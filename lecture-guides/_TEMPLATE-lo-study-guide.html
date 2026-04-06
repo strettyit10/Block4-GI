@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HOYA DOCS — ENDOCRINE BLOCK
+     LO-Based Study Guide TEMPLATE
+     ─────────────────────────────────────────────────────────────────────────
+     HOW TO USE:
+       1. Duplicate this file and rename: lec[NN]-[kebab-title].html
+       2. Replace every [PLACEHOLDER] below with lecture-specific content.
+       3. Update the <title>, sidebar header, and main <h1>.
+       4. Add/remove LO tab sections (lo1–loN) as needed.
+       5. Update sidebar nav links to match your LO tabs.
+       6. Update the downloadWord filename in the JS at the bottom.
+     ══════════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ① UPDATE TITLE -->
+    <title>Lecture [N]: [Title] — GUSOM Endocrine Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0 140px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header {
+            padding: 0 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+        }
+        .sidebar-header h2 {
+            font-size: 14px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px;
+            transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+
+        /* ── Sidebar Footer (Print / Word / Hub) ── */
+        .sidebar-footer {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+
+        /* ── Print CSS ── */
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+
+        /* ── Main Content Area ── */
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+
+        /* ── LO Sections — show only active ── */
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+
+        /* ── Content Typography (scoped to .lo-content) ── */
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+
+        /* ── Tables ── */
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+
+        /* ── Section Rule ── */
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+
+        /* ── Buzzword Pills ── */
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+
+        /* ── Callout Boxes ── */
+        /* TRAP — red */
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+        /* HY — yellow */
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        /* Mnemonic — orange */
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+        /* USMLE Summary — blue */
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+
+        /* ── Collapsible h3 ── */
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+
+        /* ── h4 body indent ── */
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+
+        /* ── Trap toggle ── */
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+
+        /* ── h5 Sub-subheading ── */
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+
+        /* ── Mnemonic toggle ── */
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+
+        /* ── Collapsible h4 ── */
+        h4.collapsible-h4 { cursor: pointer; user-select: none; }
+        h4.collapsible-h4:hover { background: #bfdbfe; }
+        h4.collapsible-h4 .h4-chevron { display: inline-block; font-size: 11px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        h4.collapsible-h4.collapsed .h4-chevron { transform: rotate(-90deg); }
+
+        /* ── Expand/Collapse All controls ── */
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+
+        /* ── In-page TOC ── */
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; margin-bottom: 10px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #1e3a5f; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #2563eb; }
+
+        /* ── LO Covered listing ── */
+        .lo-covered { background: #f0f4ff; border: 1px solid #c7d2fe; border-left: 4px solid #4f46e5; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #3730a3; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #3730a3; }
+
+        /* ── Practice Questions ── */
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .answer { display: none; margin-top: 12px; background: #eff6ff; border-left: 3px solid #2563eb; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #1e3a5f; }
+
+        /* ── Testing Your Understanding ── */
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+    </style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <!-- HoyaDocs branding — always links to study hub home -->
+        <a href="https://strettyit10.github.io/Block4-Endo/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs ↗</a>
+        <!-- ② UPDATE lecture number and title -->
+        <h2>Lecture [N]</h2>
+        <p>[Lecture Title]</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">📋 Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <!-- ③ UPDATE: one link per LO tab. Add or remove as needed. -->
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">[LO 1 Name]</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">[LO 2 Name]</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">[LO 3 Name]</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">Practice Questions</a>
+    </nav>
+    <!-- Sidebar footer — identical across all guides, do not modify -->
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <!-- ④ UPDATE filename in downloadWord JS function below -->
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">🖨️</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">📄</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-Endo/resource-mapping/index.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<!-- ══ MAIN CONTENT ═════════════════════════════════════════════════════════ -->
+<main class="main">
+    <div class="header">
+        <!-- ⑤ UPDATE lecture number and title -->
+        <h1>Lecture [N]: [Lecture Title]</h1>
+        <p>HoyaDocs — Endocrine Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB ══════════════════════════════════════════════════════ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture [N] — Overview</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">[Lecture Title] · HoyaDocs Endocrine Block</p>
+        <div class="lo-content">
+
+            <!-- Page Summary Cards: one card per LO tab -->
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <!-- Card colors: blue=#dbeafe, green=#dcfce7, yellow=#fef3c7, purple=#f3e8ff -->
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:6px; font-size:14px;">📘 [LO 1 Name]</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LOs [#–#]</strong><br>
+                        [Key topics separated by · ]<br>
+                        <em style="color:#475569;">Practice Qs: [range]</em>
+                    </div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:6px; font-size:14px;">🔬 [LO 2 Name]</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LOs [#–#]</strong><br>
+                        [Key topics]<br>
+                        <em style="color:#475569;">Practice Qs: [range]</em>
+                    </div>
+                </div>
+                <!-- Add more cards as needed -->
+            </div>
+
+            <!-- Expand/Collapse All controls (optional) -->
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- ── OFFICIAL LEARNING OBJECTIVES MAP ───────────────────────────────
+                 One accordion item per LO tab. Links navigate directly to the tab
+                 section and sub-section. Practice Q links go to the practice tab. -->
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 accordion item -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">[LO 1 objective text]</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">[Topic Pill]</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('section-one')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">[Section Name]</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q3</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate above block for each additional LO, updating number, text, pill color, section IDs, and Q numbers -->
+
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1 TAB — SAMPLE STRUCTURE ══════════════════════════════════════
+         This tab demonstrates every available element pattern.
+         Delete patterns you don't need. -->
+    <section class="lo-section physio" id="lo1">
+        <!-- ⑥ UPDATE lo-title and lo-subtitle -->
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 — [Topic Name]</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">[Short description] · HoyaDocs Endocrine Block</p>
+
+        <div class="lo-content">
+
+            <!-- Optional: LOs Covered box -->
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1:</strong> [Objective text]</li>
+                    <li><strong>LO 2:</strong> [Objective text]</li>
+                </ul>
+            </div>
+
+            <!-- Optional: Expand/Collapse All controls -->
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <!-- ── IN-PAGE TABLE OF CONTENTS ──────────────────────────────────────
+     RULES:
+       • Use <ol> (ordered/numbered list), plain <a href="#id"> links — NO onclick, NO LO badge spans.
+       • "On This Page" title (no emoji) to match the established format.
+       • Link to h3 section IDs and optionally to h4 subsection IDs.
+       • Use &nbsp;&nbsp;↳ prefix in the link text for h4-level sub-items. -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#section-one">Section One</a></li>
+                    <li><a href="#first-subheading">&nbsp;&nbsp;↳ First Subheading</a></li>
+                    <li><a href="#comparison-table">&nbsp;&nbsp;↳ Comparison Table</a></li>
+                    <li><a href="#section-two">Section With Subtypes</a></li>
+                </ol>
+            </div>
+
+            <!-- ── COLLAPSIBLE h3 SECTION ───────────────────────────────────
+                 Pattern: collapsible-h3 → section-body → ⭐ intro p → [h4 + h4-body]* → hr (in last h4-body) → exam-trap → /section-body -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="section-one"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Section One Title
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Key introductory concept sentence goes here.</p>
+
+                <!-- h4 subheading with h4-body -->
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;" id="first-subheading">🔬 First Subheading</h4>
+                <div class="h4-body">
+                    <p>Content goes here. Can include lists, tables, etc.</p>
+                    <ul>
+                        <li>Bullet point one</li>
+                        <li>Bullet point two</li>
+                    </ul>
+                </div>
+
+                <!-- Sample table -->
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;" id="comparison-table">📊 Comparison Table</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Feature</th><th>Type A</th><th>Type B</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Property 1</td><td>Value</td><td>Value</td></tr>
+                            <tr><td>Property 2</td><td>Value</td><td>Value</td></tr>
+                        </tbody>
+                    </table>
+                    <hr class="section-rule"><!-- hr goes in LAST h4-body before exam-trap -->
+                </div>
+
+                <!-- Exam Trap — always at section-body level, not inside h4-body -->
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        ⚠️ TRAP: [Trap Topic] <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>[Common mistake or test trap]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /section-body -->
+
+            <!-- ── SECTION WITH h5 SUB-SUBHEADINGS ─────────────────────────
+                 Use when a concept has 3+ subtypes that each need their own content block -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="section-two"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Section With Subtypes
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Intro sentence.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔑 Overview</h4>
+                <div class="h4-body">
+                    <!-- h5 sub-subheadings for subtypes -->
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>Subtype A
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <p>Content for subtype A.</p>
+                        <!-- Optional: mnemonic inside h5-body -->
+                        <div class="mnemonic">
+                            <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                                <div class="mnemonic-header" style="margin-bottom:0;">🧠 Mnemonic: [Name]</div>
+                                <span class="mnemonic-chevron">&#9660;</span>
+                            </div>
+                            <div class="mnemonic-body collapsed">
+                                <p><strong>[MNEMONIC ACRONYM]</strong></p>
+                                <ul><li><strong>M</strong> — Meaning</li></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>Subtype B
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <p>Content for subtype B.</p>
+                    </div>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        ⚠️ TRAP: [Trap Topic] <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul><li>[Trap content]</li></ul>
+                    </div>
+                </div>
+            </div><!-- /section-body -->
+
+            <!-- ── TESTING YOUR UNDERSTANDING (end of each LO tab) ──────────────────
+     RULES:
+       • TYU questions must be OPEN-ENDED application questions — NOT A/B/C/D multiple choice.
+       • MC questions belong ONLY in the Practice Questions tab.
+       • Use <p class="option"><em>Consider: ...</em></p> to give hints (not choices).
+       • Aim for 1–2 questions per LO tab; use a clinical scenario where possible. -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo[N]">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO [N], Question 1</h4>
+                    <p>[Open-ended clinical question stem — e.g. "A researcher blocks X in a mouse model. Predict what happens to Y and Z, and explain why."]</p>
+                    <p class="option"><em>Consider: [hint 1], [hint 2], [hint 3]</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: [Key answer concept]</strong>
+                        <p style="margin-top:10px;">[Full explanation with mechanism]</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO [N], Question 2</h4>
+                    <p>[Second open-ended question]</p>
+                    <p class="option"><em>Consider: [hint 1], [hint 2]</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: [Key answer]</strong>
+                        <p style="margin-top:10px;">[Explanation]</p>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /lo-content -->
+    </section>
+
+    <!-- ══ LO 2+ TABS ════════════════════════════════════════════════════════
+         Duplicate the LO 1 block above for each additional tab.
+         Update: id="lo2", lo-title, lo-subtitle, section IDs, content. -->
+
+    <!-- ══ PRACTICE QUESTIONS TAB ═══════════════════════════════════════════ -->
+    <section class="practice-section lo-section" id="practice">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Lecture [N] — [Title] · HoyaDocs Endocrine Block</p>
+        <div class="lo-content">
+
+            <!-- Group questions by LO -->
+            <h4 style="font-size:15px; font-weight:700; color:#7c3aed; margin:0 0 8px; padding-bottom:4px; border-bottom:2px solid #ede9fe;">
+                LO 1 — [Topic]
+            </h4>
+
+            <div class="practice-question">
+                <h4>Question 1</h4>
+                <p>[Question stem]</p>
+                <p class="option">A) Option</p>
+                <p class="option">B) Option</p>
+                <p class="option">C) Option</p>
+                <p class="option">D) Option</p>
+                <p class="option">E) Option</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct Answer: [Letter] — [Label]</strong>
+                    <p style="margin-top:10px;">[Explanation]</p>
+                </div>
+            </div>
+
+            <!-- Add more questions... -->
+
+        </div>
+    </section>
+
+</main><!-- /main -->
+
+<script>
+    // ── Tab switching ────────────────────────────────────────────────────────
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    // ── Practice question answer reveal ─────────────────────────────────────
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    // ── Collapsible sections ─────────────────────────────────────────────────
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH4(h4El) {
+        h4El.classList.toggle('collapsed');
+        const body = h4El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+
+    // ── Expand / Collapse All (active tab only) ──────────────────────────────
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    // ── Export: build standalone document (shared by Print PDF + Word Doc) ───
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture [N]: [Title] — GUSOM Endocrine Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    // ── Print / Save as PDF ──────────────────────────────────────────────────
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">⏳</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    // ── Download Word Doc (.doc) ─────────────────────────────────────────────
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">⏳</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        // ④ UPDATE filename here
+        a.download = 'LecNN-[Title].doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+</script>
+</body>
+</html>

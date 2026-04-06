@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GI Lecture 01: GI Overview — GUSOM Endocrine Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background-color: #f8f9fa; color: #1f2937; line-height: 1.6; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 220px; height: 100vh; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 20px 0 140px; overflow-y: auto; z-index: 100; box-shadow: 2px 0 8px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link { display: block; padding: 10px 12px; background: #1e293b; color: #cbd5e1; border-left: 3px solid transparent; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px; }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+        .sidebar-footer { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px 15px 12px; background: linear-gradient(to top, #0f172a 60%, transparent); }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2; }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn { display: flex; align-items: center; gap: 7px; width: 100%; padding: 9px 12px; background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35); border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s ease; cursor: pointer; }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            a { color: inherit; text-decoration: none; }
+        }
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+        h4.collapsible-h4 { cursor: pointer; user-select: none; }
+        h4.collapsible-h4:hover { background: #bfdbfe; }
+        h4.collapsible-h4 .h4-chevron { display: inline-block; font-size: 11px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        h4.collapsible-h4.collapsed .h4-chevron { transform: rotate(-90deg); }
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; margin-bottom: 10px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #1e3a5f; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #2563eb; }
+        .lo-covered { background: #f0f4ff; border: 1px solid #c7d2fe; border-left: 4px solid #4f46e5; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #3730a3; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #3730a3; }
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .answer { display: none; margin-top: 12px; background: #eff6ff; border-left: 3px solid #2563eb; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #1e3a5f; }
+        .reveal-btn { margin-top: 10px; padding: 6px 14px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+    </style>
+</head>
+<body>
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-Endo/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs ↗</a>
+        <h2>GI Lecture 01</h2>
+        <p>GI Overview &amp; Physiology Intro</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">📋 Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">🏗️ GI Anatomy</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">⚙️ Functions &amp; Fluid Balance</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">🧠 Enteric Nervous System</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">🔬 Receptors &amp; Neurotransmitters</a>
+        <a href="#lo5" class="sidebar-link" onclick="switchLO(event,'lo5')">🩸 Blood Supply &amp; Autonomics</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">✏️ Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">🖨️</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">📄</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-Endo/resource-mapping/index.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+<!-- ══ MAIN CONTENT ═════════════════════════════════════════════════════════ -->
+<main class="main">
+    <div class="header">
+        <h1>GI Lecture 01: GI Overview &amp; Physiology Introduction</h1>
+        <p>HoyaDocs — GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB ══════════════════════════════════════════════════════ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">GI Lecture 01 — Overview</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">GI Overview &amp; Physiology Introduction · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:6px; font-size:14px;">🏗️ GI Anatomy</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 1</strong><br>
+                        Gross anatomy · Wall layers · Plexuses · Cell types · Muscle types<br>
+                        <em style="color:#475569;">Practice Qs: 1–4</em>
+                    </div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:6px; font-size:14px;">⚙️ Functions &amp; Fluid Balance</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LOs 2–3</strong><br>
+                        DEEP MASS · Fluid volumes · pH gradient · Hormones<br>
+                        <em style="color:#475569;">Practice Qs: 5–12</em>
+                    </div>
+                </div>
+                <div style="background:#f3e8ff; border:1px solid #d8b4fe; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#581c87; margin-bottom:6px; font-size:14px;">🧠 Enteric Nervous System</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 4</strong><br>
+                        Myenteric plexus · Submucosal plexus · Independent function · Ileus<br>
+                        <em style="color:#475569;">Practice Qs: 13–16</em>
+                    </div>
+                </div>
+                <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#78350f; margin-bottom:6px; font-size:14px;">🔬 Receptors &amp; Neurotransmitters</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 5</strong><br>
+                        Mechanoreceptors · Chemoreceptors · Osmoreceptors · ACh · VIP · 5-HT<br>
+                        <em style="color:#475569;">Practice Qs: 17–20</em>
+                    </div>
+                </div>
+                <div style="background:#fce7f3; border:1px solid #f9a8d4; border-radius:8px; padding:16px; grid-column: span 2;">
+                    <div style="font-weight:700; color:#831843; margin-bottom:6px; font-size:14px;">🩸 Blood Supply &amp; Autonomic Regulation</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LOs 6–7</strong><br>
+                        Celiac · SMA · IMA · Portal circulation · Vagus · Sympathetic · Cephalic phase<br>
+                        <em style="color:#475569;">Practice Qs: 21–28</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the gross anatomy and organization of the GI tract, including associated organs, wall layers, and cell types</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Anatomy</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-gi-segments')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">GI Segments</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-wall-layers')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Wall Layers &amp; Plexuses</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-cell-types')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Cell Types &amp; Muscle</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q3, Q4</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 2 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">List the major functions of the GI tract using the DEEP MASS mnemonic</span>
+                    <span style="background:#dcfce7; color:#14532d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Functions</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-deep-mass')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">DEEP MASS Mnemonic</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q5, Q6, Q7, Q8</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 3 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the fluid volumes entering and leaving the GI tract and the significance of this balance</span>
+                    <span style="background:#fef3c7; color:#92400e; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Fluid Balance</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-fluid-volumes')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Fluid Volumes &amp; Secretions</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-ph-gradient')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">pH Gradient Along GI Tract</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q9, Q10, Q11, Q12</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 4 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the organization and function of the enteric nervous system, including myenteric and submucosal plexuses</span>
+                    <span style="background:#f3e8ff; color:#581c87; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">ENS</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-ens-overview')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">ENS Overview</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-two-plexuses')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Two Plexuses</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-ileus')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Ileus &amp; Clinical Correlates</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q13, Q14, Q15, Q16</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 5 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">5</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Identify the sensory receptor types in the GI tract and their key neurotransmitters</span>
+                    <span style="background:#fef3c7; color:#78350f; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Receptors / NTs</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-receptor-types')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Three Receptor Types</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-neurotransmitters')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Key Neurotransmitters</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-peristaltic-reflex')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Peristaltic Reflex</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q17, Q18, Q19, Q20</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 6 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">6</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the blood supply to the GI tract and the importance of portal circulation and first-pass metabolism</span>
+                    <span style="background:#fce7f3; color:#831843; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Blood Supply</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo5');setTimeout(()=>document.getElementById('sec-arterial-supply')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Arterial Supply (Celiac/SMA/IMA)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');setTimeout(()=>document.getElementById('sec-portal-circulation')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Portal Circulation &amp; First-Pass</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q21, Q22, Q23, Q24</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 7 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">7</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Explain autonomic regulation of the GI tract, including parasympathetic, sympathetic, and cephalic phase mechanisms</span>
+                    <span style="background:#ffe4e6; color:#9f1239; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Autonomics</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo5');setTimeout(()=>document.getElementById('sec-parasympathetic')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Parasympathetic (Vagus / Pelvic)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');setTimeout(()=>document.getElementById('sec-sympathetic')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Sympathetic Effects</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');setTimeout(()=>document.getElementById('sec-cephalic-phase')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Cephalic Phase</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q25, Q26, Q27, Q28</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ LO1 TAB: GI ANATOMY ═══════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 — GI Anatomy &amp; Organization</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Gross anatomy, wall layers, plexuses, and cell types · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 1:</strong> Describe the gross anatomy and organization of the GI tract, including associated organs, wall layers, and cell types</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- TOC -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-gi-segments">GI Segments: Mouth to Anus</a></li>
+                    <li><a href="#sec-associated-organs">&nbsp;&nbsp;↳ Associated Organs</a></li>
+                    <li><a href="#sec-wall-layers">Wall Layers &amp; Plexuses</a></li>
+                    <li><a href="#sec-plexus-locations">&nbsp;&nbsp;↳ Plexus Locations</a></li>
+                    <li><a href="#sec-cell-types">Cell Types &amp; Muscle Types</a></li>
+                    <li><a href="#sec-surface-area">&nbsp;&nbsp;↳ Surface Area Adaptations</a></li>
+                    <li><a href="#sec-sphincters">Sphincters &amp; Skeletal Muscle</a></li>
+                </ol>
+            </div>
+
+            <!-- SECTION 1: GI Segments -->
+            <h3 class="collapsible-h3" id="sec-gi-segments" onclick="toggleSection(this)"><span class="section-chevron">▼</span>GI Segments: Mouth to Anus</h3>
+            <div class="section-body">
+                <p>The GI tract is a continuous tube approximately <strong>9 meters (30 feet)</strong> long, specialized at each region for specific functions. Think of it as a specialized assembly line where food is progressively broken down and nutrients extracted.</p>
+
+                <h4 id="sec-gi-order">Order of Segments</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Segment</th><th>Key Features</th><th>Primary Function</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Mouth (oral cavity)</strong></td><td>Teeth, tongue, salivary glands (parotid, submandibular, sublingual)</td><td>Mechanical digestion, salivary amylase begins carbohydrate digestion</td></tr>
+                            <tr><td><strong>Pharynx</strong></td><td>Shared with respiratory tract; epiglottis protects airway</td><td>Swallowing (deglutition)</td></tr>
+                            <tr><td><strong>Esophagus</strong></td><td>~25 cm; upper 1/3 skeletal, lower 2/3 smooth muscle; lower esophageal sphincter (LES)</td><td>Propulsion via peristalsis; no digestion/absorption</td></tr>
+                            <tr><td><strong>Stomach</strong></td><td>Fundus, body, antrum; rugae for expansion; pyloric sphincter</td><td>Storage, mechanical mixing (chyme), acid digestion, pepsin activation</td></tr>
+                            <tr><td><strong>Duodenum</strong></td><td>~25 cm (1 ft); receives common bile duct + pancreatic duct at ampulla of Vater</td><td>Neutralization of acid chyme; major digestion begins</td></tr>
+                            <tr><td><strong>Jejunum</strong></td><td>~2.5 m (8 ft); most absorption occurs here; most villi/microvilli</td><td>Majority of nutrient absorption</td></tr>
+                            <tr><td><strong>Ileum</strong></td><td>~3.5 m (11 ft); Peyer's patches; ileocecal valve; B12 + bile salts absorbed here</td><td>Final reclamation; B12, bile salts, electrolytes, water</td></tr>
+                            <tr><td><strong>Cecum + appendix</strong></td><td>First part of large intestine; ileocecal valve</td><td>Entry point; appendix is lymphoid tissue</td></tr>
+                            <tr><td><strong>Colon</strong></td><td>Ascending → transverse → descending → sigmoid; haustra, teniae coli</td><td>Water/electrolyte reabsorption; stool formation</td></tr>
+                            <tr><td><strong>Rectum</strong></td><td>Storage; stretch receptors trigger defecation reflex</td><td>Storage until defecation</td></tr>
+                            <tr><td><strong>Anal canal</strong></td><td>Internal sphincter (smooth, involuntary); external sphincter (skeletal, voluntary)</td><td>Controlled defecation</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="sec-associated-organs">Associated Organs (Accessory Glands)</h4>
+                <div class="h4-body">
+                    <p>Three organs secrete digestive products <em>into</em> the GI lumen but are not technically part of the tube itself:</p>
+                    <ul>
+                        <li><strong>Liver:</strong> Produces bile (emulsifies fats); receives all portal blood for first-pass metabolism; also produces clotting factors, albumin, and detoxifies drugs</li>
+                        <li><strong>Gallbladder:</strong> Stores and concentrates bile; releases via common bile duct in response to cholecystokinin (CCK)</li>
+                        <li><strong>Pancreas:</strong> Exocrine: secretes digestive enzymes (proteases, lipase, amylase) + bicarbonate into duodenum via pancreatic duct; Endocrine: insulin and glucagon into blood</li>
+                    </ul>
+                    <div class="hy-box"><strong>⭐ High-Yield:</strong> Bile and pancreatic secretions both enter the duodenum at the <strong>ampulla of Vater</strong>, controlled by the <strong>sphincter of Oddi</strong>. CCK opens the sphincter; secretin stimulates pancreatic bicarbonate.</div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 2: Wall Layers -->
+            <h3 class="collapsible-h3" id="sec-wall-layers" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Wall Layers &amp; Plexuses</h3>
+            <div class="section-body">
+                <p>The GI tract wall has <strong>four concentric layers</strong> (inside to outside), consistent throughout most of the tract:</p>
+
+                <h4>Four Wall Layers (Inside → Outside)</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li><strong>Mucosa</strong> — innermost layer; three sublayers:
+                            <ul>
+                                <li><em>Epithelium</em>: absorptive/secretory cells; tight junctions regulate paracellular flow</li>
+                                <li><em>Lamina propria</em>: loose CT with capillaries, lymphatics (lacteals), immune cells (plasma cells, mast cells)</li>
+                                <li><em>Muscularis mucosae</em>: thin smooth muscle layer; produces local mucosal movements</li>
+                            </ul>
+                        </li>
+                        <li><strong>Submucosa</strong> — dense CT; contains blood vessels, lymphatics, Meissner's (submucosal) plexus</li>
+                        <li><strong>Muscularis externa (propria)</strong> — two smooth muscle layers:
+                            <ul>
+                                <li><em>Inner circular muscle</em>: contracts to narrow lumen (peristalsis constriction)</li>
+                                <li><em>Outer longitudinal muscle</em>: contracts to shorten segment</li>
+                                <li>Auerbach's (myenteric) plexus lies <strong>between these two layers</strong></li>
+                            </ul>
+                        </li>
+                        <li><strong>Serosa (intraperitoneal) / Adventitia (retroperitoneal)</strong> — outermost; connective tissue covering</li>
+                    </ol>
+                </div>
+
+                <h4 id="sec-plexus-locations">Plexus Locations — Memory Anchor</h4>
+                <div class="h4-body">
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">🧡 Mnemonic: "My Sub"</div>
+                        <ul>
+                            <li><strong>My</strong>enteric plexus = <strong>M</strong>otility (between circular &amp; longitudinal muscle)</li>
+                            <li><strong>Sub</strong>mucosal plexus = <strong>S</strong>ecretion (between circular muscle &amp; submucosa)</li>
+                        </ul>
+                    </div>
+                    <table>
+                        <thead><tr><th>Plexus</th><th>Location</th><th>Primary Function</th><th>Also Called</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Myenteric plexus</strong></td><td>Between longitudinal &amp; circular muscle</td><td>Controls <strong>MOTILITY</strong> (peristalsis, segmentation)</td><td>Auerbach's plexus</td></tr>
+                            <tr><td><strong>Submucosal plexus</strong></td><td>Between circular muscle &amp; submucosa</td><td>Controls <strong>SECRETION</strong> &amp; local blood flow</td><td>Meissner's plexus</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap: Hirschsprung Disease</div>
+                        <p>Hirschsprung disease = <strong>failure of neural crest cells to migrate</strong> into the distal colon → absence of <strong>both</strong> myenteric and submucosal ganglia → tonic contraction of affected segment → functional obstruction (aganglionic megacolon). Presents in neonates as failure to pass meconium. The <em>aganglionic</em> segment is narrow; the dilated segment proximal has normal ganglion cells.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 3: Cell Types -->
+            <h3 class="collapsible-h3" id="sec-cell-types" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Cell Types &amp; Muscle Types</h3>
+            <div class="section-body">
+                <h4>Key Epithelial Cell Types</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Cell Type</th><th>Location</th><th>Function / Product</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Stem cells (transit-amplifying)</strong></td><td>Intestinal crypts (base)</td><td>Proliferate rapidly; give rise to all epithelial cell types; migrate upward along villus; replaced every 3–5 days</td></tr>
+                            <tr><td><strong>Absorptive enterocytes</strong></td><td>Villus tips (SI); surface (colon)</td><td>Nutrient, water, electrolyte absorption; brush border enzymes (lactase, sucrase, maltase)</td></tr>
+                            <tr><td><strong>Goblet cells</strong></td><td>Throughout SI and colon</td><td>Secrete mucus (lubricates, protects epithelium)</td></tr>
+                            <tr><td><strong>Enteroendocrine cells</strong></td><td>Throughout GI tract</td><td>Produce GI hormones into blood (CCK, secretin, GIP, GLP-1, somatostatin, gastrin)</td></tr>
+                            <tr><td><strong>Paneth cells</strong></td><td>Crypt base (small intestine)</td><td>Secrete defensins, lysozyme — innate immunity; support stem cell niche</td></tr>
+                            <tr><td><strong>Chief cells</strong></td><td>Gastric fundus/body</td><td>Secrete pepsinogen (inactive) → pepsin (active at pH &lt;3.5)</td></tr>
+                            <tr><td><strong>Parietal cells</strong></td><td>Gastric fundus/body</td><td>Secrete HCl (via H+/K+ ATPase) + intrinsic factor (required for B12 absorption)</td></tr>
+                            <tr><td><strong>G cells</strong></td><td>Gastric antrum + duodenum</td><td>Secrete gastrin → stimulates parietal cells → ↑HCl</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <strong>⭐ GI Cell Turnover:</strong> Intestinal epithelial cells have a lifespan of only <strong>3–5 days</strong>. Stem cells in the crypts are highly mitotically active — this is why the GI mucosa is so vulnerable to chemotherapy and radiation (which target rapidly dividing cells). Sloughed cells are digested and amino acids recycled.
+                    </div>
+                </div>
+
+                <h4 id="sec-surface-area">Surface Area Adaptations (Small Intestine)</h4>
+                <div class="h4-body">
+                    <p>The small intestine maximizes absorptive surface area through three levels of folding:</p>
+                    <ol>
+                        <li><strong>Plicae circulares (valvulae conniventes)</strong> — large circular folds of mucosa + submucosa; visible to naked eye; most prominent in jejunum; ×3 surface area</li>
+                        <li><strong>Villi</strong> — finger-like projections of mucosa; contain a central lacteal (lymphatic) and capillary network; ×10 surface area</li>
+                        <li><strong>Microvilli (brush border)</strong> — tiny projections on each enterocyte; contain digestive enzymes; ×20 surface area</li>
+                    </ol>
+                    <p>Together these increase surface area ~600-fold compared to a simple tube, enabling efficient absorption of 8–9 liters of fluid daily.</p>
+                </div>
+
+                <h4 id="sec-sphincters">Skeletal vs. Smooth Muscle in GI Tract</h4>
+                <div class="h4-body">
+                    <p>Most of the GI tract uses <strong>smooth muscle</strong> (involuntary). There are only three locations where <strong>skeletal muscle</strong> (voluntary) is found:</p>
+                    <ul>
+                        <li><strong>Mouth, pharynx, and upper esophagus</strong> — allows voluntary initiation of swallowing</li>
+                        <li><strong>External anal sphincter</strong> — allows voluntary control of defecation</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Clinical Correlation: Dysphagia</div>
+                        <p>In <strong>myasthenia gravis</strong> (autoimmune destruction of nicotinic ACh receptors at neuromuscular junction), swallowing difficulty (dysphagia) affects the <em>upper</em> esophagus (skeletal muscle). In contrast, dysphagia in <strong>achalasia</strong> or <strong>scleroderma</strong> affects the <em>lower</em> esophagus (smooth muscle) — these are NOT affected by myasthenia gravis.</p>
+                    </div>
+                </div>
+
+                <div class="usmle-summary">
+                    <div class="usmle-header">🎯 USMLE Step 1 Summary — GI Anatomy</div>
+                    <ul>
+                        <li>Four wall layers: mucosa → submucosa → muscularis externa → serosa</li>
+                        <li>Myenteric (Auerbach's) plexus = between circular + longitudinal muscle = motility</li>
+                        <li>Submucosal (Meissner's) plexus = between circular muscle + submucosa = secretion</li>
+                        <li>Parietal cells: HCl + intrinsic factor; Chief cells: pepsinogen; G cells: gastrin</li>
+                        <li>GI epithelium turns over every 3–5 days (vulnerable to chemo/radiation)</li>
+                        <li>Hirschsprung = absent ganglia (neural crest migration failure) → tonic contraction of distal colon</li>
+                        <li>Skeletal muscle only at: mouth/pharynx/upper esophagus + external anal sphincter</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo1">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 1, Question 1</h4>
+                    <p>A 2-day-old neonate fails to pass meconium and develops progressive abdominal distension. Rectal biopsy reveals an absence of ganglion cells in the affected segment. What embryological event failed, and what would you expect to find histologically in the <em>dilated</em> (proximal) segment?</p>
+                    <p class="option"><em>Consider: Neural crest migration, aganglionic vs. ganglionic segments, which segment is functionally obstructed</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Failed neural crest cell migration → Hirschsprung disease</strong>
+                        <p style="margin-top:10px;">Neural crest cells failed to migrate into the <em>distal</em> colon during embryogenesis, leaving it aganglionic. The aganglionic segment has tonic contraction (no relaxation), creating functional obstruction. The <em>dilated proximal segment</em> is normal — it has intact ganglion cells in both myenteric and submucosal plexuses; it dilates because stool cannot pass through the contracted segment below.</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 1, Question 2</h4>
+                    <p>A patient with long-standing myasthenia gravis develops difficulty initiating swallowing. Which portion of the esophagus is involved, and why are the symptoms limited to that area?</p>
+                    <p class="option"><em>Consider: Skeletal vs. smooth muscle distribution, nicotinic vs. muscarinic receptors, myasthenia mechanism</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Upper esophagus (skeletal muscle) — nicotinic NMJ affected</strong>
+                        <p style="margin-top:10px;">Myasthenia gravis destroys <em>nicotinic</em> acetylcholine receptors at the neuromuscular junction. Skeletal muscle — which requires nicotinic signaling — is affected; smooth muscle uses muscarinic receptors and is not targeted. The upper esophagus and pharynx are skeletal muscle, so dysphagia occurs there. The lower esophagus, stomach, and intestines are smooth muscle and are spared.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ LO2 TAB: FUNCTIONS & FLUID BALANCE ════════════════════════════════ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 2–3 — GI Functions &amp; Fluid Balance</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">DEEP MASS, fluid volumes, pH gradient · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 2:</strong> List the major functions of the GI tract using the DEEP MASS mnemonic</li>
+                    <li><strong>LO 3:</strong> Describe the fluid volumes entering and leaving the GI tract and their clinical significance</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- TOC -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-deep-mass">DEEP MASS — 8 GI Functions</a></li>
+                    <li><a href="#sec-hormones-vs-enzymes">&nbsp;&nbsp;↳ Hormones vs. Enzymes: Where They Go</a></li>
+                    <li><a href="#sec-fluid-volumes">Fluid Volumes in the GI Tract</a></li>
+                    <li><a href="#sec-secretion-sources">&nbsp;&nbsp;↳ Sources of GI Secretions</a></li>
+                    <li><a href="#sec-absorption-numbers">&nbsp;&nbsp;↳ Absorption Numbers</a></li>
+                    <li><a href="#sec-ph-gradient">pH Gradient Along the GI Tract</a></li>
+                </ol>
+            </div>
+
+            <!-- SECTION 1: DEEP MASS -->
+            <h3 class="collapsible-h3" id="sec-deep-mass" onclick="toggleSection(this)"><span class="section-chevron">▼</span>DEEP MASS — The 8 Functions of the GI Tract</h3>
+            <div class="section-body">
+                <div class="mnemonic">
+                    <div class="mnemonic-header">🧡 Mnemonic: DEEP MASS</div>
+                    <ul>
+                        <li><strong>D</strong> — <strong>Digestion:</strong> Enzymatic breakdown of macromolecules (carbohydrates → monosaccharides, proteins → amino acids, fats → fatty acids + monoglycerides)</li>
+                        <li><strong>E</strong> — <strong>Elimination:</strong> Removal of waste products; acid kills most ingested bacteria; mucosa-associated lymphoid tissue (MALT) provides immune defense; bacteria in colon are eliminated in stool</li>
+                        <li><strong>E</strong> — <strong>Endocrine function:</strong> GI tract is the <em>largest endocrine organ in the body</em>; enteroendocrine cells release hormones (gastrin, CCK, secretin, GIP, GLP-1, motilin) <strong>into blood</strong></li>
+                        <li><strong>P</strong> — <strong>Protection/Immune:</strong> Mucosal barrier; IgA secretion; gastric acid kills pathogens; Peyer's patches (ileum) and MALT provide adaptive immunity</li>
+                        <li><strong>M</strong> — <strong>Motility/Propulsion:</strong> Peristalsis moves content aborally; segmentation mixes content; must keep moving to allow new food in and get waste out</li>
+                        <li><strong>A</strong> — <strong>Absorption:</strong> Nutrients, electrolytes, water absorbed (almost everything is absorbed — even fiber is partially fermented by colonic bacteria)</li>
+                        <li><strong>S</strong> — <strong>Secretion:</strong> Digestive enzymes, acid, bile, bicarbonate secreted into lumen; ~7–8 L/day of secretions facilitate digestion</li>
+                        <li><strong>S</strong> — <strong>Storage:</strong> Stomach stores and releases chyme in controlled manner; colon stores stool while dehydrating it</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-hormones-vs-enzymes">Key Distinction: Hormones vs. Enzymes — Where Do They Go?</h4>
+                <div class="h4-body">
+                    <p>This is a frequently tested conceptual point:</p>
+                    <table>
+                        <thead><tr><th>Type</th><th>Secreted Into</th><th>Examples</th><th>Why it matters</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Digestive enzymes</strong></td><td>GI <strong>lumen</strong></td><td>Amylase (salivary, pancreatic), lipase, pepsin, trypsin</td><td>Act locally on food in the lumen</td></tr>
+                            <tr><td><strong>GI hormones</strong></td><td><strong>Blood</strong> (portal circulation)</td><td>Gastrin, CCK, secretin, GIP, GLP-1</td><td>Reach target organs systemically; measured in serum</td></tr>
+                            <tr><td><strong>Bicarbonate</strong></td><td>GI <strong>lumen</strong> (duodenum)</td><td>Pancreatic HCO₃⁻</td><td>Neutralizes acid chyme entering duodenum</td></tr>
+                            <tr><td><strong>Mucus</strong></td><td>GI <strong>lumen</strong></td><td>From goblet cells</td><td>Protects epithelium from acid and enzymes</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap: Hormones Are Always Secreted INTO Blood</div>
+                        <p>GI hormones (gastrin, CCK, secretin, etc.) are <strong>always</strong> secreted into the bloodstream, not the lumen. If a question asks where gastrin "acts," remember it travels through blood to reach parietal cells in the stomach. This also means they are measurable in serum and can be elevated in neoplastic conditions (e.g., Zollinger-Ellison syndrome = gastrinoma → very high serum gastrin → massive acid hypersecretion).</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 2: Fluid Volumes -->
+            <h3 class="collapsible-h3" id="sec-fluid-volumes" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Fluid Volumes in the GI Tract</h3>
+            <div class="section-body">
+                <p>The scale of GI fluid handling is remarkable — the body secretes far more than it ingests, yet almost all of it is reabsorbed. Failure of even a small portion of this reabsorption leads to clinically significant diarrhea.</p>
+
+                <h4 id="sec-secretion-sources">Sources of GI Secretions (~9–10 L/day total)</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Source</th><th>Volume/Day</th><th>Key Components</th></tr></thead>
+                        <tbody>
+                            <tr><td>Ingested fluids</td><td><strong>~2 L</strong></td><td>Water, electrolytes from diet</td></tr>
+                            <tr><td>Saliva</td><td>~1.5 L</td><td>Amylase, mucin, IgA, bicarbonate; pH 6.0–7.0</td></tr>
+                            <tr><td>Gastric juice</td><td>~2 L</td><td>HCl (pH 1.5–2.0), pepsinogen, intrinsic factor, mucus</td></tr>
+                            <tr><td>Bile</td><td>~0.5 L</td><td>Bile salts, bilirubin, cholesterol, phospholipids; pH 7.0–8.0</td></tr>
+                            <tr><td>Pancreatic juice</td><td>~1.5 L</td><td>Bicarbonate (neutralizes acid), zymogens (trypsinogen, chymotrypsinogen), lipase, amylase</td></tr>
+                            <tr><td>Intestinal secretions</td><td>~1.5–2 L</td><td>Water, electrolytes, mucus from intestinal crypts</td></tr>
+                            <tr><td><strong>TOTAL entering small intestine</strong></td><td><strong>~9–10 L/day</strong></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="sec-absorption-numbers">Where Is Fluid Absorbed?</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Site</th><th>Amount Absorbed</th><th>Key Point</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Small intestine</strong></td><td>~8,500 mL (~8.5 L)</td><td>Most efficient; driven by Na⁺ transport (co-transport with glucose/amino acids)</td></tr>
+                            <tr><td><strong>Colon</strong></td><td>~400 mL</td><td>Final dehydration of stool; Na⁺ absorbed, K⁺ secreted; electrogenic Na⁺ absorption</td></tr>
+                            <tr><td><strong>Feces (excreted)</strong></td><td>~100–200 mL</td><td>Minimal; mainly bacteria + undigested fiber + sloughed cells</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <strong>⭐ Clinical Significance:</strong> If the small intestine loses just 1% of its reabsorptive capacity, an extra 85 mL is lost — causing diarrhea. In cholera, the Vibrio cholerae toxin activates adenylyl cyclase → ↑cAMP → massive Cl⁻ secretion + water follows → stool output can exceed 20 L/day → life-threatening dehydration.
+                    </div>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap: Origin of GI Secretions</div>
+                        <p>Secretions are derived from the <strong>extracellular fluid (ECF)</strong>. Every liter secreted into the GI lumen is drawn from the ECF. This is why vomiting (gastric fluid loss = HCl loss) causes <strong>metabolic alkalosis + hypokalemia</strong>, and diarrhea (lower GI fluid loss = HCO₃⁻ loss) causes <strong>metabolic acidosis + hypokalemia</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 3: pH Gradient -->
+            <h3 class="collapsible-h3" id="sec-ph-gradient" onclick="toggleSection(this)"><span class="section-chevron">▼</span>pH Gradient Along the GI Tract</h3>
+            <div class="section-body">
+                <p>pH changes dramatically along the GI tract, driven by acid secretion in the stomach and bicarbonate neutralization in the duodenum:</p>
+                <table>
+                    <thead><tr><th>Segment</th><th>Approximate pH</th><th>Driver</th></tr></thead>
+                    <tbody>
+                        <tr><td>Mouth / Saliva</td><td>6.0–7.0</td><td>Bicarbonate in saliva</td></tr>
+                        <tr><td>Stomach (fasting)</td><td>1.5–2.0</td><td>HCl from parietal cells (H⁺/K⁺ ATPase)</td></tr>
+                        <tr><td>Duodenum (proximal)</td><td>4.0–5.0</td><td>Acid chyme enters → CCK/secretin → pancreatic HCO₃⁻ neutralizes</td></tr>
+                        <tr><td>Jejunum</td><td>6.0–7.0</td><td>Progressive neutralization</td></tr>
+                        <tr><td>Ileum (terminal)</td><td>7.0–7.5</td><td>Bicarbonate accumulation</td></tr>
+                        <tr><td>Colon</td><td>5.5–7.0</td><td>Bacterial fermentation produces short-chain fatty acids (lowers pH)</td></tr>
+                    </tbody>
+                </table>
+                <div class="hy-box">
+                    <strong>⭐ Why pH Matters:</strong>
+                    <ul>
+                        <li>Pepsin is only active at pH &lt;3.5 (denatured at higher pH) — explains why PPIs are effective ulcer treatment</li>
+                        <li>Enteric-coated medications dissolve only when pH ≥5–6, targeting the small intestine</li>
+                        <li>Pancreatic enzymes work optimally at pH 7–8 (explain why pancreatic insufficiency + acid hypersecretion compounds maldigestion)</li>
+                    </ul>
+                </div>
+
+                <div class="usmle-summary">
+                    <div class="usmle-header">🎯 USMLE Step 1 Summary — Functions &amp; Fluid Balance</div>
+                    <ul>
+                        <li>DEEP MASS = Digestion, Elimination, Endocrine, Protection, Motility, Absorption, Secretion, Storage</li>
+                        <li>GI hormones → secreted into BLOOD; digestive enzymes → secreted into LUMEN</li>
+                        <li>Total fluid entering GI: ~9–10 L/day (2L ingested + 7–8L secreted)</li>
+                        <li>Small intestine absorbs 8.5 L; colon absorbs 400 mL; only 100–200 mL excreted</li>
+                        <li>Vomiting → metabolic alkalosis (lose HCl); diarrhea → metabolic acidosis (lose HCO₃⁻)</li>
+                        <li>Stomach pH ~1.5; duodenum pH rises to 4–5 after HCO₃⁻ neutralization; jejunum 6–7</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo2">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 2–3, Question 1</h4>
+                    <p>A patient presents with severe, watery diarrhea and is found to have metabolic acidosis with hypokalemia. Based on GI fluid physiology, explain the acid-base and electrolyte abnormalities.</p>
+                    <p class="option"><em>Consider: What fluid is lost in diarrhea, HCO₃⁻ content of intestinal secretions, where K⁺ is secreted</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Diarrhea causes HCO₃⁻ loss → non-anion gap metabolic acidosis + K⁺ loss</strong>
+                        <p style="margin-top:10px;">Intestinal and pancreatic secretions are bicarbonate-rich. Diarrhea causes massive loss of HCO₃⁻ → non-anion gap metabolic acidosis. The colon normally absorbs Na⁺ and <em>secretes</em> K⁺; with high-volume diarrhea, this K⁺ secretion plus loss of K⁺ in stool → hypokalemia. Contrast with vomiting (HCl loss → metabolic alkalosis + hypokalemia).</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 2–3, Question 2</h4>
+                    <p>A drug company claims their new antibiotic increases gastric acid secretion. A colleague says this cannot be a GI hormone mechanism because hormones aren't produced in the GI tract. How do you respond, and what evidence contradicts this claim?</p>
+                    <p class="option"><em>Consider: DEEP MASS "Endocrine" function, enteroendocrine cells, gastrin source</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Incorrect — the GI tract is the largest endocrine organ in the body</strong>
+                        <p style="margin-top:10px;">The GI tract contains abundant enteroendocrine cells that secrete peptide hormones into the bloodstream. Gastrin (from G cells in gastric antrum and duodenum) is a prime example — it travels through blood to stimulate parietal cells to produce HCl. CCK, secretin, GIP, and GLP-1 are other GI hormones. The GI tract's endocrine function is the "E" in DEEP MASS.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ LO3 TAB: ENTERIC NERVOUS SYSTEM ══════════════════════════════════ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 4 — Enteric Nervous System</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">The "second brain" of the gut · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 4:</strong> Describe the organization and function of the enteric nervous system, including the myenteric and submucosal plexuses</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- TOC -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-ens-overview">ENS Overview — The "Second Brain"</a></li>
+                    <li><a href="#sec-two-plexuses">The Two Plexuses</a></li>
+                    <li><a href="#sec-ens-neurons">&nbsp;&nbsp;↳ ENS Neuron Types</a></li>
+                    <li><a href="#sec-extrinsic-vs-intrinsic">Extrinsic vs. Intrinsic Control</a></li>
+                    <li><a href="#sec-ileus">Ileus: When ENS Fails</a></li>
+                </ol>
+            </div>
+
+            <!-- SECTION 1: ENS Overview -->
+            <h3 class="collapsible-h3" id="sec-ens-overview" onclick="toggleSection(this)"><span class="section-chevron">▼</span>ENS Overview — The "Second Brain"</h3>
+            <div class="section-body">
+                <p>The <strong>enteric nervous system (ENS)</strong> is a semi-autonomous network of ~500 million neurons embedded in the wall of the GI tract from esophagus to anus — more neurons than in the spinal cord. It can coordinate complex GI functions <strong>completely independently</strong> of the brain or spinal cord, earning it the name "the second brain" (Gershon, 1999).</p>
+
+                <div class="buzzwords">
+                    <span class="buzzword">Second Brain</span>
+                    <span class="buzzword">~500 million neurons</span>
+                    <span class="buzzword">Intrinsic innervation</span>
+                    <span class="buzzword">Functions without CNS</span>
+                    <span class="buzzword">Myenteric = motility</span>
+                    <span class="buzzword">Submucosal = secretion</span>
+                </div>
+
+                <p>Key principle: The GI tract can perform its basic functions (peristalsis, secretion, absorption) <strong>without any input from the brain or spinal cord</strong>. However, extrinsic innervation (autonomic) makes these functions more coordinated, efficient, and responsive to the body's overall state.</p>
+
+                <div class="hy-box">
+                    <strong>⭐ Clinical Proof of ENS Autonomy:</strong> Transplanted intestinal segments that have been <strong>extrinsically denervated</strong> (all vagal and sympathetic connections cut) still undergo peristalsis. In patients with complete spinal cord injuries, the gut continues to function — though motility and bowel habits may be disrupted, the ENS still drives basal activity.
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 2: Two Plexuses -->
+            <h3 class="collapsible-h3" id="sec-two-plexuses" onclick="toggleSection(this)"><span class="section-chevron">▼</span>The Two Plexuses</h3>
+            <div class="section-body">
+                <table>
+                    <thead><tr><th>Feature</th><th>Myenteric Plexus (Auerbach's)</th><th>Submucosal Plexus (Meissner's)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Location</strong></td><td>Between circular and longitudinal muscle</td><td>Between circular muscle and submucosa</td></tr>
+                        <tr><td><strong>Primary function</strong></td><td>Controls <strong>MOTILITY</strong> (peristalsis + segmentation)</td><td>Controls <strong>SECRETION</strong> + mucosal blood flow</td></tr>
+                        <tr><td><strong>Runs throughout</strong></td><td>Entire GI tract (esophagus → rectum)</td><td>Mainly small + large intestine (less in esophagus/stomach)</td></tr>
+                        <tr><td><strong>Stimulus response</strong></td><td>Responds to stretch → initiates peristalsis</td><td>Responds to chemical signals → triggers secretion</td></tr>
+                        <tr><td><strong>Absent in Hirschsprung</strong></td><td>Yes (both plexuses absent)</td><td>Yes (both plexuses absent)</td></tr>
+                    </tbody>
+                </table>
+
+                <h4 id="sec-ens-neurons">ENS Neuron Types</h4>
+                <div class="h4-body">
+                    <p>Like the CNS, the ENS has three functional neuron classes:</p>
+                    <ul>
+                        <li><strong>Sensory (afferent) neurons:</strong> Detect intraluminal stimuli (stretch, chemicals, osmolarity) → feed into ENS circuits and send signals to CNS via vagal afferents</li>
+                        <li><strong>Interneurons:</strong> Integrate signals; form local reflex circuits; allow ascending excitation and descending inhibition</li>
+                        <li><strong>Motor (efferent) neurons:</strong>
+                            <ul>
+                                <li><em>Excitatory motor neurons:</em> Release <strong>acetylcholine (ACh)</strong> and <strong>Substance P</strong> → contract smooth muscle</li>
+                                <li><em>Inhibitory motor neurons:</em> Release <strong>VIP</strong> (vasoactive intestinal peptide) and <strong>nitric oxide (NO)</strong> → relax smooth muscle</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 3: Extrinsic vs. Intrinsic -->
+            <h3 class="collapsible-h3" id="sec-extrinsic-vs-intrinsic" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Extrinsic vs. Intrinsic Control</h3>
+            <div class="section-body">
+                <table>
+                    <thead><tr><th>Feature</th><th>Intrinsic (ENS)</th><th>Extrinsic (Autonomic)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Source</strong></td><td>Neurons within GI wall</td><td>Vagus nerve (CN X), pelvic nerve, splanchnic nerves</td></tr>
+                        <tr><td><strong>Required for basic GI function?</strong></td><td><strong>Yes</strong> — gut can work without extrinsic input</td><td><strong>No</strong> — modulates but not required for basal function</td></tr>
+                        <tr><td><strong>Effect of removal</strong></td><td>Loss → ileus (no motility)</td><td>Loss → less coordinated but still functional GI tract</td></tr>
+                        <tr><td><strong>Role in digestion</strong></td><td>Local reflex arcs; peristaltic reflex; secretomotor reflexes</td><td>Amplifies (PSNS) or suppresses (SNS) ENS activity</td></tr>
+                    </tbody>
+                </table>
+                <p>Think of the ENS as the "local government" of the GI tract — it can run day-to-day operations. The autonomic nervous system is the "federal government" — it can override or amplify local decisions but isn't needed for basic operations.</p>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 4: Ileus -->
+            <h3 class="collapsible-h3" id="sec-ileus" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Ileus: When ENS Fails</h3>
+            <div class="section-body">
+                <p><strong>Ileus</strong> = absence or failure of GI motility. When the ENS cannot function properly (or sensory receptors that feed into it are absent), peristalsis ceases.</p>
+
+                <h4>Types of Ileus</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Type</th><th>Cause</th><th>Mechanism</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Paralytic (adynamic) ileus</strong></td><td>Post-surgery, peritonitis, opiate medications, electrolyte imbalances (↓K⁺)</td><td>SNS overactivation or direct smooth muscle inhibition → ENS inhibited → no peristalsis</td></tr>
+                            <tr><td><strong>Hirschsprung ileus</strong></td><td>Absent ganglia (developmental)</td><td>No ENS present → no relaxation → functional obstruction</td></tr>
+                            <tr><td><strong>Mechanical obstruction</strong></td><td>Adhesions, hernia, tumor</td><td>Physical block; motility may initially be exaggerated proximal to obstruction</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header">⚠️ Exam Trap: Opiates and Ileus</div>
+                    <p>Opioids (morphine, codeine) bind to <strong>μ-opioid receptors on ENS neurons</strong> → inhibit excitatory neurotransmitter release → decreased peristalsis + increased sphincter tone → <strong>constipation and paralytic ileus</strong>. This is the basis for drugs like methylnaltrexone (peripherally-acting μ-opioid antagonist that doesn't cross the BBB) to treat opioid-induced constipation without reversing analgesia.</p>
+                </div>
+
+                <div class="usmle-summary">
+                    <div class="usmle-header">🎯 USMLE Step 1 Summary — Enteric Nervous System</div>
+                    <ul>
+                        <li>ENS = ~500 million neurons; functions independently of CNS ("second brain")</li>
+                        <li>Myenteric (Auerbach's) plexus: between circular + longitudinal muscle → MOTILITY</li>
+                        <li>Submucosal (Meissner's) plexus: between circular muscle + submucosa → SECRETION</li>
+                        <li>Excitatory ENS neurons: ACh + Substance P; Inhibitory: VIP + NO</li>
+                        <li>Loss of ENS → ileus (no peristalsis); Hirschsprung = absent ganglia → aganglionic segment contracts tonically</li>
+                        <li>Opioids bind μ-receptors on ENS → constipation/ileus</li>
+                        <li>Extrinsic innervation modulates ENS but is NOT required for basic GI function</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo3">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 4, Question 1</h4>
+                    <p>A patient on high-dose IV morphine for post-operative pain develops abdominal distension, no bowel sounds, and failure to pass gas or stool for 4 days. The team wants to treat the ileus without reversing analgesia. What is the mechanism and the targeted treatment?</p>
+                    <p class="option"><em>Consider: Where opioid receptors are expressed in the GI tract, ENS neuron function, peripherally-restricted antagonists</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: μ-opioid receptor activation on ENS neurons → paralytic ileus; Tx: methylnaltrexone</strong>
+                        <p style="margin-top:10px;">Morphine binds μ-opioid receptors expressed on ENS neurons throughout the GI tract. This inhibits excitatory neurotransmitter release (ACh, Substance P) from the myenteric plexus → decreases peristalsis + increases sphincter tone → paralytic ileus. <strong>Methylnaltrexone</strong> (Relistor) is a peripherally-acting μ-opioid antagonist that does <em>not</em> cross the blood-brain barrier, blocking GI effects without reversing CNS analgesia.</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 4, Question 2</h4>
+                    <p>Explain why a completely transected spinal cord at T6 would NOT result in complete cessation of GI motility, but would significantly alter bowel habits.</p>
+                    <p class="option"><em>Consider: ENS autonomy, what extrinsic innervation provides, how bowel habits are controlled voluntarily</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: ENS is intrinsically autonomous; loss of extrinsic modulation alters coordinated control</strong>
+                        <p style="margin-top:10px;">The ENS can maintain basal peristalsis and secretion without any input from the CNS or extrinsic ANS. Therefore, a T6 spinal transection does not stop GI motility. However, bowel habits are significantly altered because: (1) the cephalic phase (CNS → vagal activation) is disrupted; (2) coordinated defecation requires integration of voluntary external anal sphincter control (pudendal nerve, S2–S4) with the involuntary internal sphincter; (3) sympathetic modulation is lost. "Neurogenic bowel" results — the ENS still functions, but reflex defecation is uncoordinated and voluntary control is absent below the lesion.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ LO4 TAB: RECEPTORS & NEUROTRANSMITTERS ════════════════════════════ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 5 — Sensory Receptors &amp; Neurotransmitters</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">How the ENS senses the luminal environment · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 5:</strong> Identify the sensory receptor types in the GI tract and their key neurotransmitters</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- TOC -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-receptor-types">Three Sensory Receptor Types</a></li>
+                    <li><a href="#sec-mechano">&nbsp;&nbsp;↳ Mechanoreceptors</a></li>
+                    <li><a href="#sec-chemo">&nbsp;&nbsp;↳ Chemoreceptors</a></li>
+                    <li><a href="#sec-osmo">&nbsp;&nbsp;↳ Osmoreceptors</a></li>
+                    <li><a href="#sec-neurotransmitters">Key GI Neurotransmitters</a></li>
+                    <li><a href="#sec-peristaltic-reflex">The Peristaltic Reflex</a></li>
+                    <li><a href="#sec-serotonin-gi">Serotonin in the GI Tract</a></li>
+                </ol>
+            </div>
+
+            <!-- SECTION 1: Receptor Types -->
+            <h3 class="collapsible-h3" id="sec-receptor-types" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Three Sensory Receptor Types</h3>
+            <div class="section-body">
+                <p>The ENS "sees" the luminal environment through three types of sensory receptors embedded in the GI wall. These receptors feed into ENS reflex arcs that trigger appropriate motor and secretory responses.</p>
+
+                <div class="hy-box">
+                    <strong>⭐ Key Principle:</strong> If any receptor type is absent or dysfunctional → the ENS cannot initiate appropriate reflexes → <strong>ileus</strong> or dysmotility. This is why post-operative ileus occurs even when the ENS is intact — surgical manipulation and inflammation desensitize the mechanoreceptors.
+                </div>
+
+                <h4 id="sec-mechano">1. Mechanoreceptors (Stretch Receptors)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Stimulus:</strong> Distension/stretch of the GI wall (intraluminal pressure, volume)</li>
+                        <li><strong>Location:</strong> Muscle layers and submucosa; respond to both circular and longitudinal stretch</li>
+                        <li><strong>Response:</strong> Primary trigger for peristaltic reflex; also activates vomiting reflex when over-distended</li>
+                        <li><strong>Clinical relevance:</strong> Post-operative ileus — handling bowel during surgery "stuns" mechanoreceptors; reduced activity → paralytic ileus. Also: gastric distension → satiety signal via vagal afferents</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-chemo">2. Chemoreceptors</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Stimulus:</strong> Chemical composition of luminal contents — pH, specific nutrients (fatty acids, amino acids, glucose), bile acids, bacterial products</li>
+                        <li><strong>Location:</strong> Epithelial layer (enteroendocrine cells act as sensory cells) and submucosa</li>
+                        <li><strong>Response:</strong> Trigger hormone secretion (CCK released by fatty acids/amino acids in duodenum; secretin released by acid in duodenum); activate ENS secretory reflexes</li>
+                        <li><strong>Clinical relevance:</strong> Low intraluminal pH triggers secretin release → pancreatic HCO₃⁻ secretion (protects duodenum from acid)</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-osmo">3. Osmoreceptors</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Stimulus:</strong> Osmolarity of luminal contents</li>
+                        <li><strong>Location:</strong> Duodenal and jejunal mucosa are most sensitive</li>
+                        <li><strong>Response:</strong> Hyperosmolar chyme → slows gastric emptying (gives more time to dilute before absorption); triggers fluid secretion into lumen to dilute content</li>
+                        <li><strong>Clinical relevance:</strong> Dumping syndrome — rapid gastric emptying of hyperosmolar content into small intestine (post-gastrectomy) overwhelms osmoreceptor regulation → fluid rushes into gut lumen → hypovolemia + nausea/diarrhea</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 2: Neurotransmitters -->
+            <h3 class="collapsible-h3" id="sec-neurotransmitters" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Key GI Neurotransmitters</h3>
+            <div class="section-body">
+                <table>
+                    <thead><tr><th>Neurotransmitter</th><th>Source</th><th>Effect on GI</th><th>High-Yield Associations</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Acetylcholine (ACh)</strong></td><td>ENS excitatory motor neurons; vagal postganglionic</td><td>↑Motility (peristalsis); ↑Secretion; contracts smooth muscle</td><td>Muscarinic M3 receptor; blocked by atropine → decreased motility</td></tr>
+                        <tr><td><strong>Substance P</strong></td><td>ENS excitatory neurons; primary sensory afferents</td><td>↑Smooth muscle contraction; ascending limb of peristaltic reflex</td><td>Co-released with ACh in excitatory limb</td></tr>
+                        <tr><td><strong>VIP (Vasoactive Intestinal Peptide)</strong></td><td>ENS inhibitory neurons</td><td>↓Smooth muscle contraction (relaxation); ↑secretion; vasodilation</td><td>VIPoma (pancreatic tumor) → massive watery diarrhea (WDHA syndrome = Verner-Morrison). VIP = descending inhibition in peristaltic reflex</td></tr>
+                        <tr><td><strong>Nitric Oxide (NO)</strong></td><td>ENS inhibitory neurons (nNOS)</td><td>↓Smooth muscle tone (relaxation); maintains LES and pyloric sphincter in relaxed state</td><td>Loss of NO neurons → achalasia (LES fails to relax); loss of pyloric NO neurons → infantile hypertrophic pyloric stenosis (controversial)</td></tr>
+                        <tr><td><strong>Serotonin (5-HT)</strong></td><td>Enterochromaffin cells (~90% of body's 5-HT)</td><td>Initiates peristaltic and secretory reflexes; acts on 5-HT3 and 5-HT4 receptors on ENS neurons</td><td>5-HT3 antagonists (ondansetron) = antiemetics; 5-HT4 agonists (metoclopramide, cisapride) = prokinetics</td></tr>
+                        <tr><td><strong>Neuropeptide Y (NPY)</strong></td><td>Sympathetic neurons, ENS</td><td>↓Motility; ↓secretion; vasoconstriction</td><td>Mediates sympathetic suppression of GI function</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 3: Peristaltic Reflex -->
+            <h3 class="collapsible-h3" id="sec-peristaltic-reflex" onclick="toggleSection(this)"><span class="section-chevron">▼</span>The Peristaltic Reflex</h3>
+            <div class="section-body">
+                <p>The peristaltic reflex is the fundamental ENS-mediated reflex that propels content aborally (toward the anus). It has two simultaneous limbs, creating a "squeeze-and-relax" wave:</p>
+                <ol>
+                    <li><strong>Stimulus:</strong> Distension (mechanoreceptors) or chemical stimuli trigger ENS sensory neurons</li>
+                    <li><strong>Ascending excitation (oral/proximal side of bolus):</strong>
+                        <ul>
+                            <li>ACh + Substance P released → circular muscle CONTRACTS above bolus → propels content forward</li>
+                        </ul>
+                    </li>
+                    <li><strong>Descending inhibition (aboral/distal side of bolus):</strong>
+                        <ul>
+                            <li>VIP + NO released → circular muscle RELAXES below bolus → creates space for content to move into</li>
+                        </ul>
+                    </li>
+                    <li><strong>Net effect:</strong> Content moves in the aboral direction (mouth → anus)</li>
+                </ol>
+
+                <div class="exam-trap">
+                    <div class="trap-header">⚠️ Exam Trap: Achalasia and the Peristaltic Reflex</div>
+                    <p>In achalasia, the <strong>inhibitory neurons (VIP/NO)</strong> at the LES are destroyed (autoimmune or idiopathic). Without descending inhibition, the LES fails to relax when food arrives → food cannot enter the stomach → progressive esophageal dilation. Key imaging: "bird-beak" appearance on barium swallow. Treatment: pneumatic dilation or surgical myotomy (Heller), or botulinum toxin injection (blocks ACh release from excitatory neurons to rebalance).</p>
+                </div>
+
+                <h4 id="sec-serotonin-gi">Serotonin in the GI Tract</h4>
+                <div class="h4-body">
+                    <p>The GI tract contains <strong>~90% of the body's total serotonin</strong>, produced by enterochromaffin (EC) cells in the intestinal mucosa. 5-HT is the primary initiator of the peristaltic reflex:</p>
+                    <ul>
+                        <li>Distension or chemical stimuli → EC cells release 5-HT into the lamina propria</li>
+                        <li>5-HT activates <strong>5-HT3 receptors</strong> on intrinsic primary afferent neurons (IPANs) → initiates peristaltic reflex</li>
+                        <li>5-HT also acts on <strong>5-HT4 receptors</strong> → enhances ACh release → prokinetic effect</li>
+                    </ul>
+                    <p><strong>Pharmacologic implications:</strong></p>
+                    <ul>
+                        <li><strong>5-HT3 antagonists</strong> (ondansetron, granisetron): Block 5-HT3 on vagal afferents → antiemetic; used for chemotherapy-induced nausea</li>
+                        <li><strong>5-HT4 agonists</strong> (cisapride, prucalopride): ↑ACh release → prokinetic; used for gastroparesis</li>
+                        <li><strong>Carcinoid tumors</strong> (EC cell tumors) → massive 5-HT release → carcinoid syndrome: flushing, diarrhea, wheezing, right-sided heart disease</li>
+                    </ul>
+                </div>
+
+                <div class="usmle-summary">
+                    <div class="usmle-header">🎯 USMLE Step 1 Summary — Receptors &amp; Neurotransmitters</div>
+                    <ul>
+                        <li>Three GI receptor types: mechanoreceptors (stretch), chemoreceptors (composition), osmoreceptors (osmolarity)</li>
+                        <li>All three required for ENS to function; absence → ileus</li>
+                        <li>Peristaltic reflex: ACh/Substance P (ascending excitation) + VIP/NO (descending inhibition)</li>
+                        <li>Achalasia = loss of inhibitory NO/VIP neurons at LES → LES fails to relax</li>
+                        <li>90% of body serotonin is in GI (enterochromaffin cells); 5-HT3 antagonists = antiemetics; 5-HT4 agonists = prokinetics</li>
+                        <li>VIPoma → watery diarrhea (VIP acts as secretagogue); carcinoid tumor → flushing + diarrhea</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo4">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 5, Question 1</h4>
+                    <p>A patient undergoes laparoscopic cholecystectomy and develops persistent dysphagia to solids and liquids six months later. Esophageal manometry reveals failure of the LES to relax with swallowing and absent peristalsis in the distal esophagus. What neurotransmitter/receptor deficit explains this finding?</p>
+                    <p class="option"><em>Consider: LES relaxation mechanism, descending inhibitory limb of peristaltic reflex, achalasia pathophysiology</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Loss of inhibitory VIP/NO neurons at LES → achalasia</strong>
+                        <p style="margin-top:10px;">LES relaxation during swallowing is mediated by inhibitory ENS neurons that release <strong>VIP and nitric oxide (NO)</strong> — the descending inhibitory limb of the peristaltic reflex. In achalasia, these inhibitory neurons (likely nNOS/VIP-positive) are selectively destroyed (autoimmune, possibly triggered by HSV or Trypanosoma cruzi in Chagas disease). Without VIP/NO → LES cannot relax → obstruction. The remaining excitatory (ACh) tone is unopposed → hypertensive LES. Treatment with botulinum toxin blocks the excitatory ACh signal to temporarily rebalance, or myotomy divides the circular muscle to physically relieve obstruction.</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 5, Question 2</h4>
+                    <p>A patient with a known ileal carcinoid tumor presents with flushing, watery diarrhea, and wheezing. You check a 24-hour urine for 5-HIAA and it's massively elevated. What is the mechanism linking the tumor to these symptoms, and why does right-sided heart disease develop but NOT left-sided?</p>
+                    <p class="option"><em>Consider: Where 5-HT is metabolized, carcinoid heart disease anatomy, hepatic first-pass</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: EC cell tumor → massive 5-HT release → enters portal circulation → right heart exposed before liver metabolism</strong>
+                        <p style="margin-top:10px;">Carcinoid tumors (from enterochromaffin cells) release massive amounts of serotonin (5-HT) and other vasoactive substances directly into the portal circulation. Normally, 5-HT is metabolized by monoamine oxidase (MAO) in the liver — hepatic first-pass metabolism. However, when the liver is overwhelmed (or there are liver metastases), 5-HT enters systemic circulation → carcinoid syndrome. The right heart (right atrium, tricuspid valve, pulmonary valve) receives venous return <em>before</em> it passes through the pulmonary vasculature. 5-HT causes fibrosis of right-sided valves (tricuspid regurgitation, pulmonary stenosis). The pulmonary vasculature inactivates 5-HT before it reaches the left heart → left heart is spared (unless there is a right-to-left shunt or pulmonary/bronchial carcinoid releasing 5-HT directly into pulmonary veins).</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ LO5 TAB: BLOOD SUPPLY & AUTONOMIC ═════════════════════════════════ -->
+    <section class="lo-section" id="lo5">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 6–7 — Blood Supply &amp; Autonomic Regulation</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Portal circulation, first-pass metabolism, vagus, and sympathetics · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 6:</strong> Describe the blood supply to the GI tract and the importance of portal circulation and first-pass metabolism</li>
+                    <li><strong>LO 7:</strong> Explain autonomic regulation of the GI tract, including parasympathetic, sympathetic, and cephalic phase mechanisms</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <!-- TOC -->
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-arterial-supply">Arterial Supply: Celiac, SMA, IMA</a></li>
+                    <li><a href="#sec-celiac-territory">&nbsp;&nbsp;↳ Celiac Artery Territory</a></li>
+                    <li><a href="#sec-sma-ima-territory">&nbsp;&nbsp;↳ SMA and IMA Territory</a></li>
+                    <li><a href="#sec-portal-circulation">Portal Circulation &amp; First-Pass Metabolism</a></li>
+                    <li><a href="#sec-lipid-exception">&nbsp;&nbsp;↳ The Lipid Exception</a></li>
+                    <li><a href="#sec-splanchnic-regulation">&nbsp;&nbsp;↳ Splanchnic Blood Flow Regulation</a></li>
+                    <li><a href="#sec-parasympathetic">Parasympathetic Regulation (PSNS)</a></li>
+                    <li><a href="#sec-sympathetic">Sympathetic Regulation (SNS)</a></li>
+                    <li><a href="#sec-cephalic-phase">Cephalic Phase</a></li>
+                </ol>
+            </div>
+
+            <!-- SECTION 1: Arterial Supply -->
+            <h3 class="collapsible-h3" id="sec-arterial-supply" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Arterial Supply: Celiac, SMA, IMA</h3>
+            <div class="section-body">
+                <p>The GI tract receives blood from three unpaired branches of the abdominal aorta, each supplying an embryologic division of the gut:</p>
+
+                <table>
+                    <thead><tr><th>Artery</th><th>Embryologic Origin</th><th>Structures Supplied</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Celiac artery</strong></td><td>Foregut</td><td>Distal esophagus, stomach, duodenum (1st &amp; 2nd parts), liver, gallbladder, spleen, head of pancreas</td></tr>
+                        <tr><td><strong>Superior Mesenteric Artery (SMA)</strong></td><td>Midgut</td><td>Duodenum (distal 3rd &amp; 4th parts), jejunum, ileum, cecum, ascending colon, proximal 2/3 of transverse colon</td></tr>
+                        <tr><td><strong>Inferior Mesenteric Artery (IMA)</strong></td><td>Hindgut</td><td>Distal 1/3 of transverse colon, descending colon, sigmoid colon, upper rectum</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-header">🧡 Mnemonic: Watershed Zones = Vulnerable Points</div>
+                    <ul>
+                        <li><strong>Splenic flexure</strong> = watershed between SMA and IMA territories → most vulnerable to ischemic colitis (borderline supply from both)</li>
+                        <li><strong>Rectosigmoid junction</strong> = watershed between IMA and pudendal/hemorrhoidal arteries → second most vulnerable</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-celiac-territory">Celiac Artery Branches</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Left gastric artery</strong> — stomach (lesser curvature); most common site of peptic ulcer bleeding if erodes into vessel</li>
+                        <li><strong>Common hepatic artery</strong> → proper hepatic artery (liver) + gastroduodenal artery (duodenum, head of pancreas)</li>
+                        <li><strong>Splenic artery</strong> → spleen + pancreatic branches + left gastroepiploic</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-sma-ima-territory">SMA and IMA Key Branches</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>SMA branches:</strong> Inferior pancreaticoduodenal, jejunal arteries, ileal arteries, ileocolic, right colic, middle colic</li>
+                        <li><strong>IMA branches:</strong> Left colic, sigmoid arteries, superior rectal artery</li>
+                        <li><strong>Rectum collaterals:</strong> Superior rectal (IMA) + middle rectal (internal iliac) + inferior rectal (pudendal) → rich collateral supply explains why rectal ischemia is rare</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap: SMA Syndrome / Ischemic Colitis</div>
+                        <p><strong>SMA syndrome:</strong> Compression of duodenum between aorta and SMA (in very thin patients or those with rapid weight loss) → upper GI obstruction. <strong>SMA embolism</strong> is a surgical emergency: sudden-onset severe periumbilical pain out of proportion to physical exam, +/- bloody diarrhea. The "pain out of proportion to exam" clue + atrial fibrillation (source of embolus) is classic Step 1.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 2: Portal Circulation -->
+            <h3 class="collapsible-h3" id="sec-portal-circulation" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Portal Circulation &amp; First-Pass Metabolism</h3>
+            <div class="section-body">
+                <p>Blood draining the GI tract (small intestine, colon, stomach, pancreas, spleen) flows into the <strong>portal vein</strong> before entering systemic circulation. This ensures all absorbed nutrients are processed by the liver first.</p>
+
+                <h4>Portal Venous Drainage Route</h4>
+                <div class="h4-body">
+                    <p><strong>GI capillaries → portal vein → hepatic sinusoids → hepatic veins → inferior vena cava → right heart → systemic circulation</strong></p>
+                    <table>
+                        <thead><tr><th>Nutrient</th><th>Route After Absorption</th><th>Why</th></tr></thead>
+                        <tbody>
+                            <tr><td>Glucose, amino acids, short-chain FAs, water-soluble vitamins</td><td>Capillaries → Portal vein → Liver first-pass</td><td>Water-soluble; enter capillaries directly</td></tr>
+                            <tr><td>Long-chain fatty acids, fat-soluble vitamins (A,D,E,K)</td><td>Chylomicrons → Lacteals → Thoracic duct → Left subclavian vein → Systemic circulation</td><td>Too large for capillaries; packaged as chylomicrons in enterocytes</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="sec-lipid-exception">The Lipid Exception — Why It Matters</h4>
+                <div class="h4-body">
+                    <p>Dietary fats bypass the liver entirely on first absorption. This has clinical implications:</p>
+                    <ul>
+                        <li><strong>Fat-soluble drug administration:</strong> Drugs delivered in lipid carriers can partially bypass liver first-pass by entering lymphatics</li>
+                        <li><strong>Fat-soluble vitamins (ADEK):</strong> Malabsorption of fat (pancreatic insufficiency, cholestasis, celiac disease) → deficiency of ADEK specifically</li>
+                        <li><strong>Chylomicrons reach the right heart directly</strong> (via thoracic duct → SVC) → why hypercholesterolemia from fat absorption doesn't initially require liver processing</li>
+                    </ul>
+                </div>
+
+                <h4 id="sec-splanchnic-regulation">Splanchnic Blood Flow During Digestion</h4>
+                <div class="h4-body">
+                    <p>At rest, the splanchnic circulation receives ~25–30% of cardiac output. After a meal, this increases dramatically:</p>
+                    <ul>
+                        <li>Post-prandial: Increased blood flow to intestines (hyperemia) supports nutrient absorption</li>
+                        <li>This is diverted from skeletal muscle → explains why vigorous exercise immediately after eating is uncomfortable and can cause cramping</li>
+                        <li>Sympathetic activation (exercise, fight-or-flight) → splanchnic vasoconstriction → blood redirected to muscles</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Portal Hypertension Consequences</div>
+                        <p>Liver cirrhosis → ↑resistance in hepatic sinusoids → portal pressure rises → blood backs up into portal tributaries → <strong>portosystemic shunts</strong> open: (1) Esophageal varices (left gastric → azygos), (2) Caput medusae (paraumbilical veins), (3) Hemorrhoids (superior rectal ↔ inferior/middle rectal). Most dangerous: esophageal varices → can rupture → life-threatening hemorrhage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 3: Parasympathetic -->
+            <h3 class="collapsible-h3" id="sec-parasympathetic" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Parasympathetic Regulation — "Rest and Digest"</h3>
+            <div class="section-body">
+                <p>Parasympathetic innervation promotes GI function by amplifying ENS activity, increasing secretion, and enhancing motility.</p>
+
+                <table>
+                    <thead><tr><th>Feature</th><th>Vagus Nerve (CN X)</th><th>Pelvic Nerve (S2–S4)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Territory</strong></td><td>Esophagus → transverse colon (~75% of GI tract)</td><td>Distal transverse colon, descending colon, sigmoid, rectum</td></tr>
+                        <tr><td><strong>Preganglionic fiber</strong></td><td>Long; travels in vagus nerve to ENS ganglia in GI wall</td><td>Long; in pelvic splanchnic nerves to ENS ganglia</td></tr>
+                        <tr><td><strong>Postganglionic fiber</strong></td><td>Short; ENS neuron (uses ACh)</td><td>Short; ENS neuron (uses ACh)</td></tr>
+                        <tr><td><strong>Effect</strong></td><td>↑Motility, ↑secretion, ↑gastric acid, ↑enzyme secretion; cephalic phase</td><td>↑Motility in distal colon; defecation reflex</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="hy-box">
+                    <strong>⭐ Key PSNS Rule:</strong> Parasympathetic = MOSTLY vagal (craniosacral division). The vagus nerve carries PSNS fibers to virtually all GI tract except the distal colon/rectum (pelvic nerve). On Step 1, if a question involves GI PSNS effect anywhere from esophagus to transverse colon → think vagus (CN X).
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 4: Sympathetic -->
+            <h3 class="collapsible-h3" id="sec-sympathetic" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Sympathetic Regulation — "Fight or Flight"</h3>
+            <div class="section-body">
+                <p>Sympathetic activation suppresses GI function and redirects blood flow to muscles — the body's "shut down digestion to deal with the threat" response.</p>
+
+                <table>
+                    <thead><tr><th>Feature</th><th>Detail</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Origin</strong></td><td>T5–L2 spinal cord</td></tr>
+                        <tr><td><strong>Preganglionic fibers</strong></td><td>Splanchnic nerves (greater, lesser, least, lumbar) → prevertebral ganglia</td></tr>
+                        <tr><td><strong>Ganglia</strong></td><td>Celiac ganglion (foregut), superior mesenteric ganglion (midgut), inferior mesenteric ganglion (hindgut)</td></tr>
+                        <tr><td><strong>Postganglionic NT</strong></td><td>Norepinephrine (NE) at target; also NPY (Neuropeptide Y)</td></tr>
+                        <tr><td><strong>Effect on motility</strong></td><td>↓Peristalsis (↓ENS excitability), ↑sphincter tone (contracts sphincters)</td></tr>
+                        <tr><td><strong>Effect on secretion</strong></td><td>↓Secretion (including gastric acid, pancreatic enzymes)</td></tr>
+                        <tr><td><strong>Effect on blood flow</strong></td><td>Splanchnic vasoconstriction → blood redirected to skeletal muscle, brain, heart</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="exam-trap">
+                    <div class="trap-header">⚠️ Exam Trap: Sympathetic Does NOT Just Inhibit Everything</div>
+                    <p>While SNS generally decreases GI motility and secretion, it simultaneously <strong>contracts sphincters</strong> (ileocecal valve, internal anal sphincter). This is why stress/anxiety can cause "stress diarrhea" when SNS tone paradoxically triggers ENS-mediated mass movements in the colon via complex mechanisms — GI physiology is not a simple on/off switch.</p>
+                </div>
+            </div>
+
+            <hr class="section-rule">
+
+            <!-- SECTION 5: Cephalic Phase -->
+            <h3 class="collapsible-h3" id="sec-cephalic-phase" onclick="toggleSection(this)"><span class="section-chevron">▼</span>Cephalic Phase — Brain Anticipates the Meal</h3>
+            <div class="section-body">
+                <p>The <strong>cephalic phase</strong> occurs <em>before food even enters the GI tract</em>, driven entirely by the CNS in response to anticipatory signals.</p>
+
+                <h4>Stimuli and Mechanism</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Stimuli:</strong> Sight, smell, taste, or even thought of food → cortical and hypothalamic activation</li>
+                        <li><strong>Pathway:</strong> CNS → dorsal motor nucleus of vagus → vagus nerve → ENS → GI effectors</li>
+                        <li><strong>Effects:</strong> ↑Salivation, ↑gastric acid secretion, ↑gastric motility, ↑pancreatic enzyme secretion</li>
+                        <li><strong>Magnitude:</strong> Accounts for ~20–30% of total gastric acid response to a meal</li>
+                    </ul>
+                </div>
+
+                <h4>Pavlov's Classic Experiment</h4>
+                <div class="h4-body">
+                    <p>Ivan Pavlov demonstrated the cephalic phase by showing that dogs secreted gastric juice when <em>shown</em> food (before ingestion). This "psychic secretion" is mediated entirely by vagal efferents to the stomach.</p>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">🧡 Three Phases of Gastric Acid Secretion</div>
+                        <ul>
+                            <li><strong>Cephalic phase</strong> (20–30%): Sight/smell/thought → vagal activation → ↑HCl + pepsinogen</li>
+                            <li><strong>Gastric phase</strong> (60–70%): Food in stomach → distension (mechanoreceptors) + amino acids/peptides → gastrin release → ↑HCl</li>
+                            <li><strong>Intestinal phase</strong> (5–10%): Chyme in duodenum → some gastrin; also inhibitory hormones (secretin, CCK, GIP) dampen acid output</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="usmle-summary">
+                    <div class="usmle-header">🎯 USMLE Step 1 Summary — Blood Supply &amp; Autonomic Regulation</div>
+                    <ul>
+                        <li>Celiac = foregut; SMA = midgut; IMA = hindgut. Watershed zones: splenic flexure (SMA/IMA) + rectosigmoid junction</li>
+                        <li>Portal vein carries all absorbed nutrients to liver first-pass EXCEPT lipids (chylomicrons → lacteals → thoracic duct)</li>
+                        <li>Portal hypertension → esophageal varices (most dangerous), caput medusae, hemorrhoids</li>
+                        <li>PSNS: Vagus (CN X) → esophagus to transverse colon; pelvic nerve (S2–S4) → distal colon/rectum. Effect: ↑motility + ↑secretion</li>
+                        <li>SNS: T5–L2 → splanchnic nerves → prevertebral ganglia (celiac, SMA, IMA). Effect: ↓motility + ↓secretion + splanchnic vasoconstriction</li>
+                        <li>Cephalic phase: sight/smell/taste → vagus → 20–30% of gastric acid response; demonstrated by Pavlov's experiments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo5">🧠 Testing Your Understanding!</h4>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 6–7, Question 1</h4>
+                    <p>A 68-year-old man with atrial fibrillation presents with sudden-onset severe periumbilical pain for 3 hours. His abdomen is soft with minimal tenderness on physical exam. CT angiography reveals an embolus at the origin of the superior mesenteric artery. Which segments of bowel are at risk for ischemia, and what is the physiologic explanation for "pain out of proportion to exam"?</p>
+                    <p class="option"><em>Consider: SMA territory, mechanism of ischemic pain, why peritoneal signs are absent early</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: SMA embolism → midgut ischemia (small intestine + right colon); visceral pain without peritoneal signs early</strong>
+                        <p style="margin-top:10px;">The SMA supplies the entire midgut — duodenum (distal), jejunum, ileum, cecum, ascending colon, and proximal 2/3 of transverse colon. An embolus here threatens all of these structures. The "pain out of proportion to exam" occurs because intestinal ischemia initially produces severe <em>visceral</em> pain (crampy, diffuse, periumbilical) mediated by visceral afferents in the mesentery — this does not require transmural necrosis or peritoneal involvement. Physical exam only reveals peritoneal signs (guarding, rebound) when the transmural ischemia progresses to perforation/peritonitis — by which time irreversible necrosis has occurred. This is why early SMA embolism is easily missed and why the classic teaching is: "severe pain + benign exam = mesenteric ischemia until proven otherwise."</p>
+                    </div>
+                </div>
+                <div class="practice-question">
+                    <h4>Testing Your Understanding — LO 6–7, Question 2</h4>
+                    <p>A patient is prescribed a highly lipophilic antiretroviral drug with extensive hepatic first-pass metabolism (oral bioavailability ~5%). A pharmacologist suggests formulating it as a lipid emulsion to improve bioavailability. Explain the physiologic basis for this strategy.</p>
+                    <p class="option"><em>Consider: Route of lipid absorption, portal vs. lymphatic drainage, where first-pass metabolism occurs</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>✓ Answer: Lipid formulation → chylomicron incorporation → lymphatic absorption → bypasses hepatic first-pass</strong>
+                        <p style="margin-top:10px;">When dietary lipids are absorbed, long-chain fatty acids are re-esterified in the enterocyte and packaged into chylomicrons. Chylomicrons are too large to enter capillaries; instead, they enter <em>lacteals</em> (lymphatic vessels in the intestinal villi) → intestinal lymphatics → thoracic duct → left subclavian vein → systemic circulation. This entirely bypasses the portal vein and liver. If a highly lipophilic drug is co-formulated with lipids, it can be incorporated into chylomicrons during absorption and enter the lymphatics — dramatically reducing first-pass hepatic metabolism and increasing systemic bioavailability. This strategy is used for drugs like tacrolimus and some HIV medications.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ══ PRACTICE QUESTIONS TAB ════════════════════════════════════════════ -->
+    <section class="lo-section" id="practice">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">USMLE Step 1 Style — 28 Questions · GI Overview &amp; Physiology</p>
+        <div class="lo-content">
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:8px;">LO 1 — GI Anatomy (Q1–Q4)</h4>
+
+            <div class="practice-question">
+                <h4>Question 1</h4>
+                <p>A histology slide shows a section of small intestine. The student identifies a layer of cells located between the inner circular and outer longitudinal smooth muscle layers that contains a dense network of neurons. Which structure is this, and what is its primary function?</p>
+                <p class="option">A. Submucosal plexus (Meissner's) — controls secretion</p>
+                <p class="option">B. Myenteric plexus (Auerbach's) — controls motility</p>
+                <p class="option">C. Muscularis mucosae — controls local mucosal movement</p>
+                <p class="option">D. Lamina propria — contains immune cells and capillaries</p>
+                <p class="option">E. Submucosa — contains blood vessels and lymphatics</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Myenteric plexus (Auerbach's) — controls motility</strong>
+                    <p style="margin-top:10px;">The myenteric (Auerbach's) plexus lies between the circular and longitudinal smooth muscle layers of the muscularis externa. It is the primary controller of GI motility, including peristalsis and segmentation. The submucosal (Meissner's) plexus lies between the circular muscle and the submucosa and controls secretion and local blood flow. The muscularis mucosae is a thin layer within the mucosa itself (not in the muscularis externa).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 2</h4>
+                <p>A 3-week-old male infant presents with projectile vomiting after every feeding. The vomitus contains undigested milk and is non-bilious. Ultrasound reveals a thickened, elongated pylorus with a "donut sign." Which layers of the GI wall are hypertrophied in this condition?</p>
+                <p class="option">A. Mucosa and submucosa</p>
+                <p class="option">B. Circular and longitudinal smooth muscle layers of the muscularis externa</p>
+                <p class="option">C. Submucosal plexus neurons only</p>
+                <p class="option">D. Lamina propria and muscularis mucosae</p>
+                <p class="option">E. Serosa and adventitia</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Circular and longitudinal smooth muscle layers of the muscularis externa</strong>
+                    <p style="margin-top:10px;">Infantile hypertrophic pyloric stenosis involves hypertrophy of the <em>smooth muscle</em> of the muscularis externa (primarily the circular muscle layer) at the pylorus. This creates gastric outlet obstruction. The vomiting is non-bilious because obstruction is proximal to the ampulla of Vater (no bile has mixed with the content). Treatment is Ramstedt pyloromyotomy — cutting through the hypertrophied muscle while preserving the mucosa.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 3</h4>
+                <p>Vitamin B12 absorption requires intrinsic factor produced by parietal cells. A 55-year-old woman with autoimmune destruction of parietal cells (pernicious anemia) would be expected to have which additional deficiency, given what parietal cells also produce?</p>
+                <p class="option">A. Pancreatic lipase deficiency</p>
+                <p class="option">B. Pepsinogen deficiency causing protein maldigestion</p>
+                <p class="option">C. Inability to acidify the stomach (achlorhydria)</p>
+                <p class="option">D. Bile salt deficiency</p>
+                <p class="option">E. Salivary amylase deficiency</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Inability to acidify the stomach (achlorhydria)</strong>
+                    <p style="margin-top:10px;">Parietal cells produce both <strong>HCl</strong> (via H⁺/K⁺ ATPase) and <strong>intrinsic factor</strong>. Autoimmune destruction of parietal cells → simultaneous loss of HCl (achlorhydria) and intrinsic factor. Achlorhydria predisposes to bacterial overgrowth and impairs protein digestion (pepsinogen activation requires low pH). Pepsinogen is produced by chief cells (not parietal cells), so pepsinogen secretion itself is not impaired, but the enzyme cannot be activated without acid.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 4</h4>
+                <p>A medical student sees a patient with Crohn's disease affecting the terminal ileum. The attending asks: "This patient has fat-soluble vitamin deficiency. Which specific vitamins would you expect to be low, and what GI mechanism explains this?" The best answer is:</p>
+                <p class="option">A. Vitamins B1, B6, B12 — terminal ileum is primary site of water-soluble vitamin absorption</p>
+                <p class="option">B. Vitamins A, D, E, K — bile salt reabsorption is disrupted, impairing fat absorption and fat-soluble vitamin absorption</p>
+                <p class="option">C. Vitamin C only — ascorbic acid is absorbed exclusively in the ileum</p>
+                <p class="option">D. Vitamins A, D, E, K — the damaged ileum cannot directly absorb fat-soluble vitamins through enterocytes</p>
+                <p class="option">E. Folate — folate is uniquely absorbed in the terminal ileum</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Vitamins A, D, E, K — bile salt disruption impairs fat absorption</strong>
+                    <p style="margin-top:10px;">The terminal ileum is the sole site of <strong>bile salt reabsorption</strong> (enterohepatic circulation). When the terminal ileum is diseased or resected, bile salts are not reabsorbed → lost in stool → bile salt pool depleted → inadequate micelle formation → fat malabsorption → fat-soluble vitamins (ADEK) are not absorbed. This is distinct from option D, which implies direct absorption failure rather than the indirect mechanism through bile salts. Additionally, the terminal ileum is the only site for B12-intrinsic factor complex absorption — so B12 deficiency also occurs in terminal ileal disease (macrocytic anemia).</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 2 — GI Functions: DEEP MASS (Q5–Q8)</h4>
+
+            <div class="practice-question">
+                <h4>Question 5</h4>
+                <p>A researcher studies a compound that blocks secretion of a peptide hormone from enteroendocrine cells in the gastric antrum. Administration of protein-rich food no longer increases gastric acid output. Which hormone is most likely blocked, and where does it normally exert its effect?</p>
+                <p class="option">A. Secretin — acts on parietal cells to stimulate HCl</p>
+                <p class="option">B. Gastrin — acts on parietal cells to stimulate HCl</p>
+                <p class="option">C. CCK — acts on the pyloric sphincter to decrease gastric emptying</p>
+                <p class="option">D. GIP — acts on parietal cells to stimulate HCl</p>
+                <p class="option">E. Motilin — acts on smooth muscle to increase gastric motility</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Gastrin — acts on parietal cells to stimulate HCl</strong>
+                    <p style="margin-top:10px;">Gastrin is produced by <strong>G cells</strong> in the gastric antrum and duodenum. It is released in response to protein (amino acids and peptides), stomach distension, and vagal stimulation. Gastrin is secreted into the blood and travels to parietal cells in the gastric body/fundus, where it activates CCK-B receptors → stimulates HCl secretion. This is the "Endocrine" function (E in DEEP MASS) — GI hormones are secreted into the bloodstream to act at distant targets.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 6</h4>
+                <p>Which GI function in DEEP MASS explains why patients with complete bowel obstruction can develop life-threatening complications even without eating — and why they become malnourished if obstruction persists?</p>
+                <p class="option">A. Digestion — enzymes continue to be released but cannot break down nutrients</p>
+                <p class="option">B. Secretion + Absorption imbalance — secretions continue accumulating in the obstructed lumen but cannot be reabsorbed, leading to fluid/electrolyte loss and eventually dehydration</p>
+                <p class="option">C. Storage — the stomach can no longer store food properly</p>
+                <p class="option">D. Motility — peristalsis cannot overcome the obstruction</p>
+                <p class="option">E. Elimination — bacteria accumulate proximal to the obstruction</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Secretion + Absorption imbalance</strong>
+                    <p style="margin-top:10px;">Even fasting patients secrete ~7–8 L of GI fluid daily from salivary glands, stomach, pancreas, bile, and intestinal crypts. Normally this fluid is almost entirely reabsorbed. With a complete small bowel obstruction, secretions continue to accumulate above the obstruction, but absorption is impaired. The result: massive third-spacing of fluid into the obstructed bowel → vomiting → dehydration → electrolyte abnormalities → shock. Without IV fluid replacement, this can be rapidly fatal — demonstrating how critical the Secretion + Absorption balance (two of the S/A components of DEEP MASS) is even without oral intake.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 7</h4>
+                <p>A patient with chronic alcoholic pancreatitis has near-total destruction of the pancreatic exocrine function. Steatorrhea (oily stools) is present. Which specific component of the DEEP MASS functions is MOST critically impaired?</p>
+                <p class="option">A. Motility — pancreatic enzymes normally slow peristalsis</p>
+                <p class="option">B. Absorption — without pancreatic lipase, triglycerides cannot be digested, and long-chain fatty acid absorption fails</p>
+                <p class="option">C. Endocrine — loss of endocrine pancreas is the primary problem</p>
+                <p class="option">D. Storage — pancreatic enzymes control how long food is stored in the stomach</p>
+                <p class="option">E. Elimination — inability to digest bacteria leads to infection</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Absorption impaired due to absent pancreatic lipase</strong>
+                    <p style="margin-top:10px;">Pancreatic lipase is essential for hydrolysis of triglycerides into monoglycerides and free fatty acids (the absorbable forms). Without it, fat passes undigested into the colon → bacterial fermentation of fat → steatorrhea (bulky, oily, malodorous stools). This also impairs absorption of fat-soluble vitamins (A, D, E, K). Treatment: oral pancreatic enzyme replacement therapy (PERT) — enzymes given with meals to replace the missing exocrine function. Note: salivary lipase and gastric lipase provide some (~10–30%) residual fat digestion.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 8</h4>
+                <p>The "P" in DEEP MASS stands for Protection/Immune. A medical student argues that the stomach actually creates danger because it is so acidic. How would you explain the "Protection" function of gastric acid?</p>
+                <p class="option">A. Gastric acid has no protective function; it only activates pepsinogen</p>
+                <p class="option">B. Gastric acid (pH 1.5) kills the vast majority of ingested pathogens before they can reach the intestine</p>
+                <p class="option">C. Gastric acid stimulates IgA secretion by plasma cells in the lamina propria</p>
+                <p class="option">D. Gastric acid prevents Paneth cell activation</p>
+                <p class="option">E. Gastric acid activates bile acid synthesis in the liver</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Gastric acid kills ingested pathogens</strong>
+                    <p style="margin-top:10px;">Gastric acid (pH 1.5–2.0) is a critical first line of immune defense. Most bacteria, viruses, and parasites cannot survive exposure to this extremely low pH. Clinical evidence: patients on <strong>proton pump inhibitors (PPIs)</strong> have a significantly higher risk of <em>Clostridioides difficile</em>, <em>Salmonella</em>, <em>Campylobacter</em>, and <em>Vibrio</em> infections — because the protective acid barrier has been reduced. Similarly, patients with achlorhydria (e.g., pernicious anemia) are more susceptible to GI infections. This is why the GI tract — despite being in contact with the outside world through food — maintains such a hostile environment.</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 3 — Fluid Balance (Q9–Q12)</h4>
+
+            <div class="practice-question">
+                <h4>Question 9</h4>
+                <p>A child with cholera (Vibrio cholerae infection) produces 20 liters of watery stool ("rice water stools") per day. The mechanism involves cholera toxin activating Gs protein → ↑cAMP → CFTR channel opens → massive Cl⁻ secretion. What happens to the ~9–10 L of daily GI secretions in a normal person that prevents this from occurring?</p>
+                <p class="option">A. The GI tract produces only ~1–2 L of secretions, so there is no risk of fluid loss</p>
+                <p class="option">B. Under normal conditions, the small intestine reabsorbs ~8.5 L and the colon reabsorbs ~400 mL, excreting only 100–200 mL in stool</p>
+                <p class="option">C. The stomach reabsorbs all secreted fluid before it reaches the intestine</p>
+                <p class="option">D. Pancreatic secretions neutralize cholera toxin before it can act</p>
+                <p class="option">E. The colon secretes water to dilute the concentrated toxin</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Small intestine reabsorbs 8.5 L; colon reabsorbs 400 mL; only 100–200 mL excreted</strong>
+                    <p style="margin-top:10px;">The GI tract secretes 7–8 L per day in addition to the ~2 L ingested, totaling ~9–10 L. The small intestine reabsorbs ~8.5 L (driven largely by Na⁺ co-transporters); the colon reabsorbs most of the remaining ~400 mL, leaving only 100–200 mL in stool. In cholera, the ↑cAMP → massive Cl⁻ secretion overwhelms this reabsorptive capacity, flipping the intestine from net absorber to net secretor. Oral rehydration solution (ORS) works by providing glucose + Na⁺ to drive Na⁺-glucose cotransport (SGLT1), which remains functional even during cholera, pulling water back across.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 10</h4>
+                <p>A 45-year-old woman undergoes Roux-en-Y gastric bypass surgery. Post-operatively, she experiences sweating, palpitations, and lightheadedness 15–30 minutes after eating carbohydrate-rich meals. Which mechanism best explains "early dumping syndrome"?</p>
+                <p class="option">A. Hypoglycemia from excess insulin secretion</p>
+                <p class="option">B. Rapid gastric emptying of hyperosmolar food into the small intestine → osmoreceptors detect high osmolarity → fluid shifts from blood into lumen → hypovolemia</p>
+                <p class="option">C. Vagal overstimulation from the bypass anatomy</p>
+                <p class="option">D. Bacterial fermentation of undigested carbohydrates in the proximal bowel</p>
+                <p class="option">E. Bile reflux into the gastric remnant</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Hyperosmolar chyme overwhelms osmoreceptors → fluid shifts → hypovolemia</strong>
+                    <p style="margin-top:10px;">After gastric bypass, the gastric remnant is small and cannot buffer or dilute food properly. Hyperosmolar food enters the small intestine rapidly without the normal pyloric regulation. Small intestinal osmoreceptors detect extreme hyperosmolarity and fluid pours from the blood into the intestinal lumen to dilute the content → intravascular hypovolemia → tachycardia, lightheadedness, sweating. This is "early" dumping (15–30 min post-meal). "Late" dumping occurs 1–3 hours later due to rebound hypoglycemia from exaggerated insulin response to the absorbed glucose load.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 11</h4>
+                <p>A patient on a nasogastric (NG) tube develops metabolic alkalosis. The NG tube is draining large amounts of gastric juice. Explain the acid-base mechanism and predict the expected electrolyte abnormalities.</p>
+                <p class="option">A. Loss of HCO₃⁻-rich gastric fluid → metabolic acidosis + hyperkalemia</p>
+                <p class="option">B. Loss of HCl-rich gastric fluid → metabolic alkalosis + hypokalemia + hypochloremia</p>
+                <p class="option">C. Loss of K⁺-rich gastric fluid → hyperkalemia + respiratory alkalosis</p>
+                <p class="option">D. Loss of pancreatic HCO₃⁻ → metabolic acidosis + hyponatremia</p>
+                <p class="option">E. Loss of bile → metabolic acidosis + hypercalcemia</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Loss of HCl → metabolic alkalosis + hypokalemia + hypochloremia</strong>
+                    <p style="margin-top:10px;">Gastric juice is highly acidic (pH 1.5) — it contains HCl, K⁺, and some Na⁺. Continuous NG suction removes HCl → extracellular [H⁺] falls → <strong>metabolic alkalosis</strong> (↑pH, ↑HCO₃⁻). Simultaneously, K⁺ is lost in gastric juice AND the kidneys respond to volume depletion by activating the RAAS → aldosterone → exchanges K⁺ for Na⁺ in the kidney → further <strong>hypokalemia</strong>. The alkalosis drives K⁺ into cells (K⁺/H⁺ exchange) → worsening hypokalemia. Cl⁻ is directly lost in HCl → <strong>hypochloremia</strong>. This is "contraction alkalosis" or "hypokalemic hypochloremic metabolic alkalosis."</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 12</h4>
+                <p>A patient with chronic diarrhea from inflammatory bowel disease has a serum pH of 7.30, HCO₃⁻ of 16 mEq/L, and serum K⁺ of 3.0 mEq/L. An intern says this picture is opposite to what would be expected from vomiting. Explain why diarrhea produces the opposite acid-base disorder compared to vomiting.</p>
+                <p class="option">A. Diarrhea causes respiratory acidosis, vomiting causes respiratory alkalosis</p>
+                <p class="option">B. Diarrhea causes metabolic acidosis (HCO₃⁻ loss in stool); vomiting causes metabolic alkalosis (HCl loss in vomitus)</p>
+                <p class="option">C. Diarrhea causes hyperkalemia because K⁺ is retained; vomiting causes hypokalemia</p>
+                <p class="option">D. Diarrhea causes metabolic alkalosis because of lactic acid generation in the bowel</p>
+                <p class="option">E. Both conditions produce metabolic acidosis through different mechanisms</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Diarrhea = metabolic acidosis (HCO₃⁻ loss); vomiting = metabolic alkalosis (HCl loss)</strong>
+                    <p style="margin-top:10px;">Intestinal and pancreatic secretions are bicarbonate-rich. Diarrhea causes loss of HCO₃⁻-rich fluid → non-anion gap metabolic acidosis (↓pH, ↓HCO₃⁻). Potassium is also lost (colon secretes K⁺, and aldosterone response worsens this) → hypokalemia. Vomiting causes loss of HCl → metabolic alkalosis (↑pH, ↑HCO₃⁻) + hypokalemia + hypochloremia. This is one of the most commonly tested acid-base patterns on Step 1: know the fluid composition at each level of the GI tract and you can predict the electrolyte/acid-base consequence of losing it.</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 4 — Enteric Nervous System (Q13–Q16)</h4>
+
+            <div class="practice-question">
+                <h4>Question 13</h4>
+                <p>A 2-year-old boy with Down syndrome presents with chronic constipation since birth. Rectal biopsy shows absence of ganglion cells in the rectosigmoid region. His dilated proximal colon shows normal ganglion cells. What is the pathophysiology of obstruction in this patient?</p>
+                <p class="option">A. The proximal dilated colon contracts tonically, preventing passage of stool</p>
+                <p class="option">B. The aganglionic distal segment lacks inhibitory relaxation → remains in tonic contraction → functional obstruction</p>
+                <p class="option">C. Absence of ganglion cells leads to watery diarrhea as uncontrolled secretion occurs</p>
+                <p class="option">D. The dilated segment lacks peristalsis; the narrow segment is normal</p>
+                <p class="option">E. Ganglion cell absence causes paralytic ileus of the entire colon</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Aganglionic segment cannot relax → functional obstruction</strong>
+                    <p style="margin-top:10px;">In Hirschsprung disease, the aganglionic segment lacks both excitatory and inhibitory ENS neurons. Without inhibitory neurons (VIP/NO), smooth muscle remains in tonic contraction — the aganglionic segment cannot relax to allow stool to pass. The proximal segment, which has normal ganglia, dilates from the backed-up stool. This is counterintuitive: the <em>narrow</em> segment is the diseased one; the <em>dilated</em> segment is normal. Down syndrome (trisomy 21) has an increased association with Hirschsprung disease. Treatment is surgical resection of the aganglionic segment (Swenson pull-through).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 14</h4>
+                <p>Which of the following correctly describes the ENS with respect to extrinsic autonomic innervation?</p>
+                <p class="option">A. The ENS requires vagal input to initiate peristalsis and will not function after vagotomy</p>
+                <p class="option">B. The ENS can maintain basic peristalsis and secretion independently; extrinsic autonomic innervation modulates but is not required for basic GI function</p>
+                <p class="option">C. The ENS consists only of afferent sensory neurons that relay signals to the CNS</p>
+                <p class="option">D. Sympathetic nerves stimulate the ENS to increase motility during stress</p>
+                <p class="option">E. The ENS is only present in the small intestine; the colon is controlled solely by extrinsic autonomic nerves</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — ENS functions independently; extrinsic ANS modulates ENS activity</strong>
+                    <p style="margin-top:10px;">The ENS contains ~500 million neurons organized into complete local reflex arcs (sensory, interneurons, motor). It can initiate and coordinate peristalsis, secretion, and local blood flow without any extrinsic input — demonstrated by experiments in which denervated bowel segments still contract rhythmically. Vagotomy (cutting the vagus nerve) does not stop peristalsis; it reduces the efficiency of coordination and decreases gastric acid secretion (used therapeutically). Sympathetic nerves generally inhibit GI motility (not stimulate). The ENS extends throughout the entire GI tract from esophagus to anus.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 15</h4>
+                <p>A patient with Parkinson's disease develops severe constipation. Research shows that Lewy bodies (α-synuclein aggregates) are present in the ENS neurons of the colon — often years before they appear in the substantia nigra. This suggests which concept about the ENS?</p>
+                <p class="option">A. The ENS is identical in structure to the CNS, including susceptibility to the same neurodegenerative processes</p>
+                <p class="option">B. The ENS is merely a relay station for signals from the brain; its independent function means nothing clinically</p>
+                <p class="option">C. The ENS contains neurons that share properties with CNS neurons, can be affected by neurodegeneration, and may serve as the origin or early site of Parkinson's pathology</p>
+                <p class="option">D. Loss of ENS neurons in Parkinson's causes diarrhea, not constipation</p>
+                <p class="option">E. The ENS is a separate organ entirely; its pathology is unrelated to CNS disease</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — ENS neurons share CNS properties; Parkinson's pathology may begin in the gut</strong>
+                    <p style="margin-top:10px;">The "Braak hypothesis" (Braak et al., 2003) proposes that Parkinson's disease may originate in the gut ENS or olfactory bulb and then spread to the brain via vagal afferents. This is supported by the finding of Lewy bodies in ENS neurons before substantia nigra involvement, and by the observation that vagotomy is associated with reduced Parkinson's risk in some studies. Constipation from ENS neurodegeneration is a common early non-motor symptom of Parkinson's. This is an active and exciting area of gut-brain axis research.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 16</h4>
+                <p>In the ENS, which neurotransmitter combination mediates the <em>ascending excitatory</em> limb of the peristaltic reflex (contraction proximal to the bolus)?</p>
+                <p class="option">A. VIP + NO</p>
+                <p class="option">B. Norepinephrine + Neuropeptide Y</p>
+                <p class="option">C. Acetylcholine + Substance P</p>
+                <p class="option">D. Serotonin (5-HT) + dopamine</p>
+                <p class="option">E. GABA + glycine</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Acetylcholine + Substance P</strong>
+                    <p style="margin-top:10px;">The peristaltic reflex has two simultaneous limbs: (1) <strong>Ascending excitation</strong> — oral (proximal) to the bolus: excitatory ENS neurons release <strong>ACh and Substance P</strong> → circular muscle contracts → propels bolus forward. (2) <strong>Descending inhibition</strong> — aboral (distal) to the bolus: inhibitory ENS neurons release <strong>VIP and NO</strong> → circular muscle relaxes → creates space for the bolus to move into. This coordination creates the propagating peristaltic wave.</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 5 — Receptors &amp; Neurotransmitters (Q17–Q20)</h4>
+
+            <div class="practice-question">
+                <h4>Question 17</h4>
+                <p>Ondansetron is a 5-HT3 receptor antagonist used to prevent chemotherapy-induced nausea and vomiting. Which physiologic role of 5-HT3 receptors does this drug block?</p>
+                <p class="option">A. 5-HT3 receptors on parietal cells → reduces HCl secretion</p>
+                <p class="option">B. 5-HT3 receptors on vagal afferent neurons in the gut wall → reduces afferent signaling to the vomiting center</p>
+                <p class="option">C. 5-HT3 receptors on ENS inhibitory neurons → increases motility</p>
+                <p class="option">D. 5-HT3 receptors on gastrin-secreting G cells → reduces gastrin release</p>
+                <p class="option">E. 5-HT3 receptors on pancreatic acinar cells → reduces enzyme secretion</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — 5-HT3 receptors on vagal afferents → afferent signaling to vomiting center</strong>
+                    <p style="margin-top:10px;">Enterochromaffin cells release 5-HT in response to luminal stimuli. 5-HT acts on <strong>5-HT3 receptors</strong> located on intrinsic primary afferent neurons (IPANs) in the ENS and on vagal afferent fiber terminals in the gut wall. Activation of vagal afferents relays signals to the nucleus tractus solitarius and area postrema (chemoreceptor trigger zone) → nausea and vomiting. Ondansetron blocks 5-HT3 on these vagal afferents → breaks the signal → antiemetic. It also has central action at the area postrema (which lacks a blood-brain barrier). 5-HT4 agonists (metoclopramide) enhance ENS excitatory neuron ACh release → prokinetic effect.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 18</h4>
+                <p>A patient with a VIPoma (pancreatic tumor secreting VIP) presents with profuse watery diarrhea, hypokalemia, and achlorhydria. Which receptor type mediates VIP's effects on GI secretion?</p>
+                <p class="option">A. VIP acts on muscarinic M3 receptors on intestinal crypt cells → opens Cl⁻ channels</p>
+                <p class="option">B. VIP acts on VPAC receptors (Gs-coupled) on intestinal crypt cells → ↑cAMP → ↑Cl⁻ secretion → water follows</p>
+                <p class="option">C. VIP acts on nicotinic receptors on ENS neurons → increases ACh release</p>
+                <p class="option">D. VIP acts on α-adrenergic receptors to decrease smooth muscle tone</p>
+                <p class="option">E. VIP acts on 5-HT4 receptors to increase intestinal motility</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — VIP → VPAC receptors (Gs) → ↑cAMP → ↑Cl⁻ secretion</strong>
+                    <p style="margin-top:10px;">VIP acts on <strong>VPAC1/VPAC2 receptors</strong>, which are Gs-coupled. Activation → ↑adenylyl cyclase → ↑cAMP → activation of protein kinase A → opens CFTR Cl⁻ channels in intestinal crypt cells → Cl⁻ secretion → water follows osmotically → massive watery diarrhea. This is the same downstream mechanism as cholera toxin (which also ↑cAMP). VIPoma (Verner-Morrison syndrome, WDHA = Watery Diarrhea-Hypokalemia-Achlorhydria): diarrhea causes K⁺ loss → hypokalemia; high VIP also suppresses gastric acid → achlorhydria. Treatment: octreotide (somatostatin analogue) suppresses VIP secretion.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 19</h4>
+                <p>A 35-year-old woman presents with progressive dysphagia to solids and liquids over 2 years. Barium swallow shows a "bird-beak" tapering at the gastroesophageal junction with proximal esophageal dilation. Esophageal manometry shows absent peristalsis in the distal esophagus and failure of LES relaxation. Which finding on high-resolution esophageal manometry best distinguishes achalasia from pseudoachalasia (caused by a cancer at the GEJ)?</p>
+                <p class="option">A. LES resting pressure is elevated in achalasia but normal in pseudoachalasia</p>
+                <p class="option">B. Aperistalsis of the esophageal body is present only in achalasia</p>
+                <p class="option">C. In achalasia, LES fails to relax with swallowing due to loss of inhibitory neurons; rapid weight loss and short symptom duration suggest pseudoachalasia/malignancy</p>
+                <p class="option">D. Pseudoachalasia shows normal peristalsis; achalasia shows absent peristalsis</p>
+                <p class="option">E. The pH gradient in the esophagus distinguishes the two conditions</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Clinical features distinguish; rapid weight loss + short history → malignancy</strong>
+                    <p style="margin-top:10px;">True achalasia (idiopathic or secondary to Chagas disease) is caused by loss of inhibitory ENS neurons (VIP/NO) at the LES → LES fails to relax. Manometrically, it shows aperistalsis in the distal esophagus and impaired LES relaxation. Pseudoachalasia from malignancy at the GEJ (e.g., adenocarcinoma, gastric cancer infiltrating the cardia) can appear identical on manometry. Key differentiating features: (1) <em>Rapid weight loss</em> — achalasia typically shows gradual weight loss; malignancy is rapid; (2) <em>Short duration</em> of symptoms (&lt;1 year); (3) Older age at presentation; (4) EGD + CT scan to exclude mass lesion. Any achalasia presentation should prompt EGD to rule out malignancy at the GEJ.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 20</h4>
+                <p>A 55-year-old man presents with flushing (especially facial), watery diarrhea, and wheezing. Serum serotonin and 24-hour urine 5-HIAA are markedly elevated. CT of the abdomen shows multiple liver metastases and a primary mass in the ileum. Why does this patient have right-sided valvular disease (tricuspid regurgitation) but NOT left-sided?</p>
+                <p class="option">A. 5-HT selectively damages right-sided valves due to the higher pressure on the right side</p>
+                <p class="option">B. Serotonin enters the portal vein → liver metabolism inactivates most of it → but liver metastases impair this → serotonin reaches the right heart via systemic veins; pulmonary vasculature inactivates 5-HT before it reaches the left heart</p>
+                <p class="option">C. 5-HT is inactivated by the right heart muscle itself before reaching the left heart</p>
+                <p class="option">D. Left-sided valves are protected by higher pressure preventing 5-HT binding</p>
+                <p class="option">E. 5-HT only acts on receptors present on right-sided valve leaflets</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Liver metastases impair first-pass metabolism; pulmonary vasculature inactivates 5-HT before left heart</strong>
+                    <p style="margin-top:10px;">Normally, serotonin released by enterochromaffin cells is almost entirely cleared by MAO in hepatocytes during portal first-pass metabolism. Liver metastases overwhelm this capacity → excess 5-HT enters systemic circulation → reaches the right heart (right atrium and ventricle) → fibrotic plaques on tricuspid and pulmonary valves → tricuspid regurgitation + pulmonary stenosis. The <strong>pulmonary circulation contains MAO</strong> in vascular endothelial cells → inactivates 5-HT before blood reaches the left atrium → left heart is spared. Exception: if there is a right-to-left shunt (PFO) or bronchial carcinoid releasing 5-HT directly into pulmonary veins, left-sided valvular disease can occur.</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 6 — Blood Supply (Q21–Q24)</h4>
+
+            <div class="practice-question">
+                <h4>Question 21</h4>
+                <p>During repair of a large abdominal aortic aneurysm, the surgeon must clamp the aorta above the inferior mesenteric artery. Post-operatively, the patient develops bloody diarrhea and left-sided colonic ischemia. Which specific vascular territory has been compromised?</p>
+                <p class="option">A. Celiac artery territory — ischemia of the stomach and duodenum</p>
+                <p class="option">B. SMA territory — ischemia of the small intestine and right colon</p>
+                <p class="option">C. IMA territory — ischemia of the left colon (descending colon, sigmoid) and upper rectum</p>
+                <p class="option">D. Pudendal artery territory — ischemia of the lower rectum and anal canal</p>
+                <p class="option">E. Portal vein territory — global intestinal ischemia</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — IMA territory (left colon, sigmoid)</strong>
+                    <p style="margin-top:10px;">The IMA supplies the hindgut: distal 1/3 of transverse colon, descending colon, sigmoid colon, and upper rectum. During AAA repair, the IMA is often sacrificed or may go into spasm after aortic clamping. If collateral flow from the SMA (through the marginal artery of Drummond) is insufficient, the left colon develops ischemia → bloody diarrhea ("ischemic colitis"). This most commonly affects the watershed area at the <strong>splenic flexure</strong> (junction of SMA and IMA territories) — the "Griffith's point." The rectum is usually spared because of its collateral blood supply from middle/inferior rectal arteries (internal iliac).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 22</h4>
+                <p>A 25-year-old man with no prior medical history presents with sudden severe abdominal pain, nausea, and rapid blood loss. Endoscopy reveals an actively bleeding posterior duodenal ulcer. Which artery is most commonly eroded by a posterior duodenal ulcer, and why does it cause more severe hemorrhage than an anterior ulcer?</p>
+                <p class="option">A. Superior mesenteric artery — large caliber vessel with high pressure flow</p>
+                <p class="option">B. Gastroduodenal artery — a branch of the common hepatic artery (celiac trunk); posterior ulcers can erode this large vessel causing massive hemorrhage</p>
+                <p class="option">C. Left gastric artery — supplies the lesser curvature and is adjacent to the duodenum</p>
+                <p class="option">D. Splenic artery — posterior to the pancreas and adjacent to the duodenum</p>
+                <p class="option">E. Right hepatic artery — runs along the posterior duodenal wall</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Gastroduodenal artery (GDA)</strong>
+                    <p style="margin-top:10px;">The gastroduodenal artery (a branch of the common hepatic artery from the celiac trunk) runs posterior to the first part of the duodenum. A posterior duodenal ulcer (most commonly H. pylori-related) can erode through the posterior duodenal wall into the GDA — a large, high-pressure artery — causing massive arterial hemorrhage. In contrast, anterior duodenal ulcers tend to perforate (free air under the diaphragm) rather than bleed, because the anterior wall is not in contact with major vessels. The GDA is also closely related to the head of the pancreas — severe pancreatitis can also erode it.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 23</h4>
+                <p>A patient takes oral metoprolol (a β-blocker) for hypertension. The drug undergoes extensive hepatic first-pass metabolism, resulting in only 40% oral bioavailability. A lipid-soluble formulation of a different drug bypasses this limitation. Which absorbed nutrient type uses this same alternative pathway?</p>
+                <p class="option">A. Glucose and amino acids — absorbed into capillaries, enter portal vein, undergo hepatic first-pass</p>
+                <p class="option">B. Long-chain fatty acids — packaged as chylomicrons in enterocytes, enter lacteals, travel via thoracic duct to systemic circulation, bypassing liver first-pass</p>
+                <p class="option">C. Water-soluble vitamins (B, C) — absorbed directly into lymphatics to bypass the liver</p>
+                <p class="option">D. Short-chain fatty acids — absorbed into lymphatics like long-chain fatty acids</p>
+                <p class="option">E. Calcium — absorbed via active transport into lymphatics</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Long-chain fatty acids (as chylomicrons) → lacteals → thoracic duct</strong>
+                    <p style="margin-top:10px;">Long-chain fatty acids (C12+) are re-esterified into triglycerides in enterocytes, assembled with apolipoproteins B-48, cholesterol, and phospholipids into <strong>chylomicrons</strong>. Chylomicrons are too large (~100–1000 nm) to enter blood capillaries, so they enter <strong>lacteals</strong> (lymphatic capillaries in each intestinal villus) → mesenteric lymphatics → thoracic duct → left subclavian vein → systemic circulation. This entirely bypasses portal circulation and hepatic first-pass metabolism. Note: short-chain (C2–C6) and medium-chain fatty acids (C8–C12) are more water-soluble and can enter portal blood directly without packaging into chylomicrons.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 24</h4>
+                <p>A patient with decompensated liver cirrhosis develops variceal bleeding from dilated veins in the lower esophagus. Which portosystemic anastomosis is responsible, and what provides the blood flow to these varices?</p>
+                <p class="option">A. Superior rectal ↔ middle/inferior rectal veins → hemorrhoidal varices</p>
+                <p class="option">B. Left gastric (coronary) vein → esophageal venous plexus ↔ azygos vein → esophageal varices</p>
+                <p class="option">C. Paraumbilical veins → anterior abdominal wall veins → caput medusae</p>
+                <p class="option">D. Splenic vein → left renal vein → systemic circulation (spontaneous splenorenal shunt)</p>
+                <p class="option">E. Portal vein → hepatic vein (direct shunt within liver) → esophageal varices</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Left gastric vein → esophageal venous plexus ↔ azygos → esophageal varices</strong>
+                    <p style="margin-top:10px;">In portal hypertension, portal blood seeks alternative routes to the systemic circulation via portosystemic anastomoses. At the lower esophagus, the <strong>left gastric (coronary) vein</strong> (a portal tributary) connects to the <strong>esophageal venous plexus</strong>, which drains into the <strong>azygos vein</strong> (systemic). Increased portal pressure → blood backs up through the left gastric vein → esophageal submucosal veins dilate (varices) → fragile submucosal vessels at risk for massive hemorrhage (30–50% mortality per bleed). Treatment: band ligation, sclerotherapy; prevention: non-selective β-blockers (propranolol/nadolol) to reduce portal pressure by decreasing cardiac output and splanchnic vasoconstriction.</p>
+                </div>
+            </div>
+
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 7 — Autonomic Regulation (Q25–Q28)</h4>
+
+            <div class="practice-question">
+                <h4>Question 25</h4>
+                <p>A 60-year-old man undergoes truncal vagotomy for peptic ulcer disease (now largely historical, but still tested). Post-operatively, his gastric acid output is dramatically reduced. Which phase of gastric acid secretion is most directly abolished by vagotomy?</p>
+                <p class="option">A. Intestinal phase — blocked because vagus innervates the duodenum</p>
+                <p class="option">B. Cephalic phase — sight/smell/thought of food no longer signals via vagus to the stomach; gastric phase is also reduced (vagus stimulates G cells to release gastrin)</p>
+                <p class="option">C. Only the gastric phase — vagal innervation only reaches the stomach</p>
+                <p class="option">D. Cephalic phase only — the gastric phase is entirely mediated by gastrin without vagal input</p>
+                <p class="option">E. Basal acid output only — stimulated acid secretion is preserved after vagotomy</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Cephalic phase abolished + gastric phase significantly reduced</strong>
+                    <p style="margin-top:10px;">Vagotomy cuts vagal efferent fibers to the stomach. Effects: (1) <strong>Cephalic phase is completely abolished</strong> — the entire cephalic response depends on vagal efferents to parietal cells and G cells. (2) <strong>Gastric phase is significantly reduced</strong> — vagal stimulation amplifies gastrin release from G cells during the gastric phase; without this, gastrin release is reduced (~50% of gastric phase preserved via local mechanisms). (3) Intestinal phase is largely unaffected (mediated by CCK/secretin). Side effects of truncal vagotomy: gastroparesis (requires pyloroplasty to ensure gastric emptying), diarrhea (from disrupted intestinal motility regulation).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 26</h4>
+                <p>During a "fight-or-flight" response, sympathetic nervous system activation occurs. Which of the following correctly describes the sympathetic effects on the GI tract and the physiologic rationale?</p>
+                <p class="option">A. Sympathetic activation increases GI motility and secretion to maximize nutrient absorption during stress</p>
+                <p class="option">B. Sympathetic activation decreases GI motility and secretion and causes splanchnic vasoconstriction, redirecting blood to vital organs (heart, brain, skeletal muscle)</p>
+                <p class="option">C. Sympathetic activation selectively increases gastric acid secretion while decreasing intestinal motility</p>
+                <p class="option">D. Sympathetic activation has no effect on the GI tract; only the ENS controls GI function during stress</p>
+                <p class="option">E. Sympathetic activation increases gastric emptying to quickly absorb nutrients for "fight-or-flight"</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — SNS decreases GI function + splanchnic vasoconstriction → blood redistribution</strong>
+                    <p style="margin-top:10px;">Sympathetic activation (T5–L2 → splanchnic nerves → celiac/SMA/IMA ganglia → NE release) produces coordinated suppression of GI function: ↓peristalsis, ↑sphincter tone, ↓secretion, and most importantly, splanchnic vasoconstriction. This diverts blood from the GI vasculature (which normally receives 25–30% of cardiac output) to skeletal muscle, heart, and brain for the "fight-or-flight" response. This is the physiologic basis of the classic advice "don't swim right after eating" — vigorous exercise activates the SNS, diverting blood away from the GI tract just when it needs blood for post-prandial digestion, causing cramping.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 27</h4>
+                <p>A researcher performs experiments demonstrating that merely showing food to a hungry dog causes immediate increased gastric secretion. This is replicated in human studies where subjects secrete significant gastric acid simply by smelling food. Which neural pathway mediates this response?</p>
+                <p class="option">A. Olfactory nerve (CN I) → hypothalamus → phrenic nerve → diaphragm → mechanical compression of stomach</p>
+                <p class="option">B. Olfactory/visual cortex → hypothalamus → dorsal motor nucleus of vagus (CN X) → vagal efferents → parietal cells + G cells → ↑HCl + gastrin</p>
+                <p class="option">C. Glossopharyngeal nerve (CN IX) → medulla → sympathetic chain → splanchnic nerves → stomach</p>
+                <p class="option">D. Trigeminal nerve (CN V) → pons → ENS → parietal cells</p>
+                <p class="option">E. Olfactory receptors → ENS directly via blood-borne signals</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Cortex/hypothalamus → dorsal motor nucleus of vagus → vagal efferents → stomach</strong>
+                    <p style="margin-top:10px;">The cephalic phase involves: sensory stimuli (sight, smell, taste, thought of food) → activation of cerebral cortex and hypothalamus → activation of the <strong>dorsal motor nucleus of the vagus nerve (CN X)</strong> in the medulla → preganglionic vagal fibers travel to the stomach → synapse on ENS postganglionic neurons → ACh release → stimulates both parietal cells (HCl via muscarinic M3) and G cells (gastrin release). This accounts for ~20–30% of total gastric acid secretion in response to a meal. Pavlov demonstrated this with his conditioned reflex experiments, for which he received the Nobel Prize in 1904.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 28</h4>
+                <p>A clinical pharmacologist is designing a drug to increase GI motility for patients with gastroparesis without causing CNS side effects. The drug would need to act peripherally on the ENS. Which combination of receptor actions would BEST achieve this goal?</p>
+                <p class="option">A. Central 5-HT3 agonist + peripheral muscarinic antagonist</p>
+                <p class="option">B. Peripheral 5-HT4 agonist (↑ACh release from ENS excitatory neurons) + peripheral dopamine D2 antagonist (removes dopaminergic inhibition of ENS)</p>
+                <p class="option">C. Peripheral α2-adrenergic agonist (mimics sympathetic activation) + central vagal stimulator</p>
+                <p class="option">D. Peripheral μ-opioid agonist (stimulates ENS prokinetic pathways) + 5-HT3 antagonist</p>
+                <p class="option">E. Peripheral GABA agonist + peripheral VIP receptor agonist</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — 5-HT4 agonist + peripheral D2 antagonist</strong>
+                    <p style="margin-top:10px;">This is the mechanism of <strong>metoclopramide</strong> (and the newer prucalopride, which is more selective for 5-HT4). 5-HT4 agonism → increases ACh release from ENS excitatory motor neurons → ↑peristalsis + ↑gastric emptying. Dopamine D2 antagonism → removes dopaminergic inhibition of ENS → further increases motility. Metoclopramide's CNS side effects (extrapyramidal symptoms, tardive dyskinesia) occur because it crosses the blood-brain barrier and blocks D2 receptors in the basal ganglia. Peripheral D2 antagonists (domperidone) don't cross the BBB — reduced CNS side effects. Prucalopride is a highly selective 5-HT4 agonist approved for chronic idiopathic constipation.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+<script>
+    // ── Tab switching ──────────────────────────────────────────────────────────
+    function switchLO(event, loId) {
+        if (event) event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) { section.classList.add('active'); section.scrollTop = 0; }
+        const link = document.querySelector('.sidebar-link[onclick*="' + loId + '"]');
+        if (link) link.classList.add('active');
+    }
+
+    // ── Collapsible h3 sections ────────────────────────────────────────────────
+    function toggleSection(el) {
+        el.classList.toggle('collapsed');
+        const body = el.nextElementSibling;
+        if (body && body.classList.contains('section-body')) {
+            body.classList.toggle('collapsed');
+        }
+    }
+
+    // ── h5 subheadings ─────────────────────────────────────────────────────────
+    function toggleH5(el) {
+        el.classList.toggle('collapsed');
+        const body = el.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) {
+            body.classList.toggle('collapsed');
+        }
+    }
+
+    // ── Expand / Collapse All ──────────────────────────────────────────────────
+    function expandAll() {
+        document.querySelectorAll('.collapsible-h3').forEach(h => {
+            h.classList.remove('collapsed');
+            const b = h.nextElementSibling;
+            if (b && b.classList.contains('section-body')) b.classList.remove('collapsed');
+        });
+        document.querySelectorAll('.h5-subheading').forEach(h => {
+            h.classList.remove('collapsed');
+            const b = h.nextElementSibling;
+            if (b && b.classList.contains('h5-body')) b.classList.remove('collapsed');
+        });
+        document.querySelectorAll('.trap-header').forEach(h => {
+            h.classList.remove('collapsed');
+            const b = h.nextElementSibling;
+            if (b && b.classList.contains('trap-body')) b.classList.remove('collapsed');
+        });
+    }
+    function collapseAll() {
+        document.querySelectorAll('.collapsible-h3').forEach(h => {
+            h.classList.add('collapsed');
+            const b = h.nextElementSibling;
+            if (b && b.classList.contains('section-body')) b.classList.add('collapsed');
+        });
+        document.querySelectorAll('.h5-subheading').forEach(h => {
+            h.classList.add('collapsed');
+            const b = h.nextElementSibling;
+            if (b && b.classList.contains('h5-body')) b.classList.add('collapsed');
+        });
+    }
+
+    // ── Practice question answer reveal ───────────────────────────────────────
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        if (answer && answer.classList.contains('answer')) {
+            answer.classList.toggle('show');
+            btn.textContent = answer.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+        }
+    }
+
+    // ── Print / PDF ────────────────────────────────────────────────────────────
+    function printAll(btn) {
+        document.querySelectorAll('.lo-section').forEach(s => s.style.display = 'block');
+        document.querySelectorAll('.section-body.collapsed').forEach(b => b.style.display = 'block');
+        window.print();
+        setTimeout(() => {
+            document.querySelectorAll('.lo-section').forEach(s => s.style.display = '');
+            document.querySelectorAll('.lo-section.active').forEach(s => s.style.display = 'block');
+        }, 1000);
+    }
+
+    // ── Word / HTML download ───────────────────────────────────────────────────
+    function downloadWord(btn) {
+        const content = document.documentElement.outerHTML;
+        const blob = new Blob([content], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gi01-gi-overview.html';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+</script>
+</body>
+</html>
