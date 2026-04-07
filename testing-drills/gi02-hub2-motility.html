@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI02 Hub #2 · GI Motility — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#F59E0B;--al:rgba(245,158,11,0.12);--ab:rgba(245,158,11,0.3);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh;}
+.container{max-width:1100px;margin:0 auto;padding:20px;}
+
+.header{background:linear-gradient(135deg,#161B22,#1C1A0F);border-bottom:3px solid var(--accent);padding:28px 30px;margin-bottom:24px;border-radius:10px;}
+.back{font-size:.8em;color:#6B7280;text-decoration:none;display:inline-block;margin-bottom:10px;}
+.back:hover{color:var(--accent);}
+h1{color:#E6EDF3;font-size:1.9em;margin-bottom:6px;}
+.atag{color:var(--accent);font-weight:600;}
+.subtitle{color:#9CA3AF;font-size:.9em;line-height:1.5;margin-bottom:12px;}
+.step1-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.step1-badge{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:4px 10px;font-size:.78em;color:#8B949E;}
+.step1-badge strong{color:var(--accent);}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:4px;}
+.hub-step{padding:6px 14px;border-radius:6px;font-size:.82em;font-weight:600;}
+.hub-step.done{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.done:hover{border-color:#00897B;color:#00897B;}
+.hub-step.current{background:var(--accent);color:#0D1117;}
+.hub-step.next{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.next:hover{border-color:var(--accent);color:var(--accent);}
+.hub-arrow{color:#30363D;}
+
+.tab-nav{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;background:#161B22;padding:10px;border-radius:8px;border:1px solid #21262D;}
+.tab-btn{padding:9px 16px;background:#1C2128;color:#8B949E;border:1px solid #30363D;border-radius:6px;cursor:pointer;font-weight:600;font-size:.86em;transition:all .2s;font-family:inherit;}
+.tab-btn:hover{background:#30363D;color:var(--accent);}
+.tab-btn.active{background:var(--accent);color:#0D1117;border-color:var(--accent);}
+.tab-content{display:none;animation:fi .25s ease;}
+.tab-content.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #21262D;}
+
+/* FLASHCARDS — fixed overlap bug */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;}
+.fc{cursor:pointer;perspective:1000px;}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:160px;}
+.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;border-radius:10px;min-height:160px;}
+.fc-front{background:#161B22;border:1px solid #30363D;border-top:3px solid var(--accent);}
+.fc-back{background:#1C1A10;border:1px solid #444;border-top:3px solid #4ADE80;transform:rotateY(180deg);}
+.fc-label{font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.fc-front .fc-label{color:var(--accent);}
+.fc-back .fc-label{color:#4ADE80;}
+.fc-q{font-size:.92em;color:#E6EDF3;line-height:1.5;font-weight:500;}
+.fc-a{font-size:.86em;color:#FEF3C7;line-height:1.6;}
+.fc-hint{font-size:.67em;color:#6B7280;margin-top:10px;}
+
+/* MCQ */
+.mcq-item{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px;margin-bottom:16px;}
+.mcq-num{font-size:.75em;color:#6B7280;font-weight:700;text-transform:uppercase;margin-bottom:8px;}
+.mcq-stem{font-size:.94em;color:#E6EDF3;margin-bottom:14px;line-height:1.65;}
+.mcq-stem strong{color:#FCD34D;}
+.mcq-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.mcq-opt{padding:10px 14px;background:#1C2128;border:1px solid #30363D;border-radius:6px;cursor:pointer;font-size:.89em;color:#C9D1D9;transition:all .2s;display:flex;gap:10px;align-items:flex-start;font-family:inherit;text-align:left;width:100%;}
+.mcq-opt:hover:not([disabled]){background:#21262D;border-color:var(--accent);}
+.mcq-opt.correct{background:rgba(74,222,128,.15);border-color:#4ADE80;color:#D1FAE5;}
+.mcq-opt.wrong{background:rgba(239,68,68,.1);border-color:#EF4444;color:#FCA5A5;}
+.mcq-opt .letter{font-weight:700;min-width:20px;}
+.mcq-exp{background:#1C2128;border-left:3px solid #4ADE80;padding:12px 14px;border-radius:0 6px 6px 0;font-size:.86em;color:#9CA3AF;display:none;margin-top:4px;line-height:1.65;}
+.mcq-exp.visible{display:block;}
+.exp-label{color:#4ADE80;font-weight:600;display:block;margin-bottom:6px;}
+.teaching{background:var(--al);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86em;color:#FEF3C7;display:none;line-height:1.6;}
+.teaching.visible{display:block;}
+.tp-label{font-weight:700;color:var(--accent);display:block;margin-bottom:4px;}
+
+/* VIGNETTES */
+.vig-item{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px;}
+.vig-banner{background:var(--al);border:1px solid var(--accent);border-radius:6px;padding:8px 14px;font-size:.8em;color:#FCD34D;font-weight:600;margin-bottom:14px;}
+.vig-stem{font-size:.92em;line-height:1.75;color:#D1D5DB;margin-bottom:14px;}
+.vig-stem strong{color:#FCD34D;}
+
+/* TEST TRAPS — Interactive T/F */
+.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6;}
+.trap-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid var(--accent);}
+.trap-num{font-size:.7em;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#1C2128;border-radius:7px;padding:14px;border-left:3px solid var(--accent);font-style:italic;}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px;}
+.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;}
+.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50;}
+.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50;}
+.trap-btn-false{background:none;border-color:#C62828;color:#EF5350;}
+.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350;}
+.trap-btn:disabled{opacity:.55;cursor:not-allowed;}
+.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784;}
+.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A;}
+.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none;}
+.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block;}
+.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block;}
+.trap-exp strong{color:#F59E0B;}
+
+/* MECHANISMS */
+.mech-box{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:18px;margin-bottom:14px;}
+.mech-title{color:var(--accent);font-size:.86em;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.pathway{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85em;}
+.pathway-step{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:6px 12px;color:#C9D1D9;}
+.pathway-arrow{color:#F59E0B;font-weight:700;padding:0 2px;}
+.pathway-step.key{background:rgba(245,158,11,.15);border-color:var(--accent);color:#FEF3C7;font-weight:600;}
+.pathway-step.green{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#D1FAE5;}
+.pathway-step.red{background:rgba(239,68,68,.1);border-color:#EF4444;color:#FCA5A5;}
+.mech-note{font-size:.82em;color:#9CA3AF;margin-top:10px;line-height:1.5;border-top:1px solid #21262D;padding-top:10px;}
+
+/* REFERENCE */
+.ref-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:.86em;}
+.ref-table th{background:var(--accent);color:#0D1117;padding:9px 12px;text-align:left;font-weight:700;}
+.ref-table td{padding:8px 12px;border:1px solid #30363D;color:#C9D1D9;vertical-align:top;line-height:1.5;}
+.ref-table tr:nth-child(even) td{background:#161B22;}
+.ref-table tr:nth-child(odd) td{background:#1C2128;}
+.ref-table td.hl{color:var(--accent);font-weight:600;}
+.ref-table td.hl-g{color:#4ADE80;font-weight:600;}
+.ref-table td.hl-r{color:#F87171;font-weight:600;}
+.ref-section-hd{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <a href="gi02-hub1-motility.html" class="back">← Hub #1 Core Concepts</a>
+  <h1>GI02 · <span class="atag">GI Motility — Step 1 Extensions</span></h1>
+  <div class="subtitle">Hub #2 · Signal transduction mechanisms · Pathophysiology integration · Mechanism-level Step 1 content</div>
+  <div class="step1-strip">
+    <div class="step1-badge"><strong>Signal:</strong> M3/Gq · VIP/Gs · NO/cGMP · CCK · Motilin</div>
+    <div class="step1-badge"><strong>Path:</strong> Achalasia · Chagas · Scleroderma · Pseudoachalasia</div>
+    <div class="step1-badge"><strong>Histo:</strong> Hirschsprung's AChE staining</div>
+    <div class="step1-badge"><strong>Sources:</strong> First Aid · Physeo · Pathoma</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi02-hub1-motility.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">🔬 Hub #2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi02-hub3-motility.html" class="hub-step next">📝 Hub #3 — USMLE Questions</a>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('mech',this)">⚙️ Mechanisms (5)</button>
+  <button class="tab-btn" onclick="switchTab('flashcards',this)">🃏 Flashcards (12)</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">❓ MCQ (5)</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">🏥 Vignettes (2)</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">⚠️ Step 1 Traps (5)</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">📊 Pathology Reference</button>
+</div>
+
+<div id="tab-mech" class="tab-content active">
+  <div class="sec">Signal Transduction &amp; Mechanism Pathways — Step 1 Level</div>
+  <div id="mechContainer"></div>
+</div>
+<div id="tab-flashcards" class="tab-content">
+  <div class="sec">Step 1 Mechanism Flashcards — Click to Flip</div>
+  <div class="fc-grid" id="fcGrid"></div>
+</div>
+<div id="tab-mcq" class="tab-content">
+  <div class="sec">Step 1 Style MCQ — Mechanism &amp; Pathophysiology</div>
+  <div id="mcqContainer"></div>
+</div>
+<div id="tab-vignettes" class="tab-content">
+  <div class="sec">Clinical Vignettes — Step 1 Integration</div>
+  <div id="vigContainer"></div>
+</div>
+<div id="tab-traps" class="tab-content">
+  <div class="trap-intro">⚠️ <strong>Step 1 Mechanism Traps:</strong> Each statement is a common misconception about GI signal transduction or pathophysiology. Select <strong>TRUE</strong> or <strong>FALSE</strong>, then read the explanation.</div>
+  <div id="trapsContainer"></div>
+</div>
+<div id="tab-ref" class="tab-content">
+  <div class="sec">Motility Disorder Comparison — High-Yield Pathology</div>
+  <div id="refContainer"></div>
+</div>
+</div>
+
+<script>
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='flashcards')setTimeout(fixCardHeights,100);
+}
+
+/* ==========================================
+   MECHANISM PATHWAYS (no drug content)
+   ========================================== */
+const mechs=[
+{
+  title:"ACh (M3) → GI Smooth Muscle Contraction",
+  pathway:["ACh binds M3 receptor","→","Gq protein activated","→","↑ PLC (phospholipase C)","→","IP₃ + DAG from PIP₂","→","IP₃: ↑ intracellular Ca²⁺ (SR release)","→","Ca²⁺-calmodulin → ↑ MLCK","→","Myosin phosphorylated","→","Smooth muscle CONTRACTION"],
+  note:"M3 → Gq → PLC → IP₃/Ca²⁺ = classic GI contraction. ACh is the excitatory ENS neurotransmitter at the oral segment of the peristaltic reflex (ascending excitation). Also mediates vagal stimulation of gastric motility. Remember: M3 = 'Gq = squeeze.'",
+  keys:[0,2,6,10]
+},
+{
+  title:"VIP → GI Smooth Muscle Relaxation (cAMP pathway)",
+  pathway:["VIP binds VPAC receptor","→","Gs protein activated","→","↑ Adenylyl cyclase","→","↑ cAMP","→","↑ PKA","→","↓ MLCK activity + ↓ Ca²⁺","→","Myosin dephosphorylated","→","Smooth muscle RELAXATION"],
+  note:"VIP = Gs → cAMP → PKA → relaxation. VIP is the primary inhibitory neurotransmitter mediating aboral relaxation in the peristaltic reflex and LES relaxation. VIP neurons are LOST in achalasia. Remember: VIP = 'cAMP = relax.'",
+  keys:[0,2,4,8]
+},
+{
+  title:"NO (Nitric Oxide) → LES and Smooth Muscle Relaxation (cGMP pathway)",
+  pathway:["nNOS neurons release NO","→","NO diffuses into smooth muscle","→","Activates soluble guanylyl cyclase","→","↑ cGMP","→","↑ PKG","→","↓ Ca²⁺ / ↓ MLCK activity","→","Smooth muscle RELAXATION"],
+  note:"NO → cGMP → PKG → relaxation. Acts synergistically with VIP at the LES and in peristaltic aboral relaxation. BOTH VIP and NO neurons are lost in achalasia. KEY DISTINCTION: VIP → cAMP (Gs pathway); NO → cGMP (guanylyl cyclase pathway) — different 2nd messengers!",
+  keys:[0,3,4,7]
+},
+{
+  title:"CCK → Slowed Gastric Emptying + Gallbladder Contraction",
+  pathway:["Fat/protein enters duodenum","→","I-cells release CCK","→","CCK-A receptors on vagal afferents + smooth muscle","→","Inhibits antral motility","→","Contracts pyloric sphincter","→","↑ Gallbladder contraction","→","↑ Pancreatic enzyme secretion","→","Delayed gastric emptying"],
+  note:"CCK = I-cells = fat/protein sensor. Dual role: (1) Digestive — contracts gallbladder + stimulates pancreas + relaxes sphincter of Oddi (2) Satiety — acts via vagal afferents → hypothalamus. CCK DELAYS gastric emptying (fat is slowest macronutrient to leave stomach).",
+  keys:[1,3,7]
+},
+{
+  title:"Motilin → MMC Phase III Initiation",
+  pathway:["Interdigestive state (3–4 h post-meal)","→","M cells of duodenum release motilin","→","Motilin receptor (GPR38) on smooth muscle + ENS neurons","→","Gs–cAMP pathway activated","→","↑ Smooth muscle excitability","→","Phase III MMC contractions","→","'Housekeeper wave' sweeps debris from stomach → terminal ileum"],
+  note:"Motilin (GPR38) = Gs pathway → cAMP → Phase III MMC. Released ONLY during fasting; MMC stops when food enters the stomach. Clinical pearl: motilin receptor agonists can be used as prokinetics by mimicking this pathway.",
+  keys:[1,2,5,6]
+}
+];
+
+/* ==========================================
+   FLASHCARDS
+   ========================================== */
+const flashcards=[
+{q:"What is the complete signal transduction pathway for ACh (M3) causing GI smooth muscle <strong>contraction</strong>?",a:"ACh → M3 → Gq → PLC → IP₃ + DAG → IP₃: ↑ intracellular Ca²⁺ (SR release) → Ca²⁺-calmodulin → ↑ MLCK → phosphorylates myosin → smooth muscle contraction.<br>Remember: M3 = Gq = squeeze (contract)."},
+{q:"What is the complete signal transduction pathway for VIP causing GI smooth muscle <strong>relaxation</strong>?",a:"VIP → VPAC receptor → Gs → ↑ adenylyl cyclase → ↑ cAMP → ↑ PKA → ↓ MLCK activity + ↓ Ca²⁺ → smooth muscle relaxation.<br>Remember: VIP = Gs = cAMP = relax."},
+{q:"How does NO cause smooth muscle relaxation in the GI tract, and how does this differ from VIP?",a:"NO → activates soluble guanylyl cyclase → ↑ cGMP → ↑ PKG → ↓ Ca²⁺ / ↓ MLCK → relaxation.<br>DISTINCTION: VIP uses cAMP (via Gs), NO uses cGMP (via guanylyl cyclase) — different second messengers, same end result (relaxation). Both are lost in achalasia."},
+{q:"How does CCK affect gastric emptying and gallbladder function?",a:"CCK (released by I-cells in duodenum/jejunum in response to fat and protein):<br>1. Inhibits antral motility + contracts pyloric sphincter → SLOWS gastric emptying<br>2. Contracts gallbladder + relaxes sphincter of Oddi → bile enters duodenum<br>3. Stimulates pancreatic enzyme secretion<br>4. Acts via vagal afferents → hypothalamic satiety signal"},
+{q:"What is motilin and what is its relationship to the MMC?",a:"Motilin = peptide released by M cells of the duodenum during fasting. Binds GPR38 (motilin receptor) → Gs → cAMP → triggers Phase III MMC contractions ('housekeeper wave'). Released during interdigestive period; MMC STOPS when food enters the stomach."},
+{q:"How does Chagas disease cause GI symptoms identical to primary achalasia?",a:"Trypanosoma cruzi selectively destroys inhibitory myenteric neurons (Auerbach's plexus) → loss of VIP/NO neurons → functional defect IDENTICAL to primary achalasia. Result: mega-esophagus + megacolon. Histologically indistinguishable from primary achalasia. Clue: South/Central American origin + cardiac involvement (RBBB, cardiomyopathy)."},
+{q:"What is pseudoachalasia and how does it differ from primary achalasia?",a:"Pseudoachalasia = secondary achalasia from malignancy (most common: gastric cardia/esophageal adenocarcinoma) infiltrating/compressing LES → same manometry as achalasia.<br>Red flags vs. primary achalasia:<br>• Age >50, rapid onset (months vs. years)<br>• Dramatic weight loss<br>• CT shows mass; endoscopy: mucosal irregularity<br>• No benefit from botulinum toxin"},
+{q:"What histological finding confirms Hirschsprung disease on rectal biopsy?",a:"Increased <strong>acetylcholinesterase (AChE) staining</strong> in lamina propria + muscularis mucosae. Absent ganglion cells are replaced by hypertrophied extrinsic cholinergic fibers (high AChE).<br>Also: calretinin immunostaining is NEGATIVE in Hirschsprung's (positive in normal ganglia).<br>Classic triad: absent ganglion cells + ↑ AChE + absent calretinin"},
+{q:"What is the proposed autoimmune mechanism of primary achalasia?",a:"Autoimmune destruction of inhibitory myenteric neurons (VIP/NO neurons) in the esophageal body and LES. Possibly triggered by viral infection (HSV-1) → T-cell mediated destruction. Associated with HLA-DQA1. Result: loss of LES relaxation + absent peristalsis. Circulating anti-neuronal antibodies found in some patients."},
+{q:"How does scleroderma affect GI motility at the molecular level?",a:"Scleroderma → TGF-β1 overproduction → fibroblast activation → excessive collagen → fibrosis replaces smooth muscle.<br>GI result: LOW LES pressure (muscle loss → GERD, Barrett's) + absent peristalsis in lower 2/3 esophagus.<br>OPPOSITE of achalasia: scleroderma = LOW LES pressure → reflux; achalasia = HIGH LES pressure → obstruction."},
+{q:"What is the difference between primary and secondary esophageal peristalsis?",a:"<strong>Primary:</strong> Initiated by voluntary swallowing (oral phase) → reflexive pharyngeal/esophageal wave. Requires intact swallowing reflex + vagus + myenteric plexus.<br><strong>Secondary:</strong> Triggered by esophageal distension (retained bolus, acid reflux) → ENS-coordinated clearance WITHOUT swallowing. Explains why reflux often clears without symptoms."},
+{q:"Compare manometry findings in achalasia vs scleroderma vs Chagas disease.",a:"<strong>Achalasia:</strong> HIGH LES pressure + incomplete LES relaxation + absent peristalsis<br><strong>Scleroderma:</strong> LOW LES pressure + absent peristalsis (lower 2/3) + often complete LES relaxation<br><strong>Chagas:</strong> HIGH LES pressure + incomplete LES relaxation + absent peristalsis (IDENTICAL to primary achalasia — distinguish by etiology/serology)"}
+];
+
+/* ==========================================
+   MCQ DATA (no drug content)
+   ========================================== */
+const mcqs=[
+{
+  stem:"A 34-year-old man from rural Bolivia presents with progressive dysphagia to both solids and liquids and a 20-lb weight loss over 8 months. Barium swallow shows a markedly dilated esophagus with 'bird beak' tapering. ECG shows right bundle branch block and frequent PVCs. Serology is positive for IgG antibodies against <em>Trypanosoma cruzi</em>. Which of the following BEST explains his esophageal findings?",
+  opts:["Autoimmune destruction of interstitial cells of Cajal (ICC)","T. cruzi destroys inhibitory myenteric neurons → loss of VIP/NO → LES cannot relax","T. cruzi causes eosinophilic infiltration of the esophageal mucosa","Chronic infection leads to fibrosis of LES smooth muscle → scar stricture","T. cruzi activates TGF-β → collagen deposition replacing myenteric plexus"],
+  correct:1,
+  exps:["Chagas does not affect ICC; it targets the myenteric (Auerbach's) plexus neurons.","CORRECT. Chagas disease (T. cruzi) selectively destroys inhibitory myenteric neurons → loss of VIP/NO → LES cannot relax → mega-esophagus. Identical to primary achalasia at the histologic level. Cardiac involvement (arrhythmias, cardiomyopathy) helps distinguish. Also causes megacolon.","Eosinophilic esophagitis is not caused by T. cruzi.","LES scar stricture would cause dysphagia to solids >> liquids — this patient has BOTH equally, suggesting functional (neuromuscular) not mechanical obstruction.","TGF-β fibrosis is the scleroderma mechanism, not Chagas."],
+  teach:"Chagas disease = T. cruzi (Reduviid/kissing bug) → destroys Auerbach's plexus → mega-esophagus + megacolon + cardiomyopathy. Manometry = identical to primary achalasia. Clue: South/Central American origin + cardiac findings (RBBB, PVCs). Treatment: benznidazole or nifurtimox for systemic disease; esophageal symptoms treated same as primary achalasia."
+},
+{
+  stem:"A 52-year-old man with systemic sclerosis presents with severe GERD and progressive dysphagia to solids. Esophageal manometry shows absent peristalsis in the lower two-thirds of the esophagus with a <strong>LOW LES pressure of 4 mmHg</strong> (normal 15–35). How does this pattern differ from primary achalasia?",
+  opts:["Both conditions show identical manometry patterns","Scleroderma shows LOW LES pressure; achalasia shows HIGH LES pressure","Scleroderma shows high LES pressure; achalasia shows low LES pressure","Both have absent peristalsis but only achalasia involves the LES","Scleroderma affects only the upper esophagus; achalasia affects the lower"],
+  correct:1,
+  exps:["They are NOT identical — LES pressure is the critical discriminating feature.","CORRECT. Scleroderma → fibrosis of smooth muscle → LOW LES pressure (muscle lost) → GERD + Barrett's. Achalasia → inhibitory neuron loss → ELEVATED LES pressure (LES cannot RELAX). Both have absent peristalsis, but LES pressure is OPPOSITE.","This is inverted — see correct answer.","Both conditions involve the LES but in opposite directions.","Scleroderma primarily affects the LOWER esophagus (smooth muscle); upper striated muscle is relatively spared."],
+  teach:"Manometry discriminator:\n• Achalasia: HIGH LES pressure + absent peristalsis + incomplete LES relaxation → DYSPHAGIA\n• Scleroderma: LOW LES pressure + absent peristalsis → GERD (reflux through lax LES)\nBoth have absent peristalsis — LES PRESSURE is the differentiator."
+},
+{
+  stem:"A researcher identifies a molecule in LES smooth muscle cells that increases intracellular cGMP, causing relaxation. She notes this molecule works via a different pathway than VIP, yet produces the same functional outcome. A pharmacologic analog of this molecule is sometimes used to temporarily reduce LES pressure in patients with achalasia. Which molecule is being studied?",
+  opts:["Acetylcholine","Vasoactive intestinal peptide (VIP)","Nitric oxide (NO)","Motilin","Serotonin (5-HT)"],
+  correct:2,
+  exps:["ACh (M3 → Gq → IP₃/Ca²⁺) causes CONTRACTION, not relaxation.","VIP works via Gs → cAMP → PKA — not cGMP. Same end result (relaxation) but different second messenger.","CORRECT. NO → activates soluble guanylyl cyclase → ↑ cGMP → ↑ PKG → smooth muscle relaxation. Nitrates (isosorbide dinitrate, nitroglycerin) are NO donors → ↑ cGMP → ↓ LES pressure → temporary symptom relief in achalasia. PDE5 inhibitors (sildenafil) prevent cGMP breakdown → same effect.","Motilin acts via Gs → cAMP to trigger MMC Phase III contractions — not LES relaxation.","5-HT (via 5-HT4 → Gs → cAMP) promotes motility but is not the cGMP pathway."],
+  teach:"NO → cGMP → PKG → LES relaxation. Compare to VIP → cAMP → PKA → relaxation: both cause relaxation but use different 2nd messengers. This is high-yield: nitrates and PDE5 inhibitors (sildenafil) exploit the NO/cGMP pathway to reduce LES pressure, providing temporary symptom relief in achalasia."
+},
+{
+  stem:"A 68-year-old man presents with 4 months of rapidly progressive dysphagia and 25-lb weight loss. Upper endoscopy reveals an irregular mass at the gastroesophageal junction. Esophageal manometry shows elevated LES pressure with incomplete relaxation and absent peristalsis — identical to achalasia. CT demonstrates a 3-cm mass at the gastric cardia. Which finding BEST differentiates this from primary achalasia?",
+  opts:["Elevated LES pressure on manometry","Rapid onset, age >50, and CT demonstrating a mass","Absent peristalsis on manometry","Bird beak sign on barium swallow","Dysphagia to both solids and liquids"],
+  correct:1,
+  exps:["Both primary achalasia and pseudoachalasia show elevated LES pressure — not discriminating.","CORRECT. Pseudoachalasia (secondary achalasia from malignancy) produces identical manometry findings. Red flags: age >50, rapid onset (<1 year vs. years for primary), dramatic weight loss, mass on CT/endoscopy. Gastric cardia adenocarcinoma is the most common cause of pseudoachalasia.","Both conditions show absent peristalsis — not discriminating.","Bird beak appears in BOTH — not discriminating.","Dysphagia to both solids and liquids occurs in BOTH — not discriminating."],
+  teach:"Pseudoachalasia ALERT: Any 'achalasia-like' presentation in a patient >50 years old + rapid onset + dramatic weight loss → CT scan + EGD to rule out malignancy BEFORE diagnosing primary achalasia. Gastric cardia cancer = most common cause. Manometry alone cannot distinguish them."
+},
+{
+  stem:"A 22-year-old student eats a high-fat meal and notices that he feels full much longer than after a carbohydrate-heavy meal. His physiology professor explains this is due to a hormone released by the duodenum that simultaneously slows gastric emptying, stimulates bile release, and signals satiety. Which hormone is being described?",
+  opts:["Gastrin","Secretin","CCK (cholecystokinin)","GIP (glucose-dependent insulinotropic peptide)","Motilin"],
+  correct:2,
+  exps:["Gastrin is released by G-cells in response to protein/distension → stimulates acid secretion; not the primary satiety hormone.","Secretin is released by S-cells in response to acid → stimulates pancreatic bicarbonate; not primarily a satiety or motility hormone.","CORRECT. CCK: I-cells (duodenum/jejunum) → fat + protein stimulation. Actions: (1) ↓ gastric emptying (inhibits antral motility + contracts pylorus), (2) ↑ gallbladder contraction, (3) ↑ pancreatic enzyme secretion, (4) vagal afferents → hypothalamus → satiety. Fat is slowest macronutrient to leave stomach because of CCK.","GIP (incretin) stimulates insulin release in response to carbohydrates/fat; minor role in motility.","Motilin is interdigestive (between meals); promotes MMC Phase III — not a satiety hormone."],
+  teach:"CCK = I-cells = fat/protein sensor. Dual role: (1) Digestive: gallbladder + pancreatic secretion + relaxes sphincter of Oddi, (2) Satiety via vagal afferents → hypothalamus. Also DELAYS gastric emptying. This is why a high-fat meal causes prolonged satiety and slower gastric emptying vs. carbohydrate-heavy meals."
+}
+];
+
+/* ==========================================
+   VIGNETTES
+   ========================================== */
+const vigs=[
+{
+  banner:"🔬 Step 1 Vignette | Chagas Disease vs. Primary Achalasia",
+  stem:`A 34-year-old man originally from rural Brazil presents with a 14-month history of progressive dysphagia to both solids and liquids, regurgitation of undigested food, and a 20-lb weight loss. He also reports palpitations and syncopal episodes. ECG shows <strong>right bundle branch block and frequent PVCs.</strong> Barium swallow shows a markedly dilated esophagus with 'bird beak' tapering. Serology: <strong>T. cruzi IgG antibody positive (1:128 titer).</strong> Esophageal manometry: elevated LES pressure (42 mmHg), incomplete relaxation, absent peristalsis.`,
+  question:"Which of the following distinguishes this patient's condition from primary (idiopathic) achalasia at the histological level?",
+  opts:["This condition shows loss of VIP/NO neurons; primary achalasia preserves them","Both conditions are histologically identical — absent VIP/NO neurons in Auerbach's plexus","This condition shows fibrosis of smooth muscle; primary achalasia preserves smooth muscle","Primary achalasia has HLA-DQA1 association; Chagas does not affect the immune system","This condition only affects the esophagus; primary achalasia also affects the colon"],
+  correct:1,
+  exps:["Both conditions lose VIP/NO neurons — this is not the distinguishing histological feature.","CORRECT. Chagas disease and primary achalasia are HISTOLOGICALLY IDENTICAL: both destroy inhibitory (VIP/NO) neurons in Auerbach's plexus → identical manometry. Distinction is etiological (T. cruzi vs. autoimmune) and clinical (South American origin + cardiac involvement in Chagas).","Smooth muscle fibrosis is the scleroderma pattern; not Chagas or primary achalasia.","Chagas does have immune components; HLA associations also exist in Chagas patients.","Chagas affects BOTH esophagus (mega-esophagus) AND colon (megacolon). Primary achalasia primarily involves the esophagus."],
+  teach:"Chagas vs. Primary Achalasia: IDENTICAL histology and manometry. Differentiate by: ORIGIN (South/Central America), CARDIAC involvement (cardiomyopathy, RBBB, PVCs), SEROLOGY (anti-T. cruzi Ab), and COLON involvement (megacolon). Treatment of esophageal disease: same as primary achalasia. Add antiparasitic (benznidazole) for systemic disease."
+},
+{
+  banner:"🔬 Step 1 Vignette | Scleroderma Esophagus vs. Achalasia",
+  stem:`A 47-year-old woman with limited cutaneous systemic sclerosis (lcSSc) presents with heartburn, regurgitation, and dysphagia primarily to <strong>solids.</strong> She has Raynaud's phenomenon and telangiectasias on face and hands. Anti-centromere antibody is positive. Esophageal manometry: <strong>absent peristalsis in the lower two-thirds of the esophagus; LES pressure 3 mmHg (↓↓).</strong> Endoscopy shows esophagitis and Barrett's esophagus.`,
+  question:"Compared to primary achalasia, which finding on this patient's manometry is the KEY discriminating feature?",
+  opts:["Absent peristalsis — this finding is unique to scleroderma","Low LES pressure — scleroderma has low LES pressure; achalasia has high LES pressure","Normal LES relaxation — unlike achalasia, scleroderma shows complete LES relaxation","High-amplitude peristaltic waves — scleroderma-specific finding","Nutcracker esophagus pattern — distinguishes scleroderma from achalasia"],
+  correct:1,
+  exps:["Absent peristalsis occurs in BOTH scleroderma AND achalasia — not discriminating.","CORRECT. The KEY discriminator is LES PRESSURE:\n• Scleroderma: LOW LES pressure (smooth muscle fibrosis → loss of LES tone) → reflux freely → GERD + Barrett's\n• Achalasia: HIGH LES pressure (loss of inhibitory neurons → unopposed excitatory tone)\nBoth have absent peristalsis — LES pressure is OPPOSITE.","LES relaxation in scleroderma may be complete (no obstruction), but the key discriminator on boards is LES PRESSURE.","High-amplitude waves = nutcracker/jackhammer esophagus — unrelated to either condition.","Nutcracker esophagus is a separate motility disorder."],
+  teach:"Scleroderma esophagus = CREST: Calcinosis, Raynaud's, Esophageal dysmotility, Sclerodactyly, Telangiectasia. Anti-centromere Ab (lcSSc). Manometry: LOW LES pressure + absent smooth muscle peristalsis → GERD → Barrett's. Achalasia: HIGH LES pressure + absent peristalsis → dysphagia (NOT reflux). Pearl: low LES + absent peristalsis + anti-centromere Ab → scleroderma, not achalasia."
+}
+];
+
+/* ==========================================
+   TEST TRAPS — Interactive T/F (mechanism-level)
+   ========================================== */
+const traps=[
+{
+  statement:'"VIP and NO both cause GI smooth muscle relaxation via the same second messenger (cAMP)."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> VIP and NO both cause relaxation but use <strong>different second messengers</strong>. VIP → Gs → adenylyl cyclase → <strong>↑ cAMP</strong> → PKA → MLCP → relaxation. NO → guanylyl cyclase → <strong>↑ cGMP</strong> → PKG → MLCP → relaxation. Both pathways converge on MLCP activation but the 2nd messengers are distinct. This is a high-yield Step 1 distinction."
+},
+{
+  statement:'"Chagas disease primarily causes cardiac disease and rarely involves the GI tract."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Chagas disease (T. cruzi) causes BOTH cardiac AND GI manifestations. T. cruzi destroys Auerbach's plexus → <strong>mega-esophagus</strong> (identical to primary achalasia) AND <strong>megacolon</strong>. The clinical presentation can mimic primary achalasia. Whenever you see 'achalasia-like' findings + South/Central American origin + cardiac involvement (RBBB, cardiomyopathy) → think Chagas."
+},
+{
+  statement:'"In scleroderma, the lower esophageal sphincter (LES) pressure is elevated (high), similar to achalasia."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Scleroderma causes <strong>LOW LES pressure</strong> — the opposite of achalasia. TGF-β → fibrosis replaces smooth muscle → LES cannot maintain tone → low pressure → GERD, Barrett's. Achalasia = HIGH LES pressure from loss of inhibitory neurons → unopposed excitatory tone → LES cannot RELAX. Both conditions have absent peristalsis; LES pressure is the critical discriminating feature."
+},
+{
+  statement:'"The M3 muscarinic receptor uses the Gs pathway to increase intracellular calcium and cause GI contraction."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> M3 uses the <strong>Gq pathway</strong>, NOT Gs. M3 → Gq → PLC → IP₃ + DAG → IP₃ releases Ca²⁺ from ER → Ca²⁺-calmodulin → MLCK → contraction. <strong>Gs</strong> (used by VIP, motilin, β-agonists) → adenylyl cyclase → ↑cAMP → PKA → relaxation. Common trap: mixing up Gq vs Gs receptor coupling."
+},
+{
+  statement:'"Absent esophageal peristalsis on manometry is sufficient to diagnose achalasia."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Absent peristalsis occurs in MULTIPLE conditions: primary achalasia (HIGH LES pressure + incomplete relaxation), scleroderma (LOW LES pressure + often normal relaxation), and Chagas disease (HIGH LES pressure, identical to achalasia). You must also assess <strong>LES pressure</strong> and <strong>LES relaxation</strong>. Absent peristalsis alone is insufficient for diagnosis."
+}
+];
+
+/* ==========================================
+   RENDER: MECHANISMS
+   ========================================== */
+function renderMechs(){
+  const cont=document.getElementById('mechContainer');
+  cont.innerHTML=mechs.map((m,mi)=>{
+    const steps=m.pathway.map((s,si)=>{
+      if(s==='→'||s==='AND'||s==='NOTE:')return`<span class="pathway-arrow">${s}</span>`;
+      const isKey=m.keys&&m.keys.includes(si);
+      const cls=isKey?'pathway-step key':'pathway-step';
+      return`<span class="${cls}">${s}</span>`;
+    }).join(' ');
+    return`<div class="mech-box">
+      <div class="mech-title">⚙️ ${m.title}</div>
+      <div class="pathway">${steps}</div>
+      <div class="mech-note">💡 ${m.note}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ==========================================
+   RENDER: FLASHCARDS
+   ========================================== */
+function renderFlashcards(){
+  const grid=document.getElementById('fcGrid');
+  grid.innerHTML=flashcards.map((fc,i)=>`
+    <div class="fc" onclick="this.classList.toggle('flipped');setTimeout(fixCardHeights,300)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">🔬 Step 1 Card ${i+1} of ${flashcards.length}</div>
+          <div class="fc-q">${fc.q}</div>
+          <div class="fc-hint">↻ Click to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">✅ Answer</div>
+          <div class="fc-a">${fc.a}</div>
+          <div class="fc-hint">↻ Click to flip back</div>
+        </div>
+      </div>
+    </div>`).join('');
+  setTimeout(fixCardHeights,100);
+}
+
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(card=>{
+    const front=card.querySelector('.fc-front');
+    const back=card.querySelector('.fc-back');
+    back.style.cssText='position:relative!important;transform:none!important;visibility:visible!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important';
+    const h=Math.max(front.scrollHeight,back.scrollHeight)+24;
+    back.style.cssText='';
+    const minH=h+'px';
+    card.style.minHeight=minH;
+    card.querySelector('.fc-inner').style.minHeight=minH;
+    front.style.minHeight=minH;
+    back.style.minHeight=minH;
+  });
+}
+
+/* ==========================================
+   RENDER: MCQ
+   ========================================== */
+function renderMCQ(){
+  const cont=document.getElementById('mcqContainer');
+  cont.innerHTML=mcqs.map((q,qi)=>`
+    <div class="mcq-item">
+      <div class="mcq-num">Step 1 Question ${qi+1} of ${mcqs.length}</div>
+      <div class="mcq-stem">${q.stem}</div>
+      <div class="mcq-options" id="opts${qi}">
+        ${q.opts.map((o,oi)=>`<button class="mcq-opt" onclick="selectMCQ(this,${qi},${oi})"><span class="letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
+      </div>
+      <div class="mcq-exp" id="exp${qi}"></div>
+      <div class="teaching" id="teach${qi}"><span class="tp-label">📚 Teaching Point</span>${q.teach.replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+}
+
+function selectMCQ(btn,qi,oi){
+  const container=document.getElementById('opts'+qi);
+  if(container.dataset.answered)return;
+  container.dataset.answered='true';
+  const q=mcqs[qi];
+  container.querySelectorAll('.mcq-opt').forEach(b=>b.setAttribute('disabled','true'));
+  container.querySelectorAll('.mcq-opt').forEach((b,idx)=>{
+    if(idx===q.correct)b.classList.add('correct');
+    else b.classList.add('wrong');
+  });
+  const expDiv=document.getElementById('exp'+qi);
+  expDiv.innerHTML=`<span class="exp-label">${oi===q.correct?'✅ Correct!':'❌ Incorrect'}</span>${q.exps[oi]}<br><br><strong style="color:#C9D1D9;display:block;margin-top:8px">All Options:</strong><br>${q.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
+  expDiv.classList.add('visible');
+  document.getElementById('teach'+qi).classList.add('visible');
+}
+
+/* ==========================================
+   RENDER: VIGNETTES
+   ========================================== */
+function renderVigs(){
+  const cont=document.getElementById('vigContainer');
+  cont.innerHTML=vigs.map((v,vi)=>`
+    <div class="vig-item">
+      <div class="vig-banner">${v.banner}</div>
+      <div class="vig-stem">${v.stem}</div>
+      <div class="mcq-stem" style="margin-bottom:12px"><strong style="color:#E6EDF3">${v.question}</strong></div>
+      <div class="mcq-options" id="vopts${vi}">
+        ${v.opts.map((o,oi)=>`<button class="mcq-opt" onclick="selectVig(this,${vi},${oi})"><span class="letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
+      </div>
+      <div class="mcq-exp" id="vexp${vi}"></div>
+      <div class="teaching" id="vteach${vi}"><span class="tp-label">📚 Teaching Point</span>${v.teach.replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+}
+
+function selectVig(btn,vi,oi){
+  const container=btn.closest('.mcq-options');
+  if(container.dataset.answered)return;
+  container.dataset.answered='true';
+  const v=vigs[vi];
+  container.querySelectorAll('.mcq-opt').forEach(b=>b.setAttribute('disabled','true'));
+  container.querySelectorAll('.mcq-opt').forEach((b,idx)=>{
+    if(idx===v.correct)b.classList.add('correct');
+    else b.classList.add('wrong');
+  });
+  const expDiv=document.getElementById('vexp'+vi);
+  expDiv.innerHTML=`<span class="exp-label">${oi===v.correct?'✅ Correct!':'❌ Incorrect'}</span>${v.exps[oi]}<br><br>${v.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
+  expDiv.classList.add('visible');
+  document.getElementById('vteach'+vi).classList.add('visible');
+}
+
+/* ==========================================
+   RENDER: TEST TRAPS (interactive T/F)
+   ========================================== */
+function renderTraps(){
+  const cont=document.getElementById('trapsContainer');
+  cont.innerHTML='';
+  traps.forEach((trap,i)=>{
+    const div=document.createElement('div');
+    div.className='trap-card';
+    div.innerHTML=`<div class="trap-num">Trap ${i+1} of ${traps.length}</div>
+      <div class="trap-statement">${trap.statement}</div>
+      <div class="trap-btns" id="tbtns-${i}">
+        <button class="trap-btn trap-btn-true" onclick="selectTrap(${i},true)">TRUE</button>
+        <button class="trap-btn trap-btn-false" onclick="selectTrap(${i},false)">FALSE</button>
+      </div>
+      <div class="trap-exp" id="trap-exp-${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+
+function selectTrap(i,choice){
+  const trap=traps[i];
+  const btns=document.getElementById('tbtns-'+i).querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correct=(choice===trap.answer);
+  const chosenBtn=btns[choice===true?0:1];
+  chosenBtn.classList.add(correct?'sel-correct':'sel-wrong');
+  const exp=document.getElementById('trap-exp-'+i);
+  exp.innerHTML=trap.exp;
+  exp.className='trap-exp '+(correct?'show-c':'show-w');
+}
+
+/* ==========================================
+   RENDER: REFERENCE
+   ========================================== */
+function renderRef(){
+  const cont=document.getElementById('refContainer');
+  let html='';
+  html+=`<div class="ref-section-hd">Motility Disorder Comparison — Step 1 High-Yield</div>`;
+  html+=`<table class="ref-table"><thead><tr><th>Feature</th><th>Primary Achalasia</th><th>Scleroderma Esophagus</th><th>Chagas Disease</th><th>Pseudoachalasia</th></tr></thead><tbody>
+    <tr><td>Etiology</td><td>Autoimmune (anti-VIP/NO neurons)</td><td>TGF-β fibrosis (smooth muscle)</td><td>T. cruzi destroys Auerbach's plexus</td><td>Malignancy (gastric cardia most common)</td></tr>
+    <tr><td>LES pressure</td><td class="hl-r">HIGH (↑↑)</td><td class="hl-g">LOW (↓↓)</td><td class="hl-r">HIGH (↑↑)</td><td class="hl-r">HIGH (↑↑)</td></tr>
+    <tr><td>LES relaxation</td><td>Incomplete/absent</td><td>Often complete (no obstruction)</td><td>Incomplete/absent</td><td>Incomplete/absent</td></tr>
+    <tr><td>Peristalsis</td><td>Absent</td><td>Absent (lower 2/3)</td><td>Absent</td><td>Absent</td></tr>
+    <tr><td>Dysphagia type</td><td>Solids AND liquids</td><td>Solids &gt; liquids + GERD</td><td>Solids AND liquids</td><td>Solids AND liquids</td></tr>
+    <tr><td>Key clue</td><td>Bird beak; young adult; autoimmune</td><td>Anti-centromere Ab; Raynaud's; GERD; Barrett's</td><td>South American origin; cardiac (RBBB, PVCs)</td><td>Age &gt;50; rapid onset; mass on CT</td></tr>
+  </tbody></table>`;
+
+  html+=`<div class="ref-section-hd" style="margin-top:24px">Signal Transduction Comparison — Contraction vs. Relaxation</div>`;
+  html+=`<table class="ref-table"><thead><tr><th>Agent</th><th>Receptor</th><th>G-protein</th><th>2nd Messenger</th><th>Kinase</th><th>Effect</th></tr></thead><tbody>
+    <tr><td class="hl">ACh</td><td>M3</td><td>Gq</td><td>IP₃ / Ca²⁺</td><td>MLCK activated</td><td class="hl-r">Contraction</td></tr>
+    <tr><td class="hl">VIP</td><td>VPAC</td><td>Gs</td><td>↑ cAMP</td><td>PKA → MLCP</td><td class="hl-g">Relaxation</td></tr>
+    <tr><td class="hl">NO</td><td>Guanylyl cyclase</td><td>—</td><td>↑ cGMP</td><td>PKG → MLCP</td><td class="hl-g">Relaxation</td></tr>
+    <tr><td class="hl">CCK</td><td>CCK-A</td><td>Gq</td><td>IP₃ / Ca²⁺</td><td>MLCK activated</td><td class="hl-r">Contraction (gallbladder)</td></tr>
+    <tr><td class="hl">Motilin</td><td>GPR38</td><td>Gs</td><td>↑ cAMP</td><td>↑ excitability</td><td class="hl-r">MMC Phase III</td></tr>
+  </tbody></table>`;
+  cont.innerHTML=html;
+}
+
+/* ==========================================
+   INIT
+   ========================================== */
+renderMechs();
+renderFlashcards();
+renderMCQ();
+renderVigs();
+renderTraps();
+renderRef();
+</script>
+</body>
+</html>
