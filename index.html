@@ -390,20 +390,24 @@
       .shell { flex-direction: column; }
 
       .sidebar {
-        width: 100%; height: auto; position: static;
+        width: 100%; height: auto; position: sticky; top: 0; z-index: 400;
         flex-direction: row; align-items: center;
-        padding: 12px 18px; gap: 12px; flex-wrap: wrap;
+        padding: 12px 18px; gap: 12px; flex-wrap: nowrap;
       }
-      .sb-brand   { margin-bottom: 0; }
+      .sb-brand   { margin-bottom: 0; flex: 1; }
       .sb-block   { display: none; }
       .sb-rule    { display: none; }
       .sb-section-label { display: none; }
       .sb-spacer  { display: none; }
       .sb-ext-label { display: none; }
-      .sb-nav     { flex-direction: row; flex-wrap: wrap; gap: 4px; margin-bottom: 0; flex: 1; }
-      .sb-ext-link { margin-bottom: 0; }
+      .sb-nav     { display: none; }
+      /* Hide quick-access links from top bar on mobile — accessed via bottom nav */
+      .sb-ext-link { display: none; }
 
-      .main-inner { padding: 28px 22px 100px; }
+      .main-inner { padding: 24px 18px 100px; }
+
+      /* Move feedback FAB above mobile nav */
+      .feedback-fab { top: auto; bottom: 72px; right: 16px; font-size: 0.74rem; padding: 6px 12px; }
 
       .mobile-nav { display: flex; }
     }
@@ -411,11 +415,25 @@
     @media (max-width: 680px) {
       .bento { grid-template-columns: 1fr; }
       .bcard-feature { grid-row: span 1; }
+
+      /* Give Today's Lectures a bounded height when stacked */
+      .today-lec-scroll { max-height: 260px; }
+
+      /* Slightly more compact cards */
+      .bcard { padding: 18px; border-radius: 16px; }
+      .bcard h3 { font-size: 0.98rem; }
+      .bcard-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+
       .workflow-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
       .wf-item { padding: 0; border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
       .wf-item:last-child { border-bottom: none; padding-bottom: 0; }
+
       .hero-title { font-size: 2.4rem; }
-      .footer { flex-direction: column; align-items: flex-start; }
+      .section-divider-text { font-size: 1.1rem; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+      /* Larger touch targets for util rows */
+      .util-row { padding: 18px 16px; }
     }
     /* ══════════════════════════════════════
        TODAY'S LECTURES CARD
@@ -674,17 +692,17 @@
     <a class="mobile-nav-item" href="#hero">
       <span class="mobile-nav-icon">🏠</span>Home
     </a>
+    <a class="mobile-nav-item" href="#lecture-tools">
+      <span class="mobile-nav-icon">📅</span>Lectures
+    </a>
     <a class="mobile-nav-item" href="#study-tools">
       <span class="mobile-nav-icon">📘</span>Study
-    </a>
-    <a class="mobile-nav-item" href="./quick-reference/">
-      <span class="mobile-nav-icon">⚡</span>Quick Ref
     </a>
     <a class="mobile-nav-item" href="#utilities">
       <span class="mobile-nav-icon">📊</span>Utilities
     </a>
-    <a class="mobile-nav-item" href="#workflow">
-      <span class="mobile-nav-icon">🔄</span>Workflow
+    <a class="mobile-nav-item" href="https://www.uworld.com/" target="_blank" rel="noopener">
+      <span class="mobile-nav-icon">🩺</span>UWorld
     </a>
   </div>
 </nav>
