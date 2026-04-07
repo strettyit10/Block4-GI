@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ══════════════════════════════════════════════════════════════════════════
-     HOYA DOCS — ENDOCRINE BLOCK
+     HOYA DOCS — GI BLOCK
      LO-Based Study Guide TEMPLATE
      ─────────────────────────────────────────────────────────────────────────
      HOW TO USE:
@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ① UPDATE TITLE -->
-    <title>Lecture [N]: [Title] — GUSOM Endocrine Block</title>
+    <title>Lecture [N]: [Title] — GUSOM GI Block</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -219,7 +219,9 @@
         .lo-toc a { color: #1e3a5f; text-decoration: none; font-weight: 500; }
         .lo-toc a:hover { text-decoration: underline; color: #2563eb; }
 
-        /* ── LO Covered listing ── */
+        /* ── LO Covered listing ──
+           ⚠️  DO NOT DELETE these rules. .lo-covered and .lo-covered-title are required by
+               every LO tab. If omitted, the "Learning Objectives Covered" box will be unstyled. */
         .lo-covered { background: #f0f4ff; border: 1px solid #c7d2fe; border-left: 4px solid #4f46e5; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
         .lo-covered-title { font-weight: 700; color: #3730a3; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
         .lo-covered ul { margin: 0; padding-left: 18px; }
@@ -239,9 +241,63 @@
         .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
         .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
         .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+    
+        /* ══ Mobile Responsive ════════════════════════════════════════════════ */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn {
+            display: none;
+            position: fixed; top: 12px; left: 12px; z-index: 200;
+            background: #1e293b; border: none; border-radius: 6px;
+            padding: 8px 11px; cursor: pointer; color: white; font-size: 20px;
+            line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 99;
+        }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar {
+                transform: translateX(-240px);
+                z-index: 150;
+            }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main {
+                margin-left: 0 !important;
+                padding: 60px 16px 30px 16px !important;
+                max-width: 100% !important;
+            }
+            .header h1 { font-size: 22px !important; }
+            .header p  { font-size: 14px !important; }
+            .lo-section { padding: 20px 16px !important; }
+            .lo-content table {
+                display: block; overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                font-size: 12px !important;
+            }
+            .lo-toc ol { padding-left: 14px; }
+            .export-actions { flex-direction: column; }
+            .buzzwords { gap: 4px; }
+            .buzzword { font-size: 11px; padding: 2px 8px; }
+        }
+        @media (max-width: 480px) {
+            div[style*="grid-template-columns:1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+            .main { padding: 55px 12px 24px 12px !important; }
+            .lo-acc-header { flex-wrap: wrap; gap: 6px !important; }
+        }
     </style>
 </head>
 <body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
 
 <!-- ══ SIDEBAR ══════════════════════════════════════════════════════════════ -->
 <aside class="sidebar">
@@ -291,13 +347,13 @@
     <div class="header">
         <!-- ⑤ UPDATE lecture number and title -->
         <h1>Lecture [N]: [Lecture Title]</h1>
-        <p>HoyaDocs — Endocrine Block | USMLE Step 1 Preparation</p>
+        <p>HoyaDocs — GI Block | USMLE Step 1 Preparation</p>
     </div>
 
     <!-- ══ OVERVIEW TAB ══════════════════════════════════════════════════════ -->
     <section class="lo-section active" id="overview">
         <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture [N] — Overview</h2>
-        <p class="lo-subtitle" style="margin-bottom:28px;">[Lecture Title] · HoyaDocs Endocrine Block</p>
+        <p class="lo-subtitle" style="margin-bottom:28px;">[Lecture Title] · HoyaDocs GI Block</p>
         <div class="lo-content">
 
             <!-- Page Summary Cards: one card per LO tab -->
@@ -370,7 +426,7 @@
     <section class="lo-section physio" id="lo1">
         <!-- ⑥ UPDATE lo-title and lo-subtitle -->
         <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 — [Topic Name]</h2>
-        <p class="lo-subtitle" style="margin-bottom:28px;">[Short description] · HoyaDocs Endocrine Block</p>
+        <p class="lo-subtitle" style="margin-bottom:28px;">[Short description] · HoyaDocs GI Block</p>
 
         <div class="lo-content">
 
@@ -406,7 +462,10 @@
             </div>
 
             <!-- ── COLLAPSIBLE h3 SECTION ───────────────────────────────────
-                 Pattern: collapsible-h3 → section-body → ⭐ intro p → [h4 + h4-body]* → hr (in last h4-body) → exam-trap → /section-body -->
+                 Pattern: collapsible-h3 → section-body → ⭐ intro p → [h4 + h4-body]* → hr (in last h4-body) → exam-trap → /section-body
+                 ⚠️  CHEVRON WARNING: ALWAYS use the HTML entity &#9660; (▼ U+25BC BLACK DOWN-POINTING TRIANGLE).
+                     NEVER paste the visually-similar ▾ character (U+25BE SMALL DOWN-POINTING TRIANGLE) directly
+                     into the source — it looks identical in most editors but breaks the CSS rotation animation. -->
             <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
                 id="section-one"
                 style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
@@ -540,33 +599,72 @@
          Duplicate the LO 1 block above for each additional tab.
          Update: id="lo2", lo-title, lo-subtitle, section IDs, content. -->
 
-    <!-- ══ PRACTICE QUESTIONS TAB ═══════════════════════════════════════════ -->
+    <!-- ══ PRACTICE QUESTIONS TAB ═══════════════════════════════════════════
+         RULES:
+           • 3–5 USMLE Step 1 MCQs per LO, grouped under a purple LO header.
+           • Each question: clinical vignette stem + 5 A–E options + reveal answer.
+           • Answer format: ✓ Correct: [Letter] — [brief reason], then explanation.
+           • LO group header format: <h4 style="color:#7c3aed; font-size:15px; ...">
+               LO N — Topic (Q1–Q3)</h4>
+           • Option format: <p class="option">A. [text]</p>  (use period, not parenthesis)
+         ════════════════════════════════════════════════════════════════════════ -->
     <section class="practice-section lo-section" id="practice">
         <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
-        <p class="lo-subtitle" style="margin-bottom:28px;">Lecture [N] — [Title] · HoyaDocs Endocrine Block</p>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Lecture [N] — [Title] · HoyaDocs GI Block</p>
         <div class="lo-content">
 
-            <!-- Group questions by LO -->
-            <h4 style="font-size:15px; font-weight:700; color:#7c3aed; margin:0 0 8px; padding-bottom:4px; border-bottom:2px solid #ede9fe;">
-                LO 1 — [Topic]
-            </h4>
+            <!-- ── LO group header (duplicate for each LO block) ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 1 — [Topic] (Q1–Q3)</h4>
 
+            <!-- Question 1 — replace stem and options with real content -->
             <div class="practice-question">
                 <h4>Question 1</h4>
-                <p>[Question stem]</p>
-                <p class="option">A) Option</p>
-                <p class="option">B) Option</p>
-                <p class="option">C) Option</p>
-                <p class="option">D) Option</p>
-                <p class="option">E) Option</p>
+                <p>[Clinical vignette stem. A patient with [age/sex] presents with [symptoms]. Labs show [findings]. What is the most likely [diagnosis / mechanism / next step]?]</p>
+                <p class="option">A. [Option A]</p>
+                <p class="option">B. [Option B]</p>
+                <p class="option">C. [Option C]</p>
+                <p class="option">D. [Option D]</p>
+                <p class="option">E. [Option E]</p>
                 <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
                 <div class="answer">
-                    <strong>✓ Correct Answer: [Letter] — [Label]</strong>
+                    <strong>✓ Correct: [Letter] — [Brief reason why this answer is correct]</strong>
+                    <p style="margin-top:10px;">[Full explanation. Address why the correct answer is right and why the key distractors are wrong. Tie back to the core mechanism or Step 1 concept.]</p>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="practice-question">
+                <h4>Question 2</h4>
+                <p>[Clinical vignette stem.]</p>
+                <p class="option">A. [Option A]</p>
+                <p class="option">B. [Option B]</p>
+                <p class="option">C. [Option C]</p>
+                <p class="option">D. [Option D]</p>
+                <p class="option">E. [Option E]</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: [Letter] — [Brief reason]</strong>
                     <p style="margin-top:10px;">[Explanation]</p>
                 </div>
             </div>
 
-            <!-- Add more questions... -->
+            <!-- Question 3 -->
+            <div class="practice-question">
+                <h4>Question 3</h4>
+                <p>[Clinical vignette stem.]</p>
+                <p class="option">A. [Option A]</p>
+                <p class="option">B. [Option B]</p>
+                <p class="option">C. [Option C]</p>
+                <p class="option">D. [Option D]</p>
+                <p class="option">E. [Option E]</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: [Letter] — [Brief reason]</strong>
+                    <p style="margin-top:10px;">[Explanation]</p>
+                </div>
+            </div>
+
+            <!-- Duplicate the LO group header + question block above for each additional LO -->
 
         </div>
     </section>
@@ -675,7 +773,7 @@
 <html ${ns}>
 <head>
     <meta charset="UTF-8">
-    <title>Lecture [N]: [Title] — GUSOM Endocrine Block</title>
+    <title>Lecture [N]: [Title] — GUSOM GI Block</title>
     <style>${pageCSS}</style>
     <style>${overrideCSS}</style>
 </head>
@@ -717,6 +815,20 @@ ${clone.outerHTML}
         URL.revokeObjectURL(url);
         btn.innerHTML = origHTML; btn.disabled = false;
     }
+
+function toggleMobileSidebar() {
+    document.querySelector('.sidebar').classList.toggle('mob-open');
+    document.querySelector('.sidebar-overlay').classList.toggle('open');
+}
+// Close mobile sidebar when a nav link is tapped
+document.querySelectorAll('.sidebar-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+            document.querySelector('.sidebar').classList.remove('mob-open');
+            document.querySelector('.sidebar-overlay').classList.remove('open');
+        }
+    });
+});
 </script>
 </body>
 </html>
