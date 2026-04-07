@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HoyaDocs | GI Study Planner</title>
+<script>(function(){const t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sb:#0d2416;--sb-hover:rgba(255,255,255,.07);--sb-line:rgba(255,255,255,.09);
+  --bg:#f4f8f5;--surface:#fff;--ink:#0f172a;--ink-2:#334155;--ink-3:#64748b;--rule:#e2e8f0;
+  --accent:#166534;--accent-2:#15803d;--accent-light:#edfdf4;--accent-br:#a7f3c9;
+  --card-sh:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --pill-h:28px;--radius:10px;
+  --c-ih-bg:#FFF9E6;--c-ih-br:#F0C040;--c-ih-tx:#7B4F00;
+  --c-bc-bg:#EEF4FF;--c-bc-br:#B8D0F5;--c-bc-tx:#1F4B99;
+  --c-bb-bg:#EDFDF4;--c-bb-br:#A7F3C9;--c-bb-tx:#166534;
+  --c-pt-bg:#FFF1EE;--c-pt-br:#FFBDAD;--c-pt-tx:#C0380A;
+  --c-ph-bg:#FAF0FF;--c-ph-br:#DFB4FE;--c-ph-tx:#6A0DAD;
+  --c-sk-bg:#FFF7EE;--c-sk-br:#F5C88A;--c-sk-tx:#854D0E;
+}
+[data-theme="dark"]{
+  --bg:#0a1f10;--surface:#122b1a;--ink:#f1f5f9;--ink-2:#cbd5e1;--ink-3:#94a3b8;--rule:#1e4a2a;
+  --accent:#4ade80;--accent-2:#22c55e;--accent-light:#0a2218;--accent-br:#1a5c35;
+  --card-sh:0 2px 8px rgba(0,0,0,.4);
+  --c-ih-bg:#2a2000;--c-ih-br:#856404;--c-ih-tx:#FCD34D;
+  --c-bc-bg:#0f1e3a;--c-bc-br:#1e3a6b;--c-bc-tx:#6BA3E8;
+  --c-bb-bg:#0a1f12;--c-bb-br:#14532d;--c-bb-tx:#4ADE80;
+  --c-pt-bg:#2a0f0a;--c-pt-br:#7f1d1d;--c-pt-tx:#FCA5A5;
+  --c-ph-bg:#1a0a2a;--c-ph-br:#4c1d95;--c-ph-tx:#C4B5FD;
+  --c-sk-bg:#2a1800;--c-sk-br:#78350f;--c-sk-tx:#FCD34D;
+}
+html,body{height:100%}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
+
+/* ── SHELL ── */
+.shell{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{width:220px;flex-shrink:0;background:var(--sb);position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;padding:24px 16px 20px;overflow-y:auto}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sb-crest{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.sb-name{font-size:.82rem;font-weight:800;color:#fff;letter-spacing:.01em}
+.sb-sub{font-size:.7rem;color:rgba(255,255,255,.5);margin-bottom:18px;padding-left:2px}
+.sb-section{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:rgba(255,255,255,.35);margin:14px 0 6px;padding-left:4px}
+.sb-link{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:7px;
+  font-size:.8rem;color:rgba(255,255,255,.75);transition:background .15s,color .15s;margin-bottom:1px}
+.sb-link:hover{background:var(--sb-hover);color:#fff}
+.sb-link.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600}
+.sb-link .ic{width:16px;text-align:center;font-size:.85rem}
+.sb-divider{height:1px;background:var(--sb-line);margin:10px 0}
+.sb-spacer{flex:1}
+.sb-theme{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;
+  font-size:.78rem;color:rgba(255,255,255,.7);width:100%;margin-bottom:6px}
+.sb-back{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;
+  font-size:.78rem;color:rgba(255,255,255,.55);transition:color .15s}
+.sb-back:hover{color:rgba(255,255,255,.85)}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+
+/* ── TOP BAR ── */
+.topbar{display:flex;align-items:center;gap:16px;padding:16px 28px;
+  border-bottom:1px solid var(--rule);background:var(--surface);position:sticky;top:0;z-index:50}
+.topbar h1{font-size:1rem;font-weight:700;color:var(--ink);flex:1}
+.topbar-badge{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-br)}
+
+/* ── TABS ── */
+.tab-nav{display:flex;gap:2px;padding:12px 28px 0;background:var(--surface);border-bottom:1px solid var(--rule)}
+.tab-btn{padding:9px 18px;font-size:.82rem;font-weight:600;border:none;background:none;
+  color:var(--ink-3);border-bottom:2px solid transparent;transition:color .15s,border-color .15s;margin-bottom:-1px}
+.tab-btn.active{color:var(--accent);border-color:var(--accent)}
+.tab-btn:hover:not(.active){color:var(--ink-2)}
+.tab-panel{display:none;padding:24px 28px 48px;overflow-y:auto}
+.tab-panel.active{display:block}
+
+/* ── CARDS / SURFACES ── */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  box-shadow:var(--card-sh);overflow:hidden}
+.card-header{padding:14px 18px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px}
+.card-body{padding:16px 18px}
+
+/* ── STAT GRID ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px}
+.stat-box{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:var(--card-sh)}
+.stat-num{font-size:1.8rem;font-weight:800;color:var(--accent);line-height:1}
+.stat-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-top:4px}
+.stat-sub{font-size:.78rem;color:var(--ink-2);margin-top:3px}
+
+/* ── PROGRESS BAR ── */
+.prog-bar-wrap{background:var(--rule);border-radius:6px;height:8px;overflow:hidden;flex:1}
+.prog-bar{height:100%;border-radius:6px;background:var(--accent);transition:width .4s}
+
+/* ── RESOURCE LEGEND ── */
+.res-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.res-pill{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:.75rem;font-weight:600;border:1px solid}
+.res-pill.IH{background:var(--c-ih-bg);border-color:var(--c-ih-br);color:var(--c-ih-tx)}
+.res-pill.BC{background:var(--c-bc-bg);border-color:var(--c-bc-br);color:var(--c-bc-tx)}
+.res-pill.BB{background:var(--c-bb-bg);border-color:var(--c-bb-br);color:var(--c-bb-tx)}
+.res-pill.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br);color:var(--c-pt-tx)}
+.res-pill.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br);color:var(--c-ph-tx)}
+.res-pill.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br);color:var(--c-sk-tx)}
+
+/* ── LECTURE CARDS ── */
+.lec-grid{display:flex;flex-direction:column;gap:12px}
+.lec-card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  box-shadow:var(--card-sh);overflow:hidden;transition:box-shadow .15s}
+.lec-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.lec-card-header{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;
+  border-bottom:1px solid var(--rule);user-select:none}
+.lec-card-header:hover{background:rgba(0,0,0,.02)}
+[data-theme="dark"] .lec-card-header:hover{background:rgba(255,255,255,.02)}
+.lec-num{font-size:.72rem;font-weight:800;color:var(--ink-3);min-width:42px}
+.lec-date-badge{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:12px;
+  background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-br);white-space:nowrap}
+.subj-badge{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap}
+.subj-Phys{background:#EEF4FF;color:#1F4B99;border:1px solid #C7D9F5}
+.subj-Path{background:#FFF1EE;color:#C0380A;border:1px solid #FFBDAD}
+.subj-Anat{background:#EDFDF4;color:#166534;border:1px solid #A7F3C9}
+.subj-Embr{background:#FAF0FF;color:#6A0DAD;border:1px solid #DFB4FE}
+.subj-Hist{background:#FFF7EE;color:#854D0E;border:1px solid #F5C88A}
+.subj-Pharm{background:#F5F0FF;color:#6d28d9;border:1px solid #d8b4fe}
+.subj-Micro{background:#F0F9FF;color:#0C4A6E;border:1px solid #BAE6FD}
+.subj-DRT{background:#F0FFF4;color:#14532D;border:1px solid #BBF7D0}
+[data-theme="dark"] .subj-Phys{background:#0f1e3a;color:#6BA3E8;border-color:#1e3a6b}
+[data-theme="dark"] .subj-Path{background:#2a0f0a;color:#FCA5A5;border-color:#7f1d1d}
+[data-theme="dark"] .subj-Anat{background:#0a1f12;color:#4ADE80;border-color:#14532d}
+[data-theme="dark"] .subj-Embr{background:#1a0a2a;color:#C4B5FD;border-color:#4c1d95}
+[data-theme="dark"] .subj-Hist{background:#2a1800;color:#FCD34D;border-color:#78350f}
+[data-theme="dark"] .subj-Pharm{background:#1a1033;color:#a78bfa;border-color:#4c1d95}
+[data-theme="dark"] .subj-Micro{background:#0a1a2a;color:#7DD3FC;border-color:#1e3a6b}
+[data-theme="dark"] .subj-DRT{background:#0a2010;color:#86EFAC;border-color:#166534}
+.lec-title{font-size:.88rem;font-weight:600;flex:1;min-width:0}
+.lec-mini-prog{display:flex;align-items:center;gap:8px;min-width:100px}
+.lec-pct{font-size:.72rem;font-weight:700;color:var(--accent);min-width:28px;text-align:right}
+.lec-chevron{font-size:.7rem;color:var(--ink-3);transition:transform .2s;margin-left:4px}
+.lec-card.open .lec-chevron{transform:rotate(180deg)}
+.lec-body{display:none;padding:0 16px 14px}
+.lec-card.open .lec-body{display:block}
+
+/* ── RESOURCE ROWS ── */
+.res-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;
+  margin-top:6px;border:1px solid transparent;transition:background .15s}
+.res-row.IH{background:var(--c-ih-bg);border-color:var(--c-ih-br)}
+.res-row.BC{background:var(--c-bc-bg);border-color:var(--c-bc-br)}
+.res-row.BB{background:var(--c-bb-bg);border-color:var(--c-bb-br)}
+.res-row.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br)}
+.res-row.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br)}
+.res-row.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br)}
+.res-row.na{background:transparent;border-color:var(--rule);opacity:.45}
+.res-row.not-included{opacity:.55;filter:grayscale(.4)}
+.res-include-btn{font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:12px;
+  border:1.5px solid;cursor:pointer;transition:all .15s;white-space:nowrap}
+.res-include-btn.IH{background:var(--c-ih-bg);border-color:var(--c-ih-br);color:var(--c-ih-tx)}
+.res-include-btn.BC{background:var(--c-bc-bg);border-color:var(--c-bc-br);color:var(--c-bc-tx)}
+.res-include-btn.BB{background:var(--c-bb-bg);border-color:var(--c-bb-br);color:var(--c-bb-tx)}
+.res-include-btn.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br);color:var(--c-pt-tx)}
+.res-include-btn.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br);color:var(--c-ph-tx)}
+.res-include-btn.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br);color:var(--c-sk-tx)}
+.res-include-btn.not-inc{background:transparent;border-color:var(--rule);color:var(--ink-3)}
+.res-label{font-size:.78rem;font-weight:600;min-width:120px;color:var(--ink-2)}
+.res-module{font-size:.72rem;color:var(--ink-3);flex:1}
+.res-time{font-size:.7rem;color:var(--ink-3);white-space:nowrap}
+.res-tasks{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.task-check{display:flex;align-items:center;gap:4px;font-size:.7rem;color:var(--ink-2);
+  background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.08);padding:2px 7px;
+  border-radius:12px;white-space:nowrap}
+[data-theme="dark"] .task-check{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.task-check.done{background:var(--accent-light);border-color:var(--accent-br)}
+.warn-pill{font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:12px;
+  background:#FFF1EE;color:#C0380A;border:1px solid #FFBDAD}
+
+/* ── DAY PLANNER ── */
+.day-group{margin-bottom:20px}
+.day-header{display:flex;align-items:center;gap:12px;padding:10px 14px;
+  background:var(--sb);border-radius:8px;color:#fff;margin-bottom:8px}
+.day-label{font-size:.88rem;font-weight:700}
+.day-week{font-size:.72rem;color:rgba(255,255,255,.6)}
+.day-stat{font-size:.75rem;color:rgba(255,255,255,.75);margin-left:auto}
+.day-tasks{display:flex;flex-direction:column;gap:4px}
+.day-task-row{display:grid;grid-template-columns:52px 1fr auto auto auto auto;gap:8px;align-items:center;
+  padding:7px 12px;border-radius:7px;border:1px solid var(--rule);background:var(--surface);
+  font-size:.78rem}
+.day-task-row.done-row{opacity:.6}
+.day-task-row.review-row{background:var(--accent-light);border-color:var(--accent-br)}
+.day-task-row.anki-row{background:var(--c-ph-bg);border-color:var(--c-ph-br)}
+.dtask-lec{font-size:.68rem;font-weight:700;color:var(--ink-3)}
+.dtask-type-pill{font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;border:1px solid;white-space:nowrap}
+.dtask-title{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dtask-time{font-size:.7rem;color:var(--ink-3);white-space:nowrap;min-width:48px;text-align:right}
+.dtask-cb{display:flex;align-items:center;gap:3px;font-size:.68rem;color:var(--ink-3);white-space:nowrap}
+.day-summary-row{display:flex;align-items:center;gap:10px;padding:7px 12px;
+  border-radius:7px;background:var(--rule);margin-top:4px;font-size:.75rem;color:var(--ink-2)}
+
+/* ── ANKI TAB ── */
+.anki-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.anki-res-card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;box-shadow:var(--card-sh)}
+.anki-res-header{padding:11px 16px;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.anki-res-body{padding:8px 0}
+.anki-row{display:flex;align-items:center;gap:8px;padding:5px 16px;font-size:.76rem}
+.anki-row:hover{background:var(--bg)}
+.anki-lec{color:var(--ink-3);min-width:52px;font-weight:600}
+.anki-count{font-weight:700;color:var(--ink);min-width:42px;text-align:right}
+.anki-sess{color:var(--ink-3);min-width:70px}
+.anki-bar-wrap{flex:1;background:var(--rule);border-radius:4px;height:6px;overflow:hidden}
+.anki-bar{height:100%;border-radius:4px}
+.anki-row.not-sel .anki-count{color:var(--ink-3)}
+.anki-row.not-sel .anki-lec{opacity:.5}
+.anki-done-cb{display:flex;align-items:center;gap:4px;font-size:.68rem;color:var(--ink-3)}
+
+/* ── UTILITY ── */
+.section-title{font-size:1rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title span{font-size:.75rem;font-weight:500;color:var(--ink-3)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--ink-3);font-size:.85rem}
+.btn-sm{padding:5px 13px;border-radius:7px;font-size:.78rem;font-weight:600;border:1px solid;cursor:pointer;transition:all .15s}
+.btn-reset{background:transparent;border-color:var(--rule);color:var(--ink-3)}
+.btn-reset:hover{border-color:#ef4444;color:#ef4444}
+.max-warn{font-size:.72rem;color:#C0380A;font-weight:600;display:none}
+.limit-tip{font-size:.72rem;color:var(--ink-3);padding:6px 10px;background:var(--bg);border-radius:6px;margin-top:8px}
+
+/* ── WEEK FILTER ── */
+.week-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.wf-btn{padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600;
+  border:1.5px solid var(--rule);background:var(--surface);color:var(--ink-3);cursor:pointer;transition:all .15s}
+.wf-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.wf-btn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+
+@media(max-width:700px){
+  .sidebar{display:none}
+  .tab-panel{padding:16px 14px 40px}
+  .day-task-row{grid-template-columns:40px 1fr auto auto}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-crest">🏥</div>
+    <div class="sb-name">HoyaDocs</div>
+  </div>
+  <div class="sb-sub">GI Block · Spring 2026</div>
+
+  <div class="sb-section">Navigation</div>
+  <a href="../index.html" class="sb-link"><span class="ic">🏠</span>Study Hub Home</a>
+  <a href="#" class="sb-link active" onclick="return false"><span class="ic">📋</span>Study Planner</a>
+  <a href="../resource-mapping/gi_resource_hub.html" class="sb-link"><span class="ic">🗺</span>Resource Map</a>
+  <a href="../resource-mapping/gi_mapping.html" class="sb-link"><span class="ic">🔗</span>Resource Matrix</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-section">Planner Views</div>
+  <a href="#" class="sb-link" onclick="switchTab('dashboard');return false"><span class="ic">📊</span>Dashboard</a>
+  <a href="#" class="sb-link" onclick="switchTab('planner');return false"><span class="ic">✅</span>Lecture Planner</a>
+  <a href="#" class="sb-link" onclick="switchTab('dayplan');return false"><span class="ic">📅</span>Day Planner</a>
+  <a href="#" class="sb-link" onclick="switchTab('anki');return false"><span class="ic">📚</span>Anki Tracker</a>
+
+  <div class="sb-divider"></div>
+  <div class="sb-section">Resources</div>
+  <a href="https://www.bootcampstep1.com/" target="_blank" class="sb-link"><span class="ic">🔵</span>Bootcamp</a>
+  <a href="https://www.boardsbeyond.com/" target="_blank" class="sb-link"><span class="ic">🟢</span>Boards &amp; Beyond</a>
+  <a href="https://www.pathoma.com/" target="_blank" class="sb-link"><span class="ic">🔴</span>Pathoma</a>
+  <a href="https://www.physeo.com/" target="_blank" class="sb-link"><span class="ic">🟣</span>Physeo</a>
+  <a href="https://sketchy.com/" target="_blank" class="sb-link"><span class="ic">🟤</span>Sketchy</a>
+
+  <div class="sb-spacer"></div>
+  <button class="sb-theme" onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+  <a href="../index.html" class="sb-back">← Back to Study Hub</a>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="main">
+  <div class="topbar">
+    <h1>📋 GI Study Planner</h1>
+    <span class="topbar-badge" id="topbar-pct">0% Complete</span>
+    <button class="btn-sm btn-reset" onclick="confirmReset()">↺ Reset All</button>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('dashboard')" data-tab="dashboard">📊 Dashboard</button>
+    <button class="tab-btn" onclick="switchTab('planner')" data-tab="planner">✅ Lecture Planner</button>
+    <button class="tab-btn" onclick="switchTab('dayplan')" data-tab="dayplan">📅 Day Planner</button>
+    <button class="tab-btn" onclick="switchTab('anki')" data-tab="anki">📚 Anki Tracker</button>
+  </div>
+
+  <!-- ══ TAB 1: DASHBOARD ══ -->
+  <div class="tab-panel active" id="tab-dashboard">
+    <div class="stat-grid" id="stat-grid"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px">
+      <!-- Progress by resource -->
+      <div class="card">
+        <div class="card-header">
+          <span style="font-size:.9rem;font-weight:700">Progress by Resource</span>
+        </div>
+        <div class="card-body" id="res-progress-bars" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+      <!-- Progress by week -->
+      <div class="card">
+        <div class="card-header">
+          <span style="font-size:.9rem;font-weight:700">Progress by Week</span>
+        </div>
+        <div class="card-body" id="week-progress-bars" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+    </div>
+
+    <!-- Quick legend -->
+    <div class="card">
+      <div class="card-header"><span style="font-size:.9rem;font-weight:700">Resource Guide</span></div>
+      <div class="card-body">
+        <div class="res-legend">
+          <div class="res-pill IH">🏥 In-House · Always included</div>
+          <div class="res-pill BC">🔵 Bootcamp</div>
+          <div class="res-pill BB">🟢 Boards &amp; Beyond</div>
+          <div class="res-pill PT">🔴 Pathoma</div>
+          <div class="res-pill PH">🟣 Physeo</div>
+          <div class="res-pill SK">🟤 Sketchy</div>
+        </div>
+        <p style="font-size:.8rem;color:var(--ink-3)">
+          <strong>Rule:</strong> In-House is always included. Select up to <strong>2 third-party resources</strong> per lecture in the Lecture Planner.<br>
+          <strong>Tasks per resource:</strong> Prep → Watch/Attend → Anki → Last Pass<br>
+          <strong>Anki timing:</strong> Same-day introduction, morning reviews every day before new content.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 2: LECTURE PLANNER ══ -->
+  <div class="tab-panel" id="tab-planner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div class="section-title" style="margin-bottom:0">Lecture Planner <span>Select resources · track tasks per lecture</span></div>
+      <div class="max-warn" id="max-warn">⚠️ Max 2 third-party resources per lecture</div>
+    </div>
+    <div class="limit-tip" style="margin-bottom:14px">
+      💡 <strong>In-House</strong> is always included. Toggle up to <strong>2 third-party resources</strong> per lecture. Check off <strong>Prep / Watch / Anki / Last Pass</strong> as you complete each task.
+    </div>
+    <div class="week-filter">
+      <button class="wf-btn active" onclick="filterWeek('all',this)">All Weeks</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 1',this)">Week 1</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 2',this)">Week 2</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 3',this)">Week 3</button>
+    </div>
+    <div class="lec-grid" id="lec-grid"></div>
+  </div>
+
+  <!-- ══ TAB 3: DAY PLANNER ══ -->
+  <div class="tab-panel" id="tab-dayplan">
+    <div class="section-title">Day Planner <span>Tasks grouped by lecture date</span></div>
+    <div id="day-planner-body"></div>
+  </div>
+
+  <!-- ══ TAB 4: ANKI TRACKER ══ -->
+  <div class="tab-panel" id="tab-anki">
+    <div class="section-title">Anki Tracker <span>Card counts for selected resources only</span></div>
+    <div class="stat-grid" id="anki-stat-grid" style="margin-bottom:18px"></div>
+    <div class="anki-grid" id="anki-grid"></div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════════════════════
+const LECTURES = [
+  {id:0, num:"1",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL GI Overview",
+   ihMin:60,
+   res:{BC:{label:"Ch. 2 · Oral Cavity",min:30},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
+   anki:{BC:174,BB:94,PH:69}},
+  {id:1, num:"2",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"Introduction / Motility",
+   ihMin:60,
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
+   anki:{BC:342,BB:102,PH:69}},
+  {id:2, num:"3",     week:"Wk 1", date:"Mon Apr 6",  subj:"Anat",  title:"Anterior Abdominal Wall / Hernia",
+   ihMin:60,
+   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:42,BB:42,PH:129,SK:105}},
+  {id:3, num:"4",     week:"Wk 1", date:"Mon Apr 6",  subj:"Hist",  title:"Esoph / Stomach / Intestines (Histology)",
+   ihMin:60,
+   res:{BC:{label:"Ch. 2 · Oral Cavity",min:15},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:null,SK:null},
+   anki:{BC:174,BB:94}},
+  {id:4, num:"5 & 6", week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL Bile Workshop & Making a Micelle",
+   ihMin:120,
+   res:{BC:{label:"Ch. 5 & 6 · Liver/Biliary",min:90},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.3 & 5.4",min:99},SK:null},
+   anki:{BC:536,BB:102,PH:99}},
+  {id:5, num:"7",     week:"Wk 1", date:"Mon Apr 6",  subj:"Embr",  title:"IL GI Primer",
+   ihMin:60,
+   res:{BC:{label:"Ch. 1 · Embryology",min:25},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:131,BB:105,PH:73,SK:105}},
+  {id:6, num:"8",     week:"Wk 1", date:"Tue Apr 7",  subj:"Anat",  title:"Abdominal Viscera I: GI Tract",
+   ihMin:60,
+   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:90},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:42,BB:90,PH:129,SK:105}},
+  {id:7, num:"9 & 10",week:"Wk 1", date:"Tue Apr 7",  subj:"Phys",  title:"Secretions I & II",
+   ihMin:120,
+   res:{BC:{label:"Ch. 2,4 & 7 · Oral/Stom/Panc",min:95},BB:{label:"Sec. 1 & 2 · Anat/Physiol",min:231},PT:null,PH:{label:"Phys. 5.2",min:45},SK:null},
+   anki:{BC:653,BB:231,PH:45}},
+  {id:8, num:"12",    week:"Wk 1", date:"Wed Apr 8",  subj:"Embr",  title:"GI Embryology",
+   ihMin:60,
+   res:{BC:{label:"Ch. 1 · Embryology",min:25},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:131,BB:105,PH:73,SK:105}},
+  {id:9, num:"13",    week:"Wk 1", date:"Wed Apr 8",  subj:"Anat",  title:"Abdominal Viscera II: Liver & Pancreas",
+   ihMin:60,
+   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 1 · Anatomy",min:99},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:292,BB:99,PH:129,SK:105}},
+  {id:10,num:"14",    week:"Wk 1", date:"Wed Apr 8",  subj:"Phys",  title:"Overview of the Liver",
+   ihMin:60,
+   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 2 · Physiology",min:118},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
+   anki:{BC:292,BB:118,PH:62}},
+  {id:11,num:"15",    week:"Wk 1", date:"Thu Apr 9",  subj:"Path",  title:"Esophagus / Stomach Disease",
+   ihMin:60,
+   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80},BB:{label:"Sec. 3 · Clinical",min:80},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.1–6.4",min:222},SK:null},
+   anki:{BC:549,BB:80,PT:528,PH:222}},
+  {id:12,num:"16 & 17",week:"Wk 1",date:"Thu Apr 9", subj:"Phys",  title:"Digestion / Absorption I & II",
+   ihMin:120,
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 2 & 3 · Physiol/Clin.",min:115},PT:null,PH:{label:"Phys. 5.5",min:50},SK:null},
+   anki:{BC:279,BB:115,PH:50}},
+  {id:13,num:"19 & 20",week:"Wk 1",date:"Fri Apr 10",subj:"Path",  title:"Intestinal Pathology I & II",
+   ihMin:120,
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:60},BB:{label:"Sec. 3 · Clinical",min:317},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.5–6.9",min:258},SK:null},
+   anki:{BC:342,BB:317,PT:528,PH:258}},
+  {id:14,num:"21",    week:"Wk 2", date:"Mon Apr 13", subj:"Pharm", title:"Poisoning Conference & Cases",
+   ihMin:60,
+   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 3 · Clinical",min:52},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1 Antiemetics",min:19}},
+   anki:{BC:42,BB:52,PH:120,SK:37}},
+  {id:15,num:"22",    week:"Wk 2", date:"Tue Apr 14", subj:"Path",  title:"GI Lab",
+   ihMin:60,
+   res:{BC:{label:"Ch. 9 · Large Intestine",min:15},BB:null,PT:{label:"Ch. 10 & 11 · GI/Hepatobil.",min:156},PH:{label:"Path. 6.3–6.5 & 6.8",min:346},SK:null},
+   anki:{BC:63,PT:812,PH:346}},
+  {id:16,num:"23 & 24",week:"Wk 2",date:"Tue Apr 14",subj:"Pharm", title:"Treatment: PUD / GERD & Other GI Disorders",
+   ihMin:120,
+   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80},BB:{label:"Sec. 3 · Clinical",min:80},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1–5.4 & 5.FA",min:0}},
+   anki:{BC:549,BB:80,PH:120,SK:120}},
+  {id:17,num:"25",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"GI Infections",
+   ihMin:60,
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
+   anki:{BC:342,BB:144,PH:95}},
+  {id:18,num:"26",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"Parasitology",
+   ihMin:60,
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
+   anki:{BC:279,BB:144,PH:95}},
+  {id:19,num:"28",    week:"Wk 2", date:"Thu Apr 16", subj:"Path",  title:"Intestinal Path. Case Review",
+   ihMin:60,
+   res:{BC:{label:"Ch. 9 · Large Intestine",min:15},BB:{label:"Sec. 3 · Clinical",min:150},PT:null,PH:{label:"Path. 6.7–6.9",min:128},SK:null},
+   anki:{BC:63,BB:150,PH:128}},
+  {id:20,num:"29",    week:"Wk 2", date:"Thu Apr 16", subj:"Anat",  title:"Retroperitoneum",
+   ihMin:60,
+   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:42,BB:42,PH:129,SK:105}},
+  {id:21,num:"33",    week:"Wk 3", date:"Mon Apr 20", subj:"Hist",  title:"Liver & Biliary Tract (Histology)",
+   ihMin:60,
+   res:{BC:{label:"Ch. 6 · Biliary System",min:44},BB:{label:"Sec. 1 · Anatomy",min:71},PT:null,PH:null,SK:{label:"Anat. 1.1",min:0}},
+   anki:{BC:244,BB:71,SK:105}},
+  {id:22,num:"34 & 35",week:"Wk 3",date:"Tue Apr 21",subj:"Path",  title:"Liver Disease I & II",
+   ihMin:120,
+   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 3 · Clinical",min:201},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
+   anki:{BC:292,BB:201,PT:284,PH:160}},
+  {id:23,num:"36",    week:"Wk 3", date:"Tue Apr 21", subj:"DRT",   title:"Liver Enzymes",
+   ihMin:60,
+   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 2 · Physiology",min:91},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
+   anki:{BC:292,BB:91,PH:62}},
+  {id:24,num:"38",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Pancreas Disease",
+   ihMin:60,
+   res:{BC:{label:"Ch. 7 · Pancreas",min:30},BB:{label:"Sec. 3 · Clinical",min:91},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.10",min:60},SK:null},
+   anki:{BC:130,BB:91,PT:284,PH:60}},
+  {id:25,num:"39",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Liver / Pancreas Lab",
+   ihMin:60,
+   res:{BC:{label:"Ch. 6 · Biliary System",min:44},BB:{label:"Sec. 3 · Clinical",min:92},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
+   anki:{BC:244,BB:92,PT:284,PH:160}},
+  {id:26,num:"40",    week:"Wk 3", date:"Fri Apr 24", subj:"Phys",  title:"PSW: Cholera / Lactose Intolerance",
+   ihMin:60,
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1",min:61},SK:null},
+   anki:{BC:279,BB:102,PH:61}},
+];
+
+const DAY_GROUPS = [
+  {day:"Mon Apr 6",  week:"Week 1", ids:[0,1,2,3,4,5]},
+  {day:"Tue Apr 7",  week:"Week 1", ids:[6,7]},
+  {day:"Wed Apr 8",  week:"Week 1", ids:[8,9,10]},
+  {day:"Thu Apr 9",  week:"Week 1", ids:[11,12]},
+  {day:"Fri Apr 10", week:"Week 1", ids:[13]},
+  {day:"Mon Apr 13", week:"Week 2", ids:[14]},
+  {day:"Tue Apr 14", week:"Week 2", ids:[15,16]},
+  {day:"Wed Apr 15", week:"Week 2", ids:[17,18]},
+  {day:"Thu Apr 16", week:"Week 2", ids:[19,20]},
+  {day:"Mon Apr 20", week:"Week 3", ids:[21]},
+  {day:"Tue Apr 21", week:"Week 3", ids:[22,23]},
+  {day:"Wed Apr 22", week:"Week 3", ids:[24,25]},
+  {day:"Fri Apr 24", week:"Week 3", ids:[26]},
+];
+
+const RES_META = {
+  IH:{label:"In-House",  emoji:"🏥",cls:"IH"},
+  BC:{label:"Bootcamp",  emoji:"🔵",cls:"BC"},
+  BB:{label:"Boards & Beyond",emoji:"🟢",cls:"BB"},
+  PT:{label:"Pathoma",   emoji:"🔴",cls:"PT"},
+  PH:{label:"Physeo",    emoji:"🟣",cls:"PH"},
+  SK:{label:"Sketchy",   emoji:"🟤",cls:"SK"},
+};
+const TP_RES = ['BC','BB','PT','PH','SK'];
+const TASKS  = ['prep','watch','anki','lastPass'];
+const TASK_LABELS = {prep:'Prep',watch:'Watch',anki:'Anki',lastPass:'Last Pass'};
+const STORAGE_KEY = 'gi-planner-v2';
+
+// ══════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════
+let STATE = {};
+
+function defaultState(){
+  const s={};
+  LECTURES.forEach(l=>{
+    s[l.id]={IH:{included:true,prep:false,watch:false,anki:false,lastPass:false}};
+    TP_RES.forEach(r=>{
+      s[l.id][r]={included:false,prep:false,watch:false,anki:false,lastPass:false};
+    });
+  });
+  return s;
+}
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(raw) STATE=JSON.parse(raw);
+    else STATE=defaultState();
+  } catch(e){ STATE=defaultState(); }
+  // Ensure all keys exist
+  LECTURES.forEach(l=>{
+    if(!STATE[l.id]) STATE[l.id]=defaultState()[l.id];
+    if(!STATE[l.id].IH) STATE[l.id].IH={included:true,prep:false,watch:false,anki:false,lastPass:false};
+    TP_RES.forEach(r=>{
+      if(!STATE[l.id][r]) STATE[l.id][r]={included:false,prep:false,watch:false,anki:false,lastPass:false};
+    });
+  });
+}
+
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(STATE)); } catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  STATS HELPERS
+// ══════════════════════════════════════════════════════════════
+function lecState(id){ return STATE[id]; }
+
+function countThirdParty(id){
+  return TP_RES.filter(r=>STATE[id][r].included).length;
+}
+
+function lecProgress(id){
+  const ls=STATE[id];
+  let tot=0,done=0;
+  // IH always counted
+  TASKS.forEach(t=>{ tot++; if(ls.IH[t]) done++; });
+  TP_RES.forEach(r=>{
+    if(!ls[r].included) return;
+    const lec=LECTURES.find(l=>l.id===id);
+    if(!lec.res[r]) return;
+    TASKS.forEach(t=>{ tot++; if(ls[r][t]) done++; });
+  });
+  return {tot,done,pct:tot?Math.round(done/tot*100):0};
+}
+
+function globalStats(){
+  let totalTasks=0,doneTasks=0,totalMin=0,doneMin=0,selectedLecs=0;
+  let byRes={IH:{tot:0,done:0},BC:{tot:0,done:0},BB:{tot:0,done:0},PT:{tot:0,done:0},PH:{tot:0,done:0},SK:{tot:0,done:0}};
+  let byWeek={'Wk 1':{tot:0,done:0},'Wk 2':{tot:0,done:0},'Wk 3':{tot:0,done:0}};
+  let ankiSelected=0;
+
+  LECTURES.forEach(l=>{
+    const ls=STATE[l.id];
+    const wk=l.week;
+    // IH
+    totalMin+=l.ihMin; if(ls.IH.watch) doneMin+=l.ihMin;
+    TASKS.forEach(t=>{
+      totalTasks++;byRes.IH.tot++;byWeek[wk].tot++;
+      if(ls.IH[t]){doneTasks++;byRes.IH.done++;byWeek[wk].done++;}
+    });
+    // 3rd party
+    TP_RES.forEach(r=>{
+      if(!ls[r].included||!l.res[r]) return;
+      selectedLecs++;
+      const m=l.res[r].min||0;
+      totalMin+=m; if(ls[r].watch) doneMin+=m;
+      TASKS.forEach(t=>{
+        totalTasks++;byRes[r].tot++;byWeek[wk].tot++;
+        if(ls[r][t]){doneTasks++;byRes[r].done++;byWeek[wk].done++;}
+      });
+      if(l.anki&&l.anki[r]) ankiSelected+=l.anki[r];
+    });
+  });
+  return {totalTasks,doneTasks,totalMin,doneMin,selectedLecs,byRes,byWeek,ankiSelected,
+    pct:totalTasks?Math.round(doneTasks/totalTasks*100):0};
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER DASHBOARD
+// ══════════════════════════════════════════════════════════════
+function renderDashboard(){
+  const s=globalStats();
+  document.getElementById('topbar-pct').textContent=s.pct+'% Complete';
+
+  const grid=document.getElementById('stat-grid');
+  const hrs=(s.totalMin/60).toFixed(1);
+  const doneHrs=(s.doneMin/60).toFixed(1);
+  grid.innerHTML=`
+    <div class="stat-box"><div class="stat-num">${s.pct}%</div><div class="stat-label">Overall Progress</div><div class="stat-sub">${s.doneTasks} / ${s.totalTasks} tasks</div></div>
+    <div class="stat-box"><div class="stat-num">${doneHrs}h</div><div class="stat-label">Hours Completed</div><div class="stat-sub">of ${hrs}h selected</div></div>
+    <div class="stat-box"><div class="stat-num">${s.selectedLecs}</div><div class="stat-label">3rd-Party Selections</div><div class="stat-sub">across 27 lectures</div></div>
+    <div class="stat-box"><div class="stat-num">${s.ankiSelected.toLocaleString()}</div><div class="stat-label">Anki Cards Selected</div><div class="stat-sub">~${Math.round(s.ankiSelected/50)} sessions @ 50/day</div></div>
+  `;
+
+  // Resource bars
+  const resBars=document.getElementById('res-progress-bars');
+  resBars.innerHTML='';
+  Object.entries(s.byRes).forEach(([r,{tot,done}])=>{
+    if(!tot) return;
+    const pct=Math.round(done/tot*100);
+    const m=RES_META[r];
+    resBars.innerHTML+=`
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:.75rem;min-width:110px;font-weight:600">${m.emoji} ${m.label}</span>
+        <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+        <span style="font-size:.72rem;color:var(--ink-3);min-width:36px;text-align:right">${pct}%</span>
+      </div>`;
+  });
+
+  // Week bars
+  const weekBars=document.getElementById('week-progress-bars');
+  weekBars.innerHTML='';
+  [['Wk 1','Mon Apr 6 – Fri Apr 10'],['Wk 2','Mon Apr 13 – Thu Apr 16'],['Wk 3','Mon Apr 20 – Fri Apr 24']].forEach(([wk,dates])=>{
+    const {tot,done}=s.byWeek[wk];
+    const pct=tot?Math.round(done/tot*100):0;
+    weekBars.innerHTML+=`
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="min-width:110px"><div style="font-size:.75rem;font-weight:600">${wk}</div><div style="font-size:.65rem;color:var(--ink-3)">${dates}</div></div>
+        <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+        <span style="font-size:.72rem;color:var(--ink-3);min-width:36px;text-align:right">${pct}%</span>
+      </div>`;
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER LECTURE PLANNER
+// ══════════════════════════════════════════════════════════════
+function renderLecturePlanner(weekFilter){
+  const grid=document.getElementById('lec-grid');
+  grid.innerHTML='';
+
+  LECTURES.forEach(l=>{
+    if(weekFilter&&weekFilter!=='all'&&l.week!==weekFilter) return;
+    const ls=STATE[l.id];
+    const {pct}=lecProgress(l.id);
+    const tpCount=countThirdParty(l.id);
+
+    const card=document.createElement('div');
+    card.className='lec-card';
+    card.id=`lec-card-${l.id}`;
+
+    // Header
+    card.innerHTML=`
+      <div class="lec-card-header" onclick="toggleLecCard(${l.id})">
+        <span class="lec-num">Lec ${l.num}</span>
+        <span class="lec-date-badge">${l.date}</span>
+        <span class="subj-badge subj-${l.subj}">${l.subj}</span>
+        <span class="lec-title">${l.title}</span>
+        <div class="lec-mini-prog">
+          <div class="prog-bar-wrap" style="min-width:60px"><div class="prog-bar" style="width:${pct}%"></div></div>
+          <span class="lec-pct">${pct}%</span>
+        </div>
+        <span class="lec-chevron">▼</span>
+      </div>
+      <div class="lec-body">
+        ${buildResRows(l, ls, tpCount)}
+      </div>`;
+
+    grid.appendChild(card);
+  });
+}
+
+function buildResRows(l, ls, tpCount){
+  let html='';
+
+  // In-House (always included)
+  html+=buildRow('IH', l, ls, true);
+
+  // Third-party
+  TP_RES.forEach(r=>{
+    if(!l.res[r]){ html+=buildRowNA(r); return; }
+    html+=buildRow(r, l, ls, false, tpCount);
+  });
+
+  if(tpCount>=2){
+    html+=`<div class="limit-tip" style="margin-top:8px">✅ 2 third-party resources selected. Deselect one to choose a different resource.</div>`;
+  }
+  return html;
+}
+
+function buildRow(r, l, ls, isIH, tpCount){
+  const meta=RES_META[r];
+  const inc=ls[r].included;
+  const avail=isIH||!!l.res[r];
+  const rowCls=inc?r:'not-included '+r;
+  const canAdd=isIH||inc||(tpCount<2);
+  const cards=l.anki?.[r]||0;
+
+  let incBtn='';
+  if(!isIH){
+    const btnLabel=inc?'✓ Selected':'+ Include';
+    const btnCls=inc?`res-include-btn ${r}`:`res-include-btn not-inc`;
+    const disabled=!canAdd&&!inc?'style="opacity:.4;cursor:not-allowed"':'';
+    incBtn=`<button class="${btnCls}" onclick="toggleResource(${l.id},'${r}')" ${disabled}>${btnLabel}</button>`;
+  } else {
+    incBtn=`<span class="res-include-btn IH" style="cursor:default">✓ Always</span>`;
+  }
+
+  const modLabel=isIH?`${l.ihMin} min lecture`:(l.res[r]?.label||'');
+  const timeStr=isIH?'':(l.res[r]?.min?`${l.res[r].min} min`:'TBD');
+
+  let tasks='';
+  if(inc||isIH){
+    TASKS.forEach(t=>{
+      const checked=ls[r][t];
+      const doneCls=checked?' done':'';
+      tasks+=`<label class="task-check${doneCls}">
+        <input type="checkbox" ${checked?'checked':''} onchange="setTask(${l.id},'${r}','${t}',this.checked)">
+        ${TASK_LABELS[t]}
+      </label>`;
+    });
+    if(cards>0&&!isIH){
+      tasks+=`<span style="font-size:.68rem;color:var(--ink-3);margin-left:4px">📚 ${cards} cards</span>`;
+    }
+  } else {
+    tasks=`<span style="font-size:.72rem;color:var(--ink-3)">Select to enable tasks</span>`;
+  }
+
+  return `<div class="res-row ${rowCls}" id="row-${l.id}-${r}">
+    ${incBtn}
+    <span class="res-label">${meta.emoji} ${meta.label}</span>
+    <span class="res-module">${modLabel}</span>
+    <span class="res-time">${timeStr}</span>
+    <div class="res-tasks">${tasks}</div>
+  </div>`;
+}
+
+function buildRowNA(r){
+  const meta=RES_META[r];
+  return `<div class="res-row na">
+    <span class="res-include-btn not-inc" style="cursor:default;opacity:.5">N/A</span>
+    <span class="res-label" style="opacity:.5">${meta.emoji} ${meta.label}</span>
+    <span class="res-module" style="font-size:.72rem;color:var(--ink-3)">Not available for this lecture</span>
+  </div>`;
+}
+
+function toggleLecCard(id){
+  const card=document.getElementById(`lec-card-${id}`);
+  card.classList.toggle('open');
+}
+
+function toggleResource(id, r){
+  const ls=STATE[id];
+  const wasInc=ls[r].included;
+  const tp=countThirdParty(id);
+  if(!wasInc&&tp>=2){
+    // Flash warning
+    const warn=document.getElementById('max-warn');
+    warn.style.display='inline';
+    setTimeout(()=>warn.style.display='none',3000);
+    return;
+  }
+  ls[r].included=!wasInc;
+  saveState();
+  const lec=LECTURES.find(l=>l.id===id);
+  const newTp=countThirdParty(id);
+  // Re-render just this card's body
+  const body=document.querySelector(`#lec-card-${id} .lec-body`);
+  if(body) body.innerHTML=buildResRows(lec,ls,newTp);
+  updateLecHeader(id);
+  renderDashboard();
+  refreshDayPlanner();
+  refreshAnki();
+}
+
+function setTask(id, r, task, val){
+  STATE[id][r][task]=val;
+  saveState();
+  updateLecHeader(id);
+  renderDashboard();
+  refreshDayPlanner();
+  refreshAnki();
+  // Update task-check styling
+  const label=document.querySelector(`#row-${id}-${r} input[onchange*="${task}"]`);
+  if(label) label.closest('.task-check').classList.toggle('done',val);
+}
+
+function updateLecHeader(id){
+  const {pct}=lecProgress(id);
+  const bar=document.querySelector(`#lec-card-${id} .prog-bar`);
+  const pctEl=document.querySelector(`#lec-card-${id} .lec-pct`);
+  if(bar) bar.style.width=pct+'%';
+  if(pctEl) pctEl.textContent=pct+'%';
+}
+
+function filterWeek(wk, btn){
+  document.querySelectorAll('.wf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLecturePlanner(wk);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER DAY PLANNER
+// ══════════════════════════════════════════════════════════════
+function renderDayPlanner(){
+  const body=document.getElementById('day-planner-body');
+  body.innerHTML='';
+
+  DAY_GROUPS.forEach(dg=>{
+    let plannedMin=0, doneMin=0;
+    let taskRows='';
+
+    // Morning review row
+    taskRows+=`<div class="day-task-row review-row">
+      <span class="dtask-lec">—</span>
+      <span style="display:flex;align-items:center;gap:6px">
+        <span class="dtask-type-pill" style="background:var(--c-bb-bg);border-color:var(--c-bb-br);color:var(--c-bb-tx)">📅 Reviews</span>
+        <span class="dtask-title" style="color:var(--accent);font-weight:600">Morning: Clear all due Anki reviews</span>
+      </span>
+      <span></span><span></span>
+      <label class="dtask-cb"><input type="checkbox" onchange="saveDayTask('${dg.day}','review',this.checked)" ${getDayTask(dg.day,'review')?'checked':''}> Done</label>
+    </div>`;
+
+    dg.ids.forEach(id=>{
+      const l=LECTURES.find(x=>x.id===id);
+      const ls=STATE[id];
+
+      // IH row
+      const ihDone=['prep','watch','anki','lastPass'].map(t=>ls.IH[t]).filter(Boolean).length;
+      const ihPct=Math.round(ihDone/4*100);
+      taskRows+=buildDayRow(id,'IH',l,ls,'IH',l.ihMin);
+      plannedMin+=l.ihMin;
+      if(ls.IH.watch) doneMin+=l.ihMin;
+
+      // 3rd party rows
+      TP_RES.forEach(r=>{
+        if(!ls[r].included||!l.res[r]) return;
+        taskRows+=buildDayRow(id,r,l,ls,r,l.res[r].min||0);
+        plannedMin+=(l.res[r].min||0);
+        if(ls[r].watch) doneMin+=(l.res[r].min||0);
+
+        // Anki row
+        const cards=l.anki?.[r]||0;
+        if(cards>0){
+          const sessions=Math.max(1,Math.round(cards/50));
+          const est=sessions*20;
+          const ankDone=getDayTask(`${dg.day}-anki-${id}-${r}`,'done');
+          taskRows+=`<div class="day-task-row anki-row ${ankDone?'done-row':''}">
+            <span class="dtask-lec">Lec ${l.num}</span>
+            <span style="display:flex;align-items:center;gap:6px">
+              <span class="dtask-type-pill" style="background:var(--c-ph-bg);border-color:var(--c-ph-br);color:var(--c-ph-tx)">📚 Anki</span>
+              <span class="dtask-title">${RES_META[r].label} · ${cards} cards · ~${sessions} sessions</span>
+            </span>
+            <span class="dtask-time">~${est} min</span>
+            <span></span>
+            <label class="dtask-cb"><input type="checkbox" onchange="saveDayTask('${dg.day}-anki-${id}-${r}','done',this.checked)" ${ankDone?'checked':''}> Done</label>
+          </div>`;
+        }
+      });
+    });
+
+    const doneHrs=(doneMin/60).toFixed(1);
+    const planHrs=(plannedMin/60).toFixed(1);
+
+    const wrapDiv=document.createElement('div');
+    wrapDiv.className='day-group';
+    wrapDiv.innerHTML=`
+      <div class="day-header">
+        <span class="day-label">📅 ${dg.day}</span>
+        <span class="day-week">${dg.week}</span>
+        <span class="day-stat">${planHrs}h planned · ${doneHrs}h done</span>
+      </div>
+      <div class="day-tasks">${taskRows}</div>
+      <div class="day-summary-row">
+        <span>📊 Day Total:</span>
+        <div class="prog-bar-wrap" style="max-width:120px"><div class="prog-bar" style="width:${plannedMin?Math.round(doneMin/plannedMin*100):0}%"></div></div>
+        <span>${doneHrs}h of ${planHrs}h completed</span>
+      </div>`;
+    body.appendChild(wrapDiv);
+  });
+}
+
+function buildDayRow(id, r, l, ls, cls, mins){
+  const meta=RES_META[r];
+  const tasks=TASKS.map(t=>{
+    const ch=ls[r][t];
+    return `<label class="dtask-cb" style="${ch?'color:var(--accent)':''}">
+      <input type="checkbox" ${ch?'checked':''} onchange="setTask(${id},'${r}','${t}',this.checked)"> ${TASK_LABELS[t]}
+    </label>`;
+  }).join('');
+
+  const allDone=TASKS.every(t=>ls[r][t]);
+  return `<div class="day-task-row ${allDone?'done-row':''}">
+    <span class="dtask-lec">Lec ${l.num}</span>
+    <span style="display:flex;align-items:center;gap:6px">
+      <span class="dtask-type-pill res-pill ${cls}" style="border:1px solid">${meta.emoji} ${meta.label}</span>
+      <span class="dtask-title">${l.title}</span>
+    </span>
+    <span class="dtask-time">${mins>0?mins+' min':''}</span>
+    <span></span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${tasks}</div>
+  </div>`;
+}
+
+// Day-level task state (reviews, etc.)
+const DAY_KEY='gi-daytasks-v1';
+let DAY_STATE={};
+function loadDayState(){ try{DAY_STATE=JSON.parse(localStorage.getItem(DAY_KEY)||'{}')}catch(e){DAY_STATE={}} }
+function saveDayTask(day,key,val){ DAY_STATE[day+'|'+key]=val; localStorage.setItem(DAY_KEY,JSON.stringify(DAY_STATE)); }
+function getDayTask(day,key){ return !!DAY_STATE[day+'|'+key]; }
+function refreshDayPlanner(){
+  if(document.getElementById('tab-dayplan').classList.contains('active')) renderDayPlanner();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER ANKI TRACKER
+// ══════════════════════════════════════════════════════════════
+function renderAnki(){
+  const grid=document.getElementById('anki-grid');
+  grid.innerHTML='';
+  const statGrid=document.getElementById('anki-stat-grid');
+
+  let totalSel=0,totalAll=0;
+  const byRes={BC:{sel:0,all:0},BB:{sel:0,all:0},PT:{sel:0,all:0},PH:{sel:0,all:0},SK:{sel:0,all:0}};
+
+  LECTURES.forEach(l=>{
+    const ls=STATE[l.id];
+    TP_RES.forEach(r=>{
+      const cards=l.anki?.[r]||0;
+      if(!cards) return;
+      byRes[r].all+=cards;
+      if(ls[r].included&&l.res[r]){byRes[r].sel+=cards;totalSel+=cards;}
+      totalAll+=cards;
+    });
+  });
+
+  statGrid.innerHTML=`
+    <div class="stat-box"><div class="stat-num">${totalSel.toLocaleString()}</div><div class="stat-label">Cards Selected</div><div class="stat-sub">of ${totalAll.toLocaleString()} total available</div></div>
+    <div class="stat-box"><div class="stat-num">~${Math.round(totalSel/50)}</div><div class="stat-label">Sessions @ 50/day</div><div class="stat-sub">${Math.round(totalSel/50/21)} sessions/day avg</div></div>
+    <div class="stat-box"><div class="stat-num">${Math.round(totalSel/50*20)}</div><div class="stat-label">Est. Minutes</div><div class="stat-sub">new cards only (not reviews)</div></div>
+    <div class="stat-box"><div class="stat-num">50</div><div class="stat-label">Max New/Day</div><div class="stat-sub">Do reviews first each morning</div></div>
+  `;
+
+  TP_RES.forEach(r=>{
+    if(!byRes[r].all) return;
+    const meta=RES_META[r];
+    const colorsMap={BC:'#2E75B6',BB:'#538135',PT:'#C55A11',PH:'#A569BD',SK:'#8D6E63'};
+    const maxCards=Math.max(...LECTURES.map(l=>l.anki?.[r]||0));
+
+    let rows='';
+    LECTURES.forEach(l=>{
+      const cards=l.anki?.[r]||0;
+      if(!cards) return;
+      const ls=STATE[l.id];
+      const sel=ls[r].included&&l.res[r];
+      const pct=Math.round(cards/maxCards*100);
+      const sess=Math.max(1,Math.round(cards/50));
+      const doneKey=`anki-${l.id}-${r}`;
+      const isDone=getDayTask(doneKey,'done');
+      rows+=`<div class="anki-row ${sel?'':'not-sel'}">
+        <span class="anki-lec">Lec ${l.num}</span>
+        <span class="anki-count">${cards}</span>
+        <span class="anki-sess" style="color:var(--ink-3);font-size:.7rem">~${sess} sess</span>
+        <div class="anki-bar-wrap"><div class="anki-bar" style="width:${pct}%;background:${sel?colorsMap[r]:colorsMap[r]}55"></div></div>
+        <label class="anki-done-cb"><input type="checkbox" ${isDone?'checked':''} onchange="saveDayTask('${doneKey}','done',this.checked)"> ✓</label>
+      </div>`;
+    });
+
+    const card=document.createElement('div');
+    card.className='anki-res-card';
+    card.innerHTML=`
+      <div class="anki-res-header" style="background:${colorsMap[r]}22;border-bottom:1px solid ${colorsMap[r]}44">
+        <span style="color:${colorsMap[r]}">${meta.emoji}</span>
+        <span style="color:var(--ink)">${meta.label}</span>
+        <span style="margin-left:auto;font-size:.72rem;color:var(--ink-3)">${byRes[r].sel.toLocaleString()} selected / ${byRes[r].all.toLocaleString()} total</span>
+      </div>
+      <div class="anki-res-body">${rows}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function refreshAnki(){
+  if(document.getElementById('tab-anki').classList.contains('active')) renderAnki();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ══════════════════════════════════════════════════════════════
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.tab===name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id==='tab-'+name);
+  });
+  if(name==='dayplan') renderDayPlanner();
+  if(name==='anki') renderAnki();
+  if(name==='dashboard') renderDashboard();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  THEME / RESET
+// ══════════════════════════════════════════════════════════════
+function toggleTheme(){
+  const curr=document.documentElement.getAttribute('data-theme');
+  const next=curr==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+}
+
+function confirmReset(){
+  if(confirm('Reset ALL progress and selections? This cannot be undone.')){
+    STATE=defaultState();
+    DAY_STATE={};
+    saveState();
+    localStorage.removeItem(DAY_KEY);
+    init();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+function init(){
+  loadState();
+  loadDayState();
+  renderDashboard();
+  renderLecturePlanner();
+}
+
+init();
+</script>
+</body>
+</html>
