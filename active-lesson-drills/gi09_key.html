@@ -1,0 +1,752 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}
+.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}
+.fb-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #DBEAFE}
+.fb-row:last-child{border-bottom:none}
+.fb-row:nth-child(even){background:#F0F7FF}
+.fb-row:nth-child(odd){background:#fff}
+.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}
+.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.inline-blank{border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:1px 2px;color:#1e293b;width:140px;display:inline-block}
+.inline-blank:focus{border-bottom-color:#1D4ED8}
+.cascade-box{background:#F0F9FF;border:1px solid #7DD3FC;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:12px;line-height:2.2}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Secretions I &amp; II &#x2014; Active Recall</h2>
+  <a href="gi09_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">&#x2705; View Answer Key</a>
+</div>
+<p class="sub">GI09-10 &mdash; Dr. Mulroney &mdash; HoyaDocs GI Block | USMLE Step 1</p>
+
+<div class="resource-banner">
+  <strong>&#128218; Linked Study Guide</strong>
+  Open <a href="../lecture-guides/gi09-10-secretions-i-ii.html" target="_blank" style="color:#1D4ED8;font-weight:600">GI09-10: GI Secretions I &amp; II</a> alongside this drill for reference.
+</div>
+
+<!-- WARMUP -->
+<div class="card">
+  <div class="sec">&#9651; Warmup &#8212; Key Facts (complete from memory)</div>
+  <div class="fg">
+    <div class="f"><label>Only gut hormone that ↑ hunger</label><div class="ki-text">Ghrelin</div></div>
+    <div class="f"><label>Both unique products of parietal cells</label><div class="ki-text">HCl + Intrinsic Factor (IF)</div></div>
+    <div class="f"><label>Rate-limiting step in HCl secretion</label><div class="ki-text">H+/K+-ATPase (proton pump)</div></div>
+    <div class="f"><label>HAG = the 3 stimulators of parietal cell HCl</label><div class="ki-text">Histamine (H2), ACh (M3), Gastrin (CCK2) — HAG</div></div>
+    <div class="f"><label>Brush border enzyme that activates trypsinogen (not pancreatic)</label><div class="ki-text">Enterokinase (brush border enzyme)</div></div>
+    <div class="f"><label>Diarrhea causes loss of ___ → metabolic ___</label><div class="ki-text">HCO3- (bicarbonate) → hyperchloremic metabolic acidosis</div></div>
+  </div>
+  <button class="btn" onclick="rev(this,a0)">Check Warmup</button>
+  <div class="fb"></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">&#128167; Hunger, Satiety &amp; Saliva</div>
+  <div class="tab" onclick="sw(1)">&#128300; Gastric Secretory Products</div>
+  <div class="tab" onclick="sw(2)">&#9879;&#65039; Gastric Acid Regulation</div>
+  <div class="tab" onclick="sw(3)">&#129514; Pancreatic, Intestinal &amp; Colonic</div>
+  <div class="tab" onclick="sw(4)">&#9999;&#65039; Practice Qs</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 0 — HUNGER, SATIETY & SALIVA (LO 1-4)
+══════════════════════════════════════════════ -->
+<div class="panel active" id="p0">
+  <div class="lo-tag">LO 1&#x2013;4 — Hunger, Satiety &amp; Salivary Secretion</div>
+
+  <div class="sec">Hunger &amp; Satiety Hormones</div>
+  <table>
+    <thead>
+      <tr><th style="width:16%">Hormone</th><th style="width:22%">Source</th><th style="width:20%">Released When</th><th style="width:15%">Effect</th><th>Mechanism</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Ghrelin</td>
+        <td><div class="ki-text">Gastric fundus (X/A-like cells)</div></td>
+        <td><div class="ki-text">Fasting / pre-meal (peaks just before meals)</div></td>
+        <td>&#8593; Hunger</td>
+        <td><div class="ki-text">Stimulates NPY/AgRP neurons → ↑ appetite, ↑ food intake, ↑ fat storage</div></td>
+      </tr>
+      <tr>
+        <td class="rl">PYY &amp; GLP-1</td>
+        <td><div class="ki-text">L-cells of distal ileum and colon</div></td>
+        <td>Post-meal (fat/CHO)</td>
+        <td>&#8595; Appetite</td>
+        <td><div class="ki-text">Inhibits NPY/AgRP neurons → ↓ appetite (ileal brake); PYY also slows GI transit</div></td>
+      </tr>
+      <tr>
+        <td class="rl">Leptin</td>
+        <td><div class="ki-text">Adipocytes (white fat); proportional to fat mass</div></td>
+        <td>&#8733; fat mass</td>
+        <td>&#8595; Appetite</td>
+        <td><div class="ki-text">Inhibits NPY/AgRP + activates POMC/CART neurons → ↓ appetite + ↑ energy expenditure</div></td>
+      </tr>
+      <tr>
+        <td class="rl">GLP-1 incretin</td>
+        <td>L-cells (ileum/colon)</td>
+        <td>Post-meal nutrients</td>
+        <td>&#8595; Blood glucose</td>
+        <td><div class="ki-text">↑ Insulin secretion (glucose-dependent incretin effect)</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn">&#9888; Step 1 trap: <strong>Ghrelin is the only hunger-stimulating gut hormone.</strong> PYY, GLP-1, CCK, leptin all reduce appetite. In obesity: leptin is HIGH but there is leptin <em>resistance</em>.</div>
+
+  <div class="sec">Three Major Salivary Glands</div>
+  <table>
+    <thead><tr><th style="width:25%">Gland</th><th>Type</th><th>Primary Product</th><th>% of Total</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Parotid</td><td><div class="ki-text">Purely serous</div></td><td><div class="ki-text">α-amylase (ptyalin)</div></td><td>~25%</td></tr>
+      <tr><td class="rl">Submandibular</td><td><div class="ki-text">Mixed (serous + mucous)</div></td><td>&#945;-amylase + mucin</td><td><div class="ki-text">~70% of total saliva</div></td></tr>
+      <tr><td class="rl">Sublingual</td><td>Predominantly mucous</td><td><div class="ki-text">Mucin (mucus glycoproteins)</div></td><td>~5%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Two-Stage Salivary Production Model</div>
+  <div class="card" style="background:#F8FAFC">
+    <p style="font-size:12px;line-height:1.9">
+      <strong>Stage 1 — Acinar cells:</strong> Produce a primary secretion that is <div class="ki-text">Isotonic (plasma-like)</div> (tonicity), similar to plasma in electrolyte composition.<br>
+      <strong>Stage 2 — Ductal cells:</strong> Na<sup>+</sup> is <div class="ki-text">Reabsorbed (water cannot follow → becomes hypotonic)</div>; K<sup>+</sup> is <div class="ki-text">Secreted into lumen (K+ &gt; plasma)</div> into the lumen; HCO<sub>3</sub><sup>&#8315;</sup> is <div class="ki-text">Secreted (HCO3- neutralizes acid in esophagus)</div> (neutralizes esophageal acid).<br>
+      <strong>Net result:</strong> Final saliva is always <div class="ki-text">Hypotonic (always, at all flow rates)</div> to plasma, even at high flow rates.
+    </p>
+  </div>
+
+  <div class="sec">Autonomic Control of Salivary Secretion</div>
+  <table>
+    <thead><tr><th style="width:28%">Division</th><th>CN / Origin</th><th>Effect</th><th>Key Clinical Point</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">PSNS → Parotid</td>
+        <td><div class="ki-text">CN IX (glossopharyngeal) via otic ganglion</div></td>
+        <td rowspan="2">Sustained, large-volume, <div class="ki-text">CN VII (facial) via submandibular ganglion</div> secretion via ACh (M3)</td>
+        <td rowspan="2">Atropine → <div class="ki-text">Watery (large-volume)</div> (blocks M3)</td>
+      </tr>
+      <tr>
+        <td class="rl">PSNS → Submandb/Sublng</td>
+        <td><div class="ki-text">Xerostomia (dry mouth)</div></td>
+      </tr>
+      <tr>
+        <td class="rl">SNS</td>
+        <td>T1&#x2013;T3 → superior cervical ganglion</td>
+        <td>Brief viscous blip then <div class="ki-text">Vasoconstriction</div> → cessation</td>
+        <td>Dry mouth under stress</td>
+      </tr>
+      <tr>
+        <td class="rl">Aldosterone effect</td>
+        <td>Salivary ducts</td>
+        <td colspan="2"><div class="ki-text">↑ Na+ reabsorption + ↑ K+ secretion (identical to renal collecting duct)</div> (same mechanism as renal collecting duct)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a1)">Check Hunger, Satiety &amp; Saliva</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 1 — GASTRIC SECRETORY PRODUCTS (LO 5-6)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p1">
+  <div class="lo-tag">LO 5&#x2013;6 — Gastric Cell Types, HCl Mechanism &amp; Mucosal Protection</div>
+
+  <div class="sec">Gastric Gland Cell Types — Complete Reference</div>
+  <table>
+    <thead>
+      <tr><th style="width:22%">Cell Type</th><th>Location</th><th>Product(s)</th><th>Stimulated By</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Surface Mucous Cells</td>
+        <td>Surface + pit</td>
+        <td><div class="ki-text">Alkaline mucus (thick gel; pH 6-7 at surface despite luminal pH 2)</div></td>
+        <td>Prostaglandins, ACh</td>
+      </tr>
+      <tr>
+        <td class="rl">Parietal (Oxyntic)</td>
+        <td>Upper-mid body</td>
+        <td><div class="ki-text">HCl</div> + <div class="ki-text">Intrinsic Factor (IF)</div></td>
+        <td><div class="ki-text">ACh (M3), Histamine (H2), Gastrin (CCK2) — all three required for maximal acid</div></td>
+      </tr>
+      <tr>
+        <td class="rl">Chief (Zymogenic)</td>
+        <td>Base of gland</td>
+        <td><div class="ki-text">Pepsinogen I &amp; II (+ gastric lipase); pepsinogen activated by HCl → pepsin</div></td>
+        <td>ACh, secretin, &#8595;pH</td>
+      </tr>
+      <tr>
+        <td class="rl">G Cells</td>
+        <td><div class="ki-text">Pyloric antrum</div></td>
+        <td>Gastrin</td>
+        <td><div class="ki-text">Peptides/AAs in lumen, vagal ACh/GRP, stomach distension</div></td>
+      </tr>
+      <tr>
+        <td class="rl">D Cells</td>
+        <td>Throughout (antrum + fundus)</td>
+        <td><div class="ki-text">Somatostatin (the primary &#x27;off switch&#x27; for acid)</div></td>
+        <td><div class="ki-text">Low luminal pH (&lt;3), fat, secretin</div></td>
+      </tr>
+      <tr>
+        <td class="rl">ECL Cells</td>
+        <td>Fundus / oxyntic gland</td>
+        <td><div class="ki-text">Histamine (+ serotonin); histamine amplifies parietal cell HCl via H2 receptor</div></td>
+        <td>Gastrin, ACh</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">HCl Secretion Mechanism — Parietal Cell</div>
+  <div class="cascade-box">
+    <strong style="color:#0C4A6E">Step 1:</strong> CO<sub>2</sub> + H<sub>2</sub>O &#8594; H<sub>2</sub>CO<sub>3</sub> via <div class="ki-text">Carbonic anhydrase</div> (inside parietal cell)<br>
+    <strong style="color:#0C4A6E">Step 2:</strong> H<sub>2</sub>CO<sub>3</sub> &#8594; H<sup>+</sup> + HCO<sub>3</sub><sup>&#8315;</sup><br>
+    <strong style="color:#0C4A6E">Step 3:</strong> H<sup>+</sup> pumped into lumen via <div class="ki-text">H+/K+-ATPase (the rate-limiting step in HCl secretion)</div> [the rate-limiting step]<br>
+    <strong style="color:#0C4A6E">Step 4:</strong> HCO<sub>3</sub><sup>&#8315;</sup> exits basolateral via <div class="ki-text">HCO3-/Cl- antiporter (exchanges intracellular HCO3- for extracellular Cl-)</div> &#8594; blood = <strong>"alkaline tide"</strong><br>
+    <strong style="color:#0C4A6E">Step 5:</strong> Cl<sup>&#8315;</sup> exits apically &#8594; combines with H<sup>+</sup> &#8594; HCl secreted
+  </div>
+  <div class="fg" style="margin-top:8px">
+    <div class="f"><label>"Alkaline tide" definition</label><div class="ki-text">Post-meal rise in blood HCO3- (one HCO3- enters blood per H+ secreted)</div></div>
+    <div class="f"><label>PPI mechanism (vs. H2 blocker)</label><div class="ki-text">PPIs irreversibly block H+/K+-ATPase; H2 blockers block histamine signaling upstream</div></div>
+  </div>
+
+  <div class="sec">Mucosal Protection &amp; Pernicious Anemia</div>
+  <div class="fg">
+    <div class="f"><label>NSAIDs: COX inhibition → ↓ ___ → mucosal injury</label><div class="ki-text">Prostaglandins (PGE2, PGI2)</div></div>
+    <div class="f"><label>Misoprostol = ___ analog; used for ___ prophylaxis</label><div class="ki-text">PGE1 analog; NSAID-induced ulcer prophylaxis</div></div>
+    <div class="f"><label>Pernicious anemia: anti-parietal cell Ab destroy ___; lose HCl + ___</label><div class="ki-text">Parietal cells; HCl + intrinsic factor (IF)</div></div>
+    <div class="f"><label>IF-B12 complex absorbed at ___</label><div class="ki-text">Terminal ileum (cubam receptor for IF-B12 complex)</div></div>
+    <div class="f"><label>Achlorhydria → hypergastrinemia mechanism (why?)</label><div class="ki-text">No HCl → no luminal pH ↓ → no somatostatin → G cells disinhibited → hypergastrinemia</div></div>
+    <div class="f"><label>Esophageal mucosa = ___ epithelium (no surface mucous cells)</label><div class="ki-text">Stratified squamous (no surface mucous cells; very vulnerable to acid)</div></div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a2)">Check Gastric Secretory Products</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 2 — GASTRIC ACID REGULATION (LO 7-11)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p2">
+  <div class="lo-tag">LO 7&#x2013;11 — Three Phases, H. pylori &amp; Drug Targets</div>
+
+  <div class="sec">Three Phases of Gastric Secretion</div>
+  <table>
+    <thead>
+      <tr><th style="width:15%">Phase</th><th>Trigger</th><th>Key Mediators</th><th>% of Acid</th><th>Net Effect</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Cephalic</td>
+        <td><div class="ki-text">Sight/smell/taste/thought of food (before food enters stomach)</div></td>
+        <td><div class="ki-text">Vagus (CN X) → ACh + GRP → parietal cells + G cells → gastrin</div></td>
+        <td><div class="ki-text">30–40%</div></td>
+        <td>&#8593; HCl</td>
+      </tr>
+      <tr>
+        <td class="rl">Gastric</td>
+        <td><div class="ki-text">Food in stomach: distension + peptides/AAs in antrum</div></td>
+        <td><div class="ki-text">ACh, Gastrin, Histamine</div></td>
+        <td><div class="ki-text">50–60%</div></td>
+        <td>&#8593; HCl (dominant)</td>
+      </tr>
+      <tr>
+        <td class="rl">Intestinal</td>
+        <td>Chyme in duodenum</td>
+        <td><div class="ki-text">Secretin, CCK, GIP + enterogastric reflex</div></td>
+        <td><div class="ki-text">5–10% (mostly inhibitory)</div></td>
+        <td>&#8595; HCl (inhibitory)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Stimulators &amp; Inhibitors of HCl</div>
+  <table>
+    <thead><tr><th style="width:22%">Stimulator/Inhibitor</th><th>Receptor / Source</th><th>2nd Messenger</th><th>Key Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Histamine (HAG)</td>
+        <td><div class="ki-text">H2 receptor</div></td>
+        <td><div class="ki-text">cAMP → PKA (most potent direct stimulator)</div></td>
+        <td>Most potent direct stimulator</td>
+      </tr>
+      <tr>
+        <td class="rl">ACh (HAG)</td>
+        <td><div class="ki-text">M3 (muscarinic) receptor → IP3/Ca2+</div></td>
+        <td>IP3/Ca<sup>2+</sup></td>
+        <td>Vagal + ENS neurons</td>
+      </tr>
+      <tr>
+        <td class="rl">Somatostatin (inhibitor)</td>
+        <td>D cells (paracrine)</td>
+        <td>&#8595; cAMP</td>
+        <td>Triggered by luminal pH &lt; <div class="ki-text">3 (somatostatin released at pH &lt;3 by D cells)</div>; the primary "off switch"</td>
+      </tr>
+      <tr>
+        <td class="rl">Secretin (inhibitor)</td>
+        <td>S cells (duodenum)</td>
+        <td>cAMP</td>
+        <td>Released when duodenal pH &lt; <div class="ki-text">4.5 (secretin released at duodenal pH &lt;4.5)</div>; &#8593; pancreatic HCO<sub>3</sub><sup>&#8315;</sup></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">H. pylori Pathophysiology</div>
+  <div class="on-exam">&#128680; H. pylori = #1 cause of peptic ulcer disease worldwide (WHO Class I carcinogen)</div>
+  <div class="fg">
+    <div class="f"><label>Urease mechanism → forms ___ → alkaline microenvironment</label><div class="ki-text">Ammonia (NH3) + CO2; creates alkaline microenvironment around bacteria</div></div>
+    <div class="f"><label>Mucinase → disrupts ___</label><div class="ki-text">Mucus-bicarbonate barrier (allows acid/pepsin direct mucosal access)</div></div>
+    <div class="f"><label>Antral H. pylori → chain: ↓ D cells → ↓ ___ → ↑ gastrin → ↑ HCl → ___</label><div class="ki-text">Somatostatin → gastrin → DU (duodenal ulcer)</div></div>
+    <div class="f"><label>Corpus H. pylori → destroys parietal cells → ↑ gastrin but ↓ HCl → ___ risk</label><div class="ki-text">Gastric ulcer (GU) + gastric cancer/adenocarcinoma</div></div>
+    <div class="f"><label>MALT lymphoma: can regress with ___</label><div class="ki-text">H. pylori eradication (MALT lymphoma can fully regress)</div></div>
+    <div class="f"><label>Triple therapy = ___</label><div class="ki-text">PPI + clarithromycin + amoxicillin (or metronidazole) × 7–14 days</div></div>
+  </div>
+
+  <div class="sec">Pharmacological Targets</div>
+  <table>
+    <thead><tr><th style="width:22%">Drug Class</th><th>Mechanism</th><th>Key Step 1 Fact</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">PPIs (omeprazole)</td>
+        <td>Irreversibly block <div class="ki-text">H+/K+-ATPase (proton pump)</div>; prodrug activated by <div class="ki-text">Acid in secretory canaliculi (prodrug activation; must take before meals)</div></td>
+        <td>Most effective; take before meals (pumps must be active)</td>
+      </tr>
+      <tr>
+        <td class="rl">H2 Blockers</td>
+        <td>Block <div class="ki-text">H2 receptor</div> receptor &#8594; &#8595; cAMP</td>
+        <td>Cimetidine: inhibits <div class="ki-text">CYP450 enzymes (drug interactions with warfarin, theophylline)</div> + causes gynecomastia</td>
+      </tr>
+      <tr>
+        <td class="rl">Misoprostol</td>
+        <td><div class="ki-text">PGE1</div> analog &#8594; &#8595; parietal cell cAMP + &#8593; mucus/HCO<sub>3</sub><sup>&#8315;</sup></td>
+        <td>NSAID prophylaxis + abortifacient (uterine contractions)</td>
+      </tr>
+      <tr>
+        <td class="rl">Truncal vagotomy</td>
+        <td>Eliminates <div class="ki-text">Cephalic phase (30–40% of acid; requires drainage procedure — pyloroplasty)</div></td>
+        <td>Requires drainage procedure (pyloroplasty); impairs gastric emptying</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a3)">Check Gastric Acid Regulation</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 3 — PANCREATIC, INTESTINAL & COLONIC (LO 12-14)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p3">
+  <div class="lo-tag">LO 12&#x2013;14 — Exocrine Pancreas, SI Secretions, Colonic &amp; GI Hormone Table</div>
+
+  <div class="sec">Pancreatic Cell Types</div>
+  <table>
+    <thead><tr><th style="width:28%">Cell Type</th><th>Stimulated By</th><th>Product</th><th>Key Detail</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Acinar cells</td>
+        <td><div class="ki-text">CCK (I-cells) + vagal ACh</div></td>
+        <td><div class="ki-text">Digestive enzymes (as zymogens stored in granules)</div></td>
+        <td>Stored as zymogen granules</td>
+      </tr>
+      <tr>
+        <td class="rl">Centroacinar / Ductal</td>
+        <td><div class="ki-text">Secretin (S-cells) + VIP</div></td>
+        <td><div class="ki-text">HCO3--rich, enzyme-poor fluid (via CFTR — cAMP-mediated)</div></td>
+        <td>Via CFTR channels; neutralizes duodenal acid</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Enzyme Activation Cascade</div>
+  <div class="cascade-box">
+    <strong style="color:#0C4A6E">Step 1:</strong> <div class="ki-text">Enterokinase</div> (brush border, duodenum — NOT pancreatic) activates trypsinogen &#8594; <strong>Trypsin</strong><br>
+    <strong style="color:#0C4A6E">Step 2:</strong> Trypsin activates <div class="ki-text">All other zymogens (chymotrypsinogen, proelastase, procarboxypeptidase, pro-colipase, prophospholipase A2)</div> (all other zymogens — chymotrypsinogen, proelastase, procarboxypeptidase, pro-colipase, prophospholipase A2)<br>
+    <strong style="color:#0C4A6E">Special cases:</strong> Amylase = <div class="ki-text">No zymogen — secreted in active form</div> (no zymogen needed); Lipase requires <div class="ki-text">Colipase (activated by trypsin from pro-colipase; anchors lipase to lipid droplet)</div> (cofactor, activated by trypsin) to anchor to lipid droplet in bile
+  </div>
+  <div class="fg" style="margin-top:8px">
+    <div class="f"><label>CF (CFTR mutation): pancreatic consequence</label><div class="ki-text">Thick secretions block pancreatic ducts → autodigestion → exocrine pancreatic insufficiency → steatorrhea + fat-soluble vitamin deficiency (ADEK)</div></div>
+    <div class="f"><label>Acute pancreatitis: phospholipase A2 → fat necrosis → sequesters Ca²⁺ → ___</label><div class="ki-text">Hypocalcemia (Ca2+ binds fatty acids → saponification → Chvostek&#x27;s/Trousseau&#x27;s signs)</div></div>
+  </div>
+
+  <div class="sec">Small Intestinal Cell Types</div>
+  <table>
+    <thead><tr><th style="width:22%">Cell</th><th>Location</th><th>Secretion</th><th>Step 1 Key Point</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Goblet Cells</td>
+        <td>Throughout SI + colon (&#8593; distally)</td>
+        <td><div class="ki-text">Mucin (mucus glycoproteins)</div></td>
+        <td>More numerous in colon; MUC2 in colon</td>
+      </tr>
+      <tr>
+        <td class="rl">Paneth Cells</td>
+        <td><div class="ki-text">Crypts of small intestine ONLY (absent from normal colon)</div></td>
+        <td><div class="ki-text">α-defensins (cryptdins), lysozyme — antimicrobial peptides</div></td>
+        <td>Paneth cell metaplasia in colon = Crohn's clue</td>
+      </tr>
+      <tr>
+        <td class="rl">Brunner's Glands</td>
+        <td><div class="ki-text">Submucosa of the duodenum only (unique location in GI tract)</div></td>
+        <td><div class="ki-text">Alkaline mucus (HCO3--rich) + urogastrone (EGF)</div></td>
+        <td>Stimulated by <div class="ki-text">Secretin (primary stimulator)</div>; inhibited by SNS</td>
+      </tr>
+      <tr>
+        <td class="rl">Enterocytes (brush border)</td>
+        <td>Villi</td>
+        <td><div class="ki-text">Brush border enzymes (enterokinase, disaccharidases, peptidases)</div></td>
+        <td>Enterokinase here activates trypsinogen</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">CFTR &amp; Secretory Diarrhea</div>
+  <div class="fg">
+    <div class="f"><label>Cholera toxin mechanism (molecular target)</label><div class="ki-text">ADP-ribosylates Gsα → locks in active (GTP-bound) state → constitutive adenylate cyclase → ↑↑ cAMP → CFTR wide open → massive Cl- secretion → &#x27;rice-water&#x27; diarrhea</div></div>
+    <div class="f"><label>E. coli heat-stable toxin (ST): mechanism</label><div class="ki-text">Activates guanylate cyclase → ↑ cGMP → ↑ CFTR activity → secretory diarrhea</div></div>
+  </div>
+
+  <div class="sec">Colonic Secretions &amp; GI Hormone Master Table</div>
+  <div class="fg">
+    <div class="f"><label>Colon: net secretor of ___ and ___</label><div class="ki-text">HCO3- and K+</div></div>
+    <div class="f"><label>HCO₃⁻/Cl⁻ exchange: HCO₃⁻ neutralizes ___</label><div class="ki-text">Short-chain fatty acids (SCFAs) from bacterial fermentation (butyrate, propionate, acetate)</div></div>
+    <div class="f"><label>Prolonged diarrhea → acid-base disturbance</label><div class="ki-text">Hyperchloremic metabolic acidosis (non-anion gap) + hypokalemia</div></div>
+    <div class="f"><label>Motilin: source; released during ___; initiates ___</label><div class="ki-text">M cells (duodenum/jejunum); fasting (interdigestive period); migrating motor complex (MMC) — &#x27;intestinal housekeeper&#x27;</div></div>
+  </div>
+
+  <div class="sec">GI Hormone Clinical Syndromes</div>
+  <table>
+    <thead><tr><th style="width:28%">Syndrome</th><th>Hormone / Cell</th><th>Classic Triad / Key Features</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Zollinger-Ellison</td>
+        <td>&#8593; Gastrin (gastrinoma)</td>
+        <td><div class="ki-text">Multiple peptic ulcers (distal duodenum), diarrhea/steatorrhea (acid inactivates lipase), ↓ response to PPIs; associated with MEN1</div></td>
+      </tr>
+      <tr>
+        <td class="rl">VIPoma (WDHA)</td>
+        <td>&#8593; VIP &#8594; &#8593; cAMP &#8594; CFTR</td>
+        <td><div class="ki-text">WDHA: Watery Diarrhea, Hypokalemia, Achlorhydria; treat with octreotide + surgery</div></td>
+      </tr>
+      <tr>
+        <td class="rl">Carcinoid Syndrome</td>
+        <td>&#8593; Serotonin (EC cells)</td>
+        <td><div class="ki-text">Flushing, diarrhea, wheezing, tricuspid regurgitation; ↑ urine 5-HIAA; occurs after liver metastasis</div></td>
+      </tr>
+      <tr>
+        <td class="rl">Somatostatinoma</td>
+        <td>&#8593; Somatostatin</td>
+        <td><div class="ki-text">&#x27;Inhibitory syndrome&#x27;: diabetes (↓ insulin) + gallstones (↓ CCK → bile stasis) + steatorrhea (↓ pancreatic lipase)</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a4)">Check Pancreatic, Intestinal &amp; Colonic</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 4 — PRACTICE Qs
+══════════════════════════════════════════════ -->
+<div class="panel" id="p4">
+  <div class="lo-tag">Practice Questions — LO 1&#x2013;14 Integration</div>
+  <p style="font-size:11px;color:#64748B;margin-bottom:12px">Select the best answer, then reveal the explanation.</p>
+
+  <!-- Q1 -->
+  <div class="pq-box">
+    <div class="pq-q">Q1. A 28-year-old woman with obesity undergoes Roux-en-Y gastric bypass. Six months later she reports markedly reduced hunger. Which of the following best explains the hormonal changes responsible?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq1" value="a"> A. Increased ghrelin from the bypassed gastric fundus</label><br>
+      <label><input type="radio" name="pq1" value="b"> B. Decreased PYY and GLP-1 due to reduced caloric intake</label><br>
+      <label><input type="radio" name="pq1" value="c"> C. Decreased ghrelin + increased PYY and GLP-1 due to altered anatomy</label><br>
+      <label><input type="radio" name="pq1" value="d"> D. Increased leptin from enlarged adipose stores</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Decreased ghrelin + increased PYY/GLP-1.</strong> The bypassed fundus produces less ghrelin (less hunger drive). Food passes rapidly to the distal gut → robust L-cell stimulation → ↑ PYY + GLP-1 → satiety. Six months post-op she has lost weight → less fat → less leptin (opposite of D). Choice A reverses the ghrelin direction.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="pq-box">
+    <div class="pq-q">Q2. A researcher collects saliva at rest (low flow) and after maximal gustatory stimulation (high flow). Which correctly describes how electrolytes change with increasing flow rate?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq2" value="a"> A. Na+ decreases; K+ increases; osmolarity rises to isotonic</label><br>
+      <label><input type="radio" name="pq2" value="b"> B. Na+ increases; K+ decreases slightly; saliva remains hypotonic</label><br>
+      <label><input type="radio" name="pq2" value="c"> C. Na+ increases; K+ increases; osmolarity becomes isotonic</label><br>
+      <label><input type="radio" name="pq2" value="d"> D. Na+ and K+ unchanged; only HCO3- changes</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Na+ increases; K+ decreases slightly; always hypotonic.</strong> At low flow, ducts have more time to reabsorb Na+ and secrete K+ → very low Na+, very high K+. At high flow, less ductal modification → Na+ rises toward plasma levels, K+ falls slightly. Saliva is always hypotonic regardless of flow rate — it never reaches isotonicity.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="pq-box">
+    <div class="pq-q">Q3. A 65-year-old woman prescribed oxybutynin (anticholinergic) for overactive bladder develops dry mouth. What is the mechanism?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq3" value="a"> A. Activation of H2 receptors on acinar cells</label><br>
+      <label><input type="radio" name="pq3" value="b"> B. Blockade of M3 muscarinic receptors on acinar cells, reducing IP3/Ca2+ signaling</label><br>
+      <label><input type="radio" name="pq3" value="c"> C. Stimulation of α1-adrenergic receptors causing vasoconstriction</label><br>
+      <label><input type="radio" name="pq3" value="d"> D. Blockade of CN IX at the otic ganglion</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — M3 muscarinic blockade → xerostomia.</strong> Parasympathetic ACh acting on M3 receptors (IP3/Ca2+) is the dominant driver of salivary secretion. Anticholinergics block M3 → eliminate sustained watery saliva → xerostomia. Note: vagus (CN X) does NOT control salivary glands — that's CN VII (submandibular/sublingual) and CN IX (parotid).</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="pq-box">
+    <div class="pq-q">Q4. A 52-year-old woman has macrocytic anemia, subacute combined degeneration, and markedly elevated serum gastrin. Anti-parietal cell antibodies are positive. Why is her gastrin elevated?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq4" value="a"> A. Gastrinoma in the pancreas</label><br>
+      <label><input type="radio" name="pq4" value="b"> B. Loss of HCl eliminates acid-mediated inhibition of G cells</label><br>
+      <label><input type="radio" name="pq4" value="c"> C. Excess vagal stimulation of G cells via GRP</label><br>
+      <label><input type="radio" name="pq4" value="d"> D. D-cell hyperplasia causing excess somatostatin</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Loss of HCl removes the normal acid feedback on G cells.</strong> Anti-parietal cell antibodies destroy parietal cells → no HCl (achlorhydria) + no intrinsic factor. Normally pH &lt;3 triggers D cells → somatostatin → inhibits G cells. Without HCl, pH stays high → no somatostatin → G cells tonically active → hypergastrinemia. This is pernicious anemia. Choice A (gastrinoma) would not show anti-parietal cell antibodies.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="pq-box">
+    <div class="pq-q">Q5. A new acid-suppressing drug is a prodrug activated by gastric acid that then irreversibly forms a disulfide bond with its target. Which target and mechanism does this describe?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq5" value="a"> A. Carbonic anhydrase in the parietal cell cytoplasm</label><br>
+      <label><input type="radio" name="pq5" value="b"> B. H2 receptor on parietal cell → reducing cAMP</label><br>
+      <label><input type="radio" name="pq5" value="c"> C. HCO3-/Cl- antiporter on basolateral membrane</label><br>
+      <label><input type="radio" name="pq5" value="d"> D. H+/K+-ATPase (proton pump) — the rate-limiting step in HCl secretion</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>D — H+/K+-ATPase (PPI mechanism).</strong> PPIs are prodrugs activated by acid in the secretory canaliculi of parietal cells → sulfenamide form → irreversibly binds cysteine residues of H+/K+-ATPase. The proton pump is the rate-limiting step in HCl secretion — no H+ reaches the lumen without it. PPIs are the most effective acid suppressants because they target the final, obligatory step. H2 blockers block histamine signaling upstream of the pump.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="pq-box">
+    <div class="pq-q">Q6. Sham feeding (seeing and smelling food without eating) significantly increases gastric acid. Which phase is this, and what happens after truncal vagotomy?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq6" value="a"> A. Gastric phase; persists after vagotomy via gastrin</label><br>
+      <label><input type="radio" name="pq6" value="b"> B. Intestinal phase; eliminated by secretin after vagotomy</label><br>
+      <label><input type="radio" name="pq6" value="c"> C. Cephalic phase; completely eliminated by truncal vagotomy</label><br>
+      <label><input type="radio" name="pq6" value="d"> D. Cephalic phase; partially preserved by ENS local reflexes</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Cephalic phase; completely eliminated by truncal vagotomy.</strong> The cephalic phase is 100% vagal (CN X): cortex → dorsal vagal nucleus → vagus → stomach → ACh + GRP → parietal cells + G cells → ↑ gastrin. Contributes 30–40% of meal acid. Truncal vagotomy severs CN X → no cephalic-phase acid response. The gastric phase has a vagal component but local ENS and gastrin can maintain it; the intestinal phase is primarily hormonal.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="pq-box">
+    <div class="pq-q">Q7. A patient develops acute pancreatitis secondary to a gallstone obstructing the pancreatic duct. Which of the following best explains why hypocalcemia develops?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq7" value="a"> A. Trypsin degrades PTH in the bloodstream</label><br>
+      <label><input type="radio" name="pq7" value="b"> B. Phospholipase A2 causes fat necrosis → Ca2+ binds fatty acids (saponification) → hypocalcemia</label><br>
+      <label><input type="radio" name="pq7" value="c"> C. Amylase release damages the parathyroid glands</label><br>
+      <label><input type="radio" name="pq7" value="d"> D. Lipase deficiency prevents absorption of dietary calcium</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Phospholipase A2 activation → fat necrosis → saponification → Ca2+ sequestration.</strong> In pancreatitis, zymogens activate prematurely inside the pancreas. Phospholipase A2 digests fat cells → fatty acids are released → Ca2+ binds fatty acids forming calcium soaps (saponification) → Ca2+ sequestered in the peritoneum → hypocalcemia → Chvostek's + Trousseau's signs. Elastase separately digests vessel walls → hemorrhagic pancreatitis → Cullen's sign (periumbilical) or Grey Turner's sign (flank).</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="pq-box">
+    <div class="pq-q">Q8. A patient has a pancreatic tumor causing watery diarrhea (8 L/day), hypokalemia, and achlorhydria. What is the diagnosis and what is the specific molecular mechanism of diarrhea?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq8" value="a"> A. Somatostatinoma; ↓ CCK → ↓ pancreatic enzymes → osmotic diarrhea</label><br>
+      <label><input type="radio" name="pq8" value="b"> B. Gastrinoma (ZES); ↑ gastrin → acid inactivates lipase → secretory diarrhea</label><br>
+      <label><input type="radio" name="pq8" value="c"> C. VIPoma; VIP → ↑ cAMP → CFTR-mediated Cl- secretion → isotonic secretory diarrhea</label><br>
+      <label><input type="radio" name="pq8" value="d"> D. Carcinoid; serotonin → ↑ gut motility → transit diarrhea</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — VIPoma (WDHA syndrome).</strong> VIP binds VPAC receptors → ↑ adenylate cyclase → ↑↑ cAMP → PKA → CFTR channels open → massive Cl- secretion → Na+ + water follow → voluminous secretory diarrhea. VIP also: inhibits parietal cells → achlorhydria; stimulates colonic K+ secretion → hypokalemia. WDHA = Watery Diarrhea, Hypokalemia, Achlorhydria. Treatment: octreotide (somatostatin analog) + surgical resection. This is also called "pancreatic cholera" because the mechanism mirrors cholera toxin's effect on CFTR.</div>
+  </div>
+
+</div>
+
+<script>
+function sw(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i));
+}
+
+function rev(btn,ans){
+  const card=btn.closest('.card,.panel');
+  const inputs=[...card.querySelectorAll('input[type=text],input:not([type]),input.inline-blank')].filter(el=>el.type!=='radio'&&el.type!=='checkbox');
+  const fb=btn.nextElementSibling;
+  fb.style.display='block';
+  fb.innerHTML='<div class="fb-header">Answer Key</div>'+
+    ans.map((a,i)=>`<div class="fb-row"><div class="fb-q">Field ${i+1}</div><div class="fb-a">${a}</div></div>`).join('');
+  inputs.forEach((el,i)=>{if(ans[i]!==undefined)el.placeholder=ans[i];});
+}
+
+// ── ANSWER OBJECTS ──────────────────────────────
+
+// Warmup (6)
+const a0=[
+  "Ghrelin",
+  "HCl + Intrinsic Factor (IF)",
+  "H+/K+-ATPase (proton pump)",
+  "Histamine (H2), ACh (M3), Gastrin (CCK2) — HAG",
+  "Enterokinase (brush border enzyme)",
+  "HCO3- (bicarbonate) → hyperchloremic metabolic acidosis"
+];
+
+// Tab 0 — Hunger, Satiety & Saliva (24)
+const a1=[
+  // Hunger/satiety table (8)
+  "Gastric fundus (X/A-like cells)",
+  "Fasting / pre-meal (peaks just before meals)",
+  "Stimulates NPY/AgRP neurons → ↑ appetite, ↑ food intake, ↑ fat storage",
+  "L-cells of distal ileum and colon",
+  "Inhibits NPY/AgRP neurons → ↓ appetite (ileal brake); PYY also slows GI transit",
+  "Adipocytes (white fat); proportional to fat mass",
+  "Inhibits NPY/AgRP + activates POMC/CART neurons → ↓ appetite + ↑ energy expenditure",
+  "↑ Insulin secretion (glucose-dependent incretin effect)",
+  // Salivary glands table (5)
+  "Purely serous",
+  "α-amylase (ptyalin)",
+  "Mixed (serous + mucous)",
+  "~70% of total saliva",
+  "Mucin (mucus glycoproteins)",
+  // Two-stage model (5)
+  "Isotonic (plasma-like)",
+  "Reabsorbed (water cannot follow → becomes hypotonic)",
+  "Secreted into lumen (K+ > plasma)",
+  "Secreted (HCO3- neutralizes acid in esophagus)",
+  "Hypotonic (always, at all flow rates)",
+  // Autonomic control (6)
+  "CN IX (glossopharyngeal) via otic ganglion",
+  "CN VII (facial) via submandibular ganglion",
+  "Watery (large-volume)",
+  "Xerostomia (dry mouth)",
+  "Vasoconstriction",
+  "↑ Na+ reabsorption + ↑ K+ secretion (identical to renal collecting duct)"
+];
+
+// Tab 1 — Gastric Secretory Products (24)
+const a2=[
+  // Cell types table (10)
+  "Alkaline mucus (thick gel; pH 6-7 at surface despite luminal pH 2)",
+  "HCl",
+  "Intrinsic Factor (IF)",
+  "ACh (M3), Histamine (H2), Gastrin (CCK2) — all three required for maximal acid",
+  "Pepsinogen I & II (+ gastric lipase); pepsinogen activated by HCl → pepsin",
+  "Pyloric antrum",
+  "Peptides/AAs in lumen, vagal ACh/GRP, stomach distension",
+  "Somatostatin (the primary 'off switch' for acid)",
+  "Low luminal pH (<3), fat, secretin",
+  "Histamine (+ serotonin); histamine amplifies parietal cell HCl via H2 receptor",
+  // HCl mechanism (5)
+  "Carbonic anhydrase",
+  "H+/K+-ATPase (the rate-limiting step in HCl secretion)",
+  "HCO3-/Cl- antiporter (exchanges intracellular HCO3- for extracellular Cl-)",
+  "Post-meal rise in blood HCO3- (one HCO3- enters blood per H+ secreted)",
+  "PPIs irreversibly block H+/K+-ATPase; H2 blockers block histamine signaling upstream",
+  // Mucosal protection (6)
+  "Prostaglandins (PGE2, PGI2)",
+  "PGE1 analog; NSAID-induced ulcer prophylaxis",
+  "Parietal cells; HCl + intrinsic factor (IF)",
+  "Terminal ileum (cubam receptor for IF-B12 complex)",
+  "No HCl → no luminal pH ↓ → no somatostatin → G cells disinhibited → hypergastrinemia",
+  "Stratified squamous (no surface mucous cells; very vulnerable to acid)"
+];
+
+// Tab 2 — Gastric Acid Regulation (25)
+const a3=[
+  // Three phases (7)
+  "Sight/smell/taste/thought of food (before food enters stomach)",
+  "Vagus (CN X) → ACh + GRP → parietal cells + G cells → gastrin",
+  "30–40%",
+  "Food in stomach: distension + peptides/AAs in antrum",
+  "ACh, Gastrin, Histamine",
+  "50–60%",
+  "Secretin, CCK, GIP + enterogastric reflex",
+  "5–10% (mostly inhibitory)",
+  // Stimulators/inhibitors (5)
+  "H2 receptor",
+  "cAMP → PKA (most potent direct stimulator)",
+  "M3 (muscarinic) receptor → IP3/Ca2+",
+  "3 (somatostatin released at pH <3 by D cells)",
+  "4.5 (secretin released at duodenal pH <4.5)",
+  // H. pylori (6)
+  "Ammonia (NH3) + CO2; creates alkaline microenvironment around bacteria",
+  "Mucus-bicarbonate barrier (allows acid/pepsin direct mucosal access)",
+  "Somatostatin → gastrin → DU (duodenal ulcer)",
+  "Gastric ulcer (GU) + gastric cancer/adenocarcinoma",
+  "H. pylori eradication (MALT lymphoma can fully regress)",
+  "PPI + clarithromycin + amoxicillin (or metronidazole) × 7–14 days",
+  // Drug targets (6)
+  "H+/K+-ATPase (proton pump)",
+  "Acid in secretory canaliculi (prodrug activation; must take before meals)",
+  "H2 receptor",
+  "CYP450 enzymes (drug interactions with warfarin, theophylline)",
+  "PGE1",
+  "Cephalic phase (30–40% of acid; requires drainage procedure — pyloroplasty)"
+];
+
+// Tab 3 — Pancreatic, Intestinal & Colonic (26)
+const a4=[
+  // Pancreatic cells (4)
+  "CCK (I-cells) + vagal ACh",
+  "Digestive enzymes (as zymogens stored in granules)",
+  "Secretin (S-cells) + VIP",
+  "HCO3--rich, enzyme-poor fluid (via CFTR — cAMP-mediated)",
+  // Enzyme cascade (6)
+  "Enterokinase",
+  "All other zymogens (chymotrypsinogen, proelastase, procarboxypeptidase, pro-colipase, prophospholipase A2)",
+  "No zymogen — secreted in active form",
+  "Colipase (activated by trypsin from pro-colipase; anchors lipase to lipid droplet)",
+  "Thick secretions block pancreatic ducts → autodigestion → exocrine pancreatic insufficiency → steatorrhea + fat-soluble vitamin deficiency (ADEK)",
+  "Hypocalcemia (Ca2+ binds fatty acids → saponification → Chvostek's/Trousseau's signs)",
+  // SI cell types (8)
+  "Mucin (mucus glycoproteins)",
+  "Crypts of small intestine ONLY (absent from normal colon)",
+  "α-defensins (cryptdins), lysozyme — antimicrobial peptides",
+  "Submucosa of the duodenum only (unique location in GI tract)",
+  "Alkaline mucus (HCO3--rich) + urogastrone (EGF)",
+  "Secretin (primary stimulator)",
+  "Brush border enzymes (enterokinase, disaccharidases, peptidases)",
+  // CFTR (2)
+  "ADP-ribosylates Gsα → locks in active (GTP-bound) state → constitutive adenylate cyclase → ↑↑ cAMP → CFTR wide open → massive Cl- secretion → 'rice-water' diarrhea",
+  "Activates guanylate cyclase → ↑ cGMP → ↑ CFTR activity → secretory diarrhea",
+  // Colonic & hormones (6)
+  "HCO3- and K+",
+  "Short-chain fatty acids (SCFAs) from bacterial fermentation (butyrate, propionate, acetate)",
+  "Hyperchloremic metabolic acidosis (non-anion gap) + hypokalemia",
+  "M cells (duodenum/jejunum); fasting (interdigestive period); migrating motor complex (MMC) — 'intestinal housekeeper'",
+  "Multiple peptic ulcers (distal duodenum), diarrhea/steatorrhea (acid inactivates lipase), ↓ response to PPIs; associated with MEN1",
+  "WDHA: Watery Diarrhea, Hypokalemia, Achlorhydria; treat with octreotide + surgery",
+  "Flushing, diarrhea, wheezing, tricuspid regurgitation; ↑ urine 5-HIAA; occurs after liver metastasis",
+  "'Inhibitory syndrome': diabetes (↓ insulin) + gallstones (↓ CCK → bile stasis) + steatorrhea (↓ pancreatic lipase)"
+];
+</script>
+</body></html>
