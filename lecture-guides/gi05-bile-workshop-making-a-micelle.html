@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HOYA DOCS — GI BLOCK
+     GI05: Bile Workshop & Making a Micelle
+     Lecturer: Mulroney | GUSOM Class of 2028
+     ══════════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 5: Bile Workshop & Making a Micelle — GUSOM GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background-color: #f8f9fa; color: #1f2937; line-height: 1.6; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 220px; height: 100vh; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 20px 0 140px; overflow-y: auto; z-index: 100; box-shadow: 2px 0 8px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link { display: block; padding: 10px 12px; background: #1e293b; color: #cbd5e1; border-left: 3px solid transparent; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px; }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+        .sidebar-footer { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px 15px 12px; background: linear-gradient(to top, #0f172a 60%, transparent); }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2; }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn { display: flex; align-items: center; gap: 7px; width: 100%; padding: 9px 12px; background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35); border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s ease; cursor: pointer; }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+        .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        /* ⚠️ CHEVRON: always use &#9660; — never paste ▾ (U+25BE) directly */
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+        h4.collapsible-h4 { cursor: pointer; user-select: none; }
+        h4.collapsible-h4:hover { background: #bfdbfe; }
+        h4.collapsible-h4 .h4-chevron { display: inline-block; font-size: 11px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        h4.collapsible-h4.collapsed .h4-chevron { transform: rotate(-90deg); }
+        /* ⚠️ DO NOT DELETE: .lo-covered required by every LO tab */
+        .lo-covered { background: #f0f4ff; border: 1px solid #c7d2fe; border-left: 4px solid #4f46e5; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #3730a3; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #3730a3; }
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; margin-bottom: 10px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #1e3a5f; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #2563eb; }
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .answer { display: none; margin-top: 12px; background: #eff6ff; border-left: 3px solid #2563eb; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #1e3a5f; }
+        .reveal-btn { margin-top: 10px; padding: 6px 14px; background: #2563eb; color: white; border: none; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s ease; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+    </style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs ↗</a>
+        <h2>Lecture 5</h2>
+        <p>Bile Workshop &amp; Making a Micelle</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">📋 Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">🌊 Unstirred Water Layer</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">🏗️ Bile Synthesis &amp; Structure</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">🔄 Secretion &amp; Recycling</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">🧪 Making a Micelle</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">✏️ Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">🖨️</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">📄</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/index.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<!-- ══ MAIN CONTENT ═════════════════════════════════════════════════════════ -->
+<main class="main">
+    <div class="header">
+        <h1>Lecture 5: Bile Workshop &amp; Making a Micelle</h1>
+        <p>HoyaDocs — GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB ══════════════════════════════════════════════════════ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 5 — Overview</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Bile Workshop &amp; Making a Micelle · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:6px; font-size:14px;">🌊 Unstirred Water Layer</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 1</strong><br>
+                        Unstirred water layer · lipid problem · bile as carrier<br>
+                        <em style="color:#475569;">Practice Qs: Q1–Q3</em>
+                    </div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:6px; font-size:14px;">🏗️ Bile Synthesis &amp; Structure</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 2</strong><br>
+                        Hepatocytes · primary vs secondary bile · amphipathic structure · bilirubin<br>
+                        <em style="color:#475569;">Practice Qs: Q4–Q6</em>
+                    </div>
+                </div>
+                <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#92400e; margin-bottom:6px; font-size:14px;">🔄 Secretion &amp; Recycling</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 3</strong><br>
+                        CCK · sphincter of Oddi · enterohepatic circulation · gallstones<br>
+                        <em style="color:#475569;">Practice Qs: Q7–Q10</em>
+                    </div>
+                </div>
+                <div style="background:#f3e8ff; border:1px solid #c4b5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#5b21b6; margin-bottom:6px; font-size:14px;">🧪 Making a Micelle</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 4</strong><br>
+                        Micelle structure · colipase · pancreatic lipase · steatorrhea<br>
+                        <em style="color:#475569;">Practice Qs: Q11–Q15</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 accordion -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Explain why lipids require bile to cross the unstirred water layer and enter enterocytes</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Physiology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-uwl')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">The Unstirred Water Layer</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-lipid-problem')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Why Lipids Are the Exception</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');setTimeout(()=>document.getElementById('sec-bile-carrier')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Bile as the Lipid Carrier</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q3</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 2 accordion -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#14532d; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the synthesis and amphipathic structure of primary and secondary bile acids</span>
+                    <span style="background:#dcfce7; color:#14532d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Physiology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-bile-synthesis')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Where Bile is Made</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-primary-bile')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Primary Bile: Glycocholic Acid</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');setTimeout(()=>document.getElementById('sec-primary-vs-secondary')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Primary vs Secondary Bile</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q4, Q5, Q6</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 3 accordion -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#92400e; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Trace the regulation of bile secretion (CCK, sphincter of Oddi) and enterohepatic circulation</span>
+                    <span style="background:#fef3c7; color:#92400e; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Physiology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-cck')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">CCK & Hormonal Regulation</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-bile-buffer')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Bile as Osmotic Agent & Buffer</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-enterohepatic')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Enterohepatic Circulation</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');setTimeout(()=>document.getElementById('sec-gallstones')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Gallstones</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q7, Q8, Q9, Q10</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 4 accordion -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#5b21b6; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Explain micelle formation, the role of colipase, and clinical consequences of fat malabsorption</span>
+                    <span style="background:#f3e8ff; color:#5b21b6; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Physiology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Section / Subheading</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-micelle-structure')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Micelle Structure</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-colipase')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Colipase & Pancreatic Lipase</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');setTimeout(()=>document.getElementById('sec-fat-malabsorption')?.scrollIntoView({behavior:'smooth'}),80);return false;" style="color:#1e3a5f;text-decoration:none;">Fat Malabsorption & Steatorrhea</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q11, Q12, Q13, Q14, Q15</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1: THE UNSTIRRED WATER LAYER & WHY LIPIDS NEED BILE ════════════ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 — The Unstirred Water Layer &amp; Why Lipids Need Bile</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">The absorption problem · bile as the solution · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 1:</strong> Explain why lipids require bile to cross the unstirred water layer and enter enterocytes</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-uwl">The Unstirred Water Layer</a></li>
+                    <li><a href="#sec-lipid-problem">Why Lipids Are the Exception</a></li>
+                    <li><a href="#sec-bile-carrier">Bile as the Lipid Carrier</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-uwl"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> The Unstirred Water Layer
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ As chyme flows through the small intestine, it slows dramatically near the intestinal wall, creating a stagnant zone called the <em>unstirred water layer (UWL)</em>.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔬 Formation of the UWL</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Chyme flows at a faster rate in the center of the lumen than near the intestinal wall — this is basic fluid dynamics (laminar flow).</li>
+                        <li>Enterocytes lining the wall secrete <strong>mucus and bicarbonate</strong>, which further slows chyme flow immediately adjacent to them.</li>
+                        <li>Result: a relatively stagnant aqueous zone — the unstirred water layer — sits just outside the brush border of the enterocytes.</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 Concept:</strong>
+                        <ul>
+                            <li>The UWL is a <strong>diffusion barrier</strong>. For a substance to enter an enterocyte, it must first diffuse through this aqueous layer.</li>
+                            <li>The secreted HCO₃⁻ also helps neutralize acid arriving from the stomach, protecting the enterocyte brush border.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-lipid-problem"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Why Lipids Are the Exception
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Most nutrients cross the UWL without difficulty. Lipids cannot — because they are <em>hydrophobic</em>.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">💧 Hydrophobic Aggregation</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Lipids are <strong>hydrophobic</strong> — they repel water and attract each other.</li>
+                        <li>In the aqueous lumen, lipids aggregate into <strong>large lipid droplets</strong>.</li>
+                        <li>These large, oily droplets cannot diffuse through the aqueous UWL efficiently — the UWL acts as a physical and chemical barrier.</li>
+                        <li>Without help, dietary fat would pass through the gut unabsorbed.</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">
+                            ⚠️ TRAP: "Lipids are lipophilic, so they should diffuse through membranes easily" <span class="trap-chevron">&#9660;</span>
+                        </div>
+                        <div class="trap-body">
+                            <p>TRUE — once lipids <em>reach</em> the enterocyte membrane they diffuse right through it (lipophilic = loves lipid membranes). The problem is <strong>getting to the membrane</strong> in the first place. The UWL is aqueous, so lipids cannot get across it without a carrier. Bile solves this problem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-bile-carrier"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Bile as the Lipid Carrier
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile forms <em>micelles</em> — small amphipathic vesicles that package lipids, carry them through the aqueous UWL, and deliver them to the enterocyte brush border.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🚕 Micelles as "Lipid Taxis"</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Bile is an <strong>amphipathic molecule</strong> — it has both hydrophilic and hydrophobic ends.</li>
+                        <li>Bile molecules orient themselves so their <strong>hydrophobic ends face inward</strong> (surrounding the lipid cargo) and their <strong>hydrophilic ends face outward</strong> (interacting with the aqueous UWL).</li>
+                        <li>This structure — a micelle — allows the lipid cargo to <strong>travel through the water-based UWL</strong> without aggregating.</li>
+                        <li>At the enterocyte membrane, lipids are released and diffuse across the lipid bilayer because they are lipophilic.</li>
+                        <li>The bile molecule itself <strong>does not enter the enterocyte</strong> — it remains in the lumen and continues down to the terminal ileum for recycling.</li>
+                    </ul>
+
+                    <div class="usmle-summary">
+                        <div class="usmle-header">🎯 Step 1 Summary: The Lipid Absorption Problem</div>
+                        <ul>
+                            <li><strong>Problem:</strong> Lipids are hydrophobic → aggregate in the aqueous lumen → cannot cross the unstirred water layer (UWL).</li>
+                            <li><strong>Solution:</strong> Bile forms amphipathic micelles → lipids packaged in the hydrophobic core → micelle carries them through the UWL.</li>
+                            <li><strong>Delivery:</strong> Lipids diffuse off the micelle into the enterocyte (lipophilic → crosses lipid bilayer freely).</li>
+                            <li><strong>Key point:</strong> Bile emulsifies lipids (breaks large droplets into smaller ones) but does NOT digest them. Digestion is by pancreatic lipase.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="section-rule">
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)">
+                        ⚠️ TRAP: Bile "digests" lipids <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body">
+                        <p><strong>Bile does NOT digest lipids.</strong> Bile is a <em>detergent/emulsifier</em> — it breaks large lipid droplets into smaller ones (emulsification) and packages them into micelles. Chemical digestion (hydrolysis of triglycerides → fatty acids + monoglycerides) is performed by <strong>pancreatic lipase</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /lo-content -->
+    </section>
+
+    <!-- ══ LO 2: BILE SYNTHESIS & STRUCTURE ══════════════════════════════════ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 2 — Bile Synthesis &amp; Structure</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Hepatocytes · amphipathic structure · primary vs secondary bile · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 2:</strong> Describe the synthesis and amphipathic structure of primary and secondary bile acids</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-bile-synthesis">Where Bile is Made</a></li>
+                    <li><a href="#sec-primary-bile">Primary Bile: Glycocholic Acid</a></li>
+                    <li><a href="#sec-primary-vs-secondary">Primary vs Secondary Bile</a></li>
+                    <li><a href="#sec-bilirubin">Bile &amp; Bilirubin Excretion</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-bile-synthesis"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Where Bile is Made
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile is synthesized exclusively in <strong>hepatocytes</strong> of the liver from a cholesterol backbone.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🏭 Hepatocyte Synthesis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>The rate-limiting enzyme for cholesterol synthesis is <strong>HMG-CoA reductase</strong> — the same enzyme targeted by statins.</li>
+                        <li>Cholesterol comes from two sources: <strong>dietary cholesterol</strong> absorbed from the gut, and <strong>de novo synthesis</strong> in the liver via HMG-CoA reductase.</li>
+                        <li>In addition to cholesterol, bile also contains <strong>phospholipids, metabolic waste products, and bilirubin</strong>.</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 Pharm Connection — Statins:</strong>
+                        <ul>
+                            <li>Statins inhibit HMG-CoA reductase → ↓ cholesterol → ↓ primary bile synthesis.</li>
+                            <li>Clinically, statins lower LDL-cholesterol and are first-line therapy for hyperlipidemia.</li>
+                            <li>Side effect: myopathy (↑ CK); rare rhabdomyolysis — risk ↑ with fibrates.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-primary-bile"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Primary Bile: Glycocholic Acid
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Primary bile = <strong>glycocholic acid</strong> (or taurocholic acid) — a cholesterol backbone conjugated with an amino acid to create an amphipathic molecule.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">⚗️ Conjugation Makes Bile Amphipathic</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>The cholesterol backbone of bile is <strong>lipophilic</strong> — it will interact with lipids.</li>
+                        <li>Conjugation with an amino acid (<strong>glycine → glycocholic acid</strong>; taurine → taurocholic acid) adds a <strong>hydrophilic (water-loving) end</strong>.</li>
+                        <li>Result: <strong>amphipathic molecule</strong> — one end loves water, one end loves lipids.</li>
+                        <li>This is the structural basis for micelle formation: lipophilic ends surround the lipid core, hydrophilic ends face the aqueous environment.</li>
+                    </ul>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Backbone</strong></td><td>Cholesterol (lipophilic steroid nucleus)</td></tr>
+                            <tr><td><strong>Conjugate</strong></td><td>Glycine (→ glycocholic acid) or Taurine (→ taurocholic acid)</td></tr>
+                            <tr><td><strong>Net property</strong></td><td>Amphipathic: hydrophilic head + lipophilic tail</td></tr>
+                            <tr><td><strong>Function</strong></td><td>Emulsification + micelle formation in small intestine</td></tr>
+                            <tr><td><strong>Location</strong></td><td>Primarily small intestine (duodenum → ileum)</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mnemonic">
+                        <div class="mnemonic-header mnemonic-toggle-header" onclick="toggleMnemonic(this)">
+                            🧠 Mnemonic: Bile's Amphipathic Structure <span class="mnemonic-chevron">&#9660;</span>
+                        </div>
+                        <div class="mnemonic-body">
+                            <p><strong>"Glycine Conjugation Makes Bile Talk to Both Worlds"</strong></p>
+                            <ul>
+                                <li><strong>Glycine/Taurine</strong> → hydrophilic head (talks to water)</li>
+                                <li><strong>Cholesterol backbone</strong> → lipophilic tail (talks to fat)</li>
+                                <li>Together = amphipathic → can surround lipids AND travel through aqueous UWL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-primary-vs-secondary"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Primary vs Secondary Bile
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Primary bile is made by the liver. Secondary bile is primary bile that has been modified by colonic bacteria — it is no longer amphipathic.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Primary Bile</th>
+                            <th>Secondary Bile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Origin</strong></td><td>Synthesized by hepatocytes</td><td>Primary bile modified by gut bacteria</td></tr>
+                        <tr><td><strong>Structure</strong></td><td>Amphipathic (hydrophilic + lipophilic ends)</td><td>Mostly lipophilic — lost hydrophilic portion</td></tr>
+                        <tr><td><strong>Location</strong></td><td>Small intestine (duodenum → ileum)</td><td>Colon</td></tr>
+                        <tr><td><strong>Micelle formation</strong></td><td>Yes — primary bile forms micelles</td><td>No — not amphipathic enough</td></tr>
+                        <tr><td><strong>Examples</strong></td><td>Cholic acid, chenodeoxycholic acid</td><td>Deoxycholic acid, lithocholic acid</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)">
+                        ⚠️ TRAP: "Secondary bile can form micelles" <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body">
+                        <p>Secondary bile is <strong>NOT amphipathic</strong> — gut bacteria deconjugate it, stripping the hydrophilic amino acid. It becomes predominantly lipophilic and is located in the colon, where it cannot participate in micelle formation. Only <strong>primary bile</strong> forms micelles in the small intestine.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-bilirubin"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Bile &amp; Bilirubin Excretion
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile formation is a critical mechanism for removing <strong>bilirubin</strong> from the blood. This has major clinical implications for jaundice.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🟡 Bilirubin in Bile</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Bilirubin is a breakdown product of <strong>heme</strong> (from RBC destruction). It is initially <strong>unconjugated (indirect)</strong> — water-insoluble, bound to albumin in blood.</li>
+                        <li>In the liver, unconjugated bilirubin is conjugated with glucuronic acid → <strong>conjugated (direct) bilirubin</strong> — water-soluble.</li>
+                        <li>Conjugated bilirubin is secreted into bile → enters the duodenum → converted by gut bacteria → <strong>urobilinogen</strong> (some reabsorbed, some excreted in urine) and <strong>stercobilin</strong> (gives stool its brown color).</li>
+                    </ul>
+
+                    <div class="usmle-summary">
+                        <div class="usmle-header">🎯 Step 1: Jaundice Patterns &amp; Bile</div>
+                        <ul>
+                            <li><strong>Obstructive jaundice</strong> (e.g., gallstone blocking common bile duct): conjugated bilirubin backs up into blood → dark urine (bilirubinuria), <strong>pale/clay-colored stools</strong> (no bilirubin reaching gut), pruritus.</li>
+                            <li><strong>Hemolytic jaundice</strong> (e.g., sickle cell, G6PD): excess unconjugated bilirubin from RBC breakdown → cannot be excreted fast enough → <strong>↑ unconjugated bilirubin</strong>; stools may be darker (more bilirubin reaching gut).</li>
+                            <li><strong>Pale stools = obstructed bile flow</strong> — high-yield association.</li>
+                            <li><strong>Cholestyramine</strong> (bile acid sequestrant) binds bile in the gut → ↓ enterohepatic reabsorption → liver converts more cholesterol to bile → ↓ LDL. Also used to treat pruritus in cholestasis.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /lo-content -->
+    </section>
+
+    <!-- ══ LO 3: BILE SECRETION, HORMONAL REGULATION & RECYCLING ════════════ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 3 — Bile Secretion, Hormonal Regulation &amp; Recycling</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">CCK · sphincter of Oddi · enterohepatic circulation · gallstones · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 3:</strong> Trace the regulation of bile secretion (CCK, sphincter of Oddi) and enterohepatic circulation, including clinical implications of disruption</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-cck">CCK &amp; Hormonal Regulation</a></li>
+                    <li><a href="#sec-bile-buffer">Bile as Osmotic Agent &amp; Buffer</a></li>
+                    <li><a href="#sec-enterohepatic">Enterohepatic Circulation</a></li>
+                    <li><a href="#sec-gallstones">Gallstones</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-cck"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> CCK &amp; Hormonal Regulation of Bile Secretion
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile secretion is triggered when chyme enters the duodenum. The key hormone is <strong>CCK (cholecystokinin)</strong>, released by I-cells of the duodenum.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🍽️ The Eating → Bile Secretion Cascade</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li><strong>Eating → vagal activation</strong>: The cephalic and gastric phases stimulate the vagus nerve → baseline increase in bile production at the liver.</li>
+                        <li><strong>Chyme enters duodenum</strong>: Fat and protein in chyme stimulate I-cells in the duodenal wall → release of <strong>CCK</strong> into the bloodstream.</li>
+                        <li><strong>CCK actions (3 key effects):</strong>
+                            <ul>
+                                <li>↑ Bile production by the liver</li>
+                                <li>Causes <strong>rhythmic contractions of the gallbladder</strong> → squirts stored concentrated bile into the common bile duct</li>
+                                <li>Relaxes the <strong>sphincter of Oddi</strong> → bile flows freely into the duodenum</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CCK Effect</th>
+                                <th>Target</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>↑ Bile production</td><td>Hepatocytes</td><td>More bile synthesized</td></tr>
+                            <tr><td>Gallbladder contraction</td><td>Gallbladder smooth muscle</td><td>Stored bile released into bile duct</td></tr>
+                            <tr><td>Sphincter of Oddi relaxation</td><td>Sphincter at ampulla of Vater</td><td>Bile enters duodenum freely</td></tr>
+                            <tr><td>↑ Pancreatic enzyme secretion</td><td>Pancreatic acinar cells</td><td>Lipase, protease, amylase released (bonus Step 1 fact)</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 HY — CCK also stimulates the pancreas:</strong>
+                        <ul>
+                            <li>CCK is the same hormone that stimulates <strong>pancreatic enzyme secretion</strong>. Fat + protein in duodenum → CCK → pancreatic lipase, proteases, amylase released.</li>
+                            <li>Secretin (S-cells) → stimulates pancreatic <strong>HCO₃⁻</strong> secretion to neutralize acid chyme. CCK + secretin work synergistically.</li>
+                            <li>A gallstone obstructing the <strong>ampulla of Vater</strong> can block both bile AND pancreatic secretions → acute pancreatitis + obstructive jaundice.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-bile-buffer"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Bile as Osmotic Agent &amp; Buffer
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile is an <strong>osmotically active</strong> substance — when secreted, it drags water into the lumen via osmosis. This is called <em>solvent drag</em>.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">💧 Solvent Drag</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Bile → osmotic agent → draws water into the intestinal lumen.</li>
+                        <li>Water movement pulls dissolved solutes along with it: <strong>Na⁺, Cl⁻, HCO₃⁻</strong> = solvent drag.</li>
+                        <li>Wherever there is bile, there is associated water — this is why <strong>bile acid malabsorption → watery diarrhea</strong> (bile irritates the colon and increases osmotic load).</li>
+                    </ul>
+                </div>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🧪 Bile as a Buffer</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Bile contains <strong>HCO₃⁻</strong> (bicarbonate) → it is alkaline.</li>
+                        <li>Acidic chyme from the stomach (pH ~2) enters the duodenum → bile (along with pancreatic HCO₃⁻) helps <strong>neutralize the acidity</strong>.</li>
+                        <li>This protects the duodenal mucosa and creates the optimal pH for pancreatic enzyme activity (~pH 6–7).</li>
+                    </ul>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">
+                            ⚠️ TRAP: Zollinger-Ellison &amp; Fat Malabsorption <span class="trap-chevron">&#9660;</span>
+                        </div>
+                        <div class="trap-body">
+                            <p>In Zollinger-Ellison syndrome (gastrinoma → ↑↑ acid secretion), the overwhelming acid load in the duodenum <strong>inactivates bile salts and pancreatic lipase</strong> (both work at higher pH). Result: fat malabsorption → steatorrhea, despite normal bile and pancreatic function. This is a classic Step 1 clinical scenario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-enterohepatic"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Enterohepatic Circulation
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Bile is <em>recycled</em> — after doing its job in the small intestine, primary bile is actively reabsorbed in the <strong>terminal ileum</strong> and returned to the liver via the portal circulation.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔄 The Recycling Loop</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li>Bile secreted from gallbladder → duodenum → forms micelles → carries lipids to jejunum/ileum for absorption.</li>
+                        <li>After lipid delivery, bile remains in the lumen and travels down to the <strong>terminal ileum</strong>.</li>
+                        <li>In the terminal ileum, primary bile is <strong>actively reabsorbed</strong> (ASBT transporter) → enters portal circulation → returns to liver.</li>
+                        <li>Liver <strong>adjusts production</strong> to replace the ~10% of bile that was lost per cycle.</li>
+                        <li>This recycling prevents the liver from overproducing bile.</li>
+                    </ol>
+
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 — Key Numbers:</strong>
+                        <ul>
+                            <li><strong>~10% of bile is lost per cycle</strong> in feces — the liver replaces this each time.</li>
+                            <li>The body recycles the same bile pool <strong>6–10 times per day</strong>.</li>
+                            <li>This is why the terminal ileum is critical — resection (e.g., Crohn's disease) → bile acid malabsorption → watery diarrhea + steatorrhea.</li>
+                        </ul>
+                    </div>
+
+                    <div class="usmle-summary">
+                        <div class="usmle-header">🎯 Step 1: Terminal Ileum Resection Consequences</div>
+                        <ul>
+                            <li><strong>Loss of bile acid absorption</strong> → bile acids enter colon → osmotic/secretory diarrhea (bile acid diarrhea).</li>
+                            <li><strong>Decreased bile acid pool</strong> → less micelle formation → fat malabsorption → steatorrhea.</li>
+                            <li><strong>Fat-soluble vitamin deficiency</strong>: A (night blindness, xerophthalmia), D (rickets/osteomalacia), E (hemolytic anemia, ataxia), K (bleeding, ↑ PT).</li>
+                            <li><strong>Also:</strong> terminal ileum = site of intrinsic factor-B₁₂ absorption → resection → B₁₂ deficiency → megaloblastic anemia.</li>
+                            <li><strong>Treat bile acid diarrhea</strong> with cholestyramine (bile acid sequestrant).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-gallstones"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Gallstones (Cholelithiasis)
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ The gallbladder stores and concentrates bile between meals. When the bile composition is disrupted, <strong>gallstones (cholelithiasis)</strong> can precipitate out of solution.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🪨 Types of Gallstones</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Composition</th>
+                                <th>Risk Factors</th>
+                                <th>Radiology</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Cholesterol stones</strong> (most common, ~80%)</td>
+                                <td>Crystallized cholesterol</td>
+                                <td>Fat, Female, Fertile, Forty, Fair (5 F's); obesity, rapid weight loss, OCP, pregnancy</td>
+                                <td>Radiolucent (won't show on X-ray)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Black pigment stones</strong></td>
+                                <td>Calcium bilirubinate (unconjugated bilirubin)</td>
+                                <td>Chronic hemolysis (sickle cell, hereditary spherocytosis, thalassemia), cirrhosis</td>
+                                <td>Radiopaque</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Brown pigment stones</strong></td>
+                                <td>Calcium bilirubinate + cholesterol + bacteria</td>
+                                <td>Biliary tract infection (E. coli, Clonorchis sinensis)</td>
+                                <td>Radiopaque</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mnemonic">
+                        <div class="mnemonic-header mnemonic-toggle-header" onclick="toggleMnemonic(this)">
+                            🧠 Mnemonic: Cholesterol Gallstones — "The 5 F's" <span class="mnemonic-chevron">&#9660;</span>
+                        </div>
+                        <div class="mnemonic-body">
+                            <p><strong>Fat, Female, Fertile, Forty, Fair</strong> (classic risk factors for cholesterol gallstones)</p>
+                            <ul>
+                                <li><strong>Fat:</strong> Obesity → ↑ cholesterol secretion into bile</li>
+                                <li><strong>Female:</strong> Estrogen ↑ cholesterol, ↓ bile acid secretion</li>
+                                <li><strong>Fertile:</strong> Pregnancy → progesterone slows gallbladder emptying (biliary stasis)</li>
+                                <li><strong>Forty:</strong> Age risk</li>
+                                <li><strong>Fair:</strong> Higher prevalence in Northern European and Native American populations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🚨 Clinical Presentation &amp; Complications</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Biliary colic:</strong> Episodic RUQ pain after fatty meals (gallbladder contracts → stone transiently occludes cystic duct → pain).</li>
+                        <li><strong>Cholecystitis:</strong> Stone occludes cystic duct → gallbladder wall inflammation → RUQ pain + fever + Murphy's sign.</li>
+                        <li><strong>Choledocholithiasis:</strong> Stone in common bile duct → obstructive jaundice (↑ conjugated bilirubin, pale stools, dark urine).</li>
+                        <li><strong>Ascending cholangitis:</strong> Infected bile behind obstruction → Charcot's triad (fever, jaundice, RUQ pain); life-threatening.</li>
+                        <li><strong>Gallstone pancreatitis:</strong> Stone obstructs ampulla of Vater → back-pressure on pancreatic duct → acute pancreatitis.</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>⭐ Treatment (from lecture):</strong>
+                        <ul>
+                            <li>Emergency surgery may be needed to remove gallstones.</li>
+                            <li>You can live without a gallbladder (cholecystectomy is well-tolerated).</li>
+                            <li>Post-op: patient advised to eat a <strong>low-fat diet</strong> — so the liver doesn't need to produce as much bile. Note: the liver can compensate by producing more bile if needed.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /lo-content -->
+    </section>
+
+    <!-- ══ LO 4: MAKING A MICELLE ══════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 4 — Making a Micelle</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Micelle structure · colipase · pancreatic lipase · fat malabsorption · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 4:</strong> Explain micelle formation, the role of colipase in allowing pancreatic lipase access, and clinical consequences of fat malabsorption (steatorrhea, fat-soluble vitamin deficiency)</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#sec-micelle-structure">Micelle Structure</a></li>
+                    <li><a href="#sec-colipase">The Colipase Problem &amp; Solution</a></li>
+                    <li><a href="#sec-fat-malabsorption">Fat Malabsorption &amp; Steatorrhea</a></li>
+                    <li><a href="#sec-clinical-bile">Clinical Correlations: Bile Duct Diseases</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-micelle-structure"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Micelle Structure
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ A micelle is a <em>spherical amphipathic aggregate</em> — primary bile molecules arrange themselves around a lipid core to form a "lipid taxi" that can travel through the aqueous unstirred water layer.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🧫 How Micelles Assemble</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Primary bile is amphipathic: <strong>lipophilic (cholesterol backbone) end faces inward</strong>, surrounding and trapping the dietary lipids.</li>
+                        <li><strong>Hydrophilic (amino acid conjugate) end faces outward</strong>, interacting with the aqueous UWL — allowing the micelle to travel through water.</li>
+                        <li>The lipid cargo inside the micelle includes <strong>free fatty acids, monoglycerides, fat-soluble vitamins (A, D, E, K), and cholesterol</strong>.</li>
+                        <li>When the micelle reaches the enterocyte brush border, the lipids <strong>passively diffuse off</strong> into the enterocyte (they are lipophilic → cross the lipid bilayer freely).</li>
+                        <li>The bile molecules remain in the lumen and continue down to the terminal ileum for recycling.</li>
+                    </ul>
+
+                    <div class="hy-box">
+                        <strong>⭐ Key Distinction — Emulsification vs Micelle Formation:</strong>
+                        <ul>
+                            <li><strong>Emulsification:</strong> Bile breaks large fat globules into smaller droplets → ↑ surface area for lipase action. This happens in the <em>duodenum</em> before micelle assembly.</li>
+                            <li><strong>Micelle formation:</strong> Bile molecules package the lipid fragments into transportable vesicles → carry them through the UWL to the enterocyte. This is the actual absorption step.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-colipase"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> The Colipase Problem &amp; Solution
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Pancreatic lipase must digest triglycerides into fatty acids + monoglycerides — but bile surrounds the lipid surface, <em>blocking</em> lipase access. Colipase is the solution.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔒 The Problem: Bile Blocks Pancreatic Lipase</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Pancreatic lipase is <strong>lipophilic</strong> — it wants to access the lipid surface to digest it.</li>
+                        <li>But the micelle has its <strong>hydrophilic ends facing outward</strong> — the bile molecules form a shell around the lipids, effectively <strong>blocking pancreatic lipase</strong> from reaching the lipid core.</li>
+                        <li>Without access to the lipids, pancreatic lipase cannot perform digestion → lipids cannot be broken down into absorbable units.</li>
+                    </ul>
+                </div>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔑 The Solution: Colipase Opens the Door</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li><strong>Pro-colipase</strong> is secreted by the pancreas in an inactive form.</li>
+                        <li><strong>Trypsin</strong> (also from the pancreas) cleaves pro-colipase → activates <strong>colipase</strong>.</li>
+                        <li>Colipase <strong>binds the hydrophilic ends of bile</strong> on the micelle surface → displaces or moves aside the bile molecules → creates a "door" or opening.</li>
+                        <li>Pancreatic lipase can now access the lipid core → digests triglycerides → <strong>2 free fatty acids + 1 monoglyceride</strong>.</li>
+                        <li>These smaller lipid fragments are then packaged into micelles and delivered to enterocytes.</li>
+                    </ol>
+
+                    <div class="usmle-summary">
+                        <div class="usmle-header">🎯 Step 1: The Full Lipid Absorption Sequence</div>
+                        <ul>
+                            <li><strong>1.</strong> Lingual/gastric lipase: minor digestion in stomach (~25–30% of lipid digestion).</li>
+                            <li><strong>2.</strong> Fat enters duodenum → CCK released → gallbladder contracts, sphincter of Oddi relaxes → bile flows in.</li>
+                            <li><strong>3.</strong> Bile emulsifies fat globules → ↑ surface area.</li>
+                            <li><strong>4.</strong> Bile forms micelles around lipid fragments (hydrophilic shell, lipid core).</li>
+                            <li><strong>5.</strong> Pro-colipase (pancreas) → trypsin activates → colipase → binds hydrophilic ends of micelle → opens door for pancreatic lipase.</li>
+                            <li><strong>6.</strong> Pancreatic lipase digests triglycerides → fatty acids + monoglycerides (inside micelle).</li>
+                            <li><strong>7.</strong> Micelle reaches enterocyte brush border → lipids diffuse off → enter enterocyte.</li>
+                            <li><strong>8.</strong> Inside enterocyte: fatty acids + monoglycerides → re-esterified into triglycerides → packaged into <strong>chylomicrons</strong> → enter lacteals (lymph) → thoracic duct → circulation.</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">
+                            ⚠️ TRAP: "Pancreatic lipase doesn't work without colipase" <span class="trap-chevron">&#9660;</span>
+                        </div>
+                        <div class="trap-body">
+                            <p>More precisely: pancreatic lipase can work in the absence of bile (e.g., in the stomach), but when bile is present and forming micelles, the hydrophilic shell <strong>blocks lipase access</strong>. Colipase is required specifically to overcome this bile-induced inhibition of lipase. Without colipase, fat digestion in the small intestine fails despite bile and lipase both being present.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-fat-malabsorption"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Fat Malabsorption &amp; Steatorrhea
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ When bile is insufficient or micelle formation fails, dietary fat cannot be absorbed → <strong>steatorrhea</strong> (fat in stool) and fat-soluble vitamin deficiency.</p>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">💩 Steatorrhea</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Definition:</strong> Excess fat in stool (>7 g/day); greasy, foul-smelling, floating stools that are difficult to flush.</li>
+                        <li><strong>From the lecture:</strong> Eating a chronically <strong>low-fat diet</strong> → insufficient bile stored/produced. If you then suddenly eat a <strong>high-fat meal</strong>, there is not enough bile to form micelles → dietary fat passes unabsorbed → steatorrhea.</li>
+                        <li>The liver can compensate over time but acute shifts in fat intake with an underprepared bile pool can cause transient fat malabsorption.</li>
+                    </ul>
+                </div>
+
+                <h4 style="font-weight:600; margin-top:14px; margin-bottom:10px;">🔍 Causes of Fat Malabsorption — Step 1 Framework</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mechanism</th>
+                                <th>Example</th>
+                                <th>Key Fact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>↓ Bile production</td><td>Liver failure, PBC, PSC</td><td>No bile → no micelles → steatorrhea</td></tr>
+                            <tr><td>Bile duct obstruction</td><td>Gallstones, pancreatic cancer</td><td>Bile can't reach duodenum → pale stools</td></tr>
+                            <tr><td>↓ Bile reabsorption</td><td>Terminal ileum resection, Crohn's disease</td><td>Bile acid diarrhea + steatorrhea</td></tr>
+                            <tr><td>↓ Pancreatic lipase</td><td>Chronic pancreatitis, cystic fibrosis</td><td>Lipase absent → triglycerides undigested → steatorrhea</td></tr>
+                            <tr><td>Acid inactivation</td><td>Zollinger-Ellison syndrome</td><td>↑↑ acid inactivates bile salts + lipase</td></tr>
+                            <tr><td>Mucosal damage</td><td>Celiac disease, Whipple disease</td><td>Enterocytes damaged → can't absorb lipid products</td></tr>
+                            <tr><td>Impaired chylomicron formation</td><td>Abetalipoproteinemia</td><td>↓ MTP → can't assemble chylomicrons → fat accumulates in enterocytes</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="hy-box">
+                        <strong>⭐ Fat-Soluble Vitamin Deficiency (A, D, E, K) from Steatorrhea:</strong>
+                        <ul>
+                            <li><strong>Vitamin A deficiency:</strong> Night blindness → then xerophthalmia (dry eyes/corneal ulcers)</li>
+                            <li><strong>Vitamin D deficiency:</strong> Rickets (children) / Osteomalacia (adults) / osteoporosis; ↓ Ca²⁺ absorption</li>
+                            <li><strong>Vitamin E deficiency:</strong> Hemolytic anemia, ataxia, peripheral neuropathy (spinocerebellar degeneration)</li>
+                            <li><strong>Vitamin K deficiency:</strong> Bleeding (↓ factors II, VII, IX, X + Protein C/S) → ↑ PT/INR; ecchymoses</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4 ── -->
+            <h3 class="collapsible-h3" onclick="toggleSection(this)" id="sec-clinical-bile"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Clinical Correlations: Bile Duct Diseases
+            </h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Two autoimmune conditions — PBC and PSC — disrupt bile flow (cholestasis) and are classic Step 1 discriminators.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Primary Biliary Cholangitis (PBC)</th>
+                            <th>Primary Sclerosing Cholangitis (PSC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Pathology</strong></td><td>Autoimmune destruction of <em>intrahepatic</em> bile ducts; granulomatous inflammation</td><td>Fibroinflammatory stricturing of <em>intra- and extrahepatic</em> bile ducts</td></tr>
+                        <tr><td><strong>Demographics</strong></td><td>Middle-aged women (40–60s)</td><td>Young men; associated with <strong>UC</strong></td></tr>
+                        <tr><td><strong>Antibody</strong></td><td><strong>Anti-mitochondrial antibody (AMA)</strong> — highly specific</td><td><strong>p-ANCA</strong></td></tr>
+                        <tr><td><strong>Presentation</strong></td><td>Fatigue, pruritus, jaundice, xanthelasma, steatorrhea</td><td>Jaundice, pruritus; "beading" on ERCP</td></tr>
+                        <tr><td><strong>Complication</strong></td><td>Cirrhosis → liver failure</td><td>↑ Risk of <strong>cholangiocarcinoma</strong> and colon cancer (via UC)</td></tr>
+                        <tr><td><strong>Treatment</strong></td><td>Ursodeoxycholic acid (UDCA)</td><td>Liver transplant (only cure)</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)">
+                        ⚠️ TRAP: PBC vs PSC <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body">
+                        <ul>
+                            <li><strong>PBC:</strong> Middle-aged <em>woman</em> + pruritus + AMA = PBC. Intrahepatic ducts only.</li>
+                            <li><strong>PSC:</strong> Young <em>man</em> + UC + "beads on a string" on ERCP = PSC. Risk of cholangiocarcinoma. Perinuclear ANCA (p-ANCA).</li>
+                            <li>Both cause <strong>cholestasis → steatorrhea → fat-soluble vitamin deficiency</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /lo-content -->
+    </section>
+
+    <!-- ══ PRACTICE QUESTIONS TAB ═══════════════════════════════════════════
+         RULES: 3–5 USMLE Step 1 MCQs per LO · clinical vignette stem · A–E options
+         Answer format: ✓ Correct: [Letter] — [brief reason], then explanation. -->
+    <section class="practice-section lo-section" id="practice">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Lecture 5 — Bile Workshop &amp; Making a Micelle · HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <!-- ── LO 1 ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px;">LO 1 — The Unstirred Water Layer &amp; Why Lipids Need Bile (Q1–Q3)</h4>
+
+            <div class="practice-question">
+                <h4>Question 1</h4>
+                <p>A 34-year-old woman is being evaluated for fat malabsorption after a small bowel resection. Her physician explains that dietary lipids have difficulty crossing a specific zone adjacent to enterocytes before they can be absorbed. Which of the following best describes the primary reason lipids cannot cross this zone without assistance?</p>
+                <p class="option">A. Lipids are too large to fit through aquaporin channels</p>
+                <p class="option">B. Lipids are hydrophobic and cannot diffuse through the aqueous unstirred water layer</p>
+                <p class="option">C. Lipids require ATP-dependent transporters to enter the intestinal lumen</p>
+                <p class="option">D. Enterocytes secrete acidic mucus that repels lipid molecules</p>
+                <p class="option">E. Lipids are negatively charged and are repelled by the glycocalyx</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Lipids are hydrophobic and cannot diffuse through the aqueous UWL</strong>
+                    <p style="margin-top:10px;">The unstirred water layer (UWL) is an aqueous zone just outside the brush border of enterocytes, created by slow chyme flow and HCO₃⁻/mucus secretion. Lipids aggregate into large hydrophobic droplets in the aqueous lumen and cannot diffuse through the aqueous UWL — they need an amphipathic carrier (bile/micelles). Lipid absorption does NOT require ATP-dependent transporters (E is wrong) and there is no charge repulsion involved (E).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 2</h4>
+                <p>A gastroenterologist explains the role of bile in lipid absorption to a medical student. She states that bile does not chemically break down fat, but it performs an essential step that allows fat to be digested by pancreatic enzymes and then absorbed. Which of the following best describes this role of bile?</p>
+                <p class="option">A. Bile hydrolyzes triglycerides into fatty acids and glycerol</p>
+                <p class="option">B. Bile activates pancreatic lipase by phosphorylation</p>
+                <p class="option">C. Bile emulsifies large fat droplets and forms amphipathic micelles to carry lipids through the unstirred water layer</p>
+                <p class="option">D. Bile provides the alkaline pH required for lipase activity</p>
+                <p class="option">E. Bile directly transports fatty acids across the enterocyte membrane via receptor-mediated endocytosis</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Bile emulsifies fat droplets and forms micelles to carry lipids through the UWL</strong>
+                    <p style="margin-top:10px;">Bile acts as a detergent — it emulsifies large fat globules into smaller droplets (increasing surface area for lipase) and forms amphipathic micelles that package lipid fragments and transport them through the aqueous UWL to enterocytes. Bile does NOT hydrolyze triglycerides (that is pancreatic lipase — A is wrong), does not activate lipase by phosphorylation (B is wrong), and does not transport fatty acids via endocytosis (E is wrong). The alkaline pH comes from HCO₃⁻ in bile and pancreatic secretions, but that is not bile's primary role in lipid absorption (D is incomplete).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 3</h4>
+                <p>A researcher studies the fate of bile molecules during lipid absorption in the small intestine. After forming a micelle that carries fatty acids to an enterocyte, what happens to the bile molecules?</p>
+                <p class="option">A. Bile is absorbed along with the fatty acids into the enterocyte</p>
+                <p class="option">B. Bile is degraded by brush border enzymes in the duodenum</p>
+                <p class="option">C. Bile remains in the lumen, travels to the terminal ileum, and is actively reabsorbed into the portal circulation</p>
+                <p class="option">D. Bile is excreted entirely in feces after a single pass</p>
+                <p class="option">E. Bile is converted to secondary bile acids in the jejunum</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Bile remains in the lumen and is recycled at the terminal ileum</strong>
+                    <p style="margin-top:10px;">After delivering lipids to enterocytes, bile does not enter the cell — it remains in the intestinal lumen. It continues down to the terminal ileum, where it is actively reabsorbed via the ASBT (apical sodium-dependent bile acid transporter) into the portal circulation, returning to the liver. This is enterohepatic circulation. Only ~10% of bile is lost in feces per cycle. Secondary bile acid conversion occurs in the colon by bacterial action, not the jejunum (E is wrong).</p>
+                </div>
+            </div>
+
+            <!-- ── LO 2 ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:30px;">LO 2 — Bile Synthesis &amp; Structure (Q4–Q6)</h4>
+
+            <div class="practice-question">
+                <h4>Question 4</h4>
+                <p>A 52-year-old man is started on atorvastatin for hypercholesterolemia. His physician explains that the drug blocks the rate-limiting enzyme in cholesterol synthesis. Which of the following is this enzyme, and which bile component does its inhibition most directly reduce?</p>
+                <p class="option">A. Fatty acid synthase; phospholipid component of bile</p>
+                <p class="option">B. HMG-CoA reductase; cholesterol backbone of primary bile acids</p>
+                <p class="option">C. Cholesterol 7α-hydroxylase; bilirubin secretion into bile</p>
+                <p class="option">D. HMG-CoA synthase; triglyceride component of bile</p>
+                <p class="option">E. Acetyl-CoA carboxylase; glycine conjugate of bile acids</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — HMG-CoA reductase; cholesterol backbone of primary bile acids</strong>
+                    <p style="margin-top:10px;">HMG-CoA reductase is the rate-limiting enzyme in cholesterol synthesis. Statins inhibit this enzyme → ↓ intracellular cholesterol → hepatocytes upregulate LDL receptors → ↓ serum LDL. Since primary bile acids (e.g., cholic acid, glycocholic acid) are synthesized from a cholesterol backbone, statin therapy also reduces primary bile acid synthesis. Note: the immediate rate-limiting step in bile acid synthesis from cholesterol is cholesterol 7α-hydroxylase, but HMG-CoA reductase controls the upstream cholesterol supply.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 5</h4>
+                <p>A medical student is studying bile acid biochemistry. She learns that primary bile acids are amphipathic because they are conjugated with an amino acid. A patient with a genetic defect in this conjugation step would most likely present with which of the following?</p>
+                <p class="option">A. Jaundice due to impaired bilirubin excretion</p>
+                <p class="option">B. Fat malabsorption and steatorrhea due to impaired micelle formation</p>
+                <p class="option">C. Hyperchloremia due to impaired solvent drag</p>
+                <p class="option">D. Hypoglycemia due to impaired carbohydrate absorption</p>
+                <p class="option">E. Metabolic acidosis due to excess HCO₃⁻ secretion</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Fat malabsorption and steatorrhea due to impaired micelle formation</strong>
+                    <p style="margin-top:10px;">Conjugation with glycine (→ glycocholic acid) or taurine (→ taurocholic acid) creates the hydrophilic end of the amphipathic bile molecule — essential for micelle formation. Without this conjugation, bile cannot form proper micelles → lipids cannot be carried through the unstirred water layer → fat malabsorption → steatorrhea and fat-soluble vitamin (A, D, E, K) deficiency. Bilirubin excretion is a separate bile function and uses UDP-glucuronosyltransferase for conjugation, not amino acid conjugation (A is wrong).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 6</h4>
+                <p>A 45-year-old woman with a history of autoimmune hepatitis presents with progressively worsening jaundice, pruritus, and xanthelasma. Labs show elevated alkaline phosphatase and anti-mitochondrial antibodies (AMA). A liver biopsy reveals granulomatous destruction of intrahepatic bile ducts. Which of the following is the most likely diagnosis, and what is the expected effect on fat absorption?</p>
+                <p class="option">A. Primary sclerosing cholangitis; normal fat absorption</p>
+                <p class="option">B. Primary biliary cholangitis; steatorrhea and fat-soluble vitamin deficiency</p>
+                <p class="option">C. Autoimmune hepatitis; protein malabsorption only</p>
+                <p class="option">D. Biliary atresia; fat malabsorption corrected by ursodeoxycholic acid</p>
+                <p class="option">E. Wilson disease; copper accumulation causing fat malabsorption</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Primary biliary cholangitis; steatorrhea and fat-soluble vitamin deficiency</strong>
+                    <p style="margin-top:10px;">PBC = autoimmune destruction of intrahepatic bile ducts in a middle-aged woman; hallmark = anti-mitochondrial antibody (AMA); granulomatous inflammation on biopsy. Destruction of bile ducts → cholestasis → ↓ bile delivery to duodenum → impaired micelle formation → steatorrhea + fat-soluble vitamin deficiency (A, D, E, K). PSC (A) is associated with UC in young men and p-ANCA, not AMA. Treatment is ursodeoxycholic acid, which slows but does not correct steatorrhea in advanced disease.</p>
+                </div>
+            </div>
+
+            <!-- ── LO 3 ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:30px;">LO 3 — Bile Secretion, Hormonal Regulation &amp; Recycling (Q7–Q10)</h4>
+
+            <div class="practice-question">
+                <h4>Question 7</h4>
+                <p>A 28-year-old woman eats a high-fat meal. Thirty minutes later, she develops episodic cramping right upper quadrant pain. Imaging reveals multiple echogenic foci in the gallbladder with posterior acoustic shadowing. Which of the following hormones triggered her symptoms, and what are its three main effects on biliary physiology?</p>
+                <p class="option">A. Secretin; increases HCO₃⁻ secretion, relaxes sphincter of Oddi, contracts gallbladder</p>
+                <p class="option">B. Gastrin; increases gastric acid, stimulates bile production, relaxes pyloric sphincter</p>
+                <p class="option">C. CCK; increases bile production, contracts gallbladder, relaxes sphincter of Oddi</p>
+                <p class="option">D. GIP; inhibits acid secretion, stimulates gallbladder relaxation, decreases bile production</p>
+                <p class="option">E. Motilin; increases small bowel motility, contracts gallbladder, decreases bile reabsorption</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — CCK; increases bile production, contracts gallbladder, relaxes sphincter of Oddi</strong>
+                    <p style="margin-top:10px;">Fat (and protein) in the duodenum stimulate I-cells to release CCK. CCK has three key biliary effects: (1) ↑ bile production at the liver, (2) rhythmic contraction of the gallbladder (releasing stored concentrated bile), and (3) relaxation of the sphincter of Oddi (allowing bile to enter the duodenum). In this patient with gallstones, the gallbladder contracting against a stone in the cystic duct causes biliary colic — episodic RUQ pain after fatty meals. CCK also stimulates pancreatic enzyme secretion (lipase, proteases, amylase).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 8</h4>
+                <p>A patient undergoes resection of 120 cm of terminal ileum for Crohn's disease. Postoperatively, she develops persistent watery diarrhea despite fasting. Stool analysis shows elevated fat content. Which of the following best explains her diarrhea?</p>
+                <p class="option">A. Bacterial overgrowth causing protein fermentation in the colon</p>
+                <p class="option">B. Impaired bile acid reabsorption → bile acids enter colon → osmotic and secretory diarrhea</p>
+                <p class="option">C. Loss of ileocecal valve → rapid small bowel transit</p>
+                <p class="option">D. Decreased gastric acid production from loss of ileal enterocytes</p>
+                <p class="option">E. Malabsorption of carbohydrates due to loss of disaccharidase enzymes</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Impaired bile acid reabsorption → bile acids enter colon → diarrhea</strong>
+                    <p style="margin-top:10px;">The terminal ileum is the primary site for active bile acid reabsorption (enterohepatic circulation). After terminal ileum resection, bile acids are not reabsorbed and enter the colon, where they act as osmotic and secretory agents → watery diarrhea (bile acid diarrhea / cholerheic diarrhea). Additionally, the depleted bile acid pool impairs micelle formation → steatorrhea. She would also be at risk for B₁₂ deficiency (intrinsic factor-B₁₂ complex absorbed in terminal ileum) and fat-soluble vitamin deficiency. Cholestyramine binds bile acids in the colon and treats bile acid diarrhea.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 9</h4>
+                <p>A 55-year-old man with a history of peptic ulcer disease presents with recurrent diarrhea, significant weight loss, and steatorrhea. Serum gastrin level is markedly elevated at 1,200 pg/mL (normal &lt;100). Upper endoscopy shows multiple duodenal ulcers. Which of the following best explains his steatorrhea?</p>
+                <p class="option">A. Increased gastrin directly inhibits bile synthesis in the liver</p>
+                <p class="option">B. Excess acid in the duodenum inactivates bile salts and pancreatic lipase</p>
+                <p class="option">C. Gastrinoma metastases block the common bile duct</p>
+                <p class="option">D. Elevated gastrin stimulates CCK release, causing chronic gallbladder contraction and bile depletion</p>
+                <p class="option">E. Hypergastrinemia causes villous atrophy similar to celiac disease</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Excess acid inactivates bile salts and pancreatic lipase</strong>
+                    <p style="margin-top:10px;">This is Zollinger-Ellison syndrome (ZES): a gastrinoma producing excess gastrin → massive acid secretion → the duodenal pH drops so low that it inactivates both bile salts (optimal pH ~6) and pancreatic lipase (optimal pH ~6–7). Without functional bile and lipase, fat cannot be digested or absorbed → steatorrhea. This is a classic Step 1 vignette: ZES + steatorrhea + multiple duodenal ulcers + high serum gastrin. Treatment includes high-dose PPIs + surgical resection of gastrinoma if localized.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 10</h4>
+                <p>A 38-year-old obese woman undergoes laparoscopic cholecystectomy for symptomatic gallstones. Her surgeon explains that the gallbladder stores and concentrates bile between meals. Which of the following types of gallstones does this patient most likely have, and which radiographic finding would you expect?</p>
+                <p class="option">A. Black pigment stones; radiolucent on plain X-ray</p>
+                <p class="option">B. Cholesterol stones; radiolucent on plain X-ray</p>
+                <p class="option">C. Brown pigment stones; radiopaque on plain X-ray</p>
+                <p class="option">D. Mixed stones; radiopaque on CT only</p>
+                <p class="option">E. Cholesterol stones; radiopaque on plain X-ray</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Cholesterol stones; radiolucent on plain X-ray</strong>
+                    <p style="margin-top:10px;">Cholesterol gallstones account for ~80% of gallstones in the US and are associated with the 5 F's (Fat, Female, Fertile, Forty, Fair). Cholesterol stones are radiolucent (not visible on plain X-ray) because pure cholesterol does not absorb X-rays well — they are best seen on <strong>ultrasound</strong> (echogenic foci with posterior acoustic shadowing). Black pigment stones (calcium bilirubinate) are radiopaque and associated with hemolytic anemias. Brown pigment stones are associated with biliary infections.</p>
+                </div>
+            </div>
+
+            <!-- ── LO 4 ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:30px;">LO 4 — Making a Micelle &amp; Fat Malabsorption (Q11–Q15)</h4>
+
+            <div class="practice-question">
+                <h4>Question 11</h4>
+                <p>A researcher is studying lipid digestion in the small intestine. She discovers that pancreatic lipase cannot access dietary triglycerides within micelles because the hydrophilic ends of bile molecules form a shell that blocks enzyme entry. Which of the following correctly describes the mechanism that overcomes this barrier?</p>
+                <p class="option">A. Secretin cleaves pro-colipase → colipase displaces bile molecules from the micelle surface</p>
+                <p class="option">B. Trypsin cleaves pro-colipase → colipase binds the hydrophilic ends of bile → creates access for pancreatic lipase</p>
+                <p class="option">C. Enterokinase activates colipase → colipase digests the hydrophilic bile conjugates directly</p>
+                <p class="option">D. CCK directly activates pancreatic lipase by phosphorylation at the brush border</p>
+                <p class="option">E. Bile acids spontaneously deconjugate at the micelle surface, exposing lipid to lipase</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: B — Trypsin cleaves pro-colipase → colipase binds hydrophilic bile ends → access for pancreatic lipase</strong>
+                    <p style="margin-top:10px;">Pro-colipase is secreted by the pancreas in an inactive form. Trypsin (activated from trypsinogen by enterokinase at the brush border) cleaves pro-colipase → active colipase. Colipase then binds the hydrophilic ends of bile acid molecules on the micelle surface, creating a "door" or opening in the hydrophilic shell. Pancreatic lipase can now access the lipid core and hydrolyze triglycerides into 2 fatty acids + 1 monoglyceride. Without colipase, fat digestion in the small intestine is severely impaired despite bile and lipase both being present.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 12</h4>
+                <p>A 6-year-old boy presents with failure to thrive, severe fat malabsorption, and neurological symptoms including ataxia and visual problems. A peripheral blood smear shows acanthocytes (spiky red blood cells). Intestinal biopsy reveals enterocytes packed with fat droplets. Which of the following best explains this clinical picture?</p>
+                <p class="option">A. Celiac disease causing villous atrophy and impaired lipid uptake</p>
+                <p class="option">B. Cystic fibrosis causing pancreatic exocrine insufficiency and absent lipase</p>
+                <p class="option">C. Abetalipoproteinemia — inability to form chylomicrons due to absent microsomal triglyceride transfer protein (MTP)</p>
+                <p class="option">D. Short bowel syndrome from terminal ileum resection causing bile acid malabsorption</p>
+                <p class="option">E. Whipple disease causing PAS-positive macrophage infiltration of the lamina propria</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Abetalipoproteinemia; absent MTP → cannot form chylomicrons</strong>
+                    <p style="margin-top:10px;">Abetalipoproteinemia is a rare AR disorder caused by absent MTP (microsomal triglyceride transfer protein) → enterocytes absorb fatty acids and monoglycerides from micelles normally, but cannot package them into chylomicrons for export. Fat accumulates in enterocytes (seen on biopsy). The result: fat-soluble vitamin deficiency (especially E) → neurological symptoms (ataxia, spinocerebellar degeneration), acanthocytes (abnormal RBC membrane due to ↓ membrane lipids), and retinitis pigmentosa. This is distinct from pancreatic insufficiency (where lipase is absent) or bile acid deficiency (where micelles cannot form).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 13</h4>
+                <p>A 48-year-old man with a history of chronic alcoholism presents with greasy, foul-smelling stools that float in the toilet. He also has easy bruising. Labs show elevated PT/INR and low fat-soluble vitamin levels. Stool Sudan stain is positive for fat. Which fat-soluble vitamin deficiency best explains his bruising and elevated PT/INR?</p>
+                <p class="option">A. Vitamin A deficiency</p>
+                <p class="option">B. Vitamin D deficiency</p>
+                <p class="option">C. Vitamin E deficiency</p>
+                <p class="option">D. Vitamin K deficiency</p>
+                <p class="option">E. Vitamin C deficiency</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: D — Vitamin K deficiency</strong>
+                    <p style="margin-top:10px;">Vitamin K is a fat-soluble vitamin required for activation of coagulation factors II (prothrombin), VII, IX, X and anticoagulant proteins C and S (via γ-carboxylation). Deficiency → prolonged PT/INR → easy bruising and bleeding tendency. Chronic alcoholism impairs liver function AND causes fat malabsorption (alcoholic pancreatitis, liver disease impairing bile production) → steatorrhea → fat-soluble vitamin malabsorption. Vitamin A deficiency causes night blindness; Vitamin D causes osteomalacia/rickets; Vitamin E causes ataxia/hemolytic anemia. Vitamin C is water-soluble and causes scurvy (perifollicular hemorrhages, not elevated PT).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 14</h4>
+                <p>A 25-year-old man with cystic fibrosis has recurring episodes of steatorrhea, abdominal bloating, and poor weight gain despite adequate caloric intake. His physician prescribes pancreatic enzyme replacement therapy. Which component of the replacement therapy is most directly responsible for correcting his fat malabsorption?</p>
+                <p class="option">A. Amylase — to break down complex carbohydrates</p>
+                <p class="option">B. Trypsin — to activate co-lipase and allow lipase access to micelles</p>
+                <p class="option">C. Lipase — to hydrolyze triglycerides within micelles into absorbable fatty acids and monoglycerides</p>
+                <p class="option">D. Bile acid supplementation — to restore micelle formation</p>
+                <p class="option">E. Colipase — to directly digest triglycerides at the brush border</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Lipase; hydrolyzes triglycerides into fatty acids and monoglycerides</strong>
+                    <p style="margin-top:10px;">In cystic fibrosis, thick mucus plugs obstruct pancreatic ducts → pancreatic exocrine insufficiency → absent/decreased pancreatic lipase → triglycerides cannot be digested → steatorrhea. Pancreatic enzyme replacement therapy (PERT) provides exogenous lipase, which restores the ability to hydrolyze triglycerides inside micelles into absorbable products (2 fatty acids + 1 monoglyceride). While trypsin in the replacement also activates colipase (answer B), this is secondary — the primary driver of fat malabsorption in CF is absent lipase, not absent colipase alone. Bile acid secretion in CF is typically intact.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 15</h4>
+                <p>A 30-year-old woman has been on a strict fat-free diet for 8 months. She then attends a large holiday dinner and consumes a high-fat meal. Several hours later, she develops greasy, foul-smelling stools. Which of the following best explains this acute episode of steatorrhea?</p>
+                <p class="option">A. Her gallbladder has atrophied from disuse and can no longer contract</p>
+                <p class="option">B. The fat-free diet caused her liver to develop steatohepatitis, impairing bile synthesis</p>
+                <p class="option">C. Chronic low-fat intake results in an insufficient bile pool; a sudden high-fat load overwhelms available bile → inadequate micelle formation → fat malabsorption</p>
+                <p class="option">D. The high-fat meal triggered excess CCK, which inhibited pancreatic lipase</p>
+                <p class="option">E. The fat-free diet permanently damaged the enterocyte brush border</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>✓ Correct: C — Insufficient bile pool from low-fat diet overwhelmed by sudden high-fat load</strong>
+                    <p style="margin-top:10px;">From the lecture: a chronically low-fat diet reduces the stimulus for bile production and storage — the bile pool shrinks. When a suddenly large fat load arrives in the duodenum, there is not enough bile available to emulsify and form micelles for all the dietary fat → fat passes unabsorbed → steatorrhea. The liver can adjust over time, but the acute mismatch between fat intake and available bile causes transient fat malabsorption. This is a physiological concept: bile production is upregulated by dietary fat need. Neither gallbladder atrophy (A) nor permanent brush border damage (E) is implied — this is a functional/adaptive insufficiency.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main><!-- /main -->
+
+<script>
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH4(h4El) {
+        h4El.classList.toggle('collapsed');
+        const body = h4El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+        const clone = document.querySelector('.main').cloneNode(true);
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+        clone.querySelectorAll('.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, .export-actions, .sidebar-footer, .hub-return-btn, button').forEach(el => el.remove());
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+        const overrideCSS = `* { box-sizing: border-box; } body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; } .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; } .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} } .lo-section:first-child { page-break-before:auto !important; } .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; } ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}`;
+        const ns = forPrint ? '' : `xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'`;
+        return `<!DOCTYPE html>\n<html ${ns}>\n<head>\n<meta charset="UTF-8">\n<title>Lecture 5: Bile Workshop &amp; Making a Micelle — GUSOM GI Block</title>\n<style>${pageCSS}</style>\n<style>${overrideCSS}</style>\n</head>\n<body>\n${clone.outerHTML}\n</body>\n</html>`;
+    }
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">⏳</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) { alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.'); btn.innerHTML = origHTML; btn.disabled = false; return; }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">⏳</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'GI05-Bile-Workshop-Making-a-Micelle.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+</script>
+</body>
+</html>
