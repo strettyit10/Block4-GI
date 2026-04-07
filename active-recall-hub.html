@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Recall Drills — HoyaDocs GI Block</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* ── TOP NAV ── */
+.topnav{
+  background:#161B22;border-bottom:1px solid #21262D;
+  padding:0 28px;height:54px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{
+  width:30px;height:30px;border-radius:7px;
+  background:linear-gradient(135deg,#00695C,#004D40);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9em;font-weight:800;color:#fff;flex-shrink:0
+}
+.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#6B7280;font-weight:400;margin-left:4px}
+.nav-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.8em;color:#6B7280;font-weight:500;
+  padding:6px 12px;border-radius:6px;border:1px solid #30363D;
+  transition:all .2s
+}
+.nav-back:hover{border-color:#00BFA5;color:#00BFA5}
+
+/* ── HERO ── */
+.hero{
+  max-width:1000px;margin:0 auto;
+  padding:52px 28px 36px;
+  border-bottom:1px solid #21262D
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#003D36;border:1px solid #00695C;border-radius:6px;
+  padding:4px 12px;font-size:.72em;font-weight:700;
+  color:#00BFA5;text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:18px
+}
+.hero h1{
+  font-size:clamp(2rem,5vw,3.4rem);font-weight:900;
+  letter-spacing:-.03em;line-height:1.05;
+  color:#E6EDF3;margin-bottom:14px
+}
+.hero h1 span{color:#00BFA5}
+.hero-sub{
+  font-size:.97em;color:#8B949E;line-height:1.7;
+  max-width:600px;margin-bottom:28px
+}
+.hero-stats{display:flex;gap:20px;flex-wrap:wrap}
+.h-stat{
+  background:#161B22;border:1px solid #21262D;border-radius:8px;
+  padding:12px 18px;text-align:center;min-width:90px
+}
+.h-stat-n{font-size:1.6em;font-weight:800;color:#00BFA5}
+.h-stat-l{font-size:.68em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+/* ── HUB LEGEND ── */
+.legend-strip{
+  max-width:1000px;margin:0 auto;
+  padding:22px 28px;
+  display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;
+  border-bottom:1px solid #21262D
+}
+.legend-label{
+  font-size:.7em;font-weight:700;color:#6B7280;
+  text-transform:uppercase;letter-spacing:.1em;
+  margin-right:4px;white-space:nowrap;
+  align-self:center
+}
+.hub-legend-item{
+  display:flex;align-items:center;gap:8px;
+  background:#161B22;border:1px solid #21262D;
+  border-radius:7px;padding:8px 14px;flex:1;min-width:200px
+}
+.hub-legend-dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0
+}
+.hub-legend-dot.h1{background:#00BFA5}
+.hub-legend-dot.h2{background:#F59E0B}
+.hub-legend-dot.h3{background:#60A5FA}
+.hub-legend-name{font-size:.82em;font-weight:700;color:#E6EDF3}
+.hub-legend-desc{font-size:.74em;color:#6B7280;margin-left:2px}
+
+/* ── MAIN GRID ── */
+.main{max-width:1000px;margin:0 auto;padding:32px 28px 80px}
+.section-hdr{
+  font-size:.68em;font-weight:700;color:#6B7280;
+  text-transform:uppercase;letter-spacing:.12em;
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:10px
+}
+.section-hdr::after{content:'';flex:1;height:1px;background:#21262D}
+
+.lecture-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(440px,1fr));
+  gap:14px;margin-bottom:40px
+}
+@media(max-width:520px){.lecture-grid{grid-template-columns:1fr}}
+
+/* ── LECTURE CARD ── */
+.lec-card{
+  background:#161B22;border:1px solid #21262D;border-radius:12px;
+  padding:20px;transition:border-color .2s
+}
+.lec-card.has-live{border-color:#00695C}
+.lec-card.has-live:hover{border-color:#00BFA5}
+.lec-card-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:12px;margin-bottom:16px
+}
+.lec-num{
+  font-size:.68em;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;color:#6B7280;
+  margin-bottom:4px
+}
+.lec-title{font-size:.95em;font-weight:700;color:#E6EDF3;line-height:1.3}
+.lec-live-tag{
+  flex-shrink:0;
+  background:#003D36;border:1px solid #00695C;
+  border-radius:20px;padding:3px 10px;
+  font-size:.68em;font-weight:700;color:#00BFA5;
+  text-transform:uppercase;letter-spacing:.08em;
+  white-space:nowrap
+}
+.lec-soon-tag{
+  flex-shrink:0;
+  background:#1C2128;border:1px solid #30363D;
+  border-radius:20px;padding:3px 10px;
+  font-size:.68em;font-weight:600;color:#6B7280;
+  text-transform:uppercase;letter-spacing:.06em;
+  white-space:nowrap
+}
+
+/* ── HUB BUTTONS ── */
+.hub-row{display:flex;gap:8px;flex-wrap:wrap}
+
+.hub-btn{
+  flex:1;min-width:100px;
+  display:flex;flex-direction:column;
+  align-items:flex-start;gap:3px;
+  padding:11px 14px;border-radius:8px;
+  border:1px solid #30363D;
+  transition:all .2s;cursor:default;
+  text-decoration:none
+}
+
+/* Hub 1 — Live */
+.hub-btn.h1-live{
+  background:#003D36;border-color:#00695C;cursor:pointer
+}
+.hub-btn.h1-live:hover{
+  background:#004D40;border-color:#00BFA5;
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(0,191,165,.15)
+}
+/* Hub 2 — coming */
+.hub-btn.h2-soon{background:#161B22;border-color:#21262D}
+/* Hub 3 — coming */
+.hub-btn.h3-soon{background:#161B22;border-color:#21262D}
+/* All coming (non-GI02) */
+.hub-btn.all-soon{background:#161B22;border-color:#21262D}
+
+.hub-btn-num{
+  font-size:.67em;font-weight:700;text-transform:uppercase;letter-spacing:.08em
+}
+.hub-btn.h1-live .hub-btn-num{color:#00BFA5}
+.hub-btn.h2-soon .hub-btn-num{color:#6B7280}
+.hub-btn.h3-soon .hub-btn-num{color:#6B7280}
+.hub-btn.all-soon .hub-btn-num{color:#6B7280}
+
+.hub-btn-label{font-size:.8em;font-weight:600;line-height:1.25}
+.hub-btn.h1-live .hub-btn-label{color:#E6EDF3}
+.hub-btn.h2-soon .hub-btn-label,
+.hub-btn.h3-soon .hub-btn-label,
+.hub-btn.all-soon .hub-btn-label{color:#4B5563}
+
+.hub-btn-status{
+  font-size:.67em;font-weight:600;margin-top:2px
+}
+.hub-btn.h1-live .hub-btn-status{color:#00BFA5}
+.hub-btn.h2-soon .hub-btn-status,
+.hub-btn.h3-soon .hub-btn-status,
+.hub-btn.all-soon .hub-btn-status{color:#374151}
+
+/* Hub accent bars */
+.hub-btn::before{
+  content:'';display:block;width:100%;height:2px;
+  border-radius:2px;margin-bottom:6px
+}
+.hub-btn.h1-live::before{background:#00BFA5}
+.hub-btn.h2-soon::before{background:#374151}
+.hub-btn.h3-soon::before{background:#374151}
+.hub-btn.all-soon::before{background:#21262D}
+
+/* Hub 2 amber tint for existing */
+.hub-btn.h2-built{
+  background:#1C1A10;border-color:#3D3010;cursor:default
+}
+.hub-btn.h2-built::before{background:#6B4E0A}
+.hub-btn.h2-built .hub-btn-num{color:#B45309}
+.hub-btn.h2-built .hub-btn-label{color:#78716C}
+.hub-btn.h2-built .hub-btn-status{color:#57534E}
+
+/* ── PROGRESS BAR ── */
+.progress-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:28px;
+}
+.prog-bar-wrap{flex:1;height:6px;background:#21262D;border-radius:3px;overflow:hidden}
+.prog-bar-fill{height:100%;background:linear-gradient(90deg,#00695C,#00BFA5);border-radius:3px;width:3.33%}
+.prog-label{font-size:.76em;color:#6B7280;white-space:nowrap}
+.prog-label strong{color:#00BFA5}
+
+/* ── FOOTER ── */
+.footer{
+  max-width:1000px;margin:0 auto;
+  padding:20px 28px 36px;
+  border-top:1px solid #21262D;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px
+}
+.footer-text{font-size:.76em;color:#6B7280}
+.footer-text a{color:#00BFA5}
+.footer-text a:hover{text-decoration:underline}
+.footer-brand{font-size:.78em;font-weight:700;color:#374151}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo">H</div>
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">GI Block</span>
+  </div>
+  <a href="github-index.html" class="nav-back">← Study Hub</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">⚡ Active Recall Drills</div>
+  <h1>GI Block <span>Drill Hubs</span></h1>
+  <p class="hero-sub">
+    Three-hub active recall system for every GI lecture — flashcards, fill-in-the-blank,
+    ordering, matching, and Step 1 vignettes to reinforce lecture material through retrieval practice.
+  </p>
+  <div class="hero-stats">
+    <div class="h-stat">
+      <div class="h-stat-n">10</div>
+      <div class="h-stat-l">Lectures</div>
+    </div>
+    <div class="h-stat">
+      <div class="h-stat-n">3</div>
+      <div class="h-stat-l">Hubs each</div>
+    </div>
+    <div class="h-stat">
+      <div class="h-stat-n">1</div>
+      <div class="h-stat-l">Live now</div>
+    </div>
+  </div>
+</div>
+
+<!-- HUB LEGEND -->
+<div class="legend-strip">
+  <span class="legend-label">Each hub:</span>
+  <div class="hub-legend-item">
+    <div class="hub-legend-dot h1"></div>
+    <span class="hub-legend-name">Hub 1</span>
+    <span class="hub-legend-desc">— Core Concepts · Flashcards, FIB, Ordering, Matching, Test Traps</span>
+  </div>
+  <div class="hub-legend-item">
+    <div class="hub-legend-dot h2"></div>
+    <span class="hub-legend-name">Hub 2</span>
+    <span class="hub-legend-desc">— Step 1 Extensions · High-yield clinical correlates &amp; USMLE framing</span>
+  </div>
+  <div class="hub-legend-item">
+    <div class="hub-legend-dot h3"></div>
+    <span class="hub-legend-name">Hub 3</span>
+    <span class="hub-legend-desc">— Practice Questions · Full-stem vignettes with detailed explanations</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- progress -->
+  <div class="progress-row">
+    <div class="prog-bar-wrap"><div class="prog-bar-fill"></div></div>
+    <span class="prog-label"><strong>1</strong> of 30 hubs live</span>
+  </div>
+
+  <div class="section-hdr">GI Block Lectures</div>
+
+  <div class="lecture-grid">
+
+    <!-- ─── GI01 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 01</div>
+          <div class="lec-title">GI Overview</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI02 ─── LIVE -->
+    <div class="lec-card has-live">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 02</div>
+          <div class="lec-title">GI Motility</div>
+        </div>
+        <span class="lec-live-tag">🟢 Hub 1 Live</span>
+      </div>
+      <div class="hub-row">
+        <a href="testing-drills/gi02-hub1-motility.html" class="hub-btn h1-live">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">▶ Start drill</div>
+        </a>
+        <div class="hub-btn h2-built">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">In progress</div>
+        </div>
+        <div class="hub-btn h3-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI03 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 03</div>
+          <div class="lec-title">Anterior Abdominal Wall</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI04 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 04</div>
+          <div class="lec-title">Histology: Esophagus, Stomach &amp; Intestines</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI05 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 05</div>
+          <div class="lec-title">Bile Workshop: Making a Micelle</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI07 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 07</div>
+          <div class="lec-title">GI Primer: Endoderm &amp; Gut Tube</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI08 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 08</div>
+          <div class="lec-title">Abdominal Viscera: GI Tract</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI09/10 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lectures 09 &amp; 10</div>
+          <div class="lec-title">Secretions I &amp; II</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI12 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 12</div>
+          <div class="lec-title">GI Embryology</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── GI13 ─── -->
+    <div class="lec-card">
+      <div class="lec-card-top">
+        <div>
+          <div class="lec-num">Lecture 13</div>
+          <div class="lec-title">Abdominal Viscera II</div>
+        </div>
+        <span class="lec-soon-tag">Coming Soon</span>
+      </div>
+      <div class="hub-row">
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 1</div>
+          <div class="hub-btn-label">Core Concepts</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 2</div>
+          <div class="hub-btn-label">Step 1 Extensions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+        <div class="hub-btn all-soon">
+          <div class="hub-btn-num">Hub 3</div>
+          <div class="hub-btn-label">Practice Questions</div>
+          <div class="hub-btn-status">Coming soon</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /lecture-grid -->
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="footer-text">
+    <a href="github-index.html">← Back to GI Study Hub</a> &nbsp;·&nbsp;
+    HoyaDocs Active Recall System · GUSOM GI Block
+  </span>
+  <span class="footer-brand">HoyaDocs</span>
+</div>
+
+</body>
+</html>
