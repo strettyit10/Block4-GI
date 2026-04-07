@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GI02 Hub #3 · GI Motility — Practice Questions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--accent:#1565C0;--ag:#1976D2;--al:rgba(21,101,192,0.12);}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh;}
+        .container{max-width:960px;margin:0 auto;padding:20px;}
+
+        .header{margin-bottom:28px;}
+        .back-link{display:inline-block;margin-bottom:16px;color:#6B7280;text-decoration:none;font-size:.82em;padding:5px 10px;border:1px solid #30363D;border-radius:6px;transition:all .2s;}
+        .back-link:hover{color:var(--accent);border-color:var(--accent);}
+        .header h1{font-size:1.8em;font-weight:700;color:#E6EDF3;margin-bottom:6px;}
+        .header h1 span{color:#60A5FA;}
+        .header p{font-size:.9em;color:#8B949E;margin-bottom:14px;line-height:1.5;}
+
+        .source-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+        .source-pill{background:#161B22;border:1px solid #30363D;border-radius:20px;padding:5px 12px;font-size:.78em;color:#8B949E;}
+
+        .hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+        .hub-prog-label{font-size:.78em;color:#6B7280;margin-right:4px;}
+        .hub-step{padding:6px 14px;border-radius:6px;font-size:.82em;font-weight:600;}
+        .hub-step.done{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s;}
+        .hub-step.done:hover{border-color:#00897B;color:#00897B;}
+        .hub-step.current{background:var(--accent);color:#fff;}
+        .hub-arrow{color:#30363D;}
+
+        .tabs{display:flex;gap:0;border-bottom:1px solid #30363D;margin-bottom:28px;overflow-x:auto;}
+        .tab-button{flex:1;min-width:120px;padding:12px 14px;background:none;border:none;border-bottom:2px solid transparent;color:#8B949E;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:color .2s,border-color .2s;white-space:nowrap;}
+        .tab-button.active{color:#E6EDF3;border-bottom-color:var(--accent);}
+        .tab-button:hover:not(.active){color:#C9D1D9;}
+        .tab-pane{display:none;}
+        .tab-pane.active{display:block;}
+
+        .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:28px;}
+        .stat{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px;text-align:center;}
+        .stat-n{font-size:1.9em;font-weight:700;color:#60A5FA;}
+        .stat-l{font-size:.72em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
+
+        .q-block{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px;}
+        .q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+        .q-num{font-size:.72em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;}
+        .q-tag{font-size:.68em;padding:3px 10px;border-radius:10px;font-weight:600;}
+        .q-tag.physio{background:rgba(0,137,123,.15);color:#4DB6AC;}
+        .q-tag.pharm{background:rgba(245,158,11,.15);color:#FCD34D;}
+        .q-tag.path{background:rgba(239,68,68,.15);color:#FCA5A5;}
+        .q-tag.integr{background:rgba(168,85,247,.15);color:#C084FC;}
+        .q-diff{font-size:.68em;padding:3px 8px;border-radius:8px;border:1px solid #30363D;color:#6B7280;margin-left:auto;}
+        .q-diff.med{border-color:#F59E0B;color:#F59E0B;}
+        .q-diff.hard{border-color:#EF4444;color:#EF4444;}
+
+        .q-stem{background:#1C2128;border:1px solid #21262D;border-radius:8px;padding:18px 20px;font-size:.93em;line-height:1.8;color:#E6EDF3;margin-bottom:18px;}
+        .q-stem strong{color:#FCD34D;}
+        .q-stem em{color:#93C5FD;}
+
+        .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+        .opt-btn{display:flex;align-items:flex-start;gap:12px;background:#1C2128;border:1.5px solid #30363D;border-radius:8px;padding:12px 16px;cursor:pointer;font-family:inherit;font-size:.89em;color:#C9D1D9;text-align:left;transition:border-color .15s,background .15s;width:100%;}
+        .opt-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(21,101,192,.08);}
+        .opt-btn.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5;}
+        .opt-btn.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5;}
+        .opt-btn:disabled{cursor:default;}
+        .opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0;margin-top:1px;}
+        .opt-btn.correct .opt-letter{background:#4ADE80;color:#000;}
+        .opt-btn.wrong .opt-letter{background:#EF4444;color:#fff;}
+        .opt-text{font-size:.88em;line-height:1.55;color:inherit;}
+
+        .exp-box{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:18px 20px;margin-top:4px;display:none;}
+        .exp-box.show{display:block;}
+        .exp-verdict{font-size:.85em;font-weight:700;margin-bottom:12px;padding:6px 10px;border-radius:6px;}
+        .exp-verdict.ok{background:rgba(74,222,128,.15);color:#4ADE80;}
+        .exp-verdict.bad{background:rgba(239,68,68,.1);color:#EF4444;}
+        .exp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #21262D;align-items:flex-start;font-size:.86em;line-height:1.55;}
+        .exp-row:last-child{border-bottom:none;}
+        .exp-letter{font-size:.72em;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+        .exp-letter.ok{background:rgba(74,222,128,.2);color:#4ADE80;}
+        .exp-letter.bad{background:rgba(239,68,68,.15);color:#EF4444;}
+        .exp-text{color:#9CA3AF;}
+        .exp-text.ok{color:#D1FAE5;}
+        .teach-box{margin-top:14px;background:var(--al);border:1px solid rgba(21,101,192,.4);border-radius:8px;padding:14px 16px;font-size:.86em;color:#93C5FD;line-height:1.6;}
+        .teach-box strong{color:#60A5FA;display:block;margin-bottom:4px;}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <a href="gi02-hub2-motility.html" class="back-link">← Hub #2 Step 1 Extensions</a>
+
+    <div class="header">
+        <h1>GI02 · <span>GI Motility</span> — Practice Questions</h1>
+        <p>Hub #3 · 12 full USMLE Step 1–style questions · All answer choices explained · Organized by topic</p>
+        <div class="source-pills">
+            <span class="source-pill">📚 First Aid GI Physiology</span>
+            <span class="source-pill">📚 Pathoma GI</span>
+            <span class="source-pill">📚 Physeo GI Physiology</span>
+            <span class="source-pill">📚 GUSOM Anki phys-02</span>
+            <span class="source-pill">📚 UWorld-style vignettes</span>
+        </div>
+    </div>
+
+    <div class="hub-prog">
+        <span class="hub-prog-label">Hub Progression:</span>
+        <a href="gi02-hub1-motility.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+        <span class="hub-arrow">→</span>
+        <a href="gi02-hub2-motility.html" class="hub-step done">🔬 Hub #2 — Step 1 Extensions</a>
+        <span class="hub-arrow">→</span>
+        <span class="hub-step current">📝 Hub #3 — Practice Questions</span>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat"><div class="stat-n">12</div><div class="stat-l">Questions</div></div>
+        <div class="stat"><div class="stat-n">4</div><div class="stat-l">Topic Tabs</div></div>
+        <div class="stat"><div class="stat-n">60</div><div class="stat-l">Answer Options</div></div>
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Explained</div></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="switchTab('physio',this)">⚡ Physiology (Q1–4)</button>
+        <button class="tab-button" onclick="switchTab('neural',this)">🧠 Neural Control (Q5–8)</button>
+        <button class="tab-button" onclick="switchTab('path',this)">🔴 Pathology (Q9–11)</button>
+        <button class="tab-button" onclick="switchTab('integr',this)">🔗 Integration (Q12)</button>
+    </div>
+
+    <!-- TAB: PHYSIOLOGY -->
+    <div id="tab-physio" class="tab-pane active">
+        <div id="qContainer-physio"></div>
+    </div>
+
+    <!-- TAB: NEURAL -->
+    <div id="tab-neural" class="tab-pane">
+        <div id="qContainer-neural"></div>
+    </div>
+
+    <!-- TAB: PATHOLOGY -->
+    <div id="tab-path" class="tab-pane">
+        <div id="qContainer-path"></div>
+    </div>
+
+    <!-- TAB: INTEGRATION -->
+    <div id="tab-integr" class="tab-pane">
+        <div id="qContainer-integr"></div>
+    </div>
+</div>
+
+<script>
+function switchTab(name,btn){
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    if(btn) btn.classList.add('active');
+}
+
+const questions = {
+    physio: [
+        {
+            num: 1, tag: "physio", tagLabel: "Physiology", diff: "med",
+            stem: `A physiology experiment measures slow wave (BER) activity in isolated segments of the GI tract. Recordings show rhythmic depolarizations occurring at <strong>3 cycles per minute</strong> that do NOT trigger muscle contraction in the absence of additional neural input. When the sample is exposed to acetylcholine, action potentials appear superimposed on the slow waves and contractions are observed. Which of the following BEST characterizes the cells responsible for generating the initial 3/min slow waves?`,
+            opts: [
+                "Enteric neurons in Auerbach's plexus that fire spontaneously at 3/min",
+                "Interstitial cells of Cajal (ICC) at the myenteric plexus that function as pacemakers",
+                "Smooth muscle cells of the muscularis propria that autorhythmically depolarize",
+                "Submucosal neurons in Meissner's plexus that modulate epithelial secretion",
+                "Vagal efferent nerve terminals that set the pace via acetylcholine release"
+            ],
+            correct: 1,
+            exps: [
+                "Enteric neurons modulate motility but are NOT the source of the BER. The BER persists after neural blockade — it is myogenic, generated by ICC.",
+                "CORRECT. Interstitial cells of Cajal (ICC), located at the myenteric plexus, are the pacemaker cells that generate the BER. The BER is a graded potential that sets the MAXIMUM frequency of contraction. ACh (from ENS) depolarizes smooth muscle to threshold → action potentials ride on the BER → contraction.",
+                "Smooth muscle cells are the EFFECTORS of contraction, not the BER generators. The BER is generated by ICC and transmitted to smooth muscle.",
+                "Meissner's plexus (submucosal) controls secretion and local reflexes — NOT the BER.",
+                "The BER persists after vagotomy — it is NOT vagally dependent. ICC are intrinsically rhythmic."
+            ],
+            teach: "ICC = pacemakers of GI smooth muscle. BER (slow waves) = graded, spontaneous, myogenic depolarizations. Key: BER ≠ contraction. ACh from ENS neurons is needed to push the slow wave to threshold → action potential → Ca²⁺ influx → contraction. Step 1: ICC dysfunction (diabetes, scleroderma) → impaired motility."
+        },
+        {
+            num: 2, tag: "physio", tagLabel: "Physiology", diff: "med",
+            stem: `A third-year medical student is asked to rank the following GI segments by their <em>basal electric rhythm (BER) frequency from highest to lowest</em>. The correct ranking is:`,
+            opts: [
+                "Stomach > Duodenum > Ileum",
+                "Duodenum > Ileum > Stomach",
+                "Ileum > Duodenum > Stomach",
+                "Stomach > Ileum > Duodenum",
+                "Duodenum > Stomach > Ileum"
+            ],
+            correct: 1,
+            exps: [
+                "Incorrect. The stomach has the LOWEST BER (3/min), not the highest.",
+                "CORRECT. Duodenum = 12/min (HIGHEST) > Ileum = 8/min > Stomach = 3/min (LOWEST). This counter-intuitive gradient (duodenum highest, not stomach) is important: the duodenum 'beats' faster than the stomach to ensure chyme moves aborally, preventing retrograde flow.",
+                "Ileum (8) is intermediate — it does not have the highest BER.",
+                "Stomach is the LOWEST at 3/min; this ranking is incorrect.",
+                "Duodenum (12) > Stomach (3) > Ileum (8) is incorrect — ileum is actually intermediate."
+            ],
+            teach: "BER frequency: Duodenum 12 > Ileum 8 > Stomach 3. The duodenal pacemaker (12/min) is FASTER than the stomach (3/min) — this ensures the intestine is always 'ready' to receive gastric contents and prevents retrograde peristalsis. The ileocecal region has a slower BER, acting as a physiological 'gate.'"
+        },
+        {
+            num: 3, tag: "physio", tagLabel: "Physiology", diff: "med",
+            stem: `A 44-year-old woman is evaluated for early satiety, nausea, and bloating that have persisted for 4 months. A radiolabeled meal study shows <strong>70% of the meal retained in the stomach at 4 hours</strong> (normal &lt;10%). A hormonal evaluation is performed during the interdigestive period (patient has not eaten for 5 hours). Which hormone level would you expect to be ELEVATED at the time of the interdigestive motility pattern that would normally be active now?`,
+            opts: [
+                "Gastrin", "CCK", "Motilin", "GIP (glucose-dependent insulinotropic peptide)", "Secretin"
+            ],
+            correct: 2,
+            exps: [
+                "Gastrin is elevated postprandially (released by antral G-cells in response to food), not during fasting.",
+                "CCK is elevated postprandially in response to fat and protein — released by I-cells of duodenum/jejunum. Falls during fasting.",
+                "CORRECT. Motilin is elevated during the interdigestive (fasting) state — it initiates MMC Phase III. Motilin rises cyclically every 75-120 minutes between meals to trigger the 'housekeeper wave.' In gastroparesis, motilin signaling is impaired. Erythromycin (motilin agonist) can restore this.",
+                "GIP is released in response to carbohydrates/fat in the small intestine — postprandial, not interdigestive.",
+                "Secretin is released by S-cells in response to duodenal acidification — postprandial, not interdigestive."
+            ],
+            teach: "MMC timing: starts 3-4h AFTER a meal ends (interdigestive state). Motilin rises cyclically → initiates Phase III MMC (~10 min of strong sweeping contractions). Erythromycin mimics motilin → used in gastroparesis. The MMC is the gut's 'janitor' — sweeps undigested material + bacteria from stomach/small bowel → colon."
+        },
+        {
+            num: 4, tag: "physio", tagLabel: "Physiology", diff: "hard",
+            stem: `A 28-year-old man undergoes a study of colonic physiology. A colonoscopy with mucosal biopsy of the sigmoid colon is performed. The pathologist notes the colonic mucosa lacks <strong>villi</strong>. A physiologist explains this is why the colon relies on a specific motility pattern for absorption. This pattern forms 'pockets' in the colon wall that remain stationary for prolonged periods, maximizing mucosal contact time. Which of the following molecules is the colon <em>primarily</em> absorbing during this motility pattern, and what transporter is responsible?`,
+            opts: [
+                "Glucose via SGLT1 transporter",
+                "Sodium via ENaC (epithelial sodium channel) with accompanying water",
+                "Fatty acids via passive diffusion across colonocytes",
+                "Amino acids via PEPT1 transporter",
+                "Calcium via TRPV5 channels driven by vitamin D"
+            ],
+            correct: 1,
+            exps: [
+                "SGLT1 (glucose-Na⁺ cotransporter) is in the small intestine — the colon does not absorb glucose via SGLT1.",
+                "CORRECT. Haustration = segmental 'pockets' in the colon that facilitate prolonged mucosal contact = 'colonic salvage.' The colon LACKS VILLI (no absorptive surface amplification), so it depends on haustration to maximize absorption time. Primary colon absorption: Na⁺ via ENaC (aldosterone-regulated) with accompanying H₂O and Cl⁻. This is the last chance to reclaim Na⁺/water before defecation.",
+                "Fatty acids are absorbed in the small intestine; the colon absorbs short-chain fatty acids (from bacterial fermentation) but not dietary fat.",
+                "PEPT1 is a dipeptide transporter in the small intestine, not the colon.",
+                "TRPV5-mediated Ca²⁺ absorption is predominantly in the kidney (distal tubule) and to a lesser extent duodenum — not colon."
+            ],
+            teach: "Colonic salvage via haustration: Na⁺ (ENaC, regulated by aldosterone) + accompanying water + Cl⁻ (CFTR-mediated secretion reduced). Colon lacks villi → depends on haustration for prolonged mucosal contact. Clinical: hyperaldosteronism → increased ENaC → excess Na⁺/water absorption → hypertension. CF (CFTR mutation) → excessive colonic Cl⁻ absorption → thick mucus."
+        }
+    ],
+    neural: [
+        {
+            num: 5, tag: "neural", tagLabel: "Neural Control", diff: "med",
+            stem: `A 52-year-old woman with longstanding type 1 diabetes presents with severe constipation and bloating. Colonoscopy is normal. Colonic manometry shows <strong>absent high-amplitude propagating contractions</strong> after a meal. Her gastroenterologist explains that a normal postprandial reflex that should trigger these contractions is absent. This reflex is triggered by gastric distension after a meal. Which of the following hormones AND pathways mediates this reflex?`,
+            opts: [
+                "CCK via vagal afferents to the dorsal motor nucleus of the vagus",
+                "Gastrin via the bloodstream + neural pathways → colonic mass movement (gastrocolic reflex)",
+                "Motilin via the enteric nervous system → phase III MMC in the colon",
+                "Secretin via direct smooth muscle receptors → peristalsis",
+                "GIP via the portal circulation → colonic motility"
+            ],
+            correct: 1,
+            exps: [
+                "CCK signals satiety via vagal afferents to the hypothalamus, not the primary mediator of the gastrocolic reflex.",
+                "CORRECT. Gastrocolic reflex: gastric distension → gastrin release (G-cells) + neural signaling → colonic mass movements (1-3×/day). This is why people feel the urge to defecate after eating. Diabetic autonomic neuropathy impairs this reflex → constipation. Gastrin + intrinsic ENS pathway mediate this postprandial colonic response.",
+                "Motilin mediates MMC in the SMALL BOWEL (mid-stomach → terminal ileum) during the interdigestive state — not the gastrocolic reflex.",
+                "Secretin stimulates pancreatic bicarbonate — minimal direct effect on colonic motility.",
+                "GIP (incretin) primarily stimulates insulin release; not a driver of colonic mass movement."
+            ],
+            teach: "Gastrocolic reflex: Meal → gastric distension → gastrin + ENS → colonic mass movements. The urge to defecate after eating is normal (especially after breakfast). Diabetic gastroparesis impairs gastric distension → ↓ gastrocolic reflex → constipation (despite colon being intact). This is NOT the MMC — the gastrocolic reflex is POSTPRANDIAL."
+        },
+        {
+            num: 6, tag: "neural", tagLabel: "Neural Control", diff: "med",
+            stem: `A researcher studies the enteric nervous system of the human colon. They inject a toxin that selectively destroys neurons expressing vasoactive intestinal peptide (VIP) and nNOS (neuronal nitric oxide synthase) in the myenteric plexus. What would be the EXPECTED physiological consequence of this targeted destruction?`,
+            opts: [
+                "Abolished peristaltic reflex — oral contraction cannot occur without VIP/NO neurons",
+                "Failure of aboral (distal) relaxation → peristalsis converts to retrograde waves",
+                "Increased secretion due to loss of VIP-mediated inhibition of secretomotor neurons",
+                "Loss of interstitial cells of Cajal pacemaker function",
+                "Complete loss of small intestine motility due to loss of the MMC"
+            ],
+            correct: 1,
+            exps: [
+                "Oral contraction is mediated by EXCITATORY neurons (ACh/Substance P) — these are intact. VIP/NO are inhibitory neurons for ABORAL relaxation.",
+                "CORRECT. VIP and NO neurons mediate ABORAL (distal) RELAXATION in the peristaltic reflex (Law of the Intestine). Without them, aboral relaxation fails → the 'receiving' segment cannot relax → peristalsis becomes dyscoordinated. This is the cellular basis of achalasia (VIP/NO loss in LES → LES cannot relax).",
+                "VIP is a secretomotor agent (promotes secretion) — its loss would DECREASE secretion, not increase it.",
+                "VIP/NO neurons do not generate ICC pacemakers; ICC are ICC-specific and independent.",
+                "MMC is initiated by motilin and coordinated by ENS broadly — not exclusively by VIP/NO neurons."
+            ],
+            teach: "Peristaltic reflex (Law of the Intestine):\n• ORAL contraction → ACh (M3) + Substance P → Gq → Ca²⁺ → contraction\n• ABORAL relaxation → VIP (Gs → cAMP) + NO (→ cGMP) → relaxation\nLoss of VIP/NO = inability to relax the aboral segment. This is the core defect in: (1) Achalasia (LES), (2) Hirschsprung's disease (rectosigmoid — absent ALL neurons), and (3) Chagas disease (same as achalasia mechanistically)."
+        },
+        {
+            num: 7, tag: "neural", tagLabel: "Neural Control", diff: "med",
+            stem: `A 70-year-old man with Parkinson's disease presents with difficulty swallowing both liquids and solids. His speech pathologist performs a video fluoroscopic swallow study and identifies that the <strong>pharyngeal phase is prolonged and uncoordinated</strong> — the soft palate does not fully elevate, and the epiglottis partially fails to cover the larynx, resulting in aspiration of thin liquids. Which stage of swallowing is affected, and what is the consequence of soft palate failure in this phase?`,
+            opts: [
+                "Oral phase is affected; soft palate failure → food cannot be formed into a bolus",
+                "Pharyngeal phase is affected; soft palate failure → nasal regurgitation (nasopharynx not sealed)",
+                "Esophageal phase is affected; soft palate failure → failure of UES relaxation",
+                "Oral phase is affected; soft palate failure → aspiration into the trachea",
+                "Cricopharyngeal phase is affected; soft palate failure → food enters the trachea instead of esophagus"
+            ],
+            correct: 1,
+            exps: [
+                "The oral phase is VOLUNTARY and controlled by the tongue/jaw — soft palate elevation is a PHARYNGEAL phase event. Also, soft palate failure does not primarily affect bolus formation.",
+                "CORRECT. Pharyngeal phase (INVOLUNTARY reflex): soft palate elevates to SEAL the nasopharynx → prevents nasal regurgitation. If soft palate fails → nasal regurgitation of food/liquid. Simultaneously, the epiglottis covers the larynx and true cords adduct → prevents tracheal aspiration. UES relaxes → food enters esophagus. In Parkinson's, brainstem swallowing center dysfunction → uncoordinated pharyngeal phase.",
+                "Esophageal phase involves esophageal peristalsis — UES relaxation is part of the pharyngeal phase, not esophageal.",
+                "Aspiration (tracheal) is from EPIGLOTTIS failure, not soft palate failure. Soft palate failure → nasal regurgitation.",
+                "'Cricopharyngeal phase' is not a standard swallowing stage designation; UES relaxation is part of the pharyngeal phase."
+            ],
+            teach: "Swallowing phases:\n1. Oral (VOLUNTARY): tongue → posterior pharynx\n2. Pharyngeal (INVOLUNTARY reflex): soft palate ↑ (seals nasopharynx) + epiglottis covers larynx + cords adduct + UES relaxes\n3. Esophageal (INVOLUNTARY): primary peristalsis carries bolus to stomach\nPharyngeal failures: soft palate → nasal regurgitation; epiglottis/cords → aspiration (aspiration pneumonia in Parkinson's/stroke patients)"
+        },
+        {
+            num: 8, tag: "neural", tagLabel: "Neural Control", diff: "hard",
+            stem: `A 23-year-old man sustains a spinal cord injury at the level of T10 during a motor vehicle collision. Over the following weeks, he develops <strong>difficulty controlling defecation</strong>. His neurologist explains that the two anal sphincters have different innervation and thus different responses to this injury. Which of the following CORRECTLY describes the expected findings regarding anal sphincter control after a T10 injury?`,
+            opts: [
+                "Both IAS and EAS are areflexic due to loss of all spinal innervation at T10",
+                "IAS retains reflexive relaxation (rectosphincteric reflex intact); EAS loses voluntary control (S2-S4 spinal cord preserved but supraspinal control lost)",
+                "EAS retains voluntary control (pudendal nerve intact below T10); IAS loses all innervation",
+                "IAS loses reflexive relaxation (T10 ANS fibers lost); EAS retains voluntary control via pudendal nerve (S2-S4)",
+                "Both sphincters require descending cortical control and are both flaccid after T10 injury"
+            ],
+            correct: 1,
+            exps: [
+                "A T10 injury does not eliminate ALL innervation to the sphincters. The pudendal nerve (S2-S4) and sacral ANS are preserved.",
+                "CORRECT. After T10 injury:\n• IAS (ANS, involuntary): ANS fibers (sympathetic from T10-L2 + parasympathetic sacral S2-S4 via pelvic nerve) — sympathetic component is lost at T10, but the rectosphincteric reflex (mediated by intramural ENS + sacral parasympathetics) REMAINS INTACT. IAS still relaxes reflexively with rectal distension.\n• EAS (pudendal nerve S2-S4): the sacral cord is INTACT at T10 injury → pudendal nerve function preserved → EAS can still contract reflexively. However, SUPRASPINAL (cortical/voluntary) control is lost → patient cannot voluntarily delay defecation (incontinence).",
+                "EAS via pudendal nerve (S2-S4) is below the injury level, so it's partially intact for reflexes — but voluntary cortical CONTROL is lost.",
+                "IAS sympathetic at T10 is affected, but the rectosphincteric reflex via sacral parasympathetics/ENS persists.",
+                "Not both flaccid — the sacral arc (S2-S4) is preserved, so sphincters retain reflex activity."
+            ],
+            teach: "Defecation control:\n• IAS: smooth muscle, ANS (sympathetic T10-L2, parasympathetic S2-S4 + ENS). INVOLUNTARY — rectosphincteric reflex mediated by sacral ENS/parasympathetics → intact after T10 injury.\n• EAS: skeletal muscle, pudendal nerve (S2-S4). Spinal reflex preserved at S2-S4, but VOLUNTARY cortical control requires descending pathways → lost after suprasacral cord injury → reflex defecation, unable to postpone."
+        }
+    ],
+    path: [
+        {
+            num: 9, tag: "path", tagLabel: "Pathology", diff: "hard",
+            stem: `A 52-year-old man presents with <strong>4 months of progressive dysphagia</strong> to both solids and liquids and a <strong>30-lb weight loss over 5 months.</strong> His primary care physician orders a barium swallow, which shows a <strong>'bird beak' tapering at the gastroesophageal junction.</strong> Esophageal manometry shows elevated LES pressure (38 mmHg) and absent peristalsis. He has no prior GI history. CT of the chest/abdomen shows a <strong>2.8 cm soft tissue mass at the gastric cardia.</strong> Which of the following findings MOST suggests this is NOT primary (idiopathic) achalasia?`,
+            opts: [
+                "Bird beak sign on barium swallow",
+                "Absent peristalsis on manometry",
+                "Rapid symptom onset (&lt;1 year) combined with significant weight loss and a mass on CT",
+                "Elevated LES pressure",
+                "Dysphagia to both solids and liquids"
+            ],
+            correct: 2,
+            exps: [
+                "Bird beak sign occurs in BOTH primary achalasia AND pseudoachalasia (secondary) — not discriminating.",
+                "Absent peristalsis occurs in BOTH conditions — not discriminating.",
+                "CORRECT. Pseudoachalasia (secondary achalasia from malignancy) RED FLAGS: rapid onset <1 year (primary achalasia develops over years), dramatic weight loss, and mass on CT. This patient has ALL THREE. Primary achalasia is idiopathic (autoimmune) and develops slowly; sudden severe dysphagia + mass = malignancy until proven otherwise.",
+                "Elevated LES pressure occurs in BOTH primary achalasia AND pseudoachalasia — not discriminating.",
+                "Dysphagia to both solids and liquids occurs in BOTH — not discriminating."
+            ],
+            teach: "PSEUDOACHALASIA ALERT — When to suspect:\n✅ Age >50\n✅ Symptom onset <1 year (rapid progression)\n✅ Dramatic weight loss (>15 lbs)\n✅ Mass on CT/EGD\nAlways get CT ± EGD before treating presumed 'achalasia' in older patients with rapid onset. Most common cause: gastric cardia adenocarcinoma, esophageal adenocarcinoma."
+        },
+        {
+            num: 10, tag: "path", tagLabel: "Pathology", diff: "med",
+            stem: `A 6-week-old male infant presents with failure to thrive, abdominal distension, and difficulty passing stools since birth. He has never passed a formed meconium stool spontaneously. His parents note that digital rectal examination by his pediatrician always causes explosive release of stool. A suction rectal biopsy is performed. Which of the following findings on biopsy would be MOST consistent with the diagnosis?`,
+            opts: [
+                "Increased number of ganglion cells with eosinophilic infiltration",
+                "Absence of ganglion cells with increased acetylcholinesterase staining and hypertrophied nerve fibers",
+                "Granulomatous inflammation with multinucleated giant cells transmurally",
+                "Smooth muscle fibrosis with collagen replacing muscularis propria",
+                "Goblet cell hyperplasia with absent crypts"
+            ],
+            correct: 1,
+            exps: [
+                "Increased ganglion cells does not describe any known pathology; eosinophilic infiltration = eosinophilic colitis.",
+                "CORRECT. Hirschsprung's disease biopsy: (1) ABSENT ganglion cells in both Auerbach's (myenteric) and Meissner's (submucosal) plexuses; (2) INCREASED acetylcholinesterase (AChE) staining — from hypertrophied extrinsic cholinergic nerve fibers that replace normal intrinsic ganglia; (3) Calretinin-negative (normal ganglia = calretinin-positive). Explosive release of stool = classic presentation when exam decompresses the tonically contracted aganglionic segment.",
+                "Granulomas = Crohn's disease (transmural) — no connection to Hirschsprung's.",
+                "Smooth muscle fibrosis = scleroderma pattern; not Hirschsprung's.",
+                "Goblet cell hyperplasia/absent crypts = not a standard pathological entity here."
+            ],
+            teach: "Hirschsprung's histology (memorize all 3): (1) Absent ganglion cells, (2) ↑ AChE staining, (3) Calretinin-NEGATIVE. Clinical: failure to pass meconium in first 48h + abdominal distension + explosive stool on rectal exam. ALWAYS involves rectum — the aganglionic segment starts at rectum and extends proximally. Treatment: surgical resection of aganglionic segment (pull-through procedure)."
+        },
+        {
+            num: 11, tag: "path", tagLabel: "Pathology", diff: "hard",
+            stem: `A 41-year-old woman with a 12-year history of diffuse cutaneous systemic sclerosis presents with chronic diarrhea, weight loss, and bloating. She has anti-Scl-70 (anti-topoisomerase I) antibody positive. Small bowel barium follow-through shows hypomotility and 'hidebound' appearance (tightly packed, closely spaced folds) of the small bowel. Lactulose breath test is positive. She is found to have significant vitamin B12 deficiency and iron deficiency anemia. Which of the following is the CORRECT mechanistic sequence explaining her nutritional deficiencies?`,
+            opts: [
+                "Scleroderma → anti-parietal cell antibodies → loss of intrinsic factor → B12 malabsorption",
+                "Scleroderma → TGF-β fibrosis of gut muscle → ↓ motility → ↓ MMC → bacterial overgrowth (SIBO) → B12/iron competition + brush border damage",
+                "Scleroderma → CFTR mutation → impaired bicarbonate → fat malabsorption → fat-soluble vitamin deficiency",
+                "Scleroderma → CCK underproduction → impaired pancreatic enzyme release → maldigestion",
+                "Scleroderma → rapid gastric emptying → bile acid malabsorption → fat malabsorption → B12 deficiency"
+            ],
+            correct: 1,
+            exps: [
+                "Anti-parietal cell antibodies causing B12 deficiency = autoimmune gastritis (pernicious anemia) — a separate autoimmune condition. Scleroderma can co-exist but this is NOT the primary mechanism here.",
+                "CORRECT. Scleroderma → TGF-β → fibrosis of gut smooth muscle → ↓ peristalsis → ↓ MMC → bacteria accumulate in small bowel (SIBO). Consequences: (1) Bacteria compete for/consume B12 (especially gram-negative bacteria); (2) Bacteria deconjugate bile acids → fat malabsorption → fat-soluble vitamins (DEKA); (3) Bacterial toxins damage brush border → impaired iron + carbohydrate absorption.",
+                "CFTR mutation causes cystic fibrosis — unrelated to scleroderma.",
+                "CCK underproduction is not the primary mechanism; the issue is gut dysmotility causing bacterial overgrowth.",
+                "Scleroderma causes HYPO-motility (slow transit), not rapid gastric emptying."
+            ],
+            teach: "Scleroderma → SIBO → malabsorption pathway:\nTGF-β fibrosis → ↓ motility → ↓ MMC → SIBO → B12 deficiency (bacterial competition) + iron deficiency (brush border damage) + fat malabsorption (bile acid deconjugation). Treatment: rotating antibiotics (rifaximin), nutritional supplementation. 'Hidebound' small bowel on imaging = classic scleroderma finding."
+        }
+    ],
+    integr: [
+        {
+            num: 12, tag: "integr", tagLabel: "Integration", diff: "hard",
+            stem: `A 47-year-old woman with a body mass index of 38 kg/m² is evaluated for persistent nausea, bloating, and early satiety after bariatric surgery (Roux-en-Y gastric bypass) 14 months ago. She reports that within 15-30 minutes of eating sweet or starchy foods, she develops <strong>palpitations, flushing, lightheadedness, and diarrhea.</strong> Labs drawn 20 minutes after a meal show serum glucose of 68 mg/dL (↓). Her gastroenterologist explains this is 'late dumping syndrome.' She is prescribed octreotide. This patient's symptoms are primarily caused by which of the following sequences?`,
+            opts: [
+                "Rapid gastric emptying → immediate osmotic diarrhea → fluid shift into bowel lumen → hypotension",
+                "Rapid delivery of carbohydrates to small bowel → massive GIP + GLP-1 release → excess insulin → reactive hypoglycemia + autonomic symptoms",
+                "Loss of receptive relaxation after bypass → fundal hypotension → vasovagal syncope",
+                "MMC abolition after bypass → SIBO → carbohydrate fermentation → gas + osmotic diarrhea",
+                "CCK excess from carbohydrate sensing in duodenum → colonic spasm → diarrhea + pain"
+            ],
+            correct: 1,
+            exps: [
+                "This describes EARLY dumping syndrome (occurs within 30 minutes of eating, caused by osmotic fluid shifts + vasovagal response to rapid gastric emptying). Early dumping = primarily osmotic (liquid phase). This patient's symptoms at 15-30 min with documented hypoglycemia suggest late dumping, driven by insulin overshoot.",
+                "CORRECT. LATE dumping syndrome: Roux-en-Y → rapid delivery of carbohydrates to small bowel (bypasses gastric grinding/delayed emptying) → massive incretin release (GIP + GLP-1 from K and L cells) → exaggerated insulin secretion → reactive hypoglycemia (glucose 68 mg/dL) → hypoglycemic symptoms (palpitations, flushing, lightheadedness, diaphoresis) + catecholamine surge. Octreotide (somatostatin analog) → ↓ GIP/GLP-1 → ↓ insulin → prevents reactive hypoglycemia.",
+                "Loss of receptive relaxation is not the primary mechanism of late dumping; fundal hypotension is not a defined entity.",
+                "SIBO can occur post-bypass but causes chronic symptoms (bloating, malabsorption), not acute postprandial hypoglycemia.",
+                "CCK is released by fat/protein, not primarily carbohydrates; this doesn't explain the hypoglycemia."
+            ],
+            teach: "DUMPING SYNDROME — Early vs. Late:\n• EARLY (within 30 min): osmotic fluid shift into bowel (undigested sugars) → hypotension, nausea, diarrhea\n• LATE (1-3h after meal): incretin overshoot (GIP+GLP-1) → exaggerated insulin → reactive hypoglycemia → neuroglycopenic + adrenergic symptoms\nOctreotide treats BOTH (inhibits incretins + gut motility). Dietary: small, low-carbohydrate meals; avoid liquids with meals."
+        }
+    ]
+};
+
+function buildQ(q, idx) {
+    const tagClass = q.tag;
+    const diffClass = q.diff === 'hard' ? 'hard' : 'med';
+    const diffLabel = q.diff === 'hard' ? '🔴 Hard' : '🟡 Medium';
+    const optsHtml = q.opts.map((o,oi) => `
+        <button class="opt-btn" onclick="selectQ(this,'${q.tag}',${idx},${oi})">
+            <span class="opt-letter">${String.fromCharCode(65+oi)}</span>
+            <span class="opt-text">${o}</span>
+        </button>`).join('');
+    return `<div class="q-block" id="qblock-${q.tag}-${idx}">
+        <div class="q-meta">
+            <span class="q-num">Question ${q.num}</span>
+            <span class="q-tag ${tagClass}">${q.tagLabel}</span>
+            <span class="q-diff ${diffClass}">${diffLabel}</span>
+        </div>
+        <div class="q-stem">${q.stem}</div>
+        <div class="options" id="opts-${q.tag}-${idx}">${optsHtml}</div>
+        <div class="exp-box" id="exp-${q.tag}-${idx}"></div>
+    </div>`;
+}
+
+function selectQ(btn, tag, idx, oi) {
+    const container = document.getElementById('opts-'+tag+'-'+idx);
+    if (container.dataset.answered) return;
+    container.dataset.answered = 'true';
+    const q = questions[tag][idx];
+    container.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+    container.querySelectorAll('.opt-btn').forEach((b,i) => {
+        if (i === q.correct) b.classList.add('correct');
+        else b.classList.add('wrong');
+        b.querySelector('.opt-letter').classList.add(i === q.correct ? 'ok' : 'bad');
+    });
+    const expDiv = document.getElementById('exp-'+tag+'-'+idx);
+    const verdict = oi === q.correct ? 'ok' : 'bad';
+    const verdictText = oi === q.correct ? '✅ Correct!' : '❌ Incorrect';
+    const rows = q.exps.map((e,i) => {
+        const cls = i === q.correct ? 'ok' : 'bad';
+        return `<div class="exp-row">
+            <span class="exp-letter ${cls}">${String.fromCharCode(65+i)}</span>
+            <span class="exp-text ${i===q.correct?'ok':''}">${e}</span>
+        </div>`;
+    }).join('');
+    expDiv.innerHTML = `<div class="exp-verdict ${verdict}">${verdictText}</div>${rows}
+        <div class="teach-box"><strong>📚 Teaching Point</strong>${q.teach.replace(/\n/g,'<br>')}</div>`;
+    expDiv.classList.add('show');
+}
+
+// Render all tabs
+Object.keys(questions).forEach(tab => {
+    const cont = document.getElementById('qContainer-'+tab);
+    if (cont) {
+        cont.innerHTML = questions[tab].map((q,i) => buildQ(q,i)).join('');
+    }
+});
+</script>
+</body>
+</html>
