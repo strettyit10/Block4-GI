@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI01 GI Overview — Hub #1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+.header{background:linear-gradient(135deg,#003D36 0%,#0D2420 100%);border:1px solid #00897B;border-left:5px solid #00BFA5;border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#00695C;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
+.header h1 span{color:#00BFA5}
+.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#1C2128;border:1px solid #30363D;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:#00BFA5}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#00695C;color:#fff}
+.hub-step.next{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-arrow{color:#30363D;font-size:1em}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
+
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
+.stat-card{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.6em;font-weight:700;color:#00BFA5}
+.stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #21262D;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
+.tab-btn:hover{color:#00BFA5}
+.tab-btn.active{color:#00BFA5;border-bottom-color:#00BFA5}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* FLASHCARDS */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:140px}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px;min-height:140px}
+.fc-front{border-top:3px solid #00897B}
+.fc-back{transform:rotateY(180deg);background:#0D2420;border-color:#00695C}
+.fc-label{font-size:.68em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
+.fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
+.fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
+.fc-progress .prog-num{color:#00BFA5;font-weight:700}
+
+/* FIB */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px;border-left:4px solid #00897B}
+.fib-num{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;margin-bottom:8px}
+.fib-prompt{font-size:.92em;color:#E6EDF3;line-height:1.6;margin-bottom:12px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#00BFA5}
+.fib-input.correct{border-color:#2E7D32;background:#0D2E0E}
+.fib-input.incorrect{border-color:#C62828;background:#2E0A0A}
+.fib-btn{background:#00695C;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#00897B}
+.fib-reveal-btn{background:#1C2128;border:1px solid #30363D;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:6px 10px;border-radius:5px;display:none}
+.fib-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784;display:block}
+.fib-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A;display:block}
+.fib-hint{font-size:.75em;color:#6B7280;margin-top:5px;font-style:italic}
+
+/* ORDERING */
+.ordering-intro{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
+.ordering-intro strong{color:#00BFA5}
+.order-drill{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.drill-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#E6EDF3;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#00897B;background:#1E2F2D}
+.order-item.dragging{opacity:.45;border-style:dashed;border-color:#00BFA5}
+.order-item.drag-over{border-color:#00BFA5;background:#0D2420;transform:scale(1.01)}
+.order-item .item-grip{color:#6B7280;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#0D2E0E;border-color:#2E7D32}
+.order-item.wrong-pos{background:#2E0A0A;border-color:#C62828}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#00695C;border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#00897B}
+.order-ghost-btn{background:none;border:1px solid #30363D;color:#9CA3AF;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:6px;margin-bottom:8px}
+.order-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784}
+.order-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A}
+.order-answer{background:#0D2420;border:1px solid #00695C;border-radius:7px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#9CA3AF}
+.order-answer li span{color:#00BFA5;font-weight:600}
+
+/* MATCHING */
+.match-intro{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF}
+.match-intro strong{color:#00BFA5}
+.match-set{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.match-set-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:4px}
+.match-set-hint{font-size:.78em;color:#6B7280;margin-bottom:16px}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.72em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.match-item{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:11px 14px;font-size:.85em;color:#E6EDF3;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#00897B;background:#1E2F2D}
+.match-item.selected{border-color:#00BFA5;background:#003D36;color:#fff}
+.match-item.matched-correct{border-color:#2E7D32;background:#0D2E0E;color:#81C784;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#5C1A1A;border-color:#C62828}100%{background:#1C2128;border-color:#30363D}}
+.match-score{margin-top:12px;font-size:.83em;color:#9CA3AF}
+.match-score .correct-count{color:#00BFA5;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #30363D;color:#9CA3AF;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#00BFA5;color:#00BFA5}
+
+/* TEST TRAPS */
+.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6}
+.trap-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #F59E0B}
+.trap-num{font-size:.7em;font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#1C2128;border-radius:7px;padding:14px;border-left:3px solid #F59E0B;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50}
+.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50}
+.trap-btn-false{background:none;border-color:#C62828;color:#EF5350}
+.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350}
+.trap-btn:disabled{opacity:.55;cursor:not-allowed}
+.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784}
+.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A}
+.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none}
+.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block}
+.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block}
+.trap-exp strong{color:#00BFA5}
+
+/* REFERENCE */
+.ref-section{margin-bottom:28px}
+.ref-title{font-size:.8em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #21262D}
+.ref-table{width:100%;border-collapse:collapse;font-size:.83em}
+.ref-table th{background:#1C2128;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #21262D}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #21262D;color:#E6EDF3;vertical-align:top;line-height:1.5}
+.ref-table tr:hover td{background:#161B22}
+.ref-table .key{color:#00BFA5;font-weight:600}
+.ref-note{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:12px 16px;font-size:.82em;color:#9CA3AF;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#00BFA5}
+
+.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #21262D;padding-top:14px;margin-top:28px}
+.footer a{color:#00BFA5;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #1 — Core Concepts</div>
+  <h1>GI Overview <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 01 · GI Block · GI Overview &amp; Physiology Intro — LOs 1–7
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI01 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> Watson LOs 1–7</div>
+    <div class="source-badge"><strong>Review:</strong> BRS Physiology Ch. 7</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid GI Overview</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi01-hub2-gi-overview.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi01-hub3-gi-overview.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">16</span> cards total</span><span>LOs 1–7</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Anatomy</div><div class="fc-q">Name the four concentric wall layers of the GI tract from innermost to outermost.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mucosa → Submucosa → Muscularis externa (propria) → Serosa/Adventitia</strong><br><br>Mucosa has 3 sublayers: epithelium, lamina propria, muscularis mucosae.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Plexuses</div><div class="fc-q">What are the two ENS plexuses, their alternate names, locations, and primary functions?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Myenteric (Auerbach's):</strong> between circular &amp; longitudinal muscle → MOTILITY<br><br><strong>Submucosal (Meissner's):</strong> between circular muscle &amp; submucosa → SECRETION<br><br>Mnemonic: "My Sub" — Myenteric = Motility, Submucosal = Secretion</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Cell Types</div><div class="fc-q">Parietal cells: location, two secretory products, and mechanism of HCl production?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Location:</strong> Gastric fundus/body<br><strong>Products:</strong> HCl (via H⁺/K⁺ ATPase) + Intrinsic factor (required for B12 absorption in ileum)<br><br>Stimulated by: gastrin (G cells), histamine (H2), ACh (M3)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Cell Types</div><div class="fc-q">Match: Chief cells, G cells, Paneth cells, Goblet cells — product and location for each.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Chief cells:</strong> gastric fundus → pepsinogen (→ pepsin at pH &lt;3.5)<br><strong>G cells:</strong> gastric antrum + duodenum → gastrin → ↑HCl<br><strong>Paneth cells:</strong> intestinal crypt base → defensins/lysozyme (innate immunity)<br><strong>Goblet cells:</strong> throughout SI + colon → mucus</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Surface Area</div><div class="fc-q">Name the three levels of small intestine surface area amplification in order, and the approximate fold-increase each adds.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">1. <strong>Plicae circulares</strong> — large folds of mucosa + submucosa; ×3<br>2. <strong>Villi</strong> — finger-like mucosal projections; ×10<br>3. <strong>Microvilli (brush border)</strong> — on each enterocyte; ×20<br><br>Total ≈ 600-fold amplification over a simple tube.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — DEEP MASS</div><div class="fc-q">What does DEEP MASS stand for? List all 8 functions of the GI tract.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>D</strong>igestion · <strong>E</strong>limination · <strong>E</strong>ndocrine · <strong>P</strong>rotection<br><strong>M</strong>otility · <strong>A</strong>bsorption · <strong>S</strong>ecretion · <strong>S</strong>torage<br><br>Key: GI tract = largest endocrine organ in the body (Endocrine function = "E")</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Hormones vs. Enzymes</div><div class="fc-q">GI hormones vs. digestive enzymes — where does each get secreted, and why does it matter?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>GI hormones</strong> (gastrin, CCK, secretin, GIP, GLP-1) → secreted into <strong>BLOOD</strong> → travel systemically → serum measurable<br><br><strong>Digestive enzymes</strong> (amylase, pepsin, lipase, trypsin) → secreted into <strong>LUMEN</strong> → act locally on food</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Fluid Balance</div><div class="fc-q">How much fluid enters the GI tract daily? How much is excreted in feces? Where is the majority absorbed?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Total input:</strong> ~9–10 L/day (2L ingested + 7–8L from secretions)<br><strong>Small intestine absorbs:</strong> ~8.5 L<br><strong>Colon absorbs:</strong> ~400 mL<br><strong>Feces:</strong> ~100–200 mL<br><br>Staggering efficiency — almost all reclaimed.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — pH Gradient</div><div class="fc-q">What is the approximate pH at: stomach, proximal duodenum, jejunum, ileum, and colon?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Stomach:</strong> 1.5–2.0 (HCl from parietal cells)<br><strong>Proximal duodenum:</strong> 4–5 (acid chyme + pancreatic HCO₃⁻)<br><strong>Jejunum:</strong> 6–7 (progressive neutralization)<br><strong>Ileum:</strong> 7.0–7.5<br><strong>Colon:</strong> 5.5–7.0 (bacterial fermentation lowers pH)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — ENS</div><div class="fc-q">How many neurons does the ENS contain, and what is its defining functional property?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>~500 million neurons</strong> (more than the spinal cord)<br><br>Defining property: <strong>functions completely independently of the CNS</strong> — can coordinate peristalsis, secretion, and absorption without brain/spinal cord input ("second brain")</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — ENS Neurotransmitters</div><div class="fc-q">What do excitatory ENS motor neurons release? What do inhibitory ENS motor neurons release?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Excitatory:</strong> Acetylcholine (ACh) + Substance P → smooth muscle CONTRACTION<br><br><strong>Inhibitory:</strong> VIP (vasoactive intestinal peptide) + Nitric Oxide (NO) → smooth muscle RELAXATION</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Peristaltic Reflex</div><div class="fc-q">Describe the two simultaneous limbs of the peristaltic reflex and the neurotransmitters involved in each.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ascending excitation (oral/above bolus):</strong> ACh + Substance P → circular muscle CONTRACTS → propels content forward<br><br><strong>Descending inhibition (aboral/below bolus):</strong> VIP + NO → circular muscle RELAXES → creates space for content to move into</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Receptors</div><div class="fc-q">Name the three ENS sensory receptor types and the stimulus each detects.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanoreceptors:</strong> detect wall stretch/distension → trigger peristalsis<br><strong>Chemoreceptors:</strong> detect pH, nutrients, bile acids → trigger hormone release (CCK, secretin)<br><strong>Osmoreceptors:</strong> detect luminal osmolarity → regulate gastric emptying rate</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 6 — Blood Supply</div><div class="fc-q">Which artery supplies each GI division: foregut, midgut, hindgut? Give a structure served by each.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Celiac trunk:</strong> foregut (stomach, duodenum 1st/2nd, liver, spleen, pancreas)<br><strong>SMA:</strong> midgut (duodenum 3rd/4th → proximal 2/3 transverse colon)<br><strong>IMA:</strong> hindgut (distal 1/3 transverse colon → upper rectum)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 7 — Autonomics</div><div class="fc-q">Compare parasympathetic vs. sympathetic effects on GI motility, secretion, and sphincter tone.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Parasympathetic (vagus/pelvic nerve):</strong> ↑motility, ↑secretion, ↓sphincter tone ("rest and digest")<br><br><strong>Sympathetic (splanchnic nerves):</strong> ↓motility, ↓secretion, ↑sphincter tone, vasoconstriction ("fight or flight")</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 7 — Cephalic Phase</div><div class="fc-q">What is the cephalic phase of digestion, what nerve mediates it, and what does it prepare the stomach to do?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cephalic phase:</strong> sight, smell, taste, or thought of food triggers anticipatory GI activation BEFORE food arrives<br><br><strong>Mediated by:</strong> vagus nerve (CN X) → ACh → stimulates parietal cells (HCl), chief cells (pepsinogen), gastric motility<br><br>Prepares the stomach to receive and begin digesting food</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL IN THE BLANK ══════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 01 — LO 1</div>
+      <div class="fib-prompt">The myenteric plexus is located between the <strong>circular</strong> and <strong>longitudinal</strong> muscle layers and controls GI ___________. Its alternate name is ___________'s plexus.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="function..." data-answers="motility,peristalsis">
+        <input class="fib-input" type="text" placeholder="eponym..." data-answers="auerbach">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: "My Sub" mnemonic — Myenteric = ?</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 02 — LO 1</div>
+      <div class="fib-prompt">Hirschsprung disease results from failure of ___________ cells to migrate into the distal colon during embryogenesis, leaving the segment ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="cell type..." data-answers="neural crest,neural-crest">
+        <input class="fib-input" type="text" placeholder="histological finding..." data-answers="aganglionic,without ganglion cells">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: The affected segment tonically contracts because it has no ___.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 03 — LO 1</div>
+      <div class="fib-prompt">Only two regions of the GI tract use skeletal muscle: the mouth/pharynx/upper esophagus, and the ___________ sphincter.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="which sphincter..." data-answers="external anal,external,anal">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Allows voluntary control of defecation.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 04 — LO 2</div>
+      <div class="fib-prompt">DEEP MASS: the "E" for Endocrine function refers to the fact that the GI tract is the ___________ endocrine organ in the body. GI hormones are secreted into the ___________, not the lumen.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="superlative..." data-answers="largest,biggest">
+        <input class="fib-input" type="text" placeholder="destination..." data-answers="blood,bloodstream,portal blood,circulation">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 05 — LO 3</div>
+      <div class="fib-prompt">Approximately ___________ liters of fluid enter the small intestine daily. Of this, approximately ___________ L is absorbed by the small intestine, and only ~100–200 mL is lost in feces.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="total L..." data-answers="9,10,9-10,9 to 10">
+        <input class="fib-input" type="text" placeholder="SI absorbs..." data-answers="8.5,8,8-8.5">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 06 — LO 3</div>
+      <div class="fib-prompt">Vomiting causes loss of ___________, leading to metabolic ___________. Diarrhea causes loss of ___________, leading to metabolic ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="vomiting loses..." data-answers="hcl,hydrochloric acid,acid,h+">
+        <input class="fib-input" type="text" placeholder="result..." data-answers="alkalosis">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Both also cause hypokalemia.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 07 — LO 4</div>
+      <div class="fib-prompt">The ENS contains approximately ___________ million neurons and is sometimes called the "___________ brain." It can function independently of the ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="number..." data-answers="500">
+        <input class="fib-input" type="text" placeholder="nickname..." data-answers="second,2nd">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 08 — LO 5</div>
+      <div class="fib-prompt">In the peristaltic reflex, ascending excitation releases ___________ and Substance P causing contraction ABOVE the bolus, while descending inhibition releases ___________ and NO causing relaxation BELOW.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="excitatory NT..." data-answers="ach,acetylcholine">
+        <input class="fib-input" type="text" placeholder="inhibitory NT..." data-answers="vip,vasoactive intestinal peptide">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 09 — LO 6</div>
+      <div class="fib-prompt">The celiac trunk supplies the ___________; the SMA supplies the ___________; the IMA supplies the ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="celiac territory..." data-answers="foregut,stomach,foregut structures">
+        <input class="fib-input" type="text" placeholder="SMA territory..." data-answers="midgut,small intestine,midgut structures">
+        <input class="fib-input" type="text" placeholder="IMA territory..." data-answers="hindgut,colon,hindgut structures">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 10 — LO 7</div>
+      <div class="fib-prompt">The ___________ phase of digestion is triggered by the sight, smell, or thought of food. It is mediated by the ___________ nerve, which pre-stimulates gastric acid secretion before food arrives.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="phase..." data-answers="cephalic">
+        <input class="fib-input" type="text" placeholder="nerve..." data-answers="vagus,cn x,cranial nerve 10,cranial nerve x">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Instructions:</strong> Drag and drop the items into the correct order, then click "Check Order." Use "Show Answer" if you get stuck.
+  </div>
+
+  <!-- Drill 1: GI Wall Layers -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 1 — GI Wall Layers: Innermost → Outermost</div>
+    <div class="drill-hint">Arrange these four layers from the innermost (luminal side) to the outermost.</div>
+    <div class="order-list" id="order-list-1" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-1')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Muscularis externa (propria)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mucosa</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Serosa / Adventitia</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Submucosa</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','order-fb-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-1"></div>
+    <div class="order-answer" id="order-ans-1">
+      <ol><li><span>Mucosa</span> — epithelium, lamina propria, muscularis mucosae</li><li><span>Submucosa</span> — contains Meissner's plexus, blood vessels</li><li><span>Muscularis externa</span> — circular (inner) + longitudinal (outer); Auerbach's plexus between them</li><li><span>Serosa/Adventitia</span> — outermost connective tissue layer</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 2: GI Segments -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 2 — GI Segments: Mouth → Anus</div>
+    <div class="drill-hint">Arrange these 7 segments in the correct order of food travel.</div>
+    <div class="order-list" id="order-list-2" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-2')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Jejunum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Esophagus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="7"><span class="item-grip">⠿</span><span class="item-text">Colon</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mouth / Pharynx</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Duodenum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="6"><span class="item-grip">⠿</span><span class="item-text">Ileum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Stomach</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','order-fb-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-2"></div>
+    <div class="order-answer" id="order-ans-2">
+      <ol><li><span>Mouth/Pharynx</span></li><li><span>Esophagus</span></li><li><span>Stomach</span></li><li><span>Duodenum</span> — bile + pancreatic juice enter here</li><li><span>Jejunum</span> — most absorption</li><li><span>Ileum</span> — B12 + bile salts absorbed; Peyer's patches</li><li><span>Colon</span> — water/electrolyte reabsorption; stool formation</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 3: Peristaltic Reflex Sequence -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 3 — Peristaltic Reflex: Correct Sequence</div>
+    <div class="drill-hint">Arrange the steps of the peristaltic reflex in the order they occur.</div>
+    <div class="order-list" id="order-list-3" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-3')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Descending inhibition: VIP + NO relax muscle below the bolus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">ENS sensory neurons activated → interneurons process signal</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Bolus moves aborally (toward anus)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mechanoreceptors detect wall distension from intraluminal bolus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Ascending excitation: ACh + Substance P contract muscle above the bolus</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','order-fb-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-3"></div>
+    <div class="order-answer" id="order-ans-3">
+      <ol><li><span>Mechanoreceptors detect distension</span></li><li><span>ENS sensory neurons → interneurons</span></li><li><span>Ascending excitation (ACh + SP)</span> — contraction oral/above</li><li><span>Descending inhibition (VIP + NO)</span> — relaxation aboral/below</li><li><span>Bolus moves aborally</span></li></ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATCHING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Instructions:</strong> Click an item on the left, then click its match on the right. Correct pairs turn green; wrong pairs flash red.
+  </div>
+
+  <!-- Set 1: Cell → Product -->
+  <div class="match-set">
+    <div class="match-set-title">Set 1 — Gastric Cell Type → Secretory Product</div>
+    <div class="match-set-hint">Match each cell type to its primary secretory product.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Cell Type</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Parietal cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Chief cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">G cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Paneth cell</div>
+      </div>
+      <div>
+        <div class="match-col-label">Primary Product</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Gastrin</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">HCl + Intrinsic factor</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Defensins + Lysozyme</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Pepsinogen</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms1-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms1')">Reset</button>
+  </div>
+
+  <!-- Set 2: ENS Neurotransmitter → Effect -->
+  <div class="match-set">
+    <div class="match-set-title">Set 2 — ENS Neurotransmitter → Primary GI Effect</div>
+    <div class="match-set-hint">Match each neurotransmitter to its primary GI effect.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Neurotransmitter</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Acetylcholine (ACh)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">VIP</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Nitric Oxide (NO)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Serotonin (5-HT)</div>
+      </div>
+      <div>
+        <div class="match-col-label">Primary GI Effect</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">↑Secretion + smooth muscle relaxation</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Initiates peristaltic + secretory reflexes via ENS</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">↑Motility + ↑Secretion (excitatory)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Sphincter and smooth muscle relaxation (LES)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms2-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms2')">Reset</button>
+  </div>
+
+  <!-- Set 3: Artery → GI Territory -->
+  <div class="match-set">
+    <div class="match-set-title">Set 3 — Artery → GI Territory</div>
+    <div class="match-set-hint">Match each artery to the GI structures it primarily supplies.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Artery</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Celiac trunk</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Superior Mesenteric Artery (SMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Inferior Mesenteric Artery (IMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Portal vein</div>
+      </div>
+      <div>
+        <div class="match-col-label">Territory</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Distal transverse colon → upper rectum (hindgut)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Stomach, liver, spleen, pancreas (foregut)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Drains intestinal blood to liver (first-pass metabolism)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Small intestine + proximal 2/3 of transverse colon (midgut)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms3-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms3')">Reset</button>
+  </div>
+</div>
+
+<!-- ══ TEST TRAPS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    ⚠️ <strong>Test Trap Mode:</strong> Each statement is either TRUE or FALSE as written. Many are designed to catch common exam errors. Click T or F — then read the explanation carefully.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 01 — LO 1</div>
+    <div class="trap-statement">"Auerbach's plexus controls secretion, while Meissner's plexus controls motility."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> This is reversed! Auerbach's (myenteric) plexus = MOTILITY (between circular &amp; longitudinal muscle). Meissner's (submucosal) plexus = SECRETION. Mnemonic: <strong>"My Sub"</strong> — Myenteric = Motility, Submucosal = Secretion.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 02 — LO 1</div>
+    <div class="trap-statement">"In Hirschsprung disease, the DILATED segment of colon is the aganglionic segment that cannot relax."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Classic trap! The AGANGLIONIC segment is NARROW and tonically contracted. The DILATED segment is PROXIMAL to the obstruction — it has NORMAL ganglion cells, it's just backed up with stool because nothing can pass through below it.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 03 — LO 2</div>
+    <div class="trap-statement">"Gastrin, CCK, and secretin are secreted directly into the GI lumen where they act on food to promote digestion."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> GI hormones are ALWAYS secreted into the BLOOD (portal circulation), not the lumen. They travel systemically to reach target organs (e.g., gastrin travels from G cells in the antrum through blood to stimulate parietal cells). Only digestive enzymes go into the lumen.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 04 — LO 3</div>
+    <div class="trap-statement">"Vomiting leads to metabolic acidosis because stomach acid is lost."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Vomiting causes METABOLIC ALKALOSIS. When HCl is lost from the stomach, the body loses H⁺ → blood becomes relatively more basic. The correct pairing: <strong>vomiting → metabolic alkalosis + hypokalemia</strong>; diarrhea → metabolic acidosis + hypokalemia (lose HCO₃⁻).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 05 — LO 4</div>
+    <div class="trap-statement">"A patient with complete vagotomy (all vagal fibers cut) will have no peristalsis because the ENS requires vagal input to function."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The ENS can function INDEPENDENTLY of extrinsic innervation (vagus, spinal cord). Transplanted, extrinsically denervated intestinal segments still peristalse. The vagus MODULATES and amplifies ENS activity but is NOT required for basic GI function.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 06 — LO 5</div>
+    <div class="trap-statement">"Nitric oxide (NO) from ENS neurons causes contraction of the LES to maintain the barrier against acid reflux."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> NO causes RELAXATION, not contraction. In fact, NO is responsible for relaxing the LES to allow swallowed food to pass into the stomach. When inhibitory NO neurons at the LES are destroyed (as in achalasia), the LES FAILS TO RELAX → food cannot enter the stomach → progressive esophageal dilation.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 07 — LO 6</div>
+    <div class="trap-statement">"B12 is absorbed in the jejunum, where the majority of nutrient absorption occurs."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> B12 (and bile salts) are specifically absorbed in the TERMINAL ILEUM — not the jejunum. The jejunum is the major site of general nutrient absorption, but B12 requires intrinsic factor (from parietal cells) and is exclusively absorbed in the ileum. This is why ileal disease/resection causes B12 deficiency.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 08 — LO 7</div>
+    <div class="trap-statement">"Sympathetic stimulation of the GI tract increases peristalsis and secretion to facilitate digestion during periods of stress."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Sympathetic stimulation ("fight or flight") DECREASES GI motility and secretion, INCREASES sphincter tone, and causes vasoconstriction in the gut. It essentially shunts blood and energy away from digestion during stress. It is PARASYMPATHETIC ("rest and digest") that promotes GI function.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">GI Wall Layers & Plexuses</div>
+    <table class="ref-table">
+      <thead><tr><th>Layer (Inside→Out)</th><th>Key Contents</th><th>Plexus</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Mucosa</td><td>Epithelium, lamina propria, muscularis mucosae</td><td>—</td></tr>
+        <tr><td class="key">Submucosa</td><td>Blood vessels, lymphatics, dense CT</td><td>Meissner's (submucosal) → SECRETION</td></tr>
+        <tr><td class="key">Muscularis externa</td><td>Inner circular + outer longitudinal smooth muscle</td><td>Auerbach's (myenteric) → MOTILITY (between the two muscle layers)</td></tr>
+        <tr><td class="key">Serosa/Adventitia</td><td>Outermost CT; serosa = intraperitoneal; adventitia = retroperitoneal</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Key Gastric Cell Types</div>
+    <table class="ref-table">
+      <thead><tr><th>Cell</th><th>Location</th><th>Product</th><th>Step 1 Hook</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Parietal</td><td>Fundus/body</td><td>HCl + Intrinsic factor</td><td>Target of PPIs, H2 blockers; B12 deficiency if lost</td></tr>
+        <tr><td class="key">Chief</td><td>Fundus/body</td><td>Pepsinogen → pepsin (pH &lt;3.5)</td><td>Inactive at high pH; activated by acid</td></tr>
+        <tr><td class="key">G cells</td><td>Antrum + duodenum</td><td>Gastrin → ↑HCl</td><td>Zollinger-Ellison = gastrinoma → excess gastrin → ulcers</td></tr>
+        <tr><td class="key">Goblet cells</td><td>SI + colon</td><td>Mucus</td><td>↓ in IBD (Crohn's); goblet cell metaplasia in Barrett's esophagus</td></tr>
+        <tr><td class="key">Paneth cells</td><td>Crypt base (SI)</td><td>Defensins, lysozyme</td><td>Innate immunity; dysregulated in Crohn's disease</td></tr>
+        <tr><td class="key">Enterochromaffin</td><td>Throughout GI</td><td>Serotonin (5-HT)</td><td>90% of body's serotonin; carcinoid tumors release 5-HT → flushing, diarrhea</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">ENS Neurotransmitters — Quick Reference</div>
+    <table class="ref-table">
+      <thead><tr><th>NT</th><th>Effect</th><th>Clinical Relevance</th></tr></thead>
+      <tbody>
+        <tr><td class="key">ACh</td><td>↑Motility, ↑Secretion</td><td>Atropine blocks → ↓motility; neostigmine stimulates</td></tr>
+        <tr><td class="key">Substance P</td><td>↑Contraction (ascending/oral limb)</td><td>Co-released with ACh in excitatory neurons</td></tr>
+        <tr><td class="key">VIP</td><td>↑Secretion, ↓Muscle tone</td><td>VIPoma → watery diarrhea (WDHA/Verner-Morrison)</td></tr>
+        <tr><td class="key">Nitric Oxide (NO)</td><td>↓Muscle tone (descending/aboral)</td><td>Achalasia = loss of NO neurons at LES → fails to relax</td></tr>
+        <tr><td class="key">5-HT (serotonin)</td><td>↑Peristalsis + secretion (via 5-HT3/5-HT4)</td><td>Ondansetron (5-HT3 antagonist) = antiemetic; metoclopramide (5-HT4) = prokinetic</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Fluid Balance Summary</div>
+    <table class="ref-table">
+      <thead><tr><th>Source</th><th>Volume/Day</th><th>Key Contents</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Ingested fluids</td><td>~2 L</td><td>—</td></tr>
+        <tr><td class="key">Saliva</td><td>~1.5 L</td><td>Amylase, IgA, bicarbonate; pH 6–7</td></tr>
+        <tr><td class="key">Gastric juice</td><td>~2 L</td><td>HCl (pH 1.5–2), pepsinogen, IF, mucus</td></tr>
+        <tr><td class="key">Pancreatic juice</td><td>~1.5 L</td><td>HCO₃⁻ + zymogens (trypsinogen, lipase, amylase)</td></tr>
+        <tr><td class="key">Bile</td><td>~0.5 L</td><td>Bile salts, bilirubin, cholesterol; pH 7–8</td></tr>
+        <tr><td class="key">Intestinal secretions</td><td>~1.5–2 L</td><td>Water, electrolytes, mucus</td></tr>
+        <tr><td class="key">TOTAL → small intestine</td><td>~9–10 L</td><td>Small intestine absorbs ~8.5 L; colon ~400 mL; feces ~100–200 mL</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-note">
+    <strong>Acid-Base Mnemonic:</strong> Vomiting = lose HCl = metabolic <strong>alkalosis</strong> + hypokalemia &nbsp;|&nbsp; Diarrhea = lose HCO₃⁻ = metabolic <strong>acidosis</strong> + hypokalemia
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp; GI01 Hub #1 — Core Concepts &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div><!-- /container -->
+
+<script>
+// Tab switching
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// FIB check
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+
+// Drag-and-Drop Ordering
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// Matching
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+
+// Test Traps
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+</script>
+</body>
+</html>
