@@ -1,0 +1,678 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}
+.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}
+.fb-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #DBEAFE}
+.fb-row:last-child{border-bottom:none}
+.fb-row:nth-child(even){background:#F0F7FF}
+.fb-row:nth-child(odd){background:#fff}
+.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}
+.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.inline-blank{border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:1px 2px;color:#1e293b;width:160px;display:inline-block}
+.inline-blank:focus{border-bottom-color:#1D4ED8}
+.ki-text{background:#F0FDF4;border-bottom:2px solid #22C55E;color:#14532d;font-size:12px;padding:2px 6px;border-radius:3px;display:inline-block;min-width:60px;font-weight:600}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">Abdominal Viscera II: Liver, Pancreas &amp; Spleen &#8212; Answer Key</h2>
+  
+</div>
+<p class="sub">GI13 &mdash; Abdominal Viscera II &mdash; HoyaDocs GI Block | USMLE Step 1</p>
+
+<div class="resource-banner">
+  <strong>&#128218; Linked Study Guide</strong>
+  Open <a href="../lecture-guides/gi13-abdominal-viscera-ii.html" target="_blank" style="color:#1D4ED8;font-weight:600">GI13: Abdominal Viscera II &#8212; Liver, Pancreas &amp; Spleen</a> alongside this drill for reference.
+</div>
+
+<div class="key-banner" style="background:#14532d;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:700;margin-bottom:14px;text-align:center">&#x2705; ANSWER KEY &mdash; all fields pre-filled. Use this to check your work.</div>
+<a href="gi13_active_recall.html" style="display:inline-flex;align-items:center;gap:6px;background:#1D4ED8;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap;margin-bottom:14px">&#x2190; Back to Drill</a>
+
+<!-- WARMUP -->
+<div class="card">
+  <div class="sec">&#9651; Warmup &#8212; Key Facts (complete from memory)</div>
+  <div class="fg">
+    <div class="f"><label>Portal vein: ___% of hepatic blood flow</label><span class="ki-text">70%</span></div>
+    <div class="f"><label>Porta hepatis A&#8594;P: Bile Duct &#8594; Hepatic Artery &#8594; ___</label><span class="ki-text">Portal vein (BD = Bile Duct, HA = Hepatic Artery, P = Portal vein)</span></div>
+    <div class="f"><label>Most commonly injured organ in blunt abdominal trauma</label><span class="ki-text">Spleen (ribs 9–11 in the midaxillary line)</span></div>
+    <div class="f"><label>Courvoisier&#8217;s law: painless jaundice + palpable GB = ___</label><span class="ki-text">Pancreatic cancer (until proven otherwise)</span></div>
+    <div class="f"><label>Bile salts actively reabsorbed in the ___</label><span class="ki-text">Terminal ileum (active transport)</span></div>
+    <div class="f"><label>Portal vein = SMV + ___ (behind neck of pancreas)</label><span class="ki-text">Splenic vein (SMV + splenic vein → portal vein)</span></div>
+  </div>
+  <button class="btn" onclick="rev(this,a0)">Check Warmup</button>
+  <div class="fb"></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">&#129392; Liver Anatomy &amp; Vasculature</div>
+  <div class="tab" onclick="sw(1)">&#128993; Biliary System &amp; Spleen</div>
+  <div class="tab" onclick="sw(2)">&#128300; Pancreas &amp; Obstructive Jaundice</div>
+  <div class="tab" onclick="sw(3)">&#9878;&#65039; Enzymes &amp; Digestive Integration</div>
+  <div class="tab" onclick="sw(4)">&#9997;&#65039; Practice Qs</div>
+</div>
+
+<!-- ═══ PANEL 0 — LIVER ANATOMY & VASCULATURE (22 blanks) ═══════════════════ -->
+<div class="panel active" id="p0">
+
+  <div class="sec">Five Fluids In/Out of the Liver</div>
+  <div class="warn">&#11088; The liver has a DUAL blood supply: portal vein (70%, nutrient-rich venous) + hepatic artery (30%, oxygenated). All output leaves via hepatic veins, bile ducts, or lymphatics.</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Direction</th><th>Vessel / Duct</th><th>Content &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">IN</td><td>Portal vein</td><td><span class="ki-text">Nutrient-rich venous blood from GI tract (70% of hepatic blood flow)</span></td></tr>
+        <tr><td class="rl">IN</td><td>Hepatic artery proper</td><td><span class="ki-text">Oxygenated arterial blood (30% of blood flow, ~50% of O₂ supply)</span></td></tr>
+        <tr><td class="rl">OUT</td><td>Hepatic veins (R / M / L)</td><td><span class="ki-text">Processed venous blood → IVC (just below diaphragm)</span></td></tr>
+        <tr><td class="rl">OUT</td><td>Bile ducts (R + L hepatic)</td><td><span class="ki-text">Bile → common hepatic duct → CBD</span></td></tr>
+        <tr><td class="rl">OUT</td><td>Lymphatics</td><td><span class="ki-text">Hepatic lymph → celiac nodes or diaphragm → thoracic duct</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Hepatic Lobes &amp; Couinaud Segments</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Cantlie&#8217;s line: gallbladder fossa &#8594; ___</label><span class="ki-text">IVC groove (inferior vena cava)</span></div>
+      <div class="f"><label>Caudate lobe = Couinaud segment ___ (spared in Budd-Chiari)</label><span class="ki-text">Segment I (caudate lobe — drains directly to IVC; spared in Budd-Chiari)</span></div>
+      <div class="f"><label>Quadrate + caudate are functionally ___ lobe (by Couinaud)</label><span class="ki-text">Left lobe (functionally left by Couinaud classification)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">Porta Hepatis &#8212; BD HAP (Anterior &#8594; Posterior)</div>
+  <div class="card">
+    <div class="warn">&#11088; BD HAP = <strong>B</strong>ile <strong>D</strong>uct (anterior) &#8594; <strong>H</strong>epatic <strong>A</strong>rtery &#8594; <strong>P</strong>ortal vein (posterior). The hepatoduodenal ligament forms the anterior wall of the foramen of Winslow.</div>
+    <table>
+      <thead><tr><th>Position at Porta Hepatis</th><th>Structure &#8212; fill in</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Most anterior</td><td><span class="ki-text">Bile ducts (right + left hepatic ducts)</span></td><td>Exits liver carrying bile</td></tr>
+        <tr><td class="rl">Middle</td><td><span class="ki-text">Hepatic artery proper</span></td><td>~30% blood flow, ~50% O&#x2082; supply</td></tr>
+        <tr><td class="rl">Most posterior (largest)</td><td><span class="ki-text">Portal vein (largest; nutrient-rich venous blood)</span></td><td>~70% blood flow; nutrient-rich venous blood</td></tr>
+        <tr><td class="rl">Pringle maneuver &#8212; structure compressed</td><td><span class="ki-text">Hepatoduodenal ligament (free edge of lesser omentum containing portal triad)</span></td><td>Temporarily halts hepatic blood flow intraoperatively</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Portal-Systemic Anastomoses &#8212; Sites of Collateral Formation in Portal HTN</div>
+  <div class="card">
+    <div class="on-exam">&#127919; Step 1 Favorite &#8212; Know all 4 locations + clinical manifestation</div>
+    <table>
+      <thead><tr><th>Location</th><th>Portal Side</th><th>Systemic Side &#8212; fill in</th><th>Clinical Result &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Esophagus</td><td>Left gastric (coronary) vein</td><td><span class="ki-text">Azygos / hemiazygos veins</span></td><td><span class="ki-text">Esophageal varices — risk of life-threatening hemorrhage</span></td></tr>
+        <tr><td class="rl">Anorectal junction</td><td>Superior rectal vein (IMV)</td><td><span class="ki-text">Middle + inferior rectal veins (internal iliac / pudendal)</span></td><td><span class="ki-text">Internal hemorrhoids (portal hypertension-related)</span></td></tr>
+        <tr><td class="rl">Periumbilical</td><td>Paraumbilical veins (falciform lig.)</td><td><span class="ki-text">Epigastric veins (systemic)</span></td><td><span class="ki-text">Caput medusae — dilated periumbilical veins radiating outward</span></td></tr>
+        <tr><td class="rl">Retroperitoneal</td><td>Colic / retroperitoneal veins</td><td><span class="ki-text">Lumbar / renal veins</span></td><td><span class="ki-text">Retroperitoneal varices (less visible clinically)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">GIT Pain Referral &#8212; Specific Patterns to Know</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Condition</th><th>Referred Pain Location &#8212; fill in</th><th>Mechanism</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Biliary colic / cholangitis</td><td><span class="ki-text">Right shoulder tip (phrenic nerve C3–C5 via diaphragm irritation)</span></td><td>Diaphragm irritation &#8594; phrenic nerve (C3&#8211;C5)</td></tr>
+        <tr><td class="rl">Splenic rupture (Kehr&#8217;s sign)</td><td><span class="ki-text">Left shoulder tip (Kehr’s sign)</span></td><td>Blood under left diaphragm &#8594; phrenic C3&#8211;C5</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn" onclick="rev(this,a1)">Check Tab Answers</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ═══ PANEL 1 — BILIARY SYSTEM & SPLEEN (24 blanks) ══════════════════════ -->
+<div class="panel" id="p1">
+
+  <div class="sec">Biliary Tree Architecture</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Step</th><th>Biliary Tree &#8212; fill in the blanks</th></tr></thead>
+      <tbody>
+        <tr><td style="width:32px;font-weight:700;color:#1D4ED8">1</td><td>Right + left hepatic ducts &#8594; <span class="ki-text">Common hepatic duct</span> (exits liver)</td></tr>
+        <tr><td style="width:32px;font-weight:700;color:#1D4ED8">2</td><td><span class="ki-text">Cystic duct</span> (from gallbladder) + common hepatic duct &#8594; CBD</td></tr>
+        <tr><td style="width:32px;font-weight:700;color:#1D4ED8">3</td><td>CBD + main pancreatic duct &#8594; <span class="ki-text">Ampulla of Vater (hepatopancreatic ampulla)</span> &#8594; major papilla</td></tr>
+        <tr><td style="width:32px;font-weight:700;color:#1D4ED8">4</td><td>Opens at <span class="ki-text">Major duodenal papilla (2nd part of duodenum)</span> in the 2nd part (descending) of the duodenum</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Gallbladder Anatomy &amp; Calot&#8217;s Triangle</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Feature</th><th>Answer &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Gallbladder capacity</td><td><span class="ki-text">~50 mL</span></td></tr>
+        <tr><td class="rl">Murphy&#8217;s point: right ___ costal cartilage at MCL (fundus location)</td><td><span class="ki-text">9th (right 9th costal cartilage at midclavicular line)</span></td></tr>
+        <tr><td class="rl">Hartmann&#8217;s pouch: bulge at the ___ (where stones lodge)</td><td><span class="ki-text">Neck (Hartmann’s pouch — where stones lodge)</span></td></tr>
+        <tr><td class="rl">Calot&#8217;s triangle: medial boundary (the named duct)</td><td><span class="ki-text">Common hepatic duct (medial boundary of Calot’s triangle)</span></td></tr>
+        <tr><td class="rl">Calot&#8217;s triangle: structure found within (must ID before clipping)</td><td><span class="ki-text">Cystic artery (must be identified before clipping)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Cystic Artery &amp; Laparoscopic Cholecystectomy</div>
+  <div class="card">
+    <div class="fg">
+      <div class="f"><label>Cystic artery typically arises from ___</label><span class="ki-text">Right hepatic artery (inside Calot’s triangle — highly variable origin)</span></div>
+      <div class="f"><label>Most common serious complication of lap cholecystectomy</label><span class="ki-text">CBD injury — misidentification of CBD as cystic duct (most common serious complication)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">Splenic Anatomy</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Feature</th><th>Answer &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Location (quadrant)</td><td><span class="ki-text">Left upper quadrant (LUQ)</span></td></tr>
+        <tr><td class="rl">Deep to ribs ___</td><td><span class="ki-text">9–11 (ribs 9, 10, 11 in the midaxillary line)</span></td></tr>
+        <tr><td class="rl">Long axis lies along rib ___</td><td><span class="ki-text">10th rib (long axis of spleen)</span></td></tr>
+        <tr><td class="rl">Gastrosplenic ligament contains (vessels)</td><td><span class="ki-text">Short gastric arteries + left gastroepiploic artery</span></td></tr>
+        <tr><td class="rl">Splenorenal ligament contains (vessels + structure)</td><td><span class="ki-text">Splenic artery, splenic vein, and tail of pancreas</span></td></tr>
+        <tr><td class="rl">Post-splenectomy blood smear finding (nuclear remnants in RBCs)</td><td><span class="ki-text">Howell-Jolly bodies (nuclear remnants in RBCs; also target cells, thrombocytosis)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">SHiN Vaccines &amp; Splenic Clinical Correlates</div>
+  <div class="card">
+    <div class="warn">&#11088; Post-splenectomy patients are at risk for OPSI (overwhelming post-splenectomy infection) from encapsulated organisms — vaccinate ideally 2 weeks BEFORE elective splenectomy.</div>
+    <div class="fg">
+      <div class="f"><label>SHiN = S. pneumoniae + ___ + N. meningitidis</label><span class="ki-text">H. influenzae type b (SHiN: S. pneumoniae, H. influenzae type b, N. meningitidis)</span></div>
+      <div class="f"><label>Spleen becomes palpable when enlarged to ___&#215; normal size</label><span class="ki-text">3× (must enlarge to 3× normal size before palpable below left costal margin)</span></div>
+      <div class="f"><label>OPSI most common causative organism (50&#8211;70% mortality)</label><span class="ki-text">S. pneumoniae (OPSI mortality 50–70%)</span></div>
+      <div class="f"><label>Kehr&#8217;s sign mechanism: blood under ___ irritates phrenic nerve</label><span class="ki-text">Left diaphragm (blood tracks up → phrenic nerve C3–C5 → left shoulder tip pain)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">Splenic Vasculature &amp; Portal Vein Formation</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Splenic artery is largest branch of ___</label><span class="ki-text">Celiac trunk (splenic artery = largest branch of celiac trunk)</span></div>
+      <div class="f"><label>Splenic vein runs posterior to ___</label><span class="ki-text">Pancreatic body/tail (splenic vein runs in groove on posterior surface)</span></div>
+      <div class="f"><label>Portal vein formed behind ___ of pancreas (SMV + splenic vein)</label><span class="ki-text">Neck of the pancreas (SMV + splenic vein → portal vein)</span></div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a2)">Check Tab Answers</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ═══ PANEL 2 — PANCREAS & OBSTRUCTIVE JAUNDICE (24 blanks) ══════════════ -->
+<div class="panel" id="p2">
+
+  <div class="sec">Parts of the Pancreas &#8212; Key Relations</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Part</th><th>Location</th><th>Key Relation &#8212; fill in the blank</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Head</td><td>C-loop of duodenum; L1&#8211;L2</td><td>CBD runs in groove on <span class="ki-text">Posterior</span> surface; SMA/SMV anterior</td></tr>
+        <tr><td class="rl">Uncinate process</td><td>Extension of head hooked behind SMA/SMV</td><td>SMA + SMV pass <span class="ki-text">Anterior (SMA/SMV pass anterior to uncinate process — surgical danger zone)</span> to uncinate &#8212; surgical danger zone</td></tr>
+        <tr><td class="rl">Neck</td><td>Anterior to portal vein formation</td><td>Portal vein forms immediately <span class="ki-text">Posterior (portal vein forms immediately posterior to neck)</span> to neck of pancreas</td></tr>
+        <tr><td class="rl">Body</td><td>Crosses L1&#8211;L2; posterior to stomach</td><td><span class="ki-text">Splenic (splenic vein in groove on posterior surface of body)</span> vein runs in groove on posterior surface</td></tr>
+        <tr><td class="rl">Tail</td><td>Extends to splenic hilum; splenorenal lig.</td><td>Only <span class="ki-text">Intraperitoneal (only intraperitoneal part; in splenorenal ligament)</span> part of pancreas</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Pancreatic Duct System</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Main pancreatic duct = duct of ___</label><span class="ki-text">Wirsung (duct of Wirsung = main pancreatic duct)</span></div>
+      <div class="f"><label>Accessory duct = duct of ___ (opens at minor papilla)</label><span class="ki-text">Santorini (duct of Santorini = accessory duct; opens at minor papilla)</span></div>
+      <div class="f"><label>Hepatopancreatic ampulla is the ___ point of the biliary tract</label><span class="ki-text">Narrowest (hepatopancreatic ampulla = narrowest point — where gallstones impact)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">Embryological Pancreatic Variants</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Annular pancreas: failure of ___ to rotate clockwise</label><span class="ki-text">Ventral pancreatic bud (failure to rotate clockwise with duodenum)</span></div>
+      <div class="f"><label>Annular pancreas causes ___ obstruction</label><span class="ki-text">Duodenal obstruction (ring of pancreatic tissue encircles duodenum)</span></div>
+      <div class="f"><label>Pancreas divisum: failure of ___; most common anatomic variant</label><span class="ki-text">Ventral + dorsal ducts fail to fuse (most common anatomic variant; predisposes to pancreatitis)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">Obstructive Jaundice Syndromes</div>
+  <div class="card">
+    <div class="on-exam">&#127919; Step 1 &#8212; Distinguish these three jaundice presentations</div>
+    <table>
+      <thead><tr><th>Presentation / Question</th><th>Diagnosis / Answer &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td>Painless progressive jaundice + weight loss + palpable distended gallbladder</td><td><span class="ki-text">Pancreatic head cancer (Courvoisier’s law)</span></td></tr>
+        <tr><td>Acute epigastric pain + sudden-onset jaundice + pancreatitis</td><td><span class="ki-text">Gallstone at ampulla of Vater (obstructs CBD + pancreatic duct simultaneously)</span></td></tr>
+        <tr><td>RUQ pain + fever/chills + jaundice (Charcot&#8217;s triad)</td><td><span class="ki-text">Ascending cholangitis (Charcot’s triad = RUQ pain + fever/chills + jaundice)</span></td></tr>
+        <tr><td>OJ lab pattern: ↑ direct bilirubin + ↑ ___ + ↑ GGT (mild/normal ALT/AST)</td><td><span class="ki-text">ALP (alkaline phosphatase) — with ↑ GGT and ↑ direct bilirubin</span></td></tr>
+        <tr><td>Courvoisier rationale: GB distends in cancer but NOT in gallstone disease because GB wall is ___</td><td><span class="ki-text">Fibrotic (scarred GB wall in gallstone disease cannot distend; malignant obstruction is slow → GB dilates)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Visceral Pain Referral &#8212; Gut Divisions</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Gut Division</th><th>Spinal Level / Nerve</th><th>Referred Pain Zone &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Foregut</td><td>T5&#8211;T9 (greater splanchnic)</td><td><span class="ki-text">Epigastric (foregut: stomach, liver, GB, pancreas, proximal duodenum)</span></td></tr>
+        <tr><td class="rl">Midgut</td><td>T10&#8211;T11 (lesser splanchnic)</td><td><span class="ki-text">Periumbilical (midgut: small bowel to splenic flexure)</span></td></tr>
+        <tr><td class="rl">Hindgut</td><td>L1&#8211;L2 (lumbar splanchnic)</td><td><span class="ki-text">Suprapubic / hypogastric (hindgut: distal colon, rectum)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Acute Pancreatitis &#8212; GET SMASHED</div>
+  <div class="card">
+    <div class="warn">&#11088; GET SMASHED = <strong>G</strong>allstones, <strong>E</strong>thanol, <strong>T</strong>rauma, <strong>S</strong>teroids, <strong>M</strong>umps/Malignancy, <strong>A</strong>utoimmune, <strong>S</strong>corpion, <strong>H</strong>yperlipidemia/Hypercalcemia, <strong>E</strong>RCP, <strong>D</strong>rugs</div>
+    <div class="fg">
+      <div class="f"><label>Two most common causes: gallstones + ___</label><span class="ki-text">Alcoholism (gallstones #1, alcohol #2 — together account for ~80% of cases)</span></div>
+      <div class="f"><label>Pain: epigastric, radiates to ___ (retroperitoneal location)</label><span class="ki-text">Back (retroperitoneal location against L1–L2 vertebral bodies)</span></div>
+      <div class="f"><label>Position that relieves pancreatitis pain</label><span class="ki-text">Leaning forward (fetal position / sitting forward relieves retroperitoneal pressure)</span></div>
+      <div class="f"><label>Lab marker more specific than amylase</label><span class="ki-text">Lipase (more specific than amylase for pancreatitis; stays elevated longer)</span></div>
+      <div class="f"><label>Chronic calcifying pancreatitis X-ray shows ___ in pancreatic distribution</label><span class="ki-text">Calcifications (pancreatic calcifications on plain X-ray = classic chronic alcoholic pancreatitis)</span></div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a3)">Check Tab Answers</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ═══ PANEL 3 — ENZYMES & DIGESTIVE INTEGRATION (27 blanks) ═════════════ -->
+<div class="panel" id="p3">
+
+  <div class="sec">Pancreatic Enzyme Table &#8212; Substrate &amp; Activation</div>
+  <div class="card">
+    <div class="warn">&#11088; Most enzymes secreted as inactive zymogens. Trypsin is the master activator &#8212; activated first by enterokinase at the brush border. Lipase and amylase are secreted active.</div>
+    <table>
+      <thead><tr><th>Enzyme (Zymogen &#8594; Active)</th><th>Substrate &#8212; fill in</th><th>Activated By &#8212; fill in</th><th>Key Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Trypsinogen &#8594; Trypsin</td><td><span class="ki-text">Proteins (cleaves at Arg and Lys residues)</span></td><td><span class="ki-text">Enterokinase / enteropeptidase (brush border); then autocatalytic trypsin activation</span></td><td>Master activator of all other zymogens</td></tr>
+        <tr><td class="rl">Chymotrypsinogen &#8594; Chymotrypsin</td><td><span class="ki-text">Proteins (cleaves at Phe, Trp, Tyr residues)</span></td><td><span class="ki-text">Trypsin</span></td><td>&#8212;</td></tr>
+        <tr><td class="rl">Proelastase &#8594; Elastase</td><td><span class="ki-text">Elastin and other structural proteins</span></td><td><span class="ki-text">Trypsin (causes vessel wall damage → hemorrhagic pancreatitis)</span></td><td>Causes vessel wall damage in pancreatitis</td></tr>
+        <tr><td class="rl">Pancreatic lipase</td><td><span class="ki-text">Triglycerides (hydrolyzes ester bonds → fatty acids + monoglycerides)</span></td><td><span class="ki-text">Active as secreted; co-lipase required; needs bile salt emulsification first</span></td><td>Requires bile salt emulsification; deficiency &#8594; steatorrhea</td></tr>
+        <tr><td class="rl">Pancreatic amylase</td><td><span class="ki-text">Starch → maltose + glucose oligomers</span></td><td><span class="ki-text">Active as secreted (no zymogen activation required)</span></td><td>Elevated in pancreatitis; salivary amylase also contributes</td></tr>
+        <tr><td class="rl">Phospholipase A2</td><td><span class="ki-text">Phospholipids (membrane lipids)</span></td><td><span class="ki-text">Trypsin (phospholipase destroys cell membranes in pancreatitis)</span></td><td>Destroys cell membranes in pancreatitis</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Key Hepatic Functions &#8212; Clinical Implications</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Function</th><th>Product / Action</th><th>Clinical Implication &#8212; fill in</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">Protein synthesis</td><td>Albumin, fibrinogen, clotting factors II, VII, IX, X</td><td><span class="ki-text">Liver failure → ↓ albumin (edema) + ↑ PT/coagulopathy (clotting factor deficiency)</span></td></tr>
+        <tr><td class="rl">Glycogen storage</td><td>Stores glucose as glycogen; releases between meals</td><td><span class="ki-text">Liver failure → hypoglycemia (fasting) — lost gluconeogenesis and glycogen release</span></td></tr>
+        <tr><td class="rl">Cholesterol synthesis</td><td>~80% of body cholesterol; LDL precursors</td><td><span class="ki-text">Statins inhibit HMG-CoA reductase (rate-limiting step in hepatic cholesterol synthesis)</span></td></tr>
+        <tr><td class="rl">Detoxification</td><td>CYP450 system metabolizes drugs, alcohol, toxins</td><td><span class="ki-text">Drug-drug interactions via CYP450 competition (especially CYP3A4)</span></td></tr>
+        <tr><td class="rl">Urea cycle</td><td>Converts ammonia &#8594; urea (excreted by kidney)</td><td><span class="ki-text">Liver failure → hyperammonemia → hepatic encephalopathy</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">CCK vs. Secretin &#8212; Coordinate Fat Digestion</div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Hormone</th><th>Released By (Stimulus &amp; Cell) &#8212; fill in</th><th>Key Actions &#8212; fill in the blank</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="rl">CCK (cholecystokinin)</td>
+          <td><span class="ki-text">Fat + protein in duodenum (I-cells in duodenal/jejunal mucosa)</span></td>
+          <td>GB contraction; sphincter of Oddi <span class="ki-text">Relaxation (CCK relaxes sphincter of Oddi → bile flows into duodenum)</span>; pancreatic enzyme secretion (acinar)</td>
+        </tr>
+        <tr>
+          <td class="rl">Secretin</td>
+          <td><span class="ki-text">Acid (H⁺) in duodenum (S-cells)</span></td>
+          <td>Pancreatic ductal cells secrete <span class="ki-text">HCO₃⁻-rich fluid (bicarbonate neutralizes acidic chyme from stomach)</span> (neutralizes acid chyme)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Enterohepatic Circulation of Bile Salts</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Bile salts reabsorbed in the ___ (active transport)</label><span class="ki-text">Terminal ileum (active transport via ASBT/IBAT transporters)</span></div>
+      <div class="f"><label>Approximate % of bile salts recycled per meal</label><span class="ki-text">~95% (only ~5% lost in feces; replaced by new synthesis from cholesterol)</span></div>
+      <div class="f"><label>Ileal resection &#8594; deficiency of fat-soluble vitamins ___</label><span class="ki-text">A, D, E, K (fat-soluble vitamins — require bile salt micelles for absorption)</span></div>
+    </div>
+  </div>
+
+  <div class="sec">First-Pass Metabolism &amp; Portal Nutrient Delivery</div>
+  <div class="card">
+    <div class="fg3">
+      <div class="f"><label>Nutrients (except fat) reach liver first via ___</label><span class="ki-text">Portal vein (all absorbed nutrients except fat reach liver first via portal vein)</span></div>
+      <div class="f"><label>Fat absorbed as ___ &#8594; enters lacteals &#8594; bypasses liver initially</label><span class="ki-text">Chylomicrons (packaged in enterocytes → enter lacteals → thoracic duct → left subclavian vein)</span></div>
+      <div class="f"><label>In portosystemic shunting: ___ bypass liver &#8594; hepatic encephalopathy</label><span class="ki-text">Ammonia and toxins (bypass liver → reach systemic circulation → hepatic encephalopathy)</span></div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a4)">Check Tab Answers</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ═══ PANEL 4 — PRACTICE Qs ═══════════════════════════════════════════════ -->
+<div class="panel" id="p4">
+
+  <div class="pq-box">
+    <div class="pq-q">Q1 &#8212; LO1: A 58-year-old man with alcoholic cirrhosis presents with hematemesis. Endoscopy confirms large esophageal varices. Which portal tributary is most directly responsible for the formation of esophageal varices in portal hypertension?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q1" value="A"> A) Right gastric vein</div>
+      <div><input type="radio" name="q1" value="B"> B) Left gastric (coronary) vein</div>
+      <div><input type="radio" name="q1" value="C"> C) Inferior mesenteric vein</div>
+      <div><input type="radio" name="q1" value="D"> D) Paraumbilical veins</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>B &#8212; Left gastric (coronary) vein.</strong> The left gastric vein drains the lesser curvature and lower esophagus into the portal system. In portal HTN, elevated pressure reverses flow through the left gastric vein, engorging submucosal esophageal veins &#8594; varices. Paraumbilical veins (D) &#8594; caput medusae; IMV (C) &#8594; anorectal/sigmoid varices.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q2 &#8212; LO1: A surgeon planning a right hepatic lobectomy must identify Cantlie&#8217;s line to define the true functional midplane. Cantlie&#8217;s line runs between which two structures?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q2" value="A"> A) Falciform ligament and ligamentum teres</div>
+      <div><input type="radio" name="q2" value="B"> B) Left triangular ligament and porta hepatis</div>
+      <div><input type="radio" name="q2" value="C"> C) Gallbladder fossa and groove for the IVC</div>
+      <div><input type="radio" name="q2" value="D"> D) Right hepatic vein and left hepatic duct</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>C &#8212; Gallbladder fossa to IVC groove.</strong> Cantlie&#8217;s line is the true surgical midplane separating functional right and left lobes. The falciform ligament (A) is only a surface landmark &#8212; the quadrate and caudate lobes appear right-sided but are functionally left-sided by Couinaud classification. Never confuse the falciform with the functional midplane on Step 1.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q3 &#8212; LO1: A surgeon performing laparoscopic cholecystectomy must achieve the &#8220;critical view of safety&#8221; within Calot&#8217;s triangle before clipping. What are the correct boundaries of Calot&#8217;s triangle?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q3" value="A"> A) Cystic duct, common bile duct, and portal vein</div>
+      <div><input type="radio" name="q3" value="B"> B) Cystic duct, hepatic artery proper, and liver surface</div>
+      <div><input type="radio" name="q3" value="C"> C) Cystic duct, common hepatic duct, and inferior liver surface</div>
+      <div><input type="radio" name="q3" value="D"> D) Common hepatic duct, right hepatic duct, and left hepatic duct</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>C &#8212; Cystic duct (inferior), common hepatic duct (medial), inferior liver surface (superior).</strong> The cystic artery (typically from the right hepatic artery) runs within this triangle and must be identified before clipping. Misidentifying the CBD as the cystic duct is the most feared complication of lap cholecystectomy.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q4 &#8212; LO2: A 22-year-old man sustains blunt abdominal trauma in a motor vehicle collision. He has LUQ tenderness and left shoulder tip pain. CT shows a splenic laceration. The spleen lies deep to which ribs?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q4" value="A"> A) Ribs 5&#8211;7</div>
+      <div><input type="radio" name="q4" value="B"> B) Ribs 7&#8211;9</div>
+      <div><input type="radio" name="q4" value="C"> C) Ribs 9&#8211;11</div>
+      <div><input type="radio" name="q4" value="D"> D) Ribs 11&#8211;12</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>C &#8212; Ribs 9&#8211;11.</strong> The spleen lies in the LUQ deep to ribs 9&#8211;11 in the midaxillary line; its long axis follows the 10th rib. Left shoulder tip pain (Kehr&#8217;s sign) = blood under the left diaphragm irritating the phrenic nerve (C3&#8211;C5). Rib 9&#8211;11 fractures are the classic mechanism of splenic laceration. The spleen is the most commonly injured organ in blunt abdominal trauma.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q5 &#8212; LO2: A 30-year-old woman with hereditary spherocytosis undergoes elective splenectomy. Six weeks later she develops fulminant sepsis; blood cultures grow <em>S. pneumoniae</em>. Which intervention should have been performed to prevent this complication?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q5" value="A"> A) Prophylactic anticoagulation to prevent splenic vein thrombosis</div>
+      <div><input type="radio" name="q5" value="B"> B) Vaccination against encapsulated organisms before splenectomy</div>
+      <div><input type="radio" name="q5" value="C"> C) Long-term antifungal prophylaxis</div>
+      <div><input type="radio" name="q5" value="D"> D) IVIG infusion to replace immunoglobulin production</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>B &#8212; Vaccination against encapsulated organisms (SHiN) before splenectomy.</strong> The spleen clears opsonized encapsulated bacteria (S. pneumoniae, H. influenzae type b, N. meningitidis). Without it, OPSI can be fatal (50&#8211;70% mortality). Vaccines should ideally be given 2 weeks before elective splenectomy for optimal immune response.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q6 &#8212; LO3: A 68-year-old man with a 3-month history of painless progressive jaundice, weight loss, and new-onset diabetes presents with a palpable, non-tender gallbladder. CT shows a 3 cm mass in the head of the pancreas. Which anatomical relationship explains the jaundice?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q6" value="A"> A) The tumor compresses the portal vein &#8594; portal hypertension</div>
+      <div><input type="radio" name="q6" value="B"> B) The CBD runs in a groove on the posterior surface of the pancreatic head &#8594; tumor compresses CBD</div>
+      <div><input type="radio" name="q6" value="C"> C) The tumor invades the duodenum &#8594; malabsorption of bilirubin</div>
+      <div><input type="radio" name="q6" value="D"> D) The splenic vein thrombosis &#8594; left-sided portal hypertension</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>B &#8212; CBD runs in a groove on the posterior surface of the pancreatic head.</strong> This is Courvoisier&#8217;s law: painless jaundice + palpable (distended, non-tender) gallbladder = pancreatic cancer until proven otherwise. The GB distends because slow obstruction allows gradual dilation; in gallstone disease, the GB wall is fibrotic and cannot distend. 70% of pancreatic cancers arise in the head.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q7 &#8212; LO3: A 45-year-old woman with known cholelithiasis develops sudden epigastric pain radiating to the back, vomiting, and jaundice. Labs: lipase 3,400 U/L, direct bilirubin elevated, ALP elevated. Which single anatomical site explains all three findings?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q7" value="A"> A) Cystic duct obstruction</div>
+      <div><input type="radio" name="q7" value="B"> B) Common hepatic duct obstruction</div>
+      <div><input type="radio" name="q7" value="C"> C) Ampulla of Vater (hepatopancreatic ampulla)</div>
+      <div><input type="radio" name="q7" value="D"> D) Minor duodenal papilla obstruction</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>C &#8212; Ampulla of Vater.</strong> A gallstone impacted at the ampulla simultaneously obstructs both the CBD (&#8594; obstructive jaundice, ↑ ALP, ↑ direct bilirubin) and the main pancreatic duct (&#8594; pancreatitis, ↑ lipase). The ampulla is the narrowest point of the biliary tract &#8212; gallstones passing the CBD can become trapped here. This is why gallstones and alcohol are the two most common causes of acute pancreatitis.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q8 &#8212; LO4: A medical student is reviewing digestive physiology. Which of the following correctly pairs each hormone with its primary stimulus and action?</div>
+    <div class="pq-choices">
+      <div><input type="radio" name="q8" value="A"> A) CCK released by acid &#8594; stimulates pancreatic HCO&#x2083;&#8315; secretion</div>
+      <div><input type="radio" name="q8" value="B"> B) Secretin released by fat &#8594; causes gallbladder contraction</div>
+      <div><input type="radio" name="q8" value="C"> C) CCK released by fat + protein &#8594; GB contraction + sphincter of Oddi relaxation + pancreatic enzyme secretion</div>
+      <div><input type="radio" name="q8" value="D"> D) Secretin released by fat &#8594; stimulates pancreatic acinar enzyme secretion</div>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.nextElementSibling.style.display==='block'?'Hide Answer':'Show Answer'">Show Answer</button>
+    <div class="pq-ans"><strong>C &#8212; CCK released by fat + protein (I-cells) &#8594; GB contraction + SOO relaxation + enzyme secretion.</strong> Remember: <strong>CCK</strong> = fat+protein stimulus, I-cells, GB contracts, SOO relaxes, acinar enzyme secretion. <strong>Secretin</strong> = acid (H&#x207A;) stimulus, S-cells, ductal HCO&#x2083;&#8315; secretion (neutralizes chyme). Both work together to optimize fat digestion in the duodenum.</div>
+  </div>
+
+</div>
+
+<script>
+const a0=[
+  "70%",
+  "Portal vein (BD = Bile Duct, HA = Hepatic Artery, P = Portal vein)",
+  "Spleen (ribs 9\u201311 in the midaxillary line)",
+  "Pancreatic cancer (until proven otherwise)",
+  "Terminal ileum (active transport)",
+  "Splenic vein (SMV + splenic vein \u2192 portal vein)"
+];
+
+// Tab 0 \u2014 Liver Anatomy & Vasculature (22)
+const a1=[
+  // Five fluids \u2014 Content column (5)
+  "Nutrient-rich venous blood from GI tract (70% of hepatic blood flow)",
+  "Oxygenated arterial blood (30% of blood flow, ~50% of O\u2082 supply)",
+  "Processed venous blood \u2192 IVC (just below diaphragm)",
+  "Bile \u2192 common hepatic duct \u2192 CBD",
+  "Hepatic lymph \u2192 celiac nodes or diaphragm \u2192 thoracic duct",
+  // Couinaud (3)
+  "IVC groove (inferior vena cava)",
+  "Segment I (caudate lobe \u2014 drains directly to IVC; spared in Budd-Chiari)",
+  "Left lobe (functionally left by Couinaud classification)",
+  // BD HAP (4)
+  "Bile ducts (right + left hepatic ducts)",
+  "Hepatic artery proper",
+  "Portal vein (largest; nutrient-rich venous blood)",
+  "Hepatoduodenal ligament (free edge of lesser omentum containing portal triad)",
+  // Portal-systemic \u2014 systemic side + clinical (8)
+  "Azygos / hemiazygos veins",
+  "Esophageal varices \u2014 risk of life-threatening hemorrhage",
+  "Middle + inferior rectal veins (internal iliac / pudendal)",
+  "Internal hemorrhoids (portal hypertension-related)",
+  "Epigastric veins (systemic)",
+  "Caput medusae \u2014 dilated periumbilical veins radiating outward",
+  "Lumbar / renal veins",
+  "Retroperitoneal varices (less visible clinically)",
+  // Pain referral (2)
+  "Right shoulder tip (phrenic nerve C3\u2013C5 via diaphragm irritation)",
+  "Left shoulder tip (Kehr\u2019s sign)"
+];
+
+// Tab 1 \u2014 Biliary System & Spleen (24)
+const a2=[
+  // Biliary tree (4)
+  "Common hepatic duct",
+  "Cystic duct",
+  "Ampulla of Vater (hepatopancreatic ampulla)",
+  "Major duodenal papilla (2nd part of duodenum)",
+  // Gallbladder / Calot\u2019s (5)
+  "~50 mL",
+  "9th (right 9th costal cartilage at midclavicular line)",
+  "Neck (Hartmann\u2019s pouch \u2014 where stones lodge)",
+  "Common hepatic duct (medial boundary of Calot\u2019s triangle)",
+  "Cystic artery (must be identified before clipping)",
+  // Cystic artery / CBD (2)
+  "Right hepatic artery (inside Calot\u2019s triangle \u2014 highly variable origin)",
+  "CBD injury \u2014 misidentification of CBD as cystic duct (most common serious complication)",
+  // Splenic anatomy (6)
+  "Left upper quadrant (LUQ)",
+  "9\u201311 (ribs 9, 10, 11 in the midaxillary line)",
+  "10th rib (long axis of spleen)",
+  "Short gastric arteries + left gastroepiploic artery",
+  "Splenic artery, splenic vein, and tail of pancreas",
+  "Howell-Jolly bodies (nuclear remnants in RBCs; also target cells, thrombocytosis)",
+  // SHiN / functions (4)
+  "H. influenzae type b (SHiN: S. pneumoniae, H. influenzae type b, N. meningitidis)",
+  "3\u00d7 (must enlarge to 3\u00d7 normal size before palpable below left costal margin)",
+  "S. pneumoniae (OPSI mortality 50\u201370%)",
+  "Left diaphragm (blood tracks up \u2192 phrenic nerve C3\u2013C5 \u2192 left shoulder tip pain)",
+  // Splenic vasculature (3)
+  "Celiac trunk (splenic artery = largest branch of celiac trunk)",
+  "Pancreatic body/tail (splenic vein runs in groove on posterior surface)",
+  "Neck of the pancreas (SMV + splenic vein \u2192 portal vein)"
+];
+
+// Tab 2 \u2014 Pancreas & Obstructive Jaundice (24)
+const a3=[
+  // Parts table \u2014 inline blanks (5)
+  "Posterior",
+  "Anterior (SMA/SMV pass anterior to uncinate process \u2014 surgical danger zone)",
+  "Posterior (portal vein forms immediately posterior to neck)",
+  "Splenic (splenic vein in groove on posterior surface of body)",
+  "Intraperitoneal (only intraperitoneal part; in splenorenal ligament)",
+  // Duct system (3)
+  "Wirsung (duct of Wirsung = main pancreatic duct)",
+  "Santorini (duct of Santorini = accessory duct; opens at minor papilla)",
+  "Narrowest (hepatopancreatic ampulla = narrowest point \u2014 where gallstones impact)",
+  // Embryological variants (3)
+  "Ventral pancreatic bud (failure to rotate clockwise with duodenum)",
+  "Duodenal obstruction (ring of pancreatic tissue encircles duodenum)",
+  "Ventral + dorsal ducts fail to fuse (most common anatomic variant; predisposes to pancreatitis)",
+  // OJ syndromes (5)
+  "Pancreatic head cancer (Courvoisier\u2019s law)",
+  "Gallstone at ampulla of Vater (obstructs CBD + pancreatic duct simultaneously)",
+  "Ascending cholangitis (Charcot\u2019s triad = RUQ pain + fever/chills + jaundice)",
+  "ALP (alkaline phosphatase) \u2014 with \u2191 GGT and \u2191 direct bilirubin",
+  "Fibrotic (scarred GB wall in gallstone disease cannot distend; malignant obstruction is slow \u2192 GB dilates)",
+  // Pain referral table (3)
+  "Epigastric (foregut: stomach, liver, GB, pancreas, proximal duodenum)",
+  "Periumbilical (midgut: small bowel to splenic flexure)",
+  "Suprapubic / hypogastric (hindgut: distal colon, rectum)",
+  // Pancreatitis (5)
+  "Alcoholism (gallstones #1, alcohol #2 \u2014 together account for ~80% of cases)",
+  "Back (retroperitoneal location against L1\u2013L2 vertebral bodies)",
+  "Leaning forward (fetal position / sitting forward relieves retroperitoneal pressure)",
+  "Lipase (more specific than amylase for pancreatitis; stays elevated longer)",
+  "Calcifications (pancreatic calcifications on plain X-ray = classic chronic alcoholic pancreatitis)"
+];
+
+// Tab 3 \u2014 Enzymes & Digestive Integration (27)
+const a4=[
+  // Enzyme table \u2014 substrate + activated by (12)
+  "Proteins (cleaves at Arg and Lys residues)",
+  "Enterokinase / enteropeptidase (brush border); then autocatalytic trypsin activation",
+  "Proteins (cleaves at Phe, Trp, Tyr residues)",
+  "Trypsin",
+  "Elastin and other structural proteins",
+  "Trypsin (causes vessel wall damage \u2192 hemorrhagic pancreatitis)",
+  "Triglycerides (hydrolyzes ester bonds \u2192 fatty acids + monoglycerides)",
+  "Active as secreted; co-lipase required; needs bile salt emulsification first",
+  "Starch \u2192 maltose + glucose oligomers",
+  "Active as secreted (no zymogen activation required)",
+  "Phospholipids (membrane lipids)",
+  "Trypsin (phospholipase destroys cell membranes in pancreatitis)",
+  // Hepatic functions \u2014 clinical (5)
+  "Liver failure \u2192 \u2193 albumin (edema) + \u2191 PT/coagulopathy (clotting factor deficiency)",
+  "Liver failure \u2192 hypoglycemia (fasting) \u2014 lost gluconeogenesis and glycogen release",
+  "Statins inhibit HMG-CoA reductase (rate-limiting step in hepatic cholesterol synthesis)",
+  "Drug-drug interactions via CYP450 competition (especially CYP3A4)",
+  "Liver failure \u2192 hyperammonemia \u2192 hepatic encephalopathy",
+  // CCK vs secretin (4)
+  "Fat + protein in duodenum (I-cells in duodenal/jejunal mucosa)",
+  "Relaxation (CCK relaxes sphincter of Oddi \u2192 bile flows into duodenum)",
+  "Acid (H\u207a) in duodenum (S-cells)",
+  "HCO\u2083\u207b-rich fluid (bicarbonate neutralizes acidic chyme from stomach)",
+  // Enterohepatic circulation (3)
+  "Terminal ileum (active transport via ASBT/IBAT transporters)",
+  "~95% (only ~5% lost in feces; replaced by new synthesis from cholesterol)",
+  "A, D, E, K (fat-soluble vitamins \u2014 require bile salt micelles for absorption)",
+  // First-pass metabolism (3)
+  "Portal vein (all absorbed nutrients except fat reach liver first via portal vein)",
+  "Chylomicrons (packaged in enterocytes \u2192 enter lacteals \u2192 thoracic duct \u2192 left subclavian vein)",
+  "Ammonia and toxins (bypass liver \u2192 reach systemic circulation \u2192 hepatic encephalopathy)"
+];
+
+// ── RENDER CHECK FUNCTION ────────────────────────────────────────────────────
+function rev(btn, arr){
+  const card = btn.parentElement;
+  const inputs = card.querySelectorAll('input:not([type="radio"])');
+  const fb = card.querySelector('.fb');
+  fb.innerHTML = '<div class="fb-header">Answer Key</div>';
+  inputs.forEach((inp, i) => {
+    const label = inp.closest('.f') ? inp.closest('.f').querySelector('label')?.textContent
+      : inp.closest('td')?.previousElementSibling?.textContent
+        || inp.closest('td')?.parentElement?.querySelector('.rl')?.textContent
+        || ('Item ' + (i+1));
+    const row = document.createElement('div');
+    row.className = 'fb-row';
+    row.innerHTML = `<div class="fb-q">${label || 'Item ' + (i+1)}</div><div class="fb-a">${arr[i] ?? '<em style="color:#dc2626">NO ANSWER</em>'}</div>`;
+    fb.appendChild(row);
+  });
+  fb.style.display = 'block';
+  btn.textContent = btn.textContent === 'Hide Answers' ? (btn.textContent = 'Check Tab Answers', 'Check Tab Answers') : 'Hide Answers';
+  if(fb.style.display === 'block' && btn.textContent === 'Check Tab Answers'){fb.style.display='none';}
+}
+
+function sw(i){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('p'+i).classList.add('active');
+  document.querySelectorAll('.tab')[i].classList.add('active');
+}
+</script>
+</body></html>

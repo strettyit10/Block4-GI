@@ -1,0 +1,712 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}
+.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}
+.fb-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #DBEAFE}
+.fb-row:last-child{border-bottom:none}
+.fb-row:nth-child(even){background:#F0F7FF}
+.fb-row:nth-child(odd){background:#fff}
+.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}
+.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.inline-blank{border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:1px 2px;color:#1e293b;width:140px;display:inline-block}
+.inline-blank:focus{border-bottom-color:#1D4ED8}
+.cross-sec{display:flex;flex-direction:column;gap:6px;max-width:340px;margin:8px auto}
+.cs-layer{border:1.5px solid #CBD5E1;border-radius:6px;padding:6px 12px;font-size:11px;display:flex;align-items:center;gap:8px;background:#FAFAFA}
+.cs-layer .lbl{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.03em;min-width:60px}
+.cs-layer input{border:none;border-bottom:1.5px solid #CBD5E1;font-size:11px;background:transparent;outline:none;flex:1}
+.cs-layer input:focus{border-bottom-color:#1D4ED8}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Primer: Endoderm &amp; Gut Tube &#x2014; Active Recall</h2>
+  <a href="gi07_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">&#x2705; View Answer Key</a>
+</div>
+<p class="sub">GI07 &mdash; Dr. Gallicano &mdash; HoyaDocs GI Block | USMLE Step 1</p>
+
+<div class="resource-banner">
+  <strong>&#128218; Linked Study Guide</strong>
+  Open <a href="../lecture-guides/gi07-gi-primer-endoderm-gut-tube.html" target="_blank" style="color:#1D4ED8;font-weight:600">GI07: GI Primer &mdash; Endoderm &amp; Gut Tube</a> alongside this drill for reference.
+</div>
+
+<!-- WARMUP -->
+<div class="card">
+  <div class="sec">&#9651; Warmup &#8212; Key Facts (complete from memory)</div>
+  <div class="fg">
+    <div class="f"><label>Master transcription factor for definitive endoderm specification</label><input></div>
+    <div class="f"><label>Morphogen (high levels) that drives epiblast → endoderm fate</label><input></div>
+    <div class="f"><label>Foregut artery &amp; vertebral level</label><input></div>
+    <div class="f"><label>Midgut artery &amp; vertebral level</label><input></div>
+    <div class="f"><label>Hindgut artery &amp; vertebral level</label><input></div>
+    <div class="f"><label>Persistent vitelline duct = ___ (clinical remnant)</label><input></div>
+  </div>
+  <button class="btn" onclick="rev(this,a0)">Check Warmup</button>
+  <div class="fb"></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">&#129516; Definitive Endoderm</div>
+  <div class="tab" onclick="sw(1)">&#128506; Regions, Derivatives &amp; Supply</div>
+  <div class="tab" onclick="sw(2)">&#128230; Folding &amp; Mesenteries</div>
+  <div class="tab" onclick="sw(3)">&#128260; Organ Development &amp; Rotation</div>
+  <div class="tab" onclick="sw(4)">&#9999;&#65039; Practice Qs</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 0 — DEFINITIVE ENDODERM (LO1, LO6)
+══════════════════════════════════════════════ -->
+<div class="panel active" id="p0">
+  <div class="lo-tag">LO 1 &amp; 6 — Formation of Definitive Endoderm</div>
+
+  <div class="sec">Gastrulation &amp; Germ Layer Formation</div>
+  <div class="card" style="background:#F8FAFC;border-color:#E2E8F0">
+    <p style="font-size:12px;line-height:1.9;color:#1e293b">
+      During gastrulation (days 14–16), epiblast cells ingress through the
+      <input class="inline-blank"> to form the inner germ layers.
+      The <strong>deepest</strong> ingressing cells displace the hypoblast and become
+      <input class="inline-blank">.
+      Cells that ingress to an <strong>intermediate</strong> depth become
+      <input class="inline-blank">.
+      Epiblast cells that <strong>do not ingress</strong> remain as
+      <input class="inline-blank">.
+      The hypoblast itself is <em>not</em> a gut precursor — it forms the
+      <input class="inline-blank"> only.
+      Gastrulation takes place on days <input class="inline-blank">.
+    </p>
+  </div>
+
+  <div class="sec">Molecular Signals in Endoderm Specification</div>
+  <table>
+    <thead>
+      <tr><th style="width:30%">Molecule</th><th>Role in Endoderm Specification</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Nodal (high levels)</td>
+        <td>Induces epiblast → <input> cell fate</td>
+      </tr>
+      <tr>
+        <td class="rl">Sox17</td>
+        <td><input> for definitive endoderm (required for all endoderm-derived organs)</td>
+      </tr>
+      <tr>
+        <td class="rl">Foxa2 / HNF3&#946;</td>
+        <td>Pioneer TF; specifies <input> and <input> (hepatic) identity</td>
+      </tr>
+      <tr>
+        <td class="rl">Wnt / &#946;-catenin</td>
+        <td>Specifies <input> gut identity</td>
+      </tr>
+      <tr>
+        <td class="rl">FGF</td>
+        <td>Induces <input> bud formation (liver + lung)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Gut Tube Formation Timeline</div>
+  <table>
+    <thead><tr><th>Approximate Day</th><th>Event</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Day ~20</td><td><input> and <input> pockets form (gut tube closes at ends)</td></tr>
+      <tr><td class="rl">Day ~24</td><td>Midgut still open to the <input> via vitelline duct</td></tr>
+      <tr><td class="rl">Day ~26</td><td><input> nearly complete; gut tube closes</td></tr>
+      <tr><td class="rl">Day ~30</td><td><input> buds appear (liver, pancreas, lung)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Embryonic Cross-Section — Layers (Inside &#x2192; Outside)</div>
+  <div class="cross-sec">
+    <div class="cs-layer" style="border-color:#6366F1;background:#EEF2FF"><span class="lbl">Innermost</span><input placeholder="gut lining layer"></div>
+    <div class="cs-layer"><span class="lbl">Layer 2</span><input placeholder="inner mesoderm layer"></div>
+    <div class="cs-layer" style="background:#F0FDF4"><span class="lbl">Space</span><input placeholder="fluid-filled cavity"></div>
+    <div class="cs-layer"><span class="lbl">Layer 4</span><input placeholder="outer mesoderm layer"></div>
+    <div class="cs-layer" style="border-color:#6366F1;background:#EEF2FF"><span class="lbl">Outermost</span><input placeholder="outer germ layer"></div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a1)" style="margin-top:14px">Check Definitive Endoderm</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 1 — REGIONS, DERIVATIVES & SUPPLY (LO2)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p1">
+  <div class="lo-tag">LO 2, 3 &amp; 4 — Three Gut Regions &amp; Derivatives</div>
+
+  <div class="warn">&#9888; High-yield Step 1 trap: The <strong>duodenum</strong> is split between two regions at the ampulla of Vater. Know which half belongs to foregut vs. midgut.</div>
+
+  <div class="sec">Three Gut Regions — Boundaries, Supply &amp; Derivatives</div>
+  <table>
+    <thead>
+      <tr><th style="width:15%">Region</th><th style="width:12%">Vertebral Level</th><th style="width:20%">Artery</th><th>Key Structures Supplied</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Foregut</td>
+        <td><input></td>
+        <td><input></td>
+        <td>Pharynx → <input> (also: liver, lungs, gallbladder, pancreas)</td>
+      </tr>
+      <tr>
+        <td class="rl">Midgut</td>
+        <td><input></td>
+        <td><input></td>
+        <td>Distal duodenum (from ampulla) → <input></td>
+      </tr>
+      <tr>
+        <td class="rl">Hindgut</td>
+        <td><input></td>
+        <td><input></td>
+        <td>Left 1/3 transverse colon → <input></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px;margin-bottom:10px">
+    Key duodenal split: proximal duodenum (D1) = foregut; distal duodenum (D2–D4) = midgut. The dividing landmark is the <input class="inline-blank">.
+  </p>
+
+  <div class="sec">Anal Canal — Above vs. Below the Dentate Line</div>
+  <table>
+    <thead>
+      <tr><th style="width:28%">Feature</th><th>Above Dentate Line</th><th>Below Dentate Line</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="rl">Embryologic origin</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Epithelium</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Blood supply</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Innervation / Sensation</td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Foregut Derivatives (LLGP Mnemonic)</div>
+  <p style="font-size:12px;margin-bottom:8px">Beyond the GI tube itself, the foregut also gives rise to four accessory structures. Complete each:</p>
+  <div class="fg">
+    <div class="f"><label>L — (organ)</label><input></div>
+    <div class="f"><label>L — (organ)</label><input></div>
+    <div class="f"><label>G — (organ)</label><input></div>
+    <div class="f"><label>P — (organ)</label><input></div>
+  </div>
+
+  <div class="sec">Hepatic Diverticulum &amp; Liver Development</div>
+  <div class="fg">
+    <div class="f"><label>Hepatic diverticulum arises from ___ endoderm</label><input></div>
+    <div class="f"><label>Week of development</label><input></div>
+    <div class="f"><label>Hepatic diverticulum grows into the ___</label><input></div>
+    <div class="f"><label>Endoderm of diverticulum → (cell type)</label><input></div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a2)">Check Regions &amp; Derivatives</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 2 — GUT TUBE FOLDING & MESENTERIES (LO5a)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p2">
+  <div class="lo-tag">LO 5 Part 1 — Gut Tube Folding, Mesoderm Layers &amp; Mesenteries</div>
+
+  <div class="sec">Tube-in-Tube: Mechanism of Gut Tube Formation</div>
+  <div class="card" style="background:#F8FAFC;border-color:#E2E8F0">
+    <p style="font-size:12px;line-height:1.9">
+      The gut tube forms because the embryo + amniotic sac grows faster than the
+      <input class="inline-blank">, creating a size differential that causes
+      <input class="inline-blank"> folding to pinch the endoderm inward.
+      The remaining connection between the midgut and the original sac is called the
+      <input class="inline-blank">, which normally obliterates.
+    </p>
+  </div>
+
+  <div class="sec">Mesoderm Layers — Derivatives</div>
+  <table>
+    <thead><tr><th style="width:35%">Mesoderm Layer</th><th>Key Derivatives</th></tr></thead>
+    <tbody>
+      <tr><td><input></td><td><strong>Inner</strong> layer; → gut wall smooth muscle, serosa, mesenteries</td></tr>
+      <tr><td><input></td><td><strong>Outer</strong> layer; → parietal peritoneum, body wall</td></tr>
+      <tr><td><input></td><td><strong>Middle</strong> layer; → kidneys, gonads, adrenal cortex</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Dorsal Mesentery — Fate of Each Segment</div>
+  <table>
+    <thead><tr><th style="width:35%">Segment</th><th>Fate</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Dorsal mesogastrium</td><td>→ <input></td></tr>
+      <tr><td class="rl">Mesoduodenum (D2–D4)</td><td>→ <input></td></tr>
+      <tr><td class="rl">Mesentery proper</td><td>Suspends <input></td></tr>
+      <tr><td class="rl">___ mesocolon</td><td>Persists; suspends transverse colon → <input></td></tr>
+      <tr><td class="rl">___ mesocolon</td><td>Persists; suspends sigmoid colon → <input></td></tr>
+      <tr><td class="rl">Overall extent</td><td>Dorsal mesentery is present along <input> (which portion of gut tube?)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Ventral Mesentery — Fates &amp; Clinical Significance</div>
+  <div class="warn">&#9888; Ventral mesentery exists for <strong>foregut only</strong> (above the umbilicus). It gives rise to two key ligaments.</div>
+  <table>
+    <thead><tr><th style="width:35%">Structure</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Gut region with ventral mesentery</td>
+        <td><input></td>
+      </tr>
+      <tr>
+        <td class="rl">Falciform ligament</td>
+        <td>Connects liver → anterior abdominal wall; contains <input> (= obliterated left umbilical vein)</td>
+      </tr>
+      <tr>
+        <td class="rl">Clinical — portal HTN</td>
+        <td>Ligamentum teres recanalizes in <input> → dilated paraumbilical veins = <input></td>
+      </tr>
+      <tr>
+        <td class="rl">Lesser omentum</td>
+        <td>Connects liver → stomach (gastrohepatic) + duodenum (hepatoduodenal); derived from <input></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Retroperitoneum Classification</div>
+  <table>
+    <thead><tr><th style="width:38%">Category</th><th>Key Examples</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Intraperitoneal</td>
+        <td>Stomach, spleen, liver, D1, jejunum, ileum, <input>, sigmoid colon, gallbladder</td>
+      </tr>
+      <tr>
+        <td class="rl">Secondarily retroperitoneal<br><span style="font-weight:400;font-size:10px">(lost mesentery during dev.)</span></td>
+        <td>D2–D4, pancreas (head/body/neck), <input>, descending colon</td>
+      </tr>
+      <tr>
+        <td class="rl">Secondarily retro — key mechanism</td>
+        <td>These organs lost their <input> as adjacent structures fused to the posterior wall</td>
+      </tr>
+      <tr>
+        <td class="rl">Primarily retroperitoneal<br><span style="font-weight:400;font-size:10px">(never had a mesentery)</span></td>
+        <td><input> had mesentery → kidneys, ureters, adrenals, aorta, <input>, thoracic esophagus, lower 2/3 rectum</td>
+      </tr>
+      <tr>
+        <td class="rl">Rectum (upper 1/3)</td>
+        <td><input> (has peritoneal covering)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a3)">Check Folding &amp; Mesenteries</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 3 — ORGAN DEVELOPMENT & ROTATION (LO5b, LO3, LO4)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p3">
+  <div class="lo-tag">LO 3, 4 &amp; 5 Part 2 — Organ Development, Rotation &amp; Malformations</div>
+
+  <div class="sec">Stomach Development &amp; Rotation</div>
+  <div class="card" style="background:#F8FAFC">
+    <p style="font-size:12px;line-height:1.9">
+      The stomach primordium appears on day <input class="inline-blank">.
+      Because the posterior wall grows faster, it becomes the <input class="inline-blank"> curvature,
+      while the anterior wall becomes the <input class="inline-blank"> curvature.
+      At ~day 35, the stomach rotates <input class="inline-blank"> clockwise (as viewed from the ventral side).
+      The original <em>left</em> surface is swept to the <input class="inline-blank"> position,
+      bringing the left vagus nerve to form the <input class="inline-blank"> vagal trunk.
+      The original <em>right</em> surface becomes <input class="inline-blank">,
+      and the right vagus nerve becomes the <input class="inline-blank"> vagal trunk.
+      Rotation also drags the dorsal mesogastrium to the <input class="inline-blank">,
+      creating the <input class="inline-blank"> behind the stomach,
+      accessible through the <input class="inline-blank">.
+    </p>
+  </div>
+
+  <div class="sec">Intestinal Rotation — Sequence</div>
+  <table>
+    <thead><tr><th style="width:30%">Stage / Timing</th><th>Event</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="rl">Primary loop — cranial limb</td>
+        <td>→ <input> and proximal ileum</td>
+      </tr>
+      <tr>
+        <td class="rl">Primary loop — caudal limb</td>
+        <td>→ distal ileum, <input>, appendix, ascending colon</td>
+      </tr>
+      <tr>
+        <td class="rl">Week 6</td>
+        <td>Midgut herniates into umbilical cord; rotates <input> CCW around <input></td>
+      </tr>
+      <tr>
+        <td class="rl">Week 10–11</td>
+        <td>Gut returns to abdomen; rotates additional <input> → total <input> CCW</td>
+      </tr>
+      <tr>
+        <td class="rl">Week 12</td>
+        <td>Cecum descends from RUQ → <input>; pulls up ascending colon</td>
+      </tr>
+      <tr>
+        <td class="rl">Ascending &amp; descending colon</td>
+        <td>Fuse to posterior wall → become <input></td>
+      </tr>
+      <tr>
+        <td class="rl">Week 14</td>
+        <td>GI tract development <input></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Congenital Malformations</div>
+  <div class="on-exam">&#128680; High-Yield Step 1: Know the key distinguishing features for each defect</div>
+  <table>
+    <thead>
+      <tr><th style="width:22%">Condition</th><th>Key Mechanism / Feature</th><th>Step 1 Clue</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rl">Malrotation</td>
+        <td>Incomplete rotation; cecum remains in <input></td>
+        <td>Ladd's bands compress duodenum; risk = <input> (surgical emergency)</td>
+      </tr>
+      <tr>
+        <td class="rl">Omphalocele</td>
+        <td>Herniated bowel fails to <input>; covered by <input></td>
+        <td>May contain liver; Trisomy 13/18 or Beckwith-Wiedemann</td>
+      </tr>
+      <tr>
+        <td class="rl">Gastroschisis</td>
+        <td>Defect located <input> of umbilicus</td>
+        <td>No membrane; inflamed bowel; usually isolated (no genetic assoc.)</td>
+      </tr>
+      <tr>
+        <td class="rl">Duodenal atresia</td>
+        <td>Failure of <input> from solid cord stage</td>
+        <td>Double bubble sign on AXR; Trisomy 21 (~30%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a4)">Check Organ Development &amp; Rotation</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 4 — PRACTICE Qs
+══════════════════════════════════════════════ -->
+<div class="panel" id="p4">
+  <div class="lo-tag">Practice Questions — LO 1&#x2013;6 Integration</div>
+  <p style="font-size:11px;color:#64748B;margin-bottom:12px">Select the best answer, then reveal the explanation.</p>
+
+  <!-- Q1 -->
+  <div class="pq-box">
+    <div class="pq-q">Q1. During gastrulation, a group of epiblast cells ingresses most deeply through the primitive streak and displaces the hypoblast. These cells will give rise to which tissue?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq1" value="a"> A. Ectoderm</label><br>
+      <label><input type="radio" name="pq1" value="b"> B. Mesoderm</label><br>
+      <label><input type="radio" name="pq1" value="c"> C. Definitive endoderm</label><br>
+      <label><input type="radio" name="pq1" value="d"> D. Yolk sac epithelium</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Definitive endoderm.</strong> The deepest ingressing epiblast cells displace the hypoblast and become the definitive endoderm — the future gut tube lining. The hypoblast itself only contributes to the yolk sac, NOT the gut. Sox17 and Nodal (high levels) drive this fate.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="pq-box">
+    <div class="pq-q">Q2. A classmate states: "The hypoblast is the precursor to the gut tube epithelium." Which of the following correctly identifies the error?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq2" value="a"> A. The hypoblast actually forms the gut tube; the epiblast forms the amnion</label><br>
+      <label><input type="radio" name="pq2" value="b"> B. The hypoblast forms only the yolk sac; definitive endoderm comes from the epiblast</label><br>
+      <label><input type="radio" name="pq2" value="c"> C. The hypoblast expresses Sox17 and is the master endoderm regulator</label><br>
+      <label><input type="radio" name="pq2" value="d"> D. Hypoblast cells ingress through the primitive streak to form mesoderm</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Hypoblast → yolk sac only.</strong> The hypoblast is displaced by epiblast cells ingressing through the primitive streak. It contributes to the secondary yolk sac, not the gut tube. The gut tube lining (definitive endoderm) comes entirely from the epiblast.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="pq-box">
+    <div class="pq-q">Q3. A 2-year-old boy presents with painless rectal bleeding. A Tc-99m pertechnetate scan shows focal radiotracer uptake in the right lower quadrant. This represents ectopic gastric mucosa in a remnant derived from which embryologic structure?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq3" value="a"> A. Allantois</label><br>
+      <label><input type="radio" name="pq3" value="b"> B. Vitelline (omphalomesenteric) duct</label><br>
+      <label><input type="radio" name="pq3" value="c"> C. Urachus</label><br>
+      <label><input type="radio" name="pq3" value="d"> D. Notochord</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Vitelline duct.</strong> Meckel's diverticulum is the persistent vitelline (omphalomesenteric) duct. Rule of 2s: 2% of population, 2 feet from ileocecal valve, 2 inches long, often contains 2 types of ectopic tissue (gastric &amp; pancreatic). Ectopic gastric mucosa bleeds painlessly. Tc-99m pertechnetate concentrates in gastric mucosa → hot spot in RLQ.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="pq-box">
+    <div class="pq-q">Q4. Following gastric rotation, the left vagus nerve is carried to which surface of the adult stomach?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq4" value="a"> A. Posterior surface</label><br>
+      <label><input type="radio" name="pq4" value="b"> B. Greater curvature</label><br>
+      <label><input type="radio" name="pq4" value="c"> C. Anterior surface</label><br>
+      <label><input type="radio" name="pq4" value="d"> D. Lesser curvature</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Anterior surface.</strong> The stomach rotates 90° clockwise (ventral view). The original left surface sweeps forward to become the anterior surface, carrying the left vagus → anterior vagal trunk. The right vagus → posterior vagal trunk. Surgically important: vagotomy for peptic ulcer disease must sever both trunks.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="pq-box">
+    <div class="pq-q">Q5. A newborn is found to have intestinal contents herniated through a defect located to the RIGHT of the umbilicus, with no covering membrane and inflamed, matted bowel loops. Which diagnosis best fits?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq5" value="a"> A. Omphalocele</label><br>
+      <label><input type="radio" name="pq5" value="b"> B. Umbilical hernia</label><br>
+      <label><input type="radio" name="pq5" value="c"> C. Gastroschisis</label><br>
+      <label><input type="radio" name="pq5" value="d"> D. Vitelline duct cyst</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Gastroschisis.</strong> Key distinguishing features: (1) defect to the RIGHT of the umbilicus (omphalocele is through the umbilicus), (2) NO membrane covering, (3) bowel is inflamed/thickened from amniotic fluid exposure, (4) usually an isolated defect (no chromosomal association). Omphalocele: through umbilicus, membrane-covered, may contain liver, associated with Trisomy 13/18 and Beckwith-Wiedemann.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="pq-box">
+    <div class="pq-q">Q6. Which of the following structures is considered PRIMARILY retroperitoneal (i.e., never had a mesentery during development)?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq6" value="a"> A. Ascending colon</label><br>
+      <label><input type="radio" name="pq6" value="b"> B. Descending colon</label><br>
+      <label><input type="radio" name="pq6" value="c"> C. Duodenum D2–D4</label><br>
+      <label><input type="radio" name="pq6" value="d"> D. Kidney</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>D — Kidney.</strong> The kidneys (and ureters, adrenals, aorta, IVC, thoracic esophagus, lower 2/3 rectum) are primarily retroperitoneal — they developed in the retroperitoneum and never had a peritoneal covering. The ascending and descending colon, and duodenum D2–D4, are <em>secondarily</em> retroperitoneal — they once had a mesentery but lost it when they fused to the posterior abdominal wall.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="pq-box">
+    <div class="pq-q">Q7. A 3-day-old neonate presents with bilious vomiting. Abdominal X-ray shows two air-fluid levels separated by a radiolucent area (double bubble sign). Which diagnosis and associated chromosomal abnormality are most likely?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq7" value="a"> A. Malrotation — Trisomy 18</label><br>
+      <label><input type="radio" name="pq7" value="b"> B. Duodenal atresia — Trisomy 21</label><br>
+      <label><input type="radio" name="pq7" value="c"> C. Gastroschisis — no chromosomal association</label><br>
+      <label><input type="radio" name="pq7" value="d"> D. Annular pancreas — Trisomy 13</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B — Duodenal atresia, Trisomy 21.</strong> The double bubble sign = dilated stomach + dilated proximal duodenum (two bubbles) with no distal gas, caused by failure of the duodenum to recanalize from its solid cord stage (~week 6). Approximately 30% of cases are associated with Trisomy 21. Bilious vomiting indicates obstruction distal to the ampulla of Vater.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="pq-box">
+    <div class="pq-q">Q8. A patient with internal hemorrhoids above the dentate line asks why they are not painful, unlike the external hemorrhoids below the dentate line. Which of the following correctly explains this difference?</div>
+    <div class="pq-choices">
+      <label><input type="radio" name="pq8" value="a"> A. Above the dentate line has stratified squamous epithelium and somatic innervation</label><br>
+      <label><input type="radio" name="pq8" value="b"> B. Above the dentate line is drained by the inferior rectal vein</label><br>
+      <label><input type="radio" name="pq8" value="c"> C. Above the dentate line has visceral innervation and is insensitive to pain</label><br>
+      <label><input type="radio" name="pq8" value="d"> D. Above the dentate line is ectoderm-derived and has stratified squamous epithelium</label>
+    </div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C — Visceral innervation → painless.</strong> Above dentate line: hindgut-derived, columnar epithelium, supplied by superior rectal artery (IMA), visceral innervation only → painless (internal hemorrhoids can bleed without pain). Below dentate line: ectoderm-derived, stratified squamous epithelium, supplied by inferior rectal artery (internal pudendal), somatic innervation via pudendal nerve → exquisitely painful.</div>
+  </div>
+
+</div>
+
+<script>
+function sw(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i));
+}
+
+function rev(btn,ans){
+  const inputs=[...btn.closest('.card,.panel').querySelectorAll('input[type=text],input:not([type]),input.inline-blank,.cs-layer input')].filter(el=>el.type!=='radio'&&el.type!=='checkbox');
+  const fb=btn.nextElementSibling;
+  fb.style.display='block';
+  fb.innerHTML='<div class="fb-header">Answer Key</div>'+
+    ans.map((a,i)=>`<div class="fb-row"><div class="fb-q">Field ${i+1}</div><div class="fb-a">${a}</div></div>`).join('');
+  inputs.forEach((el,i)=>{if(ans[i]!==undefined)el.placeholder=ans[i];});
+}
+
+// ── ANSWER OBJECTS ──────────────────────────────
+
+// Warmup (6)
+const a0=[
+  "Sox17",
+  "Nodal",
+  "Celiac artery (T12)",
+  "SMA — superior mesenteric artery (L1)",
+  "IMA — inferior mesenteric artery (L3)",
+  "Meckel's diverticulum"
+];
+
+// Tab 0 — Definitive Endoderm (22)
+const a1=[
+  // Gastrulation paragraph (6)
+  "primitive streak",
+  "definitive endoderm",
+  "mesoderm",
+  "ectoderm",
+  "yolk sac",
+  "14–16",
+  // Molecular signals table (6)
+  "definitive endoderm",
+  "Master transcription factor",
+  "anterior foregut",
+  "liver (hepatic)",
+  "posterior / hindgut",
+  "hepatic (liver) + lung bud",
+  // Timeline (5)
+  "foregut",
+  "hindgut",
+  "yolk sac",
+  "lateral folding",
+  "organ",
+  // Cross-section layers (5)
+  "endoderm (gut tube lining)",
+  "splanchnic mesoderm",
+  "intraembryonic coelom",
+  "somatic mesoderm",
+  "ectoderm"
+];
+
+// Tab 1 — Regions, Derivatives & Supply (26)
+const a2=[
+  // Gut regions table (9)
+  "T12",
+  "Celiac artery",
+  "proximal duodenum (to ampulla of Vater)",
+  "L1",
+  "SMA (superior mesenteric artery)",
+  "right 2/3 of transverse colon",
+  "L3",
+  "IMA (inferior mesenteric artery)",
+  "dentate line",
+  // Duodenum split (1)
+  "ampulla of Vater",
+  // Anal canal table (8)
+  "hindgut (endoderm)",
+  "ectoderm (proctodeum)",
+  "columnar (simple columnar)",
+  "stratified squamous",
+  "superior rectal artery (IMA)",
+  "inferior rectal artery (internal pudendal)",
+  "visceral / painless",
+  "somatic / painful",
+  // LLGP foregut derivatives (4)
+  "Liver",
+  "Lungs",
+  "Gallbladder",
+  "Pancreas",
+  // Hepatic diverticulum (4)
+  "caudal foregut",
+  "week 4–5",
+  "septum transversum",
+  "hepatocytes (+ bile duct epithelium)"
+];
+
+// Tab 2 — Folding & Mesenteries (24)
+const a3=[
+  // Tube-in-tube (3)
+  "yolk sac",
+  "lateral",
+  "vitelline (omphalomesenteric) duct",
+  // Mesoderm table (3)
+  "splanchnic mesoderm",
+  "somatic mesoderm",
+  "intermediate mesoderm",
+  // Dorsal mesentery (6)
+  "greater omentum",
+  "disappears (D2–D4 become secondarily retroperitoneal)",
+  "jejunum and ileum",
+  "transverse",
+  "sigmoid",
+  "entire gut tube",
+  // Ventral mesentery (5)
+  "foregut only (above umbilicus)",
+  "ligamentum teres (obliterated left umbilical vein)",
+  "portal hypertension",
+  "caput medusae",
+  "ventral mesentery (foregut mesentery)",
+  // Retroperitoneum (6)
+  "transverse colon",
+  "ascending colon",
+  "mesentery",
+  "Never",
+  "IVC",
+  "intraperitoneal"
+];
+
+// Tab 3 — Organ Development & Rotation (27)
+const a4=[
+  // Stomach rotation paragraph (12)
+  "day 27",
+  "greater",
+  "lesser",
+  "90°",
+  "anterior",
+  "anterior (left) vagal trunk",
+  "posterior",
+  "posterior (right) vagal trunk",
+  "left",
+  "lesser sac (omental bursa)",
+  "epiploic (omental) foramen",
+  // Intestinal rotation table (9)
+  "jejunum",
+  "cecum",
+  "90°",
+  "SMA (superior mesenteric artery)",
+  "180°",
+  "270°",
+  "RLQ (right lower quadrant)",
+  "secondarily retroperitoneal",
+  "complete (week 14)",
+  // Malformations table (6)
+  "RUQ (right upper quadrant)",
+  "midgut volvulus",
+  "return (reduce)",
+  "membrane (peritoneal/amniotic sac)",
+  "right",
+  "recanalization"
+];
+</script>
+</body></html>
