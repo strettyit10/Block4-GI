@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI04 Histology — Hub #3 USMLE Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh}
+.container{max-width:960px;margin:0 auto;padding:24px 20px}
+:root{--acc:#1565C0;--acc2:#1976D2;--al:rgba(21,101,192,.12)}
+
+.header{background:linear-gradient(135deg,#0A1929 0%,#0D1117 100%);border:1px solid #1E3A5F;border-left:5px solid var(--acc2);border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#1565C0;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
+.header h1 span{color:#60A5FA}
+.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#1C2128;border:1px solid #30363D;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:#60A5FA}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
+.hub-step.done{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.done:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-step.current{background:#1565C0;color:#fff}
+.hub-arrow{color:#30363D}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
+
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:28px}
+.stat{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px;text-align:center}
+.stat-n{font-size:1.9em;font-weight:700;color:#60A5FA}
+.stat-l{font-size:.72em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+.tabs{display:flex;gap:0;border-bottom:1px solid #30363D;margin-bottom:28px;overflow-x:auto}
+.tab-button{flex:1;min-width:100px;padding:12px 14px;background:none;border:none;border-bottom:2px solid transparent;color:#8B949E;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:color .2s,border-color .2s;white-space:nowrap}
+.tab-button.active{color:#E6EDF3;border-bottom-color:var(--acc2)}
+.tab-button:hover:not(.active){color:#C9D1D9}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* LO HEADER */
+.lo-header{background:var(--al);border:1px solid rgba(21,101,192,.35);border-radius:8px;padding:14px 18px;margin-bottom:22px}
+.lo-label{font-size:.7em;font-weight:700;color:#60A5FA;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.lo-text{font-size:.92em;color:#93C5FD;line-height:1.5}
+
+/* QUESTION BLOCKS */
+.q-block{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.q-num{font-size:.72em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em}
+.q-tag{font-size:.68em;padding:3px 10px;border-radius:10px;font-weight:600}
+.q-tag.struct{background:rgba(21,101,192,.15);color:#93C5FD}
+.q-tag.histo{background:rgba(16,185,129,.15);color:#6EE7B7}
+.q-tag.cell{background:rgba(245,158,11,.15);color:#FCD34D}
+.q-tag.path{background:rgba(239,68,68,.15);color:#FCA5A5}
+.q-tag.integr{background:rgba(168,85,247,.15);color:#C084FC}
+.q-diff{font-size:.68em;padding:3px 8px;border-radius:8px;border:1px solid #30363D;color:#6B7280;margin-left:auto}
+.q-diff.med{border-color:#F59E0B;color:#F59E0B}
+.q-diff.hard{border-color:#EF4444;color:#EF4444}
+
+.q-stem{background:#1C2128;border:1px solid #21262D;border-radius:8px;padding:18px 20px;font-size:.93em;line-height:1.8;color:#E6EDF3;margin-bottom:18px}
+.q-stem strong{color:#FCD34D}
+.q-stem em{color:#93C5FD}
+
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.opt-btn{display:flex;align-items:flex-start;gap:12px;background:#1C2128;border:1.5px solid #30363D;border-radius:8px;padding:12px 16px;cursor:pointer;font-family:inherit;font-size:.89em;color:#C9D1D9;text-align:left;transition:border-color .15s,background .15s;width:100%}
+.opt-btn:hover:not(:disabled){border-color:var(--acc2);background:rgba(21,101,192,.08)}
+.opt-btn.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5}
+.opt-btn.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5}
+.opt-btn:disabled{cursor:default}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0;margin-top:1px}
+.opt-btn.correct .opt-letter{background:#4ADE80;color:#000}
+.opt-btn.wrong .opt-letter{background:#EF4444;color:#fff}
+.opt-text{font-size:.88em;line-height:1.55;color:inherit}
+
+.exp-box{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:18px 20px;margin-top:4px;display:none}
+.exp-box.show{display:block}
+.exp-verdict{font-size:.85em;font-weight:700;margin-bottom:12px;padding:6px 10px;border-radius:6px}
+.exp-verdict.ok{background:rgba(74,222,128,.15);color:#4ADE80}
+.exp-verdict.bad{background:rgba(239,68,68,.1);color:#EF4444}
+.exp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #21262D;align-items:flex-start;font-size:.86em;line-height:1.55}
+.exp-row:last-child{border-bottom:none}
+.exp-letter{font-size:.72em;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.exp-letter.ok{background:rgba(74,222,128,.2);color:#4ADE80}
+.exp-letter.bad{background:rgba(239,68,68,.15);color:#EF4444}
+.exp-text{color:#9CA3AF}
+.exp-text.ok{color:#D1FAE5}
+.teach-box{margin-top:14px;background:var(--al);border:1px solid rgba(21,101,192,.4);border-radius:8px;padding:14px 16px;font-size:.86em;color:#93C5FD;line-height:1.6}
+.teach-box strong{color:#60A5FA;display:block;margin-bottom:4px}
+
+.score-box{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px 18px;margin-bottom:22px;text-align:center;font-size:.85em;color:#6B7280}
+.score-count{font-size:1.4em;font-weight:700;color:#60A5FA}
+
+.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #21262D;padding-top:14px;margin-top:28px}
+.footer a{color:#60A5FA;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── TOP NAV ── */
+.topnav{background:#161B22;border-bottom:1px solid #21262D;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#00695C,#004D40);display:flex;align-items:center;justify-content:center;font-size:.9em;font-weight:800;color:#fff;flex-shrink:0}
+.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#6B7280;font-weight:400;margin-left:4px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#6B7280;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #30363D;text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#00BFA5;color:#00BFA5}
+.theme-toggle{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:1em;transition:all .2s;line-height:1}
+.theme-toggle:hover{border-color:#6B7280}
+
+/* ── LIGHT MODE ── */
+body.light{background:#F6F8FA;color:#1F2328}
+body.light .topnav{background:#FFFFFF;border-bottom-color:#D0D7DE}
+body.light .theme-toggle{background:#F6F8FA;border-color:#D0D7DE}
+body.light .nav-back{color:#656D76;border-color:#D0D7DE}
+body.light .nav-back:hover{border-color:#00897B;color:#00695C}
+body.light .nav-brand-text{color:#1F2328}
+body.light .nav-brand-sub{color:#656D76}
+body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
+        body.light .header h1{color:#1F2328!important}
+        body.light .nav-logo{background:linear-gradient(135deg,#00695C,#004D40)!important;color:#fff!important}
+body.light .hub-prog,body.light .stats-bar .stat-card,body.light .stats-row .stat,body.light .score-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .hub-step.current{background:#00695C!important}
+body.light .tab-nav,body.light .tabs{border-bottom-color:#D0D7DE}
+body.light .tab-btn,body.light .tab-button{color:#656D76}
+body.light .tab-btn.active,body.light .tab-button.active{color:#1F2328}
+body.light .fc-front,body.light .q-block,body.light .fib-card,body.light .order-drill,body.light .match-set,body.light .trap-card,body.light .mech-card,body.light .vig-block,body.light .lo-header{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .fc-back{background:#F0FAF8!important;border-color:#A7D7C5!important}
+body.light .fc-front{border-top-color:#00897B!important}
+body.light .fc-q,body.light .fc-a,body.light .fib-prompt,body.light .drill-title,body.light .trap-statement,body.light .vig-text,body.light .vig-q,body.light .match-set-title,body.light .q-stem{color:#1F2328!important}
+body.light .q-stem{background:#F0FAF8!important;border-color:#D0D7DE!important}
+body.light .order-item,body.light .match-item,body.light .opt-btn,body.light .vig-opt,body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .order-item:hover{background:#E6F4F1!important;border-color:#00897B!important}
+body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .exp-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .exp-row{border-bottom-color:#E8ECEF!important}
+body.light .exp-text{color:#656D76!important}
+body.light .teach-box{background:rgba(0,137,123,.08)!important;border-color:rgba(0,137,123,.3)!important;color:#00695C!important}
+body.light .footer{border-top-color:#D0D7DE;color:#656D76}
+body.light .ref-table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+body.light .ref-table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+body.light .ref-table tr:hover td{background:#F0FAF8!important}
+body.light .ref-note{background:#F0FAF8!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#FFF8EC!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .hub-prog-label,body.light .fc-flip-hint,body.light .drill-hint,body.light .match-set-hint,body.light .trap-num,body.light .q-num,body.light .q-diff{color:#656D76!important}
+body.light .stat-label{color:#656D76}
+body.light .hub-tag{background:#00695C!important}
+body.light .pathway-step{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .pathway-step.key{background:rgba(245,158,11,.15)!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .mech-note{color:#92400E!important;border-left-color:#E8C56A!important}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo">H</div>
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back">← Active Drill Hub</a>
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #3 — USMLE Practice Questions</div>
+  <h1>GI04 Histology <span>Step 1 Questions</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Format:</strong> UWorld-style clinical + histology vignettes</div>
+    <div class="source-badge"><strong>LOs:</strong> GI-04 Histology LO 1–5</div>
+    <div class="source-badge"><strong>Content:</strong> First Aid GI + Pathoma + GUSOM Anki</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi04-hub1-histology.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi04-hub2-histology.html" class="hub-step done">🔬 Hub #2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">📝 Hub #3 — Practice Questions</span>
+</div>
+
+<div class="score-box">
+  Score: <span class="score-count" id="score-correct">0</span> correct / <span id="score-answered">0</span> answered
+</div>
+
+<div class="tabs">
+  <button class="tab-button active" onclick="switchTab('lo1',this)">LO 1: Structure</button>
+  <button class="tab-button" onclick="switchTab('lo2',this)">LO 2: Features</button>
+  <button class="tab-button" onclick="switchTab('lo3',this)">LO 3: Function</button>
+  <button class="tab-button" onclick="switchTab('lo4',this)">LO 4: Cell Types</button>
+  <button class="tab-button" onclick="switchTab('lo5',this)">LO 5: SI vs LI</button>
+</div>
+
+<!-- ===================== LO 1 ===================== -->
+<div class="tab-pane active" id="tab-lo1">
+  <div class="lo-header">
+    <div class="lo-label">Learning Objective 1</div>
+    <div class="lo-text">Know the organization and structure of the parts of the GI tract</div>
+  </div>
+
+  <div class="q-block" id="q-1">
+    <div class="q-meta">
+      <span class="q-num">Question 1</span>
+      <span class="q-tag struct">Structure</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A pathology student examines a cross-section of the GI tract and identifies the following layers from lumen to outer surface: epithelium → loose connective tissue → <strong>thin band of smooth muscle</strong> → denser connective tissue containing a nerve plexus → inner circular muscle → outer longitudinal muscle → serosal membrane. The "thin band of smooth muscle" identified at this layer is:
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(1,'A','B')"><span class="opt-letter">A</span><span class="opt-text">Lamina propria</span></button>
+      <button class="opt-btn" onclick="selectOpt(1,'B','B')"><span class="opt-letter">B</span><span class="opt-text">Muscularis mucosa</span></button>
+      <button class="opt-btn" onclick="selectOpt(1,'C','B')"><span class="opt-letter">C</span><span class="opt-text">Inner circular layer of muscularis externa</span></button>
+      <button class="opt-btn" onclick="selectOpt(1,'D','B')"><span class="opt-letter">D</span><span class="opt-text">Submucosa</span></button>
+      <button class="opt-btn" onclick="selectOpt(1,'E','B')"><span class="opt-letter">E</span><span class="opt-text">Serosa</span></button>
+    </div>
+    <div class="exp-box" id="exp-1">
+      <div class="exp-verdict ok">✓ Correct Answer: B — Muscularis mucosa</div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">The lamina propria is the loose connective tissue immediately under the epithelium — it contains glands, blood vessels, and immune cells but is NOT muscle.</span></div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ The muscularis mucosa is a thin band of smooth muscle at the deepest part of the mucosa (below the lamina propria). It helps with local mucosal movement and folding. Together with the epithelium and lamina propria, it constitutes the mucosa.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">C</span><span class="exp-text">The inner circular layer is the first (inner) layer of the muscularis externa — it is a thick, prominent layer responsible for peristaltic contractions, not a thin band at this position.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">The submucosa is the connective tissue layer between the muscularis mucosa and the muscularis externa — it contains the Meissner's (submucosal) plexus, as described in the question stem.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">The serosa is the outermost layer (visceral peritoneum), not an inner smooth muscle band.</span></div>
+      <div class="teach-box"><strong>Teaching Point — GI Wall Layers (lumen → out):</strong> Mucosa (epithelium + lamina propria + muscularis mucosa) → Submucosa (Meissner's plexus) → Muscularis externa (Auerbach's/myenteric plexus between layers) → Adventitia/Serosa. The muscularis mucosa is a thin, often overlooked band that is the boundary between the mucosa and submucosa.</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-2">
+    <div class="q-meta">
+      <span class="q-num">Question 2</span>
+      <span class="q-tag struct">Structure</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A researcher studying the enteric nervous system identifies two major intrinsic nerve plexuses of the GI tract. Plexus A lies in the <strong>submucosa</strong> and primarily regulates secretion and blood flow. Plexus B lies <strong>between the inner circular and outer longitudinal layers of the muscularis externa</strong> and primarily coordinates peristaltic contractions. Which of the following correctly names Plexus A and Plexus B, respectively?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(2,'A','B')"><span class="opt-letter">A</span><span class="opt-text">Auerbach's plexus; Meissner's plexus</span></button>
+      <button class="opt-btn" onclick="selectOpt(2,'B','B')"><span class="opt-letter">B</span><span class="opt-text">Meissner's plexus (submucosal); Auerbach's plexus (myenteric)</span></button>
+      <button class="opt-btn" onclick="selectOpt(2,'C','B')"><span class="opt-letter">C</span><span class="opt-text">Celiac plexus; hypogastric plexus</span></button>
+      <button class="opt-btn" onclick="selectOpt(2,'D','B')"><span class="opt-letter">D</span><span class="opt-text">Sympathetic plexus; parasympathetic plexus</span></button>
+      <button class="opt-btn" onclick="selectOpt(2,'E','B')"><span class="opt-letter">E</span><span class="opt-text">Meissner's plexus (myenteric); Auerbach's plexus (submucosal)</span></button>
+    </div>
+    <div class="exp-box" id="exp-2">
+      <div class="exp-verdict ok">✓ Correct Answer: B</div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ <strong>Meissner's plexus (submucosal plexus)</strong> is in the submucosa → controls glandular secretion and blood flow. <strong>Auerbach's plexus (myenteric plexus)</strong> lies between the two layers of muscularis externa → coordinates peristalsis. Both are part of the enteric nervous system (ENS).</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">This reverses the two plexuses. Auerbach's is myenteric (between muscle layers), not submucosal.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">This also reverses the locations. Meissner's = submucosal; Auerbach's = myenteric.</span></div>
+      <div class="teach-box"><strong>Mnemonic:</strong> "<strong>M</strong>eissner's = <strong>M</strong>ucosa-adjacent (submucosal) = secretion and blood flow." "<strong>A</strong>uerbach's = <strong>A</strong>ction (peristalsis) between muscle layers." In Hirschsprung disease, the aganglionic segment lacks Auerbach's AND Meissner's ganglia in the distal colon → no relaxation → functional obstruction.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LO 2 ===================== -->
+<div class="tab-pane" id="tab-lo2">
+  <div class="lo-header">
+    <div class="lo-label">Learning Objective 2</div>
+    <div class="lo-text">Know the overall histologic features and functions of the different parts of the GI tract</div>
+  </div>
+
+  <div class="q-block" id="q-3">
+    <div class="q-meta">
+      <span class="q-num">Question 3</span>
+      <span class="q-tag histo">Histology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      On a histology slide, a student identifies a segment of the GI tract lined by <strong>non-keratinized stratified squamous epithelium</strong>. The outer coat of this segment is adventitia rather than serosa. These findings are MOST consistent with which of the following?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(3,'A','D')"><span class="opt-letter">A</span><span class="opt-text">Stomach</span></button>
+      <button class="opt-btn" onclick="selectOpt(3,'B','D')"><span class="opt-letter">B</span><span class="opt-text">Jejunum</span></button>
+      <button class="opt-btn" onclick="selectOpt(3,'C','D')"><span class="opt-letter">C</span><span class="opt-text">Colon</span></button>
+      <button class="opt-btn" onclick="selectOpt(3,'D','D')"><span class="opt-letter">D</span><span class="opt-text">Esophagus</span></button>
+      <button class="opt-btn" onclick="selectOpt(3,'E','D')"><span class="opt-letter">E</span><span class="opt-text">Duodenum</span></button>
+    </div>
+    <div class="exp-box" id="exp-3">
+      <div class="exp-verdict ok">✓ Correct Answer: D — Esophagus</div>
+      <div class="exp-row"><span class="exp-letter ok">D</span><span class="exp-text ok">✓ Two distinguishing features of the esophagus: (1) lined by non-keratinized stratified squamous epithelium (protective, not absorptive), and (2) surrounded by adventitia rather than serosa. This lack of serosa is clinically significant — esophageal cancers spread more readily to adjacent structures (trachea, aorta) than cancers in serosal-covered GI organs.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">The stomach is lined by simple columnar epithelium with gastric pits and is covered by serosa.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">B/E</span><span class="exp-text">The small intestine (jejunum, duodenum) is lined by simple columnar epithelium with villi and is covered by serosa.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">C</span><span class="exp-text">The colon is lined by simple columnar epithelium (no villi, many goblet cells) and is covered by serosa.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> The esophagus is the only part of the GI tract covered primarily by adventitia (not serosa). The non-keratinized stratified squamous epithelium is protective — the esophagus has no absorptive or digestive function. The transition from squamous → columnar at the GEJ is the site of Barrett's metaplasia.</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-4">
+    <div class="q-meta">
+      <span class="q-num">Question 4</span>
+      <span class="q-tag histo">Histology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      During a gross anatomy lab, a student notes that the stomach differs from the rest of the GI tract in the arrangement of its muscularis externa. A dissection of the stomach wall reveals <strong>three distinct muscle layers</strong> rather than the usual two. What is the additional layer unique to the stomach, and what is its functional advantage?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(4,'A','B')"><span class="opt-letter">A</span><span class="opt-text">Outer adventitial layer — allows adhesion to the diaphragm for respiratory movement</span></button>
+      <button class="opt-btn" onclick="selectOpt(4,'B','B')"><span class="opt-letter">B</span><span class="opt-text">Inner oblique layer — enables churning and mechanical breakdown of food (trituration) in addition to peristalsis</span></button>
+      <button class="opt-btn" onclick="selectOpt(4,'C','B')"><span class="opt-letter">C</span><span class="opt-text">Middle serosal layer — provides lubrication to reduce friction between contracting muscle layers</span></button>
+      <button class="opt-btn" onclick="selectOpt(4,'D','B')"><span class="opt-letter">D</span><span class="opt-text">The outer longitudinal layer is duplicated — accelerates gastric emptying into the duodenum</span></button>
+      <button class="opt-btn" onclick="selectOpt(4,'E','B')"><span class="opt-letter">E</span><span class="opt-text">The inner circular layer is thickened to form the pyloric sphincter — no additional layer</span></button>
+    </div>
+    <div class="exp-box" id="exp-4">
+      <div class="exp-verdict ok">✓ Correct Answer: B</div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ The stomach has an additional <strong>inner oblique layer</strong> (innermost, unique to stomach), in addition to the inner circular and outer longitudinal layers present throughout the GI tract. This third layer allows the stomach to perform <strong>churning and trituration</strong> — vigorous mechanical mixing that breaks food into chyme — a function that is more demanding than simple peristalsis.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">The pyloric sphincter IS formed by a thickened circular muscle layer, but this is not described as an additional layer — it is a local modification of the existing circular layer, not a unique third layer.</span></div>
+      <div class="teach-box"><strong>Stomach muscularis layers (inner → outer):</strong> Oblique (unique) → Circular → Longitudinal. This 3-layer arrangement is what makes the stomach uniquely capable of churning food. This is a classic USMLE histology identification question.</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-5">
+    <div class="q-meta">
+      <span class="q-num">Question 5</span>
+      <span class="q-tag histo">Histology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A pathologist examining a gastric biopsy describes: "numerous shallow surface invaginations lined by tall columnar cells; these invaginations lead into deeper tubular structures in the lamina propria." The tall columnar cells lining the surface and the invaginations secrete an <strong>alkaline mucus</strong> that protects the gastric epithelium. These structures and cells are identified as:
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(5,'A','C')"><span class="opt-letter">A</span><span class="opt-text">Villi lined by enterocytes with a brush border glycocalyx</span></button>
+      <button class="opt-btn" onclick="selectOpt(5,'B','C')"><span class="opt-letter">B</span><span class="opt-text">Crypts of Lieberkühn lined by Paneth cells secreting lysozyme</span></button>
+      <button class="opt-btn" onclick="selectOpt(5,'C','C')"><span class="opt-letter">C</span><span class="opt-text">Gastric pits lined by surface mucus cells secreting protective alkaline mucin</span></button>
+      <button class="opt-btn" onclick="selectOpt(5,'D','C')"><span class="opt-letter">D</span><span class="opt-text">Rugae lined by parietal cells secreting HCl</span></button>
+      <button class="opt-btn" onclick="selectOpt(5,'E','C')"><span class="opt-letter">E</span><span class="opt-text">Gastric pits lined by chief cells secreting pepsinogen</span></button>
+    </div>
+    <div class="exp-box" id="exp-5">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ <strong>Gastric pits</strong> are the surface invaginations of the stomach mucosa. They are lined by <strong>surface mucus cells</strong> — tall columnar cells that secrete alkaline mucus, forming the critical first layer of protection against self-digestion by HCl. Each pit leads to 3–7 gastric glands in the lamina propria.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">Villi are fingerlike projections in the small intestine (not stomach). Enterocytes have a microvillus brush border for absorption, not protection.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">Chief cells are found at the BASE of gastric glands (not the surface pits). They secrete pepsinogen, an enzyme precursor, not surface mucus.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> The gastric mucosal barrier consists of two layers of mucin: (1) surface mucus cells (alkaline mucin → pits + surface), and (2) mucus neck cells (acidic mucin → gland neck). H. pylori and NSAIDs disrupt this barrier → increased susceptibility to ulceration.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LO 3 ===================== -->
+<div class="tab-pane" id="tab-lo3">
+  <div class="lo-header">
+    <div class="lo-label">Learning Objective 3</div>
+    <div class="lo-text">Be able to relate histologic features with functional differences among the parts of the GI tract</div>
+  </div>
+
+  <div class="q-block" id="q-6">
+    <div class="q-meta">
+      <span class="q-num">Question 6</span>
+      <span class="q-tag integr">Integration</span>
+      <span class="q-diff hard">Hard</span>
+    </div>
+    <div class="q-stem">
+      A 32-year-old woman with Crohn's disease undergoes resection of her terminal ileum. Postoperatively, her physician explains that she will need monthly <strong>vitamin B12 injections</strong> for the rest of her life and may require <strong>bile salt supplementation</strong>. Which histological feature of the terminal ileum is directly responsible for both of these absorptive functions?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(6,'A','D')"><span class="opt-letter">A</span><span class="opt-text">Brunner's glands in the submucosa, which facilitate B12 and bile salt release</span></button>
+      <button class="opt-btn" onclick="selectOpt(6,'B','D')"><span class="opt-letter">B</span><span class="opt-text">Peyer's patches (lymphoid nodules), which transcytose B12 and bile salts via M cells</span></button>
+      <button class="opt-btn" onclick="selectOpt(6,'C','D')"><span class="opt-letter">C</span><span class="opt-text">Paneth cells at the crypt base, which secrete enzymes that activate B12 and bile salts</span></button>
+      <button class="opt-btn" onclick="selectOpt(6,'D','D')"><span class="opt-letter">D</span><span class="opt-text">Enterocytes (absorptive cells) with specific apical receptors — cubilin for IF-B12 complex and ASBT for bile salt reabsorption</span></button>
+      <button class="opt-btn" onclick="selectOpt(6,'E','D')"><span class="opt-letter">E</span><span class="opt-text">Goblet cells, which secrete mucin that binds B12 and bile salts for transcytosis</span></button>
+    </div>
+    <div class="exp-box" id="exp-6">
+      <div class="exp-verdict ok">✓ Correct Answer: D</div>
+      <div class="exp-row"><span class="exp-letter ok">D</span><span class="exp-text ok">✓ The terminal ileum enterocytes express two key apical transporters unique to this segment: <strong>Cubilin</strong> (with amnionless) — absorbs the IF-B12 complex; and <strong>ASBT (apical sodium-dependent bile acid transporter)</strong> — reabsorbs conjugated bile salts (enterohepatic circulation). Resection of the terminal ileum removes both transporters permanently.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">Brunner's glands are in the duodenum submucosa (not ileum) and secrete alkaline mucus, not transporters for B12 or bile salts.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">B</span><span class="exp-text">Peyer's patches contain M cells that sample antigens for immune surveillance — they are not responsible for B12 or bile salt absorption.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> The terminal ileum is the ONLY site for: (1) IF-B12 complex absorption (cubilin/amnionless receptors) and (2) enterohepatic bile salt recirculation (ASBT). Crohn's ileitis or ileal resection causes both B12 deficiency (megaloblastic anemia) AND bile salt malabsorption (→ fat malabsorption → steatorrhea + fat-soluble vitamin deficiencies + cholesterol gallstones).</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-7">
+    <div class="q-meta">
+      <span class="q-num">Question 7</span>
+      <span class="q-tag integr">Integration</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A student asks why the large intestine can reabsorb water without the specialized surface area features (villi, plicae) of the small intestine. Which of the following correctly explains how the large intestine achieves water reabsorption despite this simpler architecture?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(7,'A','C')"><span class="opt-letter">A</span><span class="opt-text">The large intestine compensates with a much longer length, providing more total absorptive area</span></button>
+      <button class="opt-btn" onclick="selectOpt(7,'B','C')"><span class="opt-letter">B</span><span class="opt-text">Short villi (present in the colon but not labeled as villi) create absorptive surface area comparable to the small intestine</span></button>
+      <button class="opt-btn" onclick="selectOpt(7,'C','C')"><span class="opt-letter">C</span><span class="opt-text">The large intestine uses deep crypts and slow transit time (haustral churning by teniae coli) to maximize contact between stool and absorptive epithelium</span></button>
+      <button class="opt-btn" onclick="selectOpt(7,'D','C')"><span class="opt-letter">D</span><span class="opt-text">Brunner's glands in the colonic submucosa secrete bicarbonate that creates an osmotic gradient drawing water from the lumen</span></button>
+      <button class="opt-btn" onclick="selectOpt(7,'E','C')"><span class="opt-letter">E</span><span class="opt-text">Active transport via Na⁺ pumps is absent in the large intestine; water absorption is entirely passive</span></button>
+    </div>
+    <div class="exp-box" id="exp-7">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ The large intestine relies on: (1) <strong>deep crypts of Lieberkühn</strong> (absorptive surface); (2) <strong>slow transit</strong> — haustral contractions caused by teniae coli churn and expose contents to the mucosa for extended time periods; (3) <strong>active Na⁺ absorption</strong> (electrogenic Na⁺ transport via ENaC + Na⁺/K⁺-ATPase) drawing water osmotically. The design emphasizes slow contact time rather than massive surface area.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">B</span><span class="exp-text">The large intestine definitively has NO villi — this is a fundamental histological distinction. Any "folds" seen (haustra) are formed by teniae coli and are not villi.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">Brunner's glands are uniquely found in the duodenal submucosa, not the colon.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Understanding why each region lacks certain features is as important as knowing what's present. The large intestine uses slow haustral transit + Na⁺-driven water reabsorption. In diarrhea (e.g., cholera), the large intestine is overwhelmed by secretory diarrhea that exceeds its absorptive capacity, demonstrating its physiological limits.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LO 4 ===================== -->
+<div class="tab-pane" id="tab-lo4">
+  <div class="lo-header">
+    <div class="lo-label">Learning Objective 4</div>
+    <div class="lo-text">Identify and understand the various cell types in the GI epithelia and their specific contributions to GI function</div>
+  </div>
+
+  <div class="q-block" id="q-8">
+    <div class="q-meta">
+      <span class="q-num">Question 8</span>
+      <span class="q-tag cell">Cell Types</span>
+      <span class="q-diff hard">Hard</span>
+    </div>
+    <div class="q-stem">
+      A pathology exam slide shows two different cells from the base of a fundic gastric gland. <strong>Cell A</strong> is round, stains brightly eosinophilic (pink), and has a canalicular system lined by microvilli extending into its cytoplasm. <strong>Cell B</strong> is columnar, stains basophilic (blue-purple), and has abundant granules at its apex. Which of the following correctly identifies these cells and their secretory products?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(8,'A','D')"><span class="opt-letter">A</span><span class="opt-text">Cell A = Chief cell (pepsinogen); Cell B = Parietal cell (HCl + intrinsic factor)</span></button>
+      <button class="opt-btn" onclick="selectOpt(8,'B','D')"><span class="opt-letter">B</span><span class="opt-text">Cell A = Goblet cell (mucin); Cell B = Paneth cell (lysozyme)</span></button>
+      <button class="opt-btn" onclick="selectOpt(8,'C','D')"><span class="opt-letter">C</span><span class="opt-text">Cell A = Surface mucus cell (alkaline mucin); Cell B = Mucus neck cell (acidic mucin)</span></button>
+      <button class="opt-btn" onclick="selectOpt(8,'D','D')"><span class="opt-letter">D</span><span class="opt-text">Cell A = Parietal cell (HCl + intrinsic factor); Cell B = Chief cell (pepsinogen)</span></button>
+      <button class="opt-btn" onclick="selectOpt(8,'E','D')"><span class="opt-letter">E</span><span class="opt-text">Cell A = Enteroendocrine cell (gastrin); Cell B = Chief cell (pepsinogen)</span></button>
+    </div>
+    <div class="exp-box" id="exp-8">
+      <div class="exp-verdict ok">✓ Correct Answer: D</div>
+      <div class="exp-row"><span class="exp-letter ok">D</span><span class="exp-text ok">✓ <strong>Cell A = Parietal cell</strong>: eosinophilic (packed with mitochondria for H⁺/K⁺-ATPase); unique intracellular canaliculi lined by microvilli (↑ surface area for HCl secretion); secretes HCl + intrinsic factor. <strong>Cell B = Chief cell</strong>: basophilic (abundant RER for pepsinogen protein synthesis); apical zymogen granules containing pepsinogen.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">Classic swap trap — this reverses the staining of the two cells. Remember: <strong>P</strong>arietal = <strong>P</strong>ink (mitochondria); <strong>C</strong>hief = <strong>C</strong>olorless/blue (RER).</span></div>
+      <div class="teach-box"><strong>Mnemonic for gastric gland cell staining:</strong><br>• <strong>P</strong>arietal cell = <strong>P</strong>ink (eosinophilic) — <strong>P</strong>acked with mitochondria for the <strong>P</strong>roton pump<br>• <strong>C</strong>hief cell = <strong>C</strong>old blue (basophilic) — abundant <strong>R</strong>ough ER for zymogen synthesis<br>This is one of the most commonly tested histological distinctions on Step 1.</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-9">
+    <div class="q-meta">
+      <span class="q-num">Question 9</span>
+      <span class="q-tag cell">Cell Types</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A 60-year-old woman with a 10-year history of poorly controlled autoimmune gastritis develops fatigue and difficulty walking. Laboratory findings: Hgb 7.5 g/dL, MCV 118 fL, hypersegmented neutrophils on smear, serum B12 &lt;100 pg/mL. Anti-parietal cell antibodies are positive. The gastric cell type destroyed by this autoimmune process normally produces which of the following pair of secretory products?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(9,'A','B')"><span class="opt-letter">A</span><span class="opt-text">Pepsinogen and mucus</span></button>
+      <button class="opt-btn" onclick="selectOpt(9,'B','B')"><span class="opt-letter">B</span><span class="opt-text">HCl and intrinsic factor</span></button>
+      <button class="opt-btn" onclick="selectOpt(9,'C','B')"><span class="opt-letter">C</span><span class="opt-text">Gastrin and somatostatin</span></button>
+      <button class="opt-btn" onclick="selectOpt(9,'D','B')"><span class="opt-letter">D</span><span class="opt-text">Mucin and lipase</span></button>
+      <button class="opt-btn" onclick="selectOpt(9,'E','B')"><span class="opt-letter">E</span><span class="opt-text">Intrinsic factor and pepsinogen</span></button>
+    </div>
+    <div class="exp-box" id="exp-9">
+      <div class="exp-verdict ok">✓ Correct Answer: B</div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ Anti-parietal cell antibodies destroy <strong>parietal cells</strong>. Parietal cells are uniquely responsible for secreting both <strong>HCl</strong> (via H⁺/K⁺-ATPase) AND <strong>intrinsic factor</strong> (needed for B12 absorption in the terminal ileum). The loss of intrinsic factor leads to B12 deficiency → megaloblastic anemia (high MCV, hypersegmented PMNs) + neurological symptoms (subacute combined degeneration).</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">Intrinsic factor is parietal cell product (correct), but pepsinogen is from chief cells (not parietal cells) — making this answer incorrect.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Remember that parietal cells produce BOTH HCl and intrinsic factor. Proton pump inhibitors (PPIs) reduce acid but do not directly affect intrinsic factor in short-term use. Autoimmune pernicious anemia destroys parietal cells → loses both products simultaneously. Treat with IM vitamin B12 (bypasses the need for IF-mediated absorption).</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-10">
+    <div class="q-meta">
+      <span class="q-num">Question 10</span>
+      <span class="q-tag cell">Cell Types</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A researcher studying intestinal defense identifies cells located <strong>at the base of the intestinal crypts</strong> that have large, brightly <strong>eosinophilic apical granules</strong>. These cells are distinct from goblet cells (which have pale mucin) and from enterocytes (which have a brush border). The granules in these cells contain which of the following antimicrobial compounds?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(10,'A','C')"><span class="opt-letter">A</span><span class="opt-text">HCl and pepsinogen</span></button>
+      <button class="opt-btn" onclick="selectOpt(10,'B','C')"><span class="opt-letter">B</span><span class="opt-text">IgA and complement proteins</span></button>
+      <button class="opt-btn" onclick="selectOpt(10,'C','C')"><span class="opt-letter">C</span><span class="opt-text">Zinc and lysozyme (+ defensins)</span></button>
+      <button class="opt-btn" onclick="selectOpt(10,'D','C')"><span class="opt-letter">D</span><span class="opt-text">Gastrin and serotonin</span></button>
+      <button class="opt-btn" onclick="selectOpt(10,'E','C')"><span class="opt-letter">E</span><span class="opt-text">Mucin and bicarbonate</span></button>
+    </div>
+    <div class="exp-box" id="exp-10">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ These are <strong>Paneth cells</strong> — specialized secretory cells at the base of intestinal crypts (small and large intestine). Their eosinophilic granules contain <strong>zinc, lysozyme, and defensins (alpha-defensins/cryptdins)</strong>. They protect the intestinal stem cell niche from luminal bacteria and modulate the commensal microbiota. Paneth cell dysfunction is implicated in Crohn's disease pathogenesis.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">HCl and pepsinogen are gastric (parietal cells and chief cells, respectively), not intestinal.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">B</span><span class="exp-text">IgA is secreted by plasma cells in the lamina propria (transcytosed by intestinal epithelium as secretory IgA), not by Paneth cells.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Paneth cells = "Intestinal innate immune cells." Location: base of crypts of Lieberkühn (small &gt; large intestine). Appearance: eosinophilic (pink) apical granules — similar to parietal cells in staining but in the intestine. Paneth cell metaplasia in chronic colitis is a sign of long-standing intestinal inflammation (a Step 2 clue for Crohn's vs UC).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LO 5 ===================== -->
+<div class="tab-pane" id="tab-lo5">
+  <div class="lo-header">
+    <div class="lo-label">Learning Objective 5</div>
+    <div class="lo-text">Be able to distinguish the small and large intestines with regard to organization, structure, and function</div>
+  </div>
+
+  <div class="q-block" id="q-11">
+    <div class="q-meta">
+      <span class="q-num">Question 11</span>
+      <span class="q-tag histo">Histology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A pathologist reviews a biopsy and reports: "<strong>No villi identified</strong>; deep crypts present; very abundant goblet cells; outer longitudinal smooth muscle forms <strong>three discrete ribbon-like bands</strong> rather than a continuous layer." These findings are MOST consistent with which region of the GI tract?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(11,'A','D')"><span class="opt-letter">A</span><span class="opt-text">Jejunum</span></button>
+      <button class="opt-btn" onclick="selectOpt(11,'B','D')"><span class="opt-letter">B</span><span class="opt-text">Ileum</span></button>
+      <button class="opt-btn" onclick="selectOpt(11,'C','D')"><span class="opt-letter">C</span><span class="opt-text">Duodenum</span></button>
+      <button class="opt-btn" onclick="selectOpt(11,'D','D')"><span class="opt-letter">D</span><span class="opt-text">Colon</span></button>
+      <button class="opt-btn" onclick="selectOpt(11,'E','D')"><span class="opt-letter">E</span><span class="opt-text">Esophagus</span></button>
+    </div>
+    <div class="exp-box" id="exp-11">
+      <div class="exp-verdict ok">✓ Correct Answer: D — Colon</div>
+      <div class="exp-row"><span class="exp-letter ok">D</span><span class="exp-text ok">✓ The colon is uniquely identified by: (1) <strong>No villi</strong> (all small intestine segments have villi), (2) <strong>Very abundant goblet cells</strong> (more than anywhere in the small intestine), (3) <strong>Teniae coli</strong> — three thick bands of longitudinal smooth muscle (a modification of the muscularis externa unique to the colon). The teniae coli cause haustra (sacculations).</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A/B/C</span><span class="exp-text">All three small intestine segments have villi and a continuous outer longitudinal muscle layer (NOT teniae coli). The absence of villi immediately rules out the small intestine.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">The esophagus has no villi and no goblet cells in its normal state — but it is lined by stratified squamous epithelium (not columnar), has no crypts, and no teniae coli.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Key differentiators — <strong>Small intestine has:</strong> villi + central lacteals + plicae circulares + Paneth cells + (Brunner's glands in duodenum or Peyer's patches in ileum). <strong>Large intestine has:</strong> no villi + teniae coli + very many goblet cells + deeper crypts + appendix (abundant lymphoid tissue). This distinction is tested repeatedly on Step 1 histology slides.</div>
+    </div>
+  </div>
+
+  <div class="q-block" id="q-12">
+    <div class="q-meta">
+      <span class="q-num">Question 12</span>
+      <span class="q-tag integr">Integration</span>
+      <span class="q-diff hard">Hard</span>
+    </div>
+    <div class="q-stem">
+      A medical student comparing histological slides of different small intestine segments notes the following: Slide X has <strong>branched mucus-secreting glands in the submucosa</strong>. Slide Y has <strong>tall, prominent villi with well-developed plicae circulares</strong>. Slide Z has <strong>prominent submucosal lymphoid nodule aggregates</strong>. Which of the following correctly matches each slide to its intestinal segment?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt(12,'A','D')"><span class="opt-letter">A</span><span class="opt-text">Slide X = Ileum; Slide Y = Jejunum; Slide Z = Duodenum</span></button>
+      <button class="opt-btn" onclick="selectOpt(12,'B','D')"><span class="opt-letter">B</span><span class="opt-text">Slide X = Jejunum; Slide Y = Duodenum; Slide Z = Ileum</span></button>
+      <button class="opt-btn" onclick="selectOpt(12,'C','D')"><span class="opt-letter">C</span><span class="opt-text">Slide X = Duodenum; Slide Y = Ileum; Slide Z = Jejunum</span></button>
+      <button class="opt-btn" onclick="selectOpt(12,'D','D')"><span class="opt-letter">D</span><span class="opt-text">Slide X = Duodenum; Slide Y = Jejunum; Slide Z = Ileum</span></button>
+      <button class="opt-btn" onclick="selectOpt(12,'E','D')"><span class="opt-letter">E</span><span class="opt-text">Slide X = Ileum; Slide Y = Duodenum; Slide Z = Jejunum</span></button>
+    </div>
+    <div class="exp-box" id="exp-12">
+      <div class="exp-verdict ok">✓ Correct Answer: D</div>
+      <div class="exp-row"><span class="exp-letter ok">D</span><span class="exp-text ok">✓ <strong>Slide X = Duodenum</strong>: Brunner's glands are uniquely in the SUBMUCOSA of the duodenum. <strong>Slide Y = Jejunum</strong>: The jejunum has the tallest villi and most prominent plicae circulares, maximizing absorption surface area. <strong>Slide Z = Ileum</strong>: Peyer's patches (submucosal lymphoid aggregates) are concentrated in the ileum.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A/B/C/E</span><span class="exp-text">The key distinguishing features of each segment are Brunner's glands (submucosa = duodenum ONLY), Peyer's patches (submucosa = ileum), and tall villi/plicae (jejunum). Mix-ups on any of these three is a common Step 1 error.</span></div>
+      <div class="teach-box"><strong>Summary — Small Intestine Segment Identifiers:</strong><br>
+        • <strong>Duodenum</strong> — Brunner's glands (submucosa); receives bile + pancreatic enzymes; broad leaf-shaped villi<br>
+        • <strong>Jejunum</strong> — tallest villi; most plicae circulares; primary absorptive workhorse<br>
+        • <strong>Ileum</strong> — Peyer's patches (submucosal lymphoid tissue); most goblet cells; absorbs B12 + bile salts; smaller/fewer villi<br>
+        Goblet cells increase duodenum → ileum (inverse of villi height).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="gi04-hub1-histology.html">← Hub #1 Core Concepts</a> &nbsp;|&nbsp;
+  <a href="gi04-hub2-histology.html">← Hub #2 Step 1 Extensions</a> &nbsp;|&nbsp;
+  <a href="../index.html">GI Block Home</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+let scoreCorrect = 0;
+let scoreAnswered = 0;
+
+function selectOpt(qId, chosen, correct){
+  const block = document.getElementById('q-' + qId);
+  if(!block) return;
+  const btns = block.querySelectorAll('.opt-btn');
+  let alreadyAnswered = false;
+  btns.forEach(b => { if(b.disabled) alreadyAnswered = true; });
+  if(alreadyAnswered) return;
+
+  btns.forEach(b => {
+    b.disabled = true;
+    const letter = b.querySelector('.opt-letter').textContent.trim();
+    if(letter === correct) b.classList.add('correct');
+    else if(letter === chosen) b.classList.add('wrong');
+  });
+
+  scoreAnswered++;
+  if(chosen === correct) scoreCorrect++;
+  document.getElementById('score-correct').textContent = scoreCorrect;
+  document.getElementById('score-answered').textContent = scoreAnswered;
+
+  const exp = document.getElementById('exp-' + qId);
+  if(exp) exp.classList.add('show');
+}
+
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── THEME TOGGLE ── */
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
+  try{localStorage.setItem('gi-theme',isLight?'light':'dark');}catch(e){}
+}
+window.addEventListener('DOMContentLoaded',function(){
+  try{
+    if(localStorage.getItem('gi-theme')==='light'){
+      document.body.classList.add('light');
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent='🌙';
+    }
+  }catch(e){}
+});
+</script>
+</body>
+</html>

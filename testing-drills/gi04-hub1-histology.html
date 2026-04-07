@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI04 Histology — Hub #1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+.header{background:linear-gradient(135deg,#003D36 0%,#0D2420 100%);border:1px solid #00897B;border-left:5px solid #00BFA5;border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#00695C;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
+.header h1 span{color:#00BFA5}
+.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#1C2128;border:1px solid #30363D;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:#00BFA5}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#00695C;color:#fff}
+.hub-step.next{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-arrow{color:#30363D;font-size:1em}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
+
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
+.stat-card{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.6em;font-weight:700;color:#00BFA5}
+.stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #21262D;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
+.tab-btn:hover{color:#00BFA5}
+.tab-btn.active{color:#00BFA5;border-bottom-color:#00BFA5}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* FLASHCARDS */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px}
+.fc-front{border-top:3px solid #00897B}
+.fc-back{transform:rotateY(180deg);background:#0D2420;border-color:#00695C}
+.fc-label{font-size:.68em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
+.fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
+.fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
+.fc-progress .prog-num{color:#00BFA5;font-weight:700}
+
+/* FIB */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px;border-left:4px solid #00897B}
+.fib-num{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;margin-bottom:8px}
+.fib-prompt{font-size:.92em;color:#E6EDF3;line-height:1.6;margin-bottom:12px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#00BFA5}
+.fib-input.correct{border-color:#2E7D32;background:#0D2E0E}
+.fib-input.incorrect{border-color:#C62828;background:#2E0A0A}
+.fib-btn{background:#00695C;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#00897B}
+.fib-reveal-btn{background:#1C2128;border:1px solid #30363D;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:6px 10px;border-radius:5px;display:none}
+.fib-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784;display:block}
+.fib-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A;display:block}
+
+/* ORDERING */
+.ordering-intro{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
+.ordering-intro strong{color:#00BFA5}
+.order-drill{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.drill-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.order-item{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#E6EDF3;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#00897B;background:#1E2F2D}
+.order-item.dragging{opacity:.45;border-style:dashed;border-color:#00BFA5}
+.order-item.drag-over{border-color:#00BFA5;background:#0D2420;transform:scale(1.01)}
+.order-item .item-grip{color:#6B7280;font-size:1.1em;flex-shrink:0}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#0D2E0E;border-color:#2E7D32}
+.order-item.wrong-pos{background:#2E0A0A;border-color:#C62828}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#00695C;border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#00897B}
+.order-ghost-btn{background:none;border:1px solid #30363D;color:#9CA3AF;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.order-answer{background:#0D2420;border:1px solid #00695C;border-radius:7px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#9CA3AF}
+.order-answer li span{color:#00BFA5;font-weight:600}
+
+/* MATCHING */
+.match-intro{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF}
+.match-intro strong{color:#00BFA5}
+.match-set{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.match-set-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:4px}
+.match-set-hint{font-size:.78em;color:#6B7280;margin-bottom:16px}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.72em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.match-item{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:11px 14px;font-size:.85em;color:#E6EDF3;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#00897B;background:#1E2F2D}
+.match-item.selected{border-color:#00BFA5;background:#003D36;color:#fff}
+.match-item.matched-correct{border-color:#2E7D32;background:#0D2E0E;color:#81C784;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#5C1A1A;border-color:#C62828}100%{background:#1C2128;border-color:#30363D}}
+.match-score{margin-top:12px;font-size:.83em;color:#9CA3AF}
+.match-score .correct-count{color:#00BFA5;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #30363D;color:#9CA3AF;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#00BFA5;color:#00BFA5}
+
+/* TEST TRAPS */
+.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6}
+.trap-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #F59E0B}
+.trap-num{font-size:.7em;font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#1C2128;border-radius:7px;padding:14px;border-left:3px solid #F59E0B;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50}
+.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50}
+.trap-btn-false{background:none;border-color:#C62828;color:#EF5350}
+.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350}
+.trap-btn:disabled{opacity:.55;cursor:not-allowed}
+.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784}
+.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A}
+.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none}
+.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block}
+.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block}
+.trap-exp strong{color:#00BFA5}
+
+/* REFERENCE */
+.ref-section{margin-bottom:28px}
+.ref-title{font-size:.8em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #21262D}
+.ref-table{width:100%;border-collapse:collapse;font-size:.83em}
+.ref-table th{background:#1C2128;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #21262D}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #21262D;color:#E6EDF3;vertical-align:top;line-height:1.5}
+.ref-table tr:hover td{background:#161B22}
+.ref-table .key{color:#00BFA5;font-weight:600}
+.ref-note{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:12px 16px;font-size:.82em;color:#9CA3AF;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#00BFA5}
+
+.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #21262D;padding-top:14px;margin-top:28px}
+.footer a{color:#00BFA5;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── TOP NAV ── */
+.topnav{background:#161B22;border-bottom:1px solid #21262D;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#00695C,#004D40);display:flex;align-items:center;justify-content:center;font-size:.9em;font-weight:800;color:#fff;flex-shrink:0}
+.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#6B7280;font-weight:400;margin-left:4px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#6B7280;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #30363D;text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#00BFA5;color:#00BFA5}
+.theme-toggle{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:1em;transition:all .2s;line-height:1}
+.theme-toggle:hover{border-color:#6B7280}
+
+/* ── LIGHT MODE ── */
+body.light{background:#F6F8FA;color:#1F2328}
+body.light .topnav{background:#FFFFFF;border-bottom-color:#D0D7DE}
+body.light .theme-toggle{background:#F6F8FA;border-color:#D0D7DE}
+body.light .nav-back{color:#656D76;border-color:#D0D7DE}
+body.light .nav-back:hover{border-color:#00897B;color:#00695C}
+body.light .nav-brand-text{color:#1F2328}
+body.light .nav-brand-sub{color:#656D76}
+body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
+        body.light .header h1{color:#1F2328!important}
+        body.light .nav-logo{background:linear-gradient(135deg,#00695C,#004D40)!important;color:#fff!important}
+        body.light .trap-statement{background:#FFF8EC!important;border-left-color:#E8A000!important}
+        body.light .trap-btn-true{color:#1A6B1A!important}
+        body.light .trap-btn-false{color:#C62828!important}
+        body.light .trap-btn.sel-correct{background:#E6F4EA!important;color:#1A6B1A!important}
+        body.light .trap-btn.sel-wrong{background:#FDECEA!important;color:#B71C1C!important}
+        body.light .trap-exp.show-c{background:#E6F4EA!important;border-color:#2E7D32!important;color:#1A6B1A!important}
+        body.light .trap-exp.show-w{background:#FDECEA!important;border-color:#C62828!important;color:#B71C1C!important}
+        body.light .trap-exp strong{color:#00695C!important}
+body.light .hub-prog,body.light .stats-bar .stat-card,body.light .stats-row .stat,body.light .score-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .hub-step.current{background:#00695C!important}
+body.light .tab-nav,body.light .tabs{border-bottom-color:#D0D7DE}
+body.light .tab-btn,body.light .tab-button{color:#656D76}
+body.light .tab-btn.active,body.light .tab-button.active{color:#1F2328}
+body.light .fc-front,body.light .q-block,body.light .fib-card,body.light .order-drill,body.light .match-set,body.light .trap-card,body.light .mech-card,body.light .vig-block,body.light .lo-header{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .fc-back{background:#F0FAF8!important;border-color:#A7D7C5!important}
+body.light .fc-front{border-top-color:#00897B!important}
+body.light .fc-q,body.light .fc-a,body.light .fib-prompt,body.light .drill-title,body.light .trap-statement,body.light .vig-text,body.light .vig-q,body.light .match-set-title,body.light .q-stem{color:#1F2328!important}
+body.light .q-stem{background:#F0FAF8!important;border-color:#D0D7DE!important}
+body.light .order-item,body.light .match-item,body.light .opt-btn,body.light .vig-opt,body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .order-item:hover{background:#E6F4F1!important;border-color:#00897B!important}
+body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .exp-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .exp-row{border-bottom-color:#E8ECEF!important}
+body.light .exp-text{color:#656D76!important}
+body.light .teach-box{background:rgba(0,137,123,.08)!important;border-color:rgba(0,137,123,.3)!important;color:#00695C!important}
+body.light .footer{border-top-color:#D0D7DE;color:#656D76}
+body.light .ref-table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+body.light .ref-table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+body.light .ref-table tr:hover td{background:#F0FAF8!important}
+body.light .ref-note{background:#F0FAF8!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#FFF8EC!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .hub-prog-label,body.light .fc-flip-hint,body.light .drill-hint,body.light .match-set-hint,body.light .trap-num,body.light .q-num,body.light .q-diff{color:#656D76!important}
+body.light .stat-label{color:#656D76}
+body.light .hub-tag{background:#00695C!important}
+body.light .pathway-step{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .pathway-step.key{background:rgba(245,158,11,.15)!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .mech-note{color:#92400E!important;border-left-color:#E8C56A!important}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo">H</div>
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back">← Active Drill Hub</a>
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #1 — Core Concepts</div>
+  <h1>GI04 Histology <span>Active Drills</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GUSOM Anki hist-4 (33 cards)</div>
+    <div class="source-badge"><strong>Lecture:</strong> Notario — Esophagus, Stomach &amp; Intestines</div>
+    <div class="source-badge"><strong>LOs:</strong> GI-04 Histology LO 1–5</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid GI Histology</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">🧠 Hub #1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi04-hub2-histology.html" class="hub-step next">🔬 Hub #2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi04-hub3-histology.html" class="hub-step next">📝 Hub #3 — USMLE Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">30</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Matching Sets</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Test Traps</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">🃏 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">✏️ Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">🔀 Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">🎯 Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">⚠️ Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">📋 Reference</button>
+</div>
+
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#6B7280">All 33 GUSOM Anki concepts covered</em></span><span class="prog-num" id="fc-counter">0 / 30 seen</span></div>
+  <div class="fc-grid" id="fc-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list" id="fib-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Drag-and-Drop Ordering:</strong> Drag each item into the correct sequential position, then click <strong>Check Order</strong>. <span style="color:#81C784">Green</span> = correct position, <span style="color:#EF9A9A">Red</span> = out of order. Click <strong>Shuffle</strong> to reset or <strong>Show Answer</strong> to reveal the correct sequence.
+  </div>
+  <div id="ordering-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>How to match:</strong> Click a term on the left to select it (turns teal), then click its correct match on the right. A correct pair turns <span style="color:#81C784">green</span>. An incorrect selection <span style="color:#EF9A9A">flashes red</span>. Complete all pairs to finish each set.
+  </div>
+  <div id="matching-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">⚠️ <strong>High-yield test traps:</strong> Each statement is a common exam misconception. Select <strong>TRUE</strong> or <strong>FALSE</strong>, then read the full explanation.
+  </div>
+  <div id="traps-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-ref">
+  <div id="ref-container"></div>
+</div>
+
+<div class="footer">
+  <a href="../index.html">← GI Block Home</a> &nbsp;|&nbsp;
+  <a href="gi04-hub2-histology.html">Hub #2 — Step 1 Extensions →</a> &nbsp;|&nbsp;
+  <a href="gi04-hub3-histology.html">Hub #3 — USMLE Questions →</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+/* ==============================================
+   DATA
+   ============================================== */
+
+const flashcards = [
+  // --- GENERAL GI PLAN ---
+  {cat:"General Plan", q:"What are the 4 main layers of the GI tract wall (from lumen outward)?", a:"<strong>1. Mucosa</strong> (epithelium + lamina propria + muscularis mucosa)<br><strong>2. Submucosa</strong> (connective tissue)<br><strong>3. Muscularis externa</strong> (inner circular + outer longitudinal)<br><strong>4. Adventitia or Serosa</strong>"},
+  {cat:"General Plan", q:"Where are Meissner's (submucosal) plexus and Auerbach's (myenteric) plexus located?", a:"<strong>Meissner's</strong> = in the <strong>submucosa</strong> → controls secretion &amp; blood flow<br><strong>Auerbach's (myenteric)</strong> = between the <strong>two layers of muscularis externa</strong> → coordinates peristalsis"},
+  {cat:"General Plan", q:"What makes up the mucosa layer of the GI tract?", a:"<strong>3 components:</strong><br>1. <strong>Lining epithelium</strong> (protective/secretory/absorptive depending on region)<br>2. <strong>Lamina propria</strong> (loose connective tissue under epithelium)<br>3. <strong>Muscularis mucosa</strong> (thin smooth muscle band — local movement)"},
+  {cat:"General Plan", q:"GI cells have a high <em>what</em>, and new cells arise from <em>where</em>?", a:"Very high <strong>turnover rate</strong> (~3–5 days). New cells arise from <strong>stem cells in the Crypts of Lieberkühn</strong>; cells migrate upward, then slough into the lumen and are digested/reabsorbed."},
+  // --- ESOPHAGUS ---
+  {cat:"Esophagus", q:"What type of epithelium lines the esophagus, and why?", a:"<strong>Non-keratinized stratified squamous epithelium</strong> — provides a <strong>protective</strong> lining against abrasive damage from food bolus. No digestive/absorptive function here."},
+  {cat:"Esophagus", q:"Describe the muscle type in each third of the esophagus.", a:"<strong>Upper ⅓:</strong> Skeletal muscle (NOT voluntary control — involuntary)<br><strong>Middle ⅓:</strong> Mixed skeletal + smooth<br><strong>Lower ⅓:</strong> Smooth muscle only"},
+  {cat:"Esophagus", q:"What is the outer covering of most of the esophagus, and why is this clinically important?", a:"<strong>Adventitia</strong> (not serosa). Unlike most of the GI tract which has serosa, the esophagus lacks it → <strong>esophageal cancer spreads more easily</strong> into surrounding structures."},
+  {cat:"Esophagus", q:"What are the two types of glands in the esophagus?", a:"1. <strong>Submucosal glands</strong> — throughout the esophagus length; secrete <strong>protective mucin</strong> to lubricate<br>2. <strong>Cardiac glands</strong> — in the lamina propria near the stomach junction AND between the cricoid cartilage and 5th tracheal ring"},
+  {cat:"Esophagus", q:"At the gastroesophageal junction, what abrupt epithelial change occurs?", a:"Abrupt change from <strong>non-keratinized stratified squamous</strong> epithelium (esophagus) → <strong>simple columnar</strong> epithelium with gastric pits (stomach cardiac region). This junction is clinically critical — site of <strong>Barrett's esophagus</strong>."},
+  {cat:"Esophagus", q:"What are the two types of esophageal peristalsis?", a:"<strong>Primary peristalsis:</strong> initiated by voluntary swallowing; propels bolus from pharynx → stomach<br><strong>Secondary peristalsis:</strong> triggered by esophageal distension (residual food); clears the esophagus without swallowing"},
+  {cat:"Esophagus", q:"The esophagus passes through the diaphragm at which vertebral level?", a:"<strong>T10</strong> (esophageal hiatus of diaphragm). Starts at pharynx at <strong>C6</strong>; reaches stomach at <strong>T11</strong>."},
+  // --- STOMACH ---
+  {cat:"Stomach", q:"Name the 4 anatomical regions of the stomach.", a:"1. <strong>Cardiac</strong> (near GEJ)<br>2. <strong>Fundus</strong><br>3. <strong>Body</strong><br>4. <strong>Pyloric</strong> (antrum → pylorus → duodenum)"},
+  {cat:"Stomach", q:"What are rugae, and where are they found?", a:"<strong>Rugae</strong> = large <strong>longitudinal folds</strong> of the stomach mucosa &amp; submucosa. Allow the stomach to <strong>expand</strong> when filled. Unique to the stomach."},
+  {cat:"Stomach", q:"What are gastric pits, and what do they lead to?", a:"Tiny invaginations of the gastric surface epithelium. Each pit is continuous with <strong>3–7 gastric glands</strong> deep in the lamina propria. Surface &amp; pits lined by <strong>surface mucus cells</strong>."},
+  {cat:"Stomach", q:"Describe surface mucus cells.", a:"<strong>Tall columnar</strong> cells that line the surface and extend into gastric pits. Secrete <strong>alkaline, protective mucin</strong> — form the gastric mucus barrier that protects against self-digestion by HCl."},
+  {cat:"Stomach", q:"Describe chief cells: location, product, and staining.", a:"Found at the <strong>BASE</strong> of gastric glands (fundus/body). Secrete <strong>pepsinogen</strong> (activated to pepsin in acid). Stain <strong>basophilic</strong> (lots of rough ER for protein synthesis)."},
+  {cat:"Stomach", q:"Describe parietal cells: location, structure, and products.", a:"<strong>Round cells, pink/eosinophilic</strong> (many mitochondria). Deep <strong>canaliculi lined with microvilli</strong> (↑ surface area for HCl secretion).<br>Products: <strong>HCl</strong> + <strong>Intrinsic factor</strong> (binds B12 for ileal absorption)"},
+  {cat:"Stomach", q:"How do parietal cells make HCl?", a:"CO₂ from blood diffuses into cell → carbonic anhydrase → H⁺ + HCO₃⁻<br><strong>H⁺</strong> pumped into lumen by H⁺/K⁺-ATPase (proton pump)<br><strong>HCO₃⁻</strong> exchanged for Cl⁻ (enters blood → 'alkaline tide')"},
+  {cat:"Stomach", q:"What do mucus neck cells secrete, and where are they found?", a:"Located in the <strong>neck region</strong> of gastric glands. Secrete <strong>acidic mucin</strong> (distinct from the alkaline mucin of surface mucus cells)."},
+  {cat:"Stomach", q:"What are enteroendocrine cells, and where do they secrete?", a:"Diverse endocrine cells scattered along the sides of gastric glands. Secrete <strong>hormones into the surrounding blood vessels</strong> of the lamina propria (paracrine/endocrine, NOT into lumen). E.g., G cells (gastrin), ECL cells (histamine)."},
+  {cat:"Stomach", q:"Compare cardiac glands vs pyloric glands.", a:"<strong>Cardiac glands:</strong> shallow gastric pits + relatively <strong>straight glands</strong><br><strong>Pyloric glands:</strong> very <strong>deep</strong> gastric pits + very <strong>coiled glands</strong> (contains G cells that secrete gastrin)"},
+  {cat:"Stomach", q:"How many muscle layers does the stomach's muscularis externa have? Name them.", a:"<strong>3 layers</strong> (unique to stomach):<br>1. <strong>Inner oblique</strong> (innermost — unique to stomach)<br>2. <strong>Inner circular</strong><br>3. <strong>Outer longitudinal</strong><br>→ The oblique layer facilitates <strong>churning and trituration</strong>"},
+  {cat:"Stomach", q:"What is the outer covering of the stomach?", a:"<strong>Serosa</strong> (visceral peritoneum). In contrast, the esophagus is covered by adventitia."},
+  // --- SMALL INTESTINE ---
+  {cat:"Small Intestine", q:"What are the 3 divisions of the small intestine?", a:"<strong>Duodenum</strong> (~25 cm / first 10 inches) → receives bile &amp; pancreatic juice<br><strong>Jejunum</strong> (~2/5 of remainder) → primary absorption<br><strong>Ileum</strong> (~3/5 of remainder) → B12 absorption, Peyer's patches"},
+  {cat:"Small Intestine", q:"How does the small intestine increase surface area for absorption?", a:"<strong>1. Plicae circulares</strong> (circular folds involving mucosa + submucosa) — increase surface ~3×<br><strong>2. Villi</strong> (mucosal projections) — increase surface ~10×<br><strong>3. Microvilli / brush border</strong> on enterocytes — increase surface ~20×"},
+  {cat:"Small Intestine", q:"What is the central lacteal, and what does it absorb?", a:"A <strong>lymphatic vessel</strong> running up the center of each intestinal villus. Absorbs <strong>dietary fat</strong> (chylomicrons/long-chain fatty acids) into the lymphatic system."},
+  {cat:"Small Intestine", q:"Describe intestinal absorptive cells (enterocytes).", a:"<strong>Tall columnar</strong> cells with a <strong>dense microvillus brush border</strong> containing a <strong>glycocalyx</strong> (enzyme-rich carbohydrate coat). Primary absorptive cell; microvilli ↑ surface area enormously."},
+  {cat:"Small Intestine", q:"Describe Paneth cells: location, appearance, and function.", a:"Located at the <strong>base of Crypts of Lieberkühn</strong>. Contain <strong>large, eosinophilic refractile granules</strong> (stain pink/red). Granules contain <strong>zinc + lysozyme</strong> → antimicrobial defense of the intestinal stem cell niche."},
+  {cat:"Small Intestine", q:"What unique glands are in the duodenal submucosa, and what do they secrete?", a:"<strong>Brunner's glands</strong> — found exclusively in the <strong>submucosa</strong> of the <strong>duodenum</strong>. Secrete <strong>alkaline mucus</strong> to neutralize acidic chyme entering from the stomach."},
+  {cat:"Small Intestine", q:"What distinguishes the ileum histologically?", a:"<strong>Peyer's patches</strong> — prominent submucosal aggregates of <strong>lymphatic nodules</strong>. Also: most <strong>goblet cells</strong> relative to absorptive cells; least prominent villi (smaller, more slender compared to duodenum)."},
+  // --- LARGE INTESTINE ---
+  {cat:"Large Intestine", q:"List 5 histological differences between large and small intestine.", a:"Large intestine has: <strong>1.</strong> No villi<br><strong>2.</strong> Deeper crypts of Lieberkühn<br><strong>3.</strong> Many more goblet cells<br><strong>4.</strong> Teniae coli (3 bands of longitudinal muscle)<br><strong>5.</strong> Few Paneth cells and few enteroendocrine cells"},
+  {cat:"Large Intestine", q:"What are teniae coli?", a:"Three thick bands of <strong>longitudinal smooth muscle</strong> (modified muscularis externa) running along the <strong>colon</strong>. Cause <strong>accordion-like pleating</strong> of the colon wall → form haustra (sacculations)."},
+  {cat:"Large Intestine", q:"What lines the anal canal, and what are rectal columns?", a:"<strong>Non-keratinized stratified squamous epithelium</strong> (protective). Middle third: transitional epithelium.<br><strong>Rectal columns</strong> = large longitudinal folds of mucosa in the upper anal canal. The rectum itself is lined by simple columnar epithelium + tubular glands."},
+  {cat:"Large Intestine", q:"What type of muscle makes up the internal vs external anal sphincter?", a:"<strong>Internal anal sphincter</strong> = <strong>smooth muscle</strong> → <strong>involuntary</strong> control<br><strong>External anal sphincter</strong> = <strong>skeletal muscle</strong> → <strong>voluntary</strong> control (pudendal nerve, S2–S4)"},
+];
+
+const fibs = [
+  {num:1, prompt:"The esophagus is lined by <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> epithelium, which protects against abrasive damage.", answers:["non-keratinized stratified squamous","stratified squamous","nonkeratinized stratified squamous"], hint:"Protective, multi-layered, not protein-hardened"},
+  {num:2, prompt:"Parietal cells secrete <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> and <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["hcl and intrinsic factor","hydrochloric acid and intrinsic factor","intrinsic factor and hcl"], hint:"One is an acid; the other binds vitamin B12"},
+  {num:3, prompt:"Chief cells are located at the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> of gastric glands and secrete <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["base and pepsinogen","pepsinogen base","base pepsinogen"], hint:"Deepest part of gland; inactive enzyme precursor"},
+  {num:4, prompt:"The <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> plexus (Meissner's) lies in the submucosa; the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> plexus (Auerbach's) lies between the muscle layers of the muscularis externa.", answers:["submucosal and myenteric","submucosal myenteric"], hint:"Named by location: under mucosa vs. between muscles"},
+  {num:5, prompt:"The duodenum's unique glands found in the submucosa are called <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["brunner's glands","brunners glands","brunner glands"], hint:"Named after a Swiss anatomist; neutralize gastric acid"},
+  {num:6, prompt:"Paneth cells at the base of the crypts of Lieberkühn contain granules rich in <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> and <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["zinc and lysozyme","lysozyme and zinc","zinc lysozyme"], hint:"A metal ion + a bacterial cell wall-cleaving enzyme"},
+  {num:7, prompt:"The ileum is distinguished histologically by submucosal lymphatic aggregates called <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["peyer's patches","peyers patches","peyer patches"], hint:"Named for the Swiss anatomist Johann Conrad Peyer"},
+  {num:8, prompt:"The stomach has <u>&nbsp;&nbsp;</u> layers of muscularis externa. The innermost is <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, the middle is <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, and the outermost is <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["3 oblique circular longitudinal","three oblique circular longitudinal","3, oblique, circular, longitudinal"], hint:"Only the stomach has this extra innermost layer for churning"},
+  {num:9, prompt:"The common bile duct, carrying secretions from the liver, gallbladder, and pancreas, empties into the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["duodenum","early duodenum","first part of duodenum"], hint:"First part of the small intestine; receives chyme from the stomach"},
+  {num:10, prompt:"The large intestine lacks <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, has deeper <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, many more <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> cells, and a modified muscularis externa called <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["villi crypts goblet teniae coli","villi, crypts, goblet, teniae coli"], hint:"No finger-like projections; dehydration specialists with ribbon-like outer muscle"},
+  {num:11, prompt:"The <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> anal sphincter is smooth muscle (involuntary); the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> anal sphincter is skeletal muscle (voluntary).", answers:["internal external","internal and external"], hint:"Internal = inner, involuntary; External = outer, voluntary"},
+  {num:12, prompt:"GI epithelial cells turn over every <u>&nbsp;&nbsp;&nbsp;&nbsp;</u> days, with new cells generated from stem cells in the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.", answers:["3-5 crypts of lieberkuhn","3 to 5 crypts of lieberkuhn","3–5 crypts of lieberkuhn","3-5 days crypts of lieberkuhn"], hint:"Short lifespan; regenerated from glands at the base of villi"},
+];
+
+const orderingDrills = [
+  {
+    title:"GI Wall Layers — Lumen to Outer Surface",
+    hint:"Order from innermost (luminal) to outermost layer.",
+    items:[
+      {text:"Epithelium (lining of lumen — protective/secretory/absorptive)", pos:0},
+      {text:"Lamina propria (loose connective tissue, glands, immune cells)", pos:1},
+      {text:"Muscularis mucosa (thin smooth muscle — local mucosal movement)", pos:2},
+      {text:"Submucosa (dense CT; contains Meissner's plexus, Brunner's glands in duodenum)", pos:3},
+      {text:"Inner circular muscle (muscularis externa)", pos:4},
+      {text:"Outer longitudinal muscle (muscularis externa; Auerbach's plexus between layers)", pos:5},
+      {text:"Adventitia or Serosa (outer connective tissue coat)", pos:6},
+    ]
+  },
+  {
+    title:"Esophageal Muscle Transition — Upper to Lower",
+    hint:"Order from the upper esophagus (pharynx) to the lower esophagus (stomach).",
+    items:[
+      {text:"Upper ⅓ — Skeletal muscle only (involuntary despite being skeletal)", pos:0},
+      {text:"Middle ⅓ — Mixed skeletal + smooth muscle (transition zone)", pos:1},
+      {text:"Lower ⅓ — Smooth muscle only (site of LES)", pos:2},
+    ]
+  },
+  {
+    title:"Gastric Gland Regions — Surface to Base",
+    hint:"Order from the gastric surface downward into the lamina propria.",
+    items:[
+      {text:"Gastric pit (surface opening; lined by surface mucus cells — alkaline mucus)", pos:0},
+      {text:"Gland mouth (opening of gland into pit)", pos:1},
+      {text:"Gland neck (contains mucus neck cells — acidic mucin)", pos:2},
+      {text:"Gland base (contains chief cells + parietal cells)", pos:3},
+    ]
+  },
+  {
+    title:"Small Intestine — Proximal to Distal Distinguishing Features",
+    hint:"Order the three small intestine segments from most proximal to most distal.",
+    items:[
+      {text:"Duodenum — Brunner's glands in submucosa; broad leaf-shaped villi; receives bile + pancreatic juice", pos:0},
+      {text:"Jejunum — Tallest, most prominent villi and plicae; most active absorption; increasing goblet cells", pos:1},
+      {text:"Ileum — Peyer's patches (submucosal lymphoid nodules); most goblet cells; absorbs B12 + bile salts", pos:2},
+    ]
+  },
+];
+
+const matchSets = [
+  {
+    title:"Cell Type → Primary Function",
+    hint:"Match each GI cell type to its primary function or product.",
+    pairs:{
+      "Parietal cell":"Secretes HCl + intrinsic factor (vitamin B12 binding)",
+      "Chief cell":"Secretes pepsinogen (activated to pepsin in acid)",
+      "Mucus neck cell":"Secretes acidic mucin in gland neck region",
+      "Surface mucus cell":"Secretes alkaline protective mucin (gastric surface + pits)",
+      "Paneth cell":"Zinc + lysozyme antimicrobial granules at crypt base",
+      "Enteroendocrine cell":"Secretes hormones (gastrin, histamine, etc.) into bloodstream",
+      "Enterocyte (absorptive cell)":"Absorption via dense microvillus brush border + glycocalyx",
+      "Goblet cell":"Mucus secretion along intestinal (and colonic) surface",
+    }
+  },
+  {
+    title:"GI Segment → Key Distinguishing Histological Feature",
+    hint:"Match each GI region to its single most distinctive histological characteristic.",
+    pairs:{
+      "Esophagus":"Non-keratinized stratified squamous epithelium (protective)",
+      "Stomach":"3-layer muscularis externa (oblique + circular + longitudinal) + rugae + gastric pits",
+      "Duodenum":"Brunner's glands in the SUBMUCOSA (alkaline mucus neutralizes acid)",
+      "Ileum":"Peyer's patches — submucosal lymphatic nodules",
+      "Colon":"Teniae coli (3 longitudinal muscle bands) + no villi + abundant goblet cells",
+      "Anal canal":"Non-keratinized stratified squamous epithelium + rectal columns",
+    }
+  }
+];
+
+const traps = [
+  {
+    statement:"The skeletal muscle in the upper third of the esophagus is under voluntary control.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> The upper esophagus contains skeletal muscle, but it is <strong>NOT under voluntary control</strong> — it is controlled involuntarily by the swallowing center in the medulla. Once swallowing is initiated voluntarily (oral phase), the pharyngeal and esophageal phases proceed automatically."
+  },
+  {
+    statement:"Brunner's glands are found in the lamina propria of the duodenum.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> This is a classic histology trap. Brunner's glands are uniquely located in the <strong>submucosa</strong> of the duodenum — not the lamina propria. Their submucosal location is their defining histological feature and distinguishes them from all other small intestinal glands."
+  },
+  {
+    statement:"Chief cells are found in the neck region of the gastric gland.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> Chief cells (zymogenic cells) are found at the <strong>base</strong> of gastric glands, where they secrete pepsinogen. It is the <strong>mucus neck cells</strong> that are found in the neck region. Don't confuse these two — both the cell type AND its location are high-yield."
+  },
+  {
+    statement:"The large intestine has short villi that maximize surface area for water absorption.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> The large intestine has <strong>NO villi</strong> at all. This is a key distinction from the small intestine. Water absorption in the colon occurs via <strong>deep crypts of Lieberkühn</strong> and abundant goblet cell mucus to facilitate movement — not through villus surface area."
+  },
+  {
+    statement:"Both the esophagus and stomach are covered by adventitia on their outer surface.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> Only the <strong>esophagus</strong> is covered by adventitia (connective tissue continuous with surroundings — no separate peritoneal covering). The <strong>stomach is covered by serosa</strong> (visceral peritoneum). This is why esophageal cancer spreads more easily to adjacent structures."
+  },
+];
+
+/* ==============================================
+   RENDER FUNCTIONS
+   ============================================== */
+
+let seenCards = new Set();
+
+function renderFlashcards(){
+  const container = document.getElementById('fc-container');
+  flashcards.forEach((card, i) => {
+    const div = document.createElement('div');
+    div.className = 'fc';
+    div.id = 'fc-' + i;
+    div.innerHTML = `
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">${card.cat}</div>
+          <div class="fc-q">${card.q}</div>
+          <div class="fc-flip-hint">↻ Click to reveal answer</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a">${card.a}</div>
+          <div class="fc-flip-hint">↻ Click to flip back</div>
+        </div>
+      </div>`;
+    div.addEventListener('click', () => {
+      div.classList.toggle('flipped');
+      seenCards.add(i);
+      document.getElementById('fc-counter').textContent = seenCards.size + ' / ' + flashcards.length + ' seen';
+    });
+    container.appendChild(div);
+  });
+  fixCardHeights();
+}
+
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(card => {
+    const front = card.querySelector('.fc-front');
+    const back = card.querySelector('.fc-back');
+    back.style.cssText = 'position:relative!important;transform:none!important;visibility:visible!important;backface-visibility:visible!important';
+    const h = Math.max(front.scrollHeight, back.scrollHeight) + 24;
+    back.style.cssText = '';
+    const minH = h + 'px';
+    card.style.minHeight = minH;
+    card.querySelector('.fc-inner').style.minHeight = minH;
+    front.style.minHeight = minH;
+    back.style.minHeight = minH;
+  });
+}
+
+function renderFIB(){
+  const container = document.getElementById('fib-container');
+  fibs.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'fib-card';
+    div.innerHTML = `
+      <div class="fib-num">Fill-in-Blank ${f.num}</div>
+      <div class="fib-prompt">${f.prompt}</div>
+      ${f.hint ? `<div class="fib-hint">💡 Hint: ${f.hint}</div>` : ''}
+      <div class="fib-row" style="margin-top:10px">
+        <input class="fib-input" id="fib-inp-${i}" type="text" placeholder="Type your answer…" onkeydown="if(event.key==='Enter')checkFIB(${i})">
+        <button class="fib-btn" onclick="checkFIB(${i})">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFIB(${i})">Reveal</button>
+      </div>
+      <div class="fib-feedback" id="fib-fb-${i}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function checkFIB(i){
+  const inp = document.getElementById('fib-inp-' + i);
+  const fb = document.getElementById('fib-fb-' + i);
+  const val = inp.value.trim().toLowerCase();
+  const correct = fibs[i].answers.some(a => val.includes(a.toLowerCase().split(' ')[0]) || a.toLowerCase().includes(val));
+  // More robust: check if typed answer includes any key word from accepted answers
+  const isCorrect = fibs[i].answers.some(a => {
+    const words = a.toLowerCase().split(/[\s,]+/).filter(w => w.length > 3);
+    return words.some(w => val.includes(w));
+  });
+  inp.classList.remove('correct','incorrect');
+  if(isCorrect){
+    inp.classList.add('correct');
+    fb.className = 'fib-feedback correct';
+    fb.textContent = '✓ Correct! ' + fibs[i].answers[0];
+  } else {
+    inp.classList.add('incorrect');
+    fb.className = 'fib-feedback incorrect';
+    fb.textContent = '✗ Not quite. Try again or click Reveal.';
+  }
+}
+
+function revealFIB(i){
+  const inp = document.getElementById('fib-inp-' + i);
+  const fb = document.getElementById('fib-fb-' + i);
+  inp.value = fibs[i].answers[0];
+  inp.classList.add('correct');
+  fb.className = 'fib-feedback correct';
+  fb.textContent = '→ Answer: ' + fibs[i].answers[0];
+}
+
+/* ORDERING */
+let dragged = null;
+
+function renderOrdering(){
+  const container = document.getElementById('ordering-container');
+  orderingDrills.forEach((drill, di) => {
+    const shuffled = [...drill.items].sort(() => Math.random() - 0.5);
+    const div = document.createElement('div');
+    div.className = 'order-drill';
+    div.innerHTML = `
+      <div class="drill-title">${drill.title}</div>
+      <div class="drill-hint">${drill.hint}</div>
+      <div class="order-list" id="olist-${di}">
+        ${shuffled.map(item => `
+          <div class="order-item" data-pos="${item.pos}" draggable="true"
+               ondragstart="odStart(event)" ondragover="odOver(event)"
+               ondragleave="odLeave(event)" ondrop="odDrop(event)" ondragend="odEnd(event)">
+            <span class="item-grip">⠿</span>
+            <span class="item-text">${item.text}</span>
+          </div>`).join('')}
+      </div>
+      <div class="order-actions">
+        <button class="order-check-btn" onclick="checkOrder(${di})">✓ Check Order</button>
+        <button class="order-ghost-btn" onclick="shuffleOrder(${di})">↺ Shuffle</button>
+        <button class="order-ghost-btn" onclick="showOrderAnswer(${di})">👁 Show Answer</button>
+      </div>
+      <div class="order-answer" id="oanswer-${di}">
+        <strong style="color:#00BFA5">Correct Order:</strong>
+        <ol style="margin-top:8px">
+          ${drill.items.map((item,idx) => `<li><span>${item.text}</span></li>`).join('')}
+        </ol>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function odStart(e){ dragged = e.currentTarget; e.dataTransfer.effectAllowed='move'; setTimeout(()=>dragged&&dragged.classList.add('dragging'),0); }
+function odOver(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; const t=e.currentTarget; if(t!==dragged)t.classList.add('drag-over'); return false; }
+function odLeave(e){ e.currentTarget.classList.remove('drag-over'); }
+function odEnd(e){ if(dragged)dragged.classList.remove('dragging'); dragged=null; document.querySelectorAll('.order-item').forEach(el=>el.classList.remove('drag-over')); }
+function odDrop(e){
+  e.preventDefault(); e.stopPropagation();
+  const target = e.currentTarget;
+  target.classList.remove('drag-over');
+  if(dragged && target !== dragged){
+    const parent = dragged.parentNode;
+    const all = [...parent.querySelectorAll('.order-item')];
+    const di = all.indexOf(dragged), ti = all.indexOf(target);
+    if(di < ti) parent.insertBefore(dragged, target.nextSibling);
+    else parent.insertBefore(dragged, target);
+  }
+  return false;
+}
+function checkOrder(di){
+  const list = document.getElementById('olist-' + di);
+  const items = [...list.querySelectorAll('.order-item')];
+  items.forEach((item, idx) => {
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos) === idx) item.classList.add('correct-pos');
+    else item.classList.add('wrong-pos');
+  });
+}
+function shuffleOrder(di){
+  const list = document.getElementById('olist-' + di);
+  const items = [...list.querySelectorAll('.order-item')];
+  items.forEach(el => el.classList.remove('correct-pos','wrong-pos'));
+  for(let i = items.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    list.appendChild(items[j]);
+    items.splice(j, 1);
+  }
+  items.forEach(el => list.appendChild(el));
+}
+function showOrderAnswer(di){
+  const ans = document.getElementById('oanswer-' + di);
+  ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+}
+
+/* MATCHING */
+let matchState = [];
+
+function renderMatching(){
+  const container = document.getElementById('matching-container');
+  matchSets.forEach((set, si) => {
+    matchState[si] = { sel: null, matched: {}, score: 0 };
+    const keys = Object.keys(set.pairs);
+    const vals = Object.values(set.pairs);
+    // Shuffle values for display
+    const shuffledVals = [...vals].sort(() => Math.random() - 0.5);
+    const div = document.createElement('div');
+    div.className = 'match-set';
+    div.innerHTML = `
+      <div class="match-set-title">${set.title}</div>
+      <div class="match-set-hint">${set.hint}</div>
+      <div class="match-cols">
+        <div>
+          <div class="match-col-label">Cell / Region</div>
+          ${keys.map(k => `<div class="match-item" id="ml-${si}-${k.replace(/[^a-z0-9]/gi,'_')}" onclick="matchClick(${si},'left','${k.replace(/'/g,"\\'")}')"> ${k}</div>`).join('')}
+        </div>
+        <div>
+          <div class="match-col-label">Function / Feature</div>
+          ${shuffledVals.map(v => `<div class="match-item" id="mr-${si}-${v.replace(/[^a-z0-9]/gi,'_').substring(0,30)}" onclick="matchClick(${si},'right','${v.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')"> ${v}</div>`).join('')}
+        </div>
+      </div>
+      <div class="match-score">Matched: <span class="correct-count" id="mscore-${si}">0</span> / ${keys.length}</div>
+      <button class="match-reset-btn" onclick="resetMatch(${si})">↺ Reset</button>`;
+    container.appendChild(div);
+  });
+}
+
+function matchClick(si, side, id){
+  const state = matchState[si];
+  const set = matchSets[si];
+  // Build element ID
+  const safeId = id.replace(/[^a-z0-9]/gi,'_');
+  if(state.matched[id]) return;
+  if(side === 'left'){
+    if(state.sel){
+      const prevEl = document.getElementById('ml-' + si + '-' + state.sel.replace(/[^a-z0-9]/gi,'_'));
+      if(prevEl) prevEl.classList.remove('selected');
+    }
+    state.sel = id;
+    const el = document.getElementById('ml-' + si + '-' + safeId);
+    if(el) el.classList.add('selected');
+  } else {
+    if(!state.sel) return;
+    const leftKey = state.sel;
+    const correctRight = set.pairs[leftKey];
+    const leftEl = document.getElementById('ml-' + si + '-' + leftKey.replace(/[^a-z0-9]/gi,'_'));
+    if(id === correctRight){
+      // Correct match
+      const rightEl = document.getElementById('mr-' + si + '-' + id.replace(/[^a-z0-9]/gi,'_').substring(0,30));
+      if(leftEl){ leftEl.classList.remove('selected'); leftEl.classList.add('matched-correct'); }
+      if(rightEl){ rightEl.classList.add('matched-correct'); }
+      state.matched[leftKey] = true;
+      state.matched[id] = true;
+      state.score++;
+      document.getElementById('mscore-' + si).textContent = state.score;
+    } else {
+      // Wrong
+      const rightEl = document.getElementById('mr-' + si + '-' + id.replace(/[^a-z0-9]/gi,'_').substring(0,30));
+      if(rightEl){ rightEl.classList.add('flash-wrong'); setTimeout(()=>rightEl.classList.remove('flash-wrong'),600); }
+      if(leftEl){ leftEl.classList.remove('selected'); }
+    }
+    state.sel = null;
+  }
+}
+
+function resetMatch(si){
+  matchState[si] = { sel: null, matched: {}, score: 0 };
+  document.getElementById('mscore-' + si).textContent = '0';
+  document.querySelectorAll(`[id^="ml-${si}-"],[id^="mr-${si}-"]`).forEach(el => {
+    el.classList.remove('selected','matched-correct','flash-wrong');
+  });
+}
+
+/* TEST TRAPS */
+function renderTraps(){
+  const container = document.getElementById('traps-container');
+  traps.forEach((trap, i) => {
+    const div = document.createElement('div');
+    div.className = 'trap-card';
+    div.innerHTML = `
+      <div class="trap-num">Test Trap ${i+1}</div>
+      <div class="trap-statement">"${trap.statement}"</div>
+      <div class="trap-btns" id="tbtns-${i}">
+        <button class="trap-btn trap-btn-true" onclick="selectTrap(${i},true)">TRUE</button>
+        <button class="trap-btn trap-btn-false" onclick="selectTrap(${i},false)">FALSE</button>
+      </div>
+      <div class="trap-exp" id="trap-exp-${i}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function selectTrap(i, choice){
+  const trap = traps[i];
+  const btns = document.getElementById('tbtns-' + i).querySelectorAll('.trap-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = (choice === trap.answer);
+  const chosenBtn = btns[choice === true ? 0 : 1];
+  chosenBtn.classList.add(correct ? 'sel-correct' : 'sel-wrong');
+  const exp = document.getElementById('trap-exp-' + i);
+  exp.innerHTML = trap.exp;
+  exp.className = 'trap-exp ' + (correct ? 'show-c' : 'show-w');
+}
+
+/* REFERENCE */
+function renderRef(){
+  document.getElementById('ref-container').innerHTML = `
+    <div class="ref-section">
+      <div class="ref-title">GI Wall Layers — Overview</div>
+      <table class="ref-table">
+        <tr><th>Layer</th><th>Components</th><th>Key Notes</th></tr>
+        <tr><td class="key">Mucosa</td><td>Epithelium + Lamina propria + Muscularis mucosa</td><td>Function varies by region (protective/secretory/absorptive)</td></tr>
+        <tr><td class="key">Submucosa</td><td>Dense connective tissue; Meissner's plexus</td><td>Brunner's glands in duodenum; lymphatics; blood vessels</td></tr>
+        <tr><td class="key">Muscularis externa</td><td>Inner circular + outer longitudinal (Auerbach's plexus between); 3 layers in stomach</td><td>Responsible for peristaltic waves</td></tr>
+        <tr><td class="key">Outer coat</td><td>Adventitia (esophagus, retroperitoneal) OR Serosa (most of GI)</td><td>Esophagus = adventitia; rest = serosa (visceral peritoneum)</td></tr>
+      </table>
+    </div>
+    <div class="ref-section">
+      <div class="ref-title">Gastric Gland Cell Types</div>
+      <table class="ref-table">
+        <tr><th>Cell</th><th>Location</th><th>Product(s)</th><th>Staining</th></tr>
+        <tr><td class="key">Surface mucus cell</td><td>Surface + gastric pit</td><td>Alkaline protective mucin</td><td>Pale (mucin-filled)</td></tr>
+        <tr><td class="key">Mucus neck cell</td><td>Gland neck</td><td>Acidic mucin</td><td>Pale, granular</td></tr>
+        <tr><td class="key">Parietal cell</td><td>Neck–base</td><td>HCl, intrinsic factor</td><td>Eosinophilic (pink) — many mitochondria</td></tr>
+        <tr><td class="key">Chief cell</td><td>Gland base</td><td>Pepsinogen</td><td>Basophilic (blue) — lots of RER</td></tr>
+        <tr><td class="key">Enteroendocrine cell</td><td>Throughout gland</td><td>Gastrin (G cells), histamine (ECL), somatostatin (D cells)</td><td>Argentaffin (silver stain)</td></tr>
+      </table>
+    </div>
+    <div class="ref-section">
+      <div class="ref-title">Small Intestine — Regional Comparison</div>
+      <table class="ref-table">
+        <tr><th>Feature</th><th>Duodenum</th><th>Jejunum</th><th>Ileum</th></tr>
+        <tr><td>Villi shape</td><td>Broad, leaf-shaped</td><td>Tall, finger-like</td><td>Short, slender</td></tr>
+        <tr><td>Goblet cells</td><td>Fewest</td><td>Moderate</td><td>Most numerous</td></tr>
+        <tr><td class="key">Unique feature</td><td class="key">Brunner's glands (submucosa)</td><td>Most plicae circulares</td><td class="key">Peyer's patches (submucosa)</td></tr>
+        <tr><td>Receives</td><td>Bile + pancreatic juice via common bile duct</td><td>—</td><td>Absorbs B12 + bile salts</td></tr>
+      </table>
+    </div>
+    <div class="ref-section">
+      <div class="ref-title">Small vs Large Intestine — Key Histological Differences</div>
+      <table class="ref-table">
+        <tr><th>Feature</th><th>Small Intestine</th><th>Large Intestine</th></tr>
+        <tr><td>Villi</td><td class="key">Present</td><td class="key" style="color:#EF9A9A">Absent</td></tr>
+        <tr><td>Crypts of Lieberkühn</td><td>Present, shallow–moderate</td><td>Present, deeper</td></tr>
+        <tr><td>Goblet cells</td><td>Moderate (↑ toward ileum)</td><td class="key">Very abundant</td></tr>
+        <tr><td>Paneth cells</td><td>Yes (crypt base)</td><td>Few</td></tr>
+        <tr><td>Outer muscle layer</td><td>Complete longitudinal layer</td><td class="key">Teniae coli (3 bands)</td></tr>
+        <tr><td>Plicae circulares</td><td>Present (esp. jejunum)</td><td>Absent</td></tr>
+        <tr><td>Lymphoid tissue</td><td>Peyer's patches (ileum)</td><td>Appendix (abundant)</td></tr>
+        <tr><td>Primary function</td><td>Digestion + absorption</td><td>Water reabsorption + solidification</td></tr>
+      </table>
+      <div class="ref-note"><strong>Memory hook for teniae coli:</strong> The 3 teniae coli are shorter than the colon wall → they pucker the wall into haustra (sacculations). When they relax during mass movements, haustra temporarily disappear.</div>
+    </div>`;
+}
+
+/* ==============================================
+   TAB SWITCHING
+   ============================================== */
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ==============================================
+   INIT
+   ============================================== */
+window.addEventListener('DOMContentLoaded', () => {
+  renderFlashcards();
+  renderFIB();
+  renderOrdering();
+  renderMatching();
+  renderTraps();
+  renderRef();
+  window.addEventListener('resize', fixCardHeights);
+});
+
+/* ── THEME TOGGLE ── */
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
+  try{localStorage.setItem('gi-theme',isLight?'light':'dark');}catch(e){}
+}
+window.addEventListener('DOMContentLoaded',function(){
+  try{
+    if(localStorage.getItem('gi-theme')==='light'){
+      document.body.classList.add('light');
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent='🌙';
+    }
+  }catch(e){}
+});
+</script>
+</body>
+</html>

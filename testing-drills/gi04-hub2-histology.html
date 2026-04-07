@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI04 Histology — Hub #2 Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+:root{--acc:#F59E0B;--acc-dark:#B45309;--acc-dim:rgba(245,158,11,.12)}
+
+.header{background:linear-gradient(135deg,#2D1A00 0%,#1A1000 100%);border:1px solid #92400E;border-left:5px solid var(--acc);border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#92400E;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
+.header h1 span{color:var(--acc)}
+.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#1C2128;border:1px solid #30363D;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:var(--acc)}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
+.hub-step.done{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.done:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-step.current{background:#92400E;color:#fff}
+.hub-step.next{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:var(--acc);color:var(--acc)}
+.hub-arrow{color:#30363D}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
+
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
+.stat-card{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.6em;font-weight:700;color:var(--acc)}
+.stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #21262D;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
+.tab-btn:hover{color:var(--acc)}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* MECHANISMS */
+.mech-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:24px;margin-bottom:20px;border-top:3px solid var(--acc)}
+.mech-title{font-size:1.05em;font-weight:700;color:#E6EDF3;margin-bottom:6px}
+.mech-subtitle{font-size:.82em;color:#9CA3AF;margin-bottom:18px}
+.pathway{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:16px}
+.pathway-step{background:#1C2128;border:1px solid #30363D;border-radius:7px;padding:8px 14px;font-size:.82em;color:#E6EDF3;line-height:1.4}
+.pathway-step.key{background:var(--acc-dim);border-color:var(--acc);color:#FCD34D;font-weight:600}
+.pathway-arrow{color:#6B7280;font-size:1.2em;margin:0 2px}
+.mech-note{background:#1C2128;border-left:3px solid var(--acc);border-radius:0 6px 6px 0;padding:10px 14px;font-size:.83em;color:#D97706;line-height:1.6;margin-top:12px}
+
+/* FLASHCARDS */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px}
+.fc-front{border-top:3px solid #B45309}
+.fc-back{transform:rotateY(180deg);background:#2D1A00;border-color:#92400E}
+.fc-label{font-size:.68em;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
+.fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
+.fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
+.fc-progress .prog-num{color:var(--acc);font-weight:700}
+
+/* MCQ */
+.q-block{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:20px}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.q-num{font-size:.72em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em}
+.q-tag{font-size:.68em;padding:3px 10px;border-radius:10px;font-weight:600}
+.q-tag.mech{background:rgba(245,158,11,.15);color:#FCD34D}
+.q-tag.path{background:rgba(239,68,68,.15);color:#FCA5A5}
+.q-tag.integr{background:rgba(168,85,247,.15);color:#C084FC}
+.q-diff{font-size:.68em;padding:3px 8px;border-radius:8px;border:1px solid #30363D;color:#6B7280;margin-left:auto}
+.q-diff.med{border-color:#F59E0B;color:#F59E0B}
+.q-diff.hard{border-color:#EF4444;color:#EF4444}
+.q-stem{background:#1C2128;border:1px solid #21262D;border-radius:8px;padding:18px 20px;font-size:.93em;line-height:1.8;color:#E6EDF3;margin-bottom:18px}
+.q-stem strong{color:#FCD34D}
+.q-stem em{color:#93C5FD}
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.opt-btn{display:flex;align-items:flex-start;gap:12px;background:#1C2128;border:1.5px solid #30363D;border-radius:8px;padding:12px 16px;cursor:pointer;font-family:inherit;font-size:.89em;color:#C9D1D9;text-align:left;transition:border-color .15s,background .15s;width:100%}
+.opt-btn:hover:not(:disabled){border-color:var(--acc);background:rgba(245,158,11,.06)}
+.opt-btn.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5}
+.opt-btn.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5}
+.opt-btn:disabled{cursor:default}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0;margin-top:1px}
+.opt-btn.correct .opt-letter{background:#4ADE80;color:#000}
+.opt-btn.wrong .opt-letter{background:#EF4444;color:#fff}
+.opt-text{font-size:.88em;line-height:1.55;color:inherit}
+.exp-box{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:18px 20px;margin-top:4px;display:none}
+.exp-box.show{display:block}
+.exp-verdict{font-size:.85em;font-weight:700;margin-bottom:12px;padding:6px 10px;border-radius:6px}
+.exp-verdict.ok{background:rgba(74,222,128,.15);color:#4ADE80}
+.exp-verdict.bad{background:rgba(239,68,68,.1);color:#EF4444}
+.exp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #21262D;align-items:flex-start;font-size:.86em;line-height:1.55}
+.exp-row:last-child{border-bottom:none}
+.exp-letter{font-size:.72em;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.exp-letter.ok{background:rgba(74,222,128,.2);color:#4ADE80}
+.exp-letter.bad{background:rgba(239,68,68,.15);color:#EF4444}
+.exp-text{color:#9CA3AF}
+.exp-text.ok{color:#D1FAE5}
+.teach-box{margin-top:14px;background:var(--acc-dim);border:1px solid rgba(245,158,11,.4);border-radius:8px;padding:14px 16px;font-size:.86em;color:#FCD34D;line-height:1.6}
+.teach-box strong{color:var(--acc);display:block;margin-bottom:4px}
+
+/* VIGNETTES */
+.vig-block{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:24px;margin-bottom:20px;border-left:4px solid #A855F7}
+.vig-label{font-size:.7em;font-weight:700;color:#C084FC;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.vig-text{background:#1C2128;border:1px solid #21262D;border-radius:8px;padding:16px 18px;font-size:.9em;line-height:1.8;color:#E6EDF3;margin-bottom:16px}
+.vig-q{font-size:.92em;font-weight:600;color:#E6EDF3;margin-bottom:14px}
+.vig-options{display:flex;flex-direction:column;gap:8px}
+.vig-opt{display:flex;align-items:flex-start;gap:10px;background:#1C2128;border:1.5px solid #30363D;border-radius:8px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.88em;color:#C9D1D9;text-align:left;transition:all .15s;width:100%}
+.vig-opt:hover:not(:disabled){border-color:#A855F7;background:rgba(168,85,247,.06)}
+.vig-opt.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5}
+.vig-opt.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5}
+.vig-opt:disabled{cursor:default}
+.vig-opt-letter{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.77em;font-weight:700;flex-shrink:0;margin-top:1px}
+.vig-opt.correct .vig-opt-letter{background:#4ADE80;color:#000}
+.vig-opt.wrong .vig-opt-letter{background:#EF4444;color:#fff}
+
+/* TEST TRAPS */
+.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6}
+.trap-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #F59E0B}
+.trap-num{font-size:.7em;font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#1C2128;border-radius:7px;padding:14px;border-left:3px solid #F59E0B;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50}
+.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50}
+.trap-btn-false{background:none;border-color:#C62828;color:#EF5350}
+.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350}
+.trap-btn:disabled{opacity:.55;cursor:not-allowed}
+.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784}
+.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A}
+.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none}
+.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block}
+.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block}
+.trap-exp strong{color:var(--acc)}
+
+/* REFERENCE */
+.ref-section{margin-bottom:28px}
+.ref-title{font-size:.8em;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #21262D}
+.ref-table{width:100%;border-collapse:collapse;font-size:.83em}
+.ref-table th{background:#1C2128;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #21262D}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #21262D;color:#E6EDF3;vertical-align:top;line-height:1.5}
+.ref-table tr:hover td{background:#161B22}
+.ref-table .key{color:var(--acc);font-weight:600}
+
+.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #21262D;padding-top:14px;margin-top:28px}
+.footer a{color:var(--acc);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── TOP NAV ── */
+.topnav{background:#161B22;border-bottom:1px solid #21262D;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#00695C,#004D40);display:flex;align-items:center;justify-content:center;font-size:.9em;font-weight:800;color:#fff;flex-shrink:0}
+.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#6B7280;font-weight:400;margin-left:4px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#6B7280;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #30363D;text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#00BFA5;color:#00BFA5}
+.theme-toggle{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:1em;transition:all .2s;line-height:1}
+.theme-toggle:hover{border-color:#6B7280}
+
+/* ── LIGHT MODE ── */
+body.light{background:#F6F8FA;color:#1F2328}
+body.light .topnav{background:#FFFFFF;border-bottom-color:#D0D7DE}
+body.light .theme-toggle{background:#F6F8FA;border-color:#D0D7DE}
+body.light .nav-back{color:#656D76;border-color:#D0D7DE}
+body.light .nav-back:hover{border-color:#00897B;color:#00695C}
+body.light .nav-brand-text{color:#1F2328}
+body.light .nav-brand-sub{color:#656D76}
+body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
+        body.light .header h1{color:#1F2328!important}
+        body.light .nav-logo{background:linear-gradient(135deg,#00695C,#004D40)!important;color:#fff!important}
+        body.light .trap-statement{background:#FFF8EC!important;border-left-color:#E8A000!important}
+        body.light .trap-btn-true{color:#1A6B1A!important}
+        body.light .trap-btn-false{color:#C62828!important}
+        body.light .trap-btn.sel-correct{background:#E6F4EA!important;color:#1A6B1A!important}
+        body.light .trap-btn.sel-wrong{background:#FDECEA!important;color:#B71C1C!important}
+        body.light .trap-exp.show-c{background:#E6F4EA!important;border-color:#2E7D32!important;color:#1A6B1A!important}
+        body.light .trap-exp.show-w{background:#FDECEA!important;border-color:#C62828!important;color:#B71C1C!important}
+        body.light .trap-exp strong{color:#00695C!important}
+body.light .hub-prog,body.light .stats-bar .stat-card,body.light .stats-row .stat,body.light .score-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .hub-step.current{background:#00695C!important}
+body.light .tab-nav,body.light .tabs{border-bottom-color:#D0D7DE}
+body.light .tab-btn,body.light .tab-button{color:#656D76}
+body.light .tab-btn.active,body.light .tab-button.active{color:#1F2328}
+body.light .fc-front,body.light .q-block,body.light .fib-card,body.light .order-drill,body.light .match-set,body.light .trap-card,body.light .mech-card,body.light .vig-block,body.light .lo-header{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .fc-back{background:#F0FAF8!important;border-color:#A7D7C5!important}
+body.light .fc-front{border-top-color:#00897B!important}
+body.light .fc-q,body.light .fc-a,body.light .fib-prompt,body.light .drill-title,body.light .trap-statement,body.light .vig-text,body.light .vig-q,body.light .match-set-title,body.light .q-stem{color:#1F2328!important}
+body.light .q-stem{background:#F0FAF8!important;border-color:#D0D7DE!important}
+body.light .order-item,body.light .match-item,body.light .opt-btn,body.light .vig-opt,body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .order-item:hover{background:#E6F4F1!important;border-color:#00897B!important}
+body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .exp-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
+body.light .exp-row{border-bottom-color:#E8ECEF!important}
+body.light .exp-text{color:#656D76!important}
+body.light .teach-box{background:rgba(0,137,123,.08)!important;border-color:rgba(0,137,123,.3)!important;color:#00695C!important}
+body.light .footer{border-top-color:#D0D7DE;color:#656D76}
+body.light .ref-table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+body.light .ref-table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+body.light .ref-table tr:hover td{background:#F0FAF8!important}
+body.light .ref-note{background:#F0FAF8!important;border-color:#D0D7DE!important;color:#656D76!important}
+body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#FFF8EC!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .hub-prog-label,body.light .fc-flip-hint,body.light .drill-hint,body.light .match-set-hint,body.light .trap-num,body.light .q-num,body.light .q-diff{color:#656D76!important}
+body.light .stat-label{color:#656D76}
+body.light .hub-tag{background:#00695C!important}
+body.light .pathway-step{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+body.light .pathway-step.key{background:rgba(245,158,11,.15)!important;border-color:#E8C56A!important;color:#92400E!important}
+body.light .mech-note{color:#92400E!important;border-left-color:#D97706!important}
+/* Tab btn (underline style — restore contrast) */
+body.light .tab-btn{color:#4A5568!important}
+body.light .tab-btn:hover{color:#00695C!important}
+body.light .tab-btn.active{color:#00695C!important;border-bottom-color:#00695C!important}
+/* Source / step badges */
+body.light .source-badge{background:#F0FAF8!important;border-color:#A7D7C5!important;color:#2D4A3E!important}
+body.light .source-badge strong{color:#00695C!important}
+/* MCQ tag contrast */
+body.light .q-tag.mech{background:rgba(180,83,9,.1)!important;color:#92400E!important}
+body.light .q-tag.path{background:rgba(220,38,38,.1)!important;color:#991B1B!important}
+body.light .q-tag.integr{background:rgba(109,40,217,.1)!important;color:#6D28D9!important}
+body.light .q-diff.med{border-color:#B45309!important;color:#B45309!important}
+body.light .q-diff.hard{border-color:#DC2626!important;color:#DC2626!important}
+/* Mechanisms — mech-title is #E6EDF3 (near-white) — must override */
+body.light .mech-title{color:#1B4332!important}
+body.light .mech-subtitle{color:#4A6B5A!important}
+/* Vignette label */
+body.light .vig-label{color:#6D28D9!important}
+/* Path Reference */
+body.light .ref-title{color:#00695C!important;border-bottom-color:#D0D7DE!important}
+body.light .ref-table .key{color:#00695C!important}
+body.light .ref-table tr:hover td{background:#F0FAF8!important}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo">H</div>
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back">← Active Drill Hub</a>
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>GI04 Histology <span>Step 1 Deep Dive</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Mechanisms:</strong> Parietal cell HCl, Intrinsic factor, Pepsinogen</div>
+    <div class="source-badge"><strong>Pathology:</strong> Barrett's, H. pylori, Pernicious anemia, Gastric cancer</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid GI + Pathoma Ch. 14</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi04-hub1-histology.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">🔬 Hub #2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi04-hub3-histology.html" class="hub-step next">📝 Hub #3 — USMLE Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Mechanisms</div></div>
+  <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">MCQ</div></div>
+  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Vignettes</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Test Traps</div></div>
+  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('mechs',this)">⚙️ Mechanisms</button>
+  <button class="tab-btn" onclick="switchTab('flashcards',this)">🃏 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">📋 MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">🏥 Vignettes</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">⚠️ Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">📊 Reference</button>
+</div>
+
+<!-- MECHANISMS TAB -->
+<div class="tab-pane active" id="tab-mechs">
+
+  <div class="mech-card">
+    <div class="mech-title">Mechanism 1 — Parietal Cell HCl Secretion</div>
+    <div class="mech-subtitle">How the parietal cell generates and secretes hydrochloric acid into the gastric lumen</div>
+    <div class="pathway">
+      <span class="pathway-step">CO₂ from blood → diffuses into parietal cell</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key">Carbonic anhydrase<br>CO₂ + H₂O → H₂CO₃ → H⁺ + HCO₃⁻</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key">H⁺/K⁺-ATPase (proton pump)<br>H⁺ → lumen, K⁺ → cell</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">Cl⁻ exits into lumen via Cl⁻ channel<br>→ HCl formed in lumen</span>
+    </div>
+    <div class="pathway">
+      <span class="pathway-step key">Basolateral: HCO₃⁻ exchanged for Cl⁻<br>→ HCO₃⁻ enters blood ("alkaline tide")</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">Blood becomes transiently alkaline after meal → ↑ urine pH post-prandially</span>
+    </div>
+    <div class="mech-note">
+      🎯 <strong>Step 1 targets:</strong> Proton pump inhibitors (PPIs) block the H⁺/K⁺-ATPase irreversibly. Carbonic anhydrase inhibitors (acetazolamide) reduce H⁺ generation. Omeprazole, lansoprazole, pantoprazole all act on the same pump — the final common pathway for all acid secretion stimuli (gastrin, histamine, ACh).
+    </div>
+  </div>
+
+  <div class="mech-card">
+    <div class="mech-title">Mechanism 2 — Intrinsic Factor and Vitamin B12 Absorption</div>
+    <div class="mech-subtitle">Why parietal cell loss leads to B12 deficiency and megaloblastic anemia</div>
+    <div class="pathway">
+      <span class="pathway-step key">Parietal cells secrete intrinsic factor (IF)</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">IF binds dietary B12 (cobalamin) in the duodenum/jejunum</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key">IF-B12 complex absorbed by cubilin receptors in the terminal ileum</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">B12 → cofactor for methionine synthase (DNA synthesis) + methylmalonyl-CoA mutase (myelin)</span>
+    </div>
+    <div class="pathway">
+      <span class="pathway-step key" style="color:#FCA5A5;border-color:#C62828">Parietal cell loss (autoimmune)</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">↓ IF → ↓ B12 absorption</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">↓ DNA synthesis → megaloblastic anemia</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key" style="color:#FCA5A5;border-color:#C62828">Subacute combined degeneration of spinal cord (posterior + lateral columns)</span>
+    </div>
+    <div class="mech-note">
+      🎯 <strong>Step 1 targets:</strong> Pernicious anemia = anti-parietal cell antibodies (↓ IF) OR anti-IF antibodies (blocks B12 binding). Schilling test distinguishes intrinsic vs extrinsic B12 deficiency. Terminal ileum resection (Crohn's) causes the same B12 deficiency but NOT pernicious anemia (IF still secreted; just can't absorb IF-B12 complex). Treat with IM B12.
+    </div>
+  </div>
+
+  <div class="mech-card">
+    <div class="mech-title">Mechanism 3 — Pepsinogen Activation and Pepsin Function</div>
+    <div class="mech-subtitle">Zymogen activation in the gastric gland</div>
+    <div class="pathway">
+      <span class="pathway-step key">Chief cells (gland base) secrete pepsinogen (inactive zymogen)</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key">Low gastric pH (HCl) cleaves N-terminal segment of pepsinogen</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">Active pepsin (endopeptidase)</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step key">Pepsin autocatalyzes: cleaves more pepsinogen → pepsin (positive feedback)</span>
+    </div>
+    <div class="pathway">
+      <span class="pathway-step">Pepsin cleaves peptide bonds → initiates protein digestion</span>
+      <span class="pathway-arrow">→</span>
+      <span class="pathway-step">Denatures at pH &gt;5 → inactivated when chyme reaches duodenum (neutralized by pancreatic HCO₃⁻)</span>
+    </div>
+    <div class="mech-note">
+      🎯 <strong>Step 1 targets:</strong> Chief cells = basophilic stain (abundant RER for protein synthesis). Zollinger-Ellison syndrome: ↑↑ gastrin → ↑↑ HCl → converts all pepsinogen → ↑↑ pepsin → peptic ulcers. PPIs that reduce acid also reduce pepsin activity indirectly (less pH-driven activation).
+    </div>
+  </div>
+
+</div>
+
+<!-- FLASHCARDS TAB -->
+<div class="tab-pane" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#6B7280">Step 1 high-yield histology + pathology</em></span><span class="prog-num" id="fc-counter">0 / 12 seen</span></div>
+  <div class="fc-grid" id="fc-container"></div>
+</div>
+
+<!-- MCQ TAB -->
+<div class="tab-pane" id="tab-mcq">
+
+  <!-- Q1 -->
+  <div class="q-block" id="q-1">
+    <div class="q-meta">
+      <span class="q-num">Question 1</span>
+      <span class="q-tag mech">Mechanism</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A pharmacologist is studying a new drug that blocks the enzyme responsible for the initial step in HCl generation inside parietal cells. This drug would primarily inhibit which of the following enzymes?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt('1','A','B')"><span class="opt-letter">A</span><span class="opt-text">H⁺/K⁺-ATPase</span></button>
+      <button class="opt-btn" onclick="selectOpt('1','B','B')"><span class="opt-letter">B</span><span class="opt-text">Carbonic anhydrase</span></button>
+      <button class="opt-btn" onclick="selectOpt('1','C','B')"><span class="opt-letter">C</span><span class="opt-text">Pepsinogen</span></button>
+      <button class="opt-btn" onclick="selectOpt('1','D','B')"><span class="opt-letter">D</span><span class="opt-text">Na⁺/K⁺-ATPase</span></button>
+      <button class="opt-btn" onclick="selectOpt('1','E','B')"><span class="opt-letter">E</span><span class="opt-text">Gastric lipase</span></button>
+    </div>
+    <div class="exp-box" id="exp-1">
+      <div class="exp-verdict ok">✓ Correct Answer: B — Carbonic anhydrase</div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">H⁺/K⁺-ATPase is the proton pump — it's the final step (exporting H⁺ into lumen), not the initial step. PPIs block this enzyme.</span></div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ Carbonic anhydrase catalyzes CO₂ + H₂O → H₂CO₃ → H⁺ + HCO₃⁻. This is the first step generating H⁺ inside the parietal cell. Without this, there is no H⁺ to pump.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">C</span><span class="exp-text">Pepsinogen is secreted by chief cells (not parietal cells) and is a zymogen, not relevant to HCl generation.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">Na⁺/K⁺-ATPase maintains cellular membrane potential; not specific to parietal cell acid secretion.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">E</span><span class="exp-text">Gastric lipase is secreted by chief cells and initiates fat digestion; unrelated to HCl generation.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> The sequence in parietal cell acid secretion: Carbonic anhydrase (step 1) → H⁺ generated → H⁺/K⁺-ATPase (proton pump, step 2) exports H⁺ into lumen. Acetazolamide blocks carbonic anhydrase; PPIs block H⁺/K⁺-ATPase.</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q-2">
+    <div class="q-meta">
+      <span class="q-num">Question 2</span>
+      <span class="q-tag path">Pathology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A 58-year-old man with a 20-year history of heartburn undergoes upper endoscopy. A salmon-colored tongue of mucosa is seen extending 3 cm above the gastroesophageal junction. Biopsy shows columnar epithelium with <strong>goblet cells</strong>. What type of metaplasia is this, and what is the primary risk?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt('2','A','C')"><span class="opt-letter">A</span><span class="opt-text">Squamous metaplasia → risk of squamous cell carcinoma of the esophagus</span></button>
+      <button class="opt-btn" onclick="selectOpt('2','B','C')"><span class="opt-letter">B</span><span class="opt-text">Squamous metaplasia → risk of esophageal adenocarcinoma</span></button>
+      <button class="opt-btn" onclick="selectOpt('2','C','C')"><span class="opt-letter">C</span><span class="opt-text">Intestinal (columnar) metaplasia (Barrett's esophagus) → risk of esophageal adenocarcinoma</span></button>
+      <button class="opt-btn" onclick="selectOpt('2','D','C')"><span class="opt-letter">D</span><span class="opt-text">Intestinal metaplasia → risk of squamous cell carcinoma of the esophagus</span></button>
+      <button class="opt-btn" onclick="selectOpt('2','E','C')"><span class="opt-letter">E</span><span class="opt-text">Transitional metaplasia → risk of lymphoma</span></button>
+    </div>
+    <div class="exp-box" id="exp-2">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ Barrett's esophagus = replacement of normal non-keratinized stratified squamous epithelium with columnar intestinal-type epithelium containing goblet cells (intestinal metaplasia). Caused by chronic GERD. Major risk: esophageal <strong>adenocarcinoma</strong> (NOT squamous cell carcinoma). Goblet cells are the hallmark on biopsy.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A/B</span><span class="exp-text">Squamous metaplasia means columnar → squamous (opposite direction). Barrett's is columnar metaplasia (stratified squamous → columnar).</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">Barrett's is associated with adenocarcinoma (lower esophagus/GEJ), not squamous cell carcinoma (which occurs in upper/mid esophagus from smoking/alcohol).</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Barrett's esophagus — chronic acid reflux → columnar intestinal metaplasia (goblet cells on biopsy) → dysplasia → adenocarcinoma. The two types of esophageal cancer: squamous cell (upper/mid, smoking/alcohol, worldwide) vs adenocarcinoma (lower/GEJ, GERD/Barrett's, Western countries, ↑ incidence).</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q-3">
+    <div class="q-meta">
+      <span class="q-num">Question 3</span>
+      <span class="q-tag path">Pathology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A 65-year-old woman presents with fatigue, pallor, and tingling in her hands and feet. Labs show macrocytic anemia, elevated MCV, and low serum B12. Endoscopy reveals atrophic, pale gastric mucosa. Serology is positive for anti-parietal cell antibodies. Which of the following is the direct cause of her B12 deficiency?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt('3','A','B')"><span class="opt-letter">A</span><span class="opt-text">Decreased chief cell secretion of pepsinogen, impairing protein digestion needed for B12 release</span></button>
+      <button class="opt-btn" onclick="selectOpt('3','B','B')"><span class="opt-letter">B</span><span class="opt-text">Loss of parietal cells → decreased intrinsic factor → failure of B12 absorption in the terminal ileum</span></button>
+      <button class="opt-btn" onclick="selectOpt('3','C','B')"><span class="opt-letter">C</span><span class="opt-text">Loss of HCl production → alkaline gastric environment → bacterial overgrowth competing for B12</span></button>
+      <button class="opt-btn" onclick="selectOpt('3','D','B')"><span class="opt-letter">D</span><span class="opt-text">Damage to ileal mucosa preventing absorption of free B12</span></button>
+      <button class="opt-btn" onclick="selectOpt('3','E','B')"><span class="opt-letter">E</span><span class="opt-text">Decreased goblet cell production of mucin impairing duodenal B12 absorption</span></button>
+    </div>
+    <div class="exp-box" id="exp-3">
+      <div class="exp-verdict ok">✓ Correct Answer: B</div>
+      <div class="exp-row"><span class="exp-letter ok">B</span><span class="exp-text ok">✓ Parietal cells secrete intrinsic factor (IF). Autoimmune destruction of parietal cells (pernicious anemia) → no IF → B12 cannot be absorbed at the terminal ileum (requires IF-B12 complex + cubilin receptors). Result: megaloblastic anemia + subacute combined degeneration of the spinal cord.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">Chief cells secrete pepsinogen, not intrinsic factor. While protein digestion helps release protein-bound B12, this is not the direct mechanism in pernicious anemia.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">C</span><span class="exp-text">Bacterial overgrowth can cause B12 deficiency but is not the direct mechanism in autoimmune pernicious anemia; this patient's antibodies point to parietal cell destruction.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">Ileal damage (as in Crohn's) causes B12 deficiency, but this patient's pathology is gastric (atrophic gastritis, anti-parietal cell antibodies), not ileal.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> Pernicious anemia — autoimmune gastritis → parietal cell destruction → ↓ IF → B12 malabsorption. Distinguished from dietary B12 deficiency (vegans) by antibody testing. Both cause megaloblastic anemia + neurological symptoms (subacute combined degeneration: posterior columns + lateral corticospinal tracts). Treat with IM B12 (bypasses GI absorption).</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q-4">
+    <div class="q-meta">
+      <span class="q-num">Question 4</span>
+      <span class="q-tag path">Pathology</span>
+      <span class="q-diff med">Medium</span>
+    </div>
+    <div class="q-stem">
+      A 45-year-old man undergoes endoscopy for epigastric pain. Biopsy of the gastric antrum shows chronic active gastritis with <strong>curved gram-negative rods</strong> in the mucus layer overlying the epithelium. The organism tests positive on urease breath test. Which of the following BEST describes how this infection predisposes to duodenal ulcer disease?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt('4','A','C')"><span class="opt-letter">A</span><span class="opt-text">Direct invasion of parietal cells → ↓ HCl production → alkaline environment → duodenal damage</span></button>
+      <button class="opt-btn" onclick="selectOpt('4','B','C')"><span class="opt-letter">B</span><span class="opt-text">Infection of the fundus → destroys chief cells → ↓ pepsinogen → ulceration</span></button>
+      <button class="opt-btn" onclick="selectOpt('4','C','C')"><span class="opt-letter">C</span><span class="opt-text">Antral infection → damages D cells → ↓ somatostatin → ↑ gastrin → ↑↑ acid → duodenal ulcer</span></button>
+      <button class="opt-btn" onclick="selectOpt('4','D','C')"><span class="opt-letter">D</span><span class="opt-text">Urease produces HCl directly → burns through duodenal mucosa</span></button>
+      <button class="opt-btn" onclick="selectOpt('4','E','C')"><span class="opt-letter">E</span><span class="opt-text">H. pylori blocks Brunner's glands → ↓ bicarbonate secretion → acid injury to duodenum</span></button>
+    </div>
+    <div class="exp-box" id="exp-4">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ H. pylori colonizes primarily the antrum → damages D cells (which secrete somatostatin) → ↓ somatostatin → removes inhibition of gastrin (G cells) → ↑ gastrin → ↑↑ HCl → overwhelms duodenal HCO₃⁻ buffering → duodenal ulcer. Urease also generates ammonia (NH₃) which is directly cytotoxic to mucus cells.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">H. pylori actually ↑ acid production indirectly (via ↑ gastrin), not ↓ it. In severe/long-standing infection involving the fundus, acid may ultimately decrease (atrophic gastritis stage), but early disease causes ↑ acid.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">D</span><span class="exp-text">Urease breaks down urea → NH₃ + CO₂. The NH₃ is cytotoxic to mucus cells and neutralizes acid near the bacteria (allowing them to survive), but does not directly produce HCl.</span></div>
+      <div class="teach-box"><strong>Teaching Point:</strong> H. pylori → antral gastritis → ↓ somatostatin → ↑ gastrin → ↑ acid → duodenal ulcers (most common H. pylori ulcer site). Fundal H. pylori → atrophic gastritis → ↓ acid → ↑ risk of gastric adenocarcinoma (intestinal type) and MALT lymphoma. Diagnose: urease breath test, stool antigen, serology, or biopsy. Treat: triple therapy (PPI + clarithromycin + amoxicillin).</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q-5">
+    <div class="q-meta">
+      <span class="q-num">Question 5</span>
+      <span class="q-tag integr">Integration</span>
+      <span class="q-diff hard">Hard</span>
+    </div>
+    <div class="q-stem">
+      On a histology exam, a student is shown two cells from the base of gastric glands side by side. Cell X stains <strong>eosinophilic (pink)</strong> with a round shape and has deeply invaginated intracellular canaliculi. Cell Y stains <strong>basophilic (blue/purple)</strong> with abundant basal cytoplasm. Which of the following correctly identifies these cells and their products?
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="selectOpt('5','A','C')"><span class="opt-letter">A</span><span class="opt-text">Cell X = Chief cell (pepsinogen); Cell Y = Parietal cell (HCl)</span></button>
+      <button class="opt-btn" onclick="selectOpt('5','B','C')"><span class="opt-letter">B</span><span class="opt-text">Cell X = Goblet cell (mucin); Cell Y = Paneth cell (lysozyme)</span></button>
+      <button class="opt-btn" onclick="selectOpt('5','C','C')"><span class="opt-letter">C</span><span class="opt-text">Cell X = Parietal cell (HCl + intrinsic factor); Cell Y = Chief cell (pepsinogen)</span></button>
+      <button class="opt-btn" onclick="selectOpt('5','D','C')"><span class="opt-letter">D</span><span class="opt-text">Cell X = Enteroendocrine cell (gastrin); Cell Y = Parietal cell (HCl)</span></button>
+      <button class="opt-btn" onclick="selectOpt('5','E','C')"><span class="opt-letter">E</span><span class="opt-text">Cell X = Mucus neck cell (acidic mucin); Cell Y = Chief cell (pepsin)</span></button>
+    </div>
+    <div class="exp-box" id="exp-5">
+      <div class="exp-verdict ok">✓ Correct Answer: C</div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ Parietal cells (Cell X) are eosinophilic because they are packed with <strong>mitochondria</strong> (pink on H&amp;E) — they need enormous ATP for the H⁺/K⁺-ATPase. Their invaginated canaliculi are the key ultrastructural feature. Chief cells (Cell Y) are basophilic because they contain abundant <strong>RER</strong> (blue/purple on H&amp;E) for pepsinogen protein synthesis.</span></div>
+      <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">The staining is reversed. Chief cells are basophilic; parietal cells are eosinophilic. This is a classic swap-the-answer trap on Step 1.</span></div>
+      <div class="teach-box"><strong>Mnemonic:</strong> "Parietal cells are <strong>P</strong>ink (<strong>P</strong>acked with mitochondria for the <strong>P</strong>roton pump)." Chief cells are "<strong>C</strong>hief = <strong>C</strong>olorless/blue (abundant RE<strong>R</strong>)." This staining distinction is a high-yield histology discrimination question.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- VIGNETTES TAB -->
+<div class="tab-pane" id="tab-vignettes">
+
+  <div class="vig-block">
+    <div class="vig-label">Clinical Vignette 1 — Endoscopic Finding</div>
+    <div class="vig-text">
+      A 62-year-old man with a 25-year history of heartburn, treated with antacids, undergoes routine upper endoscopy for surveillance. The endoscopist notes a <strong>3 cm salmon-colored tongue</strong> of mucosa extending proximally above the gastroesophageal junction. Multiple biopsies are taken. The pathologist reports: "columnar epithelium with <strong>goblet cell intestinal metaplasia</strong>; no dysplasia identified." The patient asks what this means and whether it is serious.
+    </div>
+    <div class="vig-q">Which of the following BEST describes the pathological process and the primary clinical concern?</div>
+    <div class="vig-options" id="vig-opts-1">
+      <button class="vig-opt" onclick="selectVig(1,'A','C')"><span class="vig-opt-letter">A</span>Squamous metaplasia in response to acid — increased risk of esophageal squamous cell carcinoma</button>
+      <button class="vig-opt" onclick="selectVig(1,'B','C')"><span class="vig-opt-letter">B</span>Normal gastric-type columnar mucosa — no increased cancer risk; reassure patient</button>
+      <button class="vig-opt" onclick="selectVig(1,'C','C')"><span class="vig-opt-letter">C</span>Barrett's esophagus (intestinal metaplasia with goblet cells) — increased risk of esophageal adenocarcinoma requiring surveillance</button>
+      <button class="vig-opt" onclick="selectVig(1,'D','C')"><span class="vig-opt-letter">D</span>Pyloric metaplasia — a benign finding requiring no follow-up</button>
+      <button class="vig-opt" onclick="selectVig(1,'E','C')"><span class="vig-opt-letter">E</span>Eosinophilic esophagitis — treat with dietary modification and topical steroids</button>
+    </div>
+    <div class="exp-box show" id="vig-exp-1" style="display:none">
+      <div class="exp-verdict ok">✓ Correct Answer: C — Barrett's esophagus with adenocarcinoma risk</div>
+      <p style="font-size:.86em;color:#9CA3AF;line-height:1.6;margin-top:8px">
+        <strong style="color:#FCD34D">Explanation:</strong> The hallmark of Barrett's esophagus is replacement of the normal non-keratinized stratified squamous epithelium with <strong>columnar intestinal metaplasia containing goblet cells</strong>. Goblet cells are required for the diagnosis. The pathogenesis: chronic GERD → acid reflux → changes gene expression in basal stem cells → intestinal-type columnar metaplasia. Barrett's carries a ~30–125× increased risk of <strong>esophageal adenocarcinoma</strong> compared to the general population. Management involves surveillance endoscopy with biopsies every 3–5 years (if no dysplasia), high-dose PPI therapy, and endoscopic ablation if high-grade dysplasia develops. The transition from Barrett's → low-grade dysplasia → high-grade dysplasia → adenocarcinoma follows the metaplasia-dysplasia-carcinoma sequence.
+      </p>
+    </div>
+  </div>
+
+  <div class="vig-block">
+    <div class="vig-label">Clinical Vignette 2 — Systemic Presentation</div>
+    <div class="vig-text">
+      A 58-year-old woman presents with 6 months of progressive fatigue, pallor, and paresthesias in her feet and hands. She reports no dietary restrictions. Physical exam reveals a smooth, beefy-red tongue (glossitis) and diminished vibration sense in the lower extremities. CBC: Hgb 8.2 g/dL, MCV 115 fL (normal 80–100). Peripheral smear: hypersegmented neutrophils. Serum B12: 90 pg/mL (low). Anti-parietal cell antibodies: <strong>positive</strong>. Anti-intrinsic factor antibodies: <strong>positive</strong>. Upper endoscopy: pale, atrophic gastric mucosa; loss of rugae in the body/fundus.
+    </div>
+    <div class="vig-q">Which of the following BEST describes the mechanism linking this patient's gastric histology to her hematologic and neurologic findings?</div>
+    <div class="vig-options" id="vig-opts-2">
+      <button class="vig-opt" onclick="selectVig(2,'A','C')"><span class="vig-opt-letter">A</span>Loss of chief cells → decreased pepsinogen → impaired protein digestion → B12 cannot be released from food</button>
+      <button class="vig-opt" onclick="selectVig(2,'B','C')"><span class="vig-opt-letter">B</span>Autoimmune destruction of parietal cells → decreased HCl → achlorhydria → bacterial overgrowth consuming dietary B12</button>
+      <button class="vig-opt" onclick="selectVig(2,'C','C')"><span class="vig-opt-letter">C</span>Autoimmune destruction of parietal cells → decreased intrinsic factor → B12 malabsorption → megaloblastic anemia + subacute combined degeneration</button>
+      <button class="vig-opt" onclick="selectVig(2,'D','C')"><span class="vig-opt-letter">D</span>Anti-parietal cell antibodies directly damage the terminal ileum → impaired B12 absorption at cubilin receptors</button>
+      <button class="vig-opt" onclick="selectVig(2,'E','C')"><span class="vig-opt-letter">E</span>Atrophic gastritis → H. pylori infection → competitive B12 consumption → B12 deficiency</button>
+    </div>
+    <div class="exp-box show" id="vig-exp-2" style="display:none">
+      <div class="exp-verdict ok">✓ Correct Answer: C — Pernicious anemia</div>
+      <p style="font-size:.86em;color:#9CA3AF;line-height:1.6;margin-top:8px">
+        <strong style="color:#FCD34D">Explanation:</strong> This is a classic presentation of <strong>pernicious anemia</strong>. The mechanism: autoimmune gastritis → loss of parietal cells → <strong>no intrinsic factor (IF)</strong> → B12 cannot form the IF-B12 complex → B12 cannot be absorbed via cubilin receptors in the terminal ileum → B12 deficiency → <strong>megaloblastic anemia</strong> (↓ DNA synthesis: large RBCs, hypersegmented PMNs) + <strong>subacute combined degeneration</strong> (loss of myelin in posterior columns [vibration/proprioception] and lateral corticospinal tracts). The positive anti-IF antibodies are essentially diagnostic. Note: both anti-parietal cell AND anti-IF antibodies can cause pernicious anemia (different mechanisms but same outcome). Treatment: intramuscular B12 injections (bypasses absent IF/ileal absorption). Unlike Crohn's disease affecting the terminal ileum, this patient has gastric pathology as the root cause.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- TEST TRAPS TAB -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">⚠️ <strong>High-yield Step 1 test traps:</strong> Each statement is a common exam misconception about GI histology and pathology. Select <strong>TRUE</strong> or <strong>FALSE</strong> first, then read the full explanation.
+  </div>
+  <div id="traps-container"></div>
+</div>
+
+<!-- REFERENCE TAB -->
+<div class="tab-pane" id="tab-ref">
+  <div class="ref-section">
+    <div class="ref-title">Step 1 Pathology Overview — GI Histology-Related Diseases</div>
+    <table class="ref-table">
+      <tr><th>Disease</th><th>Pathology</th><th>Key Cells/Finding</th><th>Consequence</th></tr>
+      <tr><td class="key">Barrett's esophagus</td><td>Chronic GERD → squamous → columnar intestinal metaplasia</td><td>Goblet cells on biopsy (required for diagnosis)</td><td>↑ Risk of esophageal adenocarcinoma (GEJ)</td></tr>
+      <tr><td class="key">Pernicious anemia</td><td>Autoimmune destruction of parietal cells → atrophic gastritis</td><td>Anti-parietal cell Ab, anti-IF Ab; atrophic mucosa</td><td>↓ IF → B12 malabsorption → megaloblastic anemia + SCD</td></tr>
+      <tr><td class="key">H. pylori gastritis</td><td>Colonizes antral mucus layer; urease positive; ↓ D cells → ↑ gastrin</td><td>Curved gram-negative rods in mucus layer; chronic active gastritis</td><td>Duodenal ulcer (antral H. pylori); gastric ulcer/cancer (fundal H. pylori); MALT lymphoma</td></tr>
+      <tr><td class="key">Zollinger-Ellison syndrome</td><td>Gastrin-secreting tumor (gastrinoma) in pancreas or duodenal wall; MEN-1</td><td>↑↑ serum gastrin; multiple/refractory ulcers; secretory diarrhea</td><td>↑↑ HCl → peptic ulcers + diarrhea (acid inactivates pancreatic lipase)</td></tr>
+      <tr><td class="key">Gastric adenocarcinoma</td><td><em>Intestinal type:</em> H. pylori → chronic gastritis → metaplasia → dysplasia → carcinoma<br><em>Diffuse type:</em> CDH1 mutation; signet ring cells</td><td>Intestinal: gland formation; Diffuse: linitis plastica (leather bottle)</td><td>Virchow's node (left supraclavicular); Krukenberg tumor (ovarian mets)</td></tr>
+    </table>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">Parietal Cell vs Chief Cell — Comparison</div>
+    <table class="ref-table">
+      <tr><th>Feature</th><th>Parietal Cell</th><th>Chief Cell</th></tr>
+      <tr><td>Location in gland</td><td>Neck and base</td><td>Base (predominant)</td></tr>
+      <tr><td>Shape</td><td>Round, pyramidal</td><td>Columnar, abundant basal cytoplasm</td></tr>
+      <tr><td class="key">H&amp;E stain</td><td class="key">Eosinophilic (pink) — abundant mitochondria</td><td class="key">Basophilic (blue/purple) — abundant RER</td></tr>
+      <tr><td>Unique structure</td><td>Intracellular canaliculi lined with microvilli</td><td>Zymogen granules at apex</td></tr>
+      <tr><td class="key">Products</td><td class="key">HCl + Intrinsic factor</td><td class="key">Pepsinogen (→ pepsin)</td></tr>
+      <tr><td>Clinical relevance</td><td>Target of PPIs; lost in pernicious anemia; stimulated by gastrin/histamine/ACh</td><td>Zollinger-Ellison: ↑ pepsin activity; decreased in atrophic gastritis</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="gi04-hub1-histology.html">← Hub #1 Core Concepts</a> &nbsp;|&nbsp;
+  <a href="../index.html">GI Block Home</a> &nbsp;|&nbsp;
+  <a href="gi04-hub3-histology.html">Hub #3 — USMLE Questions →</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+/* ==========================================
+   FLASHCARDS DATA
+   ========================================== */
+const flashcards = [
+  {cat:"Mechanism", q:"Describe the step-by-step mechanism of HCl production in parietal cells.", a:"1. CO₂ diffuses in from blood<br>2. <strong>Carbonic anhydrase</strong>: CO₂ + H₂O → H⁺ + HCO₃⁻<br>3. <strong>H⁺/K⁺-ATPase</strong> (proton pump) pumps H⁺ → lumen; K⁺ → cell<br>4. Cl⁻ exits into lumen → HCl formed<br>5. HCO₃⁻ → blood in exchange for Cl⁻ (<strong>'alkaline tide'</strong>)"},
+  {cat:"Mechanism", q:"What is the 'alkaline tide' after a meal?", a:"After a meal, parietal cells secrete H⁺ into the stomach and release <strong>HCO₃⁻ into the blood</strong> in exchange for Cl⁻. This transiently raises blood pH (alkaline tide) and also increases urine pH. Reversed when HCl is neutralized in duodenum (HCO₃⁻ is recaptured)."},
+  {cat:"Mechanism", q:"What are the 3 stimuli for parietal cell HCl secretion?", a:"<strong>1. Acetylcholine (ACh)</strong> — from vagus nerve (via M3 receptors)<br><strong>2. Gastrin</strong> — from G cells in antrum (via CCK-B receptors)<br><strong>3. Histamine</strong> — from ECL cells (via H2 receptors)<br>All three → ↑ H⁺/K⁺-ATPase activity → ↑ HCl"},
+  {cat:"Pathology", q:"What is Barrett's esophagus? What causes it and what is its risk?", a:"<strong>Barrett's esophagus</strong>: replacement of esophageal stratified squamous epithelium with <strong>columnar intestinal-type epithelium containing goblet cells</strong>.<br>Cause: chronic GERD (acid reflux)<br>Risk: ↑↑ risk of <strong>esophageal adenocarcinoma</strong> (NOT squamous cell carcinoma)"},
+  {cat:"Pathology", q:"What histological finding is REQUIRED to diagnose Barrett's esophagus?", a:"<strong>Goblet cells</strong> on biopsy (intestinal metaplasia). Simple columnar (gastric-type) metaplasia alone is NOT sufficient — goblet cells (mucin-containing, cup-shaped, alcian blue-positive) are required for formal Barrett's diagnosis."},
+  {cat:"Pathology", q:"What is pernicious anemia and what is the mechanism?", a:"<strong>Pernicious anemia</strong>: autoimmune destruction of parietal cells (anti-parietal cell Ab) OR blocking of intrinsic factor (anti-IF Ab)<br>→ ↓ intrinsic factor (IF)<br>→ B12 cannot be absorbed in terminal ileum<br>→ Megaloblastic anemia + subacute combined degeneration (posterior + lateral cord columns)"},
+  {cat:"Pathology", q:"H. pylori: where does it colonize, and how does it cause duodenal ulcers?", a:"<strong>H. pylori</strong> colonizes the <strong>gastric antrum</strong> mucus layer. Mechanism:<br>1. Damages antral <strong>D cells</strong> → ↓ somatostatin<br>2. ↓ somatostatin removes inhibition of G cells → ↑ <strong>gastrin</strong><br>3. ↑ Gastrin → ↑↑ HCl → overwhelms duodenal buffering → <strong>duodenal ulcer</strong>"},
+  {cat:"Pathology", q:"What is Zollinger-Ellison syndrome?", a:"<strong>Gastrin-secreting tumor (gastrinoma)</strong> — usually in the pancreas or duodenum (gastrinoma triangle). Causes ↑↑↑ gastrin → ↑↑↑ HCl → multiple, refractory, atypical peptic ulcers + secretory diarrhea. Associated with <strong>MEN-1</strong> (parathyroid + pituitary + pancreatic tumors)."},
+  {cat:"Pathology", q:"What are the 2 types of gastric adenocarcinoma and how do they differ?", a:"<strong>Intestinal type:</strong> H. pylori → chronic gastritis → intestinal metaplasia → dysplasia → adenocarcinoma. Gland-forming, better prognosis.<br><strong>Diffuse type:</strong> CDH1 mutation (E-cadherin), <strong>signet ring cells</strong>, linitis plastica (leather bottle stomach). Worse prognosis. Spreads diffusely."},
+  {cat:"Cell Histology", q:"Why do parietal cells stain eosinophilic (pink) on H&E?", a:"Parietal cells are <strong>packed with mitochondria</strong> to power the H⁺/K⁺-ATPase (enormous ATP demand). Mitochondria stain eosinophilic (pink). Also have deep intracellular canaliculi lined with microvilli to maximize surface area for H⁺ secretion."},
+  {cat:"Cell Histology", q:"Why do chief cells stain basophilic (blue/purple) on H&E?", a:"Chief cells have <strong>abundant rough endoplasmic reticulum (RER)</strong> for synthesizing and secreting large amounts of pepsinogen (a protein). RER stains basophilic (blue/purple) due to its high RNA content. Compare to parietal cells (eosinophilic, mitochondria-rich)."},
+  {cat:"Integration", q:"A patient with terminal ileum Crohn's disease develops B12 deficiency. How does this differ from pernicious anemia?", a:"<strong>Same outcome</strong> (B12 deficiency → megaloblastic anemia + neurological symptoms), <strong>different mechanism</strong>:<br>• <strong>Crohn's (terminal ileum)</strong>: cubilin receptors for IF-B12 absorption are lost → B12 malabsorption, but IF is <strong>still produced normally</strong> by parietal cells<br>• <strong>Pernicious anemia</strong>: parietal cells destroyed → <strong>no IF produced</strong> → B12 cannot bind IF → cannot be absorbed"},
+];
+
+/* ==========================================
+   TEST TRAPS DATA
+   ========================================== */
+const traps = [
+  {
+    statement:"The H⁺/K⁺-ATPase in parietal cells pumps H⁺ out of the cell in exchange for Na⁺.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> The proton pump (H⁺/K⁺-ATPase) exchanges <strong>H⁺ for K⁺</strong>, not Na⁺. K⁺ enters the cell while H⁺ is pumped into the lumen. This distinction matters because different drugs target different pumps: PPIs block H⁺/K⁺-ATPase; cardiac glycosides block Na⁺/K⁺-ATPase."
+  },
+  {
+    statement:"Barrett's esophagus is a change to squamous metaplasia in response to chronic acid reflux.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> This is reversed. Barrett's is a change FROM squamous TO <strong>columnar intestinal metaplasia</strong>. The normal esophagus is already lined by squamous epithelium — chronic acid reflux drives metaplasia toward intestinal-type columnar epithelium (with goblet cells). Squamous metaplasia would mean columnar → squamous (the opposite direction)."
+  },
+  {
+    statement:"Chief cells stain eosinophilic (pink) on H&E because they are packed with mitochondria.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> This describes <strong>parietal cells</strong>, not chief cells. Chief cells are <strong>basophilic (blue/purple)</strong> because they contain abundant rough ER for pepsinogen synthesis. Parietal cells are eosinophilic (pink) because they have abundant mitochondria to power the H⁺/K⁺-ATPase. This is a classic swap trap on Step 1."
+  },
+  {
+    statement:"Intrinsic factor is secreted by chief cells in the fundic glands of the stomach.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> Intrinsic factor is secreted by <strong>parietal cells</strong>, not chief cells. Chief cells secrete pepsinogen. Parietal cells secrete both HCl AND intrinsic factor — so a single drug (a PPI) or a single autoimmune process (pernicious anemia) can simultaneously reduce acid and impair B12 absorption."
+  },
+  {
+    statement:"A patient with Crohn's disease affecting only the terminal ileum will develop pernicious anemia.",
+    answer:false,
+    exp:"<strong>FALSE.</strong> Terminal ileum Crohn's disease causes B12 malabsorption (because cubilin receptors for the IF-B12 complex are in the terminal ileum), but this is <strong>NOT pernicious anemia</strong>. Pernicious anemia specifically refers to B12 deficiency caused by <strong>loss of intrinsic factor</strong> due to autoimmune destruction of parietal cells. In Crohn's, intrinsic factor is produced normally — the absorption site is damaged, not the IF production. Both cause megaloblastic anemia, but the distinction is high-yield."
+  },
+];
+
+/* ==========================================
+   RENDER FUNCTIONS
+   ========================================== */
+let seenCards = new Set();
+
+function renderFlashcards(){
+  const container = document.getElementById('fc-container');
+  flashcards.forEach((card, i) => {
+    const div = document.createElement('div');
+    div.className = 'fc';
+    div.innerHTML = `
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">${card.cat}</div>
+          <div class="fc-q">${card.q}</div>
+          <div class="fc-flip-hint">↻ Click to reveal answer</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a">${card.a}</div>
+          <div class="fc-flip-hint">↻ Click to flip back</div>
+        </div>
+      </div>`;
+    div.addEventListener('click', () => {
+      div.classList.toggle('flipped');
+      seenCards.add(i);
+      document.getElementById('fc-counter').textContent = seenCards.size + ' / ' + flashcards.length + ' seen';
+    });
+    container.appendChild(div);
+  });
+  fixCardHeights();
+}
+
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(card => {
+    const front = card.querySelector('.fc-front');
+    const back = card.querySelector('.fc-back');
+    back.style.cssText = 'position:relative!important;transform:none!important;visibility:visible!important;backface-visibility:visible!important';
+    const h = Math.max(front.scrollHeight, back.scrollHeight) + 24;
+    back.style.cssText = '';
+    const minH = h + 'px';
+    card.style.minHeight = minH;
+    card.querySelector('.fc-inner').style.minHeight = minH;
+    front.style.minHeight = minH;
+    back.style.minHeight = minH;
+  });
+}
+
+function renderTraps(){
+  const container = document.getElementById('traps-container');
+  traps.forEach((trap, i) => {
+    const div = document.createElement('div');
+    div.className = 'trap-card';
+    div.innerHTML = `
+      <div class="trap-num">Test Trap ${i+1}</div>
+      <div class="trap-statement">"${trap.statement}"</div>
+      <div class="trap-btns" id="tbtns-${i}">
+        <button class="trap-btn trap-btn-true" onclick="selectTrap(${i},true)">TRUE</button>
+        <button class="trap-btn trap-btn-false" onclick="selectTrap(${i},false)">FALSE</button>
+      </div>
+      <div class="trap-exp" id="trap-exp-${i}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function selectTrap(i, choice){
+  const trap = traps[i];
+  const btns = document.getElementById('tbtns-' + i).querySelectorAll('.trap-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = (choice === trap.answer);
+  btns[choice === true ? 0 : 1].classList.add(correct ? 'sel-correct' : 'sel-wrong');
+  const exp = document.getElementById('trap-exp-' + i);
+  exp.innerHTML = trap.exp;
+  exp.className = 'trap-exp ' + (correct ? 'show-c' : 'show-w');
+}
+
+function selectOpt(qId, chosen, correct){
+  const block = document.getElementById('q-' + qId);
+  const btns = block.querySelectorAll('.opt-btn');
+  btns.forEach(b => {
+    b.disabled = true;
+    const letter = b.querySelector('.opt-letter').textContent;
+    if(letter === correct) b.classList.add('correct');
+    else if(letter === chosen) b.classList.add('wrong');
+  });
+  document.getElementById('exp-' + qId).classList.add('show');
+}
+
+function selectVig(vigId, chosen, correct){
+  const opts = document.getElementById('vig-opts-' + vigId).querySelectorAll('.vig-opt');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    const letter = btn.querySelector('.vig-opt-letter').textContent;
+    if(letter === correct) btn.classList.add('correct');
+    else if(letter === chosen) btn.classList.add('wrong');
+  });
+  const exp = document.getElementById('vig-exp-' + vigId);
+  if(exp) exp.style.display = 'block';
+}
+
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderFlashcards();
+  renderTraps();
+  window.addEventListener('resize', fixCardHeights);
+});
+
+/* ── THEME TOGGLE ── */
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
+  try{localStorage.setItem('gi-theme',isLight?'light':'dark');}catch(e){}
+}
+window.addEventListener('DOMContentLoaded',function(){
+  try{
+    if(localStorage.getItem('gi-theme')==='light'){
+      document.body.classList.add('light');
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent='🌙';
+    }
+  }catch(e){}
+});
+</script>
+</body>
+</html>
