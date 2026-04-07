@@ -175,13 +175,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F7F4;color:#1A2332;fo
 .res-group-hdr .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .res-group-body{padding:8px 10px;display:flex;flex-direction:column;gap:5px}
 .res-chip{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;flex-direction:column;align-items:stretch;
   padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;
-  border:1px solid transparent;transition:.15s;cursor:pointer;gap:8px;text-decoration:none
+  border:1px solid transparent;transition:.15s;cursor:pointer;gap:0;text-decoration:none
 }
 .res-chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .res-chip .chip-txt{flex:1;line-height:1.3}
 .res-chip .chip-cnt{flex-shrink:0;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(0,0,0,.10)}
+.chip-row{display:flex;align-items:center;gap:8px}
+.chip-sub{font-size:10.5px;margin-top:5px;line-height:1.45;opacity:.88;font-weight:500}
+.chip-xref{font-size:10px;margin-top:3px;font-style:italic;opacity:.72;line-height:1.4}
 .res-chip.no-link{cursor:default;opacity:.6}
 .res-chip.no-link:hover{transform:none;box-shadow:none}
 .res-none{font-size:11px;color:#AAB8C8;font-style:italic;padding:6px 10px}
@@ -807,7 +810,9 @@ const DATA = [
       {
         "section": "Ch. 2 \u00b7 Oral Cavity",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-2_OralCavity.pdf",
-        "count": 174
+        "count": 174,
+        "subchapters": "2.6 Salivary Glands (A–B) · 2.2 Tongue & Gustation (B)",
+        "xref": "Cross-ref: 4.5–4.7 enteric hormones & somatostatin for autonomic secretion context"
       }
     ],
     "bb": [
@@ -896,12 +901,15 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.1 General Principles (A overview, E vasculature, F enteroendocrine cells)",
+        "xref": "Cross-ref: Ch 4.1D stomach motility for comparison"
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63
+        "count": 63,
+        "subchapters": "9.1 General Principles (A–D: structure, vasculature, physiology, histology) · 9.2 Pectinate (Dentate) Line"
       }
     ],
     "bb": [
@@ -1033,12 +1041,14 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200
+        "count": 200,
+        "subchapters": "3.1 Esophageal Anatomy (B: Histology — layers, stratified squamous epithelium)"
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349
+        "count": 349,
+        "subchapters": "4.1B Stomach Histology · 4.4 Gastric Cells (parietal, chief, G, D, ECL, interstitial cells of Cajal)"
       }
     ],
     "bb": [
@@ -1170,12 +1180,14 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292
+        "count": 292,
+        "subchapters": "5.1D Metabolism (cholesterol synthesis) · 5.2 Hepatic Microarchitecture (B hepatocytes, C bile/blood flow)"
       },
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244
+        "count": 244,
+        "subchapters": "6.1D Bile Composition · 6.2 Bilirubin Metabolism (A–C: production, conjugation, enterohepatic recycling) · 6.5 Bile Acids (A–C)"
       }
     ],
     "bb": [
@@ -1229,7 +1241,8 @@ const DATA = [
       {
         "section": "Ch. 1 \u00b7 Embryology",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-1_Embryology.pdf",
-        "count": 131
+        "count": 131,
+        "subchapters": "1.1 General Embryology (A–D: endoderm, foregut/midgut rotation, gut derivatives) · 1.2 Ventral Wall Defects · 1.3 TE Defects · 1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"
       }
     ],
     "bb": [
@@ -1305,7 +1318,9 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.1 General Principles (A anatomy overview, B duodenum location, E vasculature)",
+        "xref": "Cross-ref: Ch 4.2 Celiac Trunk · Ch 4.3 GI Ligaments"
       }
     ],
     "bb": [
@@ -1446,17 +1461,20 @@ const DATA = [
       {
         "section": "Ch. 2 \u00b7 Oral Cavity",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-2_OralCavity.pdf",
-        "count": 174
+        "count": 174,
+        "subchapters": "2.6 Salivary Glands (A–B: α-amylase, lipase, mucin, autonomic control, major glands & ducts)"
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349
+        "count": 349,
+        "subchapters": "4.4 Gastric Cells · 4.5 Gastric Regulation (A–G: HCl, gastrin, bicarb, pepsinogen, histamine, somatostatin) · 4.6 Intestinal Regulation (A–E: secretin, CCK, GIP, GLP-1) · 4.7 Parietal Cell Physiology (A–B: H⁺/K⁺-ATPase) · 4.8 Pernicious Anemia (A: B12 absorption physiology)"
       },
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130
+        "count": 130,
+        "subchapters": "7.1D Exocrine Secretion Overview · 7.2 Exocrine Pancreas (A overview, C physiology, D pancreatic fluid composition)"
       }
     ],
     "bb": [
@@ -1580,7 +1598,8 @@ const DATA = [
       {
         "section": "Ch. 1 \u00b7 Embryology",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-1_Embryology.pdf",
-        "count": 131
+        "count": 131,
+        "subchapters": "1.1 General Embryology (A–D) · 1.2 Ventral Wall Defects (omphalocele, gastroschisis) · 1.3 TE Defects (pure EA, pure TEF, EA+distal TEF) · 1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"
       }
     ],
     "bb": [
@@ -1628,12 +1647,15 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292
+        "count": 292,
+        "subchapters": "5.1 Liver Anatomy (A–C: lobes, ligaments, vasculature) · 5.2 Hepatic Microarchitecture (A lobule, C flow, D sinusoids) · 5.3 Hepatic Zones (A–C)"
       },
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130
+        "count": 130,
+        "subchapters": "7.1 General Principles (A–C: anatomy, vasculature) · 7.2B Exocrine Histology (acinar & ductal cells)",
+        "xref": "Cross-ref: Ch 6.1 Biliary Tree Anatomy"
       }
     ],
     "bb": [
@@ -1714,7 +1736,9 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292
+        "count": 292,
+        "subchapters": "5.1D Metabolism (AST/ALT/ALP functions) · 5.2 (B hepatocytes, E Kupffer cells) · 5.3 Hepatic Zones (O₂ gradient, zone-specific toxin vulnerability) · 5.10 Cirrhosis (A–E) · 5.11 Portal HTN (A–G: portocaval anastomoses) · 5.12 Ascites (A–D: SAAG, SBP)",
+        "xref": "Cross-ref: Ch 6.2 Bilirubin Metabolism · Ch 6.5 Bile Acids · Ch 6.3 Hereditary Hyperbilirubinemia"
       }
     ],
     "bb": [
@@ -2027,12 +2051,14 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200
+        "count": 200,
+        "subchapters": "3.3 GERD & Barrett Esophagus (A–B) · 3.4 Esophagitis (F candida, G HSV, H CMV, I eosinophilic) · 3.6 Barotrauma/Bleeding (A Mallory-Weiss, B Boerhaave, C varices) · 3.7 Esophageal Malignancy (A–C: adenocarcinoma, SCC)"
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349
+        "count": 349,
+        "subchapters": "4.8 Pernicious Anemia (B B12 deficiency, C pernicious anemia) · 4.9 Gastritis (A–E: erosive, chronic, H. pylori, Ménétrier) · 4.10 PUD (A–E: gastric vs duodenal, hemorrhage, perforation) · 4.11 Gastric Malignancy (A–E: adenocarcinoma, GIST, MALT)"
       }
     ],
     "bb": [
@@ -2221,7 +2247,9 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.1 (B duodenum, C jejunum, D ileum — bile salt & B12 absorption at terminal ileum) · 8.2 Histology (A–E: villi, brush border, goblet cells) · 8.3 Nutrient Absorption (A–E: carbs/SGLT1, lipids/micelles, bile salts/enterohepatic) · 8.9 Lactose Intolerance (A–E)",
+        "xref": "Cross-ref: Ch 4.6 Intestinal Regulation (CCK, secretin, GIP)"
       }
     ],
     "bb": [
@@ -2604,12 +2632,16 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.4 Small Bowel Obstruction (A–E: adhesions, hernia, intussusception, volvulus) · 8.8 Celiac Disease (A–G: HLA-DQ2/8, villous atrophy, Marsh criteria) · 8.14 Mesenteric Ischemia (B acute: SMA embolism/thrombosis) · 8.15 Meckel Diverticulum · 8.16 Intussusception",
+        "xref": "Cross-ref: Ch 1.2 Ventral Wall Defects (congenital context)"
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63
+        "count": 63,
+        "subchapters": "9.4 Crohn Disease (A–F: skip lesions, transmural, granulomas) · 9.5 Ulcerative Colitis (A–F: continuous, mucosal, toxic megacolon) · 9.7 Appendicitis (A–E) · 9.8 Diverticulosis/itis · 9.9 Hirschsprung (A–F) · 9.13 Colonic Polyps · 9.15 CRC (A–F: APC/KRAS/p53, MSI)",
+        "xref": "Cross-ref: Ch 9.16 Polyposis Syndromes"
       }
     ],
     "bb": [
@@ -2754,7 +2786,9 @@ const DATA = [
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63
+        "count": 63,
+        "subchapters": "9.4 Crohn (transmural, granulomas, cobblestoning) · 9.5 UC (mucosal, crypt abscesses, pseudopolyps) · 9.7 Appendicitis (neutrophilic infiltration of muscularis propria) · 9.13 Colonic Polyps (A: tubular vs villous histology) · 9.15 CRC (A–F: histology, molecular pathways, staging)",
+        "xref": "Cross-ref: Ch 8.8 Celiac Disease (villous atrophy) · Ch 8.2 Small Intestine Histology"
       }
     ],
     "bb": [],
@@ -2818,12 +2852,15 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200
+        "count": 200,
+        "subchapters": "3.2 Motility Disorders (drug targets: CCBs, nitrates for DES; VIP for achalasia) · 3.3 GERD (LES pharmacology, lifestyle modification, PPI mechanism)"
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349
+        "count": 349,
+        "subchapters": "4.7 Parietal Cell Physiology (A–B: H⁺/K⁺-ATPase → PPI & H₂-blocker targets) · 4.9D H. pylori (triple/quadruple therapy) · 4.10 PUD (A–E: pharmacologic management) · 4.12 Gastric Pharmacology (A PPIs, B H₂-antagonists, C antacids, D bismuth/sucralfate, E misoprostol, F metoclopramide)",
+        "xref": "Cross-ref: Ch 9.17–9.19 Bowel/Antiemetic Medications"
       }
     ],
     "bb": [
@@ -3008,12 +3045,16 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.10 Whipple Disease (T. whipplei, PAS+ macrophages, malabsorption) · 8.11 SIBO (A–E: etiology, breath test, treatment) · 8.7 Acute Upper GI Bleeding (infectious etiologies)",
+        "xref": "⚠ Limited coverage of C. diff, cholera, dysentery — supplement with Sketchy Micro"
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63
+        "count": 63,
+        "subchapters": "9.3D Proctitis (gonorrhea, chlamydia, HSV) · 9.7 Appendicitis (intraabdominal infections, peritonitis) · 9.8 Diverticulitis (complicated: abscess, peritonitis, fistula)",
+        "xref": "Cross-ref: Ch 8.13 IBS (post-infectious) · Ch 4.9D H. pylori"
       }
     ],
     "bb": [
@@ -3077,7 +3118,9 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.1 General Principles (anatomy context for parasitic infection sites) · 8.2 Histology (brush border disruption in Giardia; villous atrophy in Cryptosporidium) · 8.3 Nutrient Absorption (malabsorption mechanism)",
+        "xref": "⚠ No dedicated parasite subchapters in Bootcamp GI — primary study resource: Sketchy Micro (Parasitology)"
       }
     ],
     "bb": [
@@ -3119,7 +3162,9 @@ const DATA = [
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63
+        "count": 63,
+        "subchapters": "9.4 Crohn (A–F) · 9.5 UC (A–F) · 9.8 Diverticulosis/itis (A–C) · 9.13 Colonic Polyps · 9.14 Carcinogenesis (A chromosomal instability, B MSI/Lynch, C CpG methylation) · 9.15 CRC (A–F) · 9.16 Polyposis Syndromes (A FAP, B Peutz-Jeghers, C juvenile polyposis)",
+        "xref": "Cross-ref: Ch 8.8 Celiac · Ch 8.14 Mesenteric Ischemia · Ch 8.15 Meckel Diverticulum"
       }
     ],
     "bb": [
@@ -3274,7 +3319,9 @@ const DATA = [
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244
+        "count": 244,
+        "subchapters": "6.1 General Principles (A–D: gallbladder anatomy, biliary tree, vasculature, bile composition) · 6.2 Bilirubin Metabolism (A–C: production, conjugation, enterohepatic recycling)",
+        "xref": "Cross-ref: Ch 5.2 Hepatic Microarchitecture · Ch 5.3 Hepatic Zones · Ch 7.1A–B & 7.2B Pancreas Histology"
       }
     ],
     "bb": [
@@ -3569,7 +3616,8 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292
+        "count": 292,
+        "subchapters": "5.4 Alcohol-induced Hepatitis (A–E: steatosis→steatohepatitis, Mallory-Denk bodies) · 5.5 MASLD/NAFLD (A–G) · 5.6 Autoimmune Hepatitis · 5.7 Wilson Disease · 5.8 Hereditary Hemochromatosis · 5.9F Viral Hepatitis (HAV–HEV serology) · 5.10 Cirrhosis (A–E) · 5.13 HCC (A–F) · 5.14 Liver Masses (angiosarcoma, hemangioma, FNH, adenoma)"
       }
     ],
     "bb": [
@@ -3693,7 +3741,9 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292
+        "count": 292,
+        "subchapters": "5.1D Metabolism (AST, ALT, ALP, GGT, bilirubin function) · 5.9B Ischemic Hepatitis (shock liver; AST/ALT >1000) · 5.9D Acetaminophen Toxicity (Zone 3 necrosis, NAC) · 5.9E Inhaled Anesthetic Toxicity (halothane hepatitis)",
+        "xref": "Cross-ref: Ch 6.2 Bilirubin Metabolism · Ch 6.3 Hereditary Hyperbilirubinemia (Gilbert, Crigler-Najjar, Dubin-Johnson, Rotor) · Ch 6.4 Neonatal Hyperbilirubinemia"
       }
     ],
     "bb": [
@@ -3857,7 +3907,9 @@ const DATA = [
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130
+        "count": 130,
+        "subchapters": "7.1 General Principles (A–C: anatomy, vasculature) · 7.2 Exocrine Pancreas (A overview, B histology) · 7.3 Acute Pancreatitis (A–D: pathophysiology, gallstones/alcohol, Ranson criteria) · 7.4 Complications (A necrotizing, B pseudocyst, C hemorrhagic) · 7.5 Chronic Pancreatitis (A–D) · 7.6 Pancreatic Adenocarcinoma (A–D: Courvoisier sign) · 7.7 PNETs (B insulinoma, C glucagonoma, D Zollinger-Ellison, E VIPoma, F somatostatinoma)",
+        "xref": "Cross-ref: Ch 1.5 Pancreatic Anomalies (annular pancreas, pancreas divisum)"
       }
     ],
     "bb": [
@@ -3912,7 +3964,9 @@ const DATA = [
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244
+        "count": 244,
+        "subchapters": "6.2 Bilirubin Metabolism (conjugated vs unconjugated patterns) · 6.5 Bile Acids (A–C) · 6.6 Cholelithiasis (A–C: cholesterol vs black pigment stones) · 6.7 Biliary Colic · 6.8 Acute Cholecystitis (A–E: Murphy's sign, Charcot's triad) · 6.9 Choledocholithiasis (A–D: ERCP) · 6.10 Acute Cholangitis (A–C: Reynolds' pentad) · 6.13 Biliary Malignancy (A cholangiocarcinoma, B gallbladder adenocarcinoma)",
+        "xref": "Cross-ref: Ch 5.13 HCC · Ch 5.14 Liver Masses · Ch 7.3–7.6 Pancreatitis/Adenocarcinoma"
       }
     ],
     "bb": [
@@ -3982,7 +4036,9 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279
+        "count": 279,
+        "subchapters": "8.3 Nutrient Absorption (B: SGLT1 Na⁺-coupled glucose — basis of oral rehydration therapy) · 8.9 Lactose Intolerance (A–E: osmotic diarrhea, brush border enzyme deficiency) · 8.11 SIBO (secretory vs osmotic diarrhea) · 8.1 General Principles (anatomy context for cholera toxin site of action)",
+        "xref": "Cross-ref: Ch 9.17–9.18 Anticonstipation & Antidiarrheal Medications"
       }
     ],
     "bb": [
@@ -4076,9 +4132,11 @@ function buildResGroup(res, chips) {
     const cls2 = hasLink ? 'res-chip' : 'res-chip no-link';
     const ankiUrl = ch.html || '';
     const oc   = hasLink ? `onclick="openAnki('${ankiUrl}','${esc(ch.section)}')"` : '';
+    const subHtml  = ch.subchapters ? `<div class="chip-sub">${esc(ch.subchapters)}</div>` : '';
+    const xrefHtml = ch.xref       ? `<div class="chip-xref">${esc(ch.xref)}</div>`       : '';
     return `<div class="${cls2}" style="background:${st.bg};color:${st.c};border-color:${st.c}44" ${oc}>
-      <span class="chip-txt">${esc(ch.section)}</span>
-      <span class="chip-cnt">${ch.count}</span>
+      <div class="chip-row"><span class="chip-txt">${esc(ch.section)}</span><span class="chip-cnt">${ch.count}</span></div>
+      ${subHtml}${xrefHtml}
     </div>`;
   }).join('');
   return `<div class="res-group">
