@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI01 Hub #2 · GI Overview — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#F59E0B;--al:rgba(245,158,11,0.12);--ab:rgba(245,158,11,0.3);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#0D1117;color:#E6EDF3;min-height:100vh;}
+.container{max-width:1100px;margin:0 auto;padding:20px;}
+
+.header{background:linear-gradient(135deg,#161B22,#1C1A0F);border-bottom:3px solid var(--accent);padding:28px 30px;margin-bottom:24px;border-radius:10px;}
+.back{font-size:.8em;color:#6B7280;text-decoration:none;display:inline-block;margin-bottom:10px;}
+.back:hover{color:var(--accent);}
+h1{color:#E6EDF3;font-size:1.9em;margin-bottom:6px;}
+.atag{color:var(--accent);font-weight:600;}
+.subtitle{color:#9CA3AF;font-size:.9em;line-height:1.5;margin-bottom:12px;}
+.step1-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.step1-badge{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:4px 10px;font-size:.78em;color:#8B949E;}
+.step1-badge strong{color:var(--accent);}
+
+.hub-prog{background:#161B22;border:1px solid #21262D;border-radius:8px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:4px;}
+.hub-step{padding:6px 14px;border-radius:6px;font-size:.82em;font-weight:600;}
+.hub-step.done{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.done:hover{border-color:#00897B;color:#00897B;}
+.hub-step.current{background:var(--accent);color:#0D1117;}
+.hub-step.next{background:#1C2128;border:1px solid #30363D;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.next:hover{border-color:var(--accent);color:var(--accent);}
+.hub-arrow{color:#30363D;}
+
+.tab-nav{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;background:#161B22;padding:10px;border-radius:8px;border:1px solid #21262D;}
+.tab-btn{padding:9px 16px;background:#1C2128;color:#8B949E;border:1px solid #30363D;border-radius:6px;cursor:pointer;font-weight:600;font-size:.86em;transition:all .2s;font-family:inherit;}
+.tab-btn:hover{background:#30363D;color:var(--accent);}
+.tab-btn.active{background:var(--accent);color:#0D1117;border-color:var(--accent);}
+.tab-content{display:none;animation:fi .25s ease;}
+.tab-content.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #21262D;}
+
+/* FLASHCARDS */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;}
+.fc{cursor:pointer;perspective:1000px;}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:160px;}
+.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;border-radius:10px;min-height:160px;}
+.fc-front{background:#161B22;border:1px solid #30363D;border-top:3px solid var(--accent);}
+.fc-back{background:#1C1A10;border:1px solid #444;border-top:3px solid #4ADE80;transform:rotateY(180deg);}
+.fc-label{font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.fc-front .fc-label{color:var(--accent);}
+.fc-back .fc-label{color:#4ADE80;}
+.fc-q{font-size:.92em;color:#E6EDF3;line-height:1.5;font-weight:500;}
+.fc-a{font-size:.86em;color:#FEF3C7;line-height:1.6;}
+.fc-hint{font-size:.67em;color:#6B7280;margin-top:10px;}
+
+/* MCQ */
+.mcq-item{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:20px;margin-bottom:16px;}
+.mcq-num{font-size:.75em;color:#6B7280;font-weight:700;text-transform:uppercase;margin-bottom:8px;}
+.mcq-stem{font-size:.93em;color:#E6EDF3;line-height:1.7;margin-bottom:14px;background:#1C2128;padding:14px;border-radius:8px;border-left:3px solid var(--accent);}
+.mcq-stem strong{color:#FCD34D;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.mcq-opt{background:#1C2128;border:1px solid #30363D;border-radius:6px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#C9D1D9;transition:all .18s;display:flex;align-items:flex-start;gap:10px;}
+.mcq-opt:hover:not(.locked){border-color:var(--accent);background:#2A2010;}
+.mcq-opt.correct{background:#0D2E0E;border-color:#2E7D32;color:#81C784;}
+.mcq-opt.wrong{background:#2E0A0A;border-color:#C62828;color:#EF9A9A;}
+.mcq-opt.locked{cursor:default;}
+.opt-letter{font-weight:700;color:var(--accent);flex-shrink:0;width:18px;}
+.mcq-exp{background:#1C2128;border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;font-size:.84em;color:#9CA3AF;line-height:1.7;display:none;}
+.mcq-exp.show{display:block;}
+.mcq-exp strong{color:var(--accent);}
+
+/* CLINICAL CORRELATES */
+.cc-card{background:#161B22;border:1px solid #30363D;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid var(--accent);}
+.cc-tag{display:inline-block;background:var(--al);border:1px solid var(--ab);border-radius:4px;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);padding:2px 8px;margin-bottom:10px;}
+.cc-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:10px;}
+.cc-body{font-size:.88em;color:#9CA3AF;line-height:1.7;}
+.cc-body strong{color:#E6EDF3;}
+.cc-body em{color:var(--accent);font-style:normal;}
+.cc-reveal{background:none;border:1px solid #30363D;color:#9CA3AF;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:12px;transition:all .2s;}
+.cc-reveal:hover{border-color:var(--accent);color:var(--accent);}
+.cc-detail{display:none;margin-top:12px;padding:12px;background:#1C1A10;border-radius:6px;border:1px solid #3D3010;font-size:.85em;color:#FEF3C7;line-height:1.7;}
+.cc-detail.open{display:block;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="gi01-hub1-gi-overview.html" class="back">← Hub 1: Core Concepts</a>
+
+<div class="header">
+  <h1>GI Overview <span class="atag">Step 1 Extensions</span></h1>
+  <div class="subtitle">Hub #2 · High-Yield Clinical Correlates &amp; USMLE Framing · Lecture 01 · GI Block</div>
+  <div class="step1-strip">
+    <div class="step1-badge"><strong>Diseases:</strong> Hirschsprung · Achalasia · Zollinger-Ellison · Carcinoid · VIPoma · Dumping Syndrome</div>
+    <div class="step1-badge"><strong>Drugs:</strong> PPIs · H2 blockers · Ondansetron · Metoclopramide · Methylnaltrexone</div>
+    <div class="step1-badge"><strong>Pharm:</strong> Atropine · Neostigmine · Botox (LES)</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi01-hub1-gi-overview.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi01-hub3-gi-overview.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">🃏 Step 1 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">❓ MCQ Drill</button>
+  <button class="tab-btn" onclick="switchTab('cc',this)">🏥 Clinical Correlates</button>
+</div>
+
+<!-- ══ STEP 1 FLASHCARDS ══════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-flashcards">
+  <div class="sec">Step 1 High-Yield Flashcards — 14 Cards</div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Hirschsprung Disease</div><div class="fc-q">Classic presentation, pathophysiology, histologic finding, and key imaging?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Presentation:</strong> Neonate fails to pass meconium; abdominal distension<br><strong>Path:</strong> Neural crest cells fail to migrate → absent ganglia (both plexuses) in distal colon → tonic contraction<br><strong>Histo:</strong> Aganglionic segment (narrow) — dilated segment PROXIMAL is normal<br><strong>Imaging:</strong> Barium enema shows narrow distal + dilated proximal segment ("transition zone")</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Achalasia</div><div class="fc-q">Pathophysiology, characteristic symptoms, imaging finding, and treatment options?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Path:</strong> Loss of inhibitory neurons (VIP/NO) at LES → LES fails to relax<br><strong>Sx:</strong> Progressive dysphagia (solids AND liquids), regurgitation, weight loss<br><strong>Imaging:</strong> "Bird-beak" on barium swallow; manometry shows absent LES relaxation<br><strong>Tx:</strong> Pneumatic dilation, Heller myotomy, or botulinum toxin (blocks ACh at LES)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Zollinger-Ellison Syndrome</div><div class="fc-q">Tumor type, mechanism, key lab finding, clinical triad?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Gastrinoma (usually in "gastrinoma triangle" — duodenum/pancreas)<br><strong>Mechanism:</strong> ↑↑Gastrin → ↑↑HCl → peptic ulcers + diarrhea (fat malabsorption from acid inactivating lipase)<br><strong>Lab:</strong> Elevated fasting serum gastrin (&gt;1000 pg/mL diagnostic)<br><strong>Triad:</strong> Peptic ulcers (multiple, atypical) + diarrhea + elevated gastrin</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">VIPoma (Verner-Morrison)</div><div class="fc-q">Tumor origin, WDHA syndrome components, mechanism of diarrhea?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Pancreatic islet cell tumor secreting VIP<br><strong>WDHA:</strong> Watery Diarrhea, Hypokalemia, Achlorhydria (no acid)<br><strong>Mechanism:</strong> VIP → ↑cAMP in intestinal epithelium → massive Cl⁻ secretion → osmotic water loss → "pancreatic cholera"<br><strong>Dx:</strong> Elevated serum VIP + CT/MRI for tumor</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Carcinoid Tumor</div><div class="fc-q">Cell of origin, secretory product, carcinoid syndrome features, and when syndrome occurs?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> Enterochromaffin cells (90% of body's 5-HT)<br><strong>Product:</strong> Serotonin (5-HT) + other amines<br><strong>Syndrome:</strong> Flushing, diarrhea, bronchospasm, right-sided heart disease (tricuspid regurgitation)<br><strong>Key:</strong> Syndrome only occurs with LIVER METS (local serotonin is first-pass metabolized; liver mets secrete directly into systemic circulation)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Dumping Syndrome</div><div class="fc-q">Cause, pathophysiology (early vs. late), and clinical features?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> Post-gastrectomy (loss of pyloric regulation)<br><strong>Early dumping (30 min):</strong> Hyperosmolar chyme → fluid shifts into gut lumen → hypovolemia → tachycardia, nausea, diarrhea<br><strong>Late dumping (2–3 hrs):</strong> Rapid glucose absorption → insulin spike → reactive hypoglycemia<br><strong>Tx:</strong> Small, frequent low-carb meals; octreotide for refractory cases</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Opioid-Induced Constipation</div><div class="fc-q">Receptor mechanism, why analgesic effect is preserved with targeted treatment?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> μ-opioid receptors on ENS neurons → inhibit ACh/SP release → ↓peristalsis + ↑sphincter tone<br><strong>Treatment:</strong> Methylnaltrexone (peripherally-acting μ-antagonist, does NOT cross BBB) → blocks GI opioid effects without reversing CNS analgesia<br><strong>Also:</strong> Naloxegol (similar mechanism, oral)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">PPI vs. H2 Blocker</div><div class="fc-q">Mechanism of each drug class, target cell, and main clinical use?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>PPIs (omeprazole, lansoprazole):</strong> Irreversibly inhibit H⁺/K⁺ ATPase on PARIETAL cells → block final step of HCl secretion → most potent<br><strong>H2 blockers (famotidine, ranitidine):</strong> Block histamine H2 receptors on parietal cells → ↓cAMP → ↓HCl<br><strong>Use:</strong> GERD, PUD, ZES (PPIs preferred for ZES)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">5-HT Pharmacology</div><div class="fc-q">What receptor does ondansetron block? What does metoclopramide do? Clinical uses of each?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ondansetron:</strong> 5-HT3 ANTAGONIST → blocks serotonin-mediated emesis → antiemetic (chemo-induced, post-op nausea)<br><strong>Metoclopramide:</strong> D2 antagonist + 5-HT4 AGONIST → ↑ACh release → prokinetic (↑gastric emptying)<br><strong>Note:</strong> Metoclopramide crosses BBB → risk of tardive dyskinesia (EPS)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Portal Hypertension</div><div class="fc-q">What causes portal hypertension, and what are the three major clinical consequences of portosystemic shunting?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> ↑portal vein pressure (usually from cirrhosis → fibrosis → ↑resistance)<br><strong>Consequences of portosystemic shunts:</strong><br>1. <strong>Esophageal varices</strong> (left gastric → azygos) → life-threatening GI bleed<br>2. <strong>Caput medusae</strong> (paraumbilical veins dilate)<br>3. <strong>Hemorrhoids</strong> (inferior mesenteric → inferior rectal)<br>Also: Ascites, splenomegaly, hepatic encephalopathy</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">First-Pass Metabolism</div><div class="fc-q">What is first-pass metabolism, what types of drugs are most affected, and how can it be bypassed?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Definition:</strong> Drug absorbed from GI tract → portal vein → liver → hepatic metabolism BEFORE reaching systemic circulation → ↓bioavailability<br><strong>Most affected:</strong> Lipophilic drugs (morphine, nitroglycerin, propranolol, lidocaine)<br><strong>Bypass routes:</strong> Sublingual (nitroglycerin), IV, transdermal, rectal (partial bypass), inhalation</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Myasthenia Gravis + GI</div><div class="fc-q">Why does myasthenia gravis cause dysphagia of the UPPER esophagus specifically?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> MG destroys nicotinic ACh receptors at the NMJ → skeletal muscle weakness<br><strong>GI relevance:</strong> Only the upper esophagus and pharynx use <em>skeletal muscle</em> (voluntary swallowing initiation)<br><strong>Spared:</strong> Lower esophagus, stomach, intestines use smooth muscle (muscarinic signaling) → NOT affected by MG<br><strong>Contrast:</strong> Achalasia affects lower esophagus (smooth muscle/inhibitory neuron loss)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Cholera &amp; GI Fluid Physiology</div><div class="fc-q">How does cholera cause such massive diarrhea, and why does ORS (oral rehydration solution) work?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> Vibrio cholerae toxin → permanently activates adenylyl cyclase → ↑↑cAMP → massive Cl⁻ secretion → water follows osmotically → "rice-water" stools up to 20 L/day<br><strong>ORS works because:</strong> SGLT1 (Na⁺-glucose cotransporter) is NOT affected by cAMP → co-transporting Na⁺ + glucose still drives water absorption → bypasses the toxin's mechanism</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Watershed Areas</div><div class="fc-q">What are the two GI watershed areas, why are they vulnerable, and what condition results from ischemia there?</div><div class="fc-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Two watershed areas:</strong><br>1. <strong>Splenic flexure</strong> (SMA/IMA border) — most vulnerable<br>2. <strong>Rectosigmoid junction</strong> (IMA/internal iliac border)<br><strong>Why vulnerable:</strong> End-arterial zones with minimal collateral flow<br><strong>Result of ischemia:</strong> Ischemic colitis — especially in elderly, post-aortic surgery, hypotension; presents as bloody diarrhea + left-lower quadrant pain</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MCQ DRILL ══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-mcq">
+  <div class="sec">Step 1-Style MCQs — 6 Questions</div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 1 of 6 — Neurotransmitters / Achalasia</div>
+    <div class="mcq-stem">A 42-year-old woman presents with a 2-year history of progressive difficulty swallowing both solids and liquids, regurgitation of undigested food, and a 6 kg weight loss. Barium swallow shows <strong>smooth, tapered narrowing at the gastroesophageal junction</strong> with proximal esophageal dilation. Esophageal manometry demonstrates absent peristalsis and failure of the lower esophageal sphincter to relax after swallowing. Which neurotransmitter is most deficient at the LES in this condition?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Acetylcholine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Substance P</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Nitric oxide (NO)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Serotonin (5-HT)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Neuropeptide Y</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Nitric oxide.</strong> Achalasia results from loss of inhibitory neurons (VIP + NO) at the LES. NO is the primary neurotransmitter responsible for LES relaxation during swallowing. Without NO, the LES remains tonically contracted. ACh/Substance P (choice A/B) are excitatory — their relative excess contributes to the failure to relax. Botulinum toxin (blocks ACh) is used therapeutically to partially restore balance.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 2 of 6 — Hirschsprung / Embryology</div>
+    <div class="mcq-stem">A 3-day-old male neonate has not passed meconium since birth. His abdomen is progressively distended and tympanitic. Rectal examination reveals explosive release of stool and gas when the finger is withdrawn. Rectal biopsy is obtained. Which of the following histologic findings is most expected in the <strong>affected aganglionic segment</strong>?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Normal ganglion cells in the myenteric plexus with hypertrophied circular muscle</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Absence of ganglion cells in both the myenteric and submucosal plexuses</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Absence of ganglion cells only in the submucosal plexus with normal myenteric plexus</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Increased numbers of ganglion cells due to neural hypertrophy proximal to the obstruction</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Dilated, thin-walled bowel with normal ganglionic architecture</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Absence of ganglion cells in BOTH plexuses.</strong> Hirschsprung disease is caused by failure of neural crest cells to migrate to the distal colon. Both the myenteric AND submucosal ganglia are absent in the affected segment. This results in tonic, unopposed smooth muscle contraction → functional obstruction. The biopsy is taken from the narrow, aganglionic segment (not the dilated proximal segment, which has normal ganglia and is dilated from stool accumulation above the obstruction).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 3 of 6 — Fluid Balance / Acid-Base</div>
+    <div class="mcq-stem">A 28-year-old woman with severe persistent vomiting (hyperemesis gravidarum) presents to the ED. ABG shows pH 7.55, pCO₂ 48 mmHg, HCO₃⁻ 40 mEq/L. Serum K⁺ is 2.8 mEq/L. Which of the following best explains the acid-base and electrolyte abnormalities?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Loss of HCO₃⁻-rich fluid from the upper GI tract</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Loss of HCl from the stomach → relative increase in serum HCO₃⁻ + renal K⁺ wasting</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Respiratory alkalosis from hyperventilation due to nausea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Loss of pancreatic bicarbonate causing metabolic acidosis</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Aldosterone excess from volume depletion causing metabolic acidosis</div>
+    </div>
+    <div class="mcq-exp"><strong>B — HCl loss → metabolic alkalosis + hypokalemia.</strong> Vomiting causes loss of H⁺ and Cl⁻ from gastric secretions → serum HCO₃⁻ rises (metabolic alkalosis). Volume depletion → ↑aldosterone → Na⁺ reabsorption in exchange for K⁺ secretion → hypokalemia. To maintain electroneutrality, the kidney also excretes K⁺ and H⁺ ("paradoxical aciduria"). Key: pH 7.55 = alkalosis; pCO₂ 48 = compensatory retention of CO₂; elevated HCO₃⁻ confirms primary metabolic alkalosis.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 4 of 6 — Pharmacology / GI Hormones</div>
+    <div class="mcq-stem">A 55-year-old man presents with severe peptic ulcers in the duodenum and jejunum, watery diarrhea, and epigastric pain unresponsive to standard PPI therapy. Serum gastrin level is 1,800 pg/mL (normal &lt;100). A secretin stimulation test causes a paradoxical RISE in gastrin. CT scan shows a 2 cm mass in the pancreatic head. Which of the following best describes the mechanism by which this patient's tumor causes diarrhea?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>VIP secretion → massive Cl⁻ secretion into the lumen</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Direct invasion of the intestinal mucosa by the tumor</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Excess gastrin → excess HCl → acid inactivates pancreatic lipase + bile salts → fat malabsorption + osmotic diarrhea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Excess serotonin from enterochromaffin cells stimulates secretory diarrhea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Hypersecretion of secretin → excessive pancreatic fluid output</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Excess HCl → inactivates lipase + bile salts → steatorrhea.</strong> This is Zollinger-Ellison syndrome (gastrinoma). The elevated gastrin drives massive HCl secretion. The excess acid in the duodenum: (1) directly damages the mucosa → multiple ulcers; (2) inactivates pancreatic lipase (which needs pH 7–8) and precipitates bile salts → fat malabsorption → steatorrhea. The secretin stimulation test is diagnostic: normal physiology → secretin suppresses gastrin; ZES → paradoxical rise (gastrinoma cells lack normal feedback inhibition).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 5 of 6 — ENS / Opioids</div>
+    <div class="mcq-stem">A 68-year-old man with metastatic prostate cancer is started on IV morphine for pain control. Three days later he develops abdominal distension, absence of bowel sounds, and no bowel movements. Abdominal X-ray shows diffuse gaseous distension of the bowel without a transition point. His pain is currently well-controlled. Which drug would best treat his GI complication <em>without</em> affecting his analgesia?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Naloxone IV</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Atropine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Methylnaltrexone</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Metoclopramide</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Ondansetron</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Methylnaltrexone.</strong> This patient has opioid-induced paralytic ileus (μ-receptor activation on ENS neurons → ↓ACh release → ↓peristalsis). Methylnaltrexone is a peripherally-acting μ-opioid antagonist that does NOT cross the blood-brain barrier → reverses GI opioid effects without affecting CNS analgesia. Naloxone (A) would cross the BBB and reverse analgesia. Atropine (B) blocks muscarinic receptors → would worsen ileus. Metoclopramide (D) is a prokinetic but doesn't address the receptor mechanism directly. Ondansetron (E) is an antiemetic.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 6 of 6 — Blood Supply / Ischemia</div>
+    <div class="mcq-stem">A 72-year-old woman with a history of peripheral vascular disease undergoes elective repair of an infrarenal abdominal aortic aneurysm. On postoperative day 2 she develops crampy left-sided abdominal pain and bloody diarrhea. CT angiography shows patent aortic graft but no flow in the inferior mesenteric artery, which was sacrificed during the repair. Which segment of colon is MOST at risk for ischemia in this setting?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Cecum and ascending colon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Transverse colon at its midpoint</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Splenic flexure and descending colon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Terminal ileum</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Rectum</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Splenic flexure and descending colon.</strong> The splenic flexure is the watershed area between SMA and IMA territories — it has the most tenuous blood supply. When the IMA is sacrificed (common in aortic surgery), the descending colon and splenic flexure lose their primary supply. If collateral flow from SMA is inadequate (as in atherosclerotic disease), ischemic colitis develops at this watershed zone. The rectum (E) is protected by dual supply from IMA (superior rectal) + internal iliac (middle/inferior rectal arteries).</div>
+  </div>
+
+</div>
+
+<!-- ══ CLINICAL CORRELATES ════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-cc">
+  <div class="sec">Clinical Correlates — Step 1 Disease Profiles</div>
+
+  <div class="cc-card">
+    <div class="cc-tag">ENS Pathology</div>
+    <div class="cc-title">Achalasia vs. Hirschsprung — Key Distinguishing Features</div>
+    <div class="cc-body">Both involve loss of <strong>inhibitory ENS neurons</strong>, but the affected location differs completely.<br><br>
+    <em>Achalasia:</em> Loss of VIP/NO neurons at the LES → LES fails to relax → progressive dysphagia solids AND liquids, regurgitation, bird-beak on barium swallow. Adults. Possible autoimmune etiology or Chagas disease (Trypanosoma cruzi).<br><br>
+    <em>Hirschsprung:</em> Absent ganglia (both plexuses) in distal colon → tonic contraction → functional obstruction. Neonates. Failure of neural crest migration. Presents as failure to pass meconium.</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Key Comparison Table</button>
+    <div class="cc-detail">
+      <table style="width:100%;font-size:.85em;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;color:#F59E0B;font-weight:700;">Feature</td><td style="padding:6px 10px;color:#F59E0B;">Achalasia</td><td style="padding:6px 10px;color:#F59E0B;">Hirschsprung</td></tr>
+        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">Location</td><td style="padding:6px 10px;">LES / esophagus</td><td style="padding:6px 10px;">Distal colon (always to anus)</td></tr>
+        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">NT lost</td><td style="padding:6px 10px;">VIP + NO</td><td style="padding:6px 10px;">Both plexuses absent</td></tr>
+        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">Presentation</td><td style="padding:6px 10px;">Dysphagia, regurgitation</td><td style="padding:6px 10px;">No meconium, abdominal distension</td></tr>
+        <tr><td style="padding:6px 10px;">Treatment</td><td style="padding:6px 10px;">Pneumatic dilation / Heller myotomy / Botox</td><td style="padding:6px 10px;">Surgical resection of aganglionic segment</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">GI Hormone Tumors</div>
+    <div class="cc-title">Gastrinoma vs. VIPoma vs. Carcinoid — The "Secretory Tumor" Triad</div>
+    <div class="cc-body">Three Step 1 tumors defined by their hormone product and GI consequences:<br><br>
+    <em>Gastrinoma (ZES):</em> ↑Gastrin → ↑↑HCl → multiple ulcers (D2, jejunum), diarrhea/steatorrhea, elevated fasting serum gastrin &gt;1000 pg/mL. Secretin stimulation → paradoxical gastrin rise.<br><br>
+    <em>VIPoma (Verner-Morrison):</em> ↑VIP → massive watery diarrhea (WDHA: Watery Diarrhea, Hypokalemia, Achlorhydria). "Pancreatic cholera."<br><br>
+    <em>Carcinoid:</em> ↑5-HT → flushing, diarrhea, bronchospasm, right-sided heart disease. Syndrome only with liver mets (bypasses first-pass metabolism).</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Distinguishing Clues</button>
+    <div class="cc-detail">
+      <strong style="color:#F59E0B;">USMLE Clue Words:</strong><br>
+      • <strong>Multiple ulcers refractory to PPIs</strong> → think Gastrinoma (ZES)<br>
+      • <strong>"Watery diarrhea" + hypokalemia + achlorhydria</strong> → think VIPoma<br>
+      • <strong>Flushing + diarrhea + wheezing + right heart murmur</strong> → think Carcinoid with liver mets<br>
+      • <strong>Elevated urine 5-HIAA</strong> → confirms carcinoid (5-hydroxyindoleacetic acid = 5-HT metabolite)
+    </div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Pharmacology</div>
+    <div class="cc-title">GI Drug Targets — Step 1 Pharmacology Summary</div>
+    <div class="cc-body">The GI pharmacology tested on Step 1 maps directly to receptor physiology:<br><br>
+    <em>Proton pump inhibitors (PPIs):</em> Block H⁺/K⁺ ATPase on parietal cells. Require activation at low pH. Used for GERD, PUD, ZES, H. pylori eradication.<br><br>
+    <em>H2 blockers:</em> Block histamine H2 receptors on parietal cells → ↓cAMP → ↓HCl. Less potent than PPIs.<br><br>
+    <em>Ondansetron:</em> 5-HT3 antagonist → blocks serotonin-mediated vagal afferents → antiemetic. No GI motility effect.<br><br>
+    <em>Metoclopramide:</em> D2 + 5-HT4 receptor modulator → prokinetic + antiemetic. Crosses BBB → risk of tardive dyskinesia with prolonged use.<br><br>
+    <em>Atropine:</em> Muscarinic (M3) antagonist → ↓GI motility, ↓secretion. Used in organophosphate poisoning and bradycardia.<br><br>
+    <em>Methylnaltrexone:</em> Peripheral μ-opioid antagonist → reverses opioid-induced constipation/ileus without reversing analgesia.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">GI Physiology + Boards</div>
+    <div class="cc-title">Fluid Balance — Clinical Consequences</div>
+    <div class="cc-body">The scale of GI fluid handling creates predictable clinical scenarios:<br><br>
+    <em>Vomiting → Metabolic alkalosis + hypokalemia:</em> Loss of HCl; volume depletion → aldosterone → K⁺ wasting + "paradoxical aciduria" (kidneys retain Na⁺ + HCO₃⁻, excrete K⁺ + H⁺).<br><br>
+    <em>Diarrhea → Metabolic acidosis + hypokalemia:</em> Loss of HCO₃⁻-rich intestinal/pancreatic fluid; colon secretes K⁺ normally → hypokalemia amplified with high stool output.<br><br>
+    <em>Cholera → Isotonic volume depletion:</em> Vibrio cholerae toxin → ↑cAMP → massive Cl⁻/water secretion. ORS works via SGLT1 (Na⁺-glucose cotransport is cAMP-independent). Rice-water stools, up to 20 L/day.</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Quick Reference</button>
+    <div class="cc-detail">
+      <strong style="color:#F59E0B;">Acid-Base from GI losses:</strong><br>
+      • <strong>Vomiting</strong> → lose HCl → metabolic <strong>alkalosis</strong> + hypokalemia<br>
+      • <strong>Diarrhea</strong> → lose HCO₃⁻ → metabolic <strong>acidosis</strong> + hypokalemia<br>
+      • <strong>Fistula (high-output, pancreatic/SI)</strong> → lose HCO₃⁻ → metabolic acidosis<br>
+      • <strong>Both</strong> cause hypokalemia (different mechanisms)
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #21262D;padding-top:14px;margin-top:28px">
+  <a href="../active-recall-hub.html" style="color:#F59E0B;text-decoration:none;">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI01 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function answerMCQ(opt,correct){
+  const item=opt.closest('.mcq-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.mcq-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.mcq-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  const exp=item.querySelector('.mcq-exp');exp.classList.add('show');
+}
+function toggleCC(btn){
+  const d=btn.nextElementSibling;d.classList.toggle('open');
+  btn.textContent=d.classList.contains('open')?'Hide':'Show Key Comparison Table';
+}
+</script>
+</body>
+</html>
