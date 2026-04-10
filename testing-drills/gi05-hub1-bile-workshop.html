@@ -7,214 +7,228 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#000000;color:#E6EDF3;min-height:100vh}
+body{font-family:'Inter',sans-serif;background:#02590f;color:#E6EDF3;min-height:100vh}
 .container{max-width:1100px;margin:0 auto;padding:24px 20px}
 
-.header{background:linear-gradient(135deg,#003D36 0%,#0D2420 100%);border:1px solid #00897B;border-left:5px solid #00BFA5;border-radius:12px;padding:28px 32px;margin-bottom:22px}
-.hub-tag{display:inline-block;background:#00695C;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header{background:linear-gradient(135deg,#02590f 0%,#02590f 100%);border:1px solid #22C55E;border-left:5px solid #4ADE80;border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#16A34A;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
 .header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
-.header h1 span{color:#00BFA5}
+.header h1 span{color:#4ADE80}
 .header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
 .source-strip{display:flex;gap:8px;flex-wrap:wrap}
-.source-badge{background:#0d2610;border:1px solid #1e4826;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
-.source-badge strong{color:#00BFA5}
+.source-badge{background:#02590f;border:1px solid #1e4826;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:#4ADE80}
 
-.hub-prog{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-prog{background:#02590f;border:1px solid #2d6e30;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
-.hub-step.current{background:#00695C;color:#fff}
-.hub-step.next{background:#0d2610;border:1px solid #1e4826;color:#6B7280;text-decoration:none;transition:all .2s}
-.hub-step.next:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-step.current{background:#16A34A;color:#fff}
+.hub-step.next{background:#02590f;border:1px solid #1e4826;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#4ADE80;color:#4ADE80}
 .hub-arrow{color:#1e4826;font-size:1em}
 .hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
 
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
-.stat-card{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:12px;text-align:center}
-.stat-num{font-size:1.6em;font-weight:700;color:#00BFA5}
+.stat-card{background:#02590f;border:1px solid #2d6e30;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.6em;font-weight:700;color:#4ADE80}
 .stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
 
-.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #173d1d;padding-bottom:0}
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #2d6e30;padding-bottom:0}
 .tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
-.tab-btn:hover{color:#00BFA5}
-.tab-btn.active{color:#00BFA5;border-bottom-color:#00BFA5}
+.tab-btn:hover{color:#4ADE80}
+.tab-btn.active{color:#4ADE80;border-bottom-color:#4ADE80}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
 
 /* FLASHCARDS */
 .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
-.fc{perspective:1000px;cursor:pointer}
-.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:140px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
 .fc.flipped .fc-inner{transform:rotateY(180deg)}
-.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:20px;min-height:140px}
-.fc-front{border-top:3px solid #00897B}
-.fc-back{transform:rotateY(180deg);background:#0D2420;border-color:#00695C}
-.fc-label{font-size:.68em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:20px}
+.fc-front{border-top:3px solid #22C55E}
+.fc-back{transform:rotateY(180deg);background:#02590f;border-color:#16A34A}
+.fc-label{font-size:.68em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
 .fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
 .fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
 .fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
 .fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
-.fc-progress .prog-num{color:#00BFA5;font-weight:700}
+.fc-progress .prog-num{color:#4ADE80;font-weight:700}
 
 /* FIB */
 .fib-list{display:flex;flex-direction:column;gap:16px}
-.fib-card{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:20px;border-left:4px solid #00897B}
-.fib-num{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;margin-bottom:8px}
+.fib-card{background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:20px;border-left:4px solid #22C55E}
+.fib-num{font-size:.7em;font-weight:700;color:#4ADE80;text-transform:uppercase;margin-bottom:8px}
 .fib-prompt{font-size:.92em;color:#E6EDF3;line-height:1.6;margin-bottom:12px}
 .fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.fib-input{background:#000000;border:1px solid #1e4826;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
-.fib-input:focus{outline:none;border-color:#00BFA5}
-.fib-input.correct{border-color:#2E7D32;background:#0D2E0E}
+.fib-input{background:#02590f;border:1px solid #1e4826;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#4ADE80}
+.fib-input.correct{border-color:#2E7D32;background:#02590f}
 .fib-input.incorrect{border-color:#C62828;background:#2E0A0A}
-.fib-btn{background:#00695C;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
-.fib-btn:hover{background:#00897B}
-.fib-reveal-btn{background:#0d2610;border:1px solid #1e4826;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
-.fib-reveal-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.fib-btn{background:#16A34A;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#22C55E}
+.fib-reveal-btn{background:#02590f;border:1px solid #1e4826;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#4ADE80;color:#4ADE80}
 .fib-feedback{font-size:.82em;margin-top:8px;padding:6px 10px;border-radius:5px;display:none}
-.fib-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784;display:block}
+.fib-feedback.correct{background:#02590f;border:1px solid #2E7D32;color:#81C784;display:block}
 .fib-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A;display:block}
 .fib-hint{font-size:.75em;color:#6B7280;margin-top:5px;font-style:italic}
 
 /* ORDERING */
-.ordering-intro{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
-.ordering-intro strong{color:#00BFA5}
-.order-drill{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:20px}
-.drill-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
-.drill-subtitle{font-size:.78em;color:#6B7280;margin-bottom:16px}
-.drag-list{list-style:none;display:flex;flex-direction:column;gap:8px;min-height:40px}
-.drag-item{background:#0d2610;border:1px solid #1e4826;border-radius:7px;padding:11px 14px;cursor:grab;font-size:.88em;color:#E6EDF3;display:flex;align-items:center;gap:10px;transition:background .15s,border-color .15s;user-select:none}
-.drag-item:active{cursor:grabbing}
-.drag-item.dragging{opacity:.4}
-.drag-item.drag-over{border-color:#00BFA5;background:#003D36}
-.drag-handle{color:#6B7280;font-size:1.1em}
-.drill-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.check-btn{background:#00695C;border:none;color:#fff;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit}
-.check-btn:hover{background:#00897B}
-.reset-btn{background:#0d2610;border:1px solid #1e4826;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit}
-.reset-btn:hover{border-color:#6B7280;color:#E6EDF3}
-.order-feedback{margin-top:10px;font-size:.82em;padding:8px 12px;border-radius:6px;display:none}
-.order-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784;display:block}
-.order-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A;display:block}
-.drag-item.order-correct{border-color:#2E7D32;background:#0D2E0E}
-.drag-item.order-wrong{border-color:#C62828;background:#2E0A0A}
+.ordering-intro{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#16A34A;line-height:1.6}
+.ordering-intro strong{color:#16A34A}
+.order-drill{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #22C55E;border-radius:10px;padding:22px;margin-bottom:20px}
+.drill-title{font-size:1em;font-weight:700;color:#1F2328;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#ffffff;border:1px solid #22C55E;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#1F2328;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#16A34A;background:#dcfce7}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#4ADE80}
+.order-item.drag-over{border-color:#4ADE80;background:#bbf7d0;transform:scale(1.01)}
+.order-item .item-grip{color:#22C55E;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#d1fae5;border-color:#16A34A}
+.order-item.wrong-pos{background:#fee2e2;border-color:#ef4444;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#16A34A;border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#22C55E}
+.order-ghost-btn{background:none;border:1px solid #22C55E;color:#16A34A;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#4ADE80;color:#22C55E}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:6px;margin-bottom:8px}
+.order-feedback.correct{background:#d1fae5;border:1px solid #16A34A;color:#16A34A}
+.order-feedback.incorrect{background:#fee2e2;border:1px solid #ef4444;color:#991b1b}
+.order-answer{background:#f0fdf4;border:1px solid #22C55E;border-radius:7px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#374151}
+.order-answer li span{color:#16A34A;font-weight:600}
 
 /* MATCHING */
-.match-intro{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
-.match-intro strong{color:#00BFA5}
-.match-game{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:20px}
-.match-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
-.match-subtitle{font-size:.78em;color:#6B7280;margin-bottom:16px}
+.match-intro{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#16A34A}
+.match-intro strong{color:#16A34A}
+.match-set{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #22C55E;border-radius:10px;padding:22px;margin-bottom:20px}
+.match-set-title{font-size:1em;font-weight:700;color:#1F2328;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
 .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.match-col-label{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.match-items{display:flex;flex-direction:column;gap:7px}
-.match-item{background:#0d2610;border:1px solid #1e4826;border-radius:7px;padding:10px 13px;font-size:.85em;color:#E6EDF3;cursor:pointer;transition:all .15s;line-height:1.4}
-.match-item:hover{border-color:#00897B;background:#0D2420}
-.match-item.selected{border-color:#00BFA5;background:#003D36}
-.match-item.matched-correct{border-color:#2E7D32;background:#0D2E0E;cursor:default}
-.match-item.matched-wrong{border-color:#C62828;background:#2E0A0A;animation:flash-wrong .4s}
-@keyframes flash-wrong{0%,100%{background:#2E0A0A}50%{background:#5C1A1A}}
-.match-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
-.match-score{font-size:.82em;color:#6B7280}
-.match-score span{color:#00BFA5;font-weight:700}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.72em;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.match-item{background:#ffffff;border:1px solid #22C55E;border-radius:7px;padding:11px 14px;font-size:.85em;color:#1F2328;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#16A34A!important;background:#dcfce7!important}
+.match-item.selected{border-color:#16A34A!important;background:#dcfce7!important;color:#16A34A!important;font-weight:600}
+.match-item.matched-correct{border-color:#16A34A!important;background:#d1fae5!important;color:#16A34A!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#fee2e2;border-color:#ef4444}100%{background:#ffffff;border-color:#22C55E}}
+.match-score{margin-top:12px;font-size:.83em;color:#6B7280}
+.match-score .correct-count{color:#16A34A;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #22C55E;color:#16A34A;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#4ADE80;color:#22C55E}
 
 /* TEST TRAPS */
-.trap-intro{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
-.trap-intro strong{color:#00BFA5}
-.trap-card{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:16px;border-left:4px solid #B45309}
-.trap-num{font-size:.68em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-intro{background:#02590f;border:1px solid #2d6e30;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
+.trap-intro strong{color:#4ADE80}
+.trap-card{background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:16px;border-left:4px solid #B45309}
+.trap-num{font-size:.68em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
 .trap-statement{font-size:.95em;color:#E6EDF3;line-height:1.5;margin-bottom:14px;font-weight:500}
 .trap-btns{display:flex;gap:8px}
 .trap-btn{padding:8px 22px;border-radius:6px;border:none;cursor:pointer;font-size:.84em;font-weight:700;font-family:inherit;transition:all .2s}
-.trap-btn.true-btn{background:#1C3A1C;border:1px solid #2E7D32;color:#81C784}
+.trap-btn.true-btn{background:#02590f;border:1px solid #2E7D32;color:#81C784}
 .trap-btn.true-btn:hover{background:#2E7D32;color:#fff}
 .trap-btn.false-btn{background:#3A1C1C;border:1px solid #C62828;color:#EF9A9A}
 .trap-btn.false-btn:hover{background:#C62828;color:#fff}
 .trap-btn.selected-correct{background:#2E7D32;color:#fff}
 .trap-btn.selected-wrong{background:#C62828;color:#fff}
 .trap-explanation{margin-top:12px;font-size:.83em;line-height:1.6;padding:10px 14px;border-radius:7px;display:none}
-.trap-explanation.show{display:block;background:#000000;border:1px solid #1e4826;color:#9CA3AF}
-.trap-explanation strong{color:#00BFA5}
+.trap-explanation.show{display:block;background:#02590f;border:1px solid #1e4826;color:#9CA3AF}
+.trap-explanation strong{color:#4ADE80}
 
 /* REF TABLE */
 .ref-section{margin-bottom:30px}
-.ref-section h3{font-size:.95em;font-weight:700;color:#00BFA5;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #173d1d}
+.ref-section h3{font-size:.95em;font-weight:700;color:#4ADE80;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #2d6e30}
 table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.84em}
-th{background:#0d2610;color:#9CA3AF;font-size:.75em;text-transform:uppercase;letter-spacing:.05em;padding:10px 12px;text-align:left;border-bottom:1px solid #1e4826}
-td{padding:10px 12px;border-bottom:1px solid #173d1d;color:#E6EDF3;vertical-align:top;line-height:1.5}
+th{background:#02590f;color:#9CA3AF;font-size:.75em;text-transform:uppercase;letter-spacing:.05em;padding:10px 12px;text-align:left;border-bottom:1px solid #1e4826}
+td{padding:10px 12px;border-bottom:1px solid #2d6e30;color:#1F2328;vertical-align:top;line-height:1.5}
+tr:hover td{background:#16A34A;color:#ffffff!important}
 tr:last-child td{border-bottom:none}
-td strong{color:#00BFA5}
+td strong{color:#4ADE80}
 
 .back-link{display:inline-flex;align-items:center;gap:6px;color:#6B7280;font-size:.82em;text-decoration:none;margin-bottom:16px;transition:color .2s}
-.back-link:hover{color:#00BFA5}
+.back-link:hover{color:#4ADE80}
 
-.section-label{font-size:.72em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;display:block}
+.section-label{font-size:.72em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;display:block}
 /* ── TOP NAV ── */
-.topnav{background:#0d2416;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav{background:#166534;border-bottom:1px solid #14532D;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px}
-.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
-.nav-brand-sub{font-size:.72em;color:#7eb98a;font-weight:400;margin-left:4px}
+.nav-brand-text{font-size:1.25em;font-weight:900;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#ffffff;font-weight:400;margin-left:4px}
 .nav-actions{display:flex;align-items:center;gap:10px}
-.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.65);font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);text-decoration:none;transition:all .2s}
-.nav-back-btn:hover{border-color:#00BFA5;color:#00BFA5}
-
-/* ── THEME TOGGLE BUTTON ── */
-.theme-toggle{background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:.95em;transition:all .2s;line-height:1;color:#fff}
-.theme-toggle:hover{background:rgba(255,255,255,0.20)}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#16A34A;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #16A34A;background:#ffffff;text-decoration:none;transition:all .2s}
+.nav-back-btn:hover{border-color:#4ADE80;color:#4ADE80}
 
 /* ── LIGHT MODE ── */
-body.light{background:#F4F8F5;color:#1F2328}
-body.light .topnav{background:#f0f9f4;border-bottom-color:#c5e8d1}
-body.light .theme-toggle{background:#e8f5ee;border:1px solid #c5e8d1;color:#1F2328}
-body.light .theme-toggle:hover{background:#d4eddb}
-body.light .nav-back-btn{color:#4a7c59;border-color:#c5e8d1}
-body.light .nav-back-btn:hover{border-color:#00897B;color:#00695C}
-body.light .nav-brand-text{color:#1F2328}
-body.light .nav-brand-sub{color:#4a7c59}
-body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
-body.light .header h1{color:#1F2328!important}
-body.light .hub-tag{background:#00695C!important;color:#fff!important}
-body.light .subtitle{color:#556B61!important}
-body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556B61!important}
-body.light .hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-body.light .hub-step.current{background:#00695C!important;color:#fff!important}
-body.light .hub-prog-label,body.light .hub-arrow{color:#9CA3AF!important}
-body.light .stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .stat-label{color:#656D76!important}
-body.light .tab-nav{border-bottom-color:#D0D7DE!important}
-body.light .tab-btn{color:#656D76!important}
-body.light .tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
-body.light .section-label{color:#00695C!important}
+body{background:#F4F8F5;color:#1F2328}
+.topnav{background:#166534;border-bottom-color:#14532D}
+.nav-back-btn{color:#16A34A;border-color:#16A34A;background:#ffffff}
+.nav-back-btn:hover{border-color:#22C55E;color:#16A34A}
+.nav-brand-text{color:#1F2328}
+.nav-brand-sub{color:#ffffff!important}
+.header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#22C55E!important}
+.header h1{color:#1F2328!important}
+.hub-tag{background:#16A34A!important;color:#fff!important}
+.subtitle{color:#556B61!important}
+.source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556B61!important}
+.hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
+.hub-step.next,.hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+.hub-step.current{background:#16A34A!important;color:#fff!important}
+.hub-prog-label,.hub-arrow{color:#9CA3AF!important}
+.stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
+.stat-label{color:#656D76!important}
+.tab-nav{border-bottom-color:#D0D7DE!important}
+.tab-btn{color:#656D76!important}
+.tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
+.section-label{color:#16A34A!important}
 /* ── Cards (all hub types) ── */
-body.light .fc-front,body.light .fib-card,body.light .order-drill,body.light .match-game,
-body.light .trap-card,body.light .mcq-card,body.light .cc-card,body.light .vq-card,
-body.light .saq-card,body.light .block-header,body.light .ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .fc-back{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .fc-front{border-top-color:#00897B!important}
-body.light .fc-q,body.light .fc-a{color:#1F2328!important}
-body.light .fc-flip-hint{color:#8B9698!important}
-body.light .fc-label,body.light .fib-num,body.light .trap-num,body.light .mcq-num,
-body.light .vq-num,body.light .saq-num,body.light .cc-title{color:#00695C!important}
-body.light .fib-prompt,body.light .trap-statement,body.light .mcq-stem,body.light .vq-stem,
-body.light .saq-question,body.light .drill-title,body.light .match-title,
-body.light .cc-body,body.light .block-title{color:#1F2328!important}
-body.light .block-desc,body.light .drill-subtitle,body.light .match-subtitle{color:#556D76!important}
-body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .fib-hint{color:#9CA3AF!important}
-body.light .drag-item,body.light .match-item,body.light .mcq-opt,body.light .vq-opt{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .drag-item.drag-over{border-color:#00897B!important;background:#EDF7F4!important}
-body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#E8F5EC!important;border-color:#80CBC4!important;color:#1B5E20!important}
-body.light .match-col-label{color:#00695C!important}
-body.light .vq-stem{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .saq-answer,body.light .vq-explanation,body.light .mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556D76!important}
-body.light .saq-point{background:#F0FAF8!important;border-left-color:#00897B!important;color:#1F2328!important}
+.fc-front,.fib-card,.order-drill,.match-set,.match-game,
+.trap-card,.mcq-card,.cc-card,.vq-card,
+.saq-card,.block-header,.ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
+.fc-back{background:#EDF7F4!important;border-color:#A7D7C5!important}
+.fc-front{border-top-color:#22C55E!important}
+.fib-card,.order-drill,.match-set{border-left-color:#22C55E!important}
+.fc-q,.fc-a{color:#1F2328!important}
+.fc-flip-hint{color:#8B9698!important}
+.fc-label,.fib-num,.trap-num,.mcq-num,
+.vq-num,.saq-num,.cc-title{color:#16A34A!important}
+.fib-prompt,.trap-statement,.mcq-stem,.vq-stem,
+.saq-question,.drill-title,.match-set-title,.match-title,
+.cc-body,.block-title{color:#1F2328!important}
+.block-desc,.drill-subtitle,.match-set-hint,.match-subtitle{color:#556D76!important}
+.fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+.fib-hint{color:#9CA3AF!important}
+.match-item,.mcq-opt,.vq-opt{background:#ffffff!important;border-color:#22C55E!important;color:#1F2328!important}
+.drag-item.drag-over{border-color:#22C55E!important;background:#EDF7F4!important}
+.ordering-intro,.match-intro,.trap-intro{background:#F0FDF4!important;border-color:#86EFAC!important;color:#16A34A!important}
+.trap-card{background:#ffffff!important;border-left-color:#22C55E!important}
+.trap-num{color:#16A34A!important}
+.trap-statement{background:#F0FDF4!important;border-left-color:#22C55E!important;color:#1F2328!important}
+.trap-exp.show-c{background:#F0FDF4!important;border-color:#22C55E!important;color:#16A34A!important;display:block}
+.trap-exp.show-w{background:#FFF1F2!important;border-color:#E11D48!important;color:#9F1239!important;display:block}
+.trap-exp strong{color:#16A34A!important}
+.trap-btn-true:hover:not(:disabled){background:#F0FDF4!important;border-color:#4CAF50!important}
+.trap-btn-false:hover:not(:disabled){background:#FFF1F2!important;border-color:#EF5350!important}
+.trap-btn.sel-correct{background:#F0FDF4!important;border-color:#4CAF50!important;color:#16A34A!important}
+.trap-btn.sel-wrong{background:#FFF1F2!important;border-color:#EF5350!important;color:#9F1239!important}
+.match-col-label{color:#16A34A!important}
+.vq-stem{background:#EDF7F4!important;border-color:#A7D7C5!important}
+.saq-answer,.vq-explanation,.mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556D76!important}
+.saq-point{background:#F0FAF8!important;border-left-color:#22C55E!important;color:#1F2328!important}
 /* ── Tables ── */
-body.light table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
-body.light table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
 /* ── Reference / footer ── */
-body.light .ref-section h3{color:#00695C!important;border-bottom-color:#D0D7DE!important}
-body.light .footer,body.light .footer a{color:#656D76!important}
-body.light .footer{border-top-color:#D0D7DE!important}
-body.light .back-link{color:#656D76!important;border-color:#D0D7DE!important}
-body.light .back-link:hover{color:#00695C!important;border-color:#00695C!important}
+.ref-section h3{color:#16A34A!important;border-bottom-color:#D0D7DE!important}
+.footer,.footer a{color:#656D76!important}
+.footer{border-top-color:#D0D7DE!important}
+.back-link{color:#656D76!important;border-color:#D0D7DE!important}
+.back-link:hover{color:#16A34A!important;border-color:#16A34A!important}
 
 </style>
 </head>
@@ -225,8 +239,6 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
   </div>
   <div class="nav-actions">
     <a href="../active-recall-hub.html" class="nav-back-btn">← Active Drill Hub</a>
-  
-    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
   </div>
 </nav>
 <div class="container">
@@ -280,112 +292,112 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
     <div class="fc-progress"><span>Click any card to flip · <span class="prog-num">16</span> cards total</span></div>
     <div class="fc-grid">
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 1 · UWL</div><div class="fc-q">What is the unstirred water layer (UWL) and what creates it?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">The UWL is an aqueous zone immediately adjacent to the brush border of enterocytes. It forms because <strong>laminar flow</strong> near the gut wall is slow, and <strong>mucus + HCO₃⁻</strong> secreted by goblet cells creates a stagnant water layer that chyme cannot penetrate by bulk flow.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 1 · UWL</div><div class="fc-q">Why can't dietary lipids cross the UWL on their own?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Lipids are <strong>hydrophobic</strong> — they aggregate into large fat droplets in the aqueous lumen. These droplets cannot diffuse through the aqueous UWL. They need an amphipathic carrier (bile/micelles) to transport them to the enterocyte surface.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 1 · Bile Role</div><div class="fc-q">What is the "lipid taxi" concept and who is the driver?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile forms <strong>micelles</strong> — spherical amphipathic aggregates with a <strong>hydrophobic core</strong> (holds dietary lipids) and a <strong>hydrophilic exterior</strong> (faces the aqueous UWL). The micelle is the "taxi"; bile is the driver — it carries lipids through water to the enterocyte.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 1 · Classic Trap</div><div class="fc-q">Does bile digest lipids? Explain.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>NO.</strong> Bile does NOT digest lipids. Digestion (hydrolysis of triglycerides) is performed by <strong>pancreatic lipase</strong>. Bile <em>emulsifies</em> fat droplets (↑ surface area) and <em>forms micelles</em> to transport lipids — but never chemically breaks them down.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 2 · Synthesis</div><div class="fc-q">Where is bile synthesized and from what backbone?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile is synthesized exclusively in <strong>hepatocytes</strong> from a <strong>cholesterol backbone</strong>. The rate-limiting enzyme for cholesterol synthesis is <strong>HMG-CoA reductase</strong> — the target of statins. Bile also contains phospholipids, metabolic waste, and bilirubin.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 2 · Structure</div><div class="fc-q">What makes primary bile amphipathic? Name the two types.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Conjugation with an amino acid adds a <strong>hydrophilic head</strong> to the lipophilic cholesterol backbone:<br>• <strong>Glycine</strong> → glycocholic acid<br>• <strong>Taurine</strong> → taurocholic acid<br>Result: amphipathic molecule — one end loves fat, one end loves water.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 2 · Primary vs Secondary</div><div class="fc-q">Distinguish primary vs secondary bile acids.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Primary bile:</strong> made by hepatocytes; amphipathic; forms micelles in small intestine (e.g., cholic acid, chenodeoxycholic acid).<br><strong>Secondary bile:</strong> primary bile deconjugated by colonic bacteria → mostly lipophilic; found in colon; <em>cannot</em> form micelles. (e.g., deoxycholic acid, lithocholic acid)</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 2 · Bilirubin</div><div class="fc-q">Trace bilirubin from RBC destruction to stool color.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Heme from RBC → <strong>unconjugated bilirubin</strong> (water-insoluble, albumin-bound) → liver conjugates with glucuronic acid → <strong>conjugated bilirubin</strong> (water-soluble) → secreted into bile → gut bacteria → <strong>urobilinogen</strong> (some excreted in urine) → <strong>stercobilin</strong> (brown stool color).</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 3 · CCK</div><div class="fc-q">What triggers CCK release and what are its 3 biliary effects?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Trigger:</strong> fat + protein in duodenum → I-cells release CCK.<br><strong>3 biliary effects:</strong><br>1. ↑ bile production by hepatocytes<br>2. Gallbladder contraction (releases stored bile)<br>3. Relaxation of the sphincter of Oddi (bile flows into duodenum)</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 3 · Enterohepatic</div><div class="fc-q">Describe enterohepatic circulation — where, how, and how much is recycled?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">After micelle delivery, bile remains in the lumen → travels to <strong>terminal ileum</strong> → actively reabsorbed via <strong>ASBT transporter</strong> → portal circulation → liver reuses it. The body recycles bile <strong>6–10×/day</strong>; only <strong>~10%</strong> is lost in feces per cycle.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 3 · Gallstones</div><div class="fc-q">What are the 3 types of gallstones, their composition, and radiology?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cholesterol</strong> (~80%): crystallized cholesterol; <em>radiolucent</em> on X-ray; 5 F's risk factors.<br><strong>Black pigment:</strong> calcium bilirubinate; <em>radiopaque</em>; chronic hemolysis (sickle cell).<br><strong>Brown pigment:</strong> bilirubinate + bacteria; <em>radiopaque</em>; biliary infection (E. coli).</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 4 · Micelle</div><div class="fc-q">Describe micelle structure and what lipid cargo it carries.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Micelle = spherical aggregate of primary bile molecules:<br>• <strong>Lipophilic ends face inward</strong> → surround and trap lipid cargo<br>• <strong>Hydrophilic ends face outward</strong> → interact with the aqueous UWL<br><strong>Cargo:</strong> free fatty acids, monoglycerides, fat-soluble vitamins (A,D,E,K), cholesterol.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 4 · Colipase</div><div class="fc-q">Why is colipase needed? How is it activated?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile's hydrophilic shell <strong>blocks pancreatic lipase</strong> from accessing the lipid core. Colipase binds the hydrophilic ends of bile, creating a "door" for lipase.<br><strong>Activation:</strong> pancreas secretes <em>pro-colipase</em> → trypsin cleaves it → active <strong>colipase</strong>.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 4 · Lipase Products</div><div class="fc-q">What does pancreatic lipase produce and where do the products go?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Pancreatic lipase hydrolyzes triglycerides → <strong>2 free fatty acids + 1 monoglyceride</strong>. These diffuse passively off the micelle into the enterocyte (they are lipophilic). Inside the enterocyte: re-esterified → <strong>chylomicrons</strong> → lacteals (lymph) → thoracic duct → bloodstream.</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 4 · Steatorrhea</div><div class="fc-q">Define steatorrhea and list 4 causes.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Steatorrhea:</strong> excess fat in stool (>7 g/day); greasy, foul-smelling, floating, hard to flush.<br><strong>4 causes:</strong> ↓ bile (liver failure, obstruction), ↓ pancreatic lipase (CF, chronic pancreatitis), acid inactivation (ZES), terminal ileum resection (↓ bile reabsorption → depleted pool).</div></div>
         </div>
       </div>
 
-      <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc" onclick="flipCard(this)">
         <div class="fc-inner">
           <div class="fc-front"><div class="fc-label">LO 4 · Fat Vitamins</div><div class="fc-q">Name the deficiencies from fat malabsorption — one clue per vitamin.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
           <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Vitamin A:</strong> night blindness → xerophthalmia.<br><strong>Vitamin D:</strong> rickets (children) / osteomalacia (adults).<br><strong>Vitamin E:</strong> hemolytic anemia, ataxia, peripheral neuropathy.<br><strong>Vitamin K:</strong> bleeding (↓ II, VII, IX, X, Protein C/S) → ↑ PT/INR.</div></div>
@@ -1011,20 +1023,7 @@ function answerTrap(btn,isCorrectChoice){
 }
 
 /* ── THEME TOGGLE ── */
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light');
-  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
-  try{localStorage.setItem('gi-hub-theme',isLight?'light':'dark');}catch(e){}
-}
-window.addEventListener('DOMContentLoaded',function(){
-  try{
-    if(localStorage.getItem('gi-hub-theme')==='light'){
-      document.body.classList.add('light');
-      var b=document.getElementById('theme-btn');
-      if(b)b.textContent='🌙';
-    }
-  }catch(e){}
-});
+
 
 </script>
 </body>

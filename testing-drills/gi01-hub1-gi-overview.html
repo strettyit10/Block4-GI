@@ -7,223 +7,229 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#000000;color:#E6EDF3;min-height:100vh}
+body{font-family:'Inter',sans-serif;background:#02590f;color:#E6EDF3;min-height:100vh}
 .container{max-width:1100px;margin:0 auto;padding:24px 20px}
 
-.header{background:linear-gradient(135deg,#003D36 0%,#0D2420 100%);border:1px solid #00897B;border-left:5px solid #00BFA5;border-radius:12px;padding:28px 32px;margin-bottom:22px}
-.hub-tag{display:inline-block;background:#00695C;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header{background:linear-gradient(135deg,#02590f 0%,#02590f 100%);border:1px solid #22C55E;border-left:5px solid #4ADE80;border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#16A34A;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
 .header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
-.header h1 span{color:#00BFA5}
+.header h1 span{color:#4ADE80}
 .header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
 .source-strip{display:flex;gap:8px;flex-wrap:wrap}
-.source-badge{background:#0d2610;border:1px solid #1e4826;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
-.source-badge strong{color:#00BFA5}
+.source-badge{background:#02590f;border:1px solid #1e4826;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:#4ADE80}
 
-.hub-prog{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-prog{background:#02590f;border:1px solid #2d6e30;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
-.hub-step.current{background:#00695C;color:#fff}
-.hub-step.next{background:#0d2610;border:1px solid #1e4826;color:#6B7280;text-decoration:none;transition:all .2s}
-.hub-step.next:hover{border-color:#00BFA5;color:#00BFA5}
+.hub-step.current{background:#16A34A;color:#fff}
+.hub-step.next{background:#02590f;border:1px solid #1e4826;color:#6B7280;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#4ADE80;color:#4ADE80}
 .hub-arrow{color:#1e4826;font-size:1em}
 .hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
 
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
-.stat-card{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:12px;text-align:center}
-.stat-num{font-size:1.6em;font-weight:700;color:#00BFA5}
+.stat-card{background:#02590f;border:1px solid #2d6e30;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.6em;font-weight:700;color:#4ADE80}
 .stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
 
-.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #173d1d;padding-bottom:0}
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #2d6e30;padding-bottom:0}
 .tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
-.tab-btn:hover{color:#00BFA5}
-.tab-btn.active{color:#00BFA5;border-bottom-color:#00BFA5}
+.tab-btn:hover{color:#4ADE80}
+.tab-btn.active{color:#4ADE80;border-bottom-color:#4ADE80}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
 
 /* FLASHCARDS */
 .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
-.fc{perspective:1000px;cursor:pointer}
-.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:140px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
 .fc.flipped .fc-inner{transform:rotateY(180deg)}
-.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:20px;min-height:140px}
-.fc-front{border-top:3px solid #00897B}
-.fc-back{transform:rotateY(180deg);background:#0D2420;border-color:#00695C}
-.fc-label{font-size:.68em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:20px}
+.fc-front{border-top:3px solid #22C55E}
+.fc-back{transform:rotateY(180deg);background:#02590f;border-color:#16A34A}
+.fc-label{font-size:.68em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
 .fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
 .fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
 .fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
 .fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
-.fc-progress .prog-num{color:#00BFA5;font-weight:700}
+.fc-progress .prog-num{color:#4ADE80;font-weight:700}
 
 /* FIB */
 .fib-list{display:flex;flex-direction:column;gap:16px}
-.fib-card{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:20px;border-left:4px solid #00897B}
-.fib-num{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;margin-bottom:8px}
+.fib-card{background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:20px;border-left:4px solid #22C55E}
+.fib-num{font-size:.7em;font-weight:700;color:#4ADE80;text-transform:uppercase;margin-bottom:8px}
 .fib-prompt{font-size:.92em;color:#E6EDF3;line-height:1.6;margin-bottom:12px}
 .fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.fib-input{background:#000000;border:1px solid #1e4826;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
-.fib-input:focus{outline:none;border-color:#00BFA5}
-.fib-input.correct{border-color:#2E7D32;background:#0D2E0E}
+.fib-input{background:#02590f;border:1px solid #1e4826;border-radius:6px;padding:8px 12px;color:#E6EDF3;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#4ADE80}
+.fib-input.correct{border-color:#2E7D32;background:#02590f}
 .fib-input.incorrect{border-color:#C62828;background:#2E0A0A}
-.fib-btn{background:#00695C;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
-.fib-btn:hover{background:#00897B}
-.fib-reveal-btn{background:#0d2610;border:1px solid #1e4826;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
-.fib-reveal-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.fib-btn{background:#16A34A;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#22C55E}
+.fib-reveal-btn{background:#02590f;border:1px solid #1e4826;color:#9CA3AF;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#4ADE80;color:#4ADE80}
 .fib-feedback{font-size:.82em;margin-top:8px;padding:6px 10px;border-radius:5px;display:none}
-.fib-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784;display:block}
+.fib-feedback.correct{background:#02590f;border:1px solid #2E7D32;color:#81C784;display:block}
 .fib-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A;display:block}
 .fib-hint{font-size:.75em;color:#6B7280;margin-top:5px;font-style:italic}
 
 /* ORDERING */
-.ordering-intro{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF;line-height:1.6}
-.ordering-intro strong{color:#00BFA5}
-.order-drill{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:20px}
-.drill-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
+.ordering-intro{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#16A34A;line-height:1.6}
+.ordering-intro strong{color:#16A34A}
+.order-drill{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #22C55E;border-radius:10px;padding:22px;margin-bottom:20px}
+.drill-title{font-size:1em;font-weight:700;color:#1F2328;margin-bottom:5px}
 .drill-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
 .order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
-.order-item{background:#0d2610;border:1px solid #1e4826;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#E6EDF3;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item{background:#ffffff;border:1px solid #22C55E;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#1F2328;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
 .order-item:active{cursor:grabbing}
-.order-item:hover{border-color:#00897B;background:#1E2F2D}
-.order-item.dragging{opacity:.45;border-style:dashed;border-color:#00BFA5}
-.order-item.drag-over{border-color:#00BFA5;background:#0D2420;transform:scale(1.01)}
-.order-item .item-grip{color:#6B7280;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item:hover{border-color:#16A34A;background:#dcfce7}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#4ADE80}
+.order-item.drag-over{border-color:#4ADE80;background:#bbf7d0;transform:scale(1.01)}
+.order-item .item-grip{color:#22C55E;font-size:1.1em;flex-shrink:0;margin-top:1px}
 .order-item .item-text{flex:1}
-.order-item.correct-pos{background:#0D2E0E;border-color:#2E7D32}
-.order-item.wrong-pos{background:#2E0A0A;border-color:#C62828}
+.order-item.correct-pos{background:#d1fae5;border-color:#16A34A}
+.order-item.wrong-pos{background:#fee2e2;border-color:#ef4444;color:#991b1b}
 .order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.order-check-btn{background:#00695C;border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
-.order-check-btn:hover{background:#00897B}
-.order-ghost-btn{background:none;border:1px solid #1e4826;color:#9CA3AF;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
-.order-ghost-btn:hover{border-color:#00BFA5;color:#00BFA5}
+.order-check-btn{background:#16A34A;border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#22C55E}
+.order-ghost-btn{background:none;border:1px solid #22C55E;color:#16A34A;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#4ADE80;color:#22C55E}
 .order-feedback{font-size:.84em;padding:8px 14px;border-radius:6px;margin-bottom:8px}
-.order-feedback.correct{background:#0D2E0E;border:1px solid #2E7D32;color:#81C784}
-.order-feedback.incorrect{background:#2E0A0A;border:1px solid #C62828;color:#EF9A9A}
-.order-answer{background:#0D2420;border:1px solid #00695C;border-radius:7px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-feedback.correct{background:#d1fae5;border:1px solid #16A34A;color:#16A34A}
+.order-feedback.incorrect{background:#fee2e2;border:1px solid #ef4444;color:#991b1b}
+.order-answer{background:#f0fdf4;border:1px solid #22C55E;border-radius:7px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
 .order-answer ol{padding-left:20px;line-height:1.9}
-.order-answer li{color:#9CA3AF}
-.order-answer li span{color:#00BFA5;font-weight:600}
+.order-answer li{color:#374151}
+.order-answer li span{color:#16A34A;font-weight:600}
 
 /* MATCHING */
-.match-intro{background:#0a1f0d;border:1px solid #173d1d;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#9CA3AF}
-.match-intro strong{color:#00BFA5}
-.match-set{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:20px}
-.match-set-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:4px}
-.match-set-hint{font-size:.78em;color:#6B7280;margin-bottom:16px}
+.match-intro{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#16A34A}
+.match-intro strong{color:#16A34A}
+.match-set{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #22C55E;border-radius:10px;padding:22px;margin-bottom:20px}
+.match-set-title{font-size:1em;font-weight:700;color:#1F2328;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
 .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:600px){.match-cols{grid-template-columns:1fr}}
-.match-col-label{font-size:.72em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.match-item{background:#0d2610;border:1px solid #1e4826;border-radius:7px;padding:11px 14px;font-size:.85em;color:#E6EDF3;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
-.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#00897B;background:#1E2F2D}
-.match-item.selected{border-color:#00BFA5;background:#003D36;color:#fff}
-.match-item.matched-correct{border-color:#2E7D32;background:#0D2E0E;color:#81C784;cursor:default}
+.match-col-label{font-size:.72em;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.match-item{background:#ffffff;border:1px solid #22C55E;border-radius:7px;padding:11px 14px;font-size:.85em;color:#1F2328;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#16A34A!important;background:#dcfce7!important}
+.match-item.selected{border-color:#16A34A!important;background:#dcfce7!important;color:#16A34A!important;font-weight:600}
+.match-item.matched-correct{border-color:#16A34A!important;background:#d1fae5!important;color:#16A34A!important;cursor:default}
 .match-item.flash-wrong{animation:flashRed .5s ease forwards}
-@keyframes flashRed{0%{background:#5C1A1A;border-color:#C62828}100%{background:#0d2610;border-color:#1e4826}}
-.match-score{margin-top:12px;font-size:.83em;color:#9CA3AF}
-.match-score .correct-count{color:#00BFA5;font-weight:700}
-.match-reset-btn{background:none;border:1px solid #1e4826;color:#9CA3AF;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
-.match-reset-btn:hover{border-color:#00BFA5;color:#00BFA5}
+@keyframes flashRed{0%{background:#fee2e2;border-color:#ef4444}100%{background:#ffffff;border-color:#22C55E}}
+.match-score{margin-top:12px;font-size:.83em;color:#6B7280}
+.match-score .correct-count{color:#16A34A;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #22C55E;color:#16A34A;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#4ADE80;color:#22C55E}
 
 /* TEST TRAPS */
 .trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6}
-.trap-card{background:#0a1f0d;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #00BFA5}
-.trap-num{font-size:.7em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#0d2610;border-radius:7px;padding:14px;border-left:3px solid #00BFA5;font-style:italic}
+.trap-card{background:#02590f;border:1px solid #1e4826;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #4ADE80}
+.trap-num{font-size:.7em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#02590f;border-radius:7px;padding:14px;border-left:3px solid #4ADE80;font-style:italic}
 .trap-btns{display:flex;gap:10px;margin-bottom:8px}
 .trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
 .trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50}
-.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50}
+.trap-btn-true:hover:not(:disabled){background:#02590f;border-color:#4CAF50}
 .trap-btn-false{background:none;border-color:#C62828;color:#EF5350}
 .trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350}
 .trap-btn:disabled{opacity:.55;cursor:not-allowed}
-.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784}
+.trap-btn.sel-correct{background:#02590f;border-color:#4CAF50;color:#81C784}
 .trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A}
 .trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none}
-.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block}
+.trap-exp.show-c{background:#02590f;border:1px solid #2E7D32;color:#C8E6C9;display:block}
 .trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block}
-.trap-exp strong{color:#00BFA5}
+.trap-exp strong{color:#4ADE80}
 
 /* REFERENCE */
 .ref-section{margin-bottom:28px}
-.ref-title{font-size:.8em;font-weight:700;color:#00BFA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #173d1d}
+.ref-title{font-size:.8em;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #2d6e30}
 .ref-table{width:100%;border-collapse:collapse;font-size:.83em}
-.ref-table th{background:#0d2610;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #173d1d}
-.ref-table td{padding:10px 14px;border-bottom:1px solid #173d1d;color:#E6EDF3;vertical-align:top;line-height:1.5}
-.ref-table tr:hover td{background:#0a1f0d}
-.ref-table .key{color:#00BFA5;font-weight:600}
-.ref-note{background:#0d2610;border:1px solid #1e4826;border-radius:7px;padding:12px 16px;font-size:.82em;color:#9CA3AF;line-height:1.6;margin-top:10px}
-.ref-note strong{color:#00BFA5}
+.ref-table th{background:#02590f;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #2d6e30}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #2d6e30;color:#E6EDF3;vertical-align:top;line-height:1.5}
+.ref-table tr:hover td{background:#16A34A;color:#ffffff!important}
+.ref-table .key{color:#4ADE80;font-weight:600}
+.ref-note{background:#02590f;border:1px solid #1e4826;border-radius:7px;padding:12px 16px;font-size:.82em;color:#9CA3AF;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#4ADE80}
 
-.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #173d1d;padding-top:14px;margin-top:28px}
-.footer a{color:#00BFA5;text-decoration:none}
+.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #2d6e30;padding-top:14px;margin-top:28px}
+.footer a{color:#4ADE80;text-decoration:none}
 .footer a:hover{text-decoration:underline}
 /* ── TOP NAV ── */
-.topnav{background:#0d2416;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav{background:#166534;border-bottom:1px solid #14532D;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px}
-.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
-.nav-brand-sub{font-size:.72em;color:#7eb98a;font-weight:400;margin-left:4px}
+.nav-brand-text{font-size:1.25em;font-weight:900;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#ffffff;font-weight:400;margin-left:4px}
 .nav-actions{display:flex;align-items:center;gap:10px}
-.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.65);font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);text-decoration:none;transition:all .2s}
-.nav-back-btn:hover{border-color:#00BFA5;color:#00BFA5}
-
-/* ── THEME TOGGLE BUTTON ── */
-.theme-toggle{background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:.95em;transition:all .2s;line-height:1;color:#fff}
-.theme-toggle:hover{background:rgba(255,255,255,0.20)}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#16A34A;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #16A34A;background:#ffffff;text-decoration:none;transition:all .2s}
+.nav-back-btn:hover{border-color:#4ADE80;color:#4ADE80}
 
 /* ── LIGHT MODE ── */
-body.light{background:#F4F8F5;color:#1F2328}
-body.light .topnav{background:#f0f9f4;border-bottom-color:#c5e8d1}
-body.light .theme-toggle{background:#e8f5ee;border:1px solid #c5e8d1;color:#1F2328}
-body.light .theme-toggle:hover{background:#d4eddb}
-body.light .nav-back-btn{color:#4a7c59;border-color:#c5e8d1}
-body.light .nav-back-btn:hover{border-color:#00897B;color:#00695C}
-body.light .nav-brand-text{color:#1F2328}
-body.light .nav-brand-sub{color:#4a7c59}
-body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
-body.light .header h1{color:#1F2328!important}
-body.light .hub-tag{background:#00695C!important;color:#fff!important}
-body.light .subtitle{color:#556B61!important}
-body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556B61!important}
-body.light .hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-body.light .hub-step.current{background:#00695C!important;color:#fff!important}
-body.light .hub-prog-label,body.light .hub-arrow{color:#9CA3AF!important}
-body.light .stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .stat-label{color:#656D76!important}
-body.light .tab-nav{border-bottom-color:#D0D7DE!important}
-body.light .tab-btn{color:#656D76!important}
-body.light .tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
-body.light .section-label{color:#00695C!important}
+body{background:#F4F8F5;color:#1F2328}
+.topnav{background:#166534;border-bottom-color:#14532D}
+.nav-back-btn{color:#16A34A;border-color:#16A34A;background:#ffffff}
+.nav-back-btn:hover{border-color:#22C55E;color:#16A34A}
+.nav-brand-text{color:#1F2328}
+.nav-brand-sub{color:#ffffff!important}
+.header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#22C55E!important}
+.header h1{color:#1F2328!important}
+.hub-tag{background:#16A34A!important;color:#fff!important}
+.subtitle{color:#556B61!important}
+.source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556B61!important}
+.hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
+.hub-step.next,.hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+.hub-step.current{background:#16A34A!important;color:#fff!important}
+.hub-prog-label,.hub-arrow{color:#9CA3AF!important}
+.stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
+.stat-label{color:#656D76!important}
+.tab-nav{border-bottom-color:#D0D7DE!important}
+.tab-btn{color:#656D76!important}
+.tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
+.section-label{color:#16A34A!important}
 /* ── Cards (all hub types) ── */
-body.light .fc-front,body.light .fib-card,body.light .order-drill,body.light .match-game,
-body.light .trap-card,body.light .mcq-card,body.light .cc-card,body.light .vq-card,
-body.light .saq-card,body.light .block-header,body.light .ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .fc-back{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .fc-front{border-top-color:#00897B!important}
-body.light .fc-q,body.light .fc-a{color:#1F2328!important}
-body.light .fc-flip-hint{color:#8B9698!important}
-body.light .fc-label,body.light .fib-num,body.light .trap-num,body.light .mcq-num,
-body.light .vq-num,body.light .saq-num,body.light .cc-title{color:#00695C!important}
-body.light .fib-prompt,body.light .trap-statement,body.light .mcq-stem,body.light .vq-stem,
-body.light .saq-question,body.light .drill-title,body.light .match-title,
-body.light .cc-body,body.light .block-title{color:#1F2328!important}
-body.light .block-desc,body.light .drill-subtitle,body.light .match-subtitle{color:#556D76!important}
-body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .fib-hint{color:#9CA3AF!important}
-body.light .drag-item,body.light .match-item,body.light .mcq-opt,body.light .vq-opt{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .drag-item.drag-over{border-color:#00897B!important;background:#EDF7F4!important}
-body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#E8F5EC!important;border-color:#80CBC4!important;color:#1B5E20!important}
-body.light .match-col-label{color:#00695C!important}
-body.light .vq-stem{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .saq-answer,body.light .vq-explanation,body.light .mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556D76!important}
-body.light .saq-point{background:#F0FAF8!important;border-left-color:#00897B!important;color:#1F2328!important}
+.fc-front,.fib-card,.order-drill,.match-set,.match-game,
+.trap-card,.mcq-card,.cc-card,.vq-card,
+.saq-card,.block-header,.ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
+.fc-back{background:#EDF7F4!important;border-color:#A7D7C5!important}
+.fc-front{border-top-color:#22C55E!important}
+.fib-card,.order-drill,.match-set{border-left-color:#22C55E!important}
+.fc-q,.fc-a{color:#1F2328!important}
+.fc-flip-hint{color:#8B9698!important}
+.fc-label,.fib-num,.trap-num,.mcq-num,
+.vq-num,.saq-num,.cc-title{color:#16A34A!important}
+.fib-prompt,.trap-statement,.mcq-stem,.vq-stem,
+.saq-question,.drill-title,.match-set-title,.match-title,
+.cc-body,.block-title{color:#1F2328!important}
+.block-desc,.drill-subtitle,.match-set-hint,.match-subtitle{color:#556D76!important}
+.fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+.fib-hint{color:#9CA3AF!important}
+.match-item,.mcq-opt,.vq-opt{background:#ffffff!important;border-color:#22C55E!important;color:#1F2328!important}
+.drag-item.drag-over{border-color:#22C55E!important;background:#EDF7F4!important}
+.ordering-intro,.match-intro,.trap-intro{background:#F0FDF4!important;border-color:#86EFAC!important;color:#16A34A!important}
+.trap-card{background:#ffffff!important;border-left-color:#22C55E!important}
+.trap-num{color:#16A34A!important}
+.trap-statement{background:#F0FDF4!important;border-left-color:#22C55E!important;color:#1F2328!important}
+.trap-exp.show-c{background:#F0FDF4!important;border-color:#22C55E!important;color:#16A34A!important;display:block}
+.trap-exp.show-w{background:#FFF1F2!important;border-color:#E11D48!important;color:#9F1239!important;display:block}
+.trap-exp strong{color:#16A34A!important}
+.trap-btn-true:hover:not(:disabled){background:#F0FDF4!important;border-color:#4CAF50!important}
+.trap-btn-false:hover:not(:disabled){background:#FFF1F2!important;border-color:#EF5350!important}
+.trap-btn.sel-correct{background:#F0FDF4!important;border-color:#4CAF50!important;color:#16A34A!important}
+.trap-btn.sel-wrong{background:#FFF1F2!important;border-color:#EF5350!important;color:#9F1239!important}
+.match-col-label{color:#16A34A!important}
+.vq-stem{background:#EDF7F4!important;border-color:#A7D7C5!important}
+.saq-answer,.vq-explanation,.mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556D76!important}
+.saq-point{background:#F0FAF8!important;border-left-color:#22C55E!important;color:#1F2328!important}
 /* ── Tables ── */
-body.light table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
-body.light table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
 /* ── Reference / footer ── */
-body.light .ref-section h3{color:#00695C!important;border-bottom-color:#D0D7DE!important}
-body.light .footer,body.light .footer a{color:#656D76!important}
-body.light .footer{border-top-color:#D0D7DE!important}
-body.light .back-link{color:#656D76!important;border-color:#D0D7DE!important}
-body.light .back-link:hover{color:#00695C!important;border-color:#00695C!important}
+.ref-section h3{color:#16A34A!important;border-bottom-color:#D0D7DE!important}
+.footer,.footer a{color:#656D76!important}
+.footer{border-top-color:#D0D7DE!important}
+.back-link{color:#656D76!important;border-color:#D0D7DE!important}
+.back-link:hover{color:#16A34A!important;border-color:#16A34A!important}
 
 </style>
 </head>
@@ -234,8 +240,6 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
   </div>
   <div class="nav-actions">
     <a href="../active-recall-hub.html" class="nav-back-btn">← Active Drill Hub</a>
-  
-    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
   </div>
 </nav>
 <div class="container">
@@ -286,112 +290,112 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
   <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">16</span> cards total</span><span>LOs 1–7</span></div>
   <div class="fc-grid">
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 1 — Anatomy</div><div class="fc-q">Name the four concentric wall layers of the GI tract from innermost to outermost.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mucosa → Submucosa → Muscularis externa (propria) → Serosa/Adventitia</strong><br><br>Mucosa has 3 sublayers: epithelium, lamina propria, muscularis mucosae.</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 1 — Plexuses</div><div class="fc-q">What are the two ENS plexuses, their alternate names, locations, and primary functions?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Myenteric (Auerbach's):</strong> between circular &amp; longitudinal muscle → MOTILITY<br><br><strong>Submucosal (Meissner's):</strong> between circular muscle &amp; submucosa → SECRETION<br><br>Mnemonic: "My Sub" — Myenteric = Motility, Submucosal = Secretion</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 1 — Cell Types</div><div class="fc-q">Parietal cells: location, two secretory products, and mechanism of HCl production?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Location:</strong> Gastric fundus/body<br><strong>Products:</strong> HCl (via H⁺/K⁺ ATPase) + Intrinsic factor (required for B12 absorption in ileum)<br><br>Stimulated by: gastrin (G cells), histamine (H2), ACh (M3)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 1 — Cell Types</div><div class="fc-q">Match: Chief cells, G cells, Paneth cells, Goblet cells — product and location for each.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Chief cells:</strong> gastric fundus → pepsinogen (→ pepsin at pH &lt;3.5)<br><strong>G cells:</strong> gastric antrum + duodenum → gastrin → ↑HCl<br><strong>Paneth cells:</strong> intestinal crypt base → defensins/lysozyme (innate immunity)<br><strong>Goblet cells:</strong> throughout SI + colon → mucus</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 1 — Surface Area</div><div class="fc-q">Name the three levels of small intestine surface area amplification in order, and the approximate fold-increase each adds.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">1. <strong>Plicae circulares</strong> — large folds of mucosa + submucosa; ×3<br>2. <strong>Villi</strong> — finger-like mucosal projections; ×10<br>3. <strong>Microvilli (brush border)</strong> — on each enterocyte; ×20<br><br>Total ≈ 600-fold amplification over a simple tube.</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 2 — DEEP MASS</div><div class="fc-q">What does DEEP MASS stand for? List all 8 functions of the GI tract.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>D</strong>igestion · <strong>E</strong>limination · <strong>E</strong>ndocrine · <strong>P</strong>rotection<br><strong>M</strong>otility · <strong>A</strong>bsorption · <strong>S</strong>ecretion · <strong>S</strong>torage<br><br>Key: GI tract = largest endocrine organ in the body (Endocrine function = "E")</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 2 — Hormones vs. Enzymes</div><div class="fc-q">GI hormones vs. digestive enzymes — where does each get secreted, and why does it matter?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>GI hormones</strong> (gastrin, CCK, secretin, GIP, GLP-1) → secreted into <strong>BLOOD</strong> → travel systemically → serum measurable<br><br><strong>Digestive enzymes</strong> (amylase, pepsin, lipase, trypsin) → secreted into <strong>LUMEN</strong> → act locally on food</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 3 — Fluid Balance</div><div class="fc-q">How much fluid enters the GI tract daily? How much is excreted in feces? Where is the majority absorbed?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Total input:</strong> ~9–10 L/day (2L ingested + 7–8L from secretions)<br><strong>Small intestine absorbs:</strong> ~8.5 L<br><strong>Colon absorbs:</strong> ~400 mL<br><strong>Feces:</strong> ~100–200 mL<br><br>Staggering efficiency — almost all reclaimed.</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 3 — pH Gradient</div><div class="fc-q">What is the approximate pH at: stomach, proximal duodenum, jejunum, ileum, and colon?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Stomach:</strong> 1.5–2.0 (HCl from parietal cells)<br><strong>Proximal duodenum:</strong> 4–5 (acid chyme + pancreatic HCO₃⁻)<br><strong>Jejunum:</strong> 6–7 (progressive neutralization)<br><strong>Ileum:</strong> 7.0–7.5<br><strong>Colon:</strong> 5.5–7.0 (bacterial fermentation lowers pH)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 4 — ENS</div><div class="fc-q">How many neurons does the ENS contain, and what is its defining functional property?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>~500 million neurons</strong> (more than the spinal cord)<br><br>Defining property: <strong>functions completely independently of the CNS</strong> — can coordinate peristalsis, secretion, and absorption without brain/spinal cord input ("second brain")</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 4 — ENS Neurotransmitters</div><div class="fc-q">What do excitatory ENS motor neurons release? What do inhibitory ENS motor neurons release?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Excitatory:</strong> Acetylcholine (ACh) + Substance P → smooth muscle CONTRACTION<br><br><strong>Inhibitory:</strong> VIP (vasoactive intestinal peptide) + Nitric Oxide (NO) → smooth muscle RELAXATION</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 5 — Peristaltic Reflex</div><div class="fc-q">Describe the two simultaneous limbs of the peristaltic reflex and the neurotransmitters involved in each.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ascending excitation (oral/above bolus):</strong> ACh + Substance P → circular muscle CONTRACTS → propels content forward<br><br><strong>Descending inhibition (aboral/below bolus):</strong> VIP + NO → circular muscle RELAXES → creates space for content to move into</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 5 — Receptors</div><div class="fc-q">Name the three ENS sensory receptor types and the stimulus each detects.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanoreceptors:</strong> detect wall stretch/distension → trigger peristalsis<br><strong>Chemoreceptors:</strong> detect pH, nutrients, bile acids → trigger hormone release (CCK, secretin)<br><strong>Osmoreceptors:</strong> detect luminal osmolarity → regulate gastric emptying rate</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 6 — Blood Supply</div><div class="fc-q">Which artery supplies each GI division: foregut, midgut, hindgut? Give a structure served by each.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Celiac trunk:</strong> foregut (stomach, duodenum 1st/2nd, liver, spleen, pancreas)<br><strong>SMA:</strong> midgut (duodenum 3rd/4th → proximal 2/3 transverse colon)<br><strong>IMA:</strong> hindgut (distal 1/3 transverse colon → upper rectum)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 7 — Autonomics</div><div class="fc-q">Compare parasympathetic vs. sympathetic effects on GI motility, secretion, and sphincter tone.</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Parasympathetic (vagus/pelvic nerve):</strong> ↑motility, ↑secretion, ↓sphincter tone ("rest and digest")<br><br><strong>Sympathetic (splanchnic nerves):</strong> ↓motility, ↓secretion, ↑sphincter tone, vasoconstriction ("fight or flight")</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">LO 7 — Cephalic Phase</div><div class="fc-q">What is the cephalic phase of digestion, what nerve mediates it, and what does it prepare the stomach to do?</div><div class="fc-flip-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cephalic phase:</strong> sight, smell, taste, or thought of food triggers anticipatory GI activation BEFORE food arrives<br><br><strong>Mediated by:</strong> vagus nerve (CN X) → ACh → stimulates parietal cells (HCl), chief cells (pepsinogen), gastric motility<br><br>Prepares the stomach to receive and begin digesting food</div></div>
@@ -843,6 +847,20 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
 </div><!-- /container -->
 
 <script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    inner.style.height=front.scrollHeight+'px';
+  });
+});
 // Tab switching
 function switchTab(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
@@ -954,20 +972,7 @@ function judgeTrap(btn,correct){
 }
 
 /* ── THEME TOGGLE ── */
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light');
-  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
-  try{localStorage.setItem('gi-hub-theme',isLight?'light':'dark');}catch(e){}
-}
-window.addEventListener('DOMContentLoaded',function(){
-  try{
-    if(localStorage.getItem('gi-hub-theme')==='light'){
-      document.body.classList.add('light');
-      var b=document.getElementById('theme-btn');
-      if(b)b.textContent='🌙';
-    }
-  }catch(e){}
-});
+
 
 </script>
 </body>
