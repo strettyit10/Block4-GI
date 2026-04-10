@@ -1,0 +1,497 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}
+.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}
+.fb-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #DBEAFE}
+.fb-row:last-child{border-bottom:none}
+.fb-row:nth-child(even){background:#F0F7FF}
+.fb-row:nth-child(odd){background:#fff}
+.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}
+.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">Esophagus &amp; Stomach Disease &#x2014; Active Recall</h2>
+  <a href="gi15_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">&#x2705; View Answer Key</a>
+</div>
+<p class="sub">GI15 &mdash; HoyaDocs GI Block | USMLE Step 1</p>
+
+<div class="resource-banner">
+  <strong>&#128218; Linked Study Guide</strong>
+  Open <a href="../lecture-guides/gi15-esophagus-stomach-disease.html" target="_blank" style="color:#1D4ED8;font-weight:600">GI15: Esophagus &amp; Stomach Disease</a> alongside this drill for reference.
+</div>
+
+<!-- WARMUP -->
+<div class="card">
+  <div class="sec">&#9651; Warmup &mdash; Key Facts (complete from memory)</div>
+  <div class="fg">
+    <div class="f"><label>HSV esophagitis: giant cells at ulcer ___ show the 3 M's (Molding, Multinucleation, Margination)</label><input></div>
+    <div class="f"><label>Barrett's esophagus histologic hallmark: ___ cells (sine qua non)</label><input></div>
+    <div class="f"><label>Esophageal SCC location: ___ third; adenocarcinoma: ___ third / GEJ</label><input></div>
+    <div class="f"><label>H. pylori silver stain: ___; primarily infects gastric ___ (location)</label><input></div>
+    <div class="f"><label>GIST driver mutation: ___; targeted therapy: ___</label><input></div>
+    <div class="f"><label>Stomach is #1 ___ lymphoma site; early low-grade MALT cured by ___</label><input></div>
+  </div>
+  <button class="btn" onclick="rev(this,a0)">Check Warmup</button>
+  <div class="fb" id="fb0">
+    <div class="fb-header">Warmup Answers</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="sw(0)">&#128308; Esophageal Diseases</button>
+  <button class="tab" onclick="sw(1)">&#128992; Gastritis &amp; PUD</button>
+  <button class="tab" onclick="sw(2)">&#128995; Gastric Tumors</button>
+  <button class="tab" onclick="sw(3)">&#9999;&#65039; Practice Qs</button>
+</div>
+
+<!-- PANEL 0: ESOPHAGEAL DISEASES -->
+<div class="panel active" id="p0">
+
+  <span class="lo-tag">LO 1 &mdash; Infectious Esophagitis</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: HSV vs CMV biopsy differences &mdash; classic boards vignette. Know where to biopsy!</div>
+
+  <table>
+    <tr><th>Feature</th><th>HSV Esophagitis</th><th>CMV Esophagitis</th><th>Candida Esophagitis</th></tr>
+    <tr>
+      <td class="rl">Ulcer morphology</td>
+      <td><input placeholder="type of ulcer..."></td>
+      <td><input placeholder="type of ulcer..."></td>
+      <td>White plaques / pseudomembranes</td>
+    </tr>
+    <tr>
+      <td class="rl">Cell type infected</td>
+      <td><input placeholder="which cell?"></td>
+      <td><input placeholder="which cell?"></td>
+      <td>N/A (surface overgrowth)</td>
+    </tr>
+    <tr>
+      <td class="rl">Biopsy from</td>
+      <td><input placeholder="margin or base?"></td>
+      <td><input placeholder="margin or base?"></td>
+      <td>Surface / plaque</td>
+    </tr>
+    <tr>
+      <td class="rl">Inclusion body</td>
+      <td><input placeholder="type / name..."></td>
+      <td><input placeholder="type / name..."></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td class="rl">Key histologic finding</td>
+      <td><input placeholder="3 M's = ?"></td>
+      <td><input placeholder="characteristic cell appearance..."></td>
+      <td><input placeholder="organism morphology..."></td>
+    </tr>
+    <tr>
+      <td class="rl">Special stain</td>
+      <td>H&amp;E (Cowdry A inclusions visible)</td>
+      <td>H&amp;E (owl's eye visible)</td>
+      <td><input placeholder="stain name..."></td>
+    </tr>
+  </table>
+
+  <div class="warn">&#9888; Biopsy tip: For HSV, sample the ulcer <strong>margin</strong> (squamous cells with Cowdry A inclusions). For CMV, sample the ulcer <strong>base</strong> (endothelial cells/fibroblasts with owl's eye nuclei). This distinction is tested directly.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 2 &mdash; GERD</span>
+  <table>
+    <tr><th>Aspect</th><th>Details</th></tr>
+    <tr><td class="rl">Primary mechanism</td><td><input placeholder="LES dysfunction type..."></td></tr>
+    <tr><td class="rl">Histology: inflammatory cells</td><td><input placeholder="cell types in squamous epithelium..."></td></tr>
+    <tr><td class="rl">Histology: epithelial changes</td><td><input placeholder="basal cells and papillae changes..."></td></tr>
+    <tr><td class="rl">Complication progression</td><td><input placeholder="GERD → ___ → ___ → ___"></td></tr>
+  </table>
+  <div class="warn">&#9888; GERD histology: basal cell hyperplasia &gt;15% epithelial thickness + elongated papillae &gt;50–60% into epithelium = hallmarks even without visible inflammation. Eosinophils may be present but are not required.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 3 &mdash; Barrett&apos;s Esophagus</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: Barrett's requires BOTH endoscopic (salmon tongues) AND histologic (goblet cells) criteria</div>
+  <table>
+    <tr><th>Feature</th><th>Barrett&apos;s Esophagus</th></tr>
+    <tr><td class="rl">Macroscopic appearance</td><td><input placeholder="endoscopic appearance..."></td></tr>
+    <tr><td class="rl">Histologic hallmark</td><td><input placeholder="cell type (sine qua non)..."></td></tr>
+    <tr><td class="rl">Diagnosis requires</td><td><input placeholder="two criteria..."></td></tr>
+    <tr><td class="rl">Cancer risk</td><td><input placeholder="type of cancer and progression..."></td></tr>
+  </table>
+
+  <div class="sec">Esophageal Cancer Comparison</div>
+  <div class="on-exam">&#9888;&#65039; On-Exam: Location + risk factors reliably distinguish SCC from adenocarcinoma</div>
+  <table>
+    <tr><th>Feature</th><th>Squamous Cell Carcinoma (SCC)</th><th>Adenocarcinoma</th></tr>
+    <tr><td class="rl">Location</td><td><input placeholder="which third?"></td><td><input placeholder="which region?"></td></tr>
+    <tr><td class="rl">Risk factors</td><td><input placeholder="3-4 key risk factors..."></td><td><input placeholder="2 key risk factors..."></td></tr>
+    <tr><td class="rl">Histology</td><td><input placeholder="classic microscopic finding..."></td><td><input placeholder="classic microscopic finding..."></td></tr>
+    <tr><td class="rl">IHC markers</td><td><input placeholder="key IHC profile..."></td><td><input placeholder="key IHC profile..."></td></tr>
+    <tr><td class="rl">Precursor lesion</td><td>Squamous dysplasia</td><td><input placeholder="precursor..."></td></tr>
+  </table>
+  <div class="warn">&#9888; HY associations: Plummer-Vinson syndrome (iron deficiency + esophageal webs + glossitis) → SCC risk. Achalasia → SCC from stasis/irritation. Lye / caustic ingestion → SCC (decades later).</div>
+
+  <button class="btn" onclick="rev(this,a1)">Check Esophageal Diseases</button>
+  <div class="fb" id="fb1">
+    <div class="fb-header">Esophageal Diseases Answers</div>
+  </div>
+
+</div><!-- end panel 0 -->
+
+<!-- PANEL 1: GASTRITIS & PUD -->
+<div class="panel" id="p1">
+
+  <span class="lo-tag">LO 4–5 &mdash; Acute &amp; Chronic Gastritis</span>
+  <table>
+    <tr><th>Feature</th><th>Acute Gastritis</th><th>Chronic Gastritis</th></tr>
+    <tr><td class="rl">Dominant cell type</td><td><input placeholder="acute inflammatory cell..."></td><td><input placeholder="chronic inflammatory cells..."></td></tr>
+    <tr><td class="rl">Common causes</td><td><input placeholder="3 common causes..."></td><td><input placeholder="most common cause..."></td></tr>
+    <tr><td class="rl">Mucosal defect</td><td>Erosion = partial thickness (within mucosa)</td><td>May progress to ulcer = full thickness</td></tr>
+    <tr><td class="rl">Histologic progression</td><td>Neutrophils → erosion</td><td><input placeholder="4-step progression..."></td></tr>
+  </table>
+  <div class="warn">&#9888; Erosion vs Ulcer distinction: Erosion = partial-thickness mucosal loss (muscularis mucosae intact). Ulcer = full-thickness through muscularis mucosae into submucosa or deeper. Tested frequently in clinical vignettes.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 6 &mdash; H. pylori vs Autoimmune Gastritis</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: Know acid levels, gastrin, location, stain, and sequelae for each type</div>
+  <table>
+    <tr><th>Feature</th><th>H. pylori Gastritis</th><th>Autoimmune Gastritis</th></tr>
+    <tr><td class="rl">Location</td><td><input placeholder="part of stomach..."></td><td><input placeholder="part of stomach..."></td></tr>
+    <tr><td class="rl">Antrum involvement</td><td>Yes (antrum predominant)</td><td><input placeholder="yes or no?"></td></tr>
+    <tr><td class="rl">Inflammatory cells</td><td><input placeholder="cell types..."></td><td><input placeholder="cell types..."></td></tr>
+    <tr><td class="rl">Gastric acid</td><td><input placeholder="↑, ↓, or normal?"></td><td><input placeholder="↑, ↓, or normal?"></td></tr>
+    <tr><td class="rl">Serum gastrin</td><td><input placeholder="↑, ↓, or normal?"></td><td><input placeholder="↑, ↓, or normal?"></td></tr>
+    <tr><td class="rl">Special stain / test</td><td><input placeholder="stain name..."></td><td>Anti-parietal cell Ab; anti-intrinsic factor Ab</td></tr>
+    <tr><td class="rl">Key sequelae</td><td><input placeholder="3 sequelae (DGUAM)..."></td><td><input placeholder="2 sequelae..."></td></tr>
+  </table>
+  <div class="warn">&#9888; Autoimmune gastritis mechanism: destruction of parietal cells → ↓ intrinsic factor → ↓ B12 absorption → megaloblastic anemia (pernicious anemia). Also ↑↑ gastrin (from intact antral G cells) → ECL cell hyperplasia → carcinoid tumor risk.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 7–8 &mdash; Peptic Ulcer Disease</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: 4-layer histology and PHP complications are classic Step 1 questions</div>
+  <table>
+    <tr><th>Category</th><th>Details</th></tr>
+    <tr><td class="rl">Pathogenesis triad</td><td><input placeholder="↑ ___ + ↓ ___ + altered ___"></td></tr>
+    <tr><td class="rl">#1 predisposing factor</td><td><input placeholder="organism..."></td></tr>
+    <tr><td class="rl">#2 predisposing factor</td><td><input placeholder="drug class..."></td></tr>
+    <tr><td class="rl">Curling ulcer</td><td><input placeholder="associated with... mechanism..."></td></tr>
+    <tr><td class="rl">Cushing ulcer</td><td><input placeholder="associated with... mechanism..."></td></tr>
+    <tr><td class="rl">ZE syndrome</td><td><input placeholder="tumor → ↑ ___ → ulcers where..."></td></tr>
+    <tr><td class="rl">Microscopy: 4 layers (surface→deep)</td><td><input placeholder="1.___ 2.___ 3.___ 4.___"></td></tr>
+    <tr><td class="rl">Complications: PHP</td><td><input placeholder="P=___ H=___ P=___"></td></tr>
+  </table>
+
+  <div class="sec">PUD Treatment</div>
+  <table>
+    <tr><th>Indication</th><th>Regimen / Drug</th></tr>
+    <tr><td class="rl">H. pylori eradication</td><td><input placeholder="triple therapy = PPI + ___ + ___"></td></tr>
+    <tr><td class="rl">Acid suppression (primary)</td><td><input placeholder="drug class + mechanism..."></td></tr>
+    <tr><td class="rl">Mucosal protection agents</td><td><input placeholder="two agents and their mechanisms..."></td></tr>
+  </table>
+  <div class="warn">&#9888; ZE (Zollinger-Ellison) syndrome: gastrinoma (duodenal wall or pancreas; part of MEN1) → ↑↑ gastrin → massive acid hypersecretion → ulcers in unusual locations (distal duodenum, jejunum) + secretory diarrhea. Serum gastrin &gt;1000 pg/mL is diagnostic.</div>
+
+  <button class="btn" onclick="rev(this,a2)">Check Gastritis &amp; PUD</button>
+  <div class="fb" id="fb2">
+    <div class="fb-header">Gastritis &amp; PUD Answers</div>
+  </div>
+
+</div><!-- end panel 1 -->
+
+<!-- PANEL 2: GASTRIC TUMORS -->
+<div class="panel" id="p2">
+
+  <span class="lo-tag">LO 9 &mdash; Gastric Cancer Precursors</span>
+  <table>
+    <tr><th>Category</th><th>Examples</th></tr>
+    <tr><td class="rl">Precancerous lesions (actual neoplastic change)</td><td><input placeholder="2 lesion types..."></td></tr>
+    <tr><td class="rl">Precancerous conditions (predisposing states)</td><td><input placeholder="5 conditions..."></td></tr>
+  </table>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 10 &mdash; Gastric Carcinoma: Lauren Classification</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: Intestinal vs diffuse — histology, location, demographics, prognosis all tested</div>
+  <table>
+    <tr><th>Feature</th><th>Intestinal Type</th><th>Diffuse Type</th></tr>
+    <tr><td class="rl">Histology</td><td><input placeholder="cell/structure type..."></td><td><input placeholder="cell type..."></td></tr>
+    <tr><td class="rl">Location in stomach</td><td><input placeholder="part of stomach..."></td><td>Body/fundus (diffuse involvement)</td></tr>
+    <tr><td class="rl">Gross pattern</td><td>Nodular / ulcerating / fungating</td><td><input placeholder="name of gross pattern..."></td></tr>
+    <tr><td class="rl">Epidemiology</td><td><input placeholder="age, sex, geography..."></td><td><input placeholder="age, sex, geography..."></td></tr>
+    <tr><td class="rl">Key precursor / mutation</td><td><input placeholder="metaplasia type + infection..."></td><td><input placeholder="gene mutation..."></td></tr>
+    <tr><td class="rl">Prognosis</td><td><input placeholder="better or worse?"></td><td><input placeholder="better or worse?"></td></tr>
+  </table>
+
+  <div class="sec">Macroscopic Types of Gastric Cancer</div>
+  <div class="fg">
+    <div class="f"><label>Nodular pattern: ___</label><input></div>
+    <div class="f"><label>Ulcerating pattern: ___</label><input></div>
+    <div class="f"><label>Fungating pattern: ___</label><input></div>
+    <div class="f"><label>Linitis plastica: ___ (aka "___")</label><input></div>
+  </div>
+  <div class="warn">&#9888; Linitis plastica = diffuse infiltration of stomach wall by signet ring cells → rigid, thickened, non-distensible stomach ("leather bottle"). Associated with diffuse-type adenocarcinoma and extremely poor prognosis. Overall 5-year survival for gastric CA = ~29%.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 11 &mdash; GIST (Gastrointestinal Stromal Tumor)</span>
+  <div class="on-exam">&#9888;&#65039; On-Exam: c-KIT mutation + imatinib = classic Step 1 targeted therapy question</div>
+  <table>
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td class="rl">Cell of origin</td><td><input placeholder="Cajal cells = ___"></td></tr>
+    <tr><td class="rl">#1 site in GI tract</td><td><input placeholder="organ..."></td></tr>
+    <tr><td class="rl">Driver mutation</td><td><input placeholder="gene name + type of mutation..."></td></tr>
+    <tr><td class="rl">IHC markers (positive)</td><td><input placeholder="2 IHC markers..."></td></tr>
+    <tr><td class="rl">IHC markers (negative)</td><td>Desmin−, S-100− (distinguish from leiomyoma / schwannoma)</td></tr>
+    <tr><td class="rl">Targeted therapy</td><td><input placeholder="drug name (generic + brand)..."></td></tr>
+    <tr><td class="rl">Prognosis determined by</td><td><input placeholder="2 factors..."></td></tr>
+  </table>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 12 &mdash; Gastric MALT Lymphoma</span>
+  <table>
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td class="rl">Cell lineage</td><td><input placeholder="T-cell or B-cell? grade?"></td></tr>
+    <tr><td class="rl">Stomach's significance</td><td><input placeholder="rank + percentage..."></td></tr>
+    <tr><td class="rl">Low-grade histologic appearance</td><td><input placeholder="resembles what condition?"></td></tr>
+    <tr><td class="rl">High-grade histologic appearance</td><td><input placeholder="resembles what condition?"></td></tr>
+    <tr><td class="rl">First-line treatment (early low-grade)</td><td><input placeholder="key treatment..."></td></tr>
+  </table>
+  <div class="warn">&#9888; MALT lymphoma pathogenesis: H. pylori chronic antigen stimulation → B-cell proliferation in acquired mucosa-associated lymphoid tissue → MALT lymphoma. Eradicating the antigen (H. pylori) removes the proliferative stimulus → regression of early low-grade disease.</div>
+
+  <span class="lo-tag" style="margin-top:14px;display:inline-block">LO 13 &mdash; H. pylori Disease Summary</span>
+  <div class="fg">
+    <div class="f"><label>DGUAM: D=___, G=___, U=___, A=___, M=___</label><input></div>
+    <div class="f"><label>WHO carcinogen classification: ___</label><input></div>
+    <div class="f"><label>Gram stain: ___ (organism shape: ___)</label><input></div>
+    <div class="f"><label>Urease test: ___ (why this matters clinically: ___)</label><input></div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a3)">Check Gastric Tumors</button>
+  <div class="fb" id="fb3">
+    <div class="fb-header">Gastric Tumors Answers</div>
+  </div>
+
+</div><!-- end panel 2 -->
+
+<!-- PANEL 3: PRACTICE Qs -->
+<div class="panel" id="p3">
+  <div class="sec">USMLE-Style Practice Questions</div>
+
+  <div class="pq-box">
+    <div class="pq-q">1. A 48-year-old HIV-positive man presents with dysphagia and odynophagia. Endoscopy shows a linear ulcer in the mid-esophagus. Biopsy taken from the ulcer base reveals enlarged cells with large basophilic intranuclear inclusions surrounded by a clear halo ("owl's eye"). Which organism is responsible?</div>
+    <div class="pq-choices">A. HSV-1<br>B. CMV<br>C. Candida albicans<br>D. H. pylori<br>E. EBV</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B. CMV.</strong> Owl's eye intranuclear inclusions in endothelial cells/fibroblasts at the ulcer <em>base</em> = CMV esophagitis. Linear ulcers are characteristic of CMV. HSV shows Cowdry A inclusions in squamous cells at the ulcer <em>margin</em> (punched-out ulcers). Candida shows pseudohyphae. (LO 1)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">2. A 58-year-old man with 25 years of heartburn undergoes surveillance endoscopy revealing salmon-colored tongues of mucosa extending 3 cm above the gastroesophageal junction. Biopsy confirms columnar epithelium with goblet cells. What is the primary cancer risk of this condition?</div>
+    <div class="pq-choices">A. Squamous cell carcinoma of the esophagus<br>B. Adenocarcinoma of the esophagus<br>C. Gastric adenocarcinoma<br>D. Esophageal MALT lymphoma<br>E. No malignant potential</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B. Adenocarcinoma of the esophagus.</strong> Salmon tongues + goblet cells (intestinal metaplasia) = Barrett's esophagus. Requires both endoscopic AND histologic criteria. Barrett's is a precursor to esophageal <em>adenocarcinoma</em> (not SCC), progressing through low-grade → high-grade dysplasia → invasive carcinoma. (LO 3)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">3. A 65-year-old man with a 40-pack-year history and chronic alcohol use presents with progressive dysphagia. Endoscopy reveals a mid-esophageal mass. Biopsy shows keratin pearls and intercellular bridges. Which IHC profile is expected?</div>
+    <div class="pq-choices">A. p63+, CK5/6+, mucin−<br>B. CK7+, CDX2+, mucin+<br>C. CD117+, DOG1+, desmin−<br>D. CD20+, BCL2+<br>E. Chromogranin+, synaptophysin+</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>A. p63+, CK5/6+, mucin−.</strong> Keratin pearls + intercellular bridges = squamous cell carcinoma. Mid-esophagus + alcohol + tobacco = classic SCC setting. SCC is p63+ and CK5/6+ (squamous markers), mucin−. Adenocarcinoma (lower esophagus/GEJ, GERD/Barrett's) would be mucin+ with glands. (LO 3)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">4. A 52-year-old woman has fatigue and macrocytic anemia. Labs: ↓ gastric acid, ↑↑ serum gastrin, anti-parietal cell antibodies (+), B12 deficient. Biopsy shows lymphocytic infiltrate in the gastric body and fundus with antrum sparing. What is the pathophysiology of her anemia?</div>
+    <div class="pq-choices">A. H. pylori → mucosal bleeding → iron deficiency<br>B. Parietal cell destruction → ↓ intrinsic factor → ↓ B12 absorption<br>C. Antral G-cell hyperplasia → ↑ gastrin → folate deficiency<br>D. Intestinal metaplasia → ↓ iron absorption<br>E. NSAIDs → chronic occult bleeding → iron deficiency</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B. Parietal cell destruction → ↓ intrinsic factor → ↓ B12 absorption.</strong> Autoimmune gastritis: T-cell–mediated destruction of parietal cells → loss of intrinsic factor → B12 malabsorption → megaloblastic (pernicious) anemia. Antrum sparing + ↑↑ gastrin + anti-parietal cell Ab confirm autoimmune gastritis. (LO 6)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">5. A 50-year-old man with a known duodenal ulcer suddenly develops severe "board-like" rigid abdomen. Upright CXR shows free air under the diaphragm. Which complication occurred, and which structure is classically eroded by a posterior duodenal ulcer causing hemorrhage?</div>
+    <div class="pq-choices">A. Perforation; gastroduodenal artery<br>B. Hemorrhage; splenic artery<br>C. Pyloric obstruction; left gastric artery<br>D. Perforation; inferior mesenteric artery<br>E. Hemorrhage; superior mesenteric vein</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>A. Perforation; gastroduodenal artery.</strong> Free air under diaphragm + acute peritonitis = perforation (P in PHP). Posterior duodenal ulcers classically erode the gastroduodenal artery → massive hemorrhage. PHP = Perforation, Hemorrhage (most common complication), Pyloric obstruction (from scarring/edema). (LO 8)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">6. Gastric biopsy shows cells with a rim of mucin pushing the nucleus to the cell periphery ("signet ring" cells). The stomach is diffusely thickened and non-distensible on imaging ("leather bottle"). Which Lauren classification type is this, and what is the prognosis?</div>
+    <div class="pq-choices">A. Intestinal type; relatively better prognosis<br>B. Diffuse type; poor prognosis<br>C. Intestinal type; poor prognosis<br>D. Diffuse type; relatively better prognosis<br>E. Mixed type; intermediate prognosis</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>B. Diffuse type; poor prognosis.</strong> Signet ring cells + linitis plastica (leather bottle stomach) = diffuse-type gastric carcinoma. Diffuse type: worldwide distribution, younger (&lt;50 yo), equal M:F, associated with CDH1 (E-cadherin) mutation, poor prognosis. Intestinal type: glands/goblet cells, antrum, older males, high-incidence areas (Japan), better prognosis. (LO 10)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">7. A 60-year-old presents with a 4-cm submucosal gastric mass. Biopsy shows spindle cells. IHC: CD117+, DOG1+, desmin−, S-100−. Which mutation drives this tumor, and what is the first-line targeted therapy?</div>
+    <div class="pq-choices">A. BRAF V600E; vemurafenib<br>B. BCR-ABL; imatinib<br>C. c-KIT gain-of-function; imatinib<br>D. EGFR amplification; erlotinib<br>E. HER2 amplification; trastuzumab</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C. c-KIT gain-of-function; imatinib.</strong> Submucosal spindle cell tumor + CD117 (c-KIT)+ + DOG1+ = GIST (gastrointestinal stromal tumor), arising from interstitial cells of Cajal. Most common in the stomach. c-KIT gain-of-function mutation → constitutively active tyrosine kinase → treated with imatinib (Gleevec), a tyrosine kinase inhibitor. Prognosis determined by mitotic rate + tumor size. (LO 11)</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">8. A 64-year-old with known H. pylori infection is found on endoscopy to have a low-grade B-cell gastric lymphoma. Histologically it resembles chronic gastritis. The patient asks if he needs chemotherapy. What is the most appropriate first-line treatment for early-stage low-grade disease?</div>
+    <div class="pq-choices">A. R-CHOP chemotherapy<br>B. Total gastrectomy<br>C. H. pylori eradication (triple therapy)<br>D. Radiation therapy alone<br>E. Rituximab monotherapy</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal Answer</button>
+    <div class="pq-ans"><strong>C. H. pylori eradication (triple therapy).</strong> Low-grade gastric MALT lymphoma is antigen-driven by H. pylori. In early-stage disease, eradication of H. pylori (PPI + clarithromycin + amoxicillin × 14 days) removes the proliferative stimulus and can induce complete remission. The stomach is the #1 site of extranodal lymphoma (55%). High-grade or refractory disease requires chemotherapy. (LO 12)</div>
+  </div>
+
+</div><!-- end panel 3 -->
+
+<script>
+function sw(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',i===n)});
+  document.querySelectorAll('.panel').forEach((p,i)=>{p.classList.toggle('active',i===n)});
+}
+function rev(btn,obj){
+  const fb=btn.nextElementSibling;
+  fb.style.display='block';
+  btn.style.display='none';
+  if(!obj)return;
+  Object.entries(obj).forEach(([q,a])=>{
+    const row=document.createElement('div');row.className='fb-row';
+    row.innerHTML=`<div class="fb-q">${q}</div><div class="fb-a">${a}</div>`;
+    fb.appendChild(row);
+  });
+}
+
+const a0={
+  'HSV esophagitis biopsy site':'Ulcer MARGIN — squamous cells at the edge show the 3 M\'s: Molding, Multinucleation, Margination (not the base)',
+  'Barrett\'s histologic hallmark':'Goblet cells (columnar intestinal metaplasia) — sine qua non; requires both endoscopic AND histologic criteria',
+  'SCC vs adenocarcinoma location':'SCC = middle third; Adenocarcinoma = lower third / gastroesophageal junction (GEJ)',
+  'H. pylori stain & location':'Warthin-Starry (silver stain); infects gastric antrum → antrum-predominant gastritis',
+  'GIST mutation & therapy':'c-KIT gain-of-function mutation; targeted therapy = imatinib (Gleevec)',
+  'MALT lymphoma & cure':'Stomach = #1 extranodal lymphoma site (55%); early low-grade MALT cured by H. pylori eradication'
+};
+
+const a1={
+  'HSV — Ulcer morphology':'Punched-out ulcers (well-circumscribed, discrete borders)',
+  'HSV — Cell type infected':'Squamous epithelial cells at the ulcer MARGIN',
+  'HSV — Biopsy from':'Ulcer MARGIN (squamous cells show Cowdry A inclusions + 3 M\'s)',
+  'HSV — Inclusion body':'Cowdry A: eosinophilic intranuclear inclusions; multinucleated giant cells with 3 M\'s (Molding, Multinucleation, Margination)',
+  'CMV — Ulcer morphology':'Linear / serpiginous ulcers (elongated, at ulcer base)',
+  'CMV — Cell type infected':'Endothelial cells and fibroblasts at the ulcer BASE',
+  'CMV — Biopsy from':'Ulcer BASE (endothelial cells/fibroblasts with owl\'s eye inclusions)',
+  'CMV — Inclusion body':'Owl\'s eye: large basophilic intranuclear inclusion + smaller cytoplasmic inclusions in cytomegalic (2–4× enlarged) cells',
+  'Candida — Key histology':'Pseudohyphae + budding yeast (not true septate hyphae); GMS or PAS stain',
+  'Candida — Special stain':'GMS (Gomori methenamine silver); PAS also acceptable',
+  'GERD — Primary mechanism':'Transient LES (lower esophageal sphincter) relaxation — not just decreased LES tone',
+  'GERD — Inflammatory cells':'Neutrophils + eosinophils infiltrating squamous epithelium (also intraepithelial lymphocytes)',
+  'GERD — Epithelial changes':'Basal cell hyperplasia &gt;15% of epithelial thickness; elongated papillae &gt;50–60% into epithelium',
+  'GERD — Complication progression':'GERD → Esophageal stricture → Barrett\'s esophagus → Dysplasia (low → high grade) → Adenocarcinoma',
+  'Barrett\'s — Macroscopic':'Salmon-colored tongues of mucosa extending above the GEJ; irregular Z-line on endoscopy',
+  'Barrett\'s — Histologic hallmark':'Goblet cells (columnar intestinal metaplasia) — sine qua non; columnar epithelium replaces normal squamous',
+  'Barrett\'s — Diagnosis requires':'Both endoscopic criteria (salmon tongues) AND histologic criteria (goblet cells on biopsy)',
+  'Barrett\'s — Cancer risk':'Precancerous → esophageal adenocarcinoma; progression: Barrett\'s → low-grade dysplasia → high-grade dysplasia → adenocarcinoma',
+  'SCC — Location':'Middle third of esophagus',
+  'SCC — Risk factors':'Alcohol, tobacco, achalasia, Plummer-Vinson syndrome (iron deficiency + webs + glossitis), caustic/lye injury',
+  'SCC — Histology':'Keratin (squamous) pearls, intercellular bridges (desmosomes)',
+  'SCC — IHC':'p63+, CK5/6+, mucin− (squamous lineage markers)',
+  'Adenocarcinoma — Location':'Lower third of esophagus / gastroesophageal junction (GEJ)',
+  'Adenocarcinoma — Risk factors':'Chronic GERD, Barrett\'s esophagus, obesity (↑ abdominal pressure)',
+  'Adenocarcinoma — Histology':'Gland formation + mucin production; arises from Barrett\'s metaplasia → dysplasia',
+  'Adenocarcinoma — IHC':'CK7+, mucin+, CDX2+ (intestinal differentiation marker)',
+  'Adenocarcinoma — Precursor':'Barrett\'s esophagus (with progression through dysplasia)'
+};
+
+const a2={
+  'Acute gastritis — dominant cell':'Neutrophils (PMNs)',
+  'Acute gastritis — common causes':'NSAIDs, H. pylori (initial infection), alcohol, stress (burns, trauma, surgery), uremia',
+  'Chronic gastritis — dominant cells':'Lymphocytes + plasma cells (mononuclear infiltrate)',
+  'Chronic gastritis — most common cause':'H. pylori (#1); also autoimmune, bile reflux',
+  'Chronic gastritis — progression':'Chronic gastritis → Atrophic gastritis → Intestinal metaplasia → Gastric atrophy (→ adenocarcinoma risk)',
+  'H. pylori — Location':'Gastric antrum (antrum-predominant gastritis)',
+  'H. pylori — Inflammatory cells':'Neutrophils + plasma cells (mixed acute and chronic inflammation)',
+  'H. pylori — Gastric acid':'↑ or normal acid (early; antral damage may disrupt G-cell regulation)',
+  'H. pylori — Serum gastrin':'Normal or ↓ gastrin (antral G cells may be damaged)',
+  'H. pylori — Stain / test':'Warthin-Starry silver stain; also CLO test (urease), urea breath test, stool antigen',
+  'H. pylori — Sequelae':'PUD (duodenal > gastric ulcer), gastric adenocarcinoma, MALT lymphoma (DGUAM)',
+  'Autoimmune — Location':'Body and fundus (corpus-predominant); antrum SPARED',
+  'Autoimmune — Antrum involvement':'No (antrum spared — G cells remain intact)',
+  'Autoimmune — Inflammatory cells':'Lymphocytes (CD4+ T-cell–mediated autoimmune destruction of parietal cells)',
+  'Autoimmune — Gastric acid':'↓↓ Acid (achlorhydria — parietal cell loss)',
+  'Autoimmune — Serum gastrin':'↑↑ Gastrin (antral G cells intact; no acid feedback inhibition → hypergastrinemia)',
+  'Autoimmune — Sequelae':'Pernicious anemia (↓ IF → B12 deficiency → megaloblastic anemia); carcinoid tumor (ECL hyperplasia from ↑ gastrin)',
+  'PUD — Pathogenesis triad':'↑ Acid secretion + ↓ Mucosal defense (↓ prostaglandins/mucus/HCO₃) + Altered gastric motility',
+  'PUD — #1 predisposing factor':'H. pylori infection (causes 70–90% of duodenal ulcers)',
+  'PUD — #2 predisposing factor':'NSAIDs — inhibit COX-1 → ↓ protective prostaglandins (PGE2) → ↓ mucus and bicarbonate secretion',
+  'Curling ulcer':'Stress ulcer from severe burns — fluid shifts → splanchnic vasoconstriction → mucosal ischemia',
+  'Cushing ulcer':'Stress ulcer from CNS injury or ↑ ICP — vagal stimulation → ↑ ACh → ↑ acid hypersecretion',
+  'ZE syndrome':'Gastrinoma (duodenum/pancreas; MEN1 association) → ↑↑ gastrin → massive acid → multiple/distal/recurrent ulcers + diarrhea',
+  'PUD — Histologic layers (surface→deep)':'1. Fibrinopurulent exudate → 2. Necrosis → 3. Granulation tissue → 4. Fibrous (collagenous) scar',
+  'Complications — PHP':'P = Perforation (free air, peritonitis); H = Hemorrhage (gastroduodenal artery, most common complication); P = Pyloric obstruction (scarring/edema)',
+  'H. pylori eradication':'Triple therapy: PPI + Clarithromycin + Amoxicillin (or Metronidazole if penicillin allergy) × 14 days',
+  'Acid suppression':'PPIs (omeprazole, pantoprazole) — irreversibly inhibit H⁺/K⁺-ATPase (proton pump); also H2 blockers (ranitidine → histamine receptor inhibition)',
+  'Mucosal protection':'Sucralfate (binds ulcer base, physical barrier); Misoprostol (PGE1 analogue, replaces COX-1 prostaglandins → ↑ mucus and HCO₃)'
+};
+
+const a3={
+  'Precancerous lesions (neoplastic)':'Epithelial dysplasia (low/high grade); gastric adenomatous polyps',
+  'Precancerous conditions (predisposing)':'Intestinal metaplasia, atrophic gastritis, H. pylori infection, pernicious anemia, Ménétrier disease',
+  'Intestinal type — Histology':'Well-formed glands + goblet cells (tubular glandular pattern; resembles intestinal/colonic carcinoma)',
+  'Intestinal type — Location':'Antrum (pyloric region predominantly)',
+  'Intestinal type — Epidemiology':'High-incidence areas (Japan, Chile, Korea); older males; better prognosis than diffuse type',
+  'Intestinal type — Precursor':'Intestinal metaplasia → dysplasia; driven by H. pylori + dietary factors',
+  'Diffuse type — Histology':'Signet ring cells — intracellular mucin pushes nucleus to periphery; poorly cohesive (no glands)',
+  'Diffuse type — Gross pattern':'Linitis plastica (leather bottle stomach) — diffuse wall thickening, rigid, non-distensible',
+  'Diffuse type — Epidemiology':'Worldwide distribution; younger patients (&lt;50 yo); equal M:F ratio; poor prognosis',
+  'Diffuse type — Mutation':'CDH1 mutation (loss of E-cadherin → loss of cell–cell adhesion → diffuse infiltration); also H. pylori',
+  'Gastric CA — Most common distant met':'Liver (most common site of hematogenous spread)',
+  'Gastric CA — Overall 5-year survival':'~29% overall (poor prognosis due to late presentation)',
+  'Macroscopic types — Nodular':'Polypoid / exophytic nodular growth into lumen',
+  'Macroscopic types — Ulcerating':'Central ulceration with raised/irregular edges (must distinguish from benign peptic ulcer)',
+  'Macroscopic types — Fungating':'Large, irregular, mushroom-like mass protruding into lumen',
+  'Macroscopic types — Linitis plastica':'Diffuse wall thickening by infiltrating signet ring cells; rigid "leather bottle" stomach; = diffuse-type',
+  'GIST — Cell of origin':'Interstitial cells of Cajal (pacemaker cells of the GI tract myenteric plexus)',
+  'GIST — #1 GI site':'Stomach (most common location for GIST)',
+  'GIST — Driver mutation':'c-KIT (CD117) gain-of-function mutation → constitutively active receptor tyrosine kinase',
+  'GIST — IHC markers (positive)':'CD117 (c-KIT)+, DOG1+ (anoctamin 1)',
+  'GIST — Targeted therapy':'Imatinib (Gleevec) — tyrosine kinase inhibitor (TKI) targeting c-KIT and PDGFRA',
+  'GIST — Prognosis factors':'Mitotic rate (mitoses/50 HPF) + tumor size; both correlate with risk of metastasis',
+  'MALT — Cell lineage':'B-cell lymphoma (low-grade marginal zone B-cell lymphoma)',
+  'MALT — Stomach significance':'#1 site of extranodal lymphoma (stomach accounts for ~55% of GI lymphomas)',
+  'MALT — Low-grade appearance':'Histologically resembles chronic gastritis (easily missed on low-power)',
+  'MALT — High-grade appearance':'Resembles diffuse large B-cell lymphoma or carcinoma (requires systemic chemo)',
+  'MALT — First-line treatment':'H. pylori eradication (triple therapy) → complete remission in early-stage low-grade disease; removes antigenic drive',
+  'H. pylori — DGUAM mnemonic':'D = Duodenal ulcer; G = Gastric ulcer; U = Ulcerating gastritis; A = Adenocarcinoma; M = MALT lymphoma',
+  'H. pylori — WHO classification':'WHO Class I carcinogen (definite human carcinogen)',
+  'H. pylori — Gram stain':'Gram-negative; organism shape = spiral / helical (curved rod)',
+  'H. pylori — Urease test':'Urease-positive — produces urease → converts urea → NH₃ (↑ local pH) → enables survival in acidic stomach; basis of urea breath test + CLO test'
+};
+</script>
+
+</body></html>
