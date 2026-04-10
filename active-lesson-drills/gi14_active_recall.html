@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}
+.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}
+.fb-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #DBEAFE}
+.fb-row:last-child{border-bottom:none}
+.fb-row:nth-child(even){background:#F0F7FF}
+.fb-row:nth-child(odd){background:#fff}
+.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}
+.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">Overview of the Liver &#x2014; Active Recall</h2>
+  <a href="gi14_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">&#x2705; View Answer Key</a>
+</div>
+<p class="sub">GI14 &mdash; HoyaDocs GI Block | USMLE Step 1</p>
+
+<div class="resource-banner">
+  <strong>&#128218; Linked Study Guide</strong>
+  Open <a href="../lecture-guides/gi14-overview-of-the-liver.html" target="_blank" style="color:#1D4ED8;font-weight:600">GI14: Overview of the Liver</a> alongside this drill for reference.
+</div>
+
+<!-- WARMUP -->
+<div class="card">
+  <div class="sec">&#9651; Warmup &mdash; Key Facts (complete from memory)</div>
+  <div class="fg">
+    <div class="f"><label>Liver dual blood supply: ___ (~75%) + ___ (~25%)</label><input></div>
+    <div class="f"><label>Zone 3 (centrilobular) is most vulnerable to ___ and ___</label><input></div>
+    <div class="f"><label>Rate-limiting step in cholesterol synthesis: ___ → ___; enzyme = ___; inhibited by ___</label><input></div>
+    <div class="f"><label>Unconjugated bilirubin: fat or water soluble? Can it appear in urine?</label><input></div>
+    <div class="f"><label>CCK released by ___ cells in response to ___; causes ___ to contract + sphincter of Oddi to ___</label><input></div>
+    <div class="f"><label>Terminal ileum absorbs ___% of bile salts via transporter ___</label><input></div>
+  </div>
+  <button class="btn" onclick="rev(this,a0)">Check Warmup</button>
+  <div class="fb"></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">&#127959; Structure &amp; Zones</div>
+  <div class="tab" onclick="sw(1)">&#9879;&#65039; Metabolic Functions</div>
+  <div class="tab" onclick="sw(2)">&#129505; Bilirubin &amp; Jaundice</div>
+  <div class="tab" onclick="sw(3)">&#129704; Bile &amp; EHC</div>
+  <div class="tab" onclick="sw(4)">&#9999;&#65039; Practice Qs</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 0 — LIVER STRUCTURE & ZONES (LOs 1–2)
+══════════════════════════════════════════════ -->
+<div class="panel active" id="p0">
+  <div class="lo-tag">LOs 1 &amp; 2 — Hepatic Blood Supply, Architecture &amp; Clinical Definitions</div>
+
+  <div class="sec">Dual Blood Supply</div>
+  <table>
+    <thead><tr><th>Vessel</th><th>Flow Rate &amp; % of Total</th><th>O&#x2082; Saturation</th><th>Content / Source</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Portal Vein</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Hepatic Artery</td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+  <div class="fg">
+    <div class="f"><label>Despite portal vein's low O&#x2082;, each vessel contributes ___% of hepatic O&#x2082; delivery because ___</label><input></div>
+    <div class="f"><label>Liver receives ___% of resting cardiac output</label><input></div>
+  </div>
+
+  <div class="sec">Hepatic Acinus Zones &mdash; Rappaport Model</div>
+  <table>
+    <thead><tr><th>Zone</th><th>Location</th><th>O&#x2082; Status</th><th>Primary Functions</th><th>Vulnerable to</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Zone 1 (Periportal)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Zone 2 (Midzonal)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Zone 3 (Centrilobular)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Hepatic Cell Types</div>
+  <div class="fg">
+    <div class="f"><label>Kupffer cells = ___; located ___; largest population of ___ in the body</label><input></div>
+    <div class="f"><label>Hepatic stellate cells (Ito cells): quiescent = store ___; when activated → ___ → collagen → ___</label><input></div>
+    <div class="f"><label>Sinusoidal endothelial cells are ___; allow ___</label><input></div>
+    <div class="f"><label>Hepatocytes (~80%): perform ___ functions</label><input></div>
+  </div>
+
+  <div class="sec">Clinical Definitions (LO 2)</div>
+  <div class="fg">
+    <div class="f"><label>Hepatomegaly defined as liver &gt; ___ cm; top 3 causes: ___</label><input></div>
+    <div class="f"><label>Jaundice = yellowing of ___ due to bilirubin &gt;___mg/dL; first visible in ___ because ___</label><input></div>
+    <div class="f"><label>Cirrhosis = irreversible replacement of parenchyma with ___ + ___; most common cause in US = ___</label><input></div>
+    <div class="f"><label>3 mechanisms of ascites in cirrhosis: (1) ___, (2) ___, (3) ___</label><input></div>
+  </div>
+
+  <div class="sec">Ascites vs. Peripheral Edema</div>
+  <div class="warn">&#9888; Portal hypertension is the key distinguishing driver of ascites. Hypoalbuminemia alone causes leg edema but NOT ascites.</div>
+  <table>
+    <thead><tr><th>Feature</th><th>Ascites</th><th>Peripheral Edema</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Location</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Required component</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">SAAG</td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Portal Hypertension Classification</div>
+  <table>
+    <thead><tr><th>Type</th><th>Example Causes</th><th>LFTs / Liver Function</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Pre-hepatic</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Intra-hepatic (sinusoidal)</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Post-hepatic</td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a1)">Check Structure &amp; Zones</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 1 — METABOLIC FUNCTIONS (LOs 3–4)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p1">
+  <div class="lo-tag">LOs 3 &amp; 4 — Carbohydrate, Lipid, Cholesterol &amp; Protein Metabolism</div>
+
+  <div class="sec">Carbohydrate Metabolism</div>
+  <table>
+    <thead><tr><th>Process</th><th>Metabolic State</th><th>Hormonal Control</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Glycogenesis</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Glycogenolysis</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Gluconeogenesis</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Glycolysis</td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+  <div class="fg">
+    <div class="f"><label>Acute liver failure → profound ___ because ___</label><input></div>
+    <div class="f"><label>Liver uses ___ (not GLUT4) for glucose uptake because it is ___ (insulin-independent/dependent)</label><input></div>
+  </div>
+
+  <div class="sec">Lipid Metabolism &amp; Lipoproteins</div>
+  <div class="fg">
+    <div class="f"><label>VLDL is made by ___ and carries ___; degraded to ___ → ___</label><input></div>
+    <div class="f"><label>HDL produced by ___ + ___; performs ___ cholesterol transport</label><input></div>
+    <div class="f"><label>NAFLD/NASH mechanism: insulin resistance → ↑___ delivery to liver + ↓___ + ↓___ export → ___ accumulation</label><input></div>
+  </div>
+  <table>
+    <thead><tr><th>Lipoprotein</th><th>Origin</th><th>Primary Cargo</th><th>Key Clinical Point</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Chylomicrons</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">VLDL</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">LDL</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">HDL</td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Cholesterol Metabolism &amp; Statins (LO 4)</div>
+  <div class="fg">
+    <div class="f"><label>5 main uses of cholesterol: ___, ___, ___, ___, ___</label><input></div>
+    <div class="f"><label>Rate-limiting step: HMG-CoA → ___ catalyzed by ___</label><input></div>
+    <div class="f"><label>High dietary cholesterol → ___ (suppresses/stimulates) HMG-CoA reductase via ___</label><input></div>
+    <div class="f"><label>Statins mechanism: competitive inhibit ___ → ↓hepatic cholesterol → ↑___ → ↑LDL clearance → ↓serum LDL</label><input></div>
+    <div class="f"><label>Statin side effects: ___, ___</label><input></div>
+    <div class="f"><label>Familial hypercholesterolemia = mutation in ___ → ↑LDL despite normal ___</label><input></div>
+  </div>
+
+  <div class="sec">Protein Metabolism &amp; Liver Failure Consequences</div>
+  <div class="fg">
+    <div class="f"><label>Liver makes all plasma proteins EXCEPT ___ (made by ___)</label><input></div>
+    <div class="f"><label>Albumin t&#x00BD; = ___ days → ↓albumin indicates ___ (acute/chronic) liver dysfunction</label><input></div>
+    <div class="f"><label>Clotting factor NOT made by liver: Factor ___ (made by ___)</label><input></div>
+    <div class="f"><label>Factor with shortest t&#x00BD; = Factor ___; rises first in ___; why it's an early marker of liver failure</label><input></div>
+    <div class="f"><label>Urea cycle: NH&#x2083; → ___ (in hepatocytes only); failure → ___ → hepatic encephalopathy; treatment = ___ + ___</label><input></div>
+    <div class="f"><label>First-pass effect: oral drug absorbed → ___ → ___ → substantial metabolism before reaching systemic circulation</label><input></div>
+  </div>
+
+  <div class="sec">Signs of Liver Failure (HY)</div>
+  <div class="on-exam">&#9888;&#65039; Step 1 Favorite: Know ALL 6 consequences of hepatocyte failure</div>
+  <table>
+    <thead><tr><th>Lost Function</th><th>Consequence / Clinical Sign</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">&#8595; Albumin</td><td><input></td></tr>
+      <tr><td class="rl">&#8595; Clotting factors (II, VII, IX, X)</td><td><input></td></tr>
+      <tr><td class="rl">&#8595; Urea cycle</td><td><input></td></tr>
+      <tr><td class="rl">&#8595; Gluconeogenesis/glycogenolysis</td><td><input></td></tr>
+      <tr><td class="rl">&#8595; Estrogen metabolism</td><td><input></td></tr>
+      <tr><td class="rl">&#8595; Bile production</td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a2)">Check Metabolic Functions</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 2 — BILIRUBIN & JAUNDICE (LO 5)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p2">
+  <div class="lo-tag">LO 5 — Bilirubin Metabolism &amp; 4 Types of Jaundice</div>
+
+  <div class="sec">Bilirubin Pathway &mdash; Step by Step</div>
+  <table>
+    <thead><tr><th>Step</th><th>Location</th><th>Process</th><th>Product</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">1–3</td><td><input></td><td>Aged RBCs → Hgb → heme → biliverdin → ___</td><td><input></td></tr>
+      <tr><td class="rl">4</td><td><input></td><td>Unconjugated bilirubin bound to ___ → transported to liver</td><td><input></td></tr>
+      <tr><td class="rl">5</td><td><input></td><td>Uptake via ___; conjugated with ___ by ___</td><td><input></td></tr>
+      <tr><td class="rl">6</td><td><input></td><td>Secreted via ___ into bile → duodenum</td><td><input></td></tr>
+      <tr><td class="rl">7–8</td><td><input></td><td>Bacteria → urobilinogen → ___ (stool) + ___ (urine, ~20% reabsorbed)</td><td><input></td></tr>
+    </tbody>
+  </table>
+  <div class="fg">
+    <div class="f"><label>Unconjugated bilirubin: fat or water soluble? Can it be filtered by kidneys? Can it cross BBB?</label><input></div>
+    <div class="f"><label>Conjugated bilirubin: solubility? Appearance in urine → ___ urine; cannot cross ___</label><input></div>
+  </div>
+
+  <div class="sec">4 Types of Jaundice &mdash; Lab Differentiation</div>
+  <table>
+    <thead><tr><th>Type</th><th>Mechanism</th><th>Direct Bili</th><th>Indirect Bili</th><th>Urine Bili</th><th>Urobilinogen</th><th>Stool</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Hemolytic (Pre-hepatic)</td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Hepatocellular (Intrahepatic)</td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Obstructive (Post-hepatic)</td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Neonatal (Physiologic)</td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+  <div class="warn">&#9888; Obstructive jaundice classic triad: dark urine + clay-colored stools + pruritus. Courvoisier sign = painless jaundice + palpable non-tender gallbladder → pancreatic head malignancy until proven otherwise.</div>
+
+  <div class="sec">Congenital Hyperbilirubinemias</div>
+  <table>
+    <thead><tr><th>Condition</th><th>Defect</th><th>Bili Type</th><th>Key Clinical Feature</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Gilbert Syndrome</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Crigler-Najjar Type I</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Crigler-Najjar Type II</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Dubin-Johnson</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Rotor Syndrome</td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <button class="btn" onclick="rev(this,a3)">Check Bilirubin &amp; Jaundice</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 3 — BILE & ENTEROHEPATIC CIRCULATION (LOs 6–10)
+══════════════════════════════════════════════ -->
+<div class="panel" id="p3">
+  <div class="lo-tag">LOs 6–10 — Bile, EHC, Secretion, Regulation &amp; Clinical Predictions</div>
+
+  <div class="sec">Bile Composition (LO 6)</div>
+  <table>
+    <thead><tr><th>Component</th><th>% of Solutes</th><th>Function / Note</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">Bile salts</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Phospholipids (lecithin)</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Cholesterol</td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Conjugated bilirubin</td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+  <div class="fg">
+    <div class="f"><label>Primary bile acids (made in liver from cholesterol): ___ + ___; rate-limiting enzyme: ___</label><input></div>
+    <div class="f"><label>Gallstone formation: when ___ exceeds ___ + ___ → cholesterol crystallizes → ___ gallstones (___% of stones)</label><input></div>
+  </div>
+
+  <div class="sec">Conjugation &amp; Secondary Bile Acids (LO 7)</div>
+  <div class="fg">
+    <div class="f"><label>Bile acids conjugated with ___ or ___ → bile salts; significance: ↓pKa → ___ at intestinal pH → cannot be ___ reabsorbed</label><input></div>
+    <div class="f"><label>Secondary bile acids formed by gut bacteria via 7&#x03B1;-dehydroxylation: cholic acid → ___; chenodeoxycholic acid → ___</label><input></div>
+  </div>
+
+  <div class="sec">Enterohepatic Circulation Sequence (LO 7)</div>
+  <div class="fg">
+    <div class="f"><label>Step 1: Hepatocytes synthesize primary bile acids → conjugate with ___ → bile salts → secreted to ___</label><input></div>
+    <div class="f"><label>Step 2: Bile salts enter duodenum via ___ → emulsify ___ throughout small intestine</label><input></div>
+    <div class="f"><label>Step 3: ___% of bile salts actively reabsorbed in ___ via ASBT transporter</label><input></div>
+    <div class="f"><label>Step 4: Absorbed bile salts → ___ vein → liver reconjugates → cycle repeats ___&times; per day</label><input></div>
+    <div class="f"><label>Total bile acid pool ≈ ___ g; liver synthesizes only ___ g/day to replace fecal losses</label><input></div>
+    <div class="f"><label>Bile acid sequestrants (cholestyramine) mechanism: bind ___ in gut → ↑CYP7A1 → ↑cholesterol → bile acid synthesis → ↓serum ___</label><input></div>
+  </div>
+
+  <div class="sec">Bile Secretion &amp; Gallbladder Concentration (LO 8)</div>
+  <div class="fg">
+    <div class="f"><label>Stage 1 (hepatocytes): bile salts secreted via ___ pump; organic anions via ___</label><input></div>
+    <div class="f"><label>Stage 2 (cholangiocytes): secrete ___ and water stimulated by ___ via cAMP/CFTR</label><input></div>
+    <div class="f"><label>Gallbladder concentrates bile ___-fold by absorbing ___, ___, ___, and water</label><input></div>
+    <div class="f"><label>Between meals: sphincter of Oddi ___ → bile diverted to ___ (capacity ~___ mL)</label><input></div>
+  </div>
+
+  <div class="sec">Regulation of Bile Secretion (LO 9)</div>
+  <div class="warn">&#9888; CCK contracts the gallbladder AND relaxes the sphincter of Oddi. Secretin stimulates ductal HCO&#x2083;&#x207B; but does NOT contract the gallbladder.</div>
+  <table>
+    <thead><tr><th>Regulator</th><th>Cell / Source</th><th>Stimulus</th><th>Effect on Bile/Gallbladder</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">CCK</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Secretin</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Bile salts (choleresis)</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Vagal stimulation</td><td><input></td><td><input></td><td><input></td></tr>
+      <tr><td class="rl">Somatostatin</td><td><input></td><td><input></td><td><input></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">Clinical Predictions (LO 10)</div>
+  <div class="fg">
+    <div class="f"><label>Cholecystectomy: bile now delivered ___ (continuously/in bolus); total bile production ___; symptoms with large fatty meals: ___</label><input></div>
+    <div class="f"><label>Ileal resection: ASBT destroyed → bile salts ___ in feces → pool ___ → insufficient ___ → steatorrhea + ___ diarrhea + fat-soluble vitamin ___</label><input></div>
+    <div class="f"><label>Ileal resection also impairs ___ absorption (absorbed in terminal ileum with ___) → ___ anemia</label><input></div>
+    <div class="f"><label>Cholecystectomy vs. ileal resection: which causes steatorrhea? ___. Why the other does not: ___</label><input></div>
+  </div>
+
+  <button class="btn" onclick="rev(this,a4)">Check Bile &amp; EHC</button>
+  <div class="fb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 4 — PRACTICE QUESTIONS
+══════════════════════════════════════════════ -->
+<div class="panel" id="p4">
+  <div class="sec">Practice Questions &mdash; GI14 USMLE-Style</div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q1. A patient with acetaminophen overdose develops acute liver failure. Liver biopsy shows centrilobular necrosis. Which zone of the hepatic acinus is injured, and why is it preferentially affected?</div>
+    <div class="pq-choices">A. Zone 1 — first to receive toxic metabolites via portal blood<br>B. Zone 2 — intermediate oxygen tension increases susceptibility<br>C. Zone 3 — highest CYP2E1 concentration + lowest O&#x2082; tension<br>D. Zone 3 — direct toxin absorption from the central vein<br>E. Zone 1 — highest oxygen exposure activates APAP to NAPQI</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; C &mdash; Zone 3 (centrilobular) is preferentially damaged by acetaminophen because it has the highest concentration of CYP2E1 (the enzyme that converts APAP to toxic NAPQI) and the lowest O&#x2082; tension (last to receive blood from the portal triad). At therapeutic doses, NAPQI is detoxified by glutathione; overdose depletes glutathione → centrilobular necrosis. Zone 1 is preferentially damaged by viral hepatitis (first to receive virus-containing portal blood).</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q2. A patient with cirrhosis develops confusion, asterixis, and a flapping hand tremor. Labs show NH&#x2083; of 180 &#x3BC;g/dL. Which two medications would you prescribe and why?</div>
+    <div class="pq-choices">A. Lactulose + rifaximin<br>B. Neomycin + vancomycin<br>C. Lactulose + metronidazole<br>D. Cholestyramine + lactulose<br>E. Rifaximin + proton pump inhibitor</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; A &mdash; Hepatic encephalopathy results from impaired urea cycle → NH&#x3;accumulation → CNS toxicity (asterixis, confusion). Lactulose: acidifies colon → converts NH&#x2083; → NH&#x2084;&#x207A; (trapped, non-absorbable) + cathartic effect to expel it. Rifaximin: non-absorbable antibiotic → reduces ammonia-producing gut bacteria. Together they reduce serum ammonia. Neomycin was historically used but rifaximin has better evidence and safety profile.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q3. A 45-year-old woman with cirrhosis has ascites (SAAG = 1.4 g/dL) and bilateral leg edema. A classmate says "the edema is from low albumin — remove albumin-rich fluid and she'll get better." What is wrong with this reasoning?</div>
+    <div class="pq-choices">A. SAAG &lt;1.1 indicates malignancy, not portal hypertension<br>B. Ascites requires portal hypertension in addition to ↓oncotic pressure; removing fluid doesn't address portal HTN<br>C. Bilateral leg edema in cirrhosis is always from DVT, not albumin<br>D. Albumin levels are always normal in cirrhosis because the liver compensates<br>E. Ascites in cirrhosis is due to infection, not portal hypertension</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; B &mdash; SAAG &#x2265;1.1 g/dL indicates a portal hypertension etiology (here SAAG = 1.4). Ascites requires portal hypertension as the primary driver — hypoalbuminemia alone (e.g., nephrotic syndrome) causes leg edema but NOT ascites. The triad for cirrhotic ascites: (1) portal HTN → ↑hydrostatic pressure, (2) hypoalbuminemia → ↓oncotic pressure, (3) splanchnic vasodilation + RAAS activation → Na/H&#x2082;O retention. Treating only albumin without addressing portal HTN is insufficient.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q4. A physician prescribes atorvastatin to a patient with an LDL of 190 mg/dL. The patient asks why the drug helps. Which sequence correctly describes statin's mechanism?</div>
+    <div class="pq-choices">A. Statin blocks LDLR → less LDL cleared → LDL falls because less is produced<br>B. Statin blocks HMG-CoA reductase → ↓hepatic cholesterol → upregulate LDLR → ↑LDL clearance from plasma<br>C. Statin blocks MRP2 → ↓cholesterol secretion into bile → LDL falls<br>D. Statin activates SREBP-1c → ↑cholesterol synthesis but ↑LDL receptor too → net LDL falls<br>E. Statin blocks lipoprotein lipase → TG cleared faster → LDL falls indirectly</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; B &mdash; Statins competitively inhibit HMG-CoA reductase → ↓endogenous hepatic cholesterol synthesis → hepatocytes sense low intracellular cholesterol → SREBP-2 activated → upregulate LDL receptors (LDLR) on hepatocyte surface → ↑LDL uptake from plasma → ↓serum LDL by 30–50%. Side effects: myopathy (↑CK), rhabdomyolysis (rare), transaminase elevation. Familial hypercholesterolemia = LDLR mutation → statins less effective alone.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q5. A 28-year-old man has recurrent mild jaundice after fasting and a recent illness. Bilirubin = 3.0 mg/dL (all indirect). Direct bilirubin, LFTs, CBC, and hemolysis panel are all normal. What is the diagnosis and mechanism?</div>
+    <div class="pq-choices">A. Dubin-Johnson syndrome — defective MRP2 secretion of conjugated bilirubin<br>B. Gilbert syndrome — mildly reduced UGT1A1 promoter activity triggered by fasting/stress<br>C. Crigler-Najjar Type II — severely reduced UGT1A1 activity<br>D. Hemolytic anemia — RBC destruction overwhelming conjugation<br>E. Rotor syndrome — defective OATP1B1/B3 uptake of bilirubin</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; B &mdash; Gilbert syndrome is the most common congenital cause of unconjugated hyperbilirubinemia (5–10% of population). UGT1A1 promoter has a TATA box repeat → mildly reduced activity (30–50%) → unconjugated (indirect) bilirubin accumulates, especially during fasting, illness, exercise, or stress. Completely benign. No treatment needed. Key distinguisher from hemolysis: no anemia, no ↑reticulocytes, no ↑LDH, normal haptoglobin.</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q6. A patient presents with dark urine, pale clay-colored stools, and intense pruritus for 3 weeks. Labs: total bilirubin 12 mg/dL (direct 10, indirect 2), ALP &#x2191;&#x2191;&#x2191;, GGT &#x2191;&#x2191;, ALT/AST mildly elevated. What type of jaundice is this, and what additional sign should you look for?</div>
+    <div class="pq-choices">A. Hemolytic jaundice — look for splenomegaly and reticulocytosis<br>B. Obstructive jaundice — look for Courvoisier sign (palpable non-tender gallbladder)<br>C. Hepatocellular jaundice — look for spider angiomata and asterixis<br>D. Neonatal jaundice — look for unconjugated hyperbilirubinemia only<br>E. Gilbert syndrome — look for fasting as a precipitant</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; B &mdash; Classic obstructive (post-hepatic) jaundice: ↑↑direct bili, dark urine (bilirubinuria — conjugated bili filtered by kidneys), pale/clay stools (no bilirubin reaching gut → no stercobilin), pruritus (bile salt skin deposition), markedly ↑ALP (cholestasis marker). Courvoisier sign (painless jaundice + palpable non-tender gallbladder) = pancreatic head malignancy until proven otherwise (gallstones cause fibrosis/scarring of GB wall, preventing distension — Courvoisier's law).</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q7. A patient undergoes extensive terminal ileal resection for Crohn's disease. Which of the following is NOT an expected consequence?</div>
+    <div class="pq-choices">A. Steatorrhea<br>B. Fat-soluble vitamin deficiency (A, D, E, K)<br>C. Bile acid (cholerheic) diarrhea<br>D. Vitamin B&#x2081;&#x2082; deficiency → megaloblastic anemia<br>E. Improved fat digestion due to ↑hepatic bile acid synthesis compensating for lost reabsorption</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; E &mdash; The liver CANNOT compensate adequately through increased synthesis. The hepatic capacity to synthesize bile acids de novo is limited (~0.5 g/day). Terminal ileal resection eliminates the ASBT transporter responsible for 95% reabsorption → rapid depletion of the bile acid pool → insufficient intraluminal bile acid concentration → steatorrhea + fat-soluble vitamin deficiency + bile acid diarrhea + B&#x2081;&#x2082; deficiency. This is a key distinction from cholecystectomy (reservoir only, bile acid pool intact).</div>
+  </div>
+
+  <div class="pq-box">
+    <div class="pq-q">Q8. A medical student is tested on bile secretion regulation. She writes: "Both CCK and secretin contract the gallbladder." What is incorrect in her statement, and what does secretin actually do?</div>
+    <div class="pq-choices">A. She's correct — both hormones contract the gallbladder<br>B. CCK relaxes the gallbladder; secretin contracts it<br>C. Only CCK contracts the gallbladder; secretin stimulates ductal HCO&#x2083;&#x207B; secretion but does NOT contract the gallbladder<br>D. Secretin contracts the gallbladder only in the fasted state<br>E. Neither CCK nor secretin contracts the gallbladder — vagal stimulation is the sole driver</div>
+    <button class="pq-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+    <div class="pq-ans">&#x2705; C &mdash; The classic trap: secretin does NOT contract the gallbladder. CCK (released by I cells when fat/protein enters duodenum) → contracts gallbladder smooth muscle + relaxes sphincter of Oddi → bile delivered to duodenum. Secretin (released by S cells when H&#x207A; enters duodenum) → stimulates cholangiocytes and pancreatic ductal cells to secrete HCO&#x2083;&#x207B;-rich fluid → alkalinizes duodenum. Secretin = "the bicarb hormone," not the bile-contracting hormone.</div>
+  </div>
+
+</div><!-- /panel p4 -->
+
+<script>
+function sw(n){
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+}
+
+function rev(btn,obj){
+  var fb=btn.nextElementSibling;
+  if(fb.style.display==='block'){fb.style.display='none';btn.textContent=btn.textContent.replace('Hide','Check');return;}
+  var keys=Object.keys(obj),vals=Object.values(obj);
+  var rows='';
+  for(var i=0;i<keys.length;i++){rows+='<div class="fb-row"><div class="fb-q">'+keys[i]+'</div><div class="fb-a">'+vals[i]+'</div></div>';}
+  fb.innerHTML='<div class="fb-header">&#9989; Answer Key</div>'+rows;
+  fb.style.display='block';
+  btn.textContent=btn.textContent.replace('Check','Hide');
+}
+
+/* ── WARMUP answers (a0) ── */
+var a0={
+  'Liver dual blood supply: ___ (~75%) + ___ (~25%)':'Portal vein (~1,000 mL/min, 70–75%) + Hepatic artery (~350 mL/min, 25–30%)',
+  'Zone 3 (centrilobular) is most vulnerable to ___ and ___':'Ischemia (lowest O₂) + acetaminophen toxicity (highest CYP2E1 concentration → NAPQI production) + alcohol + halothane',
+  'Rate-limiting step in cholesterol synthesis: ___ → ___; enzyme = ___; inhibited by ___':'HMG-CoA → mevalonate; HMG-CoA reductase; inhibited by statins (competitive inhibitors)',
+  'Unconjugated bilirubin: fat or water soluble? Can it appear in urine?':'Fat-soluble (albumin-bound); CANNOT appear in urine (not filtered by kidneys); can cross BBB → kernicterus',
+  'CCK released by ___ cells in response to ___; causes ___ to contract + sphincter of Oddi to ___':'I cells (duodenum/jejunum); fat + protein entering duodenum; gallbladder to contract; sphincter of Oddi to RELAX → bile flows',
+  'Terminal ileum absorbs ___% of bile salts via transporter ___':'~95% via ASBT (apical sodium-dependent bile acid transporter)'
+};
+
+/* ── TAB 0: Structure & Zones answers (a1) ── */
+var a1={
+  'Portal Vein — Flow Rate & % of Total':'~1,000 mL/min; 70–75% of total hepatic blood flow',
+  'Portal Vein — O₂ Saturation':'Low (venous blood — partially deoxygenated by gut/spleen)',
+  'Portal Vein — Content / Source':'Nutrient-rich blood from GI tract + spleen',
+  'Hepatic Artery — Flow Rate & % of Total':'~350 mL/min; 25–30% of total hepatic blood flow',
+  'Hepatic Artery — O₂ Saturation':'High (arterial — fully oxygenated from celiac axis)',
+  'Hepatic Artery — Content / Source':'Oxygen-rich blood from celiac trunk (branch of abdominal aorta)',
+  'Despite portal vein\'s low O₂, each vessel contributes ___% of hepatic O₂ delivery because ___':'~50%; the high volume of portal blood compensates for its lower O₂ saturation → each delivers roughly equal O₂',
+  'Liver receives ___% of resting cardiac output':'~30% of resting cardiac output (second only to kidneys per gram of tissue)',
+  'Zone 1 (Periportal) — Location':'Adjacent to portal triad (periportal — first to receive blood)',
+  'Zone 1 (Periportal) — O₂ Status':'Highest O₂ and nutrient exposure (first in line)',
+  'Zone 1 (Periportal) — Primary Functions':'Gluconeogenesis, β-oxidation, urea synthesis, amino acid catabolism',
+  'Zone 1 (Periportal) — Vulnerable to':'Viral hepatitis, phosphorus toxicity (first to encounter portal blood-borne pathogens)',
+  'Zone 2 (Midzonal) — Location':'Intermediate — between periportal and centrilobular zones',
+  'Zone 2 (Midzonal) — O₂ Status':'Intermediate O₂ and nutrient exposure',
+  'Zone 2 (Midzonal) — Primary Functions':'Mixed; shares some zone 1 and zone 3 functions',
+  'Zone 2 (Midzonal) — Vulnerable to':'Yellow fever',
+  'Zone 3 (Centrilobular) — Location':'Adjacent to central vein (furthest from portal triad)',
+  'Zone 3 (Centrilobular) — O₂ Status':'Lowest O₂ and nutrient (last to receive blood)',
+  'Zone 3 (Centrilobular) — Primary Functions':'Glycolysis, lipogenesis, drug metabolism (CYP450 — esp. CYP2E1)',
+  'Zone 3 (Centrilobular) — Vulnerable to':'Ischemia, acetaminophen (APAP) toxicity, alcohol, halothane',
+  'Kupffer cells = ___; located ___; largest population of ___ in the body':'Resident macrophages; lining hepatic sinusoids; largest population of tissue macrophages (resident macrophages) in the body; phagocytose bacteria, old RBCs, and debris from portal blood',
+  'Hepatic stellate cells (Ito cells): quiescent = store ___; when activated → ___ → collagen → ___':'Store vitamin A (fat-soluble); when activated by injury → myofibroblasts → collagen production → fibrosis → cirrhosis',
+  'Sinusoidal endothelial cells are ___; allow ___':'Fenestrated (have pores); free exchange between sinusoidal blood and Space of Disse → hepatocyte access to plasma proteins and nutrients',
+  'Hepatocytes (~80%): perform ___ functions':'Metabolic (glucose homeostasis, lipid/protein synthesis), secretory (bile, bilirubin conjugation), and detoxification (CYP450, urea cycle) functions',
+  'Hepatomegaly defined as liver > ___ cm; top 3 causes: ___':'> ~12–15 cm (percussion in mid-clavicular line); top causes: viral hepatitis/infection, fatty liver disease (NAFLD), congestive heart failure ("nutmeg liver"), malignancy (HCC/mets)',
+  'Jaundice = yellowing of ___ due to bilirubin >___mg/dL; first visible in ___ because ___':'Skin, sclerae, and mucous membranes; >2–3 mg/dL; first visible in sclerae because high elastin content binds bilirubin avidly',
+  'Cirrhosis = irreversible replacement of parenchyma with ___ + ___; most common cause in US = ___':'Fibrous scar tissue + regenerative nodules; chronic alcohol use (most common in US); also chronic viral hepatitis B/C, NASH',
+  '3 mechanisms of ascites in cirrhosis: (1) ___, (2) ___, (3) ___':'(1) Portal hypertension → ↑hydrostatic pressure → fluid transudation; (2) Hypoalbuminemia → ↓plasma oncotic pressure → fluid leaves vasculature; (3) Splanchnic vasodilation (NO-mediated) → effective arterial underfilling → RAAS activation → Na⁺/H₂O retention',
+  'Ascites — Location':'Peritoneal cavity (fluid accumulation in the abdomen)',
+  'Ascites — Required component':'Portal hypertension (in addition to possible ↓oncotic pressure); SAAG ≥1.1 g/dL confirms portal HTN etiology',
+  'Ascites — SAAG':'≥1.1 g/dL = portal hypertension etiology; <1.1 g/dL = exudative (malignancy, TB peritonitis, nephrotic syndrome)',
+  'Peripheral Edema — Location':'Subcutaneous tissue (ankles, legs — dependent areas)',
+  'Peripheral Edema — Required component':'↑Capillary hydrostatic pressure OR ↓oncotic pressure; portal hypertension NOT required',
+  'Peripheral Edema — SAAG':'Not applicable to peripheral edema',
+  'Pre-hepatic — Example Causes':'Portal vein thrombosis (PVT); splenic vein thrombosis',
+  'Pre-hepatic — LFTs / Liver Function':'Normal LFTs and liver function (liver itself is normal); ↑portal pressure only',
+  'Intra-hepatic (sinusoidal) — Example Causes':'Cirrhosis (most common); Budd-Chiari syndrome (hepatic vein obstruction causes sinusoidal congestion)',
+  'Intra-hepatic (sinusoidal) — LFTs / Liver Function':'Abnormal LFTs (↑AST, ALT, bilirubin); ↓synthetic function (↓albumin, ↑PT)',
+  'Post-hepatic — Example Causes':'Budd-Chiari syndrome (hepatic vein thrombosis); constrictive pericarditis; right heart failure ("cardiac cirrhosis")',
+  'Post-hepatic — LFTs / Liver Function':'Hepatic congestion; may develop centrilobular necrosis with right heart failure; ↑bilirubin (conjugated)'
+};
+
+/* ── TAB 1: Metabolic Functions answers (a2) ── */
+var a2={
+  'Glycogenesis — Metabolic State':'Fed (postprandial) state',
+  'Glycogenesis — Hormonal Control':'Insulin ↑ (stimulates glycogen synthase)',
+  'Glycogenesis — Outcome':'Glucose → glycogen stored in liver (capacity ~100 g)',
+  'Glycogenolysis — Metabolic State':'Short-term fasting (hours)',
+  'Glycogenolysis — Hormonal Control':'Glucagon ↑ + Epinephrine ↑',
+  'Glycogenolysis — Outcome':'Glycogen → glucose released into blood to maintain normoglycemia',
+  'Gluconeogenesis — Metabolic State':'Prolonged fasting or stress (depleted glycogen stores)',
+  'Gluconeogenesis — Hormonal Control':'Glucagon ↑ + Cortisol ↑',
+  'Gluconeogenesis — Outcome':'Amino acids (Ala, Gln), lactate, glycerol → glucose (occurs in Zone 1)',
+  'Glycolysis — Metabolic State':'Fed state (high glucose load)',
+  'Glycolysis — Hormonal Control':'Insulin ↑ (promotes glucose utilization)',
+  'Glycolysis — Outcome':'Glucose → pyruvate → acetyl-CoA → energy production and/or lipid synthesis',
+  'Acute liver failure → profound ___ because ___':'Profound hypoglycemia; loss of glycogen stores (can\'t glycogenolyze) + impaired gluconeogenesis; hallmark of acute (not chronic) liver failure; poor prognostic sign',
+  'Liver uses ___ (not GLUT4) for glucose uptake because it is ___ (insulin-independent/dependent)':'GLUT2; constitutive (insulin-independent) — allows uptake proportional to portal glucose concentration regardless of insulin',
+  'VLDL is made by ___ and carries ___; degraded to ___ → ___':'Liver (hepatocytes); endogenous triglycerides (TG) + cholesterol + apoB100; degraded to IDL → then LDL by lipoprotein lipase (LPL) + hepatic lipase',
+  'HDL produced by ___ + ___; performs ___ cholesterol transport':'Liver + intestine; reverse cholesterol transport (periphery → liver for excretion in bile)',
+  'NAFLD/NASH mechanism: insulin resistance → ↑___ delivery to liver + ↓___ + ↓___ export → ___ accumulation':'↑Free fatty acid (FFA) delivery from adipose tissue; ↓β-oxidation; ↓VLDL export; triglyceride (TG) accumulation in hepatocytes',
+  'Chylomicrons — Origin':'Intestinal epithelium (enterocytes)',
+  'Chylomicrons — Primary Cargo':'Dietary (exogenous) triglycerides; carry apoB48',
+  'Chylomicrons — Key Clinical Point':'Degraded by LPL in capillaries; chylomicron remnants taken up by liver. Deficiency of LPL or apoC-II → severe hypertriglyceridemia',
+  'VLDL — Origin':'Liver (hepatocytes)',
+  'VLDL — Primary Cargo':'Endogenous TG + cholesterol; carries apoB100',
+  'VLDL — Key Clinical Point':'↑ in hypertriglyceridemia, metabolic syndrome, alcohol use; VLDL → IDL → LDL',
+  'LDL — Origin':'Derived from VLDL (via IDL)',
+  'LDL — Primary Cargo':'Cholesterol (delivers to peripheral tissues); carries apoB100',
+  'LDL — Key Clinical Point':'"Bad cholesterol" — atherogenic; lowered by statins (↑LDLR expression); familial hypercholesterolemia = LDLR mutation',
+  'HDL — Origin':'Liver + intestine (as nascent HDL with apoAI)',
+  'HDL — Primary Cargo':'Cholesterol from periphery (reverse transport)',
+  'HDL — Key Clinical Point':'"Good cholesterol"; ↑ with exercise, niacin; ↓ with smoking, metabolic syndrome',
+  '5 main uses of cholesterol: ___, ___, ___, ___, ___':'(1) Cell membrane structural component; (2) Bile acid synthesis (cholesterol 7α-hydroxylase / CYP7A1); (3) Steroid hormones (glucocorticoids, sex hormones, mineralocorticoids); (4) Vitamin D (7-dehydrocholesterol → D₃); (5) Myelin sheath (neural myelination)',
+  'Rate-limiting step: HMG-CoA → ___ catalyzed by ___':'Mevalonate; HMG-CoA reductase',
+  'High dietary cholesterol → ___ (suppresses/stimulates) HMG-CoA reductase via ___':'Suppresses (inhibits) HMG-CoA reductase via SREBP-2 — high intracellular cholesterol inhibits SREBP-2 cleavage → ↓HMG-CoA reductase transcription → ↓endogenous synthesis (feedback inhibition)',
+  'Statins mechanism: competitive inhibit ___ → ↓hepatic cholesterol → ↑___ → ↑LDL clearance → ↓serum LDL':'HMG-CoA reductase; LDL receptors (LDLR) upregulated (SREBP-2 activated when intrahepatic cholesterol falls)',
+  'Statin side effects: ___, ___':'Myopathy (↑CK — check if muscle pain); rhabdomyolysis (rare but serious); transaminase elevation (hepatotoxicity)',
+  'Familial hypercholesterolemia = mutation in ___ → ↑LDL despite normal ___':'LDL receptor (LDLR) — cannot clear LDL from plasma; normal HMG-CoA reductase (endogenous synthesis is normal)',
+  'Liver makes all plasma proteins EXCEPT ___ (made by ___)':'Immunoglobulins (antibodies); produced by plasma cells (B cells)',
+  'Albumin t½ = ___ days → ↓albumin indicates ___ (acute/chronic) liver dysfunction':'~20 days; CHRONIC liver dysfunction (long half-life means weeks of poor synthesis before albumin falls — not useful in acute failure)',
+  'Clotting factor NOT made by liver: Factor ___ (made by ___)':'Factor VIII; made by endothelial cells and megakaryocytes (hence elevated/normal in hemophilia A carrier testing)',
+  'Factor with shortest t½ = Factor ___; rises first in ___; why it\'s an early marker of liver failure':'Factor VII (t½ ~4–6 hours); PT/INR rises first; because Factor VII\'s short half-life means its levels fall fastest when liver synthetic function is impaired',
+  'Urea cycle: NH₃ → ___ (in hepatocytes only); failure → ___ → hepatic encephalopathy; treatment = ___ + ___':'NH₃ → urea (citrulline → argininosuccinate → arginine → urea + ornithine); hyperammonemia → hepatic encephalopathy (asterixis, confusion, coma); lactulose (traps NH₄⁺) + rifaximin (↓ammonia-producing bacteria)',
+  'First-pass effect: oral drug absorbed → ___ → ___ → substantial metabolism before reaching systemic circulation':'Portal vein → liver → extensive hepatic metabolism before entering systemic circulation; explains why oral bioavailability << IV (e.g., oral morphine dose >> IV morphine dose)',
+  '↓ Albumin — Consequence / Clinical Sign':'↓Oncotic pressure → ascites + peripheral edema; ↑free (unbound) drug levels → altered pharmacokinetics; ↓bilirubin-binding',
+  '↓ Clotting factors (II, VII, IX, X) — Consequence / Clinical Sign':'↑PT/INR; bleeding tendency; Factor VII (shortest t½) rises first — earliest marker of hepatic synthetic dysfunction',
+  '↓ Urea cycle — Consequence / Clinical Sign':'Hyperammonemia → hepatic encephalopathy (asterixis, confusion, fetor hepaticus, coma)',
+  '↓ Gluconeogenesis/glycogenolysis — Consequence / Clinical Sign':'Hypoglycemia — especially in acute liver failure; a hallmark and poor prognostic sign of fulminant hepatic failure',
+  '↓ Estrogen metabolism — Consequence / Clinical Sign':'↑Estrogen → spider angiomata (skin), palmar erythema, gynecomastia, testicular atrophy, loss of axillary/pubic hair',
+  '↓ Bile production — Consequence / Clinical Sign':'Steatorrhea (fat malabsorption); fat-soluble vitamin deficiency (A, D, E, K); ↓vitamin K → worsened coagulopathy'
+};
+
+/* ── TAB 2: Bilirubin & Jaundice answers (a3) ── */
+var a3={
+  'Steps 1–3 — Location':'Spleen / RES macrophages',
+  'Steps 1–3 — Product':'Unconjugated bilirubin (indirect; fat-soluble, albumin-bound, neurotoxic)',
+  'Step 4 — Location':'Bloodstream',
+  'Step 4 — Product':'Albumin–bilirubin complex (transported to liver)',
+  'Step 5 — Location':'Hepatocyte',
+  'Step 5 — Product':'Conjugated bilirubin (direct; water-soluble, non-toxic)',
+  'Step 6 — Location':'Bile canaliculi → bile duct → duodenum',
+  'Step 6 — Product':'Bile (yellow-green)',
+  'Steps 7–8 — Location':'Large intestine → colon → kidneys',
+  'Steps 7–8 — Product':'Stercobilin (brown stool color) + urobilin (yellow urine color)',
+  'Unconjugated bilirubin: fat or water soluble? Can it be filtered by kidneys? Can it cross BBB?':'Fat-soluble; CANNOT be filtered by kidneys (albumin-bound, not freely filtered) → NO bilirubinuria; CAN cross blood-brain barrier → kernicterus in neonates (brain damage)',
+  'Conjugated bilirubin: solubility? Appearance in urine → ___ urine; cannot cross ___':'Water-soluble; CAN be filtered by kidneys → bilirubinuria → dark urine (in obstructive or hepatocellular jaundice); cannot cross blood-brain barrier (no kernicterus risk)',
+  'Hemolytic (Pre-hepatic) — Mechanism':'↑RBC destruction → overwhelming bilirubin load exceeds hepatic conjugation capacity → ↑↑unconjugated bili in blood',
+  'Hemolytic (Pre-hepatic) — Direct Bili':'Normal (conjugation is intact; problem is upstream)',
+  'Hemolytic (Pre-hepatic) — Indirect Bili':'↑↑ (excess unconjugated from hemolysis)',
+  'Hemolytic (Pre-hepatic) — Urine Bili':'Negative (unconjugated cannot be filtered by kidneys)',
+  'Hemolytic (Pre-hepatic) — Urobilinogen':'↑↑ (more conjugated bilirubin reaching gut → more urobilinogen formed)',
+  'Hemolytic (Pre-hepatic) — Stool':'Dark (↑stercobilin from excess bilirubin reaching colon)',
+  'Hepatocellular (Intrahepatic) — Mechanism':'Damaged hepatocytes: ↓conjugation capacity + regurgitation of already-conjugated bilirubin back into bloodstream',
+  'Hepatocellular (Intrahepatic) — Direct Bili':'↑ (leaking from damaged hepatocytes back into blood)',
+  'Hepatocellular (Intrahepatic) — Indirect Bili':'↑ (↓conjugation)',
+  'Hepatocellular (Intrahepatic) — Urine Bili':'Positive (conjugated bili enters blood → filtered by kidneys → bilirubinuria)',
+  'Hepatocellular (Intrahepatic) — Urobilinogen':'Variable (↓ or normal — depends on degree of hepatocyte damage and biliary obstruction)',
+  'Hepatocellular (Intrahepatic) — Stool':'Normal to pale',
+  'Obstructive (Post-hepatic) — Mechanism':'Bile duct obstruction (stone, stricture, tumor) → conjugated bilirubin cannot drain → backs up into bloodstream',
+  'Obstructive (Post-hepatic) — Direct Bili':'↑↑ (conjugated bili accumulates in blood)',
+  'Obstructive (Post-hepatic) — Indirect Bili':'Normal/mildly ↑',
+  'Obstructive (Post-hepatic) — Urine Bili':'Positive → dark urine (bilirubinuria)',
+  'Obstructive (Post-hepatic) — Urobilinogen':'↓ or absent (bilirubin never reaches gut → no urobilinogen formed)',
+  'Obstructive (Post-hepatic) — Stool':'Pale/clay-colored (acholic stools — no stercobilin)',
+  'Neonatal (Physiologic) — Mechanism':'Immature UGT1A1 enzyme + high fetal hemoglobin (HbF) turnover → overwhelms conjugation → ↑↑unconjugated bili',
+  'Neonatal (Physiologic) — Direct Bili':'Normal (conjugation not absent, just immature)',
+  'Neonatal (Physiologic) — Indirect Bili':'↑↑ (primarily unconjugated; kernicterus risk)',
+  'Neonatal (Physiologic) — Urine Bili':'Negative',
+  'Neonatal (Physiologic) — Urobilinogen':'Variable',
+  'Neonatal (Physiologic) — Stool':'Normal (some bilirubin still reaches gut)',
+  'Gilbert Syndrome — Defect':'↓UGT1A1 promoter activity (TATA box repeat variant) → mild 30–50% reduction in conjugation',
+  'Gilbert Syndrome — Bili Type':'↑Indirect (unconjugated) bilirubin',
+  'Gilbert Syndrome — Key Clinical Feature':'Benign; episodic mild jaundice triggered by fasting, illness, exercise, stress. Very common (5–10% of population). No treatment needed.',
+  'Crigler-Najjar Type I — Defect':'Complete absence of UGT1A1 (null mutation)',
+  'Crigler-Najjar Type I — Bili Type':'↑↑Indirect (severely elevated unconjugated)',
+  'Crigler-Najjar Type I — Key Clinical Feature':'Severe; kernicterus in infancy without treatment; requires liver transplant (the only cure); phototherapy as bridge (16–18 hrs/day)',
+  'Crigler-Najjar Type II — Defect':'Severely reduced UGT1A1 activity (<10% of normal; missense mutation)',
+  'Crigler-Najjar Type II — Bili Type':'↑Indirect (less severe than Type I)',
+  'Crigler-Najjar Type II — Key Clinical Feature':'Responds to phenobarbital (induces UGT1A1 expression → increases residual enzyme activity)',
+  'Dubin-Johnson — Defect':'Defective MRP2 transporter (↓secretion of conjugated bilirubin into bile canaliculi)',
+  'Dubin-Johnson — Bili Type':'↑Direct (conjugated) bilirubin',
+  'Dubin-Johnson — Key Clinical Feature':'Black liver (melanin-like polymer accumulates); benign prognosis; ↑urinary coproporphyrin I (vs. III in Rotor)',
+  'Rotor Syndrome — Defect':'Defective OATP1B1/1B3 transporters (↓hepatocyte uptake of conjugated bilirubin from sinusoids)',
+  'Rotor Syndrome — Bili Type':'↑Direct (conjugated) bilirubin',
+  'Rotor Syndrome — Key Clinical Feature':'Similar to Dubin-Johnson but NORMAL liver color on biopsy (no pigment accumulation). Both are benign.'
+};
+
+/* ── TAB 3: Bile & EHC answers (a4) ── */
+var a4={
+  'Bile salts — % of Solutes':'~67% of bile solutes',
+  'Bile salts — Function / Note':'Emulsify dietary fats; form mixed micelles for fat absorption; derived from conjugated primary bile acids',
+  'Phospholipids (lecithin) — % of Solutes':'~22% of bile solutes',
+  'Phospholipids (lecithin) — Function / Note':'Solubilize cholesterol in mixed micelles; protect bile duct epithelium from bile acid toxicity',
+  'Cholesterol — % of Solutes':'~4% of bile solutes',
+  'Cholesterol — Function / Note':'Primary route of cholesterol excretion from the body (excreted in bile as free cholesterol)',
+  'Conjugated bilirubin — % of Solutes':'~0.3% of bile solutes',
+  'Conjugated bilirubin — Function / Note':'Gives bile its yellow-green color; excreted → urobilinogen → stercobilin (brown stool)',
+  'Primary bile acids (made in liver from cholesterol): ___ + ___; rate-limiting enzyme: ___':'Cholic acid (trihydroxy) + Chenodeoxycholic acid (dihydroxy); rate-limiting enzyme: cholesterol 7α-hydroxylase (CYP7A1)',
+  'Gallstone formation: when ___ exceeds ___ + ___ → cholesterol crystallizes → ___ gallstones (___% of stones)':'Cholesterol concentration exceeds bile salts + phospholipids solubilizing capacity → cholesterol crystallizes → cholesterol gallstones (80% of gallstones in the West)',
+  'Bile acids conjugated with ___ or ___ → bile salts; significance: ↓pKa → ___ at intestinal pH → cannot be ___ reabsorbed':'Taurine or glycine; ionized at intestinal pH → cannot be passively reabsorbed in small intestine → stays in lumen for fat emulsification + micelle formation',
+  'Secondary bile acids formed by gut bacteria via 7α-dehydroxylation: cholic acid → ___; chenodeoxycholic acid → ___':'Cholic acid → Deoxycholic acid; Chenodeoxycholic acid → Lithocholic acid (poorly absorbed; mostly excreted; hepatotoxic in excess)',
+  'Step 1: Hepatocytes synthesize primary bile acids → conjugate with ___ → bile salts → secreted to ___':'Taurine or glycine (→ bile salts); secreted into bile canaliculi → common bile duct → duodenum (via sphincter of Oddi)',
+  'Step 2: Bile salts enter duodenum via ___ → emulsify ___ throughout small intestine':'Sphincter of Oddi (when relaxed by CCK); emulsify dietary fats (TG, fat-soluble vitamins) for micelle formation and absorption',
+  'Step 3: ___% of bile salts actively reabsorbed in ___ via ASBT transporter':'~95%; terminal ileum; ASBT = apical sodium-dependent bile acid transporter (Na⁺-coupled active transport)',
+  'Step 4: Absorbed bile salts → ___ vein → liver reconjugates → cycle repeats ___× per day':'Portal vein (hepatic extraction ~90–95%); cycle repeats 6–10× per day',
+  'Total bile acid pool ≈ ___ g; liver synthesizes only ___ g/day to replace fecal losses':'~3–5 g total pool; synthesizes ~0.5 g/day (very efficient recycling: 18–50 g secreted/day from cycling)',
+  'Bile acid sequestrants (cholestyramine) mechanism: bind ___ in gut → ↑CYP7A1 → ↑cholesterol → bile acid synthesis → ↓serum ___':'Bind bile acids in gut (interrupt EHC) → liver converts more cholesterol to bile acids (↑CYP7A1) → ↓intrahepatic cholesterol → ↑LDLR expression → ↓serum LDL',
+  'Stage 1 (hepatocytes): bile salts secreted via ___ pump; organic anions via ___':'BSEP (bile salt export pump); MRP2 (multidrug resistance-associated protein 2 — secretes conjugated bilirubin, glutathione conjugates)',
+  'Stage 2 (cholangiocytes): secrete ___ and water stimulated by ___ via cAMP/CFTR':'HCO₃⁻ (bicarbonate) and water; stimulated by secretin → cAMP → CFTR → Cl⁻/HCO₃⁻ exchanger → alkaline modification of bile',
+  'Gallbladder concentrates bile ___-fold by absorbing ___, ___, ___, and water':'5–20-fold (average ~10×); absorbs Na⁺, Cl⁻, HCO₃⁻, and water from bile',
+  'Between meals: sphincter of Oddi ___ → bile diverted to ___ (capacity ~___ mL)':'Contracts (tonic contraction); gallbladder; ~40–70 mL capacity',
+  'CCK — Cell / Source':'I cells (duodenum and proximal jejunum)',
+  'CCK — Stimulus':'Fat + protein entering the duodenum',
+  'CCK — Effect on Bile/Gallbladder':'↑Gallbladder contraction + sphincter of Oddi RELAXATION → bile delivery to duodenum; also stimulates pancreatic enzyme secretion',
+  'Secretin — Cell / Source':'S cells (duodenum)',
+  'Secretin — Stimulus':'Acid (H⁺) entering the duodenum',
+  'Secretin — Effect on Bile/Gallbladder':'↑Ductal HCO₃⁻ secretion → alkalinizes duodenum; does NOT contract the gallbladder',
+  'Bile salts (choleresis) — Cell / Source':'Bile salts returning in portal blood (from EHC)',
+  'Bile salts (choleresis) — Stimulus':'Bile salts arriving at hepatocytes via portal blood',
+  'Bile salts (choleresis) — Effect on Bile/Gallbladder':'↑Hepatic bile secretion (bile salt-dependent fraction); FXR-mediated transcription',
+  'Vagal stimulation — Cell / Source':'Vagus nerve (CN X); cephalic phase (sight/smell of food)',
+  'Vagal stimulation — Stimulus':'Cephalic phase anticipation of a meal',
+  'Vagal stimulation — Effect on Bile/Gallbladder':'↑Bile secretion; mild gallbladder contraction via ACh on gallbladder and cholangiocytes',
+  'Somatostatin — Cell / Source':'D cells (stomach and intestine)',
+  'Somatostatin — Stimulus':'Released postprandially (counterregulatory); also in response to high acid',
+  'Somatostatin — Effect on Bile/Gallbladder':'↓Gallbladder contraction; ↓bile secretion; inhibits CCK release — overall inhibitory on GI secretion',
+  'Cholecystectomy: bile now delivered ___ (continuously/in bolus); total bile production ___; symptoms with large fatty meals: ___':'Continuously (drips from liver without concentrated storage); total bile production UNCHANGED; symptoms: bloating, loose stools, fatty food intolerance (insufficient concentrated bile bolus for large fat loads)',
+  'Ileal resection: ASBT destroyed → bile salts ___ in feces → pool ___ → insufficient ___ → steatorrhea + ___ diarrhea + fat-soluble vitamin ___':'Lost in feces; bile acid pool depletes; insufficient micelle formation; bile acid (cholerheic) diarrhea (excess bile acids irritate colon → Cl⁻/water secretion); fat-soluble vitamin deficiency (A, D, E, K)',
+  'Ileal resection also impairs ___ absorption (absorbed in terminal ileum with ___) → ___ anemia':'Vitamin B₁₂; intrinsic factor–B₁₂ complex (IF-B₁₂ receptor cubilin in terminal ileum); megaloblastic anemia (+ subacute combined degeneration of spinal cord)',
+  'Cholecystectomy vs. ileal resection: which causes steatorrhea? ___. Why the other does not: ___':'Ileal resection causes steatorrhea (bile acid pool depleted → insufficient micelles). Cholecystectomy does NOT cause steatorrhea because bile acid pool is INTACT — only the delivery pattern changes (continuous drip vs. bolus); fat malabsorption is mild and mostly with large fatty meals only'
+};
+</script>
+</body></html>
