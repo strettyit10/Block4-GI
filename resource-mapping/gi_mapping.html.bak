@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HoyaDocs GI — Lecture Resource Hub</title>
+<title>HoyaDocs GI &mdash; Resource Coverage Mapping</title>
 <style>
 /* ── RESET ───────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -170,41 +170,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F7F4;color:#1A2332;fo
 .resources-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px
 }
-.res-col-stack{display:flex;flex-direction:column;gap:10px;padding:2px 0 4px}
-/* ── 3rd Party table ─────────────────────────────── */
-.tp-table{width:100%;border-collapse:collapse;font-size:11.5px}
-.tp-table th{
-  padding:6px 10px;font-size:10px;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase;color:#4A6B5A;background:#EEF7F2;
-  border-bottom:2px solid #C8E6D4;text-align:left
-}
-.tp-table td{
-  padding:8px 10px;vertical-align:top;
-  border-bottom:1px solid #EAF2EC;line-height:1.45
-}
-.tp-table tr:last-child td{border-bottom:none}
-.tp-table tr:hover td{background:#F5FAF7}
-.tp-res-name{display:flex;align-items:center;gap:6px;font-weight:700;white-space:nowrap}
-.tp-res-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.tp-section{font-weight:600;color:#1A2332}
-.tp-subch{font-size:10.5px;color:#3D6B52;margin-top:3px;line-height:1.5}
-.tp-notes{font-size:10.5px;color:#5A7A6A;font-style:italic;line-height:1.45}
-.tp-none{font-size:11px;color:#AAB8C8;font-style:italic;padding:6px 2px}
 .res-group{background:#fff;border-radius:8px;border:1px solid #E4ECF5;overflow:hidden}
 .res-group-hdr{padding:7px 12px;font-size:11px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:6px}
 .res-group-hdr .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .res-group-body{padding:8px 10px;display:flex;flex-direction:column;gap:5px}
 .res-chip{
-  display:flex;flex-direction:column;align-items:stretch;
+  display:flex;align-items:center;justify-content:space-between;
   padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;
-  border:1px solid transparent;transition:.15s;cursor:pointer;gap:0;text-decoration:none
+  border:1px solid transparent;transition:.15s;cursor:pointer;gap:8px;text-decoration:none
 }
 .res-chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .res-chip .chip-txt{flex:1;line-height:1.3}
 .res-chip .chip-cnt{flex-shrink:0;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(0,0,0,.10)}
-.chip-row{display:flex;align-items:center;gap:8px}
-.chip-sub{font-size:10.5px;margin-top:5px;line-height:1.45;opacity:.88;font-weight:500}
-.chip-xref{font-size:10px;margin-top:3px;font-style:italic;opacity:.72;line-height:1.4}
 .res-chip.no-link{cursor:default;opacity:.6}
 .res-chip.no-link:hover{transform:none;box-shadow:none}
 .res-none{font-size:11px;color:#AAB8C8;font-style:italic;padding:6px 10px}
@@ -335,7 +312,7 @@ a.home-stat-card:hover .home-stat-n{text-decoration:underline}
 .home-instructions li{font-size:12px;color:#243D31;margin-bottom:7px;line-height:1.55;padding-left:4px}
 
 /* ── COVERAGE MATRIX ─────────────────────────────── */
-.coverage-wrap{overflow-x:auto;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:4px;width:100%}
+.coverage-wrap{overflow-x:auto;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:4px;width:100%;background:#fff}
 .coverage-table{width:100%;min-width:796px;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
 .cov-res-hdr{
   background:#1B4332;border-bottom:2px solid #0D2B1F;
@@ -353,7 +330,7 @@ a.home-stat-card:hover .home-stat-n{text-decoration:underline}
 }
 .cov-lec-row td{
   padding:7px 6px;border-bottom:1px solid #E8F3EE;
-  transition:background .1s;cursor:pointer
+  background:#fff;transition:background .1s;cursor:pointer
 }
 .cov-lec-row:hover td{background:#EDF7F2}
 .cov-lec-row td:first-child{
@@ -474,17 +451,20 @@ a.cov-legend-item:hover .cov-legend-ext{background:#1B4332;color:#fff;border-col
   html,body{overflow:auto;height:auto}
   .mob-nav-btn{display:flex}
 
-  /* Topbar: two rows on mobile */
+  /* Topbar: single row, shrink content on mobile */
   .topbar{
     height:auto;min-height:52px;
-    flex-wrap:wrap;gap:6px;padding:9px 12px
+    flex-wrap:nowrap;gap:8px;padding:10px 14px;
+    align-items:center
   }
   .topbar-sub{display:none}
+  .home-topbar-left{flex:1;min-width:0}
+  .topbar-title{font-size:13px;white-space:normal;line-height:1.25}
   .topbar-right{
-    order:3;width:100%;
-    overflow-x:auto;-webkit-overflow-scrolling:touch;
-    flex-wrap:nowrap;gap:5px;padding-bottom:2px
+    order:unset;width:auto;flex-shrink:0;
+    overflow:visible;padding-bottom:0
   }
+  .launch-btn{font-size:11px;padding:6px 11px;gap:5px}
   .fbtn{font-size:11px;padding:5px 9px;flex-shrink:0}
   .search-box{width:130px!important;font-size:12px}
 
@@ -533,65 +513,77 @@ a.cov-legend-item:hover .cov-legend-ext{background:#1B4332;color:#fff;border-col
   .detail-sec-btn{padding:11px 14px}
   .detail-sec-panel{padding:12px 14px}
 }
+
+/* ── HOME PAGE OVERRIDES ─────────────────────────── */
+html,body{overflow:auto;height:auto}
+.home-main{
+  max-width:1100px;margin:0 auto;padding:28px 32px 48px;
+}
+.howto-section{margin-bottom:36px}
+.howto-title{
+  font-size:18px;font-weight:800;color:#1B4332;
+  margin-bottom:4px;padding-bottom:10px;
+  border-bottom:2px solid #C8E6D4
+}
+.howto-sub{font-size:13px;color:#4A6B5A;margin-bottom:20px}
+.howto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.howto-card{
+  background:#fff;border:1.5px solid #C8E6D4;border-radius:12px;
+  padding:18px 20px;display:flex;flex-direction:column;gap:8px
+}
+.howto-card-icon{font-size:26px;line-height:1}
+.howto-card-title{font-size:13px;font-weight:800;color:#1B4332}
+.howto-card-body{font-size:12px;color:#243D31;line-height:1.6}
+.howto-card-body strong{color:#1B4332}
+.ref-section{margin-top:28px}
+.ref-section-title{
+  font-size:14px;font-weight:800;color:#1B4332;margin-bottom:10px;
+  border-bottom:2px solid #E8F3EE;padding-bottom:6px
+}
+.home-main .home-section-title{margin-top:32px}
+.launch-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 22px;border-radius:20px;
+  background:#1B4332;color:#fff;font-size:13px;font-weight:700;
+  text-decoration:none;border:none;cursor:pointer;transition:.15s;
+  box-shadow:0 2px 8px rgba(27,67,50,.25)
+}
+.launch-btn:hover{background:#2D6A4F;box-shadow:0 4px 14px rgba(27,67,50,.35)}
+/* Topbar simplified for home */
+.home-topbar-left{display:flex;align-items:center;gap:14px}
 </style>
 </head>
 <body>
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <button class="mob-nav-btn" id="mobNavBtn" onclick="toggleMobNav()">&#9776;</button>
-  <div>
-    <a href="https://strettyit10.github.io/Block4-GI/" target="_blank"
-       style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);text-decoration:none;
-              letter-spacing:.6px;text-transform:uppercase;display:inline-flex;align-items:center;
-              gap:3px;margin-bottom:3px;transition:.15s"
-       onmouseover="this.style.color='rgba(255,255,255,1)'"
-       onmouseout="this.style.color='rgba(255,255,255,.65)'">
-      HoyaDocs &#8599;
-    </a>
-    <div class="topbar-title">Lecture Resource Hub</div>
-    <div class="topbar-sub">Block 4 &mdash; GI</div>
+  <div class="home-topbar-left">
+    <div>
+      <a href="https://strettyit10.github.io/Block4-GI/" target="_blank"
+         style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);text-decoration:none;
+                letter-spacing:.6px;text-transform:uppercase;display:inline-flex;align-items:center;
+                gap:3px;margin-bottom:3px;transition:.15s"
+         onmouseover="this.style.color='rgba(255,255,255,1)'"
+         onmouseout="this.style.color='rgba(255,255,255,.65)'">
+        HoyaDocs &#8599;
+      </a>
+      <div class="topbar-title">Resource Coverage Mapping</div>
+      <div class="topbar-sub">Block 4 &mdash; GI</div>
+    </div>
   </div>
   <div class="topbar-right">
-    <input class="search-box" type="text" id="srch" placeholder="&#128269; Search lectures…" oninput="doFilter()">
-    <button class="fbtn on"  onclick="fS('all',this)">All</button>
-    <button class="fbtn" onclick="fS('Phys',this)"   style="color:#90D5B2">Phys</button>
-    <button class="fbtn" onclick="fS('Anat',this)"   style="color:#A5D6A7">Anat</button>
-    <button class="fbtn" onclick="fS('Hist',this)"   style="color:#CE93D8">Hist</button>
-    <button class="fbtn" onclick="fS('Embr',this)"   style="color:#F48FB1">Embr</button>
-    <button class="fbtn" onclick="fS('Path',this)"   style="color:#EF9A9A">Path</button>
-    <button class="fbtn" onclick="fS('Pharm',this)"  style="color:#80CBC4">Pharm</button>
-    <button class="fbtn" onclick="fS('Micro',this)"  style="color:#FFCC80">Micro</button>
-    <button class="fbtn" onclick="fS('DRT',this)"    style="color:#9FA8DA">DRT</button>
+    <a href="./gi_resource_hub.html" class="launch-btn">
+      &#128218;&nbsp; Open Resource Hub &rarr;
+    </a>
   </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-  <!-- Left Nav -->
-  <div class="nav-panel">
-    <div id="navPanel"></div>
-    <div class="nav-howto open" id="navHowto">
-      <div class="nav-howto-hdr" onclick="toggleHowto()">
-        &#128210;&nbsp; How to Use this Hub
-        <span class="hth-chevron">&#9650;</span>
-      </div>
-      <div class="nav-howto-body">
-        <ul style="padding-left:14px;margin:0">
-          <li>Select any <strong>lecture</strong> from the panel to view its resources &amp; UWorld QIDs.</li>
-          <li>Click a <strong>subject header</strong> to expand or collapse that group.</li>
-          <li>Click a <strong>cell in the matrix</strong> to see its chapter and jump to the lecture.</li>
-          <li>Click a <strong>legend label</strong> to open the full mapping file.</li>
-          <li>Use the <strong>search bar</strong> or <strong>subject filter buttons</strong> at the top to filter lectures.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="mob-overlay" id="mobOverlay" onclick="closeMobNav()"></div>
-  <!-- Right Detail -->
-  <div class="detail-panel" id="detailPanel">
-    <div class="detail-empty">Select a lecture from the left panel</div>
-  </div>
+<!-- MAIN CONTENT -->
+<div class="home-main">
+
+  <!-- STATS + COVERAGE (built by JS) -->
+  <div id="homeContent"></div>
+
 </div>
 
 <!-- ANKI MODAL -->
@@ -629,6 +621,15 @@ a.cov-legend-item:hover .cov-legend-ext{background:#1B4332;color:#fff;border-col
     </div>
   </div>
 </div>
+
+<!-- COV CELL POPUP -->
+<div id="covTip">
+  <button class="covtip-close" onclick="closeCovTip()">&#x2715;</button>
+  <div class="covtip-res" id="covTipRes"></div>
+  <div class="covtip-chapter" id="covTipChapter"></div>
+  <button class="covtip-btn" id="covTipBtn" onclick="">Open Lecture &rarr;</button>
+</div>
+
 
 <script>
 /* ── DATA ────────────────────────────────────────── */
@@ -806,18 +807,14 @@ const DATA = [
       {
         "section": "Ch. 2 \u00b7 Oral Cavity",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-2_OralCavity.pdf",
-        "count": 174,
-        "subchapters": "2.6 Salivary Glands (A–B) · 2.2 Tongue & Gustation (B)",
-        "xref": "Cross-ref: 4.5–4.7 enteric hormones & somatostatin for autonomic secretion context"
+        "count": 174
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 Anatomy",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-04_GI_Tract.pdf",
-        "count": 59,
-        "subchapters": "1.4 GI Tract · 20 min",
-        "xref": "Also: 1.6 Salivary Glands (14 min)"
+        "count": 59
       }
     ],
     "pathoma": [],
@@ -899,24 +896,19 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.1 General Principles (A overview, E vasculature, F enteroendocrine cells)",
-        "xref": "Cross-ref: Ch 4.1D stomach motility for comparison"
+        "count": 279
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63,
-        "subchapters": "9.1 General Principles (A–D: structure, vasculature, physiology, histology) · 9.2 Pectinate (Dentate) Line"
+        "count": 63
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Physiology",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-04_Hormones.pdf",
-        "count": 98,
-        "subchapters": "2.4 GI Hormones · 25 min",
-        "xref": "Also: 2.3 GI Secretions (13 min)"
+        "count": 98
       }
     ],
     "pathoma": [],
@@ -994,14 +986,12 @@ const DATA = [
       {
         "section": "Sec. 1 \u00b7 Hernias",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-07_Hernias.pdf",
-        "count": 42,
-        "subchapters": "1.7 Hernias · 19 min"
+        "count": 42
       },
       {
         "section": "Sec. 1 \u00b7 Anatomy",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-02_GI_Anatomy.pdf",
-        "count": 27,
-        "subchapters": "1.2 GI Anatomy · 11 min"
+        "count": 27
       }
     ],
     "pathoma": [],
@@ -1043,22 +1033,19 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200,
-        "subchapters": "3.1 Esophageal Anatomy (B: Histology — layers, stratified squamous epithelium)"
+        "count": 200
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349,
-        "subchapters": "4.1B Stomach Histology · 4.4 Gastric Cells (parietal, chief, G, D, ECL, interstitial cells of Cajal)"
+        "count": 349
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 GI Tract",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-04_GI_Tract.pdf",
-        "count": 59,
-        "subchapters": "1.4 GI Tract · 20 min"
+        "count": 59
       }
     ],
     "pathoma": [],
@@ -1183,28 +1170,24 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292,
-        "subchapters": "5.1D Metabolism (cholesterol synthesis) · 5.2 Hepatic Microarchitecture (B hepatocytes, C bile/blood flow)"
+        "count": 292
       },
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244,
-        "subchapters": "6.1D Bile Composition · 6.2 Bilirubin Metabolism (A–C: production, conjugation, enterohepatic recycling) · 6.5 Bile Acids (A–C)"
+        "count": 244
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Bile/Bilirubin",
         "html": "./GI%20Anki/BnB/02_Physio-01_Bile.html",
-        "count": 27,
-        "subchapters": "2.1 Bile · 19 min"
+        "count": 27
       },
       {
         "section": "Sec. 2 \u00b7 Bilirubin",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-02_Bilirubin.pdf",
-        "count": 64,
-        "subchapters": "2.2 Bilirubin · 30 min"
+        "count": 64
       }
     ],
     "pathoma": [],
@@ -1246,16 +1229,14 @@ const DATA = [
       {
         "section": "Ch. 1 \u00b7 Embryology",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-1_Embryology.pdf",
-        "count": 131,
-        "subchapters": "1.1 General Embryology (A–D: endoderm, foregut/midgut rotation, gut derivatives) · 1.2 Ventral Wall Defects · 1.3 TE Defects · 1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"
+        "count": 131
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 GI Embryology",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-01_GI_Embryology.pdf",
-        "count": 105,
-        "subchapters": "1.1 GI Embryology · 28 min"
+        "count": 105
       }
     ],
     "pathoma": [],
@@ -1324,23 +1305,19 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.1 General Principles (A anatomy overview, B duodenum location, E vasculature)",
-        "xref": "Cross-ref: Ch 4.2 Celiac Trunk · Ch 4.3 GI Ligaments"
+        "count": 279
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 GI Anatomy",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-02_GI_Anatomy.pdf",
-        "count": 27,
-        "subchapters": "1.2 GI Anatomy · 11 min"
+        "count": 27
       },
       {
         "section": "Sec. 1 \u00b7 Blood Supply",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-03_GI_Blood_Supply.pdf",
-        "count": 63,
-        "subchapters": "1.3 GI Blood Supply · 19 min"
+        "count": 63
       }
     ],
     "pathoma": [],
@@ -1469,41 +1446,34 @@ const DATA = [
       {
         "section": "Ch. 2 \u00b7 Oral Cavity",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-2_OralCavity.pdf",
-        "count": 174,
-        "subchapters": "2.6 Salivary Glands (A–B: α-amylase, lipase, mucin, autonomic control, major glands & ducts)"
+        "count": 174
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349,
-        "subchapters": "4.4 Gastric Cells · 4.5 Gastric Regulation (A–G: HCl, gastrin, bicarb, pepsinogen, histamine, somatostatin) · 4.6 Intestinal Regulation (A–E: secretin, CCK, GIP, GLP-1) · 4.7 Parietal Cell Physiology (A–B: H⁺/K⁺-ATPase) · 4.8 Pernicious Anemia (A: B12 absorption physiology)"
+        "count": 349
       },
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130,
-        "subchapters": "7.1D Exocrine Secretion Overview · 7.2 Exocrine Pancreas (A overview, C physiology, D pancreatic fluid composition)"
+        "count": 130
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 Salivary",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-06_Salivary.pdf",
-        "count": 35,
-        "subchapters": "1.6 Salivary Glands · 14 min"
+        "count": 35
       },
       {
         "section": "Sec. 2 \u00b7 Secretions",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-03_Secretions.pdf",
-        "count": 34,
-        "subchapters": "2.3 GI Secretions · 13 min",
-        "xref": "Also: 2.4 GI Hormones (25 min) · 2.5 Exocrine Pancreas (15 min)"
+        "count": 34
       },
       {
         "section": "Sec. 2 \u00b7 Exocrine",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-05_Exocrine.pdf",
-        "count": 47,
-        "subchapters": "2.5 Exocrine Pancreas · 15 min"
+        "count": 47
       }
     ],
     "pathoma": [],
@@ -1610,16 +1580,14 @@ const DATA = [
       {
         "section": "Ch. 1 \u00b7 Embryology",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-1_Embryology.pdf",
-        "count": 131,
-        "subchapters": "1.1 General Embryology (A–D) · 1.2 Ventral Wall Defects (omphalocele, gastroschisis) · 1.3 TE Defects (pure EA, pure TEF, EA+distal TEF) · 1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"
+        "count": 131
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 GI Embryology",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-01_GI_Embryology.pdf",
-        "count": 105,
-        "subchapters": "1.1 GI Embryology · 28 min"
+        "count": 105
       }
     ],
     "pathoma": [],
@@ -1660,29 +1628,24 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292,
-        "subchapters": "5.1 Liver Anatomy (A–C: lobes, ligaments, vasculature) · 5.2 Hepatic Microarchitecture (A lobule, C flow, D sinusoids) · 5.3 Hepatic Zones (A–C)"
+        "count": 292
       },
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130,
-        "subchapters": "7.1 General Principles (A–C: anatomy, vasculature) · 7.2B Exocrine Histology (acinar & ductal cells)",
-        "xref": "Cross-ref: Ch 6.1 Biliary Tree Anatomy"
+        "count": 130
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 Liver/Gallbladder",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-05_Liver_Gallbladder.pdf",
-        "count": 36,
-        "subchapters": "1.5 Liver, Gallbladder & Pancreas · 12 min"
+        "count": 36
       },
       {
         "section": "Sec. 1 \u00b7 Blood Supply",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-03_GI_Blood_Supply.pdf",
-        "count": 63,
-        "subchapters": "1.3 GI Blood Supply · 19 min"
+        "count": 63
       }
     ],
     "pathoma": [],
@@ -1751,24 +1714,19 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292,
-        "subchapters": "5.1D Metabolism (AST/ALT/ALP functions) · 5.2 (B hepatocytes, E Kupffer cells) · 5.3 Hepatic Zones (O₂ gradient, zone-specific toxin vulnerability) · 5.10 Cirrhosis (A–E) · 5.11 Portal HTN (A–G: portocaval anastomoses) · 5.12 Ascites (A–D: SAAG, SBP)",
-        "xref": "Cross-ref: Ch 6.2 Bilirubin Metabolism · Ch 6.5 Bile Acids · Ch 6.3 Hereditary Hyperbilirubinemia"
+        "count": 292
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Bilirubin",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-02_Bilirubin.pdf",
-        "count": 64,
-        "subchapters": "2.2 Bilirubin · 30 min"
+        "count": 64
       },
       {
         "section": "Sec. 3 \u00b7 Liver",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-02_Liver.pdf",
-        "count": 84,
-        "subchapters": "3.2 Liver Disease · 23 min",
-        "xref": "Also: 3.3 Cirrhosis (23 min) for portal HTN/ascites"
+        "count": 84
       }
     ],
     "pathoma": [],
@@ -2069,28 +2027,24 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200,
-        "subchapters": "3.3 GERD & Barrett Esophagus (A–B) · 3.4 Esophagitis (F candida, G HSV, H CMV, I eosinophilic) · 3.6 Barotrauma/Bleeding (A Mallory-Weiss, B Boerhaave, C varices) · 3.7 Esophageal Malignancy (A–C: adenocarcinoma, SCC)"
+        "count": 200
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349,
-        "subchapters": "4.8 Pernicious Anemia (B B12 deficiency, C pernicious anemia) · 4.9 Gastritis (A–E: erosive, chronic, H. pylori, Ménétrier) · 4.10 PUD (A–E: gastric vs duodenal, hemorrhage, perforation) · 4.11 Gastric Malignancy (A–E: adenocarcinoma, GIST, MALT)"
+        "count": 349
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-01_Esophagus.pdf",
-        "count": 80,
-        "subchapters": "3.1 Esophageal Disorders · 24 min"
+        "count": 80
       },
       {
         "section": "Sec. 3 \u00b7 Gastric",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-08_Gastric_Disorders.pdf",
-        "count": 129,
-        "subchapters": "3.8 Gastric Disorders · 32 min"
+        "count": 129
       }
     ],
     "pathoma": [
@@ -2267,23 +2221,19 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.1 (B duodenum, C jejunum, D ileum — bile salt & B12 absorption at terminal ileum) · 8.2 Histology (A–E: villi, brush border, goblet cells) · 8.3 Nutrient Absorption (A–E: carbs/SGLT1, lipids/micelles, bile salts/enterohepatic) · 8.9 Lactose Intolerance (A–E)",
-        "xref": "Cross-ref: Ch 4.6 Intestinal Regulation (CCK, secretin, GIP)"
+        "count": 279
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Exocrine",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-05_Exocrine.pdf",
-        "count": 47,
-        "subchapters": "2.5 Exocrine Pancreas · 15 min"
+        "count": 47
       },
       {
         "section": "Sec. 3 \u00b7 Malabsorption",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-09_Malabsorption.pdf",
-        "count": 68,
-        "subchapters": "3.9 Malabsorption · 28 min"
+        "count": 68
       }
     ],
     "pathoma": [],
@@ -2654,37 +2604,29 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.4 Small Bowel Obstruction (A–E: adhesions, hernia, intussusception, volvulus) · 8.8 Celiac Disease (A–G: HLA-DQ2/8, villous atrophy, Marsh criteria) · 8.14 Mesenteric Ischemia (B acute: SMA embolism/thrombosis) · 8.15 Meckel Diverticulum · 8.16 Intussusception",
-        "xref": "Cross-ref: Ch 1.2 Ventral Wall Defects (congenital context)"
+        "count": 279
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63,
-        "subchapters": "9.4 Crohn Disease (A–F: skip lesions, transmural, granulomas) · 9.5 Ulcerative Colitis (A–F: continuous, mucosal, toxic megacolon) · 9.7 Appendicitis (A–E) · 9.8 Diverticulosis/itis · 9.9 Hirschsprung (A–F) · 9.13 Colonic Polyps · 9.15 CRC (A–F: APC/KRAS/p53, MSI)",
-        "xref": "Cross-ref: Ch 9.16 Polyposis Syndromes"
+        "count": 63
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Intestinal",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-12_Intestinal_Disorders.pdf",
-        "count": 75,
-        "subchapters": "3.12 Intestinal Disorders · 23 min"
+        "count": 75
       },
       {
         "section": "Sec. 3 \u00b7 IBS",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-13_IBS.pdf",
-        "count": 69,
-        "subchapters": "3.13 Inflammatory Bowel Disease · 20 min"
+        "count": 69
       },
       {
         "section": "Sec. 3 \u00b7 Colon Cancer",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-14_Colon_Cancer.pdf",
-        "count": 81,
-        "subchapters": "3.14 Colon Cancer · 25 min",
-        "xref": "Also: 3.15 Carcinoid Tumors (7 min)"
+        "count": 81
       }
     ],
     "pathoma": [
@@ -2771,8 +2713,7 @@ const DATA = [
       {
         "section": "Sec. 3 \u00b7 GI Pharm",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-16_GI_Pharm.pdf",
-        "count": 52,
-        "subchapters": "3.16 GI Pharmacology · 23 min"
+        "count": 52
       }
     ],
     "pathoma": [],
@@ -2813,9 +2754,7 @@ const DATA = [
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63,
-        "subchapters": "9.4 Crohn (transmural, granulomas, cobblestoning) · 9.5 UC (mucosal, crypt abscesses, pseudopolyps) · 9.7 Appendicitis (neutrophilic infiltration of muscularis propria) · 9.13 Colonic Polyps (A: tubular vs villous histology) · 9.15 CRC (A–F: histology, molecular pathways, staging)",
-        "xref": "Cross-ref: Ch 8.8 Celiac Disease (villous atrophy) · Ch 8.2 Small Intestine Histology"
+        "count": 63
       }
     ],
     "bb": [],
@@ -2879,29 +2818,24 @@ const DATA = [
       {
         "section": "Ch. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-3_Esophagus.pdf",
-        "count": 200,
-        "subchapters": "3.2 Motility Disorders (drug targets: CCBs, nitrates for DES; VIP for achalasia) · 3.3 GERD (LES pharmacology, lifestyle modification, PPI mechanism)"
+        "count": 200
       },
       {
         "section": "Ch. 4 \u00b7 Stomach",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-4_Stomach.pdf",
-        "count": 349,
-        "subchapters": "4.7 Parietal Cell Physiology (A–B: H⁺/K⁺-ATPase → PPI & H₂-blocker targets) · 4.9D H. pylori (triple/quadruple therapy) · 4.10 PUD (A–E: pharmacologic management) · 4.12 Gastric Pharmacology (A PPIs, B H₂-antagonists, C antacids, D bismuth/sucralfate, E misoprostol, F metoclopramide)",
-        "xref": "Cross-ref: Ch 9.17–9.19 Bowel/Antiemetic Medications"
+        "count": 349
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Esophagus",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-01_Esophagus.pdf",
-        "count": 80,
-        "subchapters": "3.1 Esophageal Disorders · 24 min"
+        "count": 80
       },
       {
         "section": "Sec. 3 \u00b7 GI Pharm",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-16_GI_Pharm.pdf",
-        "count": 52,
-        "subchapters": "3.16 GI Pharmacology · 23 min"
+        "count": 52
       }
     ],
     "pathoma": [],
@@ -3074,24 +3008,19 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.10 Whipple Disease (T. whipplei, PAS+ macrophages, malabsorption) · 8.11 SIBO (A–E: etiology, breath test, treatment) · 8.7 Acute Upper GI Bleeding (infectious etiologies)",
-        "xref": "⚠ Limited coverage of C. diff, cholera, dysentery — supplement with Sketchy Micro"
+        "count": 279
       },
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63,
-        "subchapters": "9.3D Proctitis (gonorrhea, chlamydia, HSV) · 9.7 Appendicitis (intraabdominal infections, peritonitis) · 9.8 Diverticulitis (complicated: abscess, peritonitis, fistula)",
-        "xref": "Cross-ref: Ch 8.13 IBS (post-infectious) · Ch 4.9D H. pylori"
+        "count": 63
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Intestinal",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-12_Intestinal_Disorders.pdf",
-        "count": 75,
-        "subchapters": "3.12 Intestinal Disorders · 23 min"
+        "count": 75
       }
     ],
     "pathoma": [],
@@ -3148,17 +3077,14 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.1 General Principles (anatomy context for parasitic infection sites) · 8.2 Histology (brush border disruption in Giardia; villous atrophy in Cryptosporidium) · 8.3 Nutrient Absorption (malabsorption mechanism)",
-        "xref": "⚠ No dedicated parasite subchapters in Bootcamp GI — primary study resource: Sketchy Micro (Parasitology)"
+        "count": 279
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Intestinal",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-12_Intestinal_Disorders.pdf",
-        "count": 75,
-        "subchapters": "3.12 Intestinal Disorders · 23 min"
+        "count": 75
       }
     ],
     "pathoma": [],
@@ -3193,30 +3119,24 @@ const DATA = [
       {
         "section": "Ch. 9 \u00b7 Large Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-9_Large_Intestine.pdf",
-        "count": 63,
-        "subchapters": "9.4 Crohn (A–F) · 9.5 UC (A–F) · 9.8 Diverticulosis/itis (A–C) · 9.13 Colonic Polyps · 9.14 Carcinogenesis (A chromosomal instability, B MSI/Lynch, C CpG methylation) · 9.15 CRC (A–F) · 9.16 Polyposis Syndromes (A FAP, B Peutz-Jeghers, C juvenile polyposis)",
-        "xref": "Cross-ref: Ch 8.8 Celiac · Ch 8.14 Mesenteric Ischemia · Ch 8.15 Meckel Diverticulum"
+        "count": 63
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Intestinal",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-12_Intestinal_Disorders.pdf",
-        "count": 75,
-        "subchapters": "3.12 Intestinal Disorders · 23 min"
+        "count": 75
       },
       {
         "section": "Sec. 3 \u00b7 IBS",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-13_IBS.pdf",
-        "count": 69,
-        "subchapters": "3.13 Inflammatory Bowel Disease · 20 min"
+        "count": 69
       },
       {
         "section": "Sec. 3 \u00b7 Colon Cancer",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-14_Colon_Cancer.pdf",
-        "count": 81,
-        "subchapters": "3.14 Colon Cancer · 25 min",
-        "xref": "Also: 3.15 Carcinoid Tumors (7 min)"
+        "count": 81
       }
     ],
     "pathoma": [],
@@ -3285,14 +3205,12 @@ const DATA = [
       {
         "section": "Sec. 1 \u00b7 Anatomy",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-02_GI_Anatomy.pdf",
-        "count": 27,
-        "subchapters": "1.2 GI Anatomy · 11 min"
+        "count": 27
       },
       {
         "section": "Sec. 1 \u00b7 Blood Supply",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-03_GI_Blood_Supply.pdf",
-        "count": 63,
-        "subchapters": "1.3 GI Blood Supply · 19 min"
+        "count": 63
       }
     ],
     "pathoma": [],
@@ -3356,18 +3274,14 @@ const DATA = [
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244,
-        "subchapters": "6.1 General Principles (A–D: gallbladder anatomy, biliary tree, vasculature, bile composition) · 6.2 Bilirubin Metabolism (A–C: production, conjugation, enterohepatic recycling)",
-        "xref": "Cross-ref: Ch 5.2 Hepatic Microarchitecture · Ch 5.3 Hepatic Zones · Ch 7.1A–B & 7.2B Pancreas Histology"
+        "count": 244
       }
     ],
     "bb": [
       {
         "section": "Sec. 1 \u00b7 Liver/Gallbladder",
         "html": "./GI%20Anki/BnB/BNB-01_Anatomy-05_Liver_Gallbladder.pdf",
-        "count": 36,
-        "subchapters": "1.5 Liver, Gallbladder & Pancreas · 12 min",
-        "xref": "Also: 2.1 Bile (19 min) · 2.2 Bilirubin (30 min)"
+        "count": 36
       }
     ],
     "pathoma": [],
@@ -3655,35 +3569,29 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292,
-        "subchapters": "5.4 Alcohol-induced Hepatitis (A–E: steatosis→steatohepatitis, Mallory-Denk bodies) · 5.5 MASLD/NAFLD (A–G) · 5.6 Autoimmune Hepatitis · 5.7 Wilson Disease · 5.8 Hereditary Hemochromatosis · 5.9F Viral Hepatitis (HAV–HEV serology) · 5.10 Cirrhosis (A–E) · 5.13 HCC (A–F) · 5.14 Liver Masses (angiosarcoma, hemangioma, FNH, adenoma)"
+        "count": 292
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Liver",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-02_Liver.pdf",
-        "count": 84,
-        "subchapters": "3.2 Liver Disease · 23 min"
+        "count": 84
       },
       {
         "section": "Sec. 3 \u00b7 Cirrhosis",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-03_Cirrhosis.pdf",
-        "count": 44,
-        "subchapters": "3.3 Cirrhosis · 23 min",
-        "xref": "Also: 3.4 Liver Tumors (10 min) · 3.5 Wilson's & Hemochromatosis (15 min)"
+        "count": 44
       },
       {
         "section": "Sec. 3 \u00b7 Gallstones",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-06_Gallstones.pdf",
-        "count": 65,
-        "subchapters": "3.6 Gallstones · 21 min"
+        "count": 65
       },
       {
         "section": "Sec. 3 \u00b7 Biliary",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-07_Biliary.pdf",
-        "count": 27,
-        "subchapters": "3.7 Biliary Disorders · 14 min"
+        "count": 27
       }
     ],
     "pathoma": [
@@ -3785,23 +3693,19 @@ const DATA = [
       {
         "section": "Ch. 5 \u00b7 Liver",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-5_Liver.pdf",
-        "count": 292,
-        "subchapters": "5.1D Metabolism (AST, ALT, ALP, GGT, bilirubin function) · 5.9B Ischemic Hepatitis (shock liver; AST/ALT >1000) · 5.9D Acetaminophen Toxicity (Zone 3 necrosis, NAC) · 5.9E Inhaled Anesthetic Toxicity (halothane hepatitis)",
-        "xref": "Cross-ref: Ch 6.2 Bilirubin Metabolism · Ch 6.3 Hereditary Hyperbilirubinemia (Gilbert, Crigler-Najjar, Dubin-Johnson, Rotor) · Ch 6.4 Neonatal Hyperbilirubinemia"
+        "count": 292
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Bilirubin",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-02_Bilirubin.pdf",
-        "count": 64,
-        "subchapters": "2.2 Bilirubin · 30 min"
+        "count": 64
       },
       {
         "section": "Sec. 3 \u00b7 Liver",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-02_Liver.pdf",
-        "count": 84,
-        "subchapters": "3.2 Liver Disease · 23 min"
+        "count": 84
       }
     ],
     "pathoma": [],
@@ -3953,23 +3857,19 @@ const DATA = [
       {
         "section": "Ch. 7 \u00b7 Pancreas",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-7_Pancreas.pdf",
-        "count": 130,
-        "subchapters": "7.1 General Principles (A–C: anatomy, vasculature) · 7.2 Exocrine Pancreas (A overview, B histology) · 7.3 Acute Pancreatitis (A–D: pathophysiology, gallstones/alcohol, Ranson criteria) · 7.4 Complications (A necrotizing, B pseudocyst, C hemorrhagic) · 7.5 Chronic Pancreatitis (A–D) · 7.6 Pancreatic Adenocarcinoma (A–D: Courvoisier sign) · 7.7 PNETs (B insulinoma, C glucagonoma, D Zollinger-Ellison, E VIPoma, F somatostatinoma)",
-        "xref": "Cross-ref: Ch 1.5 Pancreatic Anomalies (annular pancreas, pancreas divisum)"
+        "count": 130
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Acute Pancreatitis",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-10_Acute_Pancreatitis.pdf",
-        "count": 54,
-        "subchapters": "3.10 Acute Pancreatitis · 22 min"
+        "count": 54
       },
       {
         "section": "Sec. 3 \u00b7 Chronic Pancreatitis",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-11_Chronic_Pancreatitis.pdf",
-        "count": 37,
-        "subchapters": "3.11 Chronic Pancreatitis & Pancreatic Cancer · 11 min"
+        "count": 37
       }
     ],
     "pathoma": [
@@ -4012,30 +3912,24 @@ const DATA = [
       {
         "section": "Ch. 6 \u00b7 Biliary System",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-6_Billary_System.pdf",
-        "count": 244,
-        "subchapters": "6.2 Bilirubin Metabolism (conjugated vs unconjugated patterns) · 6.5 Bile Acids (A–C) · 6.6 Cholelithiasis (A–C: cholesterol vs black pigment stones) · 6.7 Biliary Colic · 6.8 Acute Cholecystitis (A–E: Murphy's sign, Charcot's triad) · 6.9 Choledocholithiasis (A–D: ERCP) · 6.10 Acute Cholangitis (A–C: Reynolds' pentad) · 6.13 Biliary Malignancy (A cholangiocarcinoma, B gallbladder adenocarcinoma)",
-        "xref": "Cross-ref: Ch 5.13 HCC · Ch 5.14 Liver Masses · Ch 7.3–7.6 Pancreatitis/Adenocarcinoma"
+        "count": 244
       }
     ],
     "bb": [
       {
         "section": "Sec. 3 \u00b7 Liver",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-02_Liver.pdf",
-        "count": 84,
-        "subchapters": "3.2 Liver Disease · 23 min"
+        "count": 84
       },
       {
         "section": "Sec. 3 \u00b7 Cirrhosis",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-03_Cirrhosis.pdf",
-        "count": 44,
-        "subchapters": "3.3 Cirrhosis · 23 min",
-        "xref": "Also: 3.4 Liver Tumors (10 min)"
+        "count": 44
       },
       {
         "section": "Sec. 3 \u00b7 Gallstones",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-06_Gallstones.pdf",
-        "count": 65,
-        "subchapters": "3.6 Gallstones · 21 min"
+        "count": 65
       }
     ],
     "pathoma": [
@@ -4088,23 +3982,19 @@ const DATA = [
       {
         "section": "Ch. 8 \u00b7 Small Intestine",
         "html": "./GI%20Anki/Bootcamp/Bootcamp-8_Small_Intestine.pdf",
-        "count": 279,
-        "subchapters": "8.3 Nutrient Absorption (B: SGLT1 Na⁺-coupled glucose — basis of oral rehydration therapy) · 8.9 Lactose Intolerance (A–E: osmotic diarrhea, brush border enzyme deficiency) · 8.11 SIBO (secretory vs osmotic diarrhea) · 8.1 General Principles (anatomy context for cholera toxin site of action)",
-        "xref": "Cross-ref: Ch 9.17–9.18 Anticonstipation & Antidiarrheal Medications"
+        "count": 279
       }
     ],
     "bb": [
       {
         "section": "Sec. 2 \u00b7 Exocrine",
         "html": "./GI%20Anki/BnB/BNB-02_Physio-05_Exocrine.pdf",
-        "count": 47,
-        "subchapters": "2.5 Exocrine Pancreas · 15 min"
+        "count": 47
       },
       {
         "section": "Sec. 3 \u00b7 Malabsorption",
         "html": "./GI%20Anki/BnB/BNB-03_Clinical-09_Malabsorption.pdf",
-        "count": 68,
-        "subchapters": "3.9 Malabsorption · 28 min"
+        "count": 68
       }
     ],
     "pathoma": [],
@@ -4130,7 +4020,7 @@ const SC = {
   Micro: {bb:'#FFE0B2',bc:'#E65100',secBg:'#FFF3E0',secTxt:'#E65100'},
   DRT:   {bb:'#E8EAF6',bc:'#3949AB',secBg:'#EDEFFE',secTxt:'#3949AB'},
 };
-const SIDEBAR = {Phys:'#155724',Anat:'#155724',Hist:'#155724',Embr:'#155724',Path:'#155724',Pharm:'#155724',Micro:'#155724',DRT:'#155724'};
+const SIDEBAR = {Phys:'#1565C0',Anat:'#2E7D32',Hist:'#6A1B9A',Embr:'#AD1457',Path:'#B71C1C',Pharm:'#155724',Micro:'#BF360C',DRT:'#283593'};
 const SUBJ_ORDER = ['Phys','Anat','Hist','Embr','Path','Pharm','Micro','DRT'];
 const SUBJ_LABELS = {Phys:'Physiology',Anat:'Anatomy',Hist:'Histology',Embr:'Embryology',Path:'Pathology',Pharm:'Pharmacology',Micro:'Microbiology',DRT:'Disease-Related Topics'};
 const RES_ORDER = ['bb','bootcamp','pathoma','physeo','sketchy'];
@@ -4157,20 +4047,6 @@ const GDRIVE_IDS = {};
 const STUDY_GUIDES = {
   1: {url:'../lecture-guides/gi01-gi-overview.html', drillUrl:'../active-lesson-drills/gi01_active_recall.html'},
   2: {url:'../lecture-guides/gi02-gi-motility.html', drillUrl:'../active-lesson-drills/gi02_active_recall.html'},
-  3: {url:'../lecture-guides/gi03-anterior-abdominal-wall.html', drillUrl:'../active-lesson-drills/gi03_active_recall.html'},
-  4: {url:'../lecture-guides/gi04-histology-esophagus-stomach-intestines.html', drillUrl:'../active-lesson-drills/gi04_active_recall.html'},
-  5: {url:'../lecture-guides/gi05-bile-workshop-making-a-micelle.html', drillUrl:'../active-lesson-drills/gi05_active_recall.html'},
-  7: {url:'../lecture-guides/gi07-gi-primer-endoderm-gut-tube.html', drillUrl:'../active-lesson-drills/gi07_active_recall.html'},
-  8: {url:'../lecture-guides/gi08-abdominal-viscera-gi-tract.html', drillUrl:'../active-lesson-drills/gi08_active_recall.html'},
-  9: {url:'../lecture-guides/gi09-10-secretions-i-ii.html', drillUrl:'../active-lesson-drills/gi09_active_recall.html'},
-  12: {url:'../lecture-guides/gi12-gi-embryology.html', drillUrl:'../active-lesson-drills/gi12_active_recall.html'},
-  13: {url:'../lecture-guides/gi13-abdominal-viscera-ii.html'},
-  14: {url:'../lecture-guides/gi14-overview-of-the-liver.html'},
-  15: {url:'../lecture-guides/gi15-esophagus-stomach-disease.html'},
-  16: {url:'../lecture-guides/gi16-17-digestion-absorption.html'},
-  17: {url:'../lecture-guides/gi16-17-digestion-absorption.html'},
-  19: {url:'../lecture-guides/gi19-20-intestinal-pathology.html'},
-  20: {url:'../lecture-guides/gi19-20-intestinal-pathology.html'},
 };
 
 let currentIdx = -1, sTerm = '', aSubj = 'all';
@@ -4200,11 +4076,9 @@ function buildResGroup(res, chips) {
     const cls2 = hasLink ? 'res-chip' : 'res-chip no-link';
     const ankiUrl = ch.html || '';
     const oc   = hasLink ? `onclick="openAnki('${ankiUrl}','${esc(ch.section)}')"` : '';
-    const subHtml  = ch.subchapters ? `<div class="chip-sub">${esc(ch.subchapters)}</div>` : '';
-    const xrefHtml = ch.xref       ? `<div class="chip-xref">${esc(ch.xref)}</div>`       : '';
     return `<div class="${cls2}" style="background:${st.bg};color:${st.c};border-color:${st.c}44" ${oc}>
-      <div class="chip-row"><span class="chip-txt">${esc(ch.section)}</span><span class="chip-cnt">${ch.count}</span></div>
-      ${subHtml}${xrefHtml}
+      <span class="chip-txt">${esc(ch.section)}</span>
+      <span class="chip-cnt">${ch.count}</span>
     </div>`;
   }).join('');
   return `<div class="res-group">
@@ -4257,36 +4131,6 @@ function buildNavItem(cls, idx) {
   </div>`;
 }
 
-/* ── BUILD 3RD PARTY TABLE ───────────────────────────────── */
-function build3rdPartySection(cls) {
-  const rows = [];
-  RES_ORDER.forEach(r => {
-    const st = RS[r];
-    const chips = cls[r];
-    if (!chips || !chips.length) return;
-    chips.forEach(ch => {
-      rows.push({ res: st.hdr, dot: st.dot, section: ch.section,
-                  subchapters: ch.subchapters || '', xref: ch.xref || '' });
-    });
-  });
-  if (!rows.length) return `<div class="tp-none">No 3rd party resources mapped for this lecture.</div>`;
-  const bodyHtml = rows.map(r => {
-    const subHtml  = r.subchapters
-      ? `<div class="tp-subch">${esc(r.subchapters)}</div>` : '';
-    const notesHtml = r.xref
-      ? `<div class="tp-notes">${esc(r.xref)}</div>` : '—';
-    return `<tr>
-      <td><div class="tp-res-name"><div class="tp-res-dot" style="background:${r.dot}"></div>${esc(r.res)}</div></td>
-      <td><span class="tp-section">${esc(r.section)}</span>${subHtml}</td>
-      <td>${notesHtml}</td>
-    </tr>`;
-  }).join('');
-  return `<table class="tp-table">
-    <thead><tr><th>Resource</th><th>Section / Chapter / Subchapter</th><th>Notes</th></tr></thead>
-    <tbody>${bodyHtml}</tbody>
-  </table>`;
-}
-
 /* ── BUILD ANKI LIST (replaces chip grid) ────────────── */
 function buildAnkiList(cls) {
   const rows = [];
@@ -4335,7 +4179,6 @@ function buildDetail(cls) {
   const loCount = cls.los ? cls.los.reduce((s,sec)=>s+sec.items.length, 0) : 0;
   const resCnt  = RES_ORDER.filter(r => cls[r] && cls[r].length > 0).length;
   const ankiListHtml = buildAnkiList(cls);
-  const thirdPartyHtml = build3rdPartySection(cls);
   const loContent = buildLOContent(cls.los);
   const uwContent = buildUWContent(cls);
 
@@ -4379,80 +4222,132 @@ function buildDetail(cls) {
   </div>
   <div class="detail-sections">
     ${loSection}
-    <button class="detail-sec-btn" onclick="toggleSec(this,'d-sec3rd')">
+    <button class="detail-sec-btn" onclick="toggleSec(this,'d-secres')">
       <span class="arr">&#9654;</span>
-      <span class="detail-sec-label">3rd Party Resources (${resCnt})</span>
-      <span class="detail-sec-hint">subchapters shown &middot; click chip to open Anki deck</span>
-    </button>
-    <div class="detail-sec-panel" id="d-sec3rd">${thirdPartyHtml}</div>
-    <button class="detail-sec-btn" onclick="toggleSec(this,'d-secanki')">
-      <span class="arr">&#9654;</span>
-      <span class="detail-sec-label">ANKing Resources (${ankiTotal} cards)</span>
+      <span class="detail-sec-label">3rd Party &amp; Associated ANKing Resources (${resCnt})</span>
       <span class="detail-sec-hint">click a chip to open its Anki deck</span>
     </button>
-    <div class="detail-sec-panel" id="d-secanki">${ankiListHtml}</div>
+    <div class="detail-sec-panel" id="d-secres">${ankiListHtml}</div>
     ${uwSection}
   </div>`;
 }
 
-/* ── HUB HOME PAGE ───────────────────────────────── */
+/* ── SELECT LECTURE ──────────────────────────────── */
 function buildHome() {
-  return `
-  <div style="padding:28px 32px 36px;max-width:none">
-    <div class="home-title" style="font-size:20px;font-weight:800;color:#1B4332;margin-bottom:4px">Welcome to the GI Resource Hub</div>
-    <div style="font-size:13px;color:#4A6B5A;margin-bottom:24px">Everything you need to study GI, organized by lecture and linked to third-party resources and UWorld QIDs.</div>
+  const SUBJ_ORDER_H = ['Phys','Anat','Hist','Embr','Path','Pharm','Micro','DRT'];
+  const SUBJ_LABELS = {Phys:'Physiology',Anat:'Anatomy',Hist:'Histology',Embr:'Embryology',Path:'Pathology',Pharm:'Pharmacology',Micro:'Microbiology',DRT:'Disease-Related Topics'};
+  const COV_RES = ['bb','bootcamp','pathoma','physeo','sketchy'];
+  const COV_LABELS = {bb:'B&amp;B',bootcamp:'BC',pathoma:'PM',physeo:'Physeo',sketchy:'Sketchy'};
+  const COV_FULL  = {bb:'Boards &amp; Beyond',bootcamp:'Bootcamp',pathoma:'Pathoma',physeo:'Physeo',sketchy:'Sketchy'};
+  const COV_DOTS  = {bb:'#2E7D32',bootcamp:'#1565C0',pathoma:'#BF360C',physeo:'#00695C',sketchy:'#4A148C'};
+  const COV_FILES = {
+    bb:       './3rdParty-BoardsBeyond-LectureMapping.docx',
+    bootcamp: './3rdParty-Bootcamp-LectureMapping.docx',
+    pathoma:  './3rdParty-Pathoma-LectureMapping.docx',
+    physeo:   './3rdParty-Physeo-LectureMapping.docx',
+    sketchy:  './3rdParty-Sketchy-LectureMapping.docx',
+  };
 
-    <!-- Stats row -->
-    <div class="home-stat-row" style="margin-bottom:28px">
-      <a class="home-stat-card home-stat-card-green" href="./gi_mapping.html" target="_blank">
-        <div class="home-stat-icon">&#128200;</div>
-        <div class="home-stat-title">Coverage Matrix</div>
-        <div class="home-stat-lbl">&#8599; View full resource &amp; UWorld coverage map</div>
-      </a>
-      <a class="home-stat-card home-stat-card-amber" href="https://forms.gle/spz5TRQfjjc7kbQh6" target="_blank">
-        <div class="home-stat-icon">&#128203;</div>
-        <div class="home-stat-title">Suggest a Change</div>
-        <div class="home-stat-lbl">&#8599; QID additions, corrections &amp; updates</div>
-      </a>
-    </div>
+  const totalUW = new Set();
+  DATA.forEach(cls => {
+    (cls.uworld_qids||[]).forEach(q => { if (q.qid) totalUW.add(q.qid); });
+  });
 
-    <!-- How to Use -->
-    <div style="font-size:14px;font-weight:800;color:#1B4332;margin-bottom:12px;border-bottom:2px solid #C8E6D4;padding-bottom:8px">
-      &#128218; How to Use This Hub
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px">
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#128203;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">1. Select a Lecture</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Use the <strong>left sidebar</strong> to browse lectures by subject. Click any lecture to load all its resources.</div>
-      </div>
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#128269;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">2. Search &amp; Filter</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Use the <strong>search bar</strong> at the top to find lectures by name. Use the <strong>subject filter buttons</strong> to narrow by discipline.</div>
-      </div>
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#9660;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">3. Browse Anki Resources</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Each lecture maps to its <strong>B&amp;B, Bootcamp, Pathoma, Physeo, and Sketchy</strong> chapters. Click any chip to open the deck.</div>
-      </div>
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#9997;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">4. Access UWorld QIDs</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Each lecture has a <strong>pre-compiled QID list</strong>. Copy &amp; paste into UWorld &rarr; Create Custom Test to practice only the relevant questions.</div>
-      </div>
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#128214;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">5. Study Guides &amp; Drills</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Where available, each lecture links to a <strong>HoyaDocs Study Guide</strong> and <strong>Lecture Drills</strong> for active recall.</div>
-      </div>
-      <div style="background:#fff;border:1.5px solid #C8E6D4;border-radius:10px;padding:16px 18px">
-        <div style="font-size:22px;margin-bottom:6px">&#128293;</div>
-        <div style="font-size:12px;font-weight:800;color:#1B4332;margin-bottom:5px">Keyboard Shortcuts</div>
-        <div style="font-size:11.5px;color:#243D31;line-height:1.6">Use <strong>&darr; / &uarr; arrow keys</strong> to navigate between lectures. Press <strong>Esc</strong> to close any open modal.</div>
-      </div>
-    </div>
-  </div>`;
+  // Coverage matrix grouping
+  const grouped = {};
+  SUBJ_ORDER_H.forEach(s => grouped[s] = []);
+  DATA.forEach((cls, idx) => { if (grouped[cls.subject]) grouped[cls.subject].push({cls, idx}); });
+
+  // Legend — each item is a clickable link to its mapping file
+  let legend = '';
+  COV_RES.forEach(r => {
+    legend += '<a class="cov-legend-item" href="./'+COV_FILES[r]+'" target="_blank" title="Open '+COV_FULL[r]+' lecture mapping">'
+      + '<div class="cov-legend-dot" style="background:'+COV_DOTS[r]+'"></div>'
+      + COV_FULL[r]
+      + '<span class="cov-legend-ext">&#8599;</span>'
+      + '</a>';
+  });
+  legend += '<a class="cov-legend-item" href="./HoyaDocs-UWorld-LectureMapping.xlsx" target="_blank" title="Open UWorld lecture mapping">'
+    + '<div class="cov-legend-dot" style="background:#1a4731"></div>'
+    + 'UWorld QIDs (count)'
+    + '<span class="cov-legend-ext">&#8599;</span>'
+    + '</a>';
+  legend += '<div class="cov-legend-item" style="cursor:default">'
+    + '<div class="cov-legend-dot" style="background:#7B1FA2"></div>'
+    + 'ANKing Cards (count)'
+    + '</div>';
+
+  // Matrix header
+  let hdrCells = '<th>Lecture</th>';
+  COV_RES.forEach(r => { hdrCells += '<th title="'+COV_FULL[r]+'">'+COV_LABELS[r]+'</th>'; });
+  hdrCells += '<th title="Total ANKing cards available for this lecture" style="color:#DDB8FF">ANKing</th>';
+  hdrCells += '<th title="UWorld QIDs mapped to this lecture">UW</th>';
+
+  let matrixRows = '';
+  SUBJ_ORDER_H.forEach(subj => {
+    if (!grouped[subj] || !grouped[subj].length) return;
+    const sb = SIDEBAR[subj];
+    const colspan = COV_RES.length + 3;
+    matrixRows += '<tr class="cov-subj-row"><td colspan="'+colspan+'" style="background:'+sb+'">'+SUBJ_LABELS[subj]+'</td></tr>';
+    grouped[subj].forEach(({cls, idx}) => {
+      let cells = '<td title="'+esc(cls.lecture)+'" onclick="selectLecture('+idx+')" style="cursor:pointer">'+esc(cls.lecture)+'</td>';
+      COV_RES.forEach(r => {
+        const chips = cls[r]||[];
+        if (chips.length) {
+          const tip = chips.map(c=>c.section).join(', ');
+          cells += '<td class="cov-cell"><span class="cov-pip" style="background:'+COV_DOTS[r]+';opacity:.85;cursor:pointer" onclick="showCovTip(event,\''+esc(COV_FULL[r])+'\',\''+esc(tip)+'\','+idx+')"></span></td>';
+        } else {
+          cells += '<td class="cov-cell"><span class="cov-empty"></span></td>';
+        }
+      });
+      // Anki total cards
+      const ankiTotal = ['bb','bootcamp','pathoma','sketchy','physeo']
+        .reduce((sum, r) => sum + (cls[r]||[]).reduce((s, c) => s + (c.count||0), 0), 0);
+      const ankiColor = ankiTotal > 0 ? '#7B1FA2' : '#C0CBDA';
+      const ankiBg    = ankiTotal > 0 ? '#F5EEF8' : 'transparent';
+      cells += '<td class="cov-cell" style="font-size:11px;font-weight:700;color:'+ankiColor+';background:'+ankiBg+'" title="'+ankiTotal+' ANKing cards available">'+(ankiTotal > 0 ? ankiTotal.toLocaleString() : '&mdash;')+'</td>';
+      const uwCount = (cls.uworld_qids||[]).length;
+      const uwColor = uwCount > 0 ? '#1a4731' : '#C0CBDA';
+      const uwBg    = uwCount > 0 ? '#EEF8F3' : 'transparent';
+      cells += '<td class="cov-cell" style="font-size:11px;font-weight:700;color:'+uwColor+';background:'+uwBg+'" title="'+uwCount+' UWorld QID'+(uwCount!==1?'s':'')+' mapped">'+(uwCount > 0 ? uwCount : '&mdash;')+'</td>';
+      matrixRows += '<tr class="cov-lec-row">'+cells+'</tr>';
+    });
+  });
+
+  return '<div class="home-page">'
+    + '<div class="home-title">HoyaDocs GI &mdash; Resource Coverage Mapping</div>'
+    + '<div class="home-sub">A complete mapping of in-house GI lectures to third-party Step 1 resources and UWorld QIDs. Click any lecture name to open it in the Resource Hub.</div>'
+    + '<div class="home-stat-row">'
+    +   '<a class="home-stat-card home-stat-card-purple" href="./GI-3rdParty-ResourceMatrix.xlsx" target="_blank"><div class="home-stat-n" style="color:#7B1FA2">'+DATA.length+'</div><div class="home-stat-title" style="color:#6A1B9A">Lectures</div><div class="home-stat-lbl">&#8599; Download full lecture &rarr; 3rd party mapping (Excel)</div></a>'
+    +   '<a class="home-stat-card home-stat-card-green" href="./HoyaDocs-UWorld-LectureMapping.xlsx" target="_blank"><div class="home-stat-n">'+totalUW.size+'</div><div class="home-stat-title">Unique UWorld QIDs</div><div class="home-stat-lbl">&#8599; Download full lecture &rarr; UWorld QID mapping (Excel)</div></a>'
+    +   '<a class="home-stat-card home-stat-card-amber" href="https://forms.gle/spz5TRQfjjc7kbQh6" target="_blank"><div class="home-stat-icon">&#128203;</div><div class="home-stat-title">Suggest a Change</div><div class="home-stat-lbl">&#8599; QID additions, corrections &amp; updates</div></a>'
+    + '</div>'
+
+    + '<div class="home-section-title" style="font-size:20px;font-weight:800;border-bottom:2px solid #C8E6D4;padding-bottom:10px;margin-bottom:16px">Resource Coverage Matrix</div>'
+    + '<div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:12px;align-items:stretch">'
+    +   '<div style="background:#F0F7F4;border:1.5px solid #C8E6D4;border-radius:10px;padding:12px 16px;font-size:11.5px;color:#243D31;line-height:1.65">'
+    +     '<div style="font-size:12.5px;font-weight:800;color:#1B4332;margin-bottom:6px">&#128218; How to Use This Matrix</div>'
+    +     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 16px">'
+    +       '<div>&#8599;&nbsp;<strong>Click a resource name</strong> in the legend to download the full chapter-to-lecture mapping document.</div>'
+    +       '<div>&#9632;&nbsp;<strong>Click a colored cell</strong> to see which chapter covers that lecture, then jump to it in the Resource Hub.</div>'
+    +       '<div>&#128218;&nbsp;<strong>Click a lecture name</strong> in the left column to open its full resource view in the Resource Hub.</div>'
+    +       '<div>&#9651;&nbsp;<strong>ANKing</strong> column = total ANKing cards across all resources &nbsp;|&nbsp; <strong>UW</strong> column = UWorld QIDs mapped to that lecture.</div>'
+    +     '</div>'
+    +   '</div>'
+    +   '<div style="background:#F0F7F4;border:1.5px solid #C8E6D4;border-radius:10px;padding:12px 16px">'
+    +     '<div style="font-size:12.5px;font-weight:800;color:#1B4332;margin-bottom:7px">&#128200; Legend</div>'
+    +     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px">'+legend+'</div>'
+    +     '<div class="cov-legend-hint" style="margin-top:7px;font-size:10.5px">&#8599;&nbsp;Click a resource label to download its full mapping doc</div>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="coverage-wrap" style="margin-top:10px">'
+    +   '<table class="coverage-table">'
+    +     '<thead class="cov-res-hdr"><tr>'+hdrCells+'</tr></thead>'
+    +     '<tbody>'+matrixRows+'</tbody>'
+    +   '</table>'
+    + '</div>'
+
+    + '</div>';
 }
 function selectHome() {
   if (currentIdx >= 0) {
@@ -4514,21 +4409,6 @@ function render() {
     html += `</div>`;
   });
   nav.innerHTML = html;
-  // Check for ?lecture=IDX URL param (navigated from home page)
-  const params = new URLSearchParams(window.location.search);
-  const lectureParam = params.get('lecture');
-  if (lectureParam !== null) {
-    const idx = parseInt(lectureParam, 10);
-    if (!isNaN(idx) && idx >= 0 && idx < DATA.length) {
-      // Expand the subject group for this lecture
-      const subj = DATA[idx].subject;
-      const grp = document.querySelector(`.nav-group[data-subj="${subj}"]`);
-      if (grp) grp.classList.remove('collapsed');
-      selectLecture(idx);
-      return;
-    }
-  }
-  // Default: show hub home with How-to-Use + stats
   selectHome();
 }
 
@@ -4613,6 +4493,21 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ── HOME PAGE OVERRIDES ─────────────────────────── */
+// Navigate to hub when a lecture is selected from the coverage matrix
+function selectLecture(idx) {
+  window.location.href = 'gi_resource_hub.html?lecture=' + idx;
+}
+// Also override showCovTip's button to use the navigation version
+// (already handled since selectLecture is overridden above)
+
+// Override render: on the home page just populate #homeContent
+function render() {
+  const el = document.getElementById('homeContent');
+  if (el) el.innerHTML = buildHome();
+}
+
+
 render();
 
 /* ── HOW TO USE TOGGLE ───────────────────────────── */
@@ -4672,13 +4567,6 @@ function closeMobNav() {
   if (ov)  ov.classList.remove('open');
 }
 </script>
-<!-- COV CELL POPUP -->
-<div id="covTip">
-  <button class="covtip-close" onclick="closeCovTip()">&#x2715;</button>
-  <div class="covtip-res" id="covTipRes"></div>
-  <div class="covtip-chapter" id="covTipChapter"></div>
-  <button class="covtip-btn" id="covTipBtn" onclick="">Open Lecture &rarr;</button>
-</div>
 
 </body>
 </html>
