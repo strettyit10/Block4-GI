@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<!-- HoyaDocs GI Block | GI 23 — GI Pharmacology: PUD, GERD & Other GI Disorders -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 23: GI Pharmacology — HoyaDocs GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa; color: #1f2937; line-height: 1.6;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed; left: 0; top: 0; width: 220px; height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white; padding: 20px 0 220px; overflow-y: auto; z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px; transition: all 0.2s ease;
+            text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+        /* ── Sidebar Footer ── */
+        .sidebar-footer {
+            position: fixed; bottom: 0; left: 0; width: 220px;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+            z-index: 102;
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column; align-items: center;
+            gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px; width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        /* ── Print ── */
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+        }
+        /* ── Main ── */
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+        /* ── LO Sections ── */
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+        /* ── Content Typography ── */
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+        /* ── Tables ── */
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+        /* ── Section Rule ── */
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+        /* ── Buzzwords ── */
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+        /* ── Callout Boxes ── */
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        /* ── Collapsible h3 ── */
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+        /* ── h5 Sub-subheading ── */
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+        /* ── Controls ── */
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+        /* ── In-page TOC ── */
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; margin-bottom: 10px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #1e3a5f; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #2563eb; }
+        /* ── LO Covered ── */
+        .lo-covered { background: #f0f4ff; border: 1px solid #c7d2fe; border-left: 4px solid #4f46e5; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #3730a3; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #3730a3; }
+        /* ── Practice Questions ── */
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .answer { display: none; margin-top: 12px; background: #eff6ff; border-left: 3px solid #2563eb; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #1e3a5f; }
+        /* ── Practice Q block (interactive) ── */
+        .practice-q-block { display: flex; flex-direction: column; gap: 20px; }
+        .pq-item { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 8px; padding: 18px 20px; }
+        .pq-stem { font-size: 13.5px; font-weight: 600; color: #1e293b; margin-bottom: 12px; line-height: 1.55; }
+        .pq-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 0; }
+        .pq-choice { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 9px 14px; font-size: 13px; color: #334155; text-align: left; cursor: pointer; transition: background 0.15s, border-color 0.15s; width: 100%; font-family: inherit; line-height: 1.45; }
+        .pq-choice:hover:not(:disabled) { background: #eff6ff; border-color: #93c5fd; color: #1e3a5f; }
+        .pq-choice:disabled { cursor: default; }
+        .pq-choice.pq-correct { background: #dcfce7 !important; border-color: #16a34a !important; color: #15803d !important; font-weight: 700; }
+        .pq-choice.pq-wrong { background: #fee2e2 !important; border-color: #dc2626 !important; color: #991b1b !important; font-weight: 700; }
+        .pq-answer { display: none; background: #eff6ff; border-left: 3px solid #1d4ed8; padding: 12px 14px; border-radius: 5px; font-size: 13px; line-height: 1.7; color: #1f2937; margin-top: 12px; }
+        .pq-answer.show { display: block; }
+        .pq-correct-badge { display: inline-block; background: #16a34a; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-right: 6px; }
+        .pq-wrong-badge { display: inline-block; background: #dc2626; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-right: 6px; }
+        /* ── Mobile ── */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: #1e293b; border: none; border-radius: 6px; padding: 8px 11px; cursor: pointer; color: white; font-size: 20px; line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99; }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar { transform: translateX(-240px); z-index: 150; }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main { margin-left: 0 !important; padding: 60px 16px 30px 16px !important; max-width: 100% !important; }
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/" target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700; color:#60a5fa; text-decoration:none; letter-spacing:0.5px; border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'" onmouseout="this.style.color='#60a5fa'">HoyaDocs ↗</a>
+        <h2>Lecture 23</h2>
+        <p>GI Pharmacology</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">📋 Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">LO 1 — Acid Targets & Drugs</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">LO 2 — H. pylori Therapy</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">LO 3 — GERD & Antacids</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">LO 4 — Cytoprotection</a>
+        <a href="#lo5" class="sidebar-link" onclick="switchLO(event,'lo5')">LO 5 — Vomiting Reflex</a>
+        <a href="#lo6" class="sidebar-link" onclick="switchLO(event,'lo6')">LO 6 — Antiemetics</a>
+        <a href="#lo7" class="sidebar-link" onclick="switchLO(event,'lo7')">LO 7 — Diarrhea Tx</a>
+        <a href="#lo8" class="sidebar-link" onclick="switchLO(event,'lo8')">LO 8 — Laxatives</a>
+        <a href="#lo9" class="sidebar-link" onclick="switchLO(event,'lo9')">LO 9 — IBD Biologics</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">✏️ Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">🖨️</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">📄</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/gi_resource_hub.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<!-- ══ MAIN CONTENT ══════════════════════════════════════════════════════════ -->
+<main class="main">
+    <div class="header">
+        <h1>Lecture 23 — GI Pharmacology</h1>
+        <p>HoyaDocs — GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW ══════════════════════════════════════════════════════════ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 23 — Overview</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">GI Pharmacology: PUD, GERD, Nausea, Diarrhea, IBD · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;">
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:5px; font-size:13.5px;">💊 LO 1 — Acid Control Targets</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Antacids · H₂ blockers · PPIs · P-CABs · Anticholinergics<br><em style="color:#475569;">Practice Qs: Q1–Q3</em></div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:5px; font-size:13.5px;">🦠 LO 2 — H. pylori Therapy</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Triple vs quadruple therapy · Drug names<br><em style="color:#475569;">Practice Qs: Q4–Q5</em></div>
+                </div>
+                <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#92400e; margin-bottom:5px; font-size:13.5px;">🔥 LO 3 — GERD & Antacids</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">LES physiology · Antacid pharmacology · Stepwise treatment<br><em style="color:#475569;">Practice Qs: Q6–Q7</em></div>
+                </div>
+                <div style="background:#f3e8ff; border:1px solid #c4b5fd; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#5b21b6; margin-bottom:5px; font-size:13.5px;">🛡️ LO 4 — Cytoprotection</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Sucralfate · Misoprostol (PGE1 analog)<br><em style="color:#475569;">Practice Qs: Q8</em></div>
+                </div>
+                <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#991b1b; margin-bottom:5px; font-size:13.5px;">🧠 LO 5 — Vomiting Reflex</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">CTZ · NTS · Vestibular input · Motion sickness distinction<br><em style="color:#475569;">Practice Qs: Q9</em></div>
+                </div>
+                <div style="background:#e0f2fe; border:1px solid #7dd3fc; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#0c4a6e; margin-bottom:5px; font-size:13.5px;">💉 LO 6 — Antiemetics</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Ondansetron · Metoclopramide · Scopolamine · Dramamine<br><em style="color:#475569;">Practice Qs: Q10–Q11</em></div>
+                </div>
+                <div style="background:#fdf4ff; border:1px solid #e879f9; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#701a75; margin-bottom:5px; font-size:13.5px;">💧 LO 7 — Diarrhea Treatment</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">ORS rationale · Diphenoxylate · Loperamide<br><em style="color:#475569;">Practice Qs: Q12</em></div>
+                </div>
+                <div style="background:#fff7ed; border:1px solid #fdba74; border-radius:8px; padding:14px;">
+                    <div style="font-weight:700; color:#7c2d12; margin-bottom:5px; font-size:13.5px;">🌿 LO 8 — Laxatives</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Bulk · Irritants · Salines · Stool softeners by onset<br><em style="color:#475569;">Practice Qs: Q13</em></div>
+                </div>
+                <div style="background:#f0fdf4; border:1px solid #4ade80; border-radius:8px; padding:14px; grid-column:1/-1;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:5px; font-size:13.5px;">🔬 LO 9 — IBD Biologics</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">Crohn's vs UC · 5-ASA · Steroids · Anti-TNF-α vs anti-IL-23 · Infliximab vs Adalimumab · Risankizumab<br><em style="color:#475569;">Practice Qs: Q14–Q15</em></div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">State the possible targets for control of gastric acid and the classes of drugs (and their mechanism of action) that are used at those sites.</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Key Sections</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Parietal cell acid production</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Antacids, H₂ blockers, PPIs, P-CABs</a></li>
+                            </ul>
+                        </div>
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q3</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- LO 2 -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Explain the use of triple or quadruple therapy in the treatment of <em>H. pylori</em> infections. Name the drugs used.</span>
+                    <span style="background:#dcfce7; color:#166534; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Key Sections</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Quadruple therapy regimen</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Test-and-treat approach</a></li>
+                            </ul>
+                        </div>
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q4, Q5</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- LO 3 -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Discuss the physiological basis for GERD. Explain the rationale and pharmacology of antacids in the treatment of PUD and GERD.</span>
+                    <span style="background:#fef3c7; color:#92400e; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Physiology + Pharm</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Key Sections</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">LES pathophysiology</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Antacid pharmacology</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Stepwise GERD treatment</a></li>
+                            </ul>
+                        </div>
+                        <div><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q6, Q7</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- LOs 4-9 condensed -->
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Discuss the role of cytoprotection in the control of peptic ulcers and explain the pharmacology of cytoprotective drugs.</span>
+                    <span style="background:#f3e8ff; color:#5b21b6; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 4 | Practice: Q8</a>
+                </div>
+            </div>
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">5</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">List the CNS areas associated with the vomiting reflex. Explain why motion sickness is treated differently than nausea from blood-borne emetics.</span>
+                    <span style="background:#fee2e2; color:#991b1b; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Neuropharm</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo5');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 5 | Practice: Q9</a>
+                </div>
+            </div>
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">6</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Discuss the pharmacology of ondansetron and metoclopramide and compare with those for treatment of motion sickness.</span>
+                    <span style="background:#e0f2fe; color:#0c4a6e; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo6');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 6 | Practice: Q10, Q11</a>
+                </div>
+            </div>
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">7</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Explain the rationale for treating diarrhea with oral rehydration solutions, and narcotics such as diphenoxylate and loperamide.</span>
+                    <span style="background:#fdf4ff; color:#701a75; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo7');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 7 | Practice: Q12</a>
+                </div>
+            </div>
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">8</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Discuss the pharmacology of drugs used as laxatives.</span>
+                    <span style="background:#fff7ed; color:#7c2d12; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo8');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 8 | Practice: Q13</a>
+                </div>
+            </div>
+            <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">9</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Discuss the differences in biologic agents used to treat inflammatory bowel diseases (IBD).</span>
+                    <span style="background:#f0fdf4; color:#14532d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pharmacology</span>
+                    <span style="color:#64748b; font-size:11px; flex-shrink:0;">▼</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0; font-size:13px;">
+                    <a href="#" onclick="switchLO(event,'lo9');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">→ Go to LO 9 | Practice: Q14, Q15</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 1 — GASTRIC ACID TARGETS & DRUG CLASSES ═══════════════════════ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 — Gastric Acid Control: Targets & Drug Classes</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Pharmacology · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 1:</strong> State the possible targets for control of gastric acid and the classes of drugs (and their mechanism of action) that are used at those sites.</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo1-parietal">Parietal Cell Physiology & Pharmacologic Targets</a></li>
+                    <li><a href="#lo1-antacids">Antacids</a></li>
+                    <li><a href="#lo1-anticholinergics">Anticholinergics</a></li>
+                    <li><a href="#lo1-h2blockers">H₂ Receptor Antagonists ("-tidines")</a></li>
+                    <li><a href="#lo1-ppis">Proton Pump Inhibitors ("-prazoles")</a></li>
+                    <li><a href="#lo1-pcabs">P-CABs (Potassium Competitive Acid Blockers)</a></li>
+                    <li><a href="#lo1-longterm">Long-Term Effects of Acid Suppression</a></li>
+                    <li><a href="#lo1-comparison">Drug Class Comparison Table</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-parietal">
+                <span class="section-chevron">&#9660;</span> Parietal Cell Physiology & Pharmacologic Targets
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ The parietal cell produces HCl via the H⁺/K⁺-ATPase (proton pump) — the rate-limiting step in acid secretion. Three inputs stimulate it: histamine, acetylcholine, and gastrin.</p>
+                <h4 id="lo1-parietal-inputs">🔬 Three Stimulatory Inputs to the Parietal Cell</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Histamine</strong> — released by ECL cells → binds H₂ receptor (Gs-coupled) → ↑cAMP → PKA → activates H⁺/K⁺-ATPase</li>
+                        <li><strong>Acetylcholine (ACh)</strong> — parasympathetic input → binds M₃ receptor → ↑intracellular Ca²⁺ → activates proton pump. Also binds M₁ on ECL cells to release histamine.</li>
+                        <li><strong>Gastrin</strong> — from G cells in antrum → binds CCK-B receptor → ↑Ca²⁺ → activates proton pump</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 HY:</strong> The H⁺/K⁺-ATPase is the final common pathway — all three signals converge on it. PPIs (which directly block the pump) are therefore the most powerful acid suppressors.
+                    </div>
+                </div>
+                <h4>📊 Pharmacologic Targets Summary</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Target</th><th>Drug Class</th><th>Example</th></tr></thead>
+                        <tbody>
+                            <tr><td>Existing acid (neutralize)</td><td>Antacids</td><td>Mg(OH)₂, CaCO₃</td></tr>
+                            <tr><td>H₂ receptor (block histamine)</td><td>H₂ antagonists</td><td>Famotidine, Cimetidine</td></tr>
+                            <tr><td>M₁/M₃ receptor (block ACh)</td><td>Anticholinergics</td><td>Atropine</td></tr>
+                            <tr><td>H⁺/K⁺-ATPase (irreversible block)</td><td>PPIs</td><td>Omeprazole, Pantoprazole</td></tr>
+                            <tr><td>H⁺/K⁺-ATPase (competitive block)</td><td>P-CABs</td><td>Vonoprazan, Tegoprazan</td></tr>
+                            <tr><td><em>H. pylori</em> bacteria</td><td>Antibiotics (combination)</td><td>Amoxicillin, Metronidazole</td></tr>
+                            <tr><td>PG receptor (cytoprotection)</td><td>PGE1 analog</td><td>Misoprostol</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-antacids">
+                <span class="section-chevron">&#9660;</span> Antacids
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Antacids work by neutralizing existing acid — they contain alkaline ions that raise gastric pH from ~1 to ~4 (a 1000-fold change).</p>
+                <h4>💊 Individual Antacids</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Antacid</th><th>Speed</th><th>Key Side Effect</th><th>Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Sodium Bicarbonate (NaHCO₃)</strong></td><td>Fast</td><td>CO₂ gas (bloating); may need simethicone</td><td>NaHCO₃ + HCl → NaCl + H₂O + CO₂</td></tr>
+                            <tr><td><strong>Calcium Carbonate (CaCO₃)</strong></td><td>Fast</td><td>Gas, constipation</td><td>CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂ (Tums)</td></tr>
+                            <tr><td><strong>Magnesium Hydroxide [Mg(OH)₂]</strong></td><td>Slow</td><td><strong>Diarrhea</strong></td><td>MgCl₂ is osmotically active</td></tr>
+                            <tr><td><strong>Aluminum Hydroxide [Al(OH)₃]</strong></td><td>Slow</td><td><strong>Constipation</strong></td><td>Al binds phosphate in gut</td></tr>
+                            <tr><td><strong>50/50 Mg + Al combo</strong></td><td>Mixed</td><td>Balanced — GI effects cancel out</td><td>Maalox, Mylanta</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">🧠 Mnemonic — Mg vs Al</div>
+                        <strong>"Mg = Must Go" (diarrhea) | "Al = All Locked Up" (constipation)</strong><br>
+                        Mix them together and you get a happy medium.
+                    </div>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap</div>
+                        <p>Antacids neutralize acid but do <strong>not</strong> reduce acid production — they have no effect on parietal cell secretion. They are short-acting and symptomatic only. For peptic ulcers, they are adjuncts, not primary therapy.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-anticholinergics">
+                <span class="section-chevron">&#9660;</span> Anticholinergics
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Anticholinergics block muscarinic receptors on parietal cells (M₃) and ECL cells (M₁), reducing ACh-stimulated acid and histamine release.</p>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Example:</strong> Atropine (muscarinic cholinergic blocker)</li>
+                        <li><strong>Rarely used clinically</strong> — side effects are prohibitive: tachycardia, constipation, urinary retention, sexual dysfunction, dry mouth, blurred vision</li>
+                        <li>Understand the target conceptually; not a first-line PUD drug</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>Step 1 Note:</strong> Anticholinergics are "understand-the-mechanism" drugs. You won't be expected to prescribe them for PUD, but you need to know <em>why</em> they could theoretically reduce acid and why they aren't used.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-h2blockers">
+                <span class="section-chevron">&#9660;</span> H₂ Receptor Antagonists ("-tidines")
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ H₂ blockers are competitive, reversible inhibitors of histamine at H₂ receptors on gastric parietal cells → ↓cAMP → ↓acid secretion. Oral; bioavailability 40–70%.</p>
+                <div class="buzzwords">
+                    <span class="buzzword">Competitive</span><span class="buzzword">Reversible</span><span class="buzzword">H₂ receptor</span><span class="buzzword">Gs-coupled</span><span class="buzzword">Tolerance develops</span>
+                </div>
+                <h4>💊 Individual H₂ Blockers</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Drug</th><th>Key Facts</th><th>Special Concerns</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Cimetidine</strong></td><td>First in class (1979); ~70% bioavailable</td><td>⚠️ <strong>Inhibits CYP450 1A2, 2C19, 2D6</strong> → ↑t½ of warfarin, benzodiazepines, phenytoin; ↓activation of clopidogrel. Side effects: mental confusion, gynecomastia (0.2%)</td></tr>
+                            <tr><td><strong>Ranitidine</strong></td><td>Replaced imidazole ring with furan → fewer CYP effects, 90% fewer SEs</td><td>⚠️ <strong>Pulled from market</strong> — NDMA contaminant (carcinogen). Zantac brand now uses famotidine</td></tr>
+                            <tr><td><strong>Famotidine</strong></td><td>More potent and longer-lasting than cimetidine; ~40–45% bioavailable</td><td>Minor CYP450 effects; preferred H₂ blocker; now inside "Zantac" brand</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Trap — Cimetidine Drug Interactions</div>
+                        <p>Cimetidine is the classic CYP450 inhibitor in pharmacology. It <strong>increases the half-life</strong> of warfarin (bleeding risk!), benzodiazepines, phenytoin, and <strong>decreases activation</strong> of clopidogrel (a prodrug requiring CYP2C19). Famotidine does NOT have these interactions to a clinically significant degree.</p>
+                    </div>
+                    <div class="hy-box">
+                        <strong>⭐ Key Limitation:</strong> Tolerance develops with long-term H₂ blocker use — upregulation of H₂ receptors over time reduces efficacy. PPIs are preferred for chronic acid suppression.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-ppis">
+                <span class="section-chevron">&#9660;</span> Proton Pump Inhibitors ("-prazoles")
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ PPIs irreversibly inhibit the H⁺/K⁺-ATPase — the rate-limiting step in acid production. They are the most effective acid-suppressing drugs available, reducing secretion 60–80%.</p>
+                <div class="buzzwords">
+                    <span class="buzzword">Irreversible</span><span class="buzzword">Prodrug</span><span class="buzzword">Acid-activated</span><span class="buzzword">Sulfhydryl binding</span><span class="buzzword">No tolerance</span>
+                </div>
+                <h4>🔬 Mechanism of Action</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li>Oral dose taken as inactive, delayed-release (enteric-coated) prodrug</li>
+                        <li>Lipophilic — crosses into parietal cell from the blood</li>
+                        <li>Acid environment of the secretory canaliculus <strong>protonates the PPI</strong> → becomes active sulfenamide</li>
+                        <li>Active form binds <strong>irreversibly</strong> to cysteine sulfhydryl groups on H⁺/K⁺-ATPase → pump permanently inactivated</li>
+                        <li>Acid suppression lasts ~48 hours; takes several days to fully suppress all pumps</li>
+                        <li><strong>Tolerance does NOT occur</strong> — unlike H₂ blockers</li>
+                    </ol>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Clinical Pearl — Timing</div>
+                        <p>PPIs must be taken <strong>30–60 minutes before a meal</strong> (except P-CABs — see below). The meal stimulates proton pumps to be active, which allows the acid environment to activate the PPI. Taking them on an empty stomach is less effective.</p>
+                    </div>
+                </div>
+                <h4>💊 Individual PPIs</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Drug</th><th>Bioavailability</th><th>Duration</th><th>CYP Effects</th><th>Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Omeprazole</strong> (Prilosec)</td><td>35–60%</td><td>~48 hrs</td><td>Inhibits 2C19, 3A4 — ↑t½ warfarin, oxycodone; ↓clopidogrel activation</td><td>First in class</td></tr>
+                            <tr><td><strong>Esomeprazole</strong> (Nexium)</td><td>Similar to omeprazole</td><td>~48 hrs</td><td>Similar CYP interactions to omeprazole</td><td>S-enantiomer of omeprazole; extended patent strategy ("purple pill")</td></tr>
+                            <tr><td><strong>Lansoprazole</strong> (Prevacid)</td><td>~80%</td><td>Shorter than omeprazole</td><td>Less severe CYP interactions</td><td>Better bioavailability</td></tr>
+                            <tr><td><strong>Pantoprazole</strong> (Protonix)</td><td>~77%</td><td>Long-lasting</td><td><strong>Lowest CYP450 interactions of all PPIs</strong></td><td>Rx only in US (not OTC); mildest drug interaction profile</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4>⚠️ Long-Term PPI Side Effects</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Diarrhea, abdominal pain (common, mild)</li>
+                        <li><strong>Vitamin B12 deficiency</strong> — acid needed to release B12 from food proteins</li>
+                        <li><strong>Bone fractures</strong> — especially in women with long-term use (impaired Ca²⁺ absorption)</li>
+                        <li><strong>↑ C. difficile risk</strong> — reduced acid allows bacterial overgrowth</li>
+                        <li>Hypomagnesemia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-pcabs">
+                <span class="section-chevron">&#9660;</span> P-CABs (Potassium Competitive Acid Blockers) — New Class
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ P-CABs are a newer class of antisecretory drugs that bind <em>competitively and reversibly</em> (ionically) to potassium-binding site of H⁺/K⁺-ATPase — no acid activation required.</p>
+                <h4>🔬 Mechanism vs. PPIs</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Feature</th><th>PPIs</th><th>P-CABs</th></tr></thead>
+                        <tbody>
+                            <tr><td>Binding</td><td>Irreversible (covalent)</td><td>Reversible (ionic/competitive)</td></tr>
+                            <tr><td>Activation</td><td>Requires acid environment</td><td>Acid-stable; no activation needed</td></tr>
+                            <tr><td>Onset</td><td>Slower (days for full effect)</td><td>Faster (acts immediately)</td></tr>
+                            <tr><td>Timing with meals</td><td>Must take 30–60 min before meal</td><td>No meal-timing requirement</td></tr>
+                            <tr><td>Tolerance</td><td>No tolerance</td><td>No tolerance</td></tr>
+                            <tr><td>Cost</td><td>Inexpensive (generic)</td><td>Very expensive; limited use</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4>💊 P-CAB Drugs</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Vonoprazan (VOQUEZNA)</strong> — first in class; works quickly; bioavailability 40–60% in animals</li>
+                        <li><strong>Tegoprazan (K-CAB)</strong> — faster-acting than vonoprazan (by several hours); bioavailability ~60%</li>
+                    </ul>
+                    <p><strong>AGA Guideline:</strong> P-CABs are second-line — "should be used" for H. pylori eradication (most patients) and PUD refractory to PPI therapy. For GERD, reserved for BID PPI failures or severe erosive esophagitis (LA C/D).</p>
+                    <p><strong>Side effects:</strong> Indigestion, stomach tenderness; can cause acute tubular nephritis; bloody diarrhea (rare); fundic gland polyps with long-term use (benign, resolve on stopping).</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-longterm">
+                <span class="section-chevron">&#9660;</span> Long-Term Effects of Blocking Gastric Acid
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>↑ Opportunistic infections</strong> — especially <em>C. difficile</em> (gastric acid is a protective barrier)</li>
+                        <li><strong>Vitamin B12 deficiency</strong> — B12 release from food requires pepsin activation by acid</li>
+                        <li><strong>Impaired calcium absorption</strong> → bone density loss, fractures</li>
+                        <li>Hypomagnesemia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo1-comparison">
+                <span class="section-chevron">&#9660;</span> Master Comparison Table — All Acid-Control Drug Classes
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Class</th><th>Mechanism</th><th>Onset</th><th>Tolerance?</th><th>Key SEs</th></tr></thead>
+                        <tbody>
+                            <tr><td>Antacids</td><td>Neutralize existing acid</td><td>Minutes</td><td>No</td><td>Diarrhea (Mg), constipation (Al), gas (NaHCO₃)</td></tr>
+                            <tr><td>Anticholinergics</td><td>Block M₁/M₃ receptors</td><td>Fast</td><td>No</td><td>Tachycardia, constipation, dry mouth — rarely used</td></tr>
+                            <tr><td>H₂ Blockers</td><td>Competitive reversible H₂ block</td><td>1–2 hr</td><td>Yes (long-term)</td><td>Cimetidine: CYP450 inhibition, gynecomastia</td></tr>
+                            <tr><td>PPIs</td><td>Irreversible H⁺/K⁺-ATPase block</td><td>Days (full)</td><td>No</td><td>B12 deficiency, C.diff, bone fractures</td></tr>
+                            <tr><td>P-CABs</td><td>Reversible K⁺-competitive pump block</td><td>Hours</td><td>No</td><td>Fundic polyps, nephritis (rare), expensive</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="usmle-summary">
+                    <div class="usmle-header">⭐ Step 1 High-Yield Summary — LO 1</div>
+                    <ul>
+                        <li>PPIs are the most effective acid suppressors — irreversible, no tolerance, 60–80% reduction</li>
+                        <li>H₂ blockers develop tolerance; PPIs do not</li>
+                        <li><strong>Cimetidine</strong> = CYP450 inhibitor (warfarin, benzodiazepines, phenytoin, clopidogrel interactions)</li>
+                        <li><strong>Omeprazole</strong> = also CYP2C19 inhibitor → ↓clopidogrel activation (drug-drug interaction!)</li>
+                        <li><strong>Pantoprazole</strong> = fewest drug interactions of all PPIs</li>
+                        <li>Ranitidine was pulled from market due to NDMA carcinogen contamination</li>
+                        <li>All PPIs: long-term → B12 deficiency, bone fractures, ↑C. diff risk</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 2 — H. PYLORI THERAPY ══════════════════════════════════════════ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 2 — <em>H. pylori</em> Combination Therapy</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Pharmacology · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 2:</strong> Explain the use of triple or quadruple therapy in the treatment of <em>H. pylori</em> infections. Name the drugs used.</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo2-hpylori">How H. pylori Causes Ulcers</a></li>
+                    <li><a href="#lo2-diagnosis">Diagnosis</a></li>
+                    <li><a href="#lo2-antibiotics">Antibiotics Used</a></li>
+                    <li><a href="#lo2-regimens">Treatment Regimens</a></li>
+                    <li><a href="#lo2-monitoring">Post-Treatment Monitoring</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo2-hpylori">
+                <span class="section-chevron">&#9660;</span> How H. pylori Causes Ulcers
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Most non-NSAID peptic ulcers are caused by <em>H. pylori</em>. The bacteria survive in the mucosal layer by secreting urease.</p>
+                <div class="h4-body">
+                    <ul>
+                        <li><em>H. pylori</em> secretes <strong>urease</strong> → converts urea → NH₃ + CO₂ → NH₃ buffers local acid → bacteria can survive in gastric mucosa</li>
+                        <li>Bacteria secrete virulence factors + stimulate pro-inflammatory cytokines → disrupt mucosal barrier</li>
+                        <li>Acid + inflammation → tissue damage → ulceration</li>
+                        <li>Untreated: can progress to chronic gastritis, peptic ulcer disease, or gastric adenocarcinoma / MALT lymphoma</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>⭐ Step 1 HY:</strong> <em>H. pylori</em> is gram-negative, spiral-shaped, urease-positive. The urea breath test exploits urease activity (radiolabeled urea → detectable ¹³CO₂ in exhaled air).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo2-diagnosis">
+                <span class="section-chevron">&#9660;</span> Diagnosis of H. pylori
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Urea breath test</strong> — patient ingests radiolabeled urea; if <em>H. pylori</em> is present, urease breaks it down → radiolabeled CO₂ detected in breath. Non-invasive, highly accurate.</li>
+                        <li><strong>Stool antigen test</strong> — detects <em>H. pylori</em> antigens in feces. Non-invasive.</li>
+                        <li><strong>Endoscopy + biopsy</strong> — urease test (CLO test) or histology; used if endoscopy is indicated</li>
+                        <li><strong>Serology (IgG)</strong> — less useful (stays positive after eradication)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo2-antibiotics">
+                <span class="section-chevron">&#9660;</span> Antibiotics Used Against H. pylori
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ <em>H. pylori</em> is gram-negative, so moderate-spectrum antibiotics active against gram-negative bacteria are used.</p>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Amoxicillin</strong> — β-lactam, cell wall synthesis inhibitor</li>
+                        <li><strong>Clarithromycin</strong> — macrolide, 50S ribosome inhibitor; resistance increasing</li>
+                        <li><strong>Metronidazole (Flagyl)</strong> — nitroimidazole; effective in anaerobic/microaerophilic environments</li>
+                        <li><strong>Tetracycline</strong> — 30S ribosome inhibitor</li>
+                        <li><strong>Levofloxacin</strong> — fluoroquinolone; used in resistant or second-line regimens</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo2-regimens">
+                <span class="section-chevron">&#9660;</span> Treatment Regimens
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Combination therapy is required because monotherapy leads to rapid resistance. The current recommended regimen is quadruple therapy.</p>
+                <h4>💊 Quadruple Therapy (Recommended by Medical Letter)</h4>
+                <div class="h4-body">
+                    <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px; margin-bottom:12px;">
+                        <div style="font-weight:700; color:#1e3a5f; font-size:14px; margin-bottom:8px;">Quadruple Therapy = 2 Antibiotics + PPI + Bismuth</div>
+                        <ul>
+                            <li><strong>Metronidazole (Flagyl)</strong></li>
+                            <li><strong>Tetracycline</strong></li>
+                            <li><strong>PPI</strong> (any; reduces acid to help antibiotics work)</li>
+                            <li><strong>Bismuth subsalicylate (Pepto-Bismol)</strong> — antimicrobial, forms protective coating, treats GI symptoms</li>
+                        </ul>
+                        <p style="font-size:13px; margin-top:8px; color:#475569;"><strong>Duration:</strong> 7–14 days of antibiotics; PPI + bismuth continued until ulcer resolves</p>
+                    </div>
+                </div>
+                <h4>💊 Triple Therapy (Older; Falling Out of Favor)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>PPI + Amoxicillin + Clarithromycin</li>
+                        <li>Falling out of favor due to increasing clarithromycin resistance (>15% in many areas)</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Point — Why Combination?</div>
+                        <p>Monotherapy fails due to rapid resistance. The PPI serves double duty: suppresses acid (helps ulcer heal) AND raises gastric pH to improve antibiotic efficacy (many antibiotics are acid-labile). Bismuth has intrinsic antimicrobial activity against <em>H. pylori</em>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo2-monitoring">
+                <span class="section-chevron">&#9660;</span> Post-Treatment Monitoring
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <ul>
+                        <li>Retest for <em>H. pylori</em> <strong>4 weeks after completing antibiotic therapy</strong></li>
+                        <li>Use urea breath test or stool antigen (NOT serology — IgG remains positive after eradication)</li>
+                        <li>If still infected → use a different antibiotic regimen (e.g., switch to levofloxacin-based therapy)</li>
+                    </ul>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">⭐ Step 1 High-Yield Summary — LO 2</div>
+                        <ul>
+                            <li>Quadruple therapy = Metronidazole + Tetracycline + PPI + Bismuth subsalicylate (Pepto-Bismol)</li>
+                            <li>PPI serves dual purpose: heals ulcer + improves antibiotic efficacy</li>
+                            <li>Test for eradication 4 weeks post-treatment using urea breath test or stool antigen</li>
+                            <li><em>H. pylori</em> → urease → NH₃ → survives gastric acid; urease is the key virulence factor</li>
+                            <li>Untreated <em>H. pylori</em> → risk of MALT lymphoma and gastric adenocarcinoma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 3 — GERD PHYSIOLOGY & ANTACIDS ════════════════════════════════ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 3 — GERD Physiology & Antacid Pharmacology</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Physiology + Pharmacology · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 3:</strong> Discuss the physiological basis for the development of GERD. Explain the rationale and pharmacology for the use of antacids in the treatment of PUD and GERD.</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo3-physiology">Physiological Basis of GERD</a></li>
+                    <li><a href="#lo3-factors">Factors Reducing LES Pressure</a></li>
+                    <li><a href="#lo3-antacid-rationale">Antacid Rationale in PUD & GERD</a></li>
+                    <li><a href="#lo3-treatment">Stepwise Treatment of GERD</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo3-physiology">
+                <span class="section-chevron">&#9660;</span> Physiological Basis of GERD
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ GERD results from retrograde movement of gastric acid into the esophagus, causing mucosal inflammation. The primary defense is the lower esophageal sphincter (LES) — when it fails, acid refluxes.</p>
+                <div class="h4-body">
+                    <p><strong>Normal defense mechanisms:</strong></p>
+                    <ul>
+                        <li>LES maintains high resting pressure (~20 mmHg) to prevent reflux</li>
+                        <li>Esophageal peristalsis clears refluxed material</li>
+                        <li>Salivary bicarbonate neutralizes esophageal acid</li>
+                    </ul>
+                    <p><strong>GERD develops when:</strong></p>
+                    <ul>
+                        <li>LES pressure is <strong>reduced</strong> → allows reflux (see factors below)</li>
+                        <li>Increased volume of gastric contents</li>
+                        <li>Increased caustic quality (low pH, bile salts)</li>
+                        <li>Increased abdominal pressure (pregnancy, obesity)</li>
+                        <li>Impaired esophageal acid clearance (scleroderma)</li>
+                    </ul>
+                    <p><strong>Complications:</strong> Esophagitis → Barrett's esophagus → esophageal adenocarcinoma (with chronic untreated GERD)</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo3-factors">
+                <span class="section-chevron">&#9660;</span> Factors That Reduce LES Pressure
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Category</th><th>Examples</th></tr></thead>
+                        <tbody>
+                            <tr><td>Dietary</td><td>Fatty foods, caffeine, chocolate, alcohol, citrus</td></tr>
+                            <tr><td>Drugs</td><td>β-agonists, α-adrenergic antagonists, calcium channel blockers, anticholinergics, morphine, diazepam, barbiturates, progesterone</td></tr>
+                            <tr><td>Systemic disease</td><td>Scleroderma (impairs esophageal motility and acid clearance)</td></tr>
+                            <tr><td>Physiologic</td><td>Pregnancy (progesterone ↓ LES tone + increased abdominal pressure)</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Step 1 Trap — Drugs That Worsen GERD</div>
+                        <p>Many common drugs reduce LES pressure: calcium channel blockers, anticholinergics, nitrates, morphine, diazepam. Recognizing that a patient's GERD is drug-induced is a common clinical reasoning question.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo3-antacid-rationale">
+                <span class="section-chevron">&#9660;</span> Antacid Rationale in PUD & GERD
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ The "all roads lead to reducing acid" principle: regardless of the etiology of ulcer or GERD, acid is always damaging the tissue — neutralizing or suppressing it relieves symptoms and promotes healing.</p>
+                <div class="h4-body">
+                    <p><strong>Antacid rationale:</strong></p>
+                    <ul>
+                        <li>Goal: raise gastric pH from ~1 to ~4 (1000-fold reduction in H⁺ concentration)</li>
+                        <li>At pH 4, pepsin becomes inactive → mucosal protection increases</li>
+                        <li>Antacids are short-acting (hours), best for immediate/intermittent symptom relief</li>
+                        <li>For chronic conditions (PUD, chronic GERD), H₂ blockers or PPIs are preferred for sustained acid suppression</li>
+                    </ul>
+                    <p><strong>Common antacid formulations:</strong> Maalox/Mylanta (Mg/Al combo), Tums (CaCO₃), Rolaids (Mg/Ca)</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo3-treatment">
+                <span class="section-chevron">&#9660;</span> Stepwise Treatment of GERD
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <div style="background:#f0fdf4; border:1px solid #4ade80; border-radius:8px; padding:16px; margin-bottom:12px;">
+                        <div style="font-weight:700; color:#14532d; margin-bottom:10px; font-size:14px;">Step 1 — Behavioral Modification + Antacids (mild/intermittent)</div>
+                        <ul>
+                            <li>Antacids (Maalox, Tums, Mylanta)</li>
+                            <li>Elevate head of bed</li>
+                            <li>Avoid late meals, overeating, meals before naps</li>
+                            <li>Quit smoking</li>
+                            <li>Avoid medications that reduce LES pressure</li>
+                        </ul>
+                    </div>
+                    <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:16px; margin-bottom:12px;">
+                        <div style="font-weight:700; color:#92400e; margin-bottom:10px; font-size:14px;">Step 2 — Add Pharmacotherapy (if GERD worsens)</div>
+                        <ul>
+                            <li>Add <strong>H₂ receptor antagonists</strong> (famotidine)</li>
+                            <li>Add <strong>metoclopramide</strong> (D2 antagonist) → ↑antral contractions → ↑gastric emptying → reduces reflux volume</li>
+                        </ul>
+                    </div>
+                    <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:16px; margin-bottom:12px;">
+                        <div style="font-weight:700; color:#991b1b; margin-bottom:10px; font-size:14px;">Step 3 — Escalate (if still uncontrolled)</div>
+                        <ul>
+                            <li>Replace H₂ blockers with <strong>PPI</strong> (e.g., omeprazole)</li>
+                            <li>If PPI fails → try <strong>P-CAB</strong> (vonoprazan)</li>
+                            <li>If medically uncontrolled → <strong>surgery (fundoplication)</strong> — last resort</li>
+                        </ul>
+                    </div>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">⭐ Step 1 High-Yield Summary — LO 3</div>
+                        <ul>
+                            <li>GERD = reflux of acid through incompetent LES → esophageal injury</li>
+                            <li>CCBs, anticholinergics, nitrates, morphine, diazepam → reduce LES pressure → worsen GERD</li>
+                            <li>Pregnancy worsens GERD — progesterone ↓ LES + increased abdominal pressure</li>
+                            <li>Antacids raise pH 1→4 (1000-fold ↓ in H⁺); short-acting symptomatic relief</li>
+                            <li>Metoclopramide increases gastric emptying (prokinetic) — reduces reflux volume</li>
+                            <li>Chronic GERD → Barrett's esophagus → esophageal adenocarcinoma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 4 — CYTOPROTECTION ══════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 4 — Cytoprotection in Peptic Ulcer Disease</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Pharmacology · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul><li><strong>LO 4:</strong> Discuss the role of cytoprotection in the control of peptic ulcers and explain the pharmacology of cytoprotective drugs.</li></ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo4-concept">Concept of Cytoprotection</a></li>
+                    <li><a href="#lo4-sucralfate">Sucralfate</a></li>
+                    <li><a href="#lo4-misoprostol">Misoprostol (PGE1 Analog)</a></li>
+                    <li><a href="#lo4-compare">Comparison Table</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo4-concept">
+                <span class="section-chevron">&#9660;</span> Concept of Cytoprotection
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Rather than suppressing acid, cytoprotective drugs strengthen the mucosal barrier — they help the tissue defend itself against acid that is already present.</p>
+                <div class="h4-body">
+                    <p>Normal cytoprotective mechanisms in the stomach:</p>
+                    <ul>
+                        <li>Mucus layer (bicarbonate-rich) — traps HCO₃⁻ near epithelium</li>
+                        <li>Epithelial tight junctions — physical barrier</li>
+                        <li>Prostaglandins (PGE₂, PGI₂) — stimulate mucus/bicarbonate secretion, inhibit acid production, promote mucosal blood flow</li>
+                    </ul>
+                    <p>NSAIDs deplete prostaglandins (COX inhibition) → remove this cytoprotective layer → NSAID-induced ulcers. This is why misoprostol (a PGE1 analog) is specifically effective in NSAID users.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo4-sucralfate">
+                <span class="section-chevron">&#9660;</span> Sucralfate
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Sucralfate is a sucrose-sulfate-alumina compound that binds to exposed tissue proteins at the ulcer base, forming a protective barrier against acid.</p>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Mechanism:</strong> In acid environment → polymerizes → binds to positively charged tissue proteins at the ulcer base → forms a physical acid-resistant coat (lots of negative charges bind to positive charges in ulcerated tissue)</li>
+                        <li><strong>High affinity for defective (ulcerated) mucosa</strong> — selectively coats ulcers, not normal mucosa</li>
+                        <li><strong>Absorption is minimal</strong> — absorbed drug is excreted unmetabolized in urine</li>
+                        <li><strong>Best for non-NSAID ulcers</strong> — not well understood why it is less effective for NSAID-induced ulcers</li>
+                        <li>Also used for healing esophageal erosions from GER</li>
+                        <li><strong>Side effects:</strong> Constipation (aluminum content); may bind to other drugs and reduce their absorption (take separately)</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ Exam Note — Sucralfate Limitations</div>
+                        <p>Sucralfate is <strong>not effective for NSAID-induced ulcers</strong> — the mechanism is not fully understood, but it likely doesn't compensate for the loss of prostaglandin-mediated protection. For NSAID users, misoprostol or PPIs are preferred.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo4-misoprostol">
+                <span class="section-chevron">&#9660;</span> Misoprostol (PGE1 Analog)
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">⭐ Misoprostol is a synthetic PGE1 analog that mimics the normal cytoprotective effects of prostaglandins — particularly useful in NSAID users where natural PGs are depleted.</p>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Mechanism:</strong> Binds PG receptors (Gi-coupled) → inhibits H₂-stimulated cAMP in parietal cells → ↓acid secretion; also stimulates mucus and bicarbonate secretion</li>
+                        <li><strong>Especially effective in NSAID users</strong> — replaces the prostaglandin protection that NSAIDs destroy via COX inhibition</li>
+                        <li><strong>Side effects:</strong> Abdominal pain, diarrhea (very common — not well tolerated)</li>
+                        <li><strong>⚠️ Abortifacient</strong> — causes uterine contractions; absolutely contraindicated in pregnancy; used in combination with mifepristone for medical abortion</li>
+                        <li>Not widely used clinically due to poor tolerability, but conceptually important</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header">⚠️ High-Yield — Misoprostol in Pregnancy</div>
+                        <p>Misoprostol is <strong>contraindicated in pregnancy</strong> — it causes uterine contractions (abortifacient). This is a classic Step 1 point: do NOT prescribe misoprostol to prevent NSAID-induced ulcers in a pregnant patient. Use a PPI instead.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo4-compare">
+                <span class="section-chevron">&#9660;</span> Comparison: Sucralfate vs. Misoprostol
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Feature</th><th>Sucralfate</th><th>Misoprostol</th></tr></thead>
+                        <tbody>
+                            <tr><td>Mechanism</td><td>Physical barrier — binds ulcer proteins</td><td>PGE1 analog → ↓cAMP in parietal cell, ↑mucus</td></tr>
+                            <tr><td>Best for</td><td>Non-NSAID ulcers; GER erosions</td><td>NSAID-induced ulcers; NSAID prophylaxis</td></tr>
+                            <tr><td>Effective for NSAID ulcers?</td><td>No (not well understood why)</td><td>Yes — replaces depleted prostaglandins</td></tr>
+                            <tr><td>Side effects</td><td>Constipation; drug binding</td><td>Diarrhea, abdominal pain; abortifacient</td></tr>
+                            <tr><td>Pregnancy</td><td>Safe</td><td>CONTRAINDICATED</td></tr>
+                            <tr><td>Absorption</td><td>Minimal; excreted unchanged</td><td>Well absorbed orally</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">⭐ Step 1 High-Yield Summary — LO 4</div>
+                        <ul>
+                            <li>Sucralfate = physical barrier drug; best for non-NSAID ulcers; low absorption; causes constipation</li>
+                            <li>Misoprostol = PGE1 analog; best for NSAID users; side effects diarrhea; ABORTIFACIENT</li>
+                            <li>NSAIDs → ↓COX → ↓prostaglandins → ↓mucosal protection → ulcers; misoprostol replaces what NSAIDs deplete</li>
+                            <li>Never give misoprostol to a pregnant patient (use PPI for NSAID prophylaxis instead)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LO 5 — VOMITING REFLEX & CNS EMETIC CENTERS
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo5">
+        <h2 class="lo-title">LO 5 — Vomiting Reflex &amp; CNS Emetic Centers</h2>
+        <p class="lo-subtitle">Nausea Pathways · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 5:</strong> Describe the mechanism and pathways involved in the vomiting reflex, including the role of the CTZ, NTS, and vestibular system, and identify the neurotransmitter receptors involved.</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo5-overview">Vomiting Center Overview</a></li>
+                    <li><a href="#lo5-ctz">Chemoreceptor Trigger Zone (CTZ)</a></li>
+                    <li><a href="#lo5-nts">Nucleus Tractus Solitarius (NTS)</a></li>
+                    <li><a href="#lo5-vestibular">Vestibular System &amp; Motion Sickness</a></li>
+                    <li><a href="#lo5-receptors">Key Receptors by Pathway</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo5-overview">
+                <span class="section-chevron">&#9660;</span> Vomiting Center Overview
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Vomiting (emesis) is coordinated by the <strong>Emetic Center</strong> (Vomiting Center) in the <strong>medullary reticular formation</strong>. It receives convergent input from multiple peripheral and central sources and orchestrates the motor act of vomiting via cranial nerves and the phrenic nerve.</p>
+                    <h4>Afferent Inputs to the Emetic Center</h4>
+                    <table>
+                        <thead><tr><th>Input Source</th><th>Pathway</th><th>Key Stimulus</th><th>Primary Receptors</th></tr></thead>
+                        <tbody>
+                            <tr><td>Chemoreceptor Trigger Zone (CTZ)</td><td>Area postrema → Emetic Center</td><td>Blood-borne toxins, drugs, uremia, radiation</td><td>D2, 5-HT3, NK1, μ-opioid</td></tr>
+                            <tr><td>Nucleus Tractus Solitarius (NTS)</td><td>Vagal/GI afferents → NTS → Emetic Center</td><td>GI distension, irritation, chemotherapy</td><td>5-HT3 (peripheral), NK1</td></tr>
+                            <tr><td>Vestibular System</td><td>Labyrinth → Cerebellum → Emetic Center</td><td>Motion, position change</td><td>H1, M1 (muscarinic)</td></tr>
+                            <tr><td>Higher CNS Centers</td><td>Cortex/limbic → Emetic Center</td><td>Anticipatory nausea, fear, pain, smell</td><td>Multiple</td></tr>
+                            <tr><td>Peripheral GI Tract</td><td>Vagus/splanchnic nerves → NTS</td><td>Enterochromaffin 5-HT release (chemo/radiation)</td><td>5-HT3</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Motion sickness uses H1 and M1 receptors — NOT D2 or 5-HT3. This is why ondansetron (5-HT3 blocker) and metoclopramide (D2 blocker) are <em>ineffective</em> for motion sickness, while scopolamine and antihistamines work.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo5-ctz">
+                <span class="section-chevron">&#9660;</span> Chemoreceptor Trigger Zone (CTZ)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>The CTZ is located in the <strong>area postrema</strong> of the medulla, at the floor of the 4th ventricle. This region is <strong>outside the blood-brain barrier</strong>, allowing it to sense blood-borne toxins, drugs, and metabolic products directly.</p>
+                    <h4>CTZ Key Facts</h4>
+                    <ul>
+                        <li><strong>Location:</strong> Area postrema — outside BBB → directly samples blood</li>
+                        <li><strong>Triggers:</strong> Opioids, dopamine agonists (levodopa), digoxin, chemotherapy drugs, uremia, radiation metabolites</li>
+                        <li><strong>Key receptors:</strong> D2 (dopamine), 5-HT3 (serotonin), NK1 (substance P), μ-opioid</li>
+                        <li><strong>Drugs targeting CTZ:</strong> Metoclopramide (D2 antagonist), ondansetron (5-HT3 antagonist), aprepitant (NK1 antagonist)</li>
+                    </ul>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        The CTZ is the primary target for antiemetics used in chemotherapy-induced nausea and vomiting (CINV). D2 and 5-HT3 are the two most pharmacologically important CTZ receptors for Step 1.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo5-nts">
+                <span class="section-chevron">&#9660;</span> Nucleus Tractus Solitarius (NTS)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>The NTS relays <strong>visceral afferent signals</strong> from the GI tract (via the vagus nerve) to the emetic center. It is particularly important in chemotherapy- and radiation-induced nausea.</p>
+                    <h4>NTS Pathway</h4>
+                    <ul>
+                        <li>Chemotherapy / radiation → enterochromaffin cells in GI mucosa release <strong>serotonin (5-HT)</strong></li>
+                        <li>5-HT binds <strong>5-HT3 receptors</strong> on vagal afferent neurons</li>
+                        <li>Vagal afferents → NTS → Emetic Center → vomiting</li>
+                        <li>Also receives input from GI distension, pharyngeal irritation, and toxic ingestion</li>
+                    </ul>
+                    <p>Ondansetron (5-HT3 antagonist) works <em>peripherally</em> at vagal nerve endings (NTS pathway) <em>and</em> centrally at the CTZ — making it effective against both GI-triggered and blood-borne nausea.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo5-vestibular">
+                <span class="section-chevron">&#9660;</span> Vestibular System &amp; Motion Sickness
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Motion sickness arises from conflicting sensory input between the <strong>vestibular system</strong> (inner ear) and visual/proprioceptive signals. Pathway: Labyrinth → Cerebellum → Emetic Center.</p>
+                    <h4>Motion Sickness Receptor Profile</h4>
+                    <table>
+                        <thead><tr><th>Receptor Type</th><th>Location</th><th>Drug Targeting It</th><th>Route</th></tr></thead>
+                        <tbody>
+                            <tr><td>H1 (histamine)</td><td>Vestibular nucleus, emetic center</td><td>Diphenhydramine (Dramamine), Meclizine</td><td>Oral</td></tr>
+                            <tr><td>M1 (muscarinic)</td><td>Vestibular nucleus, cerebellum</td><td>Scopolamine</td><td>Transdermal patch</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">&#128161; Mnemonic</div>
+                        <strong>"Motion = H&amp;M"</strong> — Motion sickness is treated by <strong>H</strong>1 blockers and <strong>M</strong>uscarinic blockers. Nothing to do with dopamine or serotonin.
+                    </div>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Patient on a boat gets nauseated — DO NOT give ondansetron or metoclopramide. Give scopolamine or diphenhydramine. Ondansetron targets 5-HT3 (CTZ/NTS); motion sickness uses H1/M1 (vestibular pathway).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo5-receptors">
+                <span class="section-chevron">&#9660;</span> Key Receptors by Pathway — Master Table
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Pathway</th><th>Key Receptors</th><th>Antiemetic Drug Class</th><th>Examples</th></tr></thead>
+                        <tbody>
+                            <tr><td>CTZ (blood-borne toxins/drugs)</td><td>D2, 5-HT3, NK1</td><td>D2 antagonist / 5-HT3 antagonist / NK1 antagonist</td><td>Metoclopramide / Ondansetron / Aprepitant</td></tr>
+                            <tr><td>NTS/Vagal (GI irritation/chemo)</td><td>5-HT3</td><td>5-HT3 antagonist</td><td>Ondansetron, Granisetron</td></tr>
+                            <tr><td>Vestibular (motion sickness)</td><td>H1, M1</td><td>Antihistamine / Anticholinergic</td><td>Diphenhydramine / Scopolamine</td></tr>
+                            <tr><td>Higher cortex (anticipatory)</td><td>GABA, CB1</td><td>Benzodiazepine / Cannabinoid</td><td>Lorazepam / Dronabinol</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">&#11088; Step 1 High-Yield Summary — LO 5</div>
+                        <ul>
+                            <li>Emetic center in medullary reticular formation — receives input from CTZ, NTS, vestibular system, cortex</li>
+                            <li>CTZ = area postrema, outside BBB, senses blood-borne emetics; key receptors: D2, 5-HT3, NK1</li>
+                            <li>NTS = vagal GI afferents; chemo/radiation → enterochromaffin 5-HT → vagal 5-HT3 → NTS → vomiting</li>
+                            <li>Vestibular (motion sickness) uses H1 and M1 — treated with antihistamines or scopolamine, NOT ondansetron</li>
+                            <li>Ondansetron is dual-site: blocks 5-HT3 at both peripheral vagal endings (NTS) and CTZ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LO 6 — ANTIEMETICS
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo6">
+        <h2 class="lo-title">LO 6 — Antiemetics</h2>
+        <p class="lo-subtitle">Drugs for Nausea &amp; Vomiting · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 6:</strong> Describe the mechanism of action, indications, and side effects of antiemetic drugs, including 5-HT3 antagonists, dopamine antagonists, and drugs used for motion sickness.</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo6-5ht3">5-HT3 Antagonists (Ondansetron)</a></li>
+                    <li><a href="#lo6-d2">D2 Antagonists (Metoclopramide)</a></li>
+                    <li><a href="#lo6-motion">Motion Sickness Drugs</a></li>
+                    <li><a href="#lo6-other">Other Antiemetics</a></li>
+                    <li><a href="#lo6-compare">Antiemetic Comparison Table</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo6-5ht3">
+                <span class="section-chevron">&#9660;</span> 5-HT3 Antagonists — Ondansetron
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <h4>Mechanism</h4>
+                    <p>Ondansetron (Zofran) selectively blocks <strong>5-HT3 receptors</strong> — both at the <strong>CTZ (area postrema)</strong> and <strong>peripherally on vagal afferents</strong> in the GI tract. This dual site of action makes it the most effective drug for chemotherapy-induced and post-operative nausea.</p>
+                    <h4>Key Pharmacology</h4>
+                    <ul>
+                        <li><strong>Class:</strong> 5-HT3 serotonin receptor antagonist</li>
+                        <li><strong>Prototype:</strong> Ondansetron (Zofran); also granisetron, dolasetron (all "-setron" suffix)</li>
+                        <li><strong>Indications:</strong> CINV (chemotherapy-induced nausea/vomiting), post-op nausea, radiation-induced nausea</li>
+                        <li><strong>NOT effective for:</strong> Motion sickness (vestibular H1/M1 pathway), opioid-induced vomiting alone</li>
+                        <li><strong>Route:</strong> Oral or IV</li>
+                        <li><strong>Side effects:</strong> Headache, constipation, QT prolongation (at high doses)</li>
+                    </ul>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        Ondansetron = first-line for CINV. It works peripherally (blocks 5-HT released from enterochromaffin cells during chemo) AND centrally (CTZ block). "-setron" suffix = 5-HT3 antagonist family.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo6-d2">
+                <span class="section-chevron">&#9660;</span> D2 Antagonists — Metoclopramide
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <h4>Mechanism</h4>
+                    <p>Metoclopramide (Reglan) blocks <strong>D2 dopamine receptors</strong> at the CTZ. It also has <strong>prokinetic effects</strong> — it stimulates GI motility by enhancing acetylcholine release and blocking dopamine-mediated inhibition of smooth muscle, making it useful for gastroparesis.</p>
+                    <h4>Key Pharmacology</h4>
+                    <ul>
+                        <li><strong>Class:</strong> D2 antagonist + prokinetic</li>
+                        <li><strong>Indications:</strong> CINV (adjunct), gastroparesis, diabetic gastric stasis, post-op nausea, GERD (limited use)</li>
+                        <li><strong>NOT effective for:</strong> Motion sickness</li>
+                        <li><strong>Route:</strong> Oral or IV</li>
+                    </ul>
+                    <h4>Side Effects — Critical for Step 1</h4>
+                    <ul>
+                        <li><strong>Extrapyramidal symptoms (EPS):</strong> Akathisia, dystonia, parkinsonism — due to D2 block in striatum</li>
+                        <li><strong>Tardive dyskinesia</strong> with long-term use (FDA black box warning)</li>
+                        <li><strong>Hyperprolactinemia:</strong> D2 block in tuberoinfundibular pathway → ↑prolactin → galactorrhea, amenorrhea, gynecomastia</li>
+                        <li><strong>Contraindicated</strong> in Parkinson's disease (worsens dopamine deficiency)</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Metoclopramide in Parkinson's patient → NEVER do this. D2 blockade worsens parkinsonism. Also: metoclopramide crosses the BBB (unlike domperidone) → central D2 effects → EPS.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo6-motion">
+                <span class="section-chevron">&#9660;</span> Motion Sickness Drugs
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Motion sickness requires drugs targeting the <strong>vestibular pathway (H1 and M1 receptors)</strong>, not CTZ/NTS drugs.</p>
+                    <h4>Scopolamine (Anticholinergic)</h4>
+                    <ul>
+                        <li><strong>Class:</strong> Muscarinic M1 antagonist</li>
+                        <li><strong>Route:</strong> Transdermal patch (behind the ear) — preferred for sustained release</li>
+                        <li><strong>Indications:</strong> Motion sickness prophylaxis, post-op nausea</li>
+                        <li><strong>Side effects:</strong> Classic anticholinergic — dry mouth, blurred vision, urinary retention, sedation, confusion (especially elderly)</li>
+                        <li><strong>Caution:</strong> Narrow-angle glaucoma, BPH, elderly patients</li>
+                    </ul>
+                    <h4>Diphenhydramine / Dimenhydrinate (Dramamine)</h4>
+                    <ul>
+                        <li><strong>Class:</strong> H1 antihistamine (first generation — crosses BBB)</li>
+                        <li><strong>Route:</strong> Oral</li>
+                        <li><strong>Indications:</strong> Motion sickness, mild nausea, pregnancy nausea (safe)</li>
+                        <li><strong>Side effects:</strong> Sedation, anticholinergic effects (dry mouth, urinary retention)</li>
+                        <li><strong>Note:</strong> Dimenhydrinate = diphenhydramine + 8-chlorotheophylline (brand: Dramamine)</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">&#128161; Mnemonic</div>
+                        <strong>Scopolamine = "Scope out the Sea"</strong> — it's the patch you wear on a cruise ship. Best for sustained prophylaxis of motion sickness.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo6-other">
+                <span class="section-chevron">&#9660;</span> Other Antiemetics
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Drug</th><th>Class</th><th>Mechanism</th><th>Key Use</th><th>Notable Side Effects</th></tr></thead>
+                        <tbody>
+                            <tr><td>Prochlorperazine (Compazine)</td><td>Phenothiazine / D2 antagonist</td><td>D2 block at CTZ</td><td>Severe nausea/vomiting; migraines</td><td>EPS, sedation, hypotension</td></tr>
+                            <tr><td>Promethazine (Phenergan)</td><td>Phenothiazine / H1 + M1 antagonist</td><td>H1 + muscarinic block</td><td>Nausea, motion sickness, allergies</td><td>Heavy sedation; EPS; respiratory depression (black box)</td></tr>
+                            <tr><td>Aprepitant (Emend)</td><td>NK1 receptor antagonist</td><td>Blocks substance P at NK1 in CTZ/NTS</td><td>CINV prevention (3-drug regimen)</td><td>Fatigue, hiccups, CYP3A4 interactions</td></tr>
+                            <tr><td>Dronabinol (Marinol)</td><td>Cannabinoid (CB1 agonist)</td><td>CB1 receptor agonist → appetite stimulation, antiemetic</td><td>CINV refractory; AIDS-related anorexia</td><td>Euphoria, sedation, dysphoria</td></tr>
+                            <tr><td>Dexamethasone</td><td>Corticosteroid</td><td>Unknown antiemetic mechanism; synergistic with 5-HT3 antagonists</td><td>CINV (combination regimens)</td><td>Hyperglycemia, insomnia</td></tr>
+                            <tr><td>Lorazepam (Ativan)</td><td>Benzodiazepine</td><td>GABA-A → anxiolysis; reduces anticipatory nausea</td><td>Anticipatory CINV; adjunct</td><td>Sedation, respiratory depression, dependence</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo6-compare">
+                <span class="section-chevron">&#9660;</span> Antiemetic Comparison — The Decision Framework
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Clinical Scenario</th><th>Best Drug(s)</th><th>Receptor Target</th><th>Avoid</th></tr></thead>
+                        <tbody>
+                            <tr><td>Chemotherapy-induced nausea (CINV)</td><td>Ondansetron ± aprepitant ± dexamethasone</td><td>5-HT3, NK1</td><td>Metoclopramide alone</td></tr>
+                            <tr><td>Post-operative nausea</td><td>Ondansetron, scopolamine patch</td><td>5-HT3, M1</td><td>—</td></tr>
+                            <tr><td>Motion sickness</td><td>Scopolamine patch, diphenhydramine/meclizine</td><td>M1, H1</td><td>Ondansetron, metoclopramide</td></tr>
+                            <tr><td>Gastroparesis / diabetic nausea</td><td>Metoclopramide</td><td>D2 (+ prokinetic)</td><td>Avoid long-term (tardive dyskinesia)</td></tr>
+                            <tr><td>Opioid-induced nausea</td><td>Metoclopramide, ondansetron</td><td>D2, 5-HT3</td><td>—</td></tr>
+                            <tr><td>Pregnancy nausea</td><td>Diphenhydramine, doxylamine (+ B6)</td><td>H1</td><td>Metoclopramide (EPS risk)</td></tr>
+                            <tr><td>Refractory CINV</td><td>Dronabinol, lorazepam</td><td>CB1, GABA</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">&#11088; Step 1 High-Yield Summary — LO 6</div>
+                        <ul>
+                            <li>Ondansetron = 5-HT3 antagonist; best for CINV and post-op nausea; dual action (CTZ + peripheral vagal)</li>
+                            <li>Metoclopramide = D2 antagonist + prokinetic; best for gastroparesis; causes EPS, tardive dyskinesia, hyperprolactinemia; CI in Parkinson's</li>
+                            <li>Motion sickness = H1 (diphenhydramine) or M1 (scopolamine); NOT ondansetron or metoclopramide</li>
+                            <li>Aprepitant = NK1 antagonist; used in combination for high-emetogenic chemo</li>
+                            <li>Promethazine has black box warning for respiratory depression in children under 2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LO 7 — DIARRHEA TREATMENT
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo7">
+        <h2 class="lo-title">LO 7 — Diarrhea Treatment</h2>
+        <p class="lo-subtitle">Antidiarrheals &amp; ORS · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 7:</strong> Describe the pharmacological management of diarrhea, including the rationale for oral rehydration therapy and the mechanisms of antidiarrheal agents.</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo7-ors">Oral Rehydration Therapy (ORS)</a></li>
+                    <li><a href="#lo7-opioid">Opioid-Based Antidiarrheals</a></li>
+                    <li><a href="#lo7-bismuth">Bismuth Subsalicylate</a></li>
+                    <li><a href="#lo7-compare">Antidiarrheal Comparison</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo7-ors">
+                <span class="section-chevron">&#9660;</span> Oral Rehydration Therapy (ORS)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>ORS is the cornerstone of diarrhea management — especially for acute infectious diarrhea and cholera. It exploits the <strong>sodium-glucose cotransporter (SGLT1)</strong> in intestinal epithelium to drive water absorption even when active transport of sodium alone is impaired.</p>
+                    <h4>ORS Mechanism</h4>
+                    <ul>
+                        <li>SGLT1 cotransports Na<sup>+</sup> + glucose together into enterocytes</li>
+                        <li>This cotransport remains <strong>intact even during secretory diarrhea</strong> (e.g., cholera) — which only impairs electrogenic Na channels, not SGLT1</li>
+                        <li>Na<sup>+</sup> absorption drives water to follow osmotically → net rehydration</li>
+                        <li>WHO ORS formula: glucose + NaCl + KCl + sodium bicarbonate/citrate in water</li>
+                    </ul>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        ORS works in cholera because SGLT1 is unaffected by cholera toxin. Cholera toxin activates Gs → ↑cAMP → ↑Cl<sup>-</sup> secretion and ↓Na<sup>+</sup> absorption via Na<sup>+</sup> channels — but glucose-linked Na cotransport (SGLT1) is spared.
+                    </div>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Plain water does NOT work as well as ORS — without glucose, sodium is not absorbed efficiently by the gut. Do NOT give plain water only in severe diarrhea.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo7-opioid">
+                <span class="section-chevron">&#9660;</span> Opioid-Based Antidiarrheals
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Opioid receptor agonists reduce intestinal motility and secretion — useful for non-infectious diarrhea. Two key drugs are designed to work peripherally (in the gut) with minimal CNS entry.</p>
+                    <h4>Loperamide (Imodium)</h4>
+                    <ul>
+                        <li><strong>Mechanism:</strong> μ-opioid receptor agonist in the GI wall → ↓peristalsis, ↑sphincter tone, ↓intestinal secretion</li>
+                        <li><strong>CNS penetration:</strong> Minimal — does NOT cross BBB (P-glycoprotein efflux pump extrudes it) → no euphoria or addiction at normal doses</li>
+                        <li><strong>Indications:</strong> Traveler's diarrhea, IBS-D, acute non-infectious diarrhea</li>
+                        <li><strong>Contraindications:</strong> Bloody diarrhea, fever (may worsen invasive bacterial infection by retaining toxins); C. difficile colitis</li>
+                        <li><strong>Side effects:</strong> Constipation, abdominal cramps; toxic megacolon if used with severe colitis</li>
+                    </ul>
+                    <h4>Diphenoxylate + Atropine (Lomotil)</h4>
+                    <ul>
+                        <li><strong>Mechanism:</strong> Diphenoxylate = synthetic opioid → μ-receptor agonist → ↓peristalsis. Atropine added at sub-therapeutic dose to discourage abuse (causes unpleasant anticholinergic effects if large doses taken)</li>
+                        <li><strong>CNS penetration:</strong> More than loperamide — Schedule V controlled substance</li>
+                        <li><strong>Indications:</strong> Non-infectious diarrhea (2nd-line after loperamide)</li>
+                        <li><strong>Side effects:</strong> Anticholinergic effects from atropine (dry mouth, blurred vision, urinary retention), sedation</li>
+                        <li><strong>Contraindications:</strong> Infectious diarrhea, C. diff, children under 2</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">&#128161; Mnemonic</div>
+                        <strong>Lomotil = Lo-mo-til = "Lo Motility"</strong> — diphenoxylate + atropine; the atropine is there to make you feel terrible if you abuse it (anticholinergic misery = abuse deterrent).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo7-bismuth">
+                <span class="section-chevron">&#9660;</span> Bismuth Subsalicylate (Pepto-Bismol)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Mechanism:</strong> Anti-secretory (via salicylate component inhibiting prostaglandin synthesis); antimicrobial against H. pylori and enteric pathogens; coats GI mucosa</li>
+                        <li><strong>Indications:</strong> Traveler's diarrhea prophylaxis and treatment; H. pylori therapy (quadruple regimen); indigestion, heartburn</li>
+                        <li><strong>Side effects:</strong> Black tongue and black stool (harmless — bismuth sulfide); tinnitus at high doses (salicylate toxicity)</li>
+                        <li><strong>Contraindications:</strong> Children with viral illness (salicylate component → risk of Reye syndrome); aspirin allergy</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Black stool from bismuth subsalicylate ≠ GI bleeding. Distinguish by history (taking Pepto-Bismol?). GI bleed → melena is tarry and malodorous; bismuth-black stool is not tarry. Also: bismuth is part of the quadruple H. pylori regimen.
+                    </div>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">&#11088; Step 1 High-Yield Summary — LO 7</div>
+                        <ul>
+                            <li>ORS = SGLT1-mediated Na + glucose cotransport → drives water absorption; works even in cholera (SGLT1 intact)</li>
+                            <li>Loperamide = μ-opioid agonist; minimal BBB penetration; first-line antidiarrheal; avoid in infectious diarrhea/colitis</li>
+                            <li>Diphenoxylate + atropine (Lomotil) = synthetic opioid; Schedule V; atropine discourages abuse; avoid in children &lt;2</li>
+                            <li>Bismuth subsalicylate = anti-secretory + antimicrobial; causes black stool/tongue (benign); salicylate component → avoid in children with viral illness (Reye syndrome)</li>
+                            <li>Never use loperamide/opioid antidiarrheals in C. diff or bloody diarrhea — retaining toxins worsens outcome</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo7-compare">
+                <span class="section-chevron">&#9660;</span> Antidiarrheal Comparison
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Drug</th><th>Class</th><th>Mechanism</th><th>BBB?</th><th>Key Caution</th></tr></thead>
+                        <tbody>
+                            <tr><td>Loperamide (Imodium)</td><td>μ-opioid agonist</td><td>↓Peristalsis, ↑sphincter tone, ↓secretion</td><td>Minimal</td><td>Avoid in infectious diarrhea, C. diff, colitis</td></tr>
+                            <tr><td>Diphenoxylate + atropine (Lomotil)</td><td>Synthetic opioid + anticholinergic</td><td>↓Peristalsis; atropine = abuse deterrent</td><td>Some</td><td>Schedule V; anticholinergic SE; avoid &lt;2 yr</td></tr>
+                            <tr><td>Bismuth subsalicylate (Pepto-Bismol)</td><td>Bismuth salt / salicylate</td><td>Anti-secretory, antimicrobial, mucosal coat</td><td>No</td><td>Black stool (benign); Reye in children</td></tr>
+                            <tr><td>ORS</td><td>Electrolyte solution</td><td>SGLT1 cotransport → Na + water absorption</td><td>N/A</td><td>Not a drug; requires glucose + Na together</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LO 8 — LAXATIVES
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo8">
+        <h2 class="lo-title">LO 8 — Laxatives</h2>
+        <p class="lo-subtitle">Constipation Pharmacotherapy · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 8:</strong> Classify laxatives by mechanism and describe the indications, onset of action, and side effects of bulk-forming agents, osmotic laxatives, stimulant laxatives, and stool softeners.</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo8-bulk">Bulk-Forming Agents</a></li>
+                    <li><a href="#lo8-osmotic">Osmotic Laxatives</a></li>
+                    <li><a href="#lo8-stimulant">Stimulant / Irritant Laxatives</a></li>
+                    <li><a href="#lo8-softener">Stool Softeners</a></li>
+                    <li><a href="#lo8-compare">Laxative Comparison Table</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo8-bulk">
+                <span class="section-chevron">&#9660;</span> Bulk-Forming Agents
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Bulk-forming agents are <strong>indigestible dietary fibers</strong> that absorb water, swell in the colon, and increase stool bulk — mechanically stimulating peristalsis. They mimic the effect of dietary fiber.</p>
+                    <h4>Key Drugs</h4>
+                    <ul>
+                        <li><strong>Psyllium (Metamucil)</strong> — natural husk fiber; soluble fiber; also lowers LDL cholesterol</li>
+                        <li><strong>Methylcellulose (Citrucel)</strong> — semi-synthetic fiber; less gas-forming than psyllium</li>
+                        <li><strong>Polyethylene glycol (PEG / Miralax)</strong> — technically osmotic but often grouped here; non-absorbed polymer that retains water in stool</li>
+                    </ul>
+                    <h4>Pharmacology</h4>
+                    <ul>
+                        <li><strong>Onset:</strong> 12–72 hours (slow — need fiber bulk to build up)</li>
+                        <li><strong>Must be taken with adequate water</strong> — insufficient water → fiber can cause obstruction</li>
+                        <li><strong>Safest for long-term use;</strong> preferred in pregnancy, elderly, IBS</li>
+                        <li><strong>Side effects:</strong> Bloating, flatulence, abdominal cramping initially; rare esophageal obstruction if not enough fluid</li>
+                    </ul>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        PEG (Miralax) is actually an osmotic agent — it draws water into the colon lumen. However, because it works gently and is non-absorbed, it's widely used as a "gentle bulk/osmotic" agent. PEG is also used for bowel prep before colonoscopy (at higher doses).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo8-osmotic">
+                <span class="section-chevron">&#9660;</span> Osmotic Laxatives
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Osmotic laxatives draw water into the intestinal lumen by <strong>osmotic pressure</strong>, softening stool and stimulating peristalsis. They are non-absorbed (or poorly absorbed) solutes.</p>
+                    <h4>Key Drugs</h4>
+                    <table>
+                        <thead><tr><th>Drug</th><th>Type</th><th>Onset</th><th>Key Use / Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td>Magnesium citrate</td><td>Saline osmotic</td><td>30 min – 3 hr</td><td>Bowel prep, acute constipation; caution in renal failure (Mg retention)</td></tr>
+                            <tr><td>Milk of magnesia (MgOH2)</td><td>Saline osmotic</td><td>30 min – 6 hr</td><td>Common OTC; also antacid at lower doses</td></tr>
+                            <tr><td>Lactulose</td><td>Non-absorbable disaccharide</td><td>24–48 hr</td><td>Constipation; also used in hepatic encephalopathy (traps NH4+ in colon)</td></tr>
+                            <tr><td>PEG (Miralax)</td><td>Osmotic polymer</td><td>1–3 days</td><td>Gentle; safe long-term; bowel prep at higher doses</td></tr>
+                            <tr><td>Sodium phosphate</td><td>Saline osmotic</td><td>1–3 hr</td><td>Bowel prep (enemas/oral); risk of hyperphosphatemia in renal impairment</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Lactulose in hepatic encephalopathy: it acidifies the colon → NH3 + H+ → NH4+ (cannot cross colonic wall) → trapped and excreted. This lowers serum ammonia. This is a HIGH-YIELD dual use: both laxative AND treatment for hepatic encephalopathy.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo8-stimulant">
+                <span class="section-chevron">&#9660;</span> Stimulant / Irritant Laxatives
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Stimulant laxatives directly irritate the intestinal mucosa or stimulate enteric nerve plexuses, driving peristalsis. They have a faster onset but are NOT recommended for long-term use due to dependence and "cathartic colon."</p>
+                    <h4>Key Drugs</h4>
+                    <table>
+                        <thead><tr><th>Drug</th><th>Mechanism</th><th>Onset</th><th>Route</th><th>Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td>Senna (Ex-Lax, Senokot)</td><td>Anthraquinone glycoside → colon bacteria convert to active form → stimulates myenteric plexus + ↑fluid secretion</td><td>6–12 hr (oral)</td><td>Oral</td><td>Most common stimulant; safe in pregnancy; used with opioid therapy</td></tr>
+                            <tr><td>Bisacodyl (Dulcolax)</td><td>Diphenylmethane → directly stimulates enteric nerves + ↑colonic fluid secretion</td><td>6–12 hr oral; 15–60 min rectal</td><td>Oral / suppository</td><td>Bowel prep; pre-procedure; available as suppository for rapid onset</td></tr>
+                            <tr><td>Castor oil</td><td>Ricinoleic acid stimulates small bowel + colon</td><td>2–6 hr</td><td>Oral</td><td>Historical; largely obsolete; can cause severe cramping</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Long-term stimulant laxative use → "cathartic colon" — melanosis coli (brown pigment in colon mucosa; benign) and potential myenteric nerve damage. Patients can become dependent. Not recommended for chronic constipation — use bulk/osmotic agents instead.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo8-softener">
+                <span class="section-chevron">&#9660;</span> Stool Softeners (Emollients)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <h4>Docusate (Colace)</h4>
+                    <ul>
+                        <li><strong>Mechanism:</strong> Anionic surfactant — lowers surface tension of stool, allowing water and fat to penetrate the stool mass → softens stool</li>
+                        <li><strong>Onset:</strong> 1–3 days</li>
+                        <li><strong>Indications:</strong> Post-surgical constipation, post-MI (avoid Valsalva), hemorrhoids, anorectal surgery — situations where straining is dangerous</li>
+                        <li><strong>Side effects:</strong> Minimal; may cause mild abdominal cramping; generally very well tolerated</li>
+                        <li><strong>Not effective for severe constipation</strong> — purely stool softening, no peristaltic stimulation</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">&#128161; Mnemonic</div>
+                        <strong>"Docusate = Don't Strain"</strong> — used when straining is medically dangerous (post-MI, hemorrhoids, post-op). It's a softener, not a stimulant — it won't make you go, just make it easier when you do.
+                    </div>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">&#11088; Step 1 High-Yield Summary — LO 8</div>
+                        <ul>
+                            <li>Bulk agents (psyllium, PEG) = safest long-term; need water; slow onset 1–3 days; first-line for chronic constipation</li>
+                            <li>Osmotic laxatives: Mg citrate = fastest saline osmotic; lactulose = dual use (constipation + hepatic encephalopathy via NH4+ trapping)</li>
+                            <li>Stimulants (senna, bisacodyl) = fastest for acute use; NOT for long-term (cathartic colon, dependence)</li>
+                            <li>Docusate (Colace) = stool softener only; used when straining is dangerous (post-MI, hemorrhoids); no stimulant effect</li>
+                            <li>Lactulose in hepatic encephalopathy: acidifies colon → NH3 → NH4+ → trapped → lower serum ammonia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo8-compare">
+                <span class="section-chevron">&#9660;</span> Laxative Comparison Table
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Class</th><th>Examples</th><th>Mechanism</th><th>Onset</th><th>Best For</th><th>Avoid / Caution</th></tr></thead>
+                        <tbody>
+                            <tr><td>Bulk-forming</td><td>Psyllium, methylcellulose, PEG</td><td>Absorb water → ↑stool bulk → peristalsis</td><td>12–72 hr</td><td>Chronic constipation, IBS, pregnancy</td><td>Take with lots of water; obstruction if inadequate fluid</td></tr>
+                            <tr><td>Osmotic (saline)</td><td>Mg citrate, milk of magnesia</td><td>Osmotic water draw into lumen</td><td>30 min – 6 hr</td><td>Acute constipation, bowel prep</td><td>Renal failure (Mg retention)</td></tr>
+                            <tr><td>Osmotic (non-absorbable)</td><td>Lactulose, PEG</td><td>Osmotic water draw; lactulose also acidifies colon</td><td>1–3 days</td><td>Chronic constipation; hepatic encephalopathy (lactulose)</td><td>Lactulose → flatulence, bloating</td></tr>
+                            <tr><td>Stimulant/Irritant</td><td>Senna, bisacodyl</td><td>Stimulate myenteric plexus + ↑secretion</td><td>6–12 hr oral; 15–60 min rectal</td><td>Acute constipation, bowel prep, opioid-induced</td><td>Long-term use → cathartic colon</td></tr>
+                            <tr><td>Stool softener</td><td>Docusate (Colace)</td><td>Surfactant → water/fat penetrate stool</td><td>1–3 days</td><td>Post-surgical, post-MI, hemorrhoids</td><td>Not for severe constipation (no peristaltic effect)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LO 9 — IBD PHARMACOTHERAPY & BIOLOGICS
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="lo9">
+        <h2 class="lo-title">LO 9 — IBD Pharmacotherapy &amp; Biologics</h2>
+        <p class="lo-subtitle">Crohn's, UC, and Gut Microbiome · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 9:</strong> Outline the pharmacological treatment of inflammatory bowel disease, including 5-ASA agents, corticosteroids, immunosuppressants, and biologic therapies (anti-TNF-α, anti-IL-23), and describe the role of fecal microbiota transplantation.</li>
+                </ul>
+            </div>
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo9-overview">IBD Overview: Crohn's vs. UC</a></li>
+                    <li><a href="#lo9-5asa">5-ASA Agents</a></li>
+                    <li><a href="#lo9-steroids">Corticosteroids</a></li>
+                    <li><a href="#lo9-immunosup">Immunosuppressants</a></li>
+                    <li><a href="#lo9-biologics">Biologic Therapies</a></li>
+                    <li><a href="#lo9-fmt">Fecal Microbiota Transplantation (FMT)</a></li>
+                    <li><a href="#lo9-pyramid">Treatment Pyramid</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-overview">
+                <span class="section-chevron">&#9660;</span> IBD Overview: Crohn's Disease vs. Ulcerative Colitis
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Feature</th><th>Crohn's Disease</th><th>Ulcerative Colitis (UC)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Location</td><td>Any GI tract (mouth to anus); often terminal ileum + colon</td><td>Colon only; always involves rectum; continuous proximal spread</td></tr>
+                            <tr><td>Depth</td><td>Transmural (all layers)</td><td>Mucosal + submucosal only</td></tr>
+                            <tr><td>Pattern</td><td>Skip lesions — patchy, discontinuous</td><td>Continuous from rectum proximally</td></tr>
+                            <tr><td>Pathology</td><td>Granulomas; cobblestone mucosa; fistulas; strictures</td><td>Pseudopolyps; crypt abscesses; no granulomas</td></tr>
+                            <tr><td>Symptoms</td><td>RLQ pain, diarrhea (often non-bloody), malabsorption, weight loss</td><td>Bloody diarrhea, urgency, tenesmus</td></tr>
+                            <tr><td>Complication</td><td>Fistulas, abscesses, strictures, perianal disease</td><td>Toxic megacolon, colorectal cancer risk</td></tr>
+                            <tr><td>Surgery</td><td>Not curative (can recur anywhere)</td><td>Colectomy = curative</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        Crohn's = "skip lesions" + transmural + anywhere in GI tract + granulomas + fistulas. UC = "continuous from rectum" + mucosal only + colon only + bloody diarrhea + crypt abscesses.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-5asa">
+                <span class="section-chevron">&#9660;</span> 5-ASA Agents (Aminosalicylates)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>5-aminosalicylic acid (5-ASA / mesalazine / mesalamine) is the <strong>first-line drug for mild-to-moderate UC</strong>. It works topically in the colonic mucosa to reduce inflammation.</p>
+                    <h4>Mechanism</h4>
+                    <ul>
+                        <li>Inhibits COX and LOX → ↓prostaglandins and leukotrienes in colonic mucosa</li>
+                        <li>Scavenges reactive oxygen species; inhibits NF-κB → anti-inflammatory</li>
+                        <li>Acts <strong>topically</strong> — must reach the colon intact</li>
+                    </ul>
+                    <h4>Formulations</h4>
+                    <ul>
+                        <li><strong>Sulfasalazine</strong> = 5-ASA + sulfapyridine (carrier); bacteria cleave in colon → releases 5-ASA; sulfapyridine absorbed → side effects</li>
+                        <li><strong>Mesalamine (Asacol, Pentasa, Lialda)</strong> = 5-ASA alone in delayed-release coating; fewer systemic side effects than sulfasalazine</li>
+                        <li><strong>Rectal formulations:</strong> Suppositories and enemas for proctitis and left-sided UC</li>
+                    </ul>
+                    <h4>Key Side Effects</h4>
+                    <ul>
+                        <li>Sulfasalazine: Nausea, headache, hemolytic anemia, oligospermia (reversible), Stevens-Johnson syndrome (sulfapyridine component)</li>
+                        <li>Mesalamine: Generally well tolerated; rare nephrotoxicity (monitor creatinine)</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        5-ASA agents are effective for UC but have <em>limited efficacy in Crohn's disease</em> (Crohn's is transmural and often involves small bowel where 5-ASA does not reach at therapeutic concentrations).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-steroids">
+                <span class="section-chevron">&#9660;</span> Corticosteroids
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Corticosteroids (prednisone, budesonide, IV hydrocortisone/methylprednisolone) are used for <strong>acute flares</strong> of both Crohn's and UC. They are <strong>not used for maintenance</strong> due to serious long-term side effects.</p>
+                    <h4>Key Points</h4>
+                    <ul>
+                        <li><strong>Induction of remission</strong> only — bridge therapy, not maintenance</li>
+                        <li><strong>Budesonide</strong> (Entocort) — high first-pass metabolism → acts locally in ileum/right colon; fewer systemic SE than prednisone; preferred for ileal Crohn's</li>
+                        <li><strong>IV methylprednisolone/hydrocortisone</strong> — for severe/hospitalized IBD flares</li>
+                    </ul>
+                    <h4>Side Effects (systemic steroids)</h4>
+                    <ul>
+                        <li>HPA axis suppression; adrenal insufficiency on abrupt withdrawal</li>
+                        <li>Cushing's syndrome, hyperglycemia, osteoporosis, avascular necrosis</li>
+                        <li>Immunosuppression → opportunistic infections</li>
+                        <li>Cataracts, glaucoma, mood changes, peptic ulcers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-immunosup">
+                <span class="section-chevron">&#9660;</span> Immunosuppressants
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Drug</th><th>Class</th><th>Mechanism</th><th>Use in IBD</th><th>Key Toxicity</th></tr></thead>
+                        <tbody>
+                            <tr><td>Azathioprine / 6-MP</td><td>Thiopurine antimetabolite</td><td>↓Purine synthesis → ↓T- and B-cell proliferation</td><td>Maintenance therapy for Crohn's + UC; steroid-sparing</td><td>Bone marrow suppression; pancreatitis; hepatotoxicity; ↑lymphoma risk; check TPMT activity before use</td></tr>
+                            <tr><td>Methotrexate</td><td>Folate antagonist</td><td>Inhibits DHFR → ↓purine/thymidine synthesis → ↓lymphocyte proliferation; also anti-inflammatory (↑adenosine)</td><td>Crohn's disease (NOT UC — limited evidence); steroid-sparing</td><td>Hepatotoxicity, pulmonary fibrosis, teratogen (CI in pregnancy); supplement folate</td></tr>
+                            <tr><td>Cyclosporine</td><td>Calcineurin inhibitor</td><td>Inhibits calcineurin → ↓IL-2 → ↓T-cell activation</td><td>Severe/refractory UC (IV, as rescue therapy)</td><td>Nephrotoxicity, hypertension, neurotoxicity, gingival hyperplasia, hirsutism</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Before starting azathioprine/6-MP, check <strong>TPMT (thiopurine methyltransferase)</strong> activity. Low TPMT activity → cannot metabolize thiopurines → drug accumulates → severe myelosuppression. This is a classic pharmacogenomics Step 1 question.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-biologics">
+                <span class="section-chevron">&#9660;</span> Biologic Therapies
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>Biologics are monoclonal antibodies targeting specific pro-inflammatory cytokines. They are used for <strong>moderate-to-severe IBD</strong> that has failed conventional therapy.</p>
+                    <h4>Anti-TNF-α Agents</h4>
+                    <table>
+                        <thead><tr><th>Drug</th><th>Type</th><th>Route</th><th>Indications</th><th>Key Points</th></tr></thead>
+                        <tbody>
+                            <tr><td>Infliximab (Remicade)</td><td>Chimeric IgG1 mAb (mouse + human)</td><td>IV infusion</td><td>Crohn's, UC, fistulizing Crohn's, RA, psoriasis, AS</td><td>First biologic approved for IBD; chimeric → immunogenic → anti-drug antibodies; infusion reactions</td></tr>
+                            <tr><td>Adalimumab (Humira)</td><td>Fully human IgG1 mAb</td><td>SQ injection</td><td>Crohn's, UC, RA, psoriasis, AS</td><td>Fully human → less immunogenic; patient self-injects; most widely used biologic globally</td></tr>
+                            <tr><td>Certolizumab pegol (Cimzia)</td><td>PEGylated Fab fragment of humanized mAb</td><td>SQ injection</td><td>Crohn's disease</td><td>No Fc region → does not cross placenta; safer in pregnancy</td></tr>
+                        </tbody>
+                    </table>
+                    <h4>Anti-IL-12/23 and Anti-IL-23 Agents</h4>
+                    <table>
+                        <thead><tr><th>Drug</th><th>Target</th><th>IBD Indication</th><th>Key Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td>Ustekinumab (Stelara)</td><td>Anti-IL-12/23 (blocks p40 subunit)</td><td>Crohn's, UC</td><td>Also used in psoriasis; less infection risk than anti-TNF</td></tr>
+                            <tr><td>Risankizumab-rzaa (Skyrizi)</td><td>Anti-IL-23 (blocks p19 subunit — IL-23 specific)</td><td>Crohn's disease</td><td>More selective than ustekinumab; emerging evidence for UC</td></tr>
+                        </tbody>
+                    </table>
+                    <h4>Anti-Integrin Agents</h4>
+                    <ul>
+                        <li><strong>Vedolizumab (Entyvio)</strong> — anti-α4β7 integrin; blocks lymphocyte trafficking to GI mucosa; gut-selective → fewer systemic immunosuppression risks; used for Crohn's and UC</li>
+                        <li><strong>Natalizumab</strong> — anti-α4 integrin (non-gut-selective); risk of PML (progressive multifocal leukoencephalopathy — JC virus); limited to Crohn's refractory to all else</li>
+                    </ul>
+                    <h4>Anti-TNF Side Effects (Class Effect)</h4>
+                    <ul>
+                        <li><strong>Reactivation of latent TB</strong> — MUST screen with PPD/IGRA + CXR before starting</li>
+                        <li><strong>Opportunistic infections</strong> (fungal, viral)</li>
+                        <li><strong>Hepatitis B reactivation</strong> — screen HBsAg before use</li>
+                        <li><strong>Lymphoma risk</strong> (especially hepatosplenic T-cell lymphoma with combo azathioprine)</li>
+                        <li><strong>Drug-induced lupus</strong> (especially infliximab)</li>
+                        <li><strong>Demyelinating disease</strong> — avoid in MS</li>
+                        <li><strong>CHF</strong> — avoid in NYHA class III-IV heart failure</li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="exam-trap-header">&#9888;&#65039; Exam Trap</div>
+                        Infliximab = CHIMERIC (mouse + human) → more immunogenic → risk of infusion reactions and anti-drug antibodies. Adalimumab = FULLY HUMAN → less immunogenic. Both block TNF-α but infliximab is IV and adalimumab is SQ. This distinction is HIGH-YIELD.
+                    </div>
+                    <div class="mnemonic">
+                        <div class="mnemonic-header">&#128161; Mnemonic</div>
+                        <strong>"-mab" suffix = monoclonal antibody.</strong> "Infli-xi-mab" → xi = chimeric. "Adali-mu-mab" → mu = human (fully human = fully murine-free). "Vedoli-zu-mab" → zu = humanized.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-fmt">
+                <span class="section-chevron">&#9660;</span> Fecal Microbiota Transplantation (FMT)
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <p>FMT involves transferring stool from a healthy screened donor into the GI tract of a recipient to restore normal gut microbiome composition (eubiosis).</p>
+                    <h4>Key Points</h4>
+                    <ul>
+                        <li><strong>Primary indication (FDA approved):</strong> Recurrent <em>Clostridioides difficile</em> (C. diff) infection — highly effective (&gt;90% cure rate for recurrent C. diff)</li>
+                        <li><strong>Emerging research:</strong> IBD (UC especially), IBS, metabolic disease, antibiotic-associated dysbiosis</li>
+                        <li><strong>Routes:</strong> Colonoscopy, nasojejunal tube, capsule (oral — frozen stool capsules)</li>
+                        <li><strong>Rationale:</strong> Restore competitive exclusion of pathogens; rebuild diverse microbiome; modulate immune responses at mucosa</li>
+                        <li><strong>Screening required:</strong> Donor screened for infectious agents (HIV, hepatitis, multi-drug resistant organisms)</li>
+                        <li><strong>Risks:</strong> Transmission of infection from donor (rare but serious); GI side effects (cramping, bloating, transient diarrhea)</li>
+                    </ul>
+                    <div class="hy-box">
+                        <div class="hy-header">High-Yield</div>
+                        FMT is FDA-cleared for recurrent C. diff. It is NOT standard of care for IBD yet, but research is ongoing. The gut microbiome plays a central role in IBD pathogenesis — dysbiosis (loss of diversity, overgrowth of pro-inflammatory bacteria) is a feature of both Crohn's and UC.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)" id="lo9-pyramid">
+                <span class="section-chevron">&#9660;</span> IBD Treatment Pyramid
+            </h3>
+            <div class="section-body collapsed">
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Tier</th><th>Drugs</th><th>Use Case</th></tr></thead>
+                        <tbody>
+                            <tr><td>1st Line — Mild disease</td><td>5-ASA (mesalamine, sulfasalazine)</td><td>Mild-moderate UC; maintenance</td></tr>
+                            <tr><td>2nd Line — Flares</td><td>Corticosteroids (prednisone, budesonide)</td><td>Induce remission; NOT for maintenance</td></tr>
+                            <tr><td>3rd Line — Steroid-sparing / Maintenance</td><td>Azathioprine, 6-MP, methotrexate</td><td>Moderate disease; steroid-sparing; maintain remission</td></tr>
+                            <tr><td>4th Line — Moderate-Severe / Biologics</td><td>Anti-TNF (infliximab, adalimumab); anti-IL-23 (risankizumab); anti-integrin (vedolizumab)</td><td>Moderate-severe IBD refractory to conventional therapy</td></tr>
+                            <tr><td>Rescue / Refractory</td><td>Cyclosporine IV (UC); surgery</td><td>Severe/fulminant UC; surgery is curative for UC</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="usmle-summary">
+                        <div class="usmle-header">&#11088; Step 1 High-Yield Summary — LO 9</div>
+                        <ul>
+                            <li>Crohn's = transmural, skip lesions, anywhere GI, granulomas, fistulas; UC = mucosal only, continuous from rectum, colon only, crypt abscesses</li>
+                            <li>5-ASA (mesalamine) = first-line for mild UC; limited role in Crohn's; sulfasalazine = 5-ASA + sulfapyridine carrier</li>
+                            <li>Steroids = flare induction only; budesonide for ileal Crohn's (high first-pass → local effect)</li>
+                            <li>Azathioprine/6-MP → check TPMT first; methotrexate = Crohn's (not UC); both are steroid-sparing</li>
+                            <li>Infliximab = chimeric (IV); adalimumab = fully human (SQ); both anti-TNF-α; screen for TB + Hep B before use</li>
+                            <li>Risankizumab = anti-IL-23 (p19); approved for Crohn's; vedolizumab = anti-integrin, gut-selective</li>
+                            <li>FMT = FDA-cleared for recurrent C. diff; under investigation for IBD</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PRACTICE QUESTIONS
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="lo-section" id="practice">
+        <h2 class="lo-title">Practice Questions</h2>
+        <p class="lo-subtitle">GI23 Self-Assessment · HoyaDocs GI Block</p>
+        <div class="lo-content">
+            <div class="lo-covered">
+                <div class="lo-covered-title">Coverage</div>
+                <ul>
+                    <li>15 questions spanning LOs 1–9 — antacids, H2 blockers, PPIs, P-CABs, H. pylori, GERD, cytoprotection, emetics, antiemetics, antidiarrheals, laxatives, and IBD biologics.</li>
+                </ul>
+            </div>
+
+            <div class="practice-q-block">
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q1 (LO 1).</strong> A patient taking omeprazole daily for 6 months is found to have a serum Mg²⁺ of 1.1 mEq/L. Which mechanism explains this finding?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Decreased renal reabsorption of magnesium</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Impaired TRPM6/7 magnesium transporter activity in the gut due to elevated luminal pH</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Omeprazole directly chelates magnesium in the bloodstream</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Increased gastric acid secretion depletes magnesium</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. PPI-induced small bowel atrophy reduces magnesium surface area</button>
+                    </div>
+                    <div class="pq-answer">Long-term PPI use → elevated gastric pH → impairs acid-dependent activation of TRPM6/7 magnesium transporters in the small bowel → hypomagnesemia. This is a well-described complication of long-term PPI use and requires PPI discontinuation or magnesium supplementation.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q2 (LO 1).</strong> A 45-year-old man with GERD is started on famotidine. Which statement best describes famotidine's advantage over cimetidine?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Famotidine irreversibly binds H2 receptors</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Famotidine does not inhibit CYP450 enzymes and lacks antiandrogenic effects</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Famotidine has a shorter half-life requiring less frequent dosing</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Famotidine blocks both H1 and H2 receptors</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Famotidine is a prodrug requiring acid activation</button>
+                    </div>
+                    <div class="pq-answer">Cimetidine is notorious for CYP450 inhibition (warfarin, phenytoin, theophylline interactions) and antiandrogenic effects (gynecomastia, impotence). Famotidine and ranitidine lack these properties. All H2 blockers are competitive reversible antagonists.</div>
+                </div>
+
+                <div class="pq-item" data-correct="C">
+                    <div class="pq-stem"><strong>Q3 (LO 1).</strong> A patient starting a PPI is told the drug must be taken 30–60 minutes before a meal. Why?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Food activates CYP2C19 which converts the prodrug to active form</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Acid in the stomach degrades the enteric coating unless food buffers it first</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Proton pumps must be actively secreting acid (stimulated by eating) for PPIs to bind covalently</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Pre-meal dosing prevents the drug from binding to H2 receptors</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Food slows gastric emptying, extending PPI contact time</button>
+                    </div>
+                    <div class="pq-answer">PPIs are prodrugs activated in the acidic canaliculi of actively secreting proton pumps. The H⁺/K⁺-ATPase must be in its active (secreting) state for the PPI to enter the canaliculus, become protonated, and covalently bind the pump. Meal-stimulated acid secretion maximizes active pumps available — so PPIs are most effective taken 30–60 min before the first meal of the day.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q4 (LO 2).</strong> A 52-year-old man tests positive for H. pylori via urea breath test. He is started on bismuth quadruple therapy. Which four-drug combination is this?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Omeprazole + clarithromycin + amoxicillin + metronidazole</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Bismuth subsalicylate + metronidazole + tetracycline + PPI</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Bismuth + clarithromycin + amoxicillin + H2 blocker</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Omeprazole + metronidazole + azithromycin + bismuth</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Bismuth + rifaximin + clarithromycin + PPI</button>
+                    </div>
+                    <div class="pq-answer">Bismuth quadruple therapy = Bismuth subsalicylate + Metronidazole + Tetracycline + PPI. This regimen is used when clarithromycin resistance is suspected or as a salvage regimen. Triple therapy = PPI + clarithromycin + amoxicillin (or metronidazole).</div>
+                </div>
+
+                <div class="pq-item" data-correct="C">
+                    <div class="pq-stem"><strong>Q5 (LO 3).</strong> A patient with GERD reports that alcohol, chocolate, and peppermint worsen her symptoms. Which mechanism explains why these substances exacerbate GERD?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. They increase gastric acid production via parietal cell stimulation</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. They delay gastric emptying and increase intragastric pressure</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. They decrease lower esophageal sphincter (LES) pressure, allowing acid reflux</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. They stimulate H. pylori growth in the esophagus</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. They increase saliva production, diluting esophageal clearance</button>
+                    </div>
+                    <div class="pq-answer">Alcohol, chocolate, peppermint, caffeine, fatty foods, and nicotine all reduce LES pressure → allow gastric contents to reflux into the esophagus. GERD is fundamentally a disorder of LES incompetence.</div>
+                </div>
+
+                <div class="pq-item" data-correct="C">
+                    <div class="pq-stem"><strong>Q6 (LO 4).</strong> A 68-year-old woman taking daily ibuprofen for arthritis develops a peptic ulcer. Which agent would be MOST appropriate to both treat the current ulcer and prevent recurrence while she continues NSAID therapy?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Sucralfate</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Calcium carbonate antacid</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Misoprostol</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Famotidine</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Bismuth subsalicylate</button>
+                    </div>
+                    <div class="pq-answer">Misoprostol (PGE1 analog) directly replaces the prostaglandins that NSAIDs deplete. NSAIDs inhibit COX → ↓prostaglandins → ↓mucus, ↓bicarbonate, ↑acid vulnerability. Misoprostol restores these cytoprotective functions. Sucralfate is NOT effective for NSAID-induced ulcers for poorly understood reasons. Note: if patient were pregnant, use PPI instead (misoprostol is contraindicated).</div>
+                </div>
+
+                <div class="pq-item" data-correct="C">
+                    <div class="pq-stem"><strong>Q7 (LO 5).</strong> A patient undergoing cisplatin chemotherapy develops severe nausea. The oncologist explains that the drug triggers nausea by causing enterochromaffin cells in the GI mucosa to release serotonin. Which pathway does this activate?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Vestibular → cerebellum → emetic center</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Cortical → limbic → emetic center</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Vagal afferents (5-HT3) → NTS → emetic center</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. CTZ (D2 receptors) → emetic center</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Splanchnic nerve (NK1) → spinal cord → emetic center</button>
+                    </div>
+                    <div class="pq-answer">Chemotherapy → enterochromaffin cells release 5-HT → activates 5-HT3 receptors on vagal afferents → NTS → emetic center. This is the peripheral pathway. The CTZ (D2, NK1) is also activated by blood-borne cisplatin metabolites. Ondansetron works by blocking 5-HT3 at both sites.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q8 (LO 6).</strong> A 24-year-old medical student gets nauseated on a ferry. His colleague gives him ondansetron. Despite taking it, he continues to vomit. Why is ondansetron ineffective here?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Ondansetron requires IV administration for efficacy</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Motion sickness is mediated by H1 and M1 receptors in the vestibular pathway, not 5-HT3</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. The student has a CYP2D6 mutation preventing ondansetron metabolism</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Ondansetron only works for post-operative nausea, not motion sickness</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Ondansetron is only effective before vomiting begins, not after</button>
+                    </div>
+                    <div class="pq-answer">Motion sickness signals travel from the inner ear vestibular system → cerebellum → emetic center, mediated by H1 and M1 receptors. Ondansetron is a 5-HT3 antagonist — it has no activity at H1 or M1 receptors. The correct drugs for motion sickness are diphenhydramine (H1 blocker) or scopolamine (M1 blocker).</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q9 (LO 6).</strong> A 55-year-old man with Parkinson's disease develops gastroparesis. His neurologist is asked to recommend an antiemetic/prokinetic. Which drug is CONTRAINDICATED?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Ondansetron</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Metoclopramide</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Erythromycin (motilin agonist)</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Domperidone (where available)</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Diphenhydramine</button>
+                    </div>
+                    <div class="pq-answer">Metoclopramide crosses the BBB and blocks D2 receptors centrally → worsens dopamine deficiency in Parkinson's → accelerates parkinsonian symptoms. Domperidone is a D2 antagonist that does NOT cross the BBB (stays peripheral) and is safer in Parkinson's, though not available in the US. Ondansetron is safe.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q10 (LO 7).</strong> During a cholera outbreak in a refugee camp, oral rehydration solution (ORS) is distributed. A medic asks why plain water is insufficient. Which is the best explanation?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Plain water is hypotonic and causes cerebral edema</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Water must be combined with glucose to activate SGLT1 cotransport of Na⁺ and drive water absorption</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Cholera toxin destroys aquaporins, so water cannot be absorbed</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Plain water stimulates further cholera toxin release</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Water absorption requires bile salts</button>
+                    </div>
+                    <div class="pq-answer">SGLT1 cotransports Na⁺ and glucose together into enterocytes — water follows osmotically. Cholera toxin disables Na-Cl co-transport but SPARES SGLT1. Plain water lacks glucose, so SGLT1 cannot be activated and Na (and thus water) cannot be absorbed efficiently. The glucose in ORS is the critical driver of Na — and thus water — absorption even in active cholera.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q11 (LO 7).</strong> A parent brings her 5-year-old child to the ED after he ingested a large quantity of Pepto-Bismol during a stomach flu. The parent notes his tongue and stool are black. What is the most important concern regarding this child?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. GI hemorrhage from peptic ulceration</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Reye syndrome risk due to salicylate component during a viral illness</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Bismuth nephrotoxicity causing acute kidney injury</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Heavy metal poisoning from bismuth</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Black tongue is a sign of methemoglobinemia</button>
+                    </div>
+                    <div class="pq-answer">Bismuth subsalicylate contains a salicylate component. Salicylates given to children with viral illness can cause Reye syndrome (acute hepatic failure + encephalopathy). The black stool/tongue is from bismuth sulfide — it is BENIGN and not GI bleeding. The key danger here is the salicylate in a child with viral gastroenteritis.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q12 (LO 8).</strong> A patient with hepatic encephalopathy is started on lactulose. His family is confused — "how does a laxative help his brain?" Which mechanism explains lactulose's benefit?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Lactulose crosses the BBB and reduces cerebral ammonia directly</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Lactulose acidifies the colon → NH3 + H⁺ → NH4⁺ → trapped in colon → reduced serum ammonia</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Lactulose stimulates hepatic urea cycle enzymes</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Lactulose decreases colonic bacterial load that produces ammonia</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Lactulose dilutes ammonia by increasing bowel transit</button>
+                    </div>
+                    <div class="pq-answer">Colonic bacteria metabolize lactulose → lactic acid + acetic acid → lowers luminal pH. This acidification converts NH3 (membrane-permeable, absorbed → reaches brain) into NH4⁺ (ionized, membrane-impermeable, trapped in colon lumen) → excreted in stool → lower serum and CNS ammonia → improved hepatic encephalopathy.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q13 (LO 8).</strong> A patient is started on opioid pain management after hip surgery. The surgical team also starts docusate sodium (Colace). Which statement BEST describes the rationale?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Docusate stimulates peristalsis to counteract opioid-induced ileus</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Docusate is a surfactant that softens stool to prevent straining, but does not stimulate bowel movement</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Docusate blocks opioid receptors in the gut</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Docusate is an osmotic agent that draws water into the colon</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Docusate is added to prevent NSAID-induced GI irritation</button>
+                    </div>
+                    <div class="pq-answer">Docusate is a stool softener (anionic surfactant) that lowers stool surface tension, allowing water and fat to penetrate and soften the stool mass. It does NOT stimulate peristalsis. After hip surgery, straining (Valsalva) is dangerous — docusate prevents painful hard stools. For opioid-induced constipation, a stimulant laxative (senna) is actually more appropriate, which is why "senna + docusate" is a common combo order for opioid patients.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q14 (LO 9).</strong> A 29-year-old man with Crohn's disease is started on infliximab. Before initiating therapy, which screening step is MOST critical?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Echocardiogram for systolic dysfunction</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. PPD/IGRA and CXR for latent tuberculosis</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Colonoscopy to rule out colorectal cancer</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. TPMT genotyping</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Anti-CCP antibodies for RA</button>
+                    </div>
+                    <div class="pq-answer">Anti-TNF-α agents (infliximab, adalimumab) cause significant immunosuppression. TNF-α is critical for granuloma maintenance — blocking it can reactivate latent TB (granulomas dissolve → bacilli released → active TB). ALL patients must be screened with PPD or IGRA (QuantiFERON) + CXR before starting anti-TNF therapy. TPMT genotyping is required before azathioprine/6-MP, not infliximab.</div>
+                </div>
+
+                <div class="pq-item" data-correct="B">
+                    <div class="pq-stem"><strong>Q15 (LO 9).</strong> Which of the following BEST distinguishes adalimumab from infliximab?</div>
+                    <div class="pq-choices">
+                        <button class="pq-choice" data-letter="A" onclick="selectAnswer(this)">A. Adalimumab targets IL-23; infliximab targets TNF-α</button>
+                        <button class="pq-choice" data-letter="B" onclick="selectAnswer(this)">B. Adalimumab is a fully human monoclonal antibody given SQ; infliximab is a chimeric antibody given IV</button>
+                        <button class="pq-choice" data-letter="C" onclick="selectAnswer(this)">C. Adalimumab requires TPMT testing; infliximab does not</button>
+                        <button class="pq-choice" data-letter="D" onclick="selectAnswer(this)">D. Infliximab is used only for UC; adalimumab is used only for Crohn's</button>
+                        <button class="pq-choice" data-letter="E" onclick="selectAnswer(this)">E. Adalimumab is a biosimilar of infliximab</button>
+                    </div>
+                    <div class="pq-answer">Both target TNF-α, but: Infliximab = CHIMERIC (mouse + human Fc region) → given by IV infusion → more immunogenic (anti-drug antibodies, infusion reactions). Adalimumab = FULLY HUMAN → given by SQ self-injection → less immunogenic → preferred for outpatient maintenance. Both are approved for Crohn's and UC. Neither requires TPMT testing (that's for thiopurines).</div>
+                </div>
+
+            </div><!-- end practice-q-block -->
+        </div>
+    </section>
+
+</main><!-- /main -->
+
+<script>
+    // ── Interactive practice question answer selection ───────────────────────
+    function selectAnswer(btn) {
+        const item = btn.closest('.pq-item');
+        if (item.dataset.answered) return; // lock after first answer
+        item.dataset.answered = 'true';
+
+        const correct = item.dataset.correct;
+        const chosen = btn.dataset.letter;
+        const isCorrect = chosen === correct;
+
+        // Style all choices
+        item.querySelectorAll('.pq-choice').forEach(function(b) {
+            b.disabled = true;
+            if (b.dataset.letter === correct) {
+                b.classList.add('pq-correct');
+            } else if (b === btn && !isCorrect) {
+                b.classList.add('pq-wrong');
+            }
+        });
+
+        // Build and show answer with result badge
+        const answerEl = item.querySelector('.pq-answer');
+        if (answerEl) {
+            const badge = isCorrect
+                ? '<span class="pq-correct-badge">&#10003; Correct!</span>'
+                : '<span class="pq-wrong-badge">&#10007; Incorrect — correct answer: ' + correct + '</span>';
+            answerEl.innerHTML = badge + ' ' + answerEl.textContent;
+            answerEl.classList.add('show');
+        }
+    }
+
+    // ── Tab switching ────────────────────────────────────────────────────────
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    // ── Practice question answer reveal ─────────────────────────────────────
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    // ── Collapsible sections ─────────────────────────────────────────────────
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH4(h4El) {
+        h4El.classList.toggle('collapsed');
+        const body = h4El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+
+    // ── Expand / Collapse All (active tab only) ──────────────────────────────
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    // ── Export: build standalone document (shared by Print PDF + Word Doc) ───
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>GI23: GI Pharmacology — HoyaDocs GI Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    // ── Print / Save as PDF ──────────────────────────────────────────────────
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#9203;</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    // ── Download Word Doc (.doc) ─────────────────────────────────────────────
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#9203;</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'GI23-GI-Pharmacology.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function toggleMobileSidebar() {
+        document.querySelector('.sidebar').classList.toggle('mob-open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    // Close mobile sidebar when a nav link is tapped
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('mob-open');
+                document.querySelector('.sidebar-overlay').classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
