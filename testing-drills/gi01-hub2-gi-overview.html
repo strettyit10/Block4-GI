@@ -6,151 +6,157 @@
 <title>GI01 Hub #2 · GI Overview — Step 1 Extensions</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#3B82F6;--al:rgba(59,130,246,0.12);--ab:rgba(59,130,246,0.3);}
+:root{--accent:#60A5FA;--acc:#60A5FA;--acc-dim:rgba(96,165,250,0.12);--al:rgba(96,165,250,0.12);--ab:rgba(96,165,250,0.30);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',sans-serif;background:#000000;color:#E6EDF3;min-height:100vh;}
 .container{max-width:1100px;margin:0 auto;padding:20px;}
 
-.header{background:linear-gradient(135deg,#07111e,#080f1e);border-bottom:3px solid var(--accent);padding:28px 30px;margin-bottom:24px;border-radius:10px;}
-.back{font-size:.8em;color:#6B7280;text-decoration:none;display:inline-block;margin-bottom:10px;}
+.header{background:linear-gradient(135deg,#071526 0%,#050d1c 100%);border:1px solid #1E3A8A;border-left:5px solid var(--acc);border-radius:12px;padding:28px 32px;margin-bottom:22px}
+.hub-tag{display:inline-block;background:#1E3A8A;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
+.header h1 span{color:var(--acc)}
+.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
 .back:hover{color:var(--accent);}
 h1{color:#E6EDF3;font-size:1.9em;margin-bottom:6px;}
-.atag{color:var(--accent);font-weight:600;}
-.subtitle{color:#9CA3AF;font-size:.9em;line-height:1.5;margin-bottom:12px;}
-.step1-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
-.step1-badge{background:#0c1b30;border:1px solid #1a3a6a;border-radius:6px;padding:4px 10px;font-size:.78em;color:#8B949E;}
-.step1-badge strong{color:var(--accent);}
+.subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.source-badge{background:#071428;border:1px solid #1E3A8A;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
+.source-badge strong{color:var(--acc)}
 
-.hub-prog{background:#07111e;border:1px solid #152d55;border-radius:8px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hub-prog{background:#020C1B;border:1px solid #172554;border-radius:8px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .hub-prog-label{font-size:.78em;color:#6B7280;margin-right:4px;}
 .hub-step{padding:6px 14px;border-radius:6px;font-size:.82em;font-weight:600;}
-.hub-step.done{background:#0c1b30;border:1px solid #1a3a6a;color:#6B7280;text-decoration:none;transition:all .2s;}
-.hub-step.done:hover{border-color:#00897B;color:#00897B;}
-.hub-step.current{background:var(--accent);color:#000000;}
-.hub-step.next{background:#0c1b30;border:1px solid #1a3a6a;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.done{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s;}
+.hub-step.done:hover{border-color:#60A5FA;color:#60A5FA;}
+.hub-step.current{background:#2563EB;color:#ffffff;}
+.hub-step.next{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s;}
 .hub-step.next:hover{border-color:var(--accent);color:var(--accent);}
-.hub-arrow{color:#1a3a6a;}
+.hub-arrow{color:#1E3A8A;}
 
-.tab-nav{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;background:#07111e;padding:10px;border-radius:8px;border:1px solid #152d55;}
-.tab-btn{padding:9px 16px;background:#0c1b30;color:#8B949E;border:1px solid #1a3a6a;border-radius:6px;cursor:pointer;font-weight:600;font-size:.86em;transition:all .2s;font-family:inherit;}
-.tab-btn:hover{background:#1a3a6a;color:var(--accent);}
-.tab-btn.active{background:var(--accent);color:#000000;border-color:var(--accent);}
+.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #1E3A8A;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
+.tab-btn:hover{color:#60A5FA}
+.tab-btn.active{color:#60A5FA;border-bottom-color:#60A5FA}
 .tab-content{display:none;animation:fi .25s ease;}
 .tab-content.active{display:block;}
 @keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.sec{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #152d55;}
+.sec{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #172554;}
 
 /* FLASHCARDS */
 .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;}
-.fc{cursor:pointer;perspective:1000px;}
-.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s;min-height:160px;}
+.fc{cursor:pointer;perspective:1000px;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
 .fc.flipped .fc-inner{transform:rotateY(180deg);}
-.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;border-radius:10px;min-height:160px;}
-.fc-front{background:#07111e;border:1px solid #1a3a6a;border-top:3px solid var(--accent);}
-.fc-back{background:#1C1A10;border:1px solid #444;border-top:3px solid #4ADE80;transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;border-radius:10px}
+.fc-front{background:#020C1B;border:1px solid #1E3A8A;border-top:3px solid var(--accent);}
+.fc-back{background:#071428;border:1px solid #444;border-top:3px solid #2563EB;transform:rotateY(180deg);}
 .fc-label{font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
 .fc-front .fc-label{color:var(--accent);}
-.fc-back .fc-label{color:#4ADE80;}
+.fc-back .fc-label{color:#60A5FA;}
 .fc-q{font-size:.92em;color:#E6EDF3;line-height:1.5;font-weight:500;}
 .fc-a{font-size:.86em;color:#DBEAFE;line-height:1.6;}
 .fc-hint{font-size:.67em;color:#6B7280;margin-top:10px;}
 
 /* MCQ */
-.mcq-item{background:#07111e;border:1px solid #1a3a6a;border-radius:10px;padding:20px;margin-bottom:16px;}
+.mcq-item{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:20px;margin-bottom:16px;}
 .mcq-num{font-size:.75em;color:#6B7280;font-weight:700;text-transform:uppercase;margin-bottom:8px;}
-.mcq-stem{font-size:.93em;color:#E6EDF3;line-height:1.7;margin-bottom:14px;background:#0c1b30;padding:14px;border-radius:8px;border-left:3px solid var(--accent);}
+.mcq-stem{font-size:.93em;color:#E6EDF3;line-height:1.7;margin-bottom:14px;background:#071428;padding:14px;border-radius:8px;border-left:3px solid var(--accent);}
 .mcq-stem strong{color:#93C5FD;}
 .mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
-.mcq-opt{background:#0c1b30;border:1px solid #1a3a6a;border-radius:6px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#C9D1D9;transition:all .18s;display:flex;align-items:flex-start;gap:10px;}
-.mcq-opt:hover:not(.locked){border-color:var(--accent);background:#2A2010;}
+.mcq-opt{background:#071428;border:1px solid #1E3A8A;border-radius:6px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#C9D1D9;transition:all .18s;display:flex;align-items:flex-start;gap:10px;}
+.mcq-opt:hover:not(.locked){border-color:var(--accent);background:#0F1E3D;}
 .mcq-opt.correct{background:#0D2E0E;border-color:#2E7D32;color:#81C784;}
 .mcq-opt.wrong{background:#2E0A0A;border-color:#C62828;color:#EF9A9A;}
 .mcq-opt.locked{cursor:default;}
 .opt-letter{font-weight:700;color:var(--accent);flex-shrink:0;width:18px;}
-.mcq-exp{background:#0c1b30;border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;font-size:.84em;color:#9CA3AF;line-height:1.7;display:none;}
+.mcq-exp{background:#071428;border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;font-size:.84em;color:#9CA3AF;line-height:1.7;display:none;}
 .mcq-exp.show{display:block;}
 .mcq-exp strong{color:var(--accent);}
 
 /* CLINICAL CORRELATES */
-.cc-card{background:#07111e;border:1px solid #1a3a6a;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid var(--accent);}
+.cc-card{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid var(--accent);}
 .cc-tag{display:inline-block;background:var(--al);border:1px solid var(--ab);border-radius:4px;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);padding:2px 8px;margin-bottom:10px;}
 .cc-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:10px;}
 .cc-body{font-size:.88em;color:#9CA3AF;line-height:1.7;}
 .cc-body strong{color:#E6EDF3;}
 .cc-body em{color:var(--accent);font-style:normal;}
-.cc-reveal{background:none;border:1px solid #1a3a6a;color:#9CA3AF;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:12px;transition:all .2s;}
+.cc-reveal{background:none;border:1px solid #1E3A8A;color:#9CA3AF;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:12px;transition:all .2s;}
 .cc-reveal:hover{border-color:var(--accent);color:var(--accent);}
-.cc-detail{display:none;margin-top:12px;padding:12px;background:#1C1A10;border-radius:6px;border:1px solid #3D3010;font-size:.85em;color:#DBEAFE;line-height:1.7;}
+.cc-detail{display:none;margin-top:12px;padding:12px;background:#071428;border-radius:6px;border:1px solid #1E3A8A;font-size:.85em;color:#DBEAFE;line-height:1.7;}
 .cc-detail.open{display:block;}
 /* ── TOP NAV ── */
-.topnav{background:#0d2416;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav{background:#050D1A;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px}
-.nav-brand-text{font-size:.95em;font-weight:700;color:#E6EDF3}
-.nav-brand-sub{font-size:.72em;color:#7eb98a;font-weight:400;margin-left:4px}
+.nav-brand-text{font-size:1.25em;font-weight:900;color:#E6EDF3}
+.nav-brand-sub{font-size:.72em;color:#ffffff;font-weight:400;margin-left:4px}
 .nav-actions{display:flex;align-items:center;gap:10px}
-.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.65);font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);text-decoration:none;transition:all .2s}
-.nav-back-btn:hover{border-color:#3B82F6;color:#3B82F6}
-
-/* ── THEME TOGGLE BUTTON ── */
-.theme-toggle{background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:.95em;transition:all .2s;line-height:1;color:#fff}
-.theme-toggle:hover{background:rgba(255,255,255,0.20)}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#2563EB;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #2563EB;background:#ffffff;text-decoration:none;transition:all .2s}
+.nav-back-btn:hover{border-color:#60A5FA;color:#60A5FA;background:#EFF6FF}
 
 /* ── LIGHT MODE ── */
-body.light{background:#F4F8F5;color:#1F2328}
-body.light .topnav{background:#f0f9f4;border-bottom-color:#c5e8d1}
-body.light .theme-toggle{background:#e8f5ee;border:1px solid #c5e8d1;color:#1F2328}
-body.light .theme-toggle:hover{background:#d4eddb}
-body.light .nav-back-btn{color:#4a7c59;border-color:#c5e8d1}
-body.light .nav-back-btn:hover{border-color:#00897B;color:#00695C}
-body.light .nav-brand-text{color:#1F2328}
-body.light .nav-brand-sub{color:#4a7c59}
-body.light .header{background:linear-gradient(135deg,#E6F4F1 0%,#F0FAF8 100%)!important;border-color:#00897B!important}
-body.light .header h1{color:#1F2328!important}
-body.light .hub-tag{background:#00695C!important;color:#fff!important}
-body.light .subtitle{color:#556B61!important}
-body.light .source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556B61!important}
-body.light .hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .hub-step.next,body.light .hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-body.light .hub-step.current{background:#00695C!important;color:#fff!important}
-body.light .hub-prog-label,body.light .hub-arrow{color:#9CA3AF!important}
-body.light .stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .stat-label{color:#656D76!important}
-body.light .tab-nav{border-bottom-color:#D0D7DE!important}
-body.light .tab-btn{color:#656D76!important}
-body.light .tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
-body.light .section-label{color:#00695C!important}
+body{background:#F0F4FF;color:#1F2328}
+.topnav{background:#050D1A;border-bottom-color:#172554}
+.nav-back-btn{color:#2563EB;border-color:#2563EB;background:#ffffff}
+.nav-back-btn:hover{border-color:#60A5FA;color:#2563EB;background:#EFF6FF}
+.nav-brand-text{color:#1F2328}
+.nav-brand-sub{color:#ffffff!important}
+.header{background:linear-gradient(135deg,#DBEAFE 0%,#EFF6FF 100%)!important;border-color:#60A5FA!important}
+.hub-tag{background:#2563EB!important}
+.header h1{color:#1F2328!important}
+.hub-tag{background:#2563EB!important;color:#fff!important}
+.subtitle{color:#374151!important}
+.source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#374151!important}
+.hub-prog{background:#ffffff!important;border-color:#D0D7DE!important}
+.hub-step.next,.hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
+.hub-step.current{background:#2563EB!important;color:#fff!important}
+.hub-prog-label,.hub-arrow{color:#9CA3AF!important}
+.stats-bar .stat-card{background:#ffffff!important;border-color:#D0D7DE!important}
+.stat-label{color:#656D76!important}
+.tab-nav{border-bottom-color:#D0D7DE!important}
+.tab-btn{color:#656D76!important}
+.tab-btn.active{color:#1F2328!important;border-bottom-color:#1F2328!important}
+.section-label{color:#2563EB!important}
 /* ── Cards (all hub types) ── */
-body.light .fc-front,body.light .fib-card,body.light .order-drill,body.light .match-game,
-body.light .trap-card,body.light .mcq-card,body.light .cc-card,body.light .vq-card,
-body.light .saq-card,body.light .block-header,body.light .ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
-body.light .fc-back{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .fc-front{border-top-color:#00897B!important}
-body.light .fc-q,body.light .fc-a{color:#1F2328!important}
-body.light .fc-flip-hint{color:#8B9698!important}
-body.light .fc-label,body.light .fib-num,body.light .trap-num,body.light .mcq-num,
-body.light .vq-num,body.light .saq-num,body.light .cc-title{color:#00695C!important}
-body.light .fib-prompt,body.light .trap-statement,body.light .mcq-stem,body.light .vq-stem,
-body.light .saq-question,body.light .drill-title,body.light .match-title,
-body.light .cc-body,body.light .block-title{color:#1F2328!important}
-body.light .block-desc,body.light .drill-subtitle,body.light .match-subtitle{color:#556D76!important}
-body.light .fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .fib-hint{color:#9CA3AF!important}
-body.light .drag-item,body.light .match-item,body.light .mcq-opt,body.light .vq-opt{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-body.light .drag-item.drag-over{border-color:#00897B!important;background:#EDF7F4!important}
-body.light .ordering-intro,body.light .match-intro,body.light .trap-intro{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-body.light .match-col-label{color:#00695C!important}
-body.light .vq-stem{background:#EDF7F4!important;border-color:#A7D7C5!important}
-body.light .saq-answer,body.light .vq-explanation,body.light .mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#556D76!important}
-body.light .saq-point{background:#F0FAF8!important;border-left-color:#00897B!important;color:#1F2328!important}
+.fc-front,.fib-card,.order-drill,.match-set,.match-game,
+.trap-card,.mcq-item,.mcq-card,.cc-card,.vq-card,
+.saq-card,.block-header,.ref-section{background:#ffffff!important;border-color:#D0D7DE!important}
+.fc-back{background:#EFF6FF!important;border-color:#BFDBFE!important}
+.fc-front{border-top-color:#60A5FA!important}
+.fib-card,.order-drill,.match-set{border-left-color:#2563EB!important}
+.fc-q,.fc-a{color:#1F2328!important}
+.fc-flip-hint{color:#8B9698!important}
+.fc-label,.fib-num,.trap-num,.mcq-num,
+.vq-num,.saq-num,.cc-title{color:#2563EB!important}
+.fib-prompt,.trap-statement,.mcq-stem,.vq-stem,
+.saq-question,.drill-title,.match-set-title,.match-title,
+.cc-body,.block-title{color:#1F2328!important}
+.block-desc,.drill-subtitle,.match-set-hint,.match-subtitle{color:#374151!important}
+.fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+.fib-hint{color:#9CA3AF!important}
+.drag-item,.match-item,.mcq-opt,.vq-opt{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
+.drag-item.drag-over{border-color:#60A5FA!important;background:#EFF6FF!important}
+.ordering-intro,.match-intro,.trap-intro{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
+.match-col-label{color:#2563EB!important}
+.vq-stem{background:#EFF6FF!important;border-color:#BFDBFE!important}
+.saq-answer,.vq-explanation,.mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#374151!important}
+.saq-point{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#1F2328!important}
+.source-badge{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1E3A8A!important}
+.source-badge strong{color:#2563EB!important}
+.mcq-stem{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#1F2328!important}
+.mcq-stem strong{color:#1E3A8A!important}
+.mcq-exp{background:#F6F8FA!important;border-left-color:#60A5FA!important;color:#374151!important}
+.mcq-exp strong{color:#2563EB!important}
+.cc-detail{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1F2328!important}
 /* ── Tables ── */
-body.light table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
-body.light table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
+table th{background:#F6F8FA!important;color:#1F2328!important;border-bottom-color:#D0D7DE!important}
+table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
 /* ── Reference / footer ── */
-body.light .ref-section h3{color:#00695C!important;border-bottom-color:#D0D7DE!important}
-body.light .footer,body.light .footer a{color:#656D76!important}
-body.light .footer{border-top-color:#D0D7DE!important}
-body.light .back-link{color:#656D76!important;border-color:#D0D7DE!important}
-body.light .back-link:hover{color:#00695C!important;border-color:#00695C!important}
+.ref-section h3{color:#2563EB!important;border-bottom-color:#D0D7DE!important}
+.footer,.footer a{color:#656D76!important}
+.footer{border-top-color:#D0D7DE!important}
+.back-link{color:#656D76!important;border-color:#D0D7DE!important}
+.back-link:hover{color:#2563EB!important;border-color:#2563EB!important}
 
 </style>
 </head>
@@ -161,8 +167,6 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
   </div>
   <div class="nav-actions">
     <a href="../active-recall-hub.html" class="nav-back-btn">← Active Drill Hub</a>
-  
-    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀️</button>
   </div>
 </nav>
 <div class="container">
@@ -170,12 +174,12 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
 <a href="gi01-hub1-gi-overview.html" class="back">← Hub 1: Core Concepts</a>
 
 <div class="header">
-  <h1>GI Overview <span class="atag">Step 1 Extensions</span></h1>
-  <div class="subtitle">Hub #2 · High-Yield Clinical Correlates &amp; USMLE Framing · Lecture 01 · GI Block</div>
-  <div class="step1-strip">
-    <div class="step1-badge"><strong>Diseases:</strong> Hirschsprung · Achalasia · Zollinger-Ellison · Carcinoid · VIPoma · Dumping Syndrome</div>
-    <div class="step1-badge"><strong>Drugs:</strong> PPIs · H2 blockers · Ondansetron · Metoclopramide · Methylnaltrexone</div>
-    <div class="step1-badge"><strong>Pharm:</strong> Atropine · Neostigmine · Botox (LES)</div>
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>GI Overview <span>Step 1 Extensions</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Diseases:</strong> Hirschsprung · Achalasia · Zollinger-Ellison · Carcinoid · VIPoma · Dumping Syndrome</div>
+    <div class="source-badge"><strong>Drugs:</strong> PPIs · H2 blockers · Ondansetron · Metoclopramide · Methylnaltrexone</div>
+    <div class="source-badge"><strong>Pharm:</strong> Atropine · Neostigmine · Botox (LES)</div>
   </div>
 </div>
 
@@ -199,98 +203,98 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
   <div class="sec">Step 1 High-Yield Flashcards — 14 Cards</div>
   <div class="fc-grid">
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Hirschsprung Disease</div><div class="fc-q">Classic presentation, pathophysiology, histologic finding, and key imaging?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Presentation:</strong> Neonate fails to pass meconium; abdominal distension<br><strong>Path:</strong> Neural crest cells fail to migrate → absent ganglia (both plexuses) in distal colon → tonic contraction<br><strong>Histo:</strong> Aganglionic segment (narrow) — dilated segment PROXIMAL is normal<br><strong>Imaging:</strong> Barium enema shows narrow distal + dilated proximal segment ("transition zone")</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Achalasia</div><div class="fc-q">Pathophysiology, characteristic symptoms, imaging finding, and treatment options?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Path:</strong> Loss of inhibitory neurons (VIP/NO) at LES → LES fails to relax<br><strong>Sx:</strong> Progressive dysphagia (solids AND liquids), regurgitation, weight loss<br><strong>Imaging:</strong> "Bird-beak" on barium swallow; manometry shows absent LES relaxation<br><strong>Tx:</strong> Pneumatic dilation, Heller myotomy, or botulinum toxin (blocks ACh at LES)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Zollinger-Ellison Syndrome</div><div class="fc-q">Tumor type, mechanism, key lab finding, clinical triad?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Gastrinoma (usually in "gastrinoma triangle" — duodenum/pancreas)<br><strong>Mechanism:</strong> ↑↑Gastrin → ↑↑HCl → peptic ulcers + diarrhea (fat malabsorption from acid inactivating lipase)<br><strong>Lab:</strong> Elevated fasting serum gastrin (&gt;1000 pg/mL diagnostic)<br><strong>Triad:</strong> Peptic ulcers (multiple, atypical) + diarrhea + elevated gastrin</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">VIPoma (Verner-Morrison)</div><div class="fc-q">Tumor origin, WDHA syndrome components, mechanism of diarrhea?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Pancreatic islet cell tumor secreting VIP<br><strong>WDHA:</strong> Watery Diarrhea, Hypokalemia, Achlorhydria (no acid)<br><strong>Mechanism:</strong> VIP → ↑cAMP in intestinal epithelium → massive Cl⁻ secretion → osmotic water loss → "pancreatic cholera"<br><strong>Dx:</strong> Elevated serum VIP + CT/MRI for tumor</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Carcinoid Tumor</div><div class="fc-q">Cell of origin, secretory product, carcinoid syndrome features, and when syndrome occurs?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> Enterochromaffin cells (90% of body's 5-HT)<br><strong>Product:</strong> Serotonin (5-HT) + other amines<br><strong>Syndrome:</strong> Flushing, diarrhea, bronchospasm, right-sided heart disease (tricuspid regurgitation)<br><strong>Key:</strong> Syndrome only occurs with LIVER METS (local serotonin is first-pass metabolized; liver mets secrete directly into systemic circulation)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Dumping Syndrome</div><div class="fc-q">Cause, pathophysiology (early vs. late), and clinical features?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> Post-gastrectomy (loss of pyloric regulation)<br><strong>Early dumping (30 min):</strong> Hyperosmolar chyme → fluid shifts into gut lumen → hypovolemia → tachycardia, nausea, diarrhea<br><strong>Late dumping (2–3 hrs):</strong> Rapid glucose absorption → insulin spike → reactive hypoglycemia<br><strong>Tx:</strong> Small, frequent low-carb meals; octreotide for refractory cases</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Opioid-Induced Constipation</div><div class="fc-q">Receptor mechanism, why analgesic effect is preserved with targeted treatment?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> μ-opioid receptors on ENS neurons → inhibit ACh/SP release → ↓peristalsis + ↑sphincter tone<br><strong>Treatment:</strong> Methylnaltrexone (peripherally-acting μ-antagonist, does NOT cross BBB) → blocks GI opioid effects without reversing CNS analgesia<br><strong>Also:</strong> Naloxegol (similar mechanism, oral)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">PPI vs. H2 Blocker</div><div class="fc-q">Mechanism of each drug class, target cell, and main clinical use?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>PPIs (omeprazole, lansoprazole):</strong> Irreversibly inhibit H⁺/K⁺ ATPase on PARIETAL cells → block final step of HCl secretion → most potent<br><strong>H2 blockers (famotidine, ranitidine):</strong> Block histamine H2 receptors on parietal cells → ↓cAMP → ↓HCl<br><strong>Use:</strong> GERD, PUD, ZES (PPIs preferred for ZES)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">5-HT Pharmacology</div><div class="fc-q">What receptor does ondansetron block? What does metoclopramide do? Clinical uses of each?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ondansetron:</strong> 5-HT3 ANTAGONIST → blocks serotonin-mediated emesis → antiemetic (chemo-induced, post-op nausea)<br><strong>Metoclopramide:</strong> D2 antagonist + 5-HT4 AGONIST → ↑ACh release → prokinetic (↑gastric emptying)<br><strong>Note:</strong> Metoclopramide crosses BBB → risk of tardive dyskinesia (EPS)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Portal Hypertension</div><div class="fc-q">What causes portal hypertension, and what are the three major clinical consequences of portosystemic shunting?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> ↑portal vein pressure (usually from cirrhosis → fibrosis → ↑resistance)<br><strong>Consequences of portosystemic shunts:</strong><br>1. <strong>Esophageal varices</strong> (left gastric → azygos) → life-threatening GI bleed<br>2. <strong>Caput medusae</strong> (paraumbilical veins dilate)<br>3. <strong>Hemorrhoids</strong> (inferior mesenteric → inferior rectal)<br>Also: Ascites, splenomegaly, hepatic encephalopathy</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">First-Pass Metabolism</div><div class="fc-q">What is first-pass metabolism, what types of drugs are most affected, and how can it be bypassed?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Definition:</strong> Drug absorbed from GI tract → portal vein → liver → hepatic metabolism BEFORE reaching systemic circulation → ↓bioavailability<br><strong>Most affected:</strong> Lipophilic drugs (morphine, nitroglycerin, propranolol, lidocaine)<br><strong>Bypass routes:</strong> Sublingual (nitroglycerin), IV, transdermal, rectal (partial bypass), inhalation</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Myasthenia Gravis + GI</div><div class="fc-q">Why does myasthenia gravis cause dysphagia of the UPPER esophagus specifically?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> MG destroys nicotinic ACh receptors at the NMJ → skeletal muscle weakness<br><strong>GI relevance:</strong> Only the upper esophagus and pharynx use <em>skeletal muscle</em> (voluntary swallowing initiation)<br><strong>Spared:</strong> Lower esophagus, stomach, intestines use smooth muscle (muscarinic signaling) → NOT affected by MG<br><strong>Contrast:</strong> Achalasia affects lower esophagus (smooth muscle/inhibitory neuron loss)</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Cholera &amp; GI Fluid Physiology</div><div class="fc-q">How does cholera cause such massive diarrhea, and why does ORS (oral rehydration solution) work?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> Vibrio cholerae toxin → permanently activates adenylyl cyclase → ↑↑cAMP → massive Cl⁻ secretion → water follows osmotically → "rice-water" stools up to 20 L/day<br><strong>ORS works because:</strong> SGLT1 (Na⁺-glucose cotransporter) is NOT affected by cAMP → co-transporting Na⁺ + glucose still drives water absorption → bypasses the toxin's mechanism</div></div>
       </div>
     </div>
 
-    <div class="fc" onclick="this.classList.toggle('flipped')">
+    <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front"><div class="fc-label">Watershed Areas</div><div class="fc-q">What are the two GI watershed areas, why are they vulnerable, and what condition results from ischemia there?</div><div class="fc-hint">tap to flip</div></div>
         <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Two watershed areas:</strong><br>1. <strong>Splenic flexure</strong> (SMA/IMA border) — most vulnerable<br>2. <strong>Rectosigmoid junction</strong> (IMA/internal iliac border)<br><strong>Why vulnerable:</strong> End-arterial zones with minimal collateral flow<br><strong>Result of ischemia:</strong> Ischemic colitis — especially in elderly, post-aortic surgery, hypotension; presents as bloody diarrhea + left-lower quadrant pain</div></div>
@@ -397,10 +401,10 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
     <button class="cc-reveal" onclick="toggleCC(this)">Show Key Comparison Table</button>
     <div class="cc-detail">
       <table style="width:100%;font-size:.85em;border-collapse:collapse;">
-        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;color:#3B82F6;font-weight:700;">Feature</td><td style="padding:6px 10px;color:#3B82F6;">Achalasia</td><td style="padding:6px 10px;color:#3B82F6;">Hirschsprung</td></tr>
-        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">Location</td><td style="padding:6px 10px;">LES / esophagus</td><td style="padding:6px 10px;">Distal colon (always to anus)</td></tr>
-        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">NT lost</td><td style="padding:6px 10px;">VIP + NO</td><td style="padding:6px 10px;">Both plexuses absent</td></tr>
-        <tr style="border-bottom:1px solid #3D3010;"><td style="padding:6px 10px;">Presentation</td><td style="padding:6px 10px;">Dysphagia, regurgitation</td><td style="padding:6px 10px;">No meconium, abdominal distension</td></tr>
+        <tr style="border-bottom:1px solid #1E3A8A;"><td style="padding:6px 10px;color:#60A5FA;font-weight:700;">Feature</td><td style="padding:6px 10px;color:#60A5FA;">Achalasia</td><td style="padding:6px 10px;color:#60A5FA;">Hirschsprung</td></tr>
+        <tr style="border-bottom:1px solid #1E3A8A;"><td style="padding:6px 10px;">Location</td><td style="padding:6px 10px;">LES / esophagus</td><td style="padding:6px 10px;">Distal colon (always to anus)</td></tr>
+        <tr style="border-bottom:1px solid #1E3A8A;"><td style="padding:6px 10px;">NT lost</td><td style="padding:6px 10px;">VIP + NO</td><td style="padding:6px 10px;">Both plexuses absent</td></tr>
+        <tr style="border-bottom:1px solid #1E3A8A;"><td style="padding:6px 10px;">Presentation</td><td style="padding:6px 10px;">Dysphagia, regurgitation</td><td style="padding:6px 10px;">No meconium, abdominal distension</td></tr>
         <tr><td style="padding:6px 10px;">Treatment</td><td style="padding:6px 10px;">Pneumatic dilation / Heller myotomy / Botox</td><td style="padding:6px 10px;">Surgical resection of aganglionic segment</td></tr>
       </table>
     </div>
@@ -415,7 +419,7 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
     <em>Carcinoid:</em> ↑5-HT → flushing, diarrhea, bronchospasm, right-sided heart disease. Syndrome only with liver mets (bypasses first-pass metabolism).</div>
     <button class="cc-reveal" onclick="toggleCC(this)">Show Distinguishing Clues</button>
     <div class="cc-detail">
-      <strong style="color:#3B82F6;">USMLE Clue Words:</strong><br>
+      <strong style="color:#60A5FA;">USMLE Clue Words:</strong><br>
       • <strong>Multiple ulcers refractory to PPIs</strong> → think Gastrinoma (ZES)<br>
       • <strong>"Watery diarrhea" + hypokalemia + achlorhydria</strong> → think VIPoma<br>
       • <strong>Flushing + diarrhea + wheezing + right heart murmur</strong> → think Carcinoid with liver mets<br>
@@ -444,7 +448,7 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
     <em>Cholera → Isotonic volume depletion:</em> Vibrio cholerae toxin → ↑cAMP → massive Cl⁻/water secretion. ORS works via SGLT1 (Na⁺-glucose cotransport is cAMP-independent). Rice-water stools, up to 20 L/day.</div>
     <button class="cc-reveal" onclick="toggleCC(this)">Show Quick Reference</button>
     <div class="cc-detail">
-      <strong style="color:#3B82F6;">Acid-Base from GI losses:</strong><br>
+      <strong style="color:#60A5FA;">Acid-Base from GI losses:</strong><br>
       • <strong>Vomiting</strong> → lose HCl → metabolic <strong>alkalosis</strong> + hypokalemia<br>
       • <strong>Diarrhea</strong> → lose HCO₃⁻ → metabolic <strong>acidosis</strong> + hypokalemia<br>
       • <strong>Fistula (high-output, pancreatic/SI)</strong> → lose HCO₃⁻ → metabolic acidosis<br>
@@ -454,14 +458,28 @@ body.light .back-link:hover{color:#00695C!important;border-color:#00695C!importa
 
 </div>
 
-<div style="text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #152d55;padding-top:14px;margin-top:28px">
-  <a href="../active-recall-hub.html" style="color:#3B82F6;text-decoration:none;">← Active Recall Hub</a> &nbsp;·&nbsp;
+<div style="text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #172554;padding-top:14px;margin-top:28px">
+  <a href="../active-recall-hub.html" style="color:#60A5FA;text-decoration:none;">← Active Recall Hub</a> &nbsp;·&nbsp;
   GI01 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
 </div>
 
 </div>
 
 <script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    if(front) inner.style.height=front.scrollHeight+'px';
+  });
+});
 function switchTab(id,btn){
   document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -482,20 +500,7 @@ function toggleCC(btn){
 }
 
 /* ── THEME TOGGLE ── */
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light');
-  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
-  try{localStorage.setItem('gi-hub-theme',isLight?'light':'dark');}catch(e){}
-}
-window.addEventListener('DOMContentLoaded',function(){
-  try{
-    if(localStorage.getItem('gi-hub-theme')==='light'){
-      document.body.classList.add('light');
-      var b=document.getElementById('theme-btn');
-      if(b)b.textContent='🌙';
-    }
-  }catch(e){}
-});
+
 
 </script>
 </body>
