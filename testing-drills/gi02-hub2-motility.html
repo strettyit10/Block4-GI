@@ -99,8 +99,8 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
 .mcq-exp strong{color:#5D4037}
 
 /* ── INTRO BOXES ── */
-.mcq-intro,.cc-intro,.vig-intro,.hy-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
-.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong{color:#5D4037}
+.mcq-intro,.cc-intro,.vig-intro,.hy-intro,.ordering-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong,.ordering-intro strong{color:#5D4037}
 
 /* ── VIGNETTE MCQ ── */
 .vig-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #5D4037}
@@ -167,6 +167,34 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
 .ref-note{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
 .ref-note strong{color:#5D4037}
 .ref-section-hd{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px}
+
+/* ── ORDERING DRILLS ── */
+.order-drill{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.order-title{color:#5D4037;font-size:.86em;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;font-family:'Source Sans 3',sans-serif}
+.order-desc{font-size:.88em;color:#5A5A5A;margin-bottom:14px;line-height:1.55}
+.order-list{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:6px;padding:12px;margin-bottom:12px;min-height:120px}
+.order-item{background:#FFFFFF;border:1px solid #C6875A;border-radius:5px;padding:12px 14px;margin-bottom:8px;cursor:grab;user-select:none;font-size:.88em;color:#2C2C2C;display:flex;align-items:center;gap:10px;transition:all .2s}
+.order-item:last-child{margin-bottom:0}
+.order-item:hover{border-color:#9A6535;box-shadow:0 2px 6px rgba(93,64,55,.15)}
+.order-item.dragging{opacity:.6;cursor:grabbing}
+.order-item::before{content:'☰';color:#C6875A;font-weight:700;flex-shrink:0}
+.order-actions{display:flex;gap:10px;margin-bottom:12px}
+.order-btn{padding:8px 18px;border-radius:5px;border:1px solid #C6875A;background:#FFF;color:#5D4037;font-size:.87em;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.order-btn:hover{background:#FFF8F2;border-color:#9A6535}
+.order-feedback{padding:12px 14px;border-radius:5px;font-size:.86em;display:none;margin-top:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:12px 14px;margin-top:8px;font-size:.84em;color:#5A5A5A;display:none}
+.order-answer.show{display:block}
+
+/* ── HY TESTING NOTES ── */
+.hy-notes{display:grid;grid-template-columns:1fr;gap:14px}
+.hy-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:18px;border-left:4px solid #C6875A}
+.hy-card-title{font-size:.82em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;font-family:'Source Sans 3',sans-serif}
+.hy-badge{display:inline-block;background:#FFF8F2;border:1px solid #C6875A;border-radius:3px;padding:3px 8px;font-size:.75em;font-weight:700;color:#9A6535;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.hy-card-body{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.hy-card-body strong{color:#5D4037}
+.hy-card-body em{color:#9A6535;font-style:normal;font-weight:600}
 
 /* ── FOOTER ── */
 .footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
@@ -242,6 +270,14 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
     <div class="stat-num">4</div>
     <div class="stat-label">Tables</div>
   </div>
+  <div class="stat-card">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Ordering Drills</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5</div>
+    <div class="stat-label">HY Testing Notes</div>
+  </div>
 </div>
 
 <div class="tab-nav">
@@ -249,7 +285,9 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
   <button class="tab-btn" onclick="switchTab('flashcards',this)">Flashcards</button>
   <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
   <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
   <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('hy',this)">HY Testing Notes</button>
   <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
 </div>
 
@@ -270,9 +308,19 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
   <div class="sec">Clinical Vignettes — Step 1 Integration</div>
   <div id="vigContainer"></div>
 </div>
+<div id="tab-ordering" class="tab-content">
+  <div class="sec">Sequencing Drills — Motility Pathways & Disorders</div>
+  <div class="ordering-intro"><strong>Ordering Drills:</strong> Arrange the steps in the correct sequence. Drag to reorder or use the Shuffle button to see the answer.</div>
+  <div id="orderingContainer"></div>
+</div>
 <div id="tab-traps" class="tab-content">
   <div class="trap-intro"><strong>Step 1 Mechanism Traps:</strong> Each statement is a common misconception about GI signal transduction or pathophysiology. Select <strong>TRUE</strong> or <strong>FALSE</strong>, then read the explanation.</div>
   <div id="trapsContainer"></div>
+</div>
+<div id="tab-hy" class="tab-content">
+  <div class="sec">HY Testing Notes — High-Yield Clinical Pearls</div>
+  <div class="hy-intro"><strong>Testing Focus:</strong> These are high-yield testing notes covering common board traps, buzzwords, and testing distinctions in GI motility. Read each card carefully.</div>
+  <div id="hyContainer"></div>
 </div>
 <div id="tab-ref" class="tab-content">
   <div class="sec">Motility Disorder Comparison — High-Yield Pathology</div>
@@ -467,6 +515,64 @@ const traps=[
 ];
 
 /* ==========================================
+   ORDERING DRILLS DATA
+   ========================================== */
+const orderingDrills=[
+{
+  title:"Swallowing Reflex Sequence",
+  description:"Arrange the sequence of the swallowing reflex from initiation to gastric entry.",
+  steps:["LES relaxation mediated by VIP/NO neurons","Primary peristalsis (esophageal contraction wave)","Stomach receives bolus","UES (upper esophageal sphincter) relaxation","Pharyngeal phase activation (soft palate elevated, epiglottis covers larynx)"],
+  correctOrder:["Pharyngeal phase activation (soft palate elevated, epiglottis covers larynx)","UES (upper esophageal sphincter) relaxation","Primary peristalsis (esophageal contraction wave)","LES relaxation mediated by VIP/NO neurons","Stomach receives bolus"],
+  note:"The swallowing reflex has three phases: (1) ORAL — voluntary, initiated by tongue; (2) PHARYNGEAL — involuntary, soft palate closes nasopharynx, epiglottis covers larynx, UES relaxes; (3) ESOPHAGEAL — primary peristalsis propels bolus down while LES relaxes (via VIP/NO neurons = absent in achalasia)."
+},
+{
+  title:"Migrating Motor Complex (MMC) Phases",
+  description:"Arrange the phases of the interdigestive migrating motor complex in order.",
+  steps:["Phase III: Strong, rhythmic 8-12 contractions per minute","Phase I: Quiescence (no contractions)","Motilin-triggered from M cells","Phase II: Irregular, intermittent contractions","Continues downstream: stomach → duodenum → terminal ileum"],
+  correctOrder:["Phase I: Quiescence (no contractions)","Phase II: Irregular, intermittent contractions","Phase III: Strong, rhythmic 8-12 contractions per minute","Motilin-triggered from M cells","Continues downstream: stomach → duodenum → terminal ileum"],
+  note:"MMC (housekeeper wave) occurs during fasting (3–4 hours post-meal). Motilin (GPR38 agonist, Gs → cAMP) initiates Phase III. When food enters stomach, MMC stops and fed motility pattern begins. Clinical pearl: motilin receptor agonists (e.g., domperidone) can restore phase III contractions in gastroparesis."
+},
+{
+  title:"Achalasia Pathophysiology Sequence",
+  description:"Arrange the pathophysiologic cascade leading to achalasia complications.",
+  steps:["LES fails to relax during swallowing (aperistalsis)","Dysphagia progresses (solids and liquids equally affected)","Loss of inhibitory myenteric neurons (VIP/NO neurons in Auerbach's plexus)","Bird-beak appearance on barium swallow (smooth narrowing of GE junction)","Esophageal dilation with retained food/secretions"],
+  correctOrder:["Loss of inhibitory myenteric neurons (VIP/NO neurons in Auerbach's plexus)","LES fails to relax during swallowing (aperistalsis)","Esophageal dilation with retained food/secretions","Dysphagia progresses (solids and liquids equally affected)","Bird-beak appearance on barium swallow (smooth narrowing of GE junction)"],
+  note:"Primary (idiopathic) achalasia: autoimmune destruction of VIP/NO neurons → unopposed cholinergic (excitatory) tone at LES → cannot relax. Results in aperistalsis, progressive esophageal dilation, 'bird-beak' on swallow study, and dysphagia to BOTH solids and liquids (key distinction from GERD, where solids > liquids). Risk of SCC increases with chronic disease."
+}
+];
+
+/* ==========================================
+   HY TESTING NOTES DATA
+   ========================================== */
+const hyNotes=[
+{
+  badge:"TESTING",
+  title:"Slow Waves vs Action Potentials",
+  body:"<strong>Slow waves (BER)</strong> set the rhythm of GI contractions but DO NOT cause contraction by themselves. They create the 'potential' for contraction. <strong>Action potentials (spikes)</strong> riding on top of slow waves trigger actual contraction. Key distinction: slow wave frequency varies by region (stomach 3/min, duodenum 12/min) and is regulated by interstitial cells of Cajal (ICC), NOT neurons. This is why ICC loss (as in gastroparesis) causes dysmotility despite intact neurons."
+},
+{
+  badge:"TRAP",
+  title:"Achalasia vs Diffuse Esophageal Spasm (DES)",
+  body:"Students often confuse these two disorders. <strong>Achalasia:</strong> absent VIP/NO neurons → LES cannot relax + aperistalsis (no contractions) + dysphagia to solids AND liquids + bird-beak + HIGH LES pressure. <strong>DES:</strong> intact neurons but uncoordinated contractions → intermittent dysphagia + chest pain + corkscrew esophagus on barium + normal LES relaxation. Treatment differs: achalasia = botulinum, dilation, POEM; DES = calcium blockers, nitrates."
+},
+{
+  badge:"BUZZWORD",
+  title:"Hirschsprung Disease",
+  body:"Failure to pass meconium + abdominal distension in neonate + <strong>absent ganglion cells</strong> on rectal suction biopsy = Hirschsprung disease. Pathophysiology: failure of neural crest cells to migrate → absence of enteric neurons in the submucosa/muscularis (aganglionosis). Most common in rectosigmoid. Increased acetylcholinesterase (AChE) staining in retained nerve fibers (hypertrophied extrinsic innervation). Calretinin immunostaining is NEGATIVE (normal ganglia are positive). NOT a motility disorder per se but results in functional obstruction at the aganglionic segment."
+},
+{
+  badge:"TESTING",
+  title:"Erythromycin as Prokinetic",
+  body:"Erythromycin is a <strong>motilin receptor agonist</strong> — it works via GPR38 (Gs → cAMP), NOT via its antibiotic mechanism. This is why low-dose erythromycin (125–250 mg TID) is used as a prokinetic in gastroparesis and ICU feeding intolerance. Effect diminishes with prolonged use (tachyphylaxis) because motilin receptors downregulate. Not used for achalasia (which has no motilin defect); used for gastroparesis (abnormal ICC function)."
+},
+{
+  badge:"TRAP",
+  title:"Metoclopramide Contraindications",
+  body:"Metoclopramide (D2 antagonist) is a dopamine blocker, so it is CONTRAINDICATED in: (1) <strong>Parkinson disease</strong> (worsens parkinsonian symptoms by blocking dopamine in basal ganglia) and (2) <strong>small bowel obstruction</strong> (prokinetic action works against the obstruction, risking perforation). Also avoid in pheochromocytoma (risk of hypertensive crisis). Long-term use associated with tardive dyskinesia. Alternative: domperidone (peripheral D2 blocker, does not cross BBB)."
+}
+];
+
+/* ==========================================
    RENDER: MECHANISMS
    ========================================== */
 function renderMechs(){
@@ -620,6 +726,95 @@ function selectTrap(i,choice){
 }
 
 /* ==========================================
+   RENDER: ORDERING DRILLS
+   ========================================== */
+function renderOrdering(){
+  const cont=document.getElementById('orderingContainer');
+  cont.innerHTML=orderingDrills.map((drill,di)=>`
+    <div class="order-drill">
+      <div class="order-title">Drill ${di+1}: ${drill.title}</div>
+      <div class="order-desc">${drill.description}</div>
+      <div class="order-list" id="order-list-${di}">
+        ${drill.steps.map((step,si)=>`<div class="order-item" draggable="true" data-step="${si}" data-drill="${di}">${step}</div>`).join('')}
+      </div>
+      <div class="order-actions">
+        <button class="order-btn" onclick="checkOrder(${di})">Check Answer</button>
+        <button class="order-btn" onclick="shuffleDrill(${di})">Shuffle</button>
+      </div>
+      <div class="order-feedback" id="order-feedback-${di}"></div>
+      <div class="order-answer" id="order-answer-${di}"></div>
+    </div>`).join('');
+  setupDragDrop();
+}
+
+function setupDragDrop(){
+  const items=document.querySelectorAll('.order-item');
+  items.forEach(item=>{
+    item.addEventListener('dragstart',e=>{
+      e.dataTransfer.effectAllowed='move';
+      item.classList.add('dragging');
+    });
+    item.addEventListener('dragend',()=>item.classList.remove('dragging'));
+  });
+  const lists=document.querySelectorAll('.order-list');
+  lists.forEach(list=>{
+    list.addEventListener('dragover',e=>{
+      e.preventDefault();
+      const dragging=document.querySelector('.dragging');
+      const afterEl=getDragAfterElement(list,e.clientY);
+      if(afterEl==null)list.appendChild(dragging);
+      else list.insertBefore(dragging,afterEl);
+    });
+  });
+}
+
+function getDragAfterElement(container,y){
+  const draggableElements=[...container.querySelectorAll('.order-item:not(.dragging)')];
+  return draggableElements.reduce((closest,child)=>{
+    const box=child.getBoundingClientRect();
+    const offset=y-box.top-box.height/2;
+    if(offset<0&&offset>closest.offset)return{offset,element:child};
+    return closest;
+  },{offset:Number.NEGATIVE_INFINITY}).element;
+}
+
+function shuffleDrill(di){
+  const list=document.getElementById('order-list-'+di);
+  const items=[...list.querySelectorAll('.order-item')];
+  for(let i=items.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    list.appendChild(items[j]);
+  }
+  setupDragDrop();
+}
+
+function checkOrder(di){
+  const drill=orderingDrills[di];
+  const list=document.getElementById('order-list-'+di);
+  const currentOrder=[...list.querySelectorAll('.order-item')].map(el=>el.textContent);
+  const isCorrect=JSON.stringify(currentOrder)===JSON.stringify(drill.correctOrder);
+  const feedback=document.getElementById('order-feedback-'+di);
+  feedback.textContent=isCorrect?'✓ Correct sequence!':'✗ Incorrect. Check the answer below.';
+  feedback.className='order-feedback '+(isCorrect?'correct':'incorrect');
+  const answer=document.getElementById('order-answer-'+di);
+  answer.innerHTML=`<strong>Correct Order:</strong><br>${drill.correctOrder.map((s,i)=>`${i+1}. ${s}`).join('<br>')}<br><br><strong>Notes:</strong> ${drill.note}`;
+  answer.classList.add('show');
+}
+
+/* ==========================================
+   RENDER: HY TESTING NOTES
+   ========================================== */
+function renderHY(){
+  const cont=document.getElementById('hyContainer');
+  cont.innerHTML=`<div class="hy-notes">${hyNotes.map((note,ni)=>`
+    <div class="hy-card">
+      <span class="hy-badge">${note.badge}</span>
+      <div class="hy-card-title">${note.title}</div>
+      <div class="hy-card-body">${note.body}</div>
+    </div>`).join('')}</div>`;
+}
+
+/* ==========================================
    RENDER: REFERENCE
    ========================================== */
 function renderRef(){
@@ -653,7 +848,9 @@ renderMechs();
 renderFlashcards();
 renderMCQ();
 renderVigs();
+renderOrdering();
 renderTraps();
+renderHY();
 renderRef();
 
 </script>
