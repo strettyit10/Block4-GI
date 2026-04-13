@@ -742,7 +742,15 @@ const HUB_FILES = {
 
 let activeSubject = 'all';
 let searchQuery = '';
-let selectedLecture = DATA[0]?.class ?? null;
+let selectedLecture = (() => {
+  const p = new URLSearchParams(window.location.search);
+  const c = p.get('class');
+  if (c !== null) {
+    const num = Number(c);
+    if (DATA.some(d => d.class === num)) return num;
+  }
+  return DATA[0]?.class ?? null;
+})();
 let showQidTable = false;
 let showObjectives = false;
 let resourceVisibility = Object.fromEntries(RESOURCE_META.map((resource) => [resource.key, false]));
