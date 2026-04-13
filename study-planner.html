@@ -305,6 +305,18 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .backlog-res-pill{font-size:.62rem;font-weight:700;padding:1px 6px;border-radius:8px;border:1px solid;white-space:nowrap}
 .backlog-min{color:#C0380A;font-weight:700;font-size:.7rem;margin-left:auto;white-space:nowrap}
 
+/* ── BC SUBCHAPTERS ── */
+.bc-subs-wrap{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:12px;border-left:2px solid var(--c-bc-br)}
+.bc-sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;
+  background:rgba(24,90,219,.05);font-size:.74rem;color:var(--c-bc-tx)}
+[data-theme="dark"] .bc-sub-row{background:rgba(107,163,232,.06)}
+.bc-sub-row.done-sub{background:rgba(24,90,219,.12);text-decoration:line-through;opacity:.65}
+[data-theme="dark"] .bc-sub-row.done-sub{background:rgba(107,163,232,.12)}
+.bc-sub-cb{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--c-bc-tx);white-space:nowrap;flex-shrink:0}
+.bc-sub-label{flex:1;min-width:0}
+.bc-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+.bc-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+
 /* ── MOBILE ── */
 @media(max-width:700px){
   /* Topbar */
@@ -480,111 +492,111 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 const LECTURES = [
   {id:0, num:"1",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL GI Overview",
    ihMin:60,
-   res:{BC:{label:"Ch. 2 · Oral Cavity",min:30},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
+   res:{BC:{label:"Ch. 2 · Oral Cavity",min:30,subs:["2.6 Salivary Glands (A–B)","2.2 Tongue & Gustation (B)"],xref:"Xref: 4.5–4.7 enteric hormones"},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
    anki:{BC:174,BB:94,PH:69}},
   {id:1, num:"2",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"Introduction / Motility",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45,subs:["Ch. 8: 8.1 (A overview, E vasculature, F enteroendocrine)","Ch. 9: 9.1 (A–D) · 9.2 Pectinate Line"],xref:"Xref: 4.1D motility comparison"},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
    anki:{BC:342,BB:102,PH:69}},
   {id:2, num:"3",     week:"Wk 1", date:"Mon Apr 6",  subj:"Anat",  title:"Anterior Abdominal Wall / Hernia",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 10 · Hernias",min:20,subs:["10.1 (A–B) · 10.2 Indirect/Direct Inguinal","10.3 Femoral · 10.4 Diaphragmatic (B–C)"]},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:42,BB:42,PH:129,SK:105}},
   {id:3, num:"4",     week:"Wk 1", date:"Mon Apr 6",  subj:"Hist",  title:"Esoph / Stomach / Intestines (Histology)",
    ihMin:60,
-   res:{BC:{label:"Ch. 2 · Oral Cavity",min:15},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:null,SK:null},
+   res:{BC:{label:"Ch. 3 & 4 · Histology",min:15,subs:["3.1B Esophageal Histology (layers, squamous epithelium)","4.1B Stomach Histology · 4.4 Gastric Cells","(parietal, chief, G, D, ECL)"]},BB:{label:"Sec. 1 · Anatomy",min:94},PT:null,PH:null,SK:null},
    anki:{BC:174,BB:94}},
   {id:4, num:"5 & 6", week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL Bile Workshop & Making a Micelle",
    ihMin:120,
-   res:{BC:{label:"Ch. 5 & 6 · Liver/Biliary",min:90},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.3 & 5.4",min:99},SK:null},
+   res:{BC:{label:"Ch. 5 & 6 · Liver/Biliary",min:90,subs:["Ch. 5: 5.1D Metabolism · 5.2 (B hepatocytes, C bile flow)","Ch. 6: 6.1D Bile Composition · 6.2 Bilirubin (A–C)","6.5 Bile Acids (A–C)"]},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.3 & 5.4",min:99},SK:null},
    anki:{BC:536,BB:102,PH:99}},
   {id:5, num:"7",     week:"Wk 1", date:"Mon Apr 6",  subj:"Embr",  title:"IL GI Primer",
    ihMin:60,
-   res:{BC:{label:"Ch. 1 · Embryology",min:25},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 1 · Embryology",min:25,subs:["1.1 General Embryology (A–D: endoderm, gut rotation)","1.2 Ventral Wall Defects · 1.3 TE Defects","1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"]},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:131,BB:105,PH:73,SK:105}},
   {id:6, num:"8",     week:"Wk 1", date:"Tue Apr 7",  subj:"Anat",  title:"Abdominal Viscera I: GI Tract",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:90},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 10 & 8 · Visceral Anat.",min:20,subs:["10.1A Peritoneal relationships","10.4A CDH (diaphragm anatomy)","8.1 Small Intestine Vasculature"],xref:"Xref: 4.2 Celiac Trunk · 4.3 GI Ligaments"},BB:{label:"Sec. 1 · Anatomy",min:90},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:42,BB:90,PH:129,SK:105}},
   {id:7, num:"9 & 10",week:"Wk 1", date:"Tue Apr 7",  subj:"Phys",  title:"Secretions I & II",
    ihMin:120,
-   res:{BC:{label:"Ch. 2,4 & 7 · Oral/Stom/Panc",min:95},BB:{label:"Sec. 1 & 2 · Anat/Physiol",min:231},PT:null,PH:{label:"Phys. 5.2",min:45},SK:null},
+   res:{BC:{label:"Ch. 2, 4 & 7 · Oral/Stom/Panc",min:95,subs:["Ch. 2: 2.6 Salivary Glands (A–B: amylase, lipase)","Ch. 4: 4.4 Gastric Cells · 4.5 Gastric Regulation (A–G)","4.6 Intestinal Reg. · 4.7 Parietal Cell · 4.8 Pernicious Anemia (A)","Ch. 7: 7.1D Exocrine · 7.2 (A, C, D pancreatic fluid)"]},BB:{label:"Sec. 1 & 2 · Anat/Physiol",min:231},PT:null,PH:{label:"Phys. 5.2",min:45},SK:null},
    anki:{BC:653,BB:231,PH:45}},
   {id:8, num:"12",    week:"Wk 1", date:"Wed Apr 8",  subj:"Embr",  title:"GI Embryology",
    ihMin:60,
-   res:{BC:{label:"Ch. 1 · Embryology",min:25},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 1 · Embryology",min:25,subs:["1.1 General Embryology (A–D)","1.2 Ventral Wall Defects","1.3 TE Defects · 1.4 Atresia & Pyloric Stenosis","1.5 Pancreatic Anomalies"]},BB:{label:"Sec. 1 · Anatomy",min:105},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:131,BB:105,PH:73,SK:105}},
   {id:9, num:"13",    week:"Wk 1", date:"Wed Apr 8",  subj:"Anat",  title:"Abdominal Viscera II: Liver & Pancreas",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 1 · Anatomy",min:99},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 5, 6 & 7 · Liver/Panc",min:55,subs:["Ch. 5: 5.1 Liver Anatomy (A–C) · 5.2 (A, C, D) · 5.3 Zones","Ch. 7: 7.1 (A–C: anatomy, vasculature) · 7.2B Exocrine Histology"],xref:"Xref: 6.1 Biliary Tree Anatomy"},BB:{label:"Sec. 1 · Anatomy",min:99},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:292,BB:99,PH:129,SK:105}},
   {id:10,num:"14",    week:"Wk 1", date:"Wed Apr 8",  subj:"Phys",  title:"Overview of the Liver",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 2 · Physiology",min:118},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
+   res:{BC:{label:"Ch. 5 · Liver",min:55,subs:["5.1D Metabolism · 5.2 (B hepatocytes, E Kupffer cells)","5.3 Hepatic Zones · 5.10 Cirrhosis · 5.11 Portal HTN","5.12 Ascites (SAAG, SBP)"],xref:"Xref: 6.2 Bilirubin · 6.5 Bile Acids · 6.3"},BB:{label:"Sec. 2 · Physiology",min:118},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
    anki:{BC:292,BB:118,PH:62}},
   {id:11,num:"15",    week:"Wk 1", date:"Thu Apr 9",  subj:"Path",  title:"Esophagus / Stomach Disease",
    ihMin:60,
-   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80},BB:{label:"Sec. 3 · Clinical",min:80},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.1–6.4",min:222},SK:null},
+   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80,subs:["Ch. 3: 3.3 GERD/Barrett · 3.4 Esophagitis (F–I)","3.6 Barotrauma/Bleeding (A–C) · 3.7 Malignancy (A–C)","Ch. 4: 4.8 Pernicious Anemia (B–C) · 4.9 Gastritis (A–E)","4.10 PUD (A–E) · 4.11 Gastric Malignancy (A–E)"]},BB:{label:"Sec. 3 · Clinical",min:80},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.1–6.4",min:222},SK:null},
    anki:{BC:549,BB:80,PT:528,PH:222}},
   {id:12,num:"16 & 17",week:"Wk 1",date:"Thu Apr 9", subj:"Phys",  title:"Digestion / Absorption I & II",
    ihMin:120,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 2 & 3 · Physiol/Clin.",min:115},PT:null,PH:{label:"Phys. 5.5",min:50},SK:null},
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.1 (B duodenum, C jejunum, D ileum/terminal)","8.2 Histology (A–E: villi, brush border, goblet cells)","8.3 Nutrient Absorption (A–E: carbs/SGLT1, lipids/micelles)","8.9 Lactose Intolerance"],xref:"Xref: 4.6 CCK/secretin/GIP"},BB:{label:"Sec. 2 & 3 · Physiol/Clin.",min:115},PT:null,PH:{label:"Phys. 5.5",min:50},SK:null},
    anki:{BC:279,BB:115,PH:50}},
   {id:13,num:"19 & 20",week:"Wk 1",date:"Fri Apr 10",subj:"Path",  title:"Intestinal Pathology I & II",
    ihMin:120,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:60},BB:{label:"Sec. 3 · Clinical",min:317},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.5–6.9",min:258},SK:null},
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:60,subs:["Ch. 8: 8.4 SBO · 8.8 Celiac (HLA-DQ2/8, Marsh) · 8.14 Mesenteric Ischemia","8.15 Meckel Diverticulum · 8.16 Intussusception","Ch. 9: 9.4 Crohn · 9.5 UC · 9.7 Appendicitis · 9.8 Diverticulitis","9.9 Hirschsprung · 9.13 Polyps · 9.15 CRC (APC/KRAS/p53, MSI)"]},BB:{label:"Sec. 3 · Clinical",min:317},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.5–6.9",min:258},SK:null},
    anki:{BC:342,BB:317,PT:528,PH:258}},
   {id:14,num:"21",    week:"Wk 2", date:"Mon Apr 13", subj:"Pharm", title:"Poisoning Conference & Cases",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 3 · Clinical",min:52},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1 Antiemetics",min:19}},
+   res:{BC:{label:"Ch. 5 & 10 · Tox Xrefs",min:20,subs:[],xref:"⚠ Minimal GI coverage → Xref: 5.9D Acetaminophen Tox · 5.9E Inhaled Anesthetic"},BB:{label:"Sec. 3 · Clinical",min:52},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1 Antiemetics",min:19}},
    anki:{BC:42,BB:52,PH:120,SK:37}},
   {id:15,num:"22",    week:"Wk 2", date:"Tue Apr 14", subj:"Path",  title:"GI Lab",
    ihMin:60,
-   res:{BC:{label:"Ch. 9 · Large Intestine",min:15},BB:null,PT:{label:"Ch. 10 & 11 · GI/Hepatobil.",min:156},PH:{label:"Path. 6.3–6.5 & 6.8",min:346},SK:null},
+   res:{BC:{label:"Ch. 9 · Large Intestine",min:15,subs:["9.4 Crohn (transmural, granulomas)","9.5 UC (mucosal, crypt abscesses)","9.7 Appendicitis · 9.13 Colonic Polyps","9.15 CRC (histology, molecular, staging)"],xref:"Xref: 8.8 Celiac · 8.2 Small Intestine Histology"},BB:null,PT:{label:"Ch. 10 & 11 · GI/Hepatobil.",min:156},PH:{label:"Path. 6.3–6.5 & 6.8",min:346},SK:null},
    anki:{BC:63,PT:812,PH:346}},
   {id:16,num:"23 & 24",week:"Wk 2",date:"Tue Apr 14",subj:"Pharm", title:"Treatment: PUD / GERD & Other GI Disorders",
    ihMin:120,
-   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80},BB:{label:"Sec. 3 · Clinical",min:80},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1–5.4 & 5.FA",min:0}},
+   res:{BC:{label:"Ch. 3 & 4 · Esoph/Gastric Pharm",min:80,subs:["Ch. 3: 3.2 Motility Disorders (drug targets)","3.3 GERD (LES pharmacology, PPI mechanism)","Ch. 4: 4.7 Parietal Cell (H⁺/K⁺-ATPase → PPI/H₂)","4.9D H. pylori (triple/quadruple therapy)","4.10 PUD · 4.12 Gastric Pharmacology (A–F)"],xref:"Xref: 9.17–9.19 Bowel/Antiemetic Medications"},BB:{label:"Sec. 3 · Clinical",min:80},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1–5.4 & 5.FA",min:0}},
    anki:{BC:549,BB:80,PH:120,SK:120}},
   {id:17,num:"25",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"GI Infections",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
+   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45,subs:["Ch. 8: 8.10 Whipple · 8.11 SIBO (A–E) · 8.7 Upper GI Bleeding","Ch. 9: 9.3D Proctitis · 9.7 Appendicitis · 9.8 Diverticulitis"],xref:"⚠ Limited C. diff/cholera → Sketchy Micro · Xref: 8.13 IBS · 4.9D H. pylori"},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
    anki:{BC:342,BB:144,PH:95}},
   {id:18,num:"26",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"Parasitology",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.1 General Anatomy (site of parasite infection)","8.2 Histology (brush border disruption in Giardia)","8.3 Nutrient Absorption (malabsorption mechanism)"],xref:"⚠ No dedicated parasite subchapters → Sketchy Micro (Parasitology)"},BB:{label:"Sec. 3 · Clinical",min:144},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
    anki:{BC:279,BB:144,PH:95}},
   {id:19,num:"28",    week:"Wk 2", date:"Thu Apr 16", subj:"Path",  title:"Intestinal Path. Case Review",
    ihMin:60,
-   res:{BC:{label:"Ch. 9 · Large Intestine",min:15},BB:{label:"Sec. 3 · Clinical",min:150},PT:null,PH:{label:"Path. 6.7–6.9",min:128},SK:null},
+   res:{BC:{label:"Ch. 9 · Colorectal",min:15,subs:["9.4 Crohn (A–F) · 9.5 UC (A–F)","9.8 Diverticulitis · 9.13 Polyps","9.14 Carcinogenesis (chromosomal instability, MSI, Lynch)","9.15 CRC (A–F) · 9.16 Polyposis Syndromes (FAP, Peutz-Jeghers)"],xref:"Xref: 8.8 Celiac · 8.14 Mesenteric Ischemia · 8.15 Meckel"},BB:{label:"Sec. 3 · Clinical",min:150},PT:null,PH:{label:"Path. 6.7–6.9",min:128},SK:null},
    anki:{BC:63,BB:150,PH:128}},
   {id:20,num:"29",    week:"Wk 2", date:"Thu Apr 16", subj:"Anat",  title:"Retroperitoneum",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Hernias",min:20},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 10 · Retroperitoneum",min:20,subs:["10.1A Peritoneal relationships (retroperitoneal organs)","10.4A CDH (aorta T12, esophagus T10, IVC T8)","10.5 Spigelian Hernia"],xref:"Xref: 4.2 Celiac Trunk · 8.1A–E retroperitoneal duodenum"},BB:{label:"Sec. 1 · Anatomy",min:42},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:42,BB:42,PH:129,SK:105}},
   {id:21,num:"33",    week:"Wk 3", date:"Mon Apr 20", subj:"Hist",  title:"Liver & Biliary Tract (Histology)",
    ihMin:60,
-   res:{BC:{label:"Ch. 6 · Biliary System",min:44},BB:{label:"Sec. 1 · Anatomy",min:71},PT:null,PH:null,SK:{label:"Anat. 1.1",min:0}},
+   res:{BC:{label:"Ch. 6 & 7 · Biliary/Panc Hist",min:44,subs:["6.1 General (A–D: anatomy, biliary tree, bile composition)","6.2 Bilirubin Metabolism (A–C)","7.1A–B & 7.2B Pancreas Histology"],xref:"Xref: 5.2 Hepatic Microarchitecture · 5.3 Hepatic Zones"},BB:{label:"Sec. 1 · Anatomy",min:71},PT:null,PH:null,SK:{label:"Anat. 1.1",min:0}},
    anki:{BC:244,BB:71,SK:105}},
   {id:22,num:"34 & 35",week:"Wk 3",date:"Tue Apr 21",subj:"Path",  title:"Liver Disease I & II",
    ihMin:120,
-   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 3 · Clinical",min:201},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
+   res:{BC:{label:"Ch. 5 · Liver Disease",min:55,subs:["5.4 Alcoholic Hepatitis (A–E, Mallory-Denk bodies)","5.5 MASLD/NAFLD · 5.6 Autoimmune Hepatitis","5.7 Wilson Disease · 5.8 Hereditary Hemochromatosis","5.9F Viral Hepatitis (HAV–HEV serology)","5.10 Cirrhosis · 5.13 HCC · 5.14 Liver Masses"]},BB:{label:"Sec. 3 · Clinical",min:201},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
    anki:{BC:292,BB:201,PT:284,PH:160}},
   {id:23,num:"36",    week:"Wk 3", date:"Tue Apr 21", subj:"DRT",   title:"Liver Enzymes",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 · Liver",min:55},BB:{label:"Sec. 2 · Physiology",min:91},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
+   res:{BC:{label:"Ch. 5 · Liver Enzymes",min:55,subs:["5.1D Metabolism (AST, ALT, ALP, GGT functions)","5.9B Ischemic Hepatitis (shock liver, AST/ALT >1000)","5.9D Acetaminophen Toxicity (Zone 3, NAC antidote)","5.9E Inhaled Anesthetic Toxicity (halothane hepatitis)"],xref:"Xref: 6.2 Bilirubin · 6.3 Hereditary Hyperbilirubinemia · 6.4 Neonatal"},BB:{label:"Sec. 2 · Physiology",min:91},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
    anki:{BC:292,BB:91,PH:62}},
   {id:24,num:"38",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Pancreas Disease",
    ihMin:60,
-   res:{BC:{label:"Ch. 7 · Pancreas",min:30},BB:{label:"Sec. 3 · Clinical",min:91},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.10",min:60},SK:null},
+   res:{BC:{label:"Ch. 7 · Pancreas",min:30,subs:["7.1 (A–C: anatomy, vasculature) · 7.2 Exocrine (A–B)","7.3 Acute Pancreatitis (A–D: gallstones/alcohol/Ranson)","7.4 Complications (necrotizing, pseudocyst, hemorrhagic)","7.5 Chronic Pancreatitis · 7.6 Adenocarcinoma (Courvoisier)","7.7 PNETs (insulinoma, Zollinger-Ellison, VIPoma, glucagonoma)"],xref:"Xref: 1.5 Annular Pancreas / Pancreas Divisum"},BB:{label:"Sec. 3 · Clinical",min:91},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.10",min:60},SK:null},
    anki:{BC:130,BB:91,PT:284,PH:60}},
   {id:25,num:"39",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Liver / Pancreas Lab",
    ihMin:60,
-   res:{BC:{label:"Ch. 6 · Biliary System",min:44},BB:{label:"Sec. 3 · Clinical",min:92},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
+   res:{BC:{label:"Ch. 6 · Biliary System",min:44,subs:["6.2 Bilirubin Metabolism · 6.5 Bile Acids","6.6 Cholelithiasis · 6.7 Biliary Colic · 6.8 Acute Cholecystitis","6.9 Choledocholithiasis · 6.10 Acute Cholangitis","6.13 Biliary Malignancy (cholangiocarcinoma, GB adenocarcinoma)"],xref:"Xref: 5.13 HCC · 5.14 Liver Masses · 7.3–7.6 Pancreatitis"},BB:{label:"Sec. 3 · Clinical",min:92},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
    anki:{BC:244,BB:92,PT:284,PH:160}},
   {id:26,num:"40",    week:"Wk 3", date:"Fri Apr 24", subj:"Phys",  title:"PSW: Cholera / Lactose Intolerance",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1",min:61},SK:null},
+   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.3 Nutrient Absorption (B: SGLT1/Na⁺-glucose, ORT basis)","8.9 Lactose Intolerance (A–E: osmotic diarrhea)","8.11 SIBO (secretory vs osmotic diarrhea)","8.1 General Anatomy (cholera toxin site of action)"],xref:"Xref: 9.17–9.18 Anticonstipation/Antidiarrheal Meds"},BB:{label:"Sec. 2 · Physiology",min:102},PT:null,PH:{label:"Phys. 5.1",min:61},SK:null},
    anki:{BC:279,BB:102,PH:61}},
 ];
 
@@ -814,12 +826,22 @@ let STATE = {};
 
 function defaultPP(){ return {uworld:'Not Started',activeLearning:'Not Started',drillHub:'Not Started',qbank:'Not Started'}; }
 
+function bcDefaultSubs(l){
+  // Returns an array of false values matching subchapter count
+  const subs=l.res?.BC?.subs||[];
+  return subs.map(()=>false);
+}
+
 function defaultState(){
   const s={};
   LECTURES.forEach(l=>{
     s[l.id]={IH:{included:true,watch:false,ankiSetUp:false}};
     TP_RES.forEach(r=>{
-      s[l.id][r]={included:false,watch:false,ankiSetUp:false};
+      if(r==='BC'){
+        s[l.id][r]={included:false,ankiSetUp:false,subs:bcDefaultSubs(l)};
+      } else {
+        s[l.id][r]={included:false,watch:false,ankiSetUp:false};
+      }
     });
     s[l.id].practiceProblems=defaultPP();
   });
@@ -832,12 +854,29 @@ function loadState(){
     if(raw) STATE=JSON.parse(raw);
     else STATE=defaultState();
   } catch(e){ STATE=defaultState(); }
-  // Ensure all keys exist + migrate practiceProblems
+  // Ensure all keys exist + migrate practiceProblems + migrate BC subs
   LECTURES.forEach(l=>{
     if(!STATE[l.id]) STATE[l.id]=defaultState()[l.id];
     if(!STATE[l.id].IH) STATE[l.id].IH={included:true,watch:false,ankiSetUp:false};
     TP_RES.forEach(r=>{
-      if(!STATE[l.id][r]) STATE[l.id][r]={included:false,watch:false,ankiSetUp:false};
+      if(!STATE[l.id][r]){
+        if(r==='BC') STATE[l.id][r]={included:false,ankiSetUp:false,subs:bcDefaultSubs(l)};
+        else STATE[l.id][r]={included:false,watch:false,ankiSetUp:false};
+      } else if(r==='BC'){
+        // Migrate: ensure subs array exists with correct length
+        const expected=(l.res?.BC?.subs||[]).length;
+        if(!Array.isArray(STATE[l.id].BC.subs)){
+          // Old format had watch:bool — seed subs based on old watch value
+          const oldWatch=STATE[l.id].BC.watch||false;
+          STATE[l.id].BC.subs=Array(expected).fill(oldWatch);
+          delete STATE[l.id].BC.watch;
+        } else if(STATE[l.id].BC.subs.length!==expected){
+          // Resize: pad with false or trim
+          const cur=STATE[l.id].BC.subs;
+          STATE[l.id].BC.subs=Array.from({length:expected},(_,i)=>cur[i]||false);
+        }
+        if(STATE[l.id].BC.ankiSetUp===undefined) STATE[l.id].BC.ankiSetUp=false;
+      }
     });
     if(!STATE[l.id].practiceProblems) STATE[l.id].practiceProblems=defaultPP();
     else{
@@ -860,6 +899,13 @@ function countThirdParty(id){
   return TP_RES.filter(r=>STATE[id][r].included).length;
 }
 
+function bcAllSubsWatched(id){
+  const ls=STATE[id]; const lec=LECTURES.find(l=>l.id===id);
+  const subs=lec.res?.BC?.subs||[];
+  if(!subs.length) return false;
+  return (ls.BC.subs||[]).every(v=>v===true);
+}
+
 function lecWatchStats(id){
   const ls=STATE[id];
   const lec=LECTURES.find(l=>l.id===id);
@@ -868,7 +914,14 @@ function lecWatchStats(id){
   TP_RES.forEach(r=>{
     if(!ls[r].included||!lec.res[r]) return;
     const m=lec.res[r].min||0;
-    tot+=m; if(ls[r].watch) done+=m;
+    tot+=m;
+    if(r==='BC'){
+      const subs=lec.res.BC?.subs||[];
+      if(subs.length>0){ if(bcAllSubsWatched(id)) done+=m; }
+      else { if(ls.BC.watch) done+=m; }
+    } else {
+      if(ls[r].watch) done+=m;
+    }
   });
   return {tot, done, remaining:tot-done};
 }
@@ -877,16 +930,26 @@ function lecProgress(id){
   const ls=STATE[id];
   let tot=0,done=0;
   const PP_KEYS=['uworld','activeLearning','drillHub','qbank'];
+  const lec=LECTURES.find(l=>l.id===id);
   // IH — only if included
   if(ls.IH.included){
     TASKS.forEach(t=>{ tot++; if(ls.IH[t]) done++; });
   }
   // Third-party
   TP_RES.forEach(r=>{
-    if(!ls[r].included) return;
-    const lec=LECTURES.find(l=>l.id===id);
-    if(!lec.res[r]) return;
-    TASKS.forEach(t=>{ tot++; if(ls[r][t]) done++; });
+    if(!ls[r].included||!lec.res[r]) return;
+    if(r==='BC'){
+      // BC: each subchapter watch = 1 task; ankiSetUp = 1 task
+      const bcSubs=lec.res.BC?.subs||[];
+      if(bcSubs.length>0){
+        bcSubs.forEach((_,i)=>{ tot++; if((ls.BC.subs||[])[i]) done++; });
+      } else {
+        tot++; if(ls.BC.watch) done++; // no subs — fall back to single watch
+      }
+      tot++; if(ls.BC.ankiSetUp) done++; // ankiSetUp always counts
+    } else {
+      TASKS.forEach(t=>{ tot++; if(ls[r][t]) done++; });
+    }
   });
   // Practice problems — 2 points each: +1 for 1st Pass, +1 for RTG!
   if(ls.practiceProblems){
@@ -923,11 +986,29 @@ function globalStats(){
       if(!ls[r].included||!l.res[r]) return;
       selectedLecs++;
       const m=l.res[r].min||0;
-      totalMin+=m; if(ls[r].watch) doneMin+=m;
-      TASKS.forEach(t=>{
-        totalTasks++;byRes[r].tot++;byWeek[wk].tot++;
-        if(ls[r][t]){doneTasks++;byRes[r].done++;byWeek[wk].done++;}
-      });
+      if(r==='BC'){
+        totalMin+=m;
+        if(bcAllSubsWatched(l.id)) doneMin+=m;
+        const bcSubs=l.res.BC?.subs||[];
+        if(bcSubs.length>0){
+          bcSubs.forEach((_,i)=>{
+            totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
+            if((ls.BC.subs||[])[i]){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
+          });
+        } else {
+          totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
+          if(ls.BC.watch){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
+        }
+        // ankiSetUp
+        totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
+        if(ls.BC.ankiSetUp){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
+      } else {
+        totalMin+=m; if(ls[r].watch) doneMin+=m;
+        TASKS.forEach(t=>{
+          totalTasks++;byRes[r].tot++;byWeek[wk].tot++;
+          if(ls[r][t]){doneTasks++;byRes[r].done++;byWeek[wk].done++;}
+        });
+      }
       if(l.anki&&l.anki[r]) ankiSelected+=l.anki[r];
     });
     // Practice problems — 2 points each: +1 for 1st Pass, +1 for RTG!
@@ -1079,7 +1160,6 @@ function buildResRows(l, ls, tpCount){
 function buildRow(r, l, ls, isIH, tpCount){
   const meta=RES_META[r];
   const inc=ls[r].included;
-  const avail=isIH||!!l.res[r];
   const rowCls=inc?r:'not-included '+r;
   const canAdd=isIH||inc||(tpCount<2);
   const cards=l.anki?.[r]||0;
@@ -1099,6 +1179,61 @@ function buildRow(r, l, ls, isIH, tpCount){
   const modLabel=isIH?l.title:(l.res[r]?.label||'');
   const timeStr=l.res[r]?.min?`${l.res[r].min} min`:isIH?`${l.ihMin} min`:'TBD';
 
+  // ── BC with subchapters: special layout ──
+  if(r==='BC'&&!isIH){
+    const bcSubs=l.res.BC?.subs||[];
+    const bcXref=l.res.BC?.xref||'';
+    let subsHtml='';
+    if(inc){
+      // Anki set up at the top level
+      const ankiChecked=ls.BC.ankiSetUp;
+      const ankiDoneCls=ankiChecked?' done':'';
+      const ankiTask=`<label class="task-check${ankiDoneCls}">
+        <input type="checkbox" ${ankiChecked?'checked':''} onchange="setTask(${l.id},'BC','ankiSetUp',this.checked)">
+        Anki Set Up
+      </label>`;
+      if(cards>0){
+        subsHtml+=`<div class="res-tasks" style="padding-top:2px">${ankiTask}<span style="font-size:.68rem;color:var(--ink-3);margin-left:4px">📚 ${cards} cards</span></div>`;
+      } else {
+        subsHtml+=`<div class="res-tasks" style="padding-top:2px">${ankiTask}</div>`;
+      }
+      // Subchapter rows
+      if(bcSubs.length>0){
+        const subRows=bcSubs.map((subLabel,i)=>{
+          const watched=(ls.BC.subs||[])[i]||false;
+          const doneCls=watched?' done-sub':'';
+          return `<div class="bc-sub-row${doneCls}">
+            <label class="bc-sub-cb">
+              <input type="checkbox" ${watched?'checked':''} onchange="setBCSub(${l.id},${i},this.checked)">
+              Watch
+            </label>
+            <span class="bc-sub-label">${subLabel}</span>
+          </div>`;
+        }).join('');
+        subsHtml+=`<div class="bc-subs-wrap">${subRows}</div>`;
+      } else {
+        // No subs available (e.g. Poisoning lecture)
+        subsHtml+=`<div class="bc-no-subs">No specific subchapters mapped</div>`;
+      }
+      if(bcXref){
+        subsHtml+=`<div class="bc-xref">ℹ ${bcXref}</div>`;
+      }
+    } else {
+      subsHtml=`<span style="font-size:.72rem;color:var(--ink-3)">Select to enable tasks</span>`;
+    }
+
+    return `<div class="res-row ${rowCls}" id="row-${l.id}-BC" style="flex-wrap:wrap;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap">
+        ${incBtn}
+        <span class="res-label">${meta.emoji} ${meta.label}</span>
+        <span class="res-module">${modLabel}</span>
+        <span class="res-time">${timeStr}</span>
+      </div>
+      <div style="width:100%;padding-left:2px">${subsHtml}</div>
+    </div>`;
+  }
+
+  // ── Standard row (IH + non-BC resources) ──
   let tasks='';
   if(inc||isIH){
     TASKS.forEach(t=>{
@@ -1152,6 +1287,20 @@ function setPracticeProb(id, key, val){
   if(sel) sel.style.cssText=ppSelectStyle(val);
   updateLecHeader(id);
   renderDashboard();
+}
+
+function setBCSub(id, subIdx, val){
+  if(!Array.isArray(STATE[id].BC.subs)) STATE[id].BC.subs=[];
+  STATE[id].BC.subs[subIdx]=val;
+  saveState();
+  updateLecHeader(id);
+  renderDashboard();
+  // Update the sub row styling in-place
+  const bcWrap=document.querySelector(`#row-${id}-BC .bc-subs-wrap`);
+  if(bcWrap){
+    const rows=bcWrap.querySelectorAll('.bc-sub-row');
+    if(rows[subIdx]) rows[subIdx].classList.toggle('done-sub',val);
+  }
 }
 
 function toggleLecCard(id){
