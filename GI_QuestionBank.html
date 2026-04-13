@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HoyaDocs | GI Question Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #166534;
+      --accent-dark: #4ade80;
+      --accent-tint: rgba(22,101,52,0.1);
+      --accent-hover: #0d4a2c;
+      --sidebar-bg: #0d2416;
+      --bg: #f4f8f5;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    
+    [data-theme="dark"] {
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --bg: #0f172a;
+      --accent-tint: rgba(74, 222, 128, 0.15);
+    }
+
+    html, body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); height: 100%; }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .header::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+    }
+    .header-inner {
+      padding: 1rem 1.5rem 0;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .header-left { display: flex; flex-direction: column; gap: 2px; }
+    .header-eyebrow {
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .header-title {
+      font-size: 1.4rem; font-weight: 900;
+      letter-spacing: -0.035em; color: var(--text); line-height: 1.1;
+    }
+    .header-title em {
+      font-style: normal; color: var(--accent);
+    }
+    .header-right { display: flex; gap: 0.5rem; align-items: center; padding-top: 0.25rem; }
+    .header-stats {
+      display: flex; gap: 6px; margin-right: 0.5rem;
+    }
+    .header-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 999px;
+      background: var(--accent-tint); border: 1px solid var(--border);
+      font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .header-badge strong {
+      color: var(--accent); font-weight: 800;
+    }
+    .icon-btn {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: transparent; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: var(--text-muted); cursor: pointer;
+      transition: background 0.14s, border-color 0.14s, color 0.14s;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { background: var(--accent-tint); border-color: var(--accent); color: var(--accent); }
+
+    /* ===== TABS ===== */
+    .tabs {
+      display: flex; gap: 0; padding: 0 1.5rem;
+      background: var(--surface);
+    }
+    .tab {
+      padding: 0.7rem 1.25rem 0.65rem; background: none; border: none; cursor: pointer;
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      border-bottom: 2.5px solid transparent; transition: 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab:hover:not(.active) { color: var(--text); }
+
+    /* ===== LAYOUT ===== */
+    .app { display: flex; flex-direction: column; height: 100vh; }
+    .content { flex: 1; overflow: hidden; position: relative; }
+    .mode { display: none; height: 100%; }
+    .mode.active { display: flex; flex-direction: row; }
+
+    /* ===== SIDEBAR (shared by mode-1 and mode-2) ===== */
+    .sidebar {
+      width: 260px; min-width: 260px; background: var(--surface);
+      border-right: 1px solid var(--border); overflow-y: auto;
+      padding: 1rem; transition: width 0.2s, min-width 0.2s, padding 0.2s;
+      position: relative; flex-shrink: 0;
+    }
+    .sidebar.collapsed { width: 0; min-width: 0; padding: 0; overflow: hidden; border-right: none; }
+    .sidebar-toggle {
+      position: absolute; top: 50%; right: -14px; transform: translateY(-50%);
+      width: 28px; height: 28px; border-radius: 50%; background: var(--surface);
+      border: 1px solid var(--border); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 0.7rem;
+      z-index: 10; box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: var(--text-muted);
+    }
+    .sidebar-toggle:hover { background: var(--accent-tint); border-color: var(--accent); color: var(--accent); }
+    /* When sidebar collapsed, put toggle at left edge */
+    .sidebar.collapsed + .main-area .sidebar-reopen {
+      display: flex;
+    }
+    .sidebar-reopen {
+      display: none; position: absolute; top: 50%; left: 8px; transform: translateY(-50%);
+      width: 28px; height: 28px; border-radius: 50%; background: var(--surface);
+      border: 1px solid var(--border); cursor: pointer; align-items: center;
+      justify-content: center; font-size: 0.7rem; z-index: 10;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: var(--text-muted);
+    }
+    .sidebar-reopen:hover { background: var(--accent-tint); border-color: var(--accent); }
+
+    /* ===== MAIN AREA (test taking) ===== */
+    .main-area {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+
+    /* ===== FILTER PANEL INSIDE SIDEBAR ===== */
+    .filter-section { margin-bottom: 1.25rem; }
+    .filter-section-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.4rem; cursor: pointer; user-select: none;
+    }
+    .filter-section-header:hover { color: var(--accent); }
+    .section-title {
+      font-weight: 600; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem;
+    }
+    .section-title .arrow { font-size: 0.65rem; transition: transform 0.2s; }
+    .section-title .arrow.down { transform: rotate(90deg); }
+    .section-actions { display: flex; gap: 0.25rem; }
+    .section-actions button {
+      font-size: 0.65rem; padding: 2px 6px; border: 1px solid var(--border);
+      border-radius: 3px; background: var(--surface); color: var(--text-muted);
+      cursor: pointer; white-space: nowrap;
+    }
+    .section-actions button:hover { background: var(--accent-tint); color: var(--accent); }
+    .section-body { transition: max-height 0.25s ease, opacity 0.2s; overflow: hidden; }
+    .section-body.collapsed { max-height: 0 !important; opacity: 0; }
+
+    /* ===== PILLS ===== */
+    .pill-grid { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+    .pill {
+      padding: 4px 10px; border: 1px solid var(--border); border-radius: 14px;
+      background: var(--surface); color: var(--text); font-size: 0.75rem;
+      cursor: pointer; transition: 0.15s; font-weight: 500; white-space: nowrap;
+    }
+    .pill:hover { border-color: var(--accent); }
+    .pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .pill-list { display: flex; flex-direction: column; gap: 0.25rem; max-height: 200px; overflow-y: auto; margin-top: 0.3rem; }
+    .pill-list .pill { border-radius: 6px; white-space: normal; text-align: left; font-size: 0.75rem; padding: 5px 10px; }
+    .pill-list .pill.hidden { display: none; }
+    .lec-search {
+      width: 100%; padding: 5px 8px; border: 1px solid var(--border); border-radius: 5px;
+      background: var(--surface); color: var(--text); font-size: 0.75rem;
+      margin: 0.3rem 0; font-family: inherit;
+    }
+    .lec-search:focus { outline: none; border-color: var(--accent); }
+
+    /* ===== COUNT SELECTOR ===== */
+    .count-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+    .count-row button {
+      padding: 4px 8px; border: 1px solid var(--border); border-radius: 5px;
+      background: var(--surface); color: var(--text); font-size: 0.75rem;
+      cursor: pointer; font-weight: 500; min-width: 34px; transition: 0.15s;
+    }
+    .count-row button:hover { border-color: var(--accent); }
+    .count-row button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .count-row input {
+      width: 50px; padding: 4px 6px; border: 1px solid var(--border); border-radius: 5px;
+      font-size: 0.75rem; background: var(--surface); color: var(--text); font-family: inherit;
+    }
+
+    /* ===== SEEN TOGGLE ===== */
+    .seen-toggle { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; }
+    .seen-toggle input { width: 16px; height: 16px; }
+
+    /* ===== START / GENERATE BUTTONS ===== */
+    .action-btn {
+      width: 100%; padding: 0.6rem; background: var(--accent); color: white;
+      border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+      font-size: 0.85rem; margin-top: 0.75rem; transition: 0.2s;
+    }
+    .action-btn:hover { opacity: 0.9; }
+    .action-btn:disabled { background: var(--border); cursor: not-allowed; }
+    .pool-info { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
+
+    /* ===== TEST LIST (Mode 2 sidebar) ===== */
+    .test-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .test-card {
+      padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; font-size: 0.8rem; transition: 0.15s;
+    }
+    .test-card:hover { background: var(--accent-tint); border-color: var(--accent); }
+    .test-card .t-name { font-weight: 600; }
+    .test-card .t-info { color: var(--text-muted); font-size: 0.75rem; margin-top: 0.15rem; }
+
+    /* ===== TEST TAKING ===== */
+    .test-content { flex: 1; overflow-y: auto; padding: 1.5rem; }
+    .placeholder { display: flex; justify-content: center; align-items: center; height: 100%; color: var(--text-muted); font-size: 0.95rem; }
+    .q-header { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; justify-content: space-between; }
+    .q-stem { font-size: 1rem; line-height: 1.65; margin-bottom: 1.25rem; font-weight: 500; }
+    .choices { display: flex; flex-direction: column; gap: 0.6rem; }
+    .choice {
+      padding: 0.85rem 1rem; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; display: flex; gap: 0.75rem; align-items: flex-start; transition: 0.15s;
+    }
+    .choice:hover { background: var(--accent-tint); border-color: var(--accent); }
+    .choice.selected { background: var(--accent-tint); border-color: var(--accent); }
+    .choice-letter {
+      width: 28px; height: 28px; border-radius: 50%; background: var(--accent-tint);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; color: var(--accent); flex-shrink: 0; font-size: 0.85rem;
+    }
+    .choice-text { flex: 1; padding-top: 0.2rem; font-size: 0.95rem; }
+    .choice-tag { font-size: 0.75rem; flex-shrink: 0; padding-top: 0.3rem; font-weight: 600; }
+
+    /* Review colors */
+    .choice.correct { background: #ecfdf5; border-color: #10b981; }
+    .choice.correct .choice-letter { background: #d1fae5; color: #059669; }
+    .choice.correct .choice-tag { color: #059669; }
+    .choice.wrong { background: #fef2f2; border-color: #ef4444; }
+    .choice.wrong .choice-letter { background: #fee2e2; color: #dc2626; }
+    .choice.wrong .choice-tag { color: #dc2626; }
+
+    /* ===== QUESTION GRID ===== */
+    .q-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .q-dot {
+      width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      font-size: 0.7rem; font-weight: 600; transition: 0.15s; color: var(--text);
+    }
+    .q-dot:hover { border-color: var(--accent); }
+    .q-dot.answered { background: var(--accent-tint); border-color: var(--accent); }
+    .q-dot.current { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* ===== NAV BAR ===== */
+    .nav-bar {
+      padding: 0.75rem 1.5rem; background: var(--surface); border-top: 1px solid var(--border);
+      display: flex; gap: 0.75rem; justify-content: center; align-items: center;
+    }
+    .nav-bar button {
+      padding: 0.5rem 1.25rem; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--surface); color: var(--text); cursor: pointer;
+      font-weight: 600; font-size: 0.85rem; transition: 0.15s;
+    }
+    .nav-bar button:hover:not(:disabled) { background: var(--accent-tint); border-color: var(--accent); }
+    .nav-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .nav-bar .submit-btn {
+      background: var(--accent); color: white; border-color: var(--accent);
+    }
+    .nav-bar .submit-btn:hover { opacity: 0.9; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 1rem; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+
+    /* ===== REVIEW ===== */
+    .score-box {
+      text-align: center; padding: 1.5rem; background: var(--accent-tint);
+      border-radius: 10px; margin-bottom: 2rem;
+    }
+    .score-num { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
+    .score-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .review-q { margin-bottom: 2rem; padding: 1.25rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    .review-tag {
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      font-weight: 600; font-size: 0.8rem; margin-bottom: 0.75rem;
+    }
+    .review-tag.pass { background: #d1fae5; color: #059669; }
+    .review-tag.fail { background: #fee2e2; color: #dc2626; }
+    .explanation {
+      margin: 1rem 0; padding: 0.75rem 1rem; background: var(--bg);
+      border-left: 3px solid var(--accent); border-radius: 4px;
+      font-size: 0.88rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word;
+    }
+    .answer-meta { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.75rem; }
+    .meta-row {
+      display: flex; justify-content: space-between; padding: 0.4rem 0;
+      font-size: 0.85rem; border-bottom: 1px solid var(--border);
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-label { font-weight: 600; }
+    .meta-value { color: var(--text-muted); text-align: right; }
+
+    /* ===== STATS TAB ===== */
+    .stats-page { padding: 2rem; max-width: 700px; margin: 0 auto; overflow-y: auto; height: 100%; }
+    .stats-page h2 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--accent); }
+    .stats-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      padding: 1rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; text-align: center;
+    }
+    .stat-card .val { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .stat-card .lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .stats-section { margin-bottom: 2rem; }
+    .stats-section h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    .stats-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .stats-table th {
+      background: var(--accent); color: white; padding: 0.5rem 0.75rem;
+      text-align: left; font-weight: 600;
+    }
+    .stats-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+    .stats-table tr:nth-child(even) td { background: var(--accent-tint); }
+    .stats-table .num { text-align: center; }
+    .reset-stats-btn {
+      padding: 0.5rem 1rem; border: 1px solid #dc2626; border-radius: 6px;
+      background: white; color: #dc2626; cursor: pointer; font-weight: 600;
+      font-size: 0.85rem; margin-top: 1rem;
+    }
+    .reset-stats-btn:hover { background: #fef2f2; }
+
+    /* ===== BOTTOM BAR ===== */
+    .bottom-bar {
+      padding: 0.4rem 1.25rem; background: var(--surface); border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .header-stats { display: none; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { width: 220px; min-width: 220px; }
+      .stats-cards { grid-template-columns: 1fr 1fr; }
+      .header-title { font-size: 1.15rem; }
+    }
+    @media (max-width: 480px) {
+      .sidebar { position: fixed; left: 0; top: 0; height: 100%; z-index: 100; }
+      .sidebar.collapsed { width: 0; }
+      .stats-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="header-eyebrow">HoyaDocs &middot; Block 4</span>
+        <h1 class="header-title">GI <em>Question Bank</em></h1>
+      </div>
+      <div class="header-right">
+        <div class="header-stats">
+          <span class="header-badge"><strong id="hdr-answered">0</strong>&nbsp;answered</span>
+          <span class="header-badge"><strong id="hdr-accuracy">0%</strong>&nbsp;accuracy</span>
+          <span class="header-badge"><strong id="hdr-remaining">0</strong>&nbsp;remaining</span>
+        </div>
+        <button class="icon-btn" id="dark-toggle" title="Toggle dark mode">&#x1F319;</button>
+        <button class="icon-btn" id="menu-btn" title="Menu">&#9776;</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-mode="mode-1">Filtered Practice</button>
+      <button class="tab" data-mode="mode-2">Premade Tests</button>
+      <button class="tab" data-mode="mode-stats">Stats</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <!-- MODE 1: FILTERED PRACTICE -->
+    <div class="mode mode-1 active" id="mode-1">
+      <div class="sidebar" id="sidebar-1">
+        <div class="filter-section">
+          <div class="section-title" style="margin-bottom:0.4rem">QUESTIONS</div>
+          <div class="count-row" id="count-row"></div>
+          <input type="number" id="custom-count" placeholder="Custom" min="1" max="999" style="width:100%;padding:4px 8px;border:1px solid var(--border);border-radius:5px;font-size:0.75rem;margin-top:0.3rem;background:var(--surface);color:var(--text);font-family:inherit;">
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-section-header" data-target="subj-body">
+            <span class="section-title"><span class="arrow down">&#9654;</span> SUBJECTS</span>
+            <div class="section-actions">
+              <button data-action="all" data-set="subject">All</button>
+              <button data-action="none" data-set="subject">None</button>
+            </div>
+          </div>
+          <div class="section-body" id="subj-body">
+            <div class="pill-grid" id="subj-pills"></div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-section-header" data-target="lec-body">
+            <span class="section-title"><span class="arrow down">&#9654;</span> LECTURES</span>
+            <div class="section-actions">
+              <button data-action="all" data-set="lecture">All</button>
+              <button data-action="none" data-set="lecture">None</button>
+            </div>
+          </div>
+          <div class="section-body" id="lec-body">
+            <input type="text" class="lec-search" id="lec-search" placeholder="Search lectures..." autocomplete="off">
+            <div class="pill-list" id="lec-pills"></div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-section-header" data-target="src-body">
+            <span class="section-title"><span class="arrow down">&#9654;</span> SOURCES</span>
+            <div class="section-actions">
+              <button data-action="all" data-set="source">All</button>
+              <button data-action="none" data-set="source">None</button>
+            </div>
+          </div>
+          <div class="section-body" id="src-body">
+            <div class="pill-grid" id="src-pills"></div>
+          </div>
+        </div>
+
+        <label class="seen-toggle">
+          <input type="checkbox" id="include-seen" checked>
+          <span>Include seen questions</span>
+        </label>
+
+        <div class="pool-info" id="pool-info">—</div>
+        <button class="action-btn" id="start-practice">Start Practice</button>
+
+        <div style="position:absolute;top:50%;right:-14px;transform:translateY(-50%);">
+          <button class="sidebar-toggle" id="toggle-1" title="Hide sidebar">&lsaquo;</button>
+        </div>
+      </div>
+      <div class="main-area" id="main-1">
+        <button class="sidebar-reopen" id="reopen-1" title="Show sidebar">&rsaquo;</button>
+        <div class="test-content" id="content-1">
+          <div class="placeholder">Configure filters and press Start Practice</div>
+        </div>
+        <div class="nav-bar" id="nav-1" style="display:none;">
+          <button id="prev-1">&#8592; Previous</button>
+          <button id="next-1">Next &#8594;</button>
+          <button class="submit-btn" id="submit-1" style="display:none;">Submit Test</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODE 2: PREMADE TESTS -->
+    <div class="mode mode-2" id="mode-2">
+      <div class="sidebar" id="sidebar-2">
+        <div class="section-title" style="margin-bottom:0.75rem">YOUR TESTS</div>
+        <div class="test-list" id="test-list"></div>
+        <button class="action-btn" id="gen-test">Generate New Test</button>
+        <button class="action-btn" id="gen-incorrect" style="margin-top:0.4rem;background:transparent;color:var(--accent);border:1.5px solid var(--accent);">Generate from Incorrect</button>
+        <div class="pool-info" id="unseen-info">—</div>
+        <div class="pool-info" id="incorrect-info">—</div>
+        <div style="position:absolute;top:50%;right:-14px;transform:translateY(-50%);">
+          <button class="sidebar-toggle" id="toggle-2" title="Hide sidebar">&lsaquo;</button>
+        </div>
+      </div>
+      <div class="main-area" id="main-2">
+        <button class="sidebar-reopen" id="reopen-2" title="Show sidebar">&rsaquo;</button>
+        <div class="test-content" id="content-2">
+          <div class="placeholder">Click Generate New Test to begin</div>
+        </div>
+        <div class="nav-bar" id="nav-2" style="display:none;">
+          <button id="prev-2">&#8592; Previous</button>
+          <button id="next-2">Next &#8594;</button>
+          <button class="submit-btn" id="submit-2" style="display:none;">Submit Test</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODE STATS -->
+    <div class="mode mode-stats" id="mode-stats">
+      <div class="stats-page" id="stats-content">
+        <h2>Performance Stats</h2>
+        <p style="color:var(--text-muted)">Answer some questions to see your stats here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <span><strong id="stat-answered">0</strong> answered &middot; <strong id="stat-accuracy">0%</strong> accuracy</span>
+    <span><strong id="stat-remaining">0</strong> remaining</span>
+  </div>
+</div>
+
+<!-- Menu dropdown -->
+<div id="menu-overlay" style="display:none;position:fixed;inset:0;z-index:999;" onclick="this.style.display='none';document.getElementById('menu-dd').style.display='none';"></div>
+<div id="menu-dd" style="display:none;position:fixed;top:50px;right:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);z-index:1000;min-width:180px;">
+  <div style="padding:0.6rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.85rem;" id="menu-export">Export Data</div>
+  <div style="padding:0.6rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.85rem;" id="menu-import">Import Data</div>
+  <div style="padding:0.6rem 1rem;cursor:pointer;font-size:0.85rem;color:#dc2626;" id="menu-reset">Reset All Progress</div>
+</div>
+<input type="file" id="import-file" accept=".json" style="display:none;">
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const QUESTIONS = [
+  {
+    "id": "lg-01-01",
+    "stem": "A 52-year-old man undergoes an upper endoscopy. The biopsy from the distal esophagus shows columnar epithelium with goblet cells. Which of the following is the most likely diagnosis?",
+    "choices": {
+      "A": "Esophageal adenocarcinoma",
+      "B": "Barrett esophagus",
+      "C": "Esophageal squamous cell carcinoma",
+      "D": "Gastroesophageal reflux disease",
+      "E": "Eosinophilic esophagitis"
+    },
+    "correct": "B",
+    "explanation": "Barrett esophagus is characterized by intestinal metaplasia of the distal esophageal epithelium, with columnar cells containing goblet cells replacing the normal squamous epithelium. This is a complication of chronic GERD and a risk factor for esophageal adenocarcinoma.\n\nA is incorrect because adenocarcinoma is a consequence of Barrett esophagus, not the diagnosis suggested by the histology alone.\nC is incorrect because squamous cell carcinoma arises from squamous epithelium, not the columnar epithelium described.\nD is incorrect because GERD is the underlying condition but not the diagnosis shown on biopsy.\nE is incorrect because eosinophilic esophagitis would show eosinophilic infiltration, not columnar epithelium with goblet cells.",
+    "metadata": {
+      "source": "lecture-guide",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Path",
+      "concept_tested": "Barrett esophagus and intestinal metaplasia",
+      "question_format": "clinical-vignette",
+      "hub_number": null,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "lg-01-02",
+    "stem": "Which layer of the GI tract wall contains the submucosal (Meissner) plexus?",
+    "choices": {
+      "A": "Mucosa",
+      "B": "Submucosa",
+      "C": "Muscularis propria",
+      "D": "Serosa",
+      "E": "Adventitia"
+    },
+    "correct": "B",
+    "explanation": "The submucosal plexus (Meissner plexus) is located in the submucosa. It primarily controls GI blood flow and epithelial cell function, including secretion and absorption. The myenteric (Auerbach) plexus is between the circular and longitudinal muscle layers of the muscularis propria.\n\nA is incorrect because the mucosa is the innermost layer where epithelial cells reside.\nC is incorrect because the myenteric plexus, not Meissner plexus, is in the muscularis propria.\nD is incorrect because the serosa is the outermost serous membrane.\nE is incorrect because the adventitia is the outermost connective tissue layer.",
+    "metadata": {
+      "source": "lecture-guide",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Anat",
+      "concept_tested": "GI tract histology and nerve plexuses",
+      "question_format": "recall",
+      "hub_number": null,
+      "difficulty": "easy"
+    }
+  },
+  {
+    "id": "lg-01-03",
+    "stem": "A researcher is studying gut motility. She observes that transection of the vagus nerve to the stomach results in decreased gastric emptying. Which of the following best explains this finding?",
+    "choices": {
+      "A": "Loss of sympathetic innervation to the pyloric sphincter",
+      "B": "Loss of parasympathetic stimulation of gastric smooth muscle",
+      "C": "Increased secretion of cholecystokinin",
+      "D": "Decreased release of motilin",
+      "E": "Increased release of vasoactive intestinal peptide"
+    },
+    "correct": "B",
+    "explanation": "The vagus nerve provides parasympathetic innervation to the stomach. Vagal stimulation promotes gastric motility and emptying through the release of acetylcholine. Vagotomy therefore decreases gastric emptying.\n\nA is incorrect because the vagus is parasympathetic, not sympathetic.\nC is incorrect because cholecystokinin slows gastric emptying and promotes gallbladder contraction.\nD is incorrect because motilin promotes motility but its release is not directly controlled by the vagus.\nE is incorrect because VIP causes relaxation and would decrease contractility, but is not directly related to vagotomy effects.",
+    "metadata": {
+      "source": "lecture-guide",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Phys",
+      "concept_tested": "Vagal innervation and gastric emptying",
+      "question_format": "two-step-reasoning",
+      "hub_number": null,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "td-01-h1-01",
+    "stem": "A 48-year-old woman is evaluated for heartburn. Esophageal pH monitoring confirms acid reflux. Which of the following structures is the primary barrier to gastroesophageal reflux?",
+    "choices": {
+      "A": "Diaphragmatic crura",
+      "B": "Lower esophageal sphincter",
+      "C": "Phrenoesophageal ligament",
+      "D": "Angle of His",
+      "E": "Gastric rugae"
+    },
+    "correct": "B",
+    "explanation": "The lower esophageal sphincter (LES) is the primary anti-reflux barrier. It maintains tonic contraction at rest and relaxes during swallowing. Transient LES relaxations are the main mechanism of GERD in most patients.\n\nA is incorrect because the diaphragmatic crura support the esophagus but are not the primary anti-reflux barrier.\nC is incorrect because the phrenoesophageal ligament provides anatomic support but not the primary functional barrier.\nD is incorrect because the angle of His is an anatomic feature that aids reflux prevention but the LES is the primary barrier.\nE is incorrect because gastric rugae are mucosal folds and play no role in anti-reflux mechanics.",
+    "metadata": {
+      "source": "testing-drill",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Phys",
+      "concept_tested": "Lower esophageal sphincter and reflux prevention",
+      "question_format": "clinical-vignette",
+      "hub_number": 1,
+      "difficulty": "easy"
+    }
+  },
+  {
+    "id": "td-01-h1-02",
+    "stem": "Which of the following neurotransmitters is primarily responsible for relaxation of the lower esophageal sphincter?",
+    "choices": {
+      "A": "Acetylcholine",
+      "B": "Substance P",
+      "C": "Nitric oxide",
+      "D": "Serotonin",
+      "E": "Norepinephrine"
+    },
+    "correct": "C",
+    "explanation": "Nitric oxide (NO) and vasoactive intestinal peptide (VIP) are the primary inhibitory neurotransmitters responsible for LES relaxation. NO is released from inhibitory neurons in the myenteric plexus and causes smooth muscle relaxation.\n\nA is incorrect because acetylcholine is excitatory and promotes muscle contraction, not relaxation.\nB is incorrect because substance P is a neuropeptide involved in pain signaling, not LES relaxation.\nD is incorrect because serotonin has various GI effects but is not the primary LES relaxation mediator.\nE is incorrect because norepinephrine is sympathetic and would cause contraction rather than relaxation.",
+    "metadata": {
+      "source": "testing-drill",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Phys",
+      "concept_tested": "Neurotransmitters and LES relaxation",
+      "question_format": "recall",
+      "hub_number": 1,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "us-01-01",
+    "stem": "A 58-year-old man with a 30-year history of smoking presents with dysphagia and weight loss. Upper endoscopy reveals a fungating mass in the mid-esophagus. Which of the following mechanisms best explains the increased risk of squamous cell carcinoma in this patient?",
+    "choices": {
+      "A": "Chronic acid reflux causes columnar metaplasia",
+      "B": "Smoking induces direct carcinogenic DNA damage and impairs esophageal clearance",
+      "C": "Alcohol causes alkaline reflux and intestinal metaplasia",
+      "D": "Achalasia leads to chronic food retention and mucosal irritation",
+      "E": "Caustic ingestion results in squamous dysplasia"
+    },
+    "correct": "B",
+    "explanation": "Smoking is a major risk factor for esophageal squamous cell carcinoma. Tobacco contains carcinogens that directly damage DNA and impair the esophagus's ability to clear irritants, leading to chronic inflammation and malignant transformation.\n\nA is incorrect because chronic acid reflux causes adenocarcinoma in Barrett esophagus, not squamous cell carcinoma of the mid-esophagus.\nC is incorrect because alcohol-related esophageal cancer is squamous type but the mechanism is carcinogen exposure, not alkaline reflux.\nD is incorrect because while achalasia increases cancer risk, it is not the primary mechanism in smokers.\nE is incorrect because caustic injury can cause cancer but is not the typical presentation with smoking history.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Path",
+      "concept_tested": "Esophageal squamous cell carcinoma and risk factors",
+      "question_format": "clinical-vignette",
+      "hub_number": null,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "us-01-02",
+    "stem": "A medical student studying GI physiology notes that stimulation of the myenteric plexus results in increased gastric muscle contraction, while stimulation of inhibitory neurons releases nitric oxide and VIP. Which of the following statements best describes the functional consequence of blocking acetylcholinesterase in the stomach?",
+    "choices": {
+      "A": "Decreased gastric acid secretion and increased motility",
+      "B": "Increased acetylcholine levels leading to enhanced excitatory effects on smooth muscle",
+      "C": "Reduced parasympathetic signaling and decreased peristalsis",
+      "D": "Competitive inhibition of nitric oxide receptors on smooth muscle",
+      "E": "Enhanced breakdown of neuropeptide Y in the myenteric plexus"
+    },
+    "correct": "B",
+    "explanation": "Blocking acetylcholinesterase prevents the breakdown of acetylcholine, leading to increased acetylcholine levels in the synaptic cleft. This enhances parasympathetic signaling and promotes smooth muscle contraction, increasing gastric motility and emptying.\n\nA is incorrect because increased acetylcholine enhances motility but the primary gastric acid effect is separate.\nC is incorrect because blocking acetylcholinesterase increases, not decreases, parasympathetic effects.\nD is incorrect because acetylcholinesterase acts on acetylcholine, not on nitric oxide receptors.\nE is incorrect because acetylcholinesterase does not directly affect neuropeptide Y metabolism.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Phys",
+      "concept_tested": "Myenteric plexus physiology and acetylcholine signaling",
+      "question_format": "concept-application",
+      "hub_number": null,
+      "difficulty": "hard"
+    }
+  },
+  {
+    "id": "us-01-03",
+    "stem": "During a gastroenterology conference, a pathologist reviews a resected gastric tumor. The tumor shows loss of ganglion cells in the myenteric plexus in addition to malignant cells. The pathologist mentions this is similar to the finding in achalasia. Which of the following best explains why loss of myenteric ganglion cells leads to dysmotility?",
+    "choices": {
+      "A": "Decreased substance P production eliminates sensory feedback",
+      "B": "Loss of inhibitory neurons removes the normal coordinated relaxation needed for peristalsis",
+      "C": "Increased gastrin secretion overstimulates parietal cells",
+      "D": "Reduced motilin prevents the initiation of migrating motor complexes",
+      "E": "Loss of Meissner plexus impairs nutrient absorption"
+    },
+    "correct": "B",
+    "explanation": "The myenteric plexus contains both excitatory (cholinergic) and inhibitory (nitrergic) neurons. Coordinated motility requires sequential relaxation (via inhibitory neurons) followed by contraction. Loss of inhibitory ganglion cells prevents the relaxation phase, eliminating peristalsis.\n\nA is incorrect because substance P is involved in pain signaling, not the primary mechanism of motility loss.\nC is incorrect because gastrin affects acid secretion, not the mechanism of dysmotility.\nD is incorrect because motilin is produced by endocrine cells, not ganglion cells.\nE is incorrect because absorption is a Meissner plexus function but not directly related to dysmotility from myenteric loss.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 1,
+      "lecture_title": "GI Overview",
+      "subject": "Phys",
+      "concept_tested": "Myenteric plexus function and dysmotility mechanisms",
+      "question_format": "two-step-reasoning",
+      "hub_number": null,
+      "difficulty": "hard"
+    }
+  },
+  {
+    "id": "lg-02-01",
+    "stem": "A 65-year-old man presents with progressive dysphagia to solids over 6 months and a 10-lb weight loss. An esophagram shows an irregular, narrowed segment in the distal esophagus. Which of the following is the most important risk factor?",
+    "choices": {
+      "A": "Alcohol use",
+      "B": "Barrett esophagus",
+      "C": "H. pylori infection",
+      "D": "Smoking",
+      "E": "Achalasia"
+    },
+    "correct": "B",
+    "explanation": "Distal esophageal adenocarcinoma is most strongly associated with Barrett esophagus (intestinal metaplasia from chronic GERD). Squamous cell carcinoma of the esophagus is more associated with alcohol and smoking and typically affects the upper/mid esophagus.\n\nA is incorrect because while alcohol increases squamous cell cancer risk, Barrett esophagus is the most important risk factor for distal adenocarcinoma.\nC is incorrect because H. pylori is associated with gastric cancer, not esophageal adenocarcinoma.\nD is incorrect because smoking is a stronger risk factor for squamous cell carcinoma of the upper/mid esophagus.\nE is incorrect because achalasia increases cancer risk overall but is not as strong a factor as Barrett esophagus for adenocarcinoma.",
+    "metadata": {
+      "source": "lecture-guide",
+      "sub_source": null,
+      "lecture_id": 2,
+      "lecture_title": "Esophageal Disorders",
+      "subject": "Path",
+      "concept_tested": "Esophageal adenocarcinoma and Barrett esophagus",
+      "question_format": "clinical-vignette",
+      "hub_number": null,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "lg-02-02",
+    "stem": "A 35-year-old woman has difficulty swallowing both solids and liquids. Manometry shows increased lower esophageal sphincter pressure and absent peristalsis in the esophageal body. Which of the following is the most likely pathologic finding?",
+    "choices": {
+      "A": "Mucosal ulceration",
+      "B": "Loss of ganglion cells in the myenteric plexus",
+      "C": "Fibrosis of the esophageal wall",
+      "D": "Eosinophilic infiltration of the mucosa",
+      "E": "Squamous cell dysplasia"
+    },
+    "correct": "B",
+    "explanation": "Achalasia is caused by loss of inhibitory ganglion cells (neurons) in the myenteric (Auerbach) plexus, leading to failure of LES relaxation and absent peristalsis. In Chagas disease, T. cruzi destroys these ganglion cells.\n\nA is incorrect because mucosal ulceration would present with pain and bleeding, not isolated motility dysfunction.\nC is incorrect because fibrosis might occur secondarily but the primary pathology is neural loss.\nD is incorrect because eosinophilic infiltration would suggest eosinophilic esophagitis with dysphagia to solids only.\nE is incorrect because squamous cell dysplasia is a precancerous change, not the cause of achalasia.",
+    "metadata": {
+      "source": "lecture-guide",
+      "sub_source": null,
+      "lecture_id": 2,
+      "lecture_title": "Esophageal Disorders",
+      "subject": "Path",
+      "concept_tested": "Achalasia pathophysiology",
+      "question_format": "clinical-vignette",
+      "hub_number": null,
+      "difficulty": "medium"
+    }
+  },
+  {
+    "id": "us-02-01",
+    "stem": "A 42-year-old woman with a long history of GERD presents with persistent dysphagia. Upper endoscopy reveals irregular Z-line and a biopsy confirms intestinal metaplasia with dysplasia. She asks which complication poses the greatest long-term risk. Which of the following best represents the mechanism of cancer development in Barrett esophagus?",
+    "choices": {
+      "A": "Chronic acid exposure causes repeated cycles of injury, inflammation, and aberrant healing with accumulation of mutations",
+      "B": "The columnar epithelium lacks the protective mucus layer of the stomach",
+      "C": "H. pylori eradication allows increased acid reflux",
+      "D": "Barrett epithelium directly produces carcinogenic compounds from food",
+      "E": "The intestinal metaplasia blocks normal esophageal peristalsis"
+    },
+    "correct": "A",
+    "explanation": "Barrett esophagus develops from chronic acid reflux causing repeated injury and repair cycles. This chronic inflammation and regenerative response creates conditions for accumulated genetic mutations and dysplasia, eventually leading to adenocarcinoma.\n\nB is incorrect because the issue is not the mucus layer but chronic injury leading to malignant transformation.\nC is incorrect because H. pylori eradication may actually increase reflux but this is not the primary mechanism of cancer development.\nD is incorrect because Barrett epithelium itself does not produce carcinogens; the issue is the chronic inflammatory environment.\nE is incorrect because while Barrett can affect motility, the main mechanism of cancer risk is the chronic injury-inflammation-dysplasia cycle.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 2,
+      "lecture_title": "Esophageal Disorders",
+      "subject": "Path",
+      "concept_tested": "Barrett esophagus and carcinogenesis",
+      "question_format": "clinical-vignette",
+      "hub_number": null,
+      "difficulty": "hard"
+    }
+  },
+  {
+    "id": "us-02-02",
+    "stem": "Researchers investigating achalasia note that animal models with selective destruction of inhibitory neurons in the myenteric plexus develop the characteristic manometric findings of achalasia (elevated LES pressure, absent peristalsis). Which of the following neurotransmitter systems is being disrupted in these animals?",
+    "choices": {
+      "A": "Acetylcholine and dopamine pathways in the dorsal motor nucleus",
+      "B": "Nitric oxide and VIP released by inhibitory neurons that normally relax the LES",
+      "C": "Serotonin reuptake in the enteric nervous system",
+      "D": "Substance P and neurokinin pathways in the mucosa",
+      "E": "Motilin and gastrin hormone cascades in the stomach"
+    },
+    "correct": "B",
+    "explanation": "Achalasia results from loss of inhibitory neurons that release nitric oxide (NO) and vasoactive intestinal peptide (VIP). These neurotransmitters cause smooth muscle relaxation needed for LES opening and peristalsis. Without them, the LES remains contracted and peristalsis fails.\n\nA is incorrect because acetylcholine is excitatory and dopamine plays a limited role in esophageal function.\nC is incorrect because serotonin reuptake is not the primary mechanism of achalasia.\nD is incorrect because substance P is involved in pain but not the primary mechanism of LES dysfunction.\nE is incorrect because motilin and gastrin act on the stomach and are not the neural mediators of LES relaxation.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 2,
+      "lecture_title": "Esophageal Disorders",
+      "subject": "Phys",
+      "concept_tested": "Inhibitory neurotransmitters and LES physiology",
+      "question_format": "concept-application",
+      "hub_number": null,
+      "difficulty": "hard"
+    }
+  },
+  {
+    "id": "us-02-03",
+    "stem": "A 55-year-old man with chronic dysphagia attributed to achalasia has failed pneumatic dilation. He is considering POEM (peroral endoscopic myotomy) which selectively divides the circular muscle of the esophagus while preserving the mucosa. Why would this procedure be expected to relieve the obstruction in achalasia?",
+    "choices": {
+      "A": "It restores inhibitory neuron function by removing pressure on the myenteric plexus",
+      "B": "It bypasses the need for LES relaxation by creating a direct pathway for food boluses",
+      "C": "Dividing the circular muscle mechanically reduces the pressure resistance at the LES regardless of neuronal dysfunction",
+      "D": "It stimulates compensatory hypertrophy of remaining smooth muscle fibers",
+      "E": "It triggers regrowth of destroyed ganglion cells in the myenteric plexus"
+    },
+    "correct": "C",
+    "explanation": "POEM works by mechanically dividing the circular muscle of the LES. This bypasses the neuronal dysfunction by reducing the structural pressure barrier. Even without functional inhibitory neurons, the reduced muscle mass cannot generate sufficient resistance to prevent food passage.\n\nA is incorrect because POEM does not restore neuronal function; achalasia is essentially irreversible neurologically.\nB is incorrect because while a pathway is created, the mechanism is mechanical reduction of muscle, not pathway creation.\nD is incorrect because compensatory hypertrophy would not occur after myotomy and would worsen the problem.\nE is incorrect because ganglion cells destroyed in achalasia do not regenerate; POEM is a permanent mechanical solution.",
+    "metadata": {
+      "source": "usmle-generated",
+      "sub_source": null,
+      "lecture_id": 2,
+      "lecture_title": "Esophageal Disorders",
+      "subject": "Path",
+      "concept_tested": "Achalasia pathophysiology and treatment mechanisms",
+      "question_format": "two-step-reasoning",
+      "hub_number": null,
+      "difficulty": "hard"
+    }
+  }
+];
+
+const SUBJECTS = [...new Set(QUESTIONS.map(q => q.metadata.subject))].sort();
+const LECTURES = [...new Map(QUESTIONS.map(q =>
+  [q.metadata.lecture_id, {id: q.metadata.lecture_id, title: q.metadata.lecture_title}]
+)).values()].sort((a,b) => a.id - b.id);
+const SOURCES = [...new Set(QUESTIONS.map(q => q.metadata.source))];
+const SRC_LABELS = {'lecture-guide':'Lecture Guide','testing-drill':'Testing Drill','practice-problems':'Practice Problems','usmle-generated':'USMLE Step 1'};
+const STORAGE_KEY = 'gi-qbank';
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  seen: new Set(),
+  incorrect: new Set(),
+  tests: [],
+  darkMode: false,
+  stats: { totalAnswered: 0, totalCorrect: 0, bySubject: {}, bySource: {}, byLecture: {} }
+};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      state.seen = new Set(d.seen || []);
+      state.incorrect = new Set(d.incorrect || []);
+      state.tests = d.tests || [];
+      state.darkMode = d.darkMode || false;
+      state.stats = d.stats || { totalAnswered:0, totalCorrect:0, bySubject:{}, bySource:{}, byLecture:{} };
+      if (!state.stats.byLecture) state.stats.byLecture = {};
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    seen: [...state.seen], incorrect: [...state.incorrect], tests: state.tests, darkMode: state.darkMode, stats: state.stats
+  }));
+}
+
+// ============================================================
+// FILTER STATE
+// ============================================================
+let selectedSubjects = new Set(SUBJECTS);
+let selectedLectures = new Set(LECTURES.map(l => l.id));
+let selectedSources = new Set(SOURCES);
+let selectedCount = 25;
+let includeSeen = true;
+
+// ============================================================
+// TEST STATE (shared between modes)
+// ============================================================
+let activeMode = null; // 'mode-1' or 'mode-2'
+let currentTest = null;
+let testAnswers = {};
+let qIndex = 0;
+
+// ============================================================
+// HELPERS
+// ============================================================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getFilteredPool() {
+  return QUESTIONS.filter(q => {
+    if (!selectedSubjects.has(q.metadata.subject)) return false;
+    if (!selectedLectures.has(q.metadata.lecture_id)) return false;
+    if (!selectedSources.has(q.metadata.source)) return false;
+    if (!includeSeen && state.seen.has(q.id)) return false;
+    return true;
+  });
+}
+
+function $(id) { return document.getElementById(id); }
+
+// ============================================================
+// INIT UI
+// ============================================================
+function initUI() {
+  // Count buttons
+  const countRow = $('count-row');
+  [5,10,15,20,25,30,40,50].forEach(n => {
+    const b = document.createElement('button');
+    b.textContent = n;
+    if (n === 25) b.classList.add('active');
+    b.addEventListener('click', () => {
+      countRow.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      selectedCount = n;
+      $('custom-count').value = '';
+    });
+    countRow.appendChild(b);
+  });
+  $('custom-count').addEventListener('input', e => {
+    if (e.target.value) {
+      countRow.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      selectedCount = parseInt(e.target.value) || 25;
+    }
+  });
+
+  // Subject pills
+  const sp = $('subj-pills');
+  SUBJECTS.forEach(s => {
+    const p = document.createElement('button');
+    p.className = 'pill active'; p.textContent = s; p.dataset.value = s;
+    p.addEventListener('click', () => {
+      p.classList.toggle('active');
+      if (p.classList.contains('active')) selectedSubjects.add(s); else selectedSubjects.delete(s);
+      updatePool();
+    });
+    sp.appendChild(p);
+  });
+
+  // Lecture pills
+  const lp = $('lec-pills');
+  LECTURES.forEach(l => {
+    const p = document.createElement('button');
+    p.className = 'pill active'; p.textContent = 'Lec ' + l.id + ': ' + l.title; p.dataset.value = l.id;
+    p.addEventListener('click', () => {
+      p.classList.toggle('active');
+      if (p.classList.contains('active')) selectedLectures.add(l.id); else selectedLectures.delete(l.id);
+      updatePool();
+    });
+    lp.appendChild(p);
+  });
+
+  // Source pills
+  const srp = $('src-pills');
+  SOURCES.forEach(s => {
+    const p = document.createElement('button');
+    p.className = 'pill active'; p.textContent = SRC_LABELS[s] || s; p.dataset.value = s;
+    p.addEventListener('click', () => {
+      p.classList.toggle('active');
+      if (p.classList.contains('active')) selectedSources.add(s); else selectedSources.delete(s);
+      updatePool();
+    });
+    srp.appendChild(p);
+  });
+
+  // Lecture search
+  $('lec-search').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    lp.querySelectorAll('.pill').forEach(p => {
+      p.classList.toggle('hidden', q && !p.textContent.toLowerCase().includes(q));
+    });
+  });
+
+  // Include seen
+  $('include-seen').addEventListener('change', e => { includeSeen = e.target.checked; updatePool(); });
+
+  // Bulk select/deselect
+  document.querySelectorAll('.section-actions button').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const action = btn.dataset.action;
+      const setName = btn.dataset.set;
+      let container, stateSet, allValues;
+      if (setName === 'subject') { container = sp; stateSet = selectedSubjects; allValues = SUBJECTS; }
+      else if (setName === 'lecture') { container = lp; stateSet = selectedLectures; allValues = LECTURES.map(l => l.id); }
+      else { container = srp; stateSet = selectedSources; allValues = SOURCES; }
+
+      if (action === 'all') {
+        allValues.forEach(v => stateSet.add(v));
+        container.querySelectorAll('.pill').forEach(p => p.classList.add('active'));
+      } else {
+        stateSet.clear();
+        container.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      }
+      updatePool();
+    });
+  });
+
+  // Section collapse toggles
+  document.querySelectorAll('.filter-section-header').forEach(hdr => {
+    hdr.addEventListener('click', () => {
+      const target = hdr.dataset.target;
+      if (!target) return;
+      const body = $(target);
+      const arrow = hdr.querySelector('.arrow');
+      body.classList.toggle('collapsed');
+      if (arrow) arrow.classList.toggle('down');
+    });
+  });
+
+  // Sidebar toggles
+  $('toggle-1').addEventListener('click', () => { $('sidebar-1').classList.add('collapsed'); $('reopen-1').style.display = 'flex'; });
+  $('reopen-1').addEventListener('click', () => { $('sidebar-1').classList.remove('collapsed'); $('reopen-1').style.display = 'none'; });
+  $('toggle-2').addEventListener('click', () => { $('sidebar-2').classList.add('collapsed'); $('reopen-2').style.display = 'flex'; });
+  $('reopen-2').addEventListener('click', () => { $('sidebar-2').classList.remove('collapsed'); $('reopen-2').style.display = 'none'; });
+
+  // Start practice
+  $('start-practice').addEventListener('click', startPractice);
+
+  // Generate test
+  $('gen-test').addEventListener('click', generateTest);
+  $('gen-incorrect').addEventListener('click', generateFromIncorrect);
+
+  // Menu
+  $('menu-btn').addEventListener('click', () => {
+    $('menu-dd').style.display = $('menu-dd').style.display === 'none' ? 'block' : 'none';
+    $('menu-overlay').style.display = $('menu-dd').style.display;
+  });
+  $('menu-export').addEventListener('click', exportData);
+  $('menu-import').addEventListener('click', () => $('import-file').click());
+  $('menu-reset').addEventListener('click', resetAll);
+  $('import-file').addEventListener('change', importData);
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.mode').forEach(m => m.classList.remove('active'));
+      tab.classList.add('active');
+      $(tab.dataset.mode).classList.add('active');
+      if (tab.dataset.mode === 'mode-stats') renderStats();
+    });
+  });
+
+  updatePool();
+  updateTestList();
+  updateBottomBar();
+}
+
+function updatePool() {
+  const pool = getFilteredPool();
+  $('pool-info').textContent = pool.length + ' question' + (pool.length !== 1 ? 's' : '') + ' available';
+}
+
+// ============================================================
+// MODE 1: FILTERED PRACTICE
+// ============================================================
+function startPractice() {
+  const pool = getFilteredPool();
+  if (pool.length === 0) { alert('No questions match your filters.'); return; }
+  const count = Math.min(selectedCount, pool.length);
+  const selected = shuffle(pool).slice(0, count);
+
+  activeMode = 'mode-1';
+  currentTest = { questions: selected.map(q => q.id), type: 'practice', submitted: false };
+  testAnswers = {};
+  qIndex = 0;
+
+  $('nav-1').style.display = 'flex';
+  setupNav('1');
+  showQuestion('1');
+}
+
+// ============================================================
+// MODE 2: PREMADE TESTS
+// ============================================================
+function generateTest() {
+  const unseen = QUESTIONS.filter(q => !state.seen.has(q.id));
+  if (unseen.length === 0) { alert("You've seen all questions! Reset progress to generate new tests."); return; }
+
+  const target = Math.min(25, unseen.length);
+  const byLec = {};
+  unseen.forEach(q => { const l = q.metadata.lecture_id; if (!byLec[l]) byLec[l] = []; byLec[l].push(q); });
+  const lids = Object.keys(byLec).map(Number).sort((a,b) => a-b);
+
+  const sel = [];
+  let round = 0;
+  while (sel.length < target) {
+    let added = false;
+    for (const lid of lids) {
+      if (sel.length >= target) break;
+      const avail = byLec[lid].filter(q => !sel.includes(q));
+      if (avail.length > round) { sel.push(avail[round]); added = true; }
+    }
+    if (!added) break;
+    round++;
+  }
+
+  activeMode = 'mode-2';
+  currentTest = {
+    id: state.tests.length + 1, questions: shuffle(sel).map(q => q.id),
+    type: 'premade', submitted: false, created: new Date().toISOString()
+  };
+  testAnswers = {};
+  qIndex = 0;
+
+  $('nav-2').style.display = 'flex';
+  setupNav('2');
+  showQuestion('2');
+  updateTestList();
+}
+
+function generateFromIncorrect() {
+  const incorrectQs = QUESTIONS.filter(q => state.incorrect.has(q.id));
+  if (incorrectQs.length === 0) { alert("No incorrect questions to review! Keep practicing."); return; }
+
+  const target = Math.min(25, incorrectQs.length);
+  const sel = shuffle(incorrectQs).slice(0, target);
+
+  activeMode = 'mode-2';
+  currentTest = {
+    id: state.tests.length + 1, questions: sel.map(q => q.id),
+    type: 'incorrect-review', submitted: false, created: new Date().toISOString()
+  };
+  testAnswers = {};
+  qIndex = 0;
+
+  $('nav-2').style.display = 'flex';
+  setupNav('2');
+  showQuestion('2');
+  updateTestList();
+}
+
+// ============================================================
+// TEST TAKING (mode-agnostic via suffix)
+// ============================================================
+function setupNav(sfx) {
+  $('prev-' + sfx).onclick = () => { if (qIndex > 0) { qIndex--; showQuestion(sfx); } };
+  $('next-' + sfx).onclick = () => { if (qIndex < currentTest.questions.length - 1) { qIndex++; showQuestion(sfx); } };
+  $('submit-' + sfx).onclick = () => submitTest(sfx);
+}
+
+function showQuestion(sfx) {
+  const qId = currentTest.questions[qIndex];
+  const q = QUESTIONS.find(x => x.id === qId);
+  if (!q) return;
+
+  const content = $('content-' + sfx);
+  let gridHtml = '<div class="q-grid">';
+  currentTest.questions.forEach((id, i) => {
+    let cls = 'q-dot';
+    if (testAnswers[id]) cls += ' answered';
+    if (i === qIndex) cls += ' current';
+    gridHtml += '<div class="' + cls + '" data-i="' + i + '">' + (i+1) + '</div>';
+  });
+  gridHtml += '</div>';
+
+  const pct = ((qIndex + 1) / currentTest.questions.length * 100).toFixed(0);
+
+  let choicesHtml = '<div class="choices">';
+  ['A','B','C','D','E'].forEach(letter => {
+    const sel = testAnswers[qId] === letter ? ' selected' : '';
+    choicesHtml += '<div class="choice' + sel + '" data-letter="' + letter + '">' +
+      '<span class="choice-letter">' + letter + '</span>' +
+      '<span class="choice-text">' + q.choices[letter] + '</span>' +
+      '</div>';
+  });
+  choicesHtml += '</div>';
+
+  content.innerHTML = gridHtml +
+    '<div class="progress"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+    '<div class="q-header"><span>Question ' + (qIndex+1) + ' of ' + currentTest.questions.length + '</span></div>' +
+    '<div class="q-stem">' + q.stem + '</div>' +
+    choicesHtml;
+
+  // Wire up grid clicks
+  content.querySelectorAll('.q-dot').forEach(dot => {
+    dot.addEventListener('click', () => { qIndex = parseInt(dot.dataset.i); showQuestion(sfx); });
+  });
+
+  // Wire up choice clicks
+  content.querySelectorAll('.choice').forEach(ch => {
+    ch.addEventListener('click', () => {
+      testAnswers[qId] = ch.dataset.letter;
+      content.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+      ch.classList.add('selected');
+      updateNav(sfx);
+      // Refresh grid dots
+      content.querySelectorAll('.q-dot').forEach((dot, i) => {
+        dot.classList.toggle('answered', !!testAnswers[currentTest.questions[i]]);
+      });
+    });
+  });
+
+  updateNav(sfx);
+}
+
+function updateNav(sfx) {
+  $('prev-' + sfx).disabled = qIndex === 0;
+  $('next-' + sfx).disabled = qIndex === currentTest.questions.length - 1;
+  const allDone = currentTest.questions.every(id => testAnswers[id]);
+  $('submit-' + sfx).style.display = allDone ? 'inline-block' : 'none';
+}
+
+// ============================================================
+// SUBMIT & REVIEW
+// ============================================================
+function submitTest(sfx) {
+  currentTest.submitted = true;
+  let score = 0;
+  currentTest.questions.forEach(qId => {
+    const q = QUESTIONS.find(x => x.id === qId);
+    const correct = testAnswers[qId] === q.correct;
+    if (correct) score++;
+    recordStat(qId, correct);
+  });
+  currentTest.score = score;
+
+  if (currentTest.type === 'premade' || currentTest.type === 'incorrect-review') {
+    state.tests.push({ id: currentTest.id, type: currentTest.type, score, total: currentTest.questions.length, date: new Date().toISOString() });
+  }
+  saveState();
+  updateTestList();
+  updateBottomBar();
+
+  // Hide nav
+  $('nav-' + sfx).style.display = 'none';
+
+  // Render review in-place
+  const content = $('content-' + sfx);
+  const total = currentTest.questions.length;
+  const pct = Math.round(score / total * 100);
+
+  let html = '<div class="score-box"><div class="score-num">' + score + '/' + total + '</div>' +
+    '<div class="score-label">' + pct + '% correct</div></div>';
+
+  currentTest.questions.forEach((qId, idx) => {
+    const q = QUESTIONS.find(x => x.id === qId);
+    const picked = testAnswers[qId];
+    const isCorrect = picked === q.correct;
+
+    html += '<div class="review-q">';
+    html += '<div class="review-tag ' + (isCorrect ? 'pass' : 'fail') + '">' + (isCorrect ? '&#10003; Correct' : '&#10007; Incorrect') + '</div>';
+    html += '<div style="font-weight:600;font-size:0.85rem;margin-bottom:0.5rem;">Question ' + (idx+1) + '</div>';
+    html += '<div class="q-stem">' + q.stem + '</div>';
+    html += '<div class="choices">';
+    ['A','B','C','D','E'].forEach(letter => {
+      let cls = 'choice';
+      let tag = '';
+      if (letter === q.correct) { cls += ' correct'; tag = '<span class="choice-tag">&#10003; Correct</span>'; }
+      else if (letter === picked) { cls += ' wrong'; tag = '<span class="choice-tag">&#10007; Your answer</span>'; }
+      html += '<div class="' + cls + '"><span class="choice-letter">' + letter + '</span>' +
+        '<span class="choice-text">' + q.choices[letter] + '</span>' + tag + '</div>';
+    });
+    html += '</div>';
+    html += '<div class="explanation">' + q.explanation + '</div>';
+    html += '<div class="answer-meta">';
+    html += '<div class="meta-row"><span class="meta-label">Source</span><span class="meta-value">' + (SRC_LABELS[q.metadata.source] || q.metadata.source) + '</span></div>';
+    html += '<div class="meta-row"><span class="meta-label">Concept Tested</span><span class="meta-value">' + q.metadata.concept_tested + '</span></div>';
+    html += '<div class="meta-row"><span class="meta-label">Related Lecture</span><span class="meta-value">Lec ' + q.metadata.lecture_id + ': ' + q.metadata.lecture_title + '</span></div>';
+    html += '<div class="meta-row"><span class="meta-label">Difficulty</span><span class="meta-value">' + q.metadata.difficulty + '</span></div>';
+    html += '</div></div>';
+  });
+
+  content.innerHTML = html;
+}
+
+// ============================================================
+// STATS TRACKING
+// ============================================================
+function recordStat(questionId, isCorrect) {
+  state.seen.add(questionId);
+  state.stats.totalAnswered++;
+  if (isCorrect) {
+    state.stats.totalCorrect++;
+    state.incorrect.delete(questionId);
+  } else {
+    state.incorrect.add(questionId);
+  }
+
+  const q = QUESTIONS.find(x => x.id === questionId);
+  const subj = q.metadata.subject;
+  const src = q.metadata.source;
+  const lecId = q.metadata.lecture_id;
+
+  if (!state.stats.bySubject[subj]) state.stats.bySubject[subj] = {answered:0, correct:0};
+  state.stats.bySubject[subj].answered++;
+  if (isCorrect) state.stats.bySubject[subj].correct++;
+
+  if (!state.stats.bySource[src]) state.stats.bySource[src] = {answered:0, correct:0};
+  state.stats.bySource[src].answered++;
+  if (isCorrect) state.stats.bySource[src].correct++;
+
+  if (!state.stats.byLecture[lecId]) state.stats.byLecture[lecId] = {answered:0, correct:0, title: q.metadata.lecture_title};
+  state.stats.byLecture[lecId].answered++;
+  if (isCorrect) state.stats.byLecture[lecId].correct++;
+
+  saveState();
+}
+
+// ============================================================
+// STATS TAB RENDERING
+// ============================================================
+function renderStats() {
+  const s = state.stats;
+  const el = $('stats-content');
+  const remaining = getRemainingCount();
+  const acc = s.totalAnswered > 0 ? Math.round(s.totalCorrect / s.totalAnswered * 100) : 0;
+
+  let html = '<h2>Performance Stats</h2>';
+
+  // Cards
+  html += '<div class="stats-cards">';
+  html += '<div class="stat-card"><div class="val">' + s.totalAnswered + '</div><div class="lbl">Answered</div></div>';
+  html += '<div class="stat-card"><div class="val">' + acc + '%</div><div class="lbl">Accuracy</div></div>';
+  html += '<div class="stat-card"><div class="val">' + remaining + '</div><div class="lbl">Remaining</div></div>';
+  html += '</div>';
+
+  if (s.totalAnswered === 0) {
+    html += '<p style="color:var(--text-muted);text-align:center;">Answer some questions to see detailed stats.</p>';
+    el.innerHTML = html;
+    return;
+  }
+
+  // By Subject
+  html += '<div class="stats-section"><h3>By Subject</h3><table class="stats-table">';
+  html += '<tr><th>Subject</th><th class="num">Answered</th><th class="num">Correct</th><th class="num">Wrong</th><th class="num">Accuracy</th></tr>';
+  Object.keys(s.bySubject).sort().forEach(subj => {
+    const d = s.bySubject[subj];
+    const wrong = d.answered - d.correct;
+    const a = Math.round(d.correct / d.answered * 100);
+    html += '<tr><td>' + subj + '</td><td class="num">' + d.answered + '</td><td class="num">' + d.correct + '</td><td class="num">' + wrong + '</td><td class="num">' + a + '%</td></tr>';
+  });
+  html += '</table></div>';
+
+  // By Lecture (sorted by most wrong)
+  const lecEntries = Object.entries(s.byLecture).map(([id, d]) => ({ id: parseInt(id), ...d, wrong: d.answered - d.correct }))
+    .sort((a,b) => b.wrong - a.wrong);
+
+  if (lecEntries.length > 0) {
+    html += '<div class="stats-section"><h3>By Lecture <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted)">(sorted by most wrong)</span></h3>';
+    html += '<table class="stats-table"><tr><th>Lecture</th><th class="num">Answered</th><th class="num">Wrong</th><th class="num">Accuracy</th></tr>';
+    lecEntries.forEach(d => {
+      const a = Math.round(d.correct / d.answered * 100);
+      html += '<tr><td>Lec ' + d.id + ': ' + d.title + '</td><td class="num">' + d.answered + '</td><td class="num">' + d.wrong + '</td><td class="num">' + a + '%</td></tr>';
+    });
+    html += '</table></div>';
+  }
+
+  // By Source
+  html += '<div class="stats-section"><h3>By Source</h3><table class="stats-table">';
+  html += '<tr><th>Source</th><th class="num">Answered</th><th class="num">Correct</th><th class="num">Accuracy</th></tr>';
+  Object.keys(s.bySource).forEach(src => {
+    const d = s.bySource[src];
+    const a = Math.round(d.correct / d.answered * 100);
+    html += '<tr><td>' + (SRC_LABELS[src] || src) + '</td><td class="num">' + d.answered + '</td><td class="num">' + d.correct + '</td><td class="num">' + a + '%</td></tr>';
+  });
+  html += '</table></div>';
+
+  // Reset button
+  html += '<button class="reset-stats-btn" onclick="resetStats()">Reset Stats Only</button>';
+  html += '<p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Resets stats and seen questions. Test history is preserved.</p>';
+
+  el.innerHTML = html;
+}
+
+function resetStats() {
+  if (!confirm('Reset all stats and seen questions? Test history will be kept.')) return;
+  state.seen.clear();
+  state.incorrect.clear();
+  state.stats = { totalAnswered:0, totalCorrect:0, bySubject:{}, bySource:{}, byLecture:{} };
+  saveState();
+  updateBottomBar();
+  updateTestList();
+  renderStats();
+}
+
+// ============================================================
+// TEST LIST
+// ============================================================
+function updateTestList() {
+  const list = $('test-list');
+  list.innerHTML = '';
+  state.tests.forEach(t => {
+    const pct = Math.round(t.score / t.total * 100);
+    const d = new Date(t.date).toLocaleDateString('en-US', {month:'short',day:'numeric'});
+    const card = document.createElement('div');
+    card.className = 'test-card';
+    const typeLabel = t.type === 'incorrect-review' ? ' (Review)' : '';
+    card.innerHTML = '<div class="t-name">Test ' + t.id + typeLabel + '</div><div class="t-info">' + t.score + '/' + t.total + ' (' + pct + '%) &middot; ' + d + '</div>';
+    list.appendChild(card);
+  });
+  const unseen = getRemainingCount();
+  $('unseen-info').textContent = unseen + ' unseen question' + (unseen !== 1 ? 's' : '') + ' remaining';
+  $('gen-test').disabled = unseen === 0;
+  const incorrectCount = QUESTIONS.filter(q => state.incorrect.has(q.id)).length;
+  $('incorrect-info').textContent = incorrectCount + ' incorrect question' + (incorrectCount !== 1 ? 's' : '') + ' to review';
+  $('gen-incorrect').disabled = incorrectCount === 0;
+}
+
+// ============================================================
+// BOTTOM BAR
+// ============================================================
+function getRemainingCount() {
+  return QUESTIONS.filter(q => !state.seen.has(q.id)).length;
+}
+
+function updateBottomBar() {
+  const s = state.stats;
+  const remaining = getRemainingCount();
+  const acc = (s.totalAnswered > 0 ? Math.round(s.totalCorrect / s.totalAnswered * 100) : 0) + '%';
+  $('stat-answered').textContent = s.totalAnswered;
+  $('stat-accuracy').textContent = acc;
+  $('stat-remaining').textContent = remaining;
+  // Also update header badges
+  $('hdr-answered').textContent = s.totalAnswered;
+  $('hdr-accuracy').textContent = acc;
+  $('hdr-remaining').textContent = remaining;
+}
+
+// ============================================================
+// MENU ACTIONS
+// ============================================================
+function exportData() {
+  const d = { version:1, hub:'gi', exported:new Date().toISOString(), seen:[...state.seen], incorrect:[...state.incorrect], tests:state.tests, stats:state.stats };
+  const blob = new Blob([JSON.stringify(d,null,2)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gi_qbank.json'; a.click();
+  $('menu-dd').style.display = 'none'; $('menu-overlay').style.display = 'none';
+}
+
+function importData(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      state.seen = new Set(d.seen || []);
+      state.incorrect = new Set(d.incorrect || []);
+      state.tests = d.tests || [];
+      state.stats = d.stats || { totalAnswered:0, totalCorrect:0, bySubject:{}, bySource:{}, byLecture:{} };
+      if (!state.stats.byLecture) state.stats.byLecture = {};
+      saveState(); updateBottomBar(); updateTestList();
+      alert('Imported successfully!');
+    } catch(err) { alert('Error: ' + err.message); }
+  };
+  reader.readAsText(file);
+  $('menu-dd').style.display = 'none'; $('menu-overlay').style.display = 'none';
+}
+
+function resetAll() {
+  if (!confirm('Delete ALL progress, stats, and test history?')) return;
+  state.seen.clear(); state.incorrect.clear(); state.tests = [];
+  state.stats = { totalAnswered:0, totalCorrect:0, bySubject:{}, bySource:{}, byLecture:{} };
+  saveState(); updateBottomBar(); updateTestList();
+  $('content-1').innerHTML = '<div class="placeholder">Configure filters and press Start Practice</div>';
+  $('content-2').innerHTML = '<div class="placeholder">Click Generate New Test to begin</div>';
+  $('nav-1').style.display = 'none'; $('nav-2').style.display = 'none';
+  $('menu-dd').style.display = 'none'; $('menu-overlay').style.display = 'none';
+}
+
+
+    // Dark mode
+    document.getElementById('dark-toggle').addEventListener('click', () => {
+      state.darkMode = !state.darkMode;
+      document.documentElement.setAttribute('data-theme', state.darkMode ? 'dark' : '');
+      document.getElementById('dark-toggle').textContent = state.darkMode ? '☀️' : '🌙';
+      saveState();
+    });
+
+// ============================================================
+// KEYBOARD
+// ============================================================
+document.addEventListener('keydown', e => {
+  if (!currentTest || currentTest.submitted) return;
+  if (e.target.tagName === 'INPUT') return;
+  const sfx = activeMode === 'mode-1' ? '1' : '2';
+  if (e.key === 'ArrowRight' && qIndex < currentTest.questions.length - 1) { qIndex++; showQuestion(sfx); }
+  if (e.key === 'ArrowLeft' && qIndex > 0) { qIndex--; showQuestion(sfx); }
+  const letters = ['a','b','c','d','e'];
+  if (letters.includes(e.key.toLowerCase()) && !e.ctrlKey && !e.metaKey) {
+    const letter = e.key.toUpperCase();
+    const qId = currentTest.questions[qIndex];
+    testAnswers[qId] = letter;
+    showQuestion(sfx);
+  }
+});
+
+// ============================================================
+// STARTUP
+// ============================================================
+loadState();
+if (state.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
+initUI();
+</script>
+</body>
+</html>
