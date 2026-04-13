@@ -4,283 +4,243 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GI04 Histology — Hub #2 Step 1 Extensions</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#000000;color:#E6EDF3;min-height:100vh}
-.container{max-width:1100px;margin:0 auto;padding:24px 20px}
 
-:root{--acc:#60A5FA;--acc-dark:#1D4ED8;--acc-dim:rgba(59,130,246,.12)}
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
 
-.header{background:linear-gradient(135deg,#071526 0%,#050d1c 100%);border:1px solid #1E3A8A;border-left:5px solid var(--acc);border-radius:12px;padding:28px 32px;margin-bottom:22px}
-.hub-tag{display:inline-block;background:#1E3A8A;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
-.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
-.header h1 span{color:var(--acc)}
-.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
+/* ── TOP NAV ── */
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
 .source-strip{display:flex;gap:8px;flex-wrap:wrap}
-.source-badge{background:#071428;border:1px solid #1E3A8A;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
-.source-badge strong{color:var(--acc)}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
 
-.hub-prog{background:#020C1B;border:1px solid #172554;border-radius:8px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.hub-step{padding:6px 14px;border-radius:5px;font-size:.82em;font-weight:600}
-.hub-step.done{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s}
-.hub-step.done:hover{border-color:#60A5FA;color:#60A5FA}
-.hub-step.current{background:#2563EB;color:#fff}
-.hub-step.next{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s}
-.hub-step.next:hover{border-color:var(--acc);color:var(--acc)}
-.hub-arrow{color:#1E3A8A}
-.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:6px}
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 
-.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
-.stat-card{background:#020C1B;border:1px solid #172554;border-radius:8px;padding:12px;text-align:center}
-.stat-num{font-size:1.6em;font-weight:700;color:var(--acc)}
-.stat-label{font-size:.7em;color:#6B7280;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
 
-.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #172554;padding-bottom:0}
-.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
-.tab-btn:hover{color:var(--acc)}
-.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc)}
-.tab-pane{display:none}
-.tab-pane.active{display:block}
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
 
-/* MECHANISMS */
-.mech-card{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:24px;margin-bottom:20px;border-top:3px solid var(--acc)}
-.mech-title{font-size:1.05em;font-weight:700;color:#E6EDF3;margin-bottom:6px}
-.mech-subtitle{font-size:.82em;color:#9CA3AF;margin-bottom:18px}
+/* ── MECHANISMS INTRO ── */
+.mech-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mech-intro strong{color:#5D4037}
+
+/* ── MECHANISMS ── */
+.mech-card{background:#FFFFFF;border:1px solid #D5CCC0;border-left:4px solid #C6875A;border-radius:6px;padding:24px;margin-bottom:20px}
+.mech-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15em;font-weight:700;color:#5D4037;margin-bottom:6px}
+.mech-subtitle{font-size:.82em;color:#7A7060;margin-bottom:18px}
 .pathway{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:16px}
-.pathway-step{background:#071428;border:1px solid #1E3A8A;border-radius:7px;padding:8px 14px;font-size:.82em;color:#E6EDF3;line-height:1.4}
-.pathway-step.key{background:var(--acc-dim);border-color:var(--acc);color:#93C5FD;font-weight:600}
-.pathway-arrow{color:#6B7280;font-size:1.2em;margin:0 2px}
-.mech-note{background:#071428;border-left:3px solid var(--acc);border-radius:0 6px 6px 0;padding:10px 14px;font-size:.83em;color:#D97706;line-height:1.6;margin-top:12px}
+.pathway-step{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:7px;padding:8px 14px;font-size:.82em;color:#2C2C2C;line-height:1.4}
+.pathway-step.key{background:#F3EFE9;border-color:#C6875A;color:#5D4037;font-weight:600}
+.pathway-arrow{color:#7A7060;font-size:1.2em;margin:0 2px}
+.mech-note{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:0 6px 6px 0;padding:10px 14px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:12px}
+.mech-note strong{color:#5D4037}
 
-/* FLASHCARDS */
+/* ── FLASHCARDS ── */
 .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
 .fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
 .fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
 .fc.flipped{z-index:10}
 .fc.flipped .fc-inner{transform:rotateY(180deg)}
-.fc-front,.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:20px}
-.fc-front{border-top:3px solid #60A5FA}
-.fc-back{transform:rotateY(180deg);background:#071526;border-color:#1E3A8A}
-.fc-label{font-size:.68em;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.fc-q{font-size:.9em;color:#E6EDF3;line-height:1.5}
-.fc-a{font-size:.86em;color:#E6EDF3;line-height:1.6}
-.fc-flip-hint{font-size:.67em;color:#6B7280;margin-top:10px}
-.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.8em;color:#6B7280}
-.fc-progress .prog-num{color:var(--acc);font-weight:700}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
 
-/* MCQ */
-.q-block{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:22px;margin-bottom:20px}
+/* ── MCQ INTRO ── */
+.mcq-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong{color:#5D4037}
+
+/* ── MCQ DRILL ── */
+.q-block{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
 .q-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.q-num{font-size:.72em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em}
+.q-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
 .q-tag{font-size:.68em;padding:3px 10px;border-radius:10px;font-weight:600}
-.q-tag.mech{background:rgba(59,130,246,.15);color:#93C5FD}
-.q-tag.path{background:rgba(239,68,68,.15);color:#FCA5A5}
-.q-tag.integr{background:rgba(168,85,247,.15);color:#C084FC}
-.q-diff{font-size:.68em;padding:3px 8px;border-radius:8px;border:1px solid #1E3A8A;color:#6B7280;margin-left:auto}
-.q-diff.med{border-color:#60A5FA;color:#60A5FA}
+.q-tag.mech{background:#FFF8F2;color:#9A6535;border:1px solid #C6875A}
+.q-tag.path{background:#FEF5F5;color:#C62828}
+.q-tag.integr{background:#F3EFE9;color:#5D4037}
+.q-diff{font-size:.68em;padding:3px 8px;border-radius:8px;border:1px solid #D5CCC0;color:#7A7060;margin-left:auto}
+.q-diff.med{border-color:#C6875A;color:#9A6535}
 .q-diff.hard{border-color:#EF4444;color:#EF4444}
-.q-stem{background:#071428;border:1px solid #172554;border-radius:8px;padding:18px 20px;font-size:.93em;line-height:1.8;color:#E6EDF3;margin-bottom:18px}
-.q-stem strong{color:#93C5FD}
-.q-stem em{color:#93C5FD}
+.q-stem{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:8px;padding:18px 20px;font-size:.93em;line-height:1.8;color:#2C2C2C;margin-bottom:18px}
+.q-stem strong{color:#5D4037;font-weight:600}
+.q-stem em{color:#9A6535;font-style:normal}
 .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.opt-btn{display:flex;align-items:flex-start;gap:12px;background:#071428;border:1.5px solid #1E3A8A;border-radius:8px;padding:12px 16px;cursor:pointer;font-family:inherit;font-size:.89em;color:#C9D1D9;text-align:left;transition:border-color .15s,background .15s;width:100%}
-.opt-btn:hover:not(:disabled){border-color:var(--acc);background:rgba(59,130,246,.06)}
-.opt-btn.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5}
-.opt-btn.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5}
+.opt-btn{display:flex;align-items:flex-start;gap:12px;background:#F7F5F2;border:1.5px solid #D5CCC0;border-radius:8px;padding:12px 16px;cursor:pointer;font-family:inherit;font-size:.89em;color:#2C2C2C;text-align:left;transition:border-color .15s,background .15s;width:100%}
+.opt-btn:hover:not(:disabled){border-color:#C6875A;background:#F3EFE9}
+.opt-btn.correct{border-color:#66BB6A;background:#F1F8F2;color:#1B5E20}
+.opt-btn.wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
 .opt-btn:disabled{cursor:default}
-.opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0;margin-top:1px}
-.opt-btn.correct .opt-letter{background:#4ADE80;color:#000}
-.opt-btn.wrong .opt-letter{background:#EF4444;color:#fff}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:#E8E0D8;display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0;margin-top:1px;color:#5D4037}
+.opt-btn.correct .opt-letter{background:#66BB6A;color:#fff}
+.opt-btn.wrong .opt-letter{background:#C62828;color:#fff}
 .opt-text{font-size:.88em;line-height:1.55;color:inherit}
-.exp-box{background:#020C1B;border:1px solid #172554;border-radius:8px;padding:18px 20px;margin-top:4px;display:none}
+.exp-box{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:8px;padding:18px 20px;margin-top:4px;display:none}
 .exp-box.show{display:block}
 .exp-verdict{font-size:.85em;font-weight:700;margin-bottom:12px;padding:6px 10px;border-radius:6px}
-.exp-verdict.ok{background:rgba(74,222,128,.15);color:#4ADE80}
-.exp-verdict.bad{background:rgba(239,68,68,.1);color:#EF4444}
-.exp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #172554;align-items:flex-start;font-size:.86em;line-height:1.55}
+.exp-verdict.ok{background:#F1F8F2;color:#2E7D32}
+.exp-verdict.bad{background:#FEF5F5;color:#C62828}
+.exp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #E8E0D8;align-items:flex-start;font-size:.86em;line-height:1.55}
 .exp-row:last-child{border-bottom:none}
 .exp-letter{font-size:.72em;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.exp-letter.ok{background:rgba(74,222,128,.2);color:#4ADE80}
-.exp-letter.bad{background:rgba(239,68,68,.15);color:#EF4444}
-.exp-text{color:#9CA3AF}
-.exp-text.ok{color:#D1FAE5}
-.teach-box{margin-top:14px;background:var(--acc-dim);border:1px solid rgba(245,158,11,.4);border-radius:8px;padding:14px 16px;font-size:.86em;color:#93C5FD;line-height:1.6}
-.teach-box strong{color:var(--acc);display:block;margin-bottom:4px}
+.exp-letter.ok{background:#F1F8F2;color:#2E7D32}
+.exp-letter.bad{background:#FEF5F5;color:#C62828}
+.exp-text{color:#5A5A5A}
+.exp-text.ok{color:#1B5E20}
+.teach-box{margin-top:14px;background:#F3EFE9;border:1px solid #D5CCC0;border-radius:8px;padding:14px 16px;font-size:.86em;color:#5A5A5A;line-height:1.6}
+.teach-box strong{color:#5D4037;display:block;margin-bottom:4px}
 
-/* VIGNETTES */
-.vig-block{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:24px;margin-bottom:20px;border-left:4px solid var(--acc)}
-.vig-label{font-size:.7em;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.vig-text{background:#071428;border:1px solid #172554;border-radius:8px;padding:16px 18px;font-size:.9em;line-height:1.8;color:#E6EDF3;margin-bottom:16px}
-.vig-q{font-size:.92em;font-weight:600;color:#E6EDF3;margin-bottom:14px}
+/* ── VIGNETTE MCQ INTRO ── */
+.vig-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.vig-intro strong{color:#5D4037}
+
+/* ── VIGNETTES ── */
+.vig-block{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:24px;margin-bottom:20px;border-left:4px solid #5D4037}
+.vig-label{font-size:.7em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.vig-text{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:8px;padding:16px 18px;font-size:.9em;line-height:1.8;color:#2C2C2C;margin-bottom:16px}
+.vig-q{font-size:.92em;font-weight:600;color:#2C2C2C;margin-bottom:14px}
 .vig-options{display:flex;flex-direction:column;gap:8px}
-.vig-opt{display:flex;align-items:flex-start;gap:10px;background:#071428;border:1.5px solid #1E3A8A;border-radius:8px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.88em;color:#C9D1D9;text-align:left;transition:all .15s;width:100%}
-.vig-opt:hover:not(:disabled){border-color:var(--acc);background:rgba(59,130,246,.06)}
-.vig-opt.correct{border-color:#4ADE80;background:rgba(74,222,128,.1);color:#D1FAE5}
-.vig-opt.wrong{border-color:#EF4444;background:rgba(239,68,68,.08);color:#FCA5A5}
+.vig-opt{display:flex;align-items:flex-start;gap:10px;background:#F7F5F2;border:1.5px solid #D5CCC0;border-radius:8px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.88em;color:#2C2C2C;text-align:left;transition:all .15s;width:100%}
+.vig-opt:hover:not(:disabled){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{border-color:#66BB6A;background:#F1F8F2;color:#1B5E20}
+.vig-opt.wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
 .vig-opt:disabled{cursor:default}
-.vig-opt-letter{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.77em;font-weight:700;flex-shrink:0;margin-top:1px}
-.vig-opt.correct .vig-opt-letter{background:#4ADE80;color:#000}
-.vig-opt.wrong .vig-opt-letter{background:#EF4444;color:#fff}
+.vig-opt-letter{width:24px;height:24px;border-radius:50%;background:#E8E0D8;display:flex;align-items:center;justify-content:center;font-size:.77em;font-weight:700;flex-shrink:0;margin-top:1px;color:#5D4037}
+.vig-opt.correct .vig-opt-letter{background:#66BB6A;color:#fff}
+.vig-opt.wrong .vig-opt-letter{background:#C62828;color:#fff}
 
-/* TEST TRAPS */
-.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6}
-.trap-card{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid #60A5FA}
-.trap-num{font-size:.7em;font-weight:700;color:#60A5FA;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#071428;border-radius:7px;padding:14px;border-left:3px solid #60A5FA;font-style:italic}
+/* ── STEP 1 TRAPS INTRO ── */
+.trap-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-left:4px solid #C6875A;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#5D4037}
+
+/* ── STEP 1 TRAPS ── */
+.trap-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.trap-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#F3EFE9;border-radius:5px;padding:16px;border-left:3px solid #C6875A;font-style:italic}
 .trap-btns{display:flex;gap:10px;margin-bottom:8px}
-.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
-.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50}
-.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50}
-.trap-btn-false{background:none;border-color:#C62828;color:#EF5350}
-.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350}
-.trap-btn:disabled{opacity:.55;cursor:not-allowed}
-.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784}
-.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A}
-.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none}
-.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block}
-.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block}
-.trap-exp strong{color:var(--acc)}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#5D4037}
 
-/* REFERENCE */
+/* ── ORDERING DRILLS ── */
+.ordering-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#5D4037}
+.order-drill{background:#FFFFFF;border:1px solid #D5CCC0;border-left:4px solid #C6875A;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C6875A;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C6875A}
+.order-item.drag-over{border-color:#C6875A;background:#FFF8F2;transform:scale(1.01)}
+.order-item .item-grip{color:#C6875A;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A;color:#1B5E20}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#5D4037;border:none;color:#F0E8DF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#4E342E}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C6875A;color:#9A6535}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#5D4037;font-weight:600}
+
+/* ── REFERENCE ── */
 .ref-section{margin-bottom:28px}
-.ref-title{font-size:.8em;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #172554}
-.ref-table{width:100%;border-collapse:collapse;font-size:.83em}
-.ref-table th{background:#071428;color:#9CA3AF;font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid #172554}
-.ref-table td{padding:10px 14px;border-bottom:1px solid #172554;color:#E6EDF3;vertical-align:top;line-height:1.5}
-.ref-table tr:nth-child(even) td{background:#020C1B}
-.ref-table tr:nth-child(odd) td{background:#071428}
-.ref-table tr:hover td{background:#1E3A8A}
-.ref-table .key{color:var(--acc);font-weight:600}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C6875A}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0D8;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAF8F5}
+.ref-table tr:hover td{background:#F3EFE9}
+.ref-table .key{color:#5D4037;font-weight:600}
+.ref-note{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#5D4037}
 
-.footer{text-align:center;font-size:.76em;color:#6B7280;border-top:1px solid #172554;padding-top:14px;margin-top:28px}
-.footer a{color:var(--acc);text-decoration:none}
-.footer a:hover{text-decoration:underline}
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
 
-/* ── TOP NAV ── */
-.topnav{background:#050D1A;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-brand{display:flex;align-items:center;gap:10px}
-.nav-brand-text{font-size:1.25em;font-weight:900;color:#E6EDF3}
-.nav-brand-sub{font-size:.72em;color:#ffffff;font-weight:400;margin-left:4px}
-.nav-actions{display:flex;align-items:center;gap:10px}
-.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#2563EB;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #2563EB;background:#ffffff;text-decoration:none;transition:all .2s}
-.nav-back:hover{border-color:#60A5FA;color:#60A5FA}
-/* ── LIGHT MODE ── */
-body{background:#F0F4FF;color:#1F2328}
-.topnav{background:#050D1A;border-bottom-color:#172554}
-.nav-back{color:#2563EB;border-color:#2563EB;background:#ffffff}
-.nav-back:hover{border-color:#60A5FA;color:#2563EB;background:#EFF6FF}
-.nav-brand-text{color:#93C5FD}
-.nav-brand-sub{color:#ffffff!important}
-.header{background:linear-gradient(135deg,#DBEAFE 0%,#EFF6FF 100%)!important;border-color:#60A5FA!important}
-        .header h1{color:#1F2328!important}
-                .trap-statement{background:#EFF6FF!important;border-left-color:#2563EB!important}
-        .trap-btn-true{color:#1A6B1A!important}
-        .trap-btn-false{color:#C62828!important}
-        .trap-btn.sel-correct{background:#E6F4EA!important;color:#1A6B1A!important}
-        .trap-btn.sel-wrong{background:#FDECEA!important;color:#B71C1C!important}
-        .trap-exp.show-c{background:#E6F4EA!important;border-color:#2E7D32!important;color:#1A6B1A!important}
-        .trap-exp.show-w{background:#FDECEA!important;border-color:#C62828!important;color:#B71C1C!important}
-        .trap-exp strong{color:#2563EB!important}
-.hub-prog,.stats-bar .stat-card,.stats-row .stat,.score-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.hub-step.next,.hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-.hub-step.current{background:#2563EB!important}
-.tab-nav,.tabs{border-bottom-color:#D0D7DE}
-.tab-btn,.tab-button{color:#656D76}
-.tab-btn.active,.tab-button.active{color:#2563EB}
-.fc-front,.q-block,.fib-card,.order-drill,.match-set,.trap-card,.mech-card,.vig-block,.lo-header{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.fc-back{background:#EFF6FF!important;border-color:#BFDBFE!important}
-.fc-front{border-top-color:#60A5FA!important}
-.fib-card,.order-drill,.match-set{border-left-color:#2563EB!important}
-.fc-q,.fc-a,.fib-prompt,.drill-title,.trap-statement,.vig-q,.match-set-title,.q-stem{color:#1F2328!important}
-.vig-text{background:#EFF6FF!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.q-stem{background:#EFF6FF!important;border-color:#D0D7DE!important}
-.order-item,.match-item,.opt-btn,.vig-opt,.fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.order-item:hover{background:#DBEAFE!important;border-color:#60A5FA!important}
-.source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-.exp-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.exp-row{border-bottom-color:#E8ECEF!important}
-.exp-text{color:#656D76!important}
-.teach-box{background:rgba(59,130,246,.08)!important;border-color:rgba(59,130,246,.3)!important;color:#1E3A8A!important}
-.footer{border-top-color:#D0D7DE;color:#656D76}
-.mcq-stem{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#1F2328!important}
-.mcq-stem strong{color:#1E3A8A!important}
-.mcq-explanation{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#374151!important}
-.mcq-explanation strong{color:#2563EB!important}
-.ref-table th{background:#2563EB!important;color:#ffffff!important;border-bottom-color:#1D4ED8!important}
-.ref-table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
-.ref-table tr:nth-child(even) td{background:#F6F8FA!important}
-.ref-table tr:nth-child(odd) td{background:#FFFFFF!important}
-.ref-table tr:hover td{background:#DBEAFE!important;color:#1E3A8A!important}
-.ref-note{background:#EFF6FF!important;border-color:#D0D7DE!important;color:#656D76!important}
-.ordering-intro,.match-intro,.trap-intro{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-.hub-prog-label,.fc-flip-hint,.drill-hint,.match-set-hint,.trap-num,.q-num,.q-diff{color:#656D76!important}
-.stat-label{color:#656D76}
-.hub-tag{background:#2563EB!important}
-.pathway-step{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.pathway-step.key{background:rgba(59,130,246,.15)!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-.pathway-arrow{color:#2563EB!important;font-weight:700}
-.order-drill{background:#FFFFFF!important;border-color:#D0D7DE!important;border-left-color:#2563EB!important}
-.drill-title{color:#1F2328!important}
-.order-item{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.order-item:hover{background:#DBEAFE!important;border-color:#60A5FA!important}
-.order-item.correct-pos{background:#D1FAE5!important;border-color:#4ADE80!important;color:#166534!important}
-.order-item.wrong-pos{background:#FEE2E2!important;border-color:#EF4444!important;color:#991B1B!important}
-.order-answer{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#374151!important}
-.order-answer span{color:#2563EB!important}
-.mech-card{border-top-color:#60A5FA!important}
-.mech-note{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#1E3A8A!important}
-/* Tab btn (underline style — restore contrast) */
-.tab-btn{color:#656D76!important}
-.tab-btn:hover{color:#2563EB!important}
-.tab-btn.active{color:#2563EB!important;border-bottom-color:#2563EB!important}
-/* Source / step badges */
-.source-badge{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1E3A8A!important}
-.source-badge strong{color:#2563EB!important}
-/* MCQ tag contrast */
-.q-tag.mech{background:rgba(180,83,9,.1)!important;color:#1E3A8A!important}
-.q-tag.path{background:rgba(220,38,38,.1)!important;color:#991B1B!important}
-.q-tag.integr{background:rgba(109,40,217,.1)!important;color:#6D28D9!important}
-.q-diff.med{border-color:#B45309!important;color:#B45309!important}
-.q-diff.hard{border-color:#DC2626!important;color:#DC2626!important}
-/* Mechanisms — mech-title is #E6EDF3 (near-white) — must override */
-.mech-title{color:#1E3A8A!important}
-.mech-subtitle{color:#4A5568!important}
-/* Vignette label */
-.vig-label{color:#2563EB!important}
-/* Path Reference */
-.ref-title{color:#2563EB!important;border-bottom-color:#D0D7DE!important}
-.ref-table .key{color:#2563EB!important}
-
-/* ── ORDERING DRILL ── */
-.order-drill{background:#020C1B;border:1px solid #1E3A8A;border-left:4px solid var(--acc);border-radius:10px;padding:22px;margin-bottom:20px}
-.drill-title{font-size:1em;font-weight:700;color:#E6EDF3;margin-bottom:5px}
-.drill-hint{font-size:.79em;color:#6B7280;margin-bottom:14px;font-style:italic}
-.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.order-item{background:#071428;border:1px solid #1E3A8A;border-radius:7px;padding:12px 16px;cursor:grab;font-size:.86em;color:#E6EDF3;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
-.order-item:hover{border-color:var(--acc);background:rgba(96,165,250,.08)}
-.order-item.drag-over{border-color:var(--acc);background:rgba(96,165,250,.15);transform:scale(1.01)}
-.order-item.correct-pos{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#D1FAE5}
-.order-item.wrong-pos{background:rgba(239,68,68,.08);border-color:#EF4444;color:#FCA5A5}
-.item-grip{color:#4B5563;font-size:1em;flex-shrink:0;margin-top:1px}
-.item-text{flex:1}
-.order-actions{display:flex;gap:10px;margin-bottom:8px}
-.order-check-btn{background:var(--acc);border:none;color:#fff;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
-.order-check-btn:hover{background:#60A5FA}
-.order-ghost-btn{background:none;border:1px solid var(--acc);color:var(--acc);padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
-.order-ghost-btn:hover{background:rgba(96,165,250,.1)}
-.order-feedback{font-size:.86em;font-weight:600;padding:8px 12px;border-radius:6px;margin-bottom:8px;min-height:0}
-.order-feedback.correct{background:rgba(74,222,128,.15);color:#4ADE80}
-.order-feedback.incorrect{background:rgba(239,68,68,.1);color:#F87171}
-.order-answer{display:none;background:#071428;border:1px solid #1E3A8A;border-radius:8px;padding:14px 18px;font-size:.84em;color:#C9D1D9;line-height:1.8;margin-top:6px}
-.order-answer ol{margin:0;padding-left:20px}
-.order-answer li{margin-bottom:4px}
-.order-answer span{color:var(--acc);font-weight:600}
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+}
 </style>
 </head>
 <body>
 <nav class="topnav">
-  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
     <span class="nav-brand-sub">Block 4 — GI</span>
   </div>
   <div class="nav-actions">
@@ -291,7 +251,7 @@ body{background:#F0F4FF;color:#1F2328}
 
 <div class="header">
   <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
-  <h1>GI04 Histology <span>Step 1 Deep Dive</span></h1>
+  <h1>GI04 Histology <span>Step 1 Extensions</span></h1>
   <div class="source-strip">
     <div class="source-badge"><strong>Mechanisms:</strong> Parietal cell HCl, Intrinsic factor, Pepsinogen</div>
     <div class="source-badge"><strong>Pathology:</strong> Barrett's, H. pylori, Pernicious anemia, Gastric cancer</div>
@@ -301,33 +261,33 @@ body{background:#F0F4FF;color:#1F2328}
 
 <div class="hub-prog">
   <span class="hub-prog-label">Hub Progression:</span>
-  <a href="gi04-hub1-histology.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+  <a href="gi04-hub1-histology.html" class="hub-step done">Hub #1 — Core Concepts</a>
   <span class="hub-arrow">→</span>
-  <span class="hub-step current">🔬 Hub #2 — Step 1 Extensions</span>
+  <span class="hub-step current">Hub #2 — Step 1 Extensions</span>
   <span class="hub-arrow">→</span>
-  <a href="gi04-hub3-histology.html" class="hub-step next">📝 Hub #3 — USMLE Questions</a>
+  <a href="gi04-hub3-histology.html" class="hub-step next">Hub #3 — USMLE Questions</a>
 </div>
 
 <div class="stats-bar">
   <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Mechanisms</div></div>
   <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Flashcards</div></div>
   <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">MCQ</div></div>
-  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Vignettes</div></div>
-  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Test Traps</div></div>
+  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Vignettes MCQ</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Step 1 Traps</div></div>
   <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Ref Tables</div></div>
 </div>
 
 <div class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('mechs',this)">⚙️ Mechanisms</button>
-  <button class="tab-btn" onclick="switchTab('flashcards',this)">🃏 Flashcards</button>
-  <button class="tab-btn" onclick="switchTab('mcq',this)">📋 MCQ</button>
-  <button class="tab-btn" onclick="switchTab('vignettes',this)">🏥 Vignettes</button>
-  <button class="tab-btn" onclick="switchTab('traps',this)">⚠️ Test Traps</button>
-  <button class="tab-btn" onclick="switchTab('ref',this)">📊 Reference</button>
+  <button class="tab-btn active" onclick="switchTab('mechs',this)">Mechanisms</button>
+  <button class="tab-btn" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
 </div>
 
 <!-- MECHANISMS TAB -->
-<div class="tab-pane active" id="tab-mechs">
+<div class="tab-content active" id="tab-mechs">
 
   <div class="mech-card">
     <div class="mech-title">Mechanism 1 — Parietal Cell HCl Secretion</div>
@@ -360,7 +320,7 @@ body{background:#F0F4FF;color:#1F2328}
       </div>
     </div>
     <div class="mech-note">
-      🎯 <strong>Step 1 targets:</strong> Proton pump inhibitors (PPIs) block the H⁺/K⁺-ATPase irreversibly. Carbonic anhydrase inhibitors (acetazolamide) reduce H⁺ generation. Omeprazole, lansoprazole, pantoprazole all act on the same pump — the final common pathway for all acid secretion stimuli (gastrin, histamine, ACh).
+      <strong>Step 1 targets:</strong> Proton pump inhibitors (PPIs) block the H⁺/K⁺-ATPase irreversibly. Carbonic anhydrase inhibitors (acetazolamide) reduce H⁺ generation. Omeprazole, lansoprazole, pantoprazole all act on the same pump — the final common pathway for all acid secretion stimuli (gastrin, histamine, ACh).
     </div>
   </div>
 
@@ -399,7 +359,7 @@ body{background:#F0F4FF;color:#1F2328}
       </div>
     </div>
     <div class="mech-note">
-      🎯 <strong>Step 1 targets:</strong> Pernicious anemia = anti-parietal cell antibodies (↓ IF) OR anti-IF antibodies (blocks B12 binding). Schilling test distinguishes intrinsic vs extrinsic B12 deficiency. Terminal ileum resection (Crohn's) causes the same B12 deficiency but NOT pernicious anemia (IF still secreted; just can't absorb IF-B12 complex). Treat with IM B12.
+      <strong>Step 1 targets:</strong> Pernicious anemia = anti-parietal cell antibodies (↓ IF) OR anti-IF antibodies (blocks B12 binding). Schilling test distinguishes intrinsic vs extrinsic B12 deficiency. Terminal ileum resection (Crohn's) causes the same B12 deficiency but NOT pernicious anemia (IF still secreted; just can't absorb IF-B12 complex). Treat with IM B12.
     </div>
   </div>
 
@@ -434,20 +394,20 @@ body{background:#F0F4FF;color:#1F2328}
       </div>
     </div>
     <div class="mech-note">
-      🎯 <strong>Step 1 targets:</strong> Chief cells = basophilic stain (abundant RER for protein synthesis). Zollinger-Ellison syndrome: ↑↑ gastrin → ↑↑ HCl → converts all pepsinogen → ↑↑ pepsin → peptic ulcers. PPIs that reduce acid also reduce pepsin activity indirectly (less pH-driven activation).
+      <strong>Step 1 targets:</strong> Chief cells = basophilic stain (abundant RER for protein synthesis). Zollinger-Ellison syndrome: ↑↑ gastrin → ↑↑ HCl → converts all pepsinogen → ↑↑ pepsin → peptic ulcers. PPIs that reduce acid also reduce pepsin activity indirectly (less pH-driven activation).
     </div>
   </div>
 
 </div>
 
 <!-- FLASHCARDS TAB -->
-<div class="tab-pane" id="tab-flashcards">
-  <div class="fc-progress"><span>Click any card to flip · <em style="color:#6B7280">Step 1 high-yield histology + pathology</em></span><span class="prog-num" id="fc-counter">0 / 12 seen</span></div>
+<div class="tab-content" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · Step 1 high-yield histology + pathology</span><span class="prog-num" id="fc-counter">0 / 12 seen</span></div>
   <div class="fc-grid" id="fc-container"></div>
 </div>
 
 <!-- MCQ TAB -->
-<div class="tab-pane" id="tab-mcq">
+<div class="tab-content" id="tab-mcq">
 
   <!-- Q1 -->
   <div class="q-block" id="q-1">
@@ -575,16 +535,16 @@ body{background:#F0F4FF;color:#1F2328}
     </div>
     <div class="exp-box" id="exp-5">
       <div class="exp-verdict ok">✓ Correct Answer: C</div>
-      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ Parietal cells (Cell X) are eosinophilic because they are packed with <strong>mitochondria</strong> (pink on H&amp;E) — they need enormous ATP for the H⁺/K⁺-ATPase. Their invaginated canaliculi are the key ultrastructural feature. Chief cells (Cell Y) are basophilic because they contain abundant <strong>RER</strong> (blue/purple on H&amp;E) for pepsinogen protein synthesis.</span></div>
+      <div class="exp-row"><span class="exp-letter ok">C</span><span class="exp-text ok">✓ Parietal cells (Cell X) are eosinophilic because they are packed with <strong>mitochondria</strong> (pink on H&E) — they need enormous ATP for the H⁺/K⁺-ATPase. Their invaginated canaliculi are the key ultrastructural feature. Chief cells (Cell Y) are basophilic because they contain abundant <strong>RER</strong> (blue/purple on H&E) for pepsinogen protein synthesis.</span></div>
       <div class="exp-row"><span class="exp-letter bad">A</span><span class="exp-text">The staining is reversed. Chief cells are basophilic; parietal cells are eosinophilic. This is a classic swap-the-answer trap on Step 1.</span></div>
-      <div class="teach-box"><strong>Mnemonic:</strong> "Parietal cells are <strong>P</strong>ink (<strong>P</strong>acked with mitochondria for the <strong>P</strong>roton pump)." Chief cells are "<strong>C</strong>hief = <strong>C</strong>olorless/blue (abundant RE<strong>R</strong>)." This staining distinction is a high-yield histology discrimination question.</div>
+      <div class="teach-box"><strong>Mnemonic:</strong> "Parietal cells are <strong>P</strong>ink (<strong>P</strong>acked with mitochondria for the <strong>P</strong>roton pump)." Chief cells are "<strong>C</strong>hief = <strong>C</strong>olorless/blue (abundant RER)." This staining distinction is a high-yield histology discrimination question.</div>
     </div>
   </div>
 
 </div>
 
 <!-- VIGNETTES TAB -->
-<div class="tab-pane" id="tab-vignettes">
+<div class="tab-content" id="tab-vignettes">
 
   <div class="vig-block">
     <div class="vig-label">Clinical Vignette 1 — Endoscopic Finding</div>
@@ -601,8 +561,8 @@ body{background:#F0F4FF;color:#1F2328}
     </div>
     <div class="exp-box show" id="vig-exp-1" style="display:none">
       <div class="exp-verdict ok">✓ Correct Answer: C — Barrett's esophagus with adenocarcinoma risk</div>
-      <p style="font-size:.86em;color:#9CA3AF;line-height:1.6;margin-top:8px">
-        <strong style="color:#93C5FD">Explanation:</strong> The hallmark of Barrett's esophagus is replacement of the normal non-keratinized stratified squamous epithelium with <strong>columnar intestinal metaplasia containing goblet cells</strong>. Goblet cells are required for the diagnosis. The pathogenesis: chronic GERD → acid reflux → changes gene expression in basal stem cells → intestinal-type columnar metaplasia. Barrett's carries a ~30–125× increased risk of <strong>esophageal adenocarcinoma</strong> compared to the general population. Management involves surveillance endoscopy with biopsies every 3–5 years (if no dysplasia), high-dose PPI therapy, and endoscopic ablation if high-grade dysplasia develops. The transition from Barrett's → low-grade dysplasia → high-grade dysplasia → adenocarcinoma follows the metaplasia-dysplasia-carcinoma sequence.
+      <p style="font-size:.86em;color:#5A5A5A;line-height:1.6;margin-top:8px">
+        <strong style="color:#5D4037">Explanation:</strong> The hallmark of Barrett's esophagus is replacement of the normal non-keratinized stratified squamous epithelium with <strong>columnar intestinal metaplasia containing goblet cells</strong>. Goblet cells are required for the diagnosis. The pathogenesis: chronic GERD → acid reflux → changes gene expression in basal stem cells → intestinal-type columnar metaplasia. Barrett's carries a ~30–125× increased risk of <strong>esophageal adenocarcinoma</strong> compared to the general population. Management involves surveillance endoscopy with biopsies every 3–5 years (if no dysplasia), high-dose PPI therapy, and endoscopic ablation if high-grade dysplasia develops. The transition from Barrett's → low-grade dysplasia → high-grade dysplasia → adenocarcinoma follows the metaplasia-dysplasia-carcinoma sequence.
       </p>
     </div>
   </div>
@@ -622,8 +582,8 @@ body{background:#F0F4FF;color:#1F2328}
     </div>
     <div class="exp-box show" id="vig-exp-2" style="display:none">
       <div class="exp-verdict ok">✓ Correct Answer: C — Pernicious anemia</div>
-      <p style="font-size:.86em;color:#9CA3AF;line-height:1.6;margin-top:8px">
-        <strong style="color:#93C5FD">Explanation:</strong> This is a classic presentation of <strong>pernicious anemia</strong>. The mechanism: autoimmune gastritis → loss of parietal cells → <strong>no intrinsic factor (IF)</strong> → B12 cannot form the IF-B12 complex → B12 cannot be absorbed via cubilin receptors in the terminal ileum → B12 deficiency → <strong>megaloblastic anemia</strong> (↓ DNA synthesis: large RBCs, hypersegmented PMNs) + <strong>subacute combined degeneration</strong> (loss of myelin in posterior columns [vibration/proprioception] and lateral corticospinal tracts). The positive anti-IF antibodies are essentially diagnostic. Note: both anti-parietal cell AND anti-IF antibodies can cause pernicious anemia (different mechanisms but same outcome). Treatment: intramuscular B12 injections (bypasses absent IF/ileal absorption). Unlike Crohn's disease affecting the terminal ileum, this patient has gastric pathology as the root cause.
+      <p style="font-size:.86em;color:#5A5A5A;line-height:1.6;margin-top:8px">
+        <strong style="color:#5D4037">Explanation:</strong> This is a classic presentation of <strong>pernicious anemia</strong>. The mechanism: autoimmune gastritis → loss of parietal cells → <strong>no intrinsic factor (IF)</strong> → B12 cannot form the IF-B12 complex → B12 cannot be absorbed via cubilin receptors in the terminal ileum → B12 deficiency → <strong>megaloblastic anemia</strong> (↓ DNA synthesis: large RBCs, hypersegmented PMNs) + <strong>subacute combined degeneration</strong> (loss of myelin in posterior columns [vibration/proprioception] and lateral corticospinal tracts). The positive anti-IF antibodies are essentially diagnostic. Note: both anti-parietal cell AND anti-IF antibodies can cause pernicious anemia (different mechanisms but same outcome). Treatment: intramuscular B12 injections (bypasses absent IF/ileal absorption). Unlike Crohn's disease affecting the terminal ileum, this patient has gastric pathology as the root cause.
       </p>
     </div>
   </div>
@@ -631,14 +591,14 @@ body{background:#F0F4FF;color:#1F2328}
 </div>
 
 <!-- TEST TRAPS TAB -->
-<div class="tab-pane" id="tab-traps">
-  <div class="trap-intro">⚠️ <strong>High-yield Step 1 test traps:</strong> Each statement is a common exam misconception about GI histology and pathology. Select <strong>TRUE</strong> or <strong>FALSE</strong> first, then read the full explanation.
+<div class="tab-content" id="tab-traps">
+  <div class="trap-intro"><strong>High-yield Step 1 test traps:</strong> Each statement is a common exam misconception about GI histology and pathology. Select <strong>TRUE</strong> or <strong>FALSE</strong> first, then read the full explanation.
   </div>
   <div id="traps-container"></div>
 </div>
 
 <!-- REFERENCE TAB -->
-<div class="tab-pane" id="tab-ref">
+<div class="tab-content" id="tab-ref">
   <div class="ref-section">
     <div class="ref-title">Step 1 Pathology Overview — GI Histology-Related Diseases</div>
     <table class="ref-table">
@@ -656,7 +616,7 @@ body{background:#F0F4FF;color:#1F2328}
       <tr><th>Feature</th><th>Parietal Cell</th><th>Chief Cell</th></tr>
       <tr><td>Location in gland</td><td>Neck and base</td><td>Base (predominant)</td></tr>
       <tr><td>Shape</td><td>Round, pyramidal</td><td>Columnar, abundant basal cytoplasm</td></tr>
-      <tr><td class="key">H&amp;E stain</td><td class="key">Eosinophilic (pink) — abundant mitochondria</td><td class="key">Basophilic (blue/purple) — abundant RER</td></tr>
+      <tr><td class="key">H&E stain</td><td class="key">Eosinophilic (pink) — abundant mitochondria</td><td class="key">Basophilic (blue/purple) — abundant RER</td></tr>
       <tr><td>Unique structure</td><td>Intracellular canaliculi lined with microvilli</td><td>Zymogen granules at apex</td></tr>
       <tr><td class="key">Products</td><td class="key">HCl + Intrinsic factor</td><td class="key">Pepsinogen (→ pepsin)</td></tr>
       <tr><td>Clinical relevance</td><td>Target of PPIs; lost in pernicious anemia; stimulated by gastrin/histamine/ACh</td><td>Zollinger-Ellison: ↑ pepsin activity; decreased in atrophic gastritis</td></tr>
@@ -665,9 +625,8 @@ body{background:#F0F4FF;color:#1F2328}
 </div>
 
 <div class="footer">
-  <a href="gi04-hub1-histology.html">← Hub #1 Core Concepts</a> &nbsp;|&nbsp;
-  <a href="../index.html">GI Block Home</a> &nbsp;|&nbsp;
-  <a href="gi04-hub3-histology.html">Hub #3 — USMLE Questions →</a>
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI04 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
 </div>
 
 </div><!-- /container -->
@@ -760,7 +719,6 @@ function renderFlashcards(){
     });
     container.appendChild(div);
   });
-  // heights set when tab becomes visible via switchTab
 }
 
 function fixCardHeights(){
@@ -824,7 +782,7 @@ function selectVig(vigId, chosen, correct){
 }
 
 function switchTab(name, btn){
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
@@ -836,9 +794,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderTraps();
   window.addEventListener('resize', fixCardHeights);
 });
-
-/* ── THEME TOGGLE ── */
-
 
 /* ── ORDERING DRILL ── */
 var dragSrc=null;

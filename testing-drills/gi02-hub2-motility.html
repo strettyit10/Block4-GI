@@ -4,221 +4,191 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GI02 Hub #2 · GI Motility — Step 1 Extensions</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#60A5FA;--acc:#60A5FA;--acc-dim:rgba(96,165,250,0.12);--al:rgba(96,165,250,0.12);--ab:rgba(96,165,250,0.30);}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter',sans-serif;background:#000000;color:#E6EDF3;min-height:100vh;}
-.container{max-width:1100px;margin:0 auto;padding:20px;}
+*{margin:0;padding:0;box-sizing:border-box}
 
-.header{background:linear-gradient(135deg,#071526 0%,#050d1c 100%);border:1px solid #1E3A8A;border-left:5px solid var(--acc);border-radius:12px;padding:28px 32px;margin-bottom:22px}
-.hub-tag{display:inline-block;background:#1E3A8A;color:#fff;font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
-.header h1{font-size:1.9em;color:#E6EDF3;margin-bottom:6px;line-height:1.2}
-.header h1 span{color:var(--acc)}
-.header .subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
-h1{color:#E6EDF3;font-size:1.9em;margin-bottom:6px;}
-.subtitle{color:#9CA3AF;font-size:.88em;line-height:1.6;margin-bottom:14px}
-.source-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.source-badge{background:#071428;border:1px solid #1E3A8A;border-radius:5px;padding:4px 10px;font-size:.76em;color:#8B949E}
-.source-badge strong{color:var(--acc)}
-
-.hub-prog{background:#020C1B;border:1px solid #172554;border-radius:8px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.hub-prog-label{font-size:.78em;color:#6B7280;margin-right:4px;}
-.hub-step{padding:6px 14px;border-radius:6px;font-size:.82em;font-weight:600;}
-.hub-step.done{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s;}
-.hub-step.done:hover{border-color:#60A5FA;color:#60A5FA;}
-.hub-step.current{background:#2563EB;color:#ffffff;}
-.hub-step.next{background:#071428;border:1px solid #1E3A8A;color:#6B7280;text-decoration:none;transition:all .2s;}
-.hub-step.next:hover{border-color:var(--accent);color:var(--accent);}
-.hub-arrow{color:#1E3A8A;}
-
-.tab-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid #1E3A8A;padding-bottom:0}
-.tab-btn{background:none;border:none;color:#6B7280;font-size:.84em;font-weight:600;padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-1px;font-family:inherit}
-.tab-btn:hover{color:#60A5FA}
-.tab-btn.active{color:#60A5FA;border-bottom-color:#60A5FA}
-.tab-content{display:none;animation:fi .25s ease;}
-.tab-content.active{display:block;}
-@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.sec{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #172554;}
-
-/* FLASHCARDS — fixed overlap bug */
-.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;}
-.fc{cursor:pointer;perspective:1000px;position:relative;z-index:1}
-.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
-.fc.flipped{z-index:10}
-.fc.flipped .fc-inner{transform:rotateY(180deg);}
-.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;border-radius:10px}
-.fc-front{background:#020C1B;border:1px solid #1E3A8A;border-top:3px solid var(--accent);}
-.fc-back{background:#071428;border:1px solid #444;border-top:3px solid #2563EB;transform:rotateY(180deg);}
-.fc-label{font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
-.fc-front .fc-label{color:var(--accent);}
-.fc-back .fc-label{color:#60A5FA;}
-.fc-q{font-size:.92em;color:#E6EDF3;line-height:1.5;font-weight:500;}
-.fc-a{font-size:.86em;color:#DBEAFE;line-height:1.6;}
-.fc-hint{font-size:.67em;color:#6B7280;margin-top:10px;}
-
-/* MCQ */
-.mcq-item{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:20px;margin-bottom:16px;}
-.mcq-num{font-size:.75em;color:#6B7280;font-weight:700;text-transform:uppercase;margin-bottom:8px;}
-.mcq-stem{font-size:.94em;color:#E6EDF3;margin-bottom:14px;line-height:1.65;}
-.mcq-stem strong{color:#93C5FD;}
-.mcq-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
-.mcq-opt{padding:10px 14px;background:#071428;border:1px solid #1E3A8A;border-radius:6px;cursor:pointer;font-size:.89em;color:#C9D1D9;transition:all .2s;display:flex;gap:10px;align-items:flex-start;font-family:inherit;text-align:left;width:100%;}
-.mcq-opt:hover:not([disabled]){background:#172554;border-color:var(--accent);}
-.mcq-opt.correct{background:rgba(74,222,128,.15);border-color:#4ADE80;color:#D1FAE5;}
-.mcq-opt.wrong{background:rgba(239,68,68,.1);border-color:#EF4444;color:#FCA5A5;}
-.mcq-opt .letter{font-weight:700;min-width:20px;}
-.mcq-exp{background:#071428;border-left:3px solid #60A5FA;padding:12px 14px;border-radius:0 6px 6px 0;font-size:.86em;color:#9CA3AF;display:none;margin-top:4px;line-height:1.65;}
-.mcq-exp.visible{display:block;}
-.exp-label{color:#60A5FA;font-weight:600;display:block;margin-bottom:6px;}
-.teaching{background:var(--al);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86em;color:#DBEAFE;display:none;line-height:1.6;}
-.teaching.visible{display:block;}
-.tp-label{font-weight:700;color:var(--accent);display:block;margin-bottom:4px;}
-
-/* VIGNETTES */
-.vig-item{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:22px;margin-bottom:20px;}
-.vig-banner{background:var(--al);border:1px solid var(--accent);border-radius:6px;padding:8px 14px;font-size:.8em;color:#93C5FD;font-weight:600;margin-bottom:14px;}
-.vig-stem{font-size:.92em;line-height:1.75;color:#D1D5DB;margin-bottom:14px;}
-.vig-stem strong{color:#93C5FD;}
-
-/* TEST TRAPS — Interactive T/F */
-.trap-intro{background:#2E1A08;border:1px solid #7C4E10;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#FBC02D;line-height:1.6;}
-.trap-card{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:22px;margin-bottom:18px;border-left:4px solid var(--accent);}
-.trap-num{font-size:.7em;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
-.trap-statement{font-size:.97em;color:#E6EDF3;line-height:1.5;margin-bottom:16px;background:#071428;border-radius:7px;padding:14px;border-left:3px solid var(--accent);font-style:italic;}
-.trap-btns{display:flex;gap:10px;margin-bottom:8px;}
-.trap-btn{padding:9px 28px;border-radius:6px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;}
-.trap-btn-true{background:none;border-color:#2E7D32;color:#4CAF50;}
-.trap-btn-true:hover:not(:disabled){background:#0D2E0E;border-color:#4CAF50;}
-.trap-btn-false{background:none;border-color:#C62828;color:#EF5350;}
-.trap-btn-false:hover:not(:disabled){background:#2E0A0A;border-color:#EF5350;}
-.trap-btn:disabled{opacity:.55;cursor:not-allowed;}
-.trap-btn.sel-correct{background:#0D2E0E;border-color:#4CAF50;color:#81C784;}
-.trap-btn.sel-wrong{background:#2E0A0A;border-color:#EF5350;color:#EF9A9A;}
-.trap-exp{padding:13px 16px;border-radius:7px;font-size:.86em;line-height:1.6;margin-top:4px;display:none;}
-.trap-exp.show-c{background:#0D2E0E;border:1px solid #2E7D32;color:#C8E6C9;display:block;}
-.trap-exp.show-w{background:#2E0A0A;border:1px solid #C62828;color:#FFCDD2;display:block;}
-.trap-exp strong{color:#60A5FA;}
-
-/* MECHANISMS */
-.mech-box{background:#020C1B;border:1px solid #1E3A8A;border-radius:10px;padding:18px;margin-bottom:14px;}
-.mech-title{color:var(--accent);font-size:.86em;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
-.pathway{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85em;}
-.pathway-step{background:#071428;border:1px solid #1E3A8A;border-radius:6px;padding:6px 12px;color:#C9D1D9;}
-.pathway-arrow{color:#60A5FA;font-weight:700;padding:0 2px;}
-.pathway-step.key{background:rgba(59,130,246,.15);border-color:var(--accent);color:#DBEAFE;font-weight:600;}
-.pathway-step.green{background:rgba(96,165,250,.1);border-color:#60A5FA;color:#DBEAFE;}
-.pathway-step.red{background:rgba(239,68,68,.1);border-color:#EF4444;color:#FCA5A5;}
-.mech-note{font-size:.82em;color:#9CA3AF;margin-top:10px;line-height:1.5;border-top:1px solid #172554;padding-top:10px;}
-
-/* REFERENCE */
-.ref-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:.86em;}
-.ref-table th{background:var(--accent);color:#000000;padding:9px 12px;text-align:left;font-weight:700;}
-.ref-table td{padding:8px 12px;border:1px solid #1E3A8A;color:#C9D1D9;vertical-align:top;line-height:1.5;}
-.ref-table tr:nth-child(even) td{background:#020C1B;}
-.ref-table tr:nth-child(odd) td{background:#071428;}
-.ref-table td.hl{color:var(--accent);font-weight:600;}
-.ref-table td.hl-g{color:#4ADE80;font-weight:600;}
-.ref-table td.hl-r{color:#F87171;font-weight:600;}
-.ref-section-hd{font-size:.78em;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px;}
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
 
 /* ── TOP NAV ── */
-.topnav{background:#050D1A;border-bottom:1px solid rgba(255,255,255,0.09);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-brand{display:flex;align-items:center;gap:10px}
-.nav-brand-text{font-size:1.25em;font-weight:900;color:#E6EDF3}
-.nav-brand-sub{font-size:.72em;color:#ffffff;font-weight:400;margin-left:4px}
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
 .nav-actions{display:flex;align-items:center;gap:10px}
-.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#2563EB;font-weight:500;padding:6px 12px;border-radius:6px;border:1px solid #2563EB;background:#ffffff;text-decoration:none;transition:all .2s}
-.nav-back:hover{border-color:#60A5FA;color:#60A5FA}
-/* ── LIGHT MODE ── */
-body{background:#F0F4FF;color:#1F2328}
-.topnav{background:#050D1A;border-bottom-color:#172554}
-.nav-back{color:#2563EB;border-color:#2563EB;background:#ffffff}
-.nav-back:hover{border-color:#60A5FA;color:#2563EB;background:#EFF6FF}
-.nav-brand-text{color:#93C5FD}
-.nav-brand-sub{color:#ffffff!important}
-.header{background:linear-gradient(135deg,#DBEAFE 0%,#EFF6FF 100%)!important;border-color:#60A5FA!important}
-        .header h1{color:#1F2328!important}
-                .trap-statement{background:#EFF6FF!important;border-left-color:#2563EB!important}
-        .trap-btn-true{color:#1A6B1A!important}
-        .trap-btn-false{color:#C62828!important}
-        .trap-btn.sel-correct{background:#E6F4EA!important;color:#1A6B1A!important}
-        .trap-btn.sel-wrong{background:#FDECEA!important;color:#B71C1C!important}
-        .trap-exp.show-c{background:#E6F4EA!important;border-color:#2E7D32!important;color:#1A6B1A!important}
-        .trap-exp.show-w{background:#FDECEA!important;border-color:#C62828!important;color:#B71C1C!important}
-        .trap-exp strong{color:#2563EB!important}
-.hub-prog,.stats-bar .stat-card,.stats-row .stat,.score-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.hub-step.next,.hub-step.done{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-.hub-step.current{background:#2563EB!important}
-.tab-nav,.tabs{border-bottom-color:#D0D7DE}
-.tab-btn,.tab-button{color:#656D76}
-.tab-btn.active,.tab-button.active{color:#1F2328}
-.fc-front,.q-block,.fib-card,.order-drill,.match-set,.trap-card,.mech-card,.vig-block,.lo-header{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.fc-back{background:#EFF6FF!important;border-color:#BFDBFE!important}
-.fc-front{border-top-color:#60A5FA!important}
-.fib-card,.order-drill,.match-set{border-left-color:#2563EB!important}
-.fc-q,.fc-a,.fib-prompt,.drill-title,.trap-statement,.vig-text,.vig-q,.match-set-title,.q-stem{color:#1F2328!important}
-.q-stem{background:#EFF6FF!important;border-color:#D0D7DE!important}
-.order-item,.match-item,.opt-btn,.vig-opt,.fib-input{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.order-item:hover{background:#E6F4F1!important;border-color:#60A5FA!important}
-.source-badge{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#656D76!important}
-.exp-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.exp-row{border-bottom-color:#E8ECEF!important}
-.exp-text{color:#656D76!important}
-.teach-box{background:rgba(0,137,123,.08)!important;border-color:rgba(0,137,123,.3)!important;color:#2563EB!important}
-.footer{border-top-color:#D0D7DE;color:#656D76}
-.ref-table th{background:#2563EB!important;color:#ffffff!important;border-bottom-color:#1D4ED8!important}
-.ref-table td{color:#1F2328!important;border-bottom-color:#E8ECEF!important}
-.ref-table tr:hover td{background:#EFF6FF!important}
-.ref-note{background:#EFF6FF!important;border-color:#D0D7DE!important;color:#656D76!important}
-.ordering-intro,.match-intro,.trap-intro{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-.hub-prog-label,.fc-flip-hint,.drill-hint,.match-set-hint,.trap-num,.q-num,.q-diff{color:#656D76!important}
-.stat-label{color:#656D76}
-.hub-tag{background:#2563EB!important}
-.section-hdr,.pathway-step{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.pathway-step.key{background:rgba(59,130,246,.15)!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-.mech-note{color:#4A5568!important;border-top-color:#D0D7DE!important}
-/* Tab nav */
-.tab-nav{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.tab-btn{color:#656D76!important}
-.tab-btn:hover{color:#2563EB!important}
-.tab-btn.active{color:#2563EB!important;border-bottom-color:#2563EB!important}
-/* Step 1 strip */
-.source-badge{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1E3A8A!important}
-.source-badge strong{color:#2563EB!important}
-/* MCQ */
-.mcq-item{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.mcq-num{color:#8899AA!important}
-.mcq-stem{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#1F2328!important}
-.mcq-stem strong{color:#1E3A8A!important}
-.mcq-opt{background:#F6F8FA!important;border-color:#D0D7DE!important;color:#1F2328!important}
-.mcq-opt:hover:not([disabled]){background:#E6F4F1!important;border-color:#60A5FA!important}
-.mcq-opt.correct{background:rgba(34,197,94,.12)!important;border-color:#16A34A!important;color:#14532D!important}
-.mcq-opt.wrong{background:rgba(220,38,38,.08)!important;border-color:#DC2626!important;color:#7F1D1D!important}
-.mcq-exp{background:#EFF6FF!important;border-left-color:#60A5FA!important;color:#374151!important}
-.exp-label{color:#2563EB!important}
-.teaching{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-.tp-label{color:#1E3A8A!important}
-/* Vignettes */
-.vig-item{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.vig-stem{color:#1F2328!important}
-.vig-stem strong{color:#1E3A8A!important}
-.vig-banner{background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A8A!important}
-/* Mechanisms */
-.mech-box{background:#FFFFFF!important;border-color:#D0D7DE!important}
-.mech-title{color:#2563EB!important}
-/* Path Reference */
-.ref-table tr:nth-child(even) td{background:#F6F8FA!important}
-.ref-table tr:nth-child(odd) td{background:#FFFFFF!important}
-.ref-table td.hl{color:#2563EB!important}
-.ref-table td.hl-g{color:#2563EB!important}
-.ref-table td.hl-r{color:#DC2626!important}
-.ref-section-hd{color:#2563EB!important}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
+
+/* ── MCQ DRILL ── */
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.mcq-stem strong{color:#5D4037}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#5D4037}
+
+/* ── INTRO BOXES ── */
+.mcq-intro,.cc-intro,.vig-intro,.hy-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong{color:#5D4037}
+
+/* ── VIGNETTE MCQ ── */
+.vig-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #5D4037}
+.vig-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #5D4037}
+.vig-stem strong{color:#5D4037}
+.vig-stem em{color:#C6875A;font-style:normal;font-weight:600}
+.vig-buzzword{background:#FFF8F2;border:1px solid #C6875A;border-radius:3px;padding:1px 5px;font-weight:600;color:#9A6535}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-exp{background:#F3EFE9;border-left:3px solid #5D4037;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#5D4037}
+
+/* ── STEP 1 TRAPS ── */
+.trap-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-left:4px solid #C6875A;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#5D4037}
+.trap-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.trap-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#F3EFE9;border-radius:5px;padding:16px;border-left:3px solid #C6875A;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#5D4037}
+
+/* ── MECHANISMS ── */
+.mech-box{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:18px;margin-bottom:14px;border-left:4px solid #C6875A}
+.mech-title{color:#5D4037;font-size:.86em;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;font-family:'Source Sans 3',sans-serif}
+.pathway{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85em}
+.pathway-step{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:6px;padding:6px 12px;color:#2C2C2C;font-weight:500}
+.pathway-arrow{color:#C6875A;font-weight:700;padding:0 2px}
+.pathway-step.key{background:#FFF8F2;border-color:#C6875A;color:#9A6535;font-weight:600}
+.pathway-step.green{background:#F1F8F2;border-color:#66BB6A;color:#2E7D32;font-weight:600}
+.pathway-step.red{background:#FEF5F5;border-color:#EF5350;color:#C62828;font-weight:600}
+.mech-note{font-size:.82em;color:#7A7060;margin-top:10px;line-height:1.5;border-top:1px solid #D5CCC0;padding-top:10px;font-style:italic}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C6875A}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0D8;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAF8F5}
+.ref-table tr:hover td{background:#F3EFE9}
+.ref-table .key{color:#5D4037;font-weight:600}
+.ref-table td.hl{color:#5D4037;font-weight:600}
+.ref-table td.hl-g{color:#2E7D32;font-weight:600}
+.ref-table td.hl-r{color:#C62828;font-weight:600}
+.ref-note{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#5D4037}
+.ref-section-hd{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+}
 </style>
 </head>
 <body>
 <nav class="topnav">
-  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
     <span class="nav-brand-sub">Block 4 — GI</span>
   </div>
   <div class="nav-actions">
@@ -240,20 +210,47 @@ body{background:#F0F4FF;color:#1F2328}
 
 <div class="hub-prog">
   <span class="hub-prog-label">Hub Progression:</span>
-  <a href="gi02-hub1-motility.html" class="hub-step done">🧠 Hub #1 — Core Concepts</a>
+  <a href="gi02-hub1-motility.html" class="hub-step done">Hub #1 — Core Concepts</a>
   <span class="hub-arrow">→</span>
-  <span class="hub-step current">🔬 Hub #2 — Step 1 Extensions</span>
+  <span class="hub-step current">Hub #2 — Step 1 Extensions</span>
   <span class="hub-arrow">→</span>
-  <a href="gi02-hub3-motility.html" class="hub-step next">📝 Hub #3 — USMLE Questions</a>
+  <a href="gi02-hub3-motility.html" class="hub-step next">Hub #3 — USMLE Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Mechanisms</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">12</div>
+    <div class="stat-label">Flashcards</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5</div>
+    <div class="stat-label">MCQ</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Vignettes</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Step 1 Traps</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Tables</div>
+  </div>
 </div>
 
 <div class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('mech',this)">⚙️ Mechanisms (5)</button>
-  <button class="tab-btn" onclick="switchTab('flashcards',this)">🃏 Flashcards (12)</button>
-  <button class="tab-btn" onclick="switchTab('mcq',this)">❓ MCQ (5)</button>
-  <button class="tab-btn" onclick="switchTab('vignettes',this)">🏥 Vignettes (2)</button>
-  <button class="tab-btn" onclick="switchTab('traps',this)">⚠️ Step 1 Traps (5)</button>
-  <button class="tab-btn" onclick="switchTab('ref',this)">📊 Pathology Reference</button>
+  <button class="tab-btn active" onclick="switchTab('mech',this)">Mechanisms</button>
+  <button class="tab-btn" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
 </div>
 
 <div id="tab-mech" class="tab-content active">
@@ -262,6 +259,7 @@ body{background:#F0F4FF;color:#1F2328}
 </div>
 <div id="tab-flashcards" class="tab-content">
   <div class="sec">Step 1 Mechanism Flashcards — Click to Flip</div>
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#7A7060">12 Step 1 high-yield concepts</em></span><span class="prog-num" id="fc-counter">0 / 12 seen</span></div>
   <div class="fc-grid" id="fcGrid"></div>
 </div>
 <div id="tab-mcq" class="tab-content">
@@ -273,13 +271,18 @@ body{background:#F0F4FF;color:#1F2328}
   <div id="vigContainer"></div>
 </div>
 <div id="tab-traps" class="tab-content">
-  <div class="trap-intro">⚠️ <strong>Step 1 Mechanism Traps:</strong> Each statement is a common misconception about GI signal transduction or pathophysiology. Select <strong>TRUE</strong> or <strong>FALSE</strong>, then read the explanation.</div>
+  <div class="trap-intro"><strong>Step 1 Mechanism Traps:</strong> Each statement is a common misconception about GI signal transduction or pathophysiology. Select <strong>TRUE</strong> or <strong>FALSE</strong>, then read the explanation.</div>
   <div id="trapsContainer"></div>
 </div>
 <div id="tab-ref" class="tab-content">
   <div class="sec">Motility Disorder Comparison — High-Yield Pathology</div>
   <div id="refContainer"></div>
 </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI02 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
 </div>
 
 <script>
@@ -289,7 +292,15 @@ function flipCard(fc){
   const back=fc.querySelector('.fc-back');
   fc.classList.toggle('flipped');
   inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+  updateFlashcardCounter();
 }
+
+function updateFlashcardCounter(){
+  const seenCount=document.querySelectorAll('.fc.flipped').length;
+  const counter=document.getElementById('fc-counter');
+  if(counter)counter.textContent=seenCount+' / 12 seen';
+}
+
 window.addEventListener('load',function(){
   document.querySelectorAll('.fc').forEach(function(fc){
     const inner=fc.querySelector('.fc-inner');
@@ -405,7 +416,7 @@ const mcqs=[
    ========================================== */
 const vigs=[
 {
-  banner:"🔬 Step 1 Vignette | Chagas Disease vs. Primary Achalasia",
+  banner:"Step 1 Vignette | Chagas Disease vs. Primary Achalasia",
   stem:`A 34-year-old man originally from rural Brazil presents with a 14-month history of progressive dysphagia to both solids and liquids, regurgitation of undigested food, and a 20-lb weight loss. He also reports palpitations and syncopal episodes. ECG shows <strong>right bundle branch block and frequent PVCs.</strong> Barium swallow shows a markedly dilated esophagus with 'bird beak' tapering. Serology: <strong>T. cruzi IgG antibody positive (1:128 titer).</strong> Esophageal manometry: elevated LES pressure (42 mmHg), incomplete relaxation, absent peristalsis.`,
   question:"Which of the following distinguishes this patient's condition from primary (idiopathic) achalasia at the histological level?",
   opts:["This condition shows loss of VIP/NO neurons; primary achalasia preserves them","Both conditions are histologically identical — absent VIP/NO neurons in Auerbach's plexus","This condition shows fibrosis of smooth muscle; primary achalasia preserves smooth muscle","Primary achalasia has HLA-DQA1 association; Chagas does not affect the immune system","This condition only affects the esophagus; primary achalasia also affects the colon"],
@@ -414,7 +425,7 @@ const vigs=[
   teach:"Chagas vs. Primary Achalasia: IDENTICAL histology and manometry. Differentiate by: ORIGIN (South/Central America), CARDIAC involvement (cardiomyopathy, RBBB, PVCs), SEROLOGY (anti-T. cruzi Ab), and COLON involvement (megacolon). Treatment of esophageal disease: same as primary achalasia. Add antiparasitic (benznidazole) for systemic disease."
 },
 {
-  banner:"🔬 Step 1 Vignette | Scleroderma Esophagus vs. Achalasia",
+  banner:"Step 1 Vignette | Scleroderma Esophagus vs. Achalasia",
   stem:`A 47-year-old woman with limited cutaneous systemic sclerosis (lcSSc) presents with heartburn, regurgitation, and dysphagia primarily to <strong>solids.</strong> She has Raynaud's phenomenon and telangiectasias on face and hands. Anti-centromere antibody is positive. Esophageal manometry: <strong>absent peristalsis in the lower two-thirds of the esophagus; LES pressure 3 mmHg (↓↓).</strong> Endoscopy shows esophagitis and Barrett's esophagus.`,
   question:"Compared to primary achalasia, which finding on this patient's manometry is the KEY discriminating feature?",
   opts:["Absent peristalsis — this finding is unique to scleroderma","Low LES pressure — scleroderma has low LES pressure; achalasia has high LES pressure","Normal LES relaxation — unlike achalasia, scleroderma shows complete LES relaxation","High-amplitude peristaltic waves — scleroderma-specific finding","Nutcracker esophagus pattern — distinguishes scleroderma from achalasia"],
@@ -468,9 +479,9 @@ function renderMechs(){
       return`<span class="${cls}">${s}</span>`;
     }).join(' ');
     return`<div class="mech-box">
-      <div class="mech-title">⚙️ ${m.title}</div>
+      <div class="mech-title">${m.title}</div>
       <div class="pathway">${steps}</div>
-      <div class="mech-note">💡 ${m.note}</div>
+      <div class="mech-note">${m.note}</div>
     </div>`;
   }).join('');
 }
@@ -484,12 +495,12 @@ function renderFlashcards(){
     <div class="fc" onclick="flipCard(this)">
       <div class="fc-inner">
         <div class="fc-front">
-          <div class="fc-label">🔬 Step 1 Card ${i+1} of ${flashcards.length}</div>
+          <div class="fc-label">Card ${i+1} of ${flashcards.length}</div>
           <div class="fc-q">${fc.q}</div>
           <div class="fc-hint">↻ Click to flip</div>
         </div>
         <div class="fc-back">
-          <div class="fc-label">✅ Answer</div>
+          <div class="fc-label">Answer</div>
           <div class="fc-a">${fc.a}</div>
           <div class="fc-hint">↻ Click to flip back</div>
         </div>
@@ -520,13 +531,12 @@ function renderMCQ(){
   const cont=document.getElementById('mcqContainer');
   cont.innerHTML=mcqs.map((q,qi)=>`
     <div class="mcq-item">
-      <div class="mcq-num">Step 1 Question ${qi+1} of ${mcqs.length}</div>
+      <div class="mcq-num">Question ${qi+1} of ${mcqs.length}</div>
       <div class="mcq-stem">${q.stem}</div>
-      <div class="mcq-options" id="opts${qi}">
-        ${q.opts.map((o,oi)=>`<button class="mcq-opt" onclick="selectMCQ(this,${qi},${oi})"><span class="letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
+      <div class="mcq-opts" id="opts${qi}">
+        ${q.opts.map((o,oi)=>`<button class="mcq-opt" onclick="selectMCQ(this,${qi},${oi})"><span class="opt-letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
       </div>
       <div class="mcq-exp" id="exp${qi}"></div>
-      <div class="teaching" id="teach${qi}"><span class="tp-label">📚 Teaching Point</span>${q.teach.replace(/\n/g,'<br>')}</div>
     </div>`).join('');
 }
 
@@ -541,9 +551,8 @@ function selectMCQ(btn,qi,oi){
     else b.classList.add('wrong');
   });
   const expDiv=document.getElementById('exp'+qi);
-  expDiv.innerHTML=`<span class="exp-label">${oi===q.correct?'✅ Correct!':'❌ Incorrect'}</span>${q.exps[oi]}<br><br><strong style="color:#C9D1D9;display:block;margin-top:8px">All Options:</strong><br>${q.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
-  expDiv.classList.add('visible');
-  document.getElementById('teach'+qi).classList.add('visible');
+  expDiv.innerHTML=`<strong style="color:#5D4037">${oi===q.correct?'✓ Correct':'✗ Incorrect'}</strong><br><br>${q.exps[oi]}<br><br><strong style="color:#5D4037;display:block;margin-top:8px">All Options:</strong><br>${q.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
+  expDiv.classList.add('show');
 }
 
 /* ==========================================
@@ -553,31 +562,29 @@ function renderVigs(){
   const cont=document.getElementById('vigContainer');
   cont.innerHTML=vigs.map((v,vi)=>`
     <div class="vig-item">
-      <div class="vig-banner">${v.banner}</div>
+      <div class="vig-num">Vignette ${vi+1} of ${vigs.length}</div>
       <div class="vig-stem">${v.stem}</div>
-      <div class="mcq-stem" style="margin-bottom:12px"><strong style="color:#E6EDF3">${v.question}</strong></div>
-      <div class="mcq-options" id="vopts${vi}">
-        ${v.opts.map((o,oi)=>`<button class="mcq-opt" onclick="selectVig(this,${vi},${oi})"><span class="letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
+      <div class="vig-stem" style="background:#FFF8F2;border-left-color:#C6875A;font-weight:600;margin-bottom:14px"><strong style="color:#5D4037">${v.question}</strong></div>
+      <div class="vig-opts" id="vopts${vi}">
+        ${v.opts.map((o,oi)=>`<button class="vig-opt" onclick="selectVig(this,${vi},${oi})"><span class="opt-letter">${String.fromCharCode(65+oi)}.</span><span>${o}</span></button>`).join('')}
       </div>
-      <div class="mcq-exp" id="vexp${vi}"></div>
-      <div class="teaching" id="vteach${vi}"><span class="tp-label">📚 Teaching Point</span>${v.teach.replace(/\n/g,'<br>')}</div>
+      <div class="vig-exp" id="vexp${vi}"></div>
     </div>`).join('');
 }
 
 function selectVig(btn,vi,oi){
-  const container=btn.closest('.mcq-options');
+  const container=btn.closest('.vig-opts');
   if(container.dataset.answered)return;
   container.dataset.answered='true';
   const v=vigs[vi];
-  container.querySelectorAll('.mcq-opt').forEach(b=>b.setAttribute('disabled','true'));
-  container.querySelectorAll('.mcq-opt').forEach((b,idx)=>{
+  container.querySelectorAll('.vig-opt').forEach(b=>b.setAttribute('disabled','true'));
+  container.querySelectorAll('.vig-opt').forEach((b,idx)=>{
     if(idx===v.correct)b.classList.add('correct');
     else b.classList.add('wrong');
   });
   const expDiv=document.getElementById('vexp'+vi);
-  expDiv.innerHTML=`<span class="exp-label">${oi===v.correct?'✅ Correct!':'❌ Incorrect'}</span>${v.exps[oi]}<br><br>${v.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
-  expDiv.classList.add('visible');
-  document.getElementById('vteach'+vi).classList.add('visible');
+  expDiv.innerHTML=`<strong style="color:#5D4037">${oi===v.correct?'✓ Correct':'✗ Incorrect'}</strong><br><br>${v.exps[oi]}<br><br><strong style="color:#5D4037;display:block;margin-top:8px">All Options:</strong><br>${v.exps.map((e,i)=>`<b>${String.fromCharCode(65+i)}.</b> ${e}`).join('<br><br>')}`;
+  expDiv.classList.add('show');
 }
 
 /* ==========================================
@@ -625,7 +632,7 @@ function renderRef(){
     <tr><td>LES relaxation</td><td>Incomplete/absent</td><td>Often complete (no obstruction)</td><td>Incomplete/absent</td><td>Incomplete/absent</td></tr>
     <tr><td>Peristalsis</td><td>Absent</td><td>Absent (lower 2/3)</td><td>Absent</td><td>Absent</td></tr>
     <tr><td>Dysphagia type</td><td>Solids AND liquids</td><td>Solids &gt; liquids + GERD</td><td>Solids AND liquids</td><td>Solids AND liquids</td></tr>
-    <tr><td>Key clue</td><td>Bird beak; young adult; autoimmune</td><td>Anti-centromere Ab; Raynaud's; GERD; Barrett's</td><td>South American origin; cardiac (RBBB, PVCs)</td><td>Age &gt;50; rapid onset; mass on CT</td></tr>
+    <tr><td>Key clue</td><td>Bird beak; young adult; autoimmune</td><td>Anti-centromere Ab; Raynaud's; GERD; Barrett's</td><td>South American origin; cardiac (RBBB, PVCs)</td><td>Age >50; rapid onset; mass on CT</td></tr>
   </tbody></table>`;
 
   html+=`<div class="ref-section-hd" style="margin-top:24px">Signal Transduction Comparison — Contraction vs. Relaxation</div>`;
@@ -648,8 +655,6 @@ renderMCQ();
 renderVigs();
 renderTraps();
 renderRef();
-
-/* ── THEME TOGGLE ── */
 
 </script>
 </body>
