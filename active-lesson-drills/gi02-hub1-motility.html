@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI02 Motility — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back">← Active Drill Hub</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>GI Motility <span>Active Drills</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> Anki phys-02-motility</div>
+    <div class="source-badge"><strong>LOs:</strong> GI Block LOs 1–11</div>
+    <div class="source-badge"><strong>Review:</strong> BRS Physiology Ch. 8</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid GI Motility</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi02-hub2-motility.html" class="hub-step next">Hub #2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi02-hub3-motility.html" class="hub-step next">Hub #3 — USMLE Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">36</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Matching Sets</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Test Traps</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
+</div>
+
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#6B7280">All 36 Anki concepts covered</em></span><span class="prog-num" id="fc-counter">0 / 36 seen</span></div>
+  <div class="fc-grid" id="fc-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list" id="fib-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Drag-and-Drop Ordering:</strong> Drag each step to place it in the correct sequential order, then click <strong>Check Order</strong>. Steps highlighted <span style="color:#81C784">green</span> are in the correct position; <span style="color:#EF9A9A">red</span> means out of order. Use <strong>Shuffle</strong> to try again or <strong>Show Answer</strong> to reveal the correct sequence. Pathways 1–2 are the signal transduction mechanisms from Hub #2.
+  </div>
+  <div id="ordering-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>How to match:</strong> Click a term on the left to select it (turns teal), then click its correct match on the right. A correct pair turns <span style="color:#81C784">green</span>. An incorrect selection <span style="color:#EF9A9A">flashes red</span> and deselects. Complete all pairs to finish each set.
+  </div>
+  <div id="matching-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">⚠️ <strong>High-yield test traps:</strong> Each statement is a common exam misconception. Select <strong>TRUE</strong> or <strong>FALSE</strong> first, then read the full explanation to understand why it is or isn't correct.
+  </div>
+  <div id="traps-container"></div>
+</div>
+
+<div class="tab-pane" id="tab-ref">
+  <div id="ref-container"></div>
+</div>
+
+<div class="footer">
+  <a href="#">← GI Block Home</a> &nbsp;|&nbsp;
+  <a href="gi02-hub2-motility.html">Hub #2 — Step 1 Extensions →</a> &nbsp;|&nbsp;
+  <a href="gi02-hub3-motility.html">Hub #3 — USMLE Questions →</a>
+</div>
+</div>
+
+<script>
+/* ==========================================
+   DATA: FLASHCARDS
+   ========================================== */
+const flashcards=[
+{q:"What is <strong>GI motility</strong>?",a:"Movement of food and material through the GI tract via <strong>smooth muscle contraction and relaxation</strong>, coordinated by the ENS (enteric nervous system), ANS (autonomic nervous system), and GI hormones."},
+{q:"What is the <strong>BER</strong> and what is it NOT?",a:"<strong>Basic Electrical Rhythm</strong> = oscillating <strong>resting membrane potentials</strong> of GI smooth muscle. NOT action potentials. Originates in <strong>interstitial cells of Cajal (ICC)</strong>; present from esophagus to anus."},
+{q:"What is the functional role of the BER / slow waves?",a:"Sets the <strong>timing and maximal possible rate</strong> of contractions. APs can only occur at the <strong>peaks</strong> of slow waves. Higher frequency BER = higher max contraction rate."},
+{q:"How does BER frequency change along the GI tract?",a:"Frequency decreases aborally:<br><strong>Duodenum</strong> ~12/min → <strong>Ileum</strong> ~8/min → <strong>Stomach</strong> ~3–5/min → <strong>Colon</strong> ~2–6/min<br>Each segment's BER caps its max contraction rate."},
+{q:"What is the threshold for GI smooth muscle AP generation?",a:"Spontaneous APs occur when the membrane is depolarized above <strong>−40 mV</strong>. At normal resting potential, there are <strong>essentially no contractions</strong>. Greater depolarization = more APs = greater force."},
+{q:"Describe the <strong>ionic basis</strong> of GI smooth muscle APs.",a:"<strong>Depolarization:</strong> Ca²⁺ entry via voltage-gated L-type channels<br><strong>Plateau:</strong> slow Ca²⁺ and Na⁺ movement<br><strong>Repolarization:</strong> delayed ↑ K⁺ conductance<br>Distinct from skeletal muscle (which uses Na⁺ for depolarization)"},
+{q:"How does <strong>number of APs</strong> relate to contraction strength?",a:"The number of APs fired on a single slow wave is <strong>directly proportional</strong> to the force of contraction. Mechanism: AP → Ca²⁺ release → calmodulin → MLCK activation → myosin phosphorylation → cross-bridge cycling"},
+{q:"Name 5 <strong>depolarizing stimuli</strong> for GI smooth muscle.",a:"<strong>1.</strong> Stretch / mechanical distension<br><strong>2.</strong> Parasympathetic stimulation (ACh)<br><strong>3.</strong> Gastrin<br><strong>4.</strong> Serotonin (5-HT)<br><strong>5.</strong> Substance P (tachykinin)"},
+{q:"Name 3 agents that cause <strong>hyperpolarization</strong> of GI smooth muscle.",a:"<strong>1.</strong> Sympathetic tone (norepinephrine)<br><strong>2.</strong> VIP (vasoactive intestinal peptide)<br><strong>3.</strong> NO (nitric oxide)<br>All inhibit AP firing and relax smooth muscle."},
+{q:"What is the <strong>MMC</strong>?",a:"<strong>Migrating Myoelectric (Myoelectric) Complex</strong> — a cyclic pattern of electrical activity and contractions that sweeps the GI tract during fasting. Acts as the GI 'housekeeper wave.'"},
+{q:"Describe the <strong>4 phases of the MMC</strong>.",a:"<strong>Phase I:</strong> Resting — no contractions (quiescent)<br><strong>Phase II:</strong> Irregular APs begin, increasing intermittent contractions<br><strong>Phase III:</strong> Maximum regular contractions — the 'housekeeper wave'<br><strong>Phase IV:</strong> Short transition back to Phase I"},
+{q:"What <strong>triggers the MMC</strong> and when does it occur?",a:"<strong>Motilin</strong>, released by <strong>M cells of the duodenum</strong>, triggers MMC Phase II/III. Occurs during <strong>fasting</strong> (interdigestive period). <strong>MMC stops when food enters the stomach.</strong>"},
+{q:"What are the 3 stages of <strong>swallowing</strong> (deglutition)?",a:"<strong>1. Oral (voluntary):</strong> Tongue propels bolus to pharynx<br><strong>2. Pharyngeal (involuntary):</strong> Soft palate rises, glottis closes, UES relaxes; medulla (CN IX/X)<br><strong>3. Esophageal (involuntary):</strong> Primary peristalsis + LES relaxation"},
+{q:"Distinguish <strong>primary</strong> vs <strong>secondary</strong> esophageal peristalsis.",a:"<strong>Primary:</strong> Triggered by voluntary swallowing; mediated by medulla → vagus → myenteric plexus<br><strong>Secondary:</strong> Triggered by esophageal <em>distension</em> (bolus not cleared); entirely local ENS reflex — no swallowing needed"},
+{q:"What is <strong>achalasia</strong> and its mechanism?",a:"Failure of the LES to relax due to <strong>loss of inhibitory ENS neurons</strong> (aganglionic smooth muscle at LES). Dysphagia to both solids and liquids; 'bird's beak' on barium swallow. Also caused by <strong>Chagas disease</strong> (T. cruzi destroys Auerbach's plexus)."},
+{q:"What is <strong>receptive relaxation</strong>?",a:"Relaxation of the <strong>body/fundus of the stomach</strong> (and duodenum) in anticipation of incoming food. <strong>Vagally-mediated via VIP release</strong>. Allows stomach volume to increase without large ↑ in intragastric pressure."},
+{q:"How does <strong>bariatric surgery</strong> exploit receptive relaxation?",a:"Bariatric procedures (e.g., sleeve gastrectomy) <strong>eliminate receptive relaxation</strong> → stomach cannot expand normally → patient feels <strong>full very quickly</strong> with small food intake (early satiety) → reduced caloric intake → weight loss."},
+{q:"Describe the <strong>peristaltic reflex</strong> (Law of the Intestine).",a:"Distension → ascending excitation (ACh/Substance P) → circular muscle <strong>contracts BEHIND bolus</strong><br>+ descending inhibition (VIP/NO) → circular muscle <strong>relaxes AHEAD of bolus</strong><br>Mediated by vagus + myenteric plexus; produces aboral propulsion"},
+{q:"What is <strong>segmentation</strong> and how does it differ from peristalsis?",a:"Segmentation: <strong>circular muscle contracts on BOTH sides</strong> of bolus + relaxes in the middle → forms 'pockets'<br>Purpose: <strong>mixing AND propulsion</strong> (dual function)<br>Under <strong>intrinsic ENS control</strong>; propagates over <strong>longer</strong> areas than peristalsis; occurs throughout feeding"},
+{q:"What are the 2 main motility patterns of the <strong>small intestine</strong> during feeding?",a:"<strong>1. Peristalsis:</strong> Dominant in early feeding; aboral propulsion; vagus + myenteric plexus<br><strong>2. Segmentation:</strong> Dominant throughout feeding; mixing + propulsion; intrinsic ENS<br>Both are aboral ('Law of the Intestine')"},
+{q:"What are <strong>peristaltic rushes</strong>?",a:"Abnormally <strong>fast</strong> peristaltic waves sweeping through the small intestine. Normal transit is slow (allowing absorption). Peristaltic rushes bypass absorption → <strong>diarrhea</strong>. Triggered by intestinal irritants."},
+{q:"What controls the <strong>Sphincter of Oddi</strong>?",a:"Relaxed by: <strong>vagus nerve, CCK</strong> (cholecystokinin), and peristaltic influences<br>→ Allows bile + pancreatic secretions into the <strong>duodenum</strong><br>CCK simultaneously contracts the <strong>gallbladder</strong> (coordinated release of bile)"},
+{q:"Describe the two motility patterns of the <strong>large intestine</strong>.",a:"<strong>1. Haustration:</strong> Slow; circular muscle + teniae coli contract → form sacs (haustra); storage + dehydration<br><strong>2. Mass movements:</strong> Fast peristaltic contractions; 3–4×/day; triggered by gastrin + vagus; expels feces"},
+{q:"What are <strong>teniae coli</strong> and what do they form?",a:"<strong>Three thick longitudinal bands</strong> of smooth muscle (modified muscularis externa) running through the colon. Contraction of teniae coli + circular muscle creates <strong>haustra (sacs)</strong> = haustration."},
+{q:"What are <strong>mass movements</strong>?",a:"<strong>Peristaltic contractions</strong> of the colon occurring <strong>3–4×/day</strong>. Stimulated by GI hormones (mainly <strong>gastrin, also CCK</strong>) + vagus nerve, in response to chyme in the upper GI tract (gastrocolic reflex). Haustrae smooth out into a tube; feces propelled to rectum."},
+{q:"What is the <strong>gastrocolic reflex</strong>?",a:"Food entering the stomach → colonic mass movements. Mediated by:<br><strong>Parasympathetic:</strong> vagus nerve (proximal colon) + pelvic nerve (descending colon)<br><strong>Hormones:</strong> gastrin + CCK<br>Clinical note: explains post-meal urge to defecate."},
+{q:"Describe the <strong>defecation (rectosphincteric) reflex</strong>.",a:"<strong>1.</strong> Mass movement → feces enter rectum<br><strong>2.</strong> Rectal stretch → afferents → sacral cord (S2–S4)<br><strong>3.</strong> IAS (smooth muscle, involuntary) <strong>reflexively relaxes</strong><br><strong>4.</strong> Urge to defecate<br><strong>5.</strong> EAS (skeletal, voluntary): relax = defecate; contract = defer"},
+{q:"Distinguish <strong>IAS vs EAS</strong> anatomy and control.",a:"<strong>IAS</strong> (internal anal sphincter): <strong>smooth muscle</strong>; involuntary; tonically contracted; relaxes during defecation reflex<br><strong>EAS</strong> (external anal sphincter): <strong>skeletal muscle</strong>; <strong>voluntary</strong> control via pudendal nerve (S2–S4); allows conscious deferral"},
+{q:"What is <strong>Hirschsprung disease</strong>?",a:"Congenital <strong>aganglionosis</strong> of the <strong>distal colon</strong> (loss of enteric neurons). IAS fails to relax reflexively → functional obstruction. Neonatal bowel obstruction; absence of meconium. Tx: surgical resection of aganglionic segment."},
+{q:"How does the stomach differ from the rest of the GI tract in terms of <strong>muscle layers</strong>?",a:"Stomach: <strong>3 muscle layers</strong> — inner oblique, middle circular, outer longitudinal<br>Rest of GI tract: <strong>2 layers</strong> — inner circular, outer longitudinal<br>The oblique layer facilitates <strong>churning and grinding</strong> of food."},
+{q:"What role does <strong>serotonin (5-HT)</strong> play in GI motility?",a:"5-HT is a <strong>depolarizing</strong> stimulus (contraction). In high amounts/irritant situations, triggers <strong>reverse (retrograde) peristalsis</strong> → vomiting. Released by enterochromaffin cells in response to irritants. Also key in IBS pathophysiology."},
+{q:"When does <strong>retrograde (reverse) peristalsis</strong> occur?",a:"<strong>1. Vomiting:</strong> 'Power propulsion' — reverse peristalsis starts from colon/small intestine upward; serotonin-driven<br><strong>2. Defecation deferral:</strong> In the rectum when the defecation reflex is voluntarily stopped → stool pushed back to sigmoid"},
+{q:"What is <strong>haustration</strong> and what is its purpose?",a:"Haustra = sac-like pouches formed in the colon. Formed by contraction of circular muscle + teniae coli. Very <strong>slow</strong> motility. Purpose: <strong>storage and dehydration</strong> of chyme → feces. Colon BER is slow except during mass movements."},
+{q:"What factors affect colonic <strong>transit time</strong>?",a:"Shortened (faster transit) by: dietary <strong>fiber</strong>, adequate hydration, physical activity, gastrocolic reflex<br>Prolonged (slower) by: low fiber, dehydration, opioids, anticholinergics, immobility, hypothyroidism"},
+{q:"What type of muscle lines the <strong>upper vs lower esophagus</strong>?",a:"<strong>Upper 1/3:</strong> Skeletal muscle → voluntary initiation of swallowing<br><strong>Middle 1/3:</strong> Mixed skeletal + smooth<br><strong>Lower 1/3:</strong> Smooth muscle → involuntary peristalsis; mediated by vagus + myenteric plexus"},
+{q:"Describe the motility of the <strong>mouth</strong>.",a:"<strong>Mastication</strong> (chewing): voluntary; CN V (trigeminal) motor<br><strong>Deglutition</strong> (swallowing): begins voluntarily (oral phase), then becomes involuntary at the pharyngeal phase"}
+];
+
+/* ==========================================
+   DATA: FILL-IN-BLANK
+   ========================================== */
+const fibs=[
+{prompt:"GI action potentials are generated when the resting membrane potential is depolarized above ___ mV.",answers:["-40","negative 40"],hint:"Threshold: significantly more positive than normal RMP (~−70 mV)"},
+{prompt:"The MMC phase that acts as the 'housekeeper wave' with maximum regular contractions is Phase ___.",answers:["III","3","three","phase iii","phase 3"],hint:"4 phases: I (rest) → II (irregular) → III (max) → IV (transition)"},
+{prompt:"The hormone that triggers the MMC during fasting is ___.",answers:["motilin"],hint:"Released by M cells of the duodenum"},
+{prompt:"Motilin is released by M cells located in the ___.",answers:["duodenum","proximal small intestine","small intestine"],hint:"Proximal GI; triggers MMC Phase II/III"},
+{prompt:"The two main types of gastric motility are the MMC (during fasting) and ___ (during feeding).",answers:["receptive relaxation"],hint:"VIP-mediated; allows the stomach body to accommodate food"},
+{prompt:"VIP causes ___ polarization of GI smooth muscle (hyper- or de-).",answers:["hyper","hyperpolarization"],hint:"VIP = inhibitory neurotransmitter → relaxation"},
+{prompt:"Colonic haustra are formed by contraction of circular muscle and the ___.",answers:["teniae coli","tenia coli","taenia coli","taeniae coli"],hint:"3 thick longitudinal bands of smooth muscle in the colon"},
+{prompt:"Mass movements are peristaltic contractions that occur approximately ___–___ times per day. (enter as X-Y)",answers:["3-4","3–4","3 to 4","3 4"],hint:"Stimulated by gastrin + vagus; triggered by gastrocolic reflex"},
+{prompt:"Receptive relaxation is vagally-mediated via release of ___ from inhibitory neurons.",answers:["VIP","vasoactive intestinal peptide"],hint:"Same neurotransmitter that hyperpolarizes smooth muscle"},
+{prompt:"In Hirschsprung disease, ganglion cells (enteric neurons) are absent from the ___ colon.",answers:["distal","distal colon","distal segment"],hint:"Aganglionic segment; proximal colon dilates (megacolon)"},
+{prompt:"In GI smooth muscle APs, the depolarization phase is due to ___ entry via voltage-gated channels.",answers:["calcium","ca2+","ca++","ca","ca2"],hint:"Different from skeletal muscle; important for MLCK activation"},
+{prompt:"The sphincter of Oddi is relaxed by the vagus nerve, peristaltic influences, and ___.",answers:["CCK","cholecystokinin"],hint:"This hormone is released by fat/protein in the duodenum and also contracts the gallbladder"},
+{prompt:"In segmentation contractions, circular muscle contracts on ___ sides of the bolus with relaxation in the middle.",answers:["both","either","two","both sides"],hint:"Contrast with peristalsis: contraction BEHIND only"},
+{prompt:"The stomach has ___ muscle layers, compared to 2 layers in the rest of the GI tract.",answers:["3","three"],hint:"The extra inner oblique layer facilitates churning"},
+{prompt:"The gastrocolic reflex: food entering the ___ stimulates colonic mass movements.",answers:["stomach"],hint:"Explains the post-meal urge to defecate; mediated by gastrin + vagus"}
+];
+
+/* ==========================================
+   DATA: ORDERING DRILLS
+   ========================================== */
+const orderings=[
+{
+  title:"ACh/M3 Signal Transduction — Smooth Muscle Contraction",
+  hint:"Order from parasympathetic nerve firing to smooth muscle contraction (signal transduction pathway from Hub #2)",
+  steps:[
+    "ACh released from parasympathetic (cholinergic) nerve terminal",
+    "ACh binds M3 muscarinic receptor on GI smooth muscle",
+    "Gq protein activated",
+    "PLC (phospholipase C) activated → cleaves PIP₂ → IP₃ + DAG",
+    "IP₃ releases Ca²⁺ from endoplasmic reticulum",
+    "Ca²⁺-calmodulin activates MLCK (myosin light-chain kinase)",
+    "Myosin phosphorylated → cross-bridge cycling → smooth muscle contracts"
+  ]
+},
+{
+  title:"VIP / NO Signal Transduction — Smooth Muscle Relaxation",
+  hint:"Order from inhibitory neurotransmitter release to smooth muscle relaxation (signal transduction pathway from Hub #2)",
+  steps:[
+    "Inhibitory neuron releases VIP or NO",
+    "NO activates guanylyl cyclase → ↑cGMP; VIP activates Gs → adenylyl cyclase → ↑cAMP",
+    "↑cGMP activates PKG; ↑cAMP activates PKA",
+    "PKG/PKA activates MLCP (myosin light-chain phosphatase)",
+    "MLCP dephosphorylates myosin → cross-bridge cycling stops",
+    "Smooth muscle relaxes"
+  ]
+},
+{
+  title:"MMC — 4 Phases in Order",
+  hint:"Place the 4 MMC phases in order, starting from the fasting/resting state",
+  steps:[
+    "Phase I: Quiescent period — no contractions (resting state)",
+    "Phase II: Irregular APs begin — intermittent, increasing contractions",
+    "Phase III: Maximum regular contractions — 'housekeeper wave' (motilin-driven)",
+    "Phase IV: Short transition period back to Phase I"
+  ]
+},
+{
+  title:"Peristaltic Reflex — Law of the Intestine",
+  hint:"Order the events from bolus detection to aboral propulsion",
+  steps:[
+    "Bolus detected by mechanoreceptors (stretch) in mucosa/intestinal wall",
+    "Ascending excitatory interneurons fire BEHIND bolus (ACh + Substance P released)",
+    "Circular muscle contracts behind bolus (lumen closes)",
+    "Descending inhibitory interneurons fire AHEAD of bolus (VIP + NO released)",
+    "Circular muscle relaxes ahead of bolus (lumen opens/dilates)",
+    "Bolus propelled aborally (away from mouth)"
+  ]
+},
+{
+  title:"Defecation Reflex — Rectosphincteric Reflex",
+  hint:"Order the events from colonic mass movement to defecation",
+  steps:[
+    "Colonic mass movement forces feces into the rectum",
+    "Rectal distension activates stretch receptor afferents",
+    "Afferent signals reach sacral spinal cord (S2–S4)",
+    "Internal anal sphincter (IAS) reflexively relaxes — involuntary",
+    "Awareness of urge to defecate",
+    "EAS voluntarily relaxed (defecation) OR voluntarily contracted (deferral)"
+  ]
+},
+{
+  title:"Swallowing (Deglutition) — 3 Stages in Order",
+  hint:"Order the events from voluntary bolus formation to gastric entry",
+  steps:[
+    "Oral phase (voluntary): tongue forms bolus and propels it to pharynx",
+    "Pharyngeal phase: soft palate elevates, nasopharynx closes",
+    "Glottis closes, epiglottis covers larynx (airway protection)",
+    "Upper esophageal sphincter (UES) relaxes — bolus enters esophagus",
+    "Esophageal phase: primary peristalsis propels bolus distally",
+    "Lower esophageal sphincter (LES) relaxes — bolus enters stomach"
+  ]
+}
+];
+
+/* ==========================================
+   DATA: MATCHING
+   ========================================== */
+const matchSets=[
+{
+  title:"Motility Pattern → Primary GI Location",
+  hint:"Click a motility pattern on the left, then click its primary anatomical location on the right.",
+  left:[
+    {id:"m1a",text:"Haustration"},
+    {id:"m1b",text:"Receptive relaxation"},
+    {id:"m1c",text:"MMC (interdigestive)"},
+    {id:"m1d",text:"Segmentation"},
+    {id:"m1e",text:"Mass movements"},
+    {id:"m1f",text:"Primary peristalsis"},
+    {id:"m1g",text:"Secondary peristalsis"}
+  ],
+  right:[
+    {id:"m1A",text:"Large intestine (colon)"},
+    {id:"m1B",text:"Stomach body/fundus + duodenum"},
+    {id:"m1C",text:"Stomach + small intestine (during fasting)"},
+    {id:"m1D",text:"Small intestine (also colon) during feeding"},
+    {id:"m1E",text:"Large intestine — 3–4× per day"},
+    {id:"m1F",text:"Esophagus — triggered by swallowing"},
+    {id:"m1G",text:"Esophagus — triggered by distension (ENS only)"}
+  ],
+  pairs:{m1a:"m1A",m1b:"m1B",m1c:"m1C",m1d:"m1D",m1e:"m1E",m1f:"m1F",m1g:"m1G"}
+},
+{
+  title:"GI Motility Disorder → Underlying Mechanism",
+  hint:"Match each clinical disorder to its pathophysiological mechanism.",
+  left:[
+    {id:"m2a",text:"Achalasia"},
+    {id:"m2b",text:"Hirschsprung disease"},
+    {id:"m2c",text:"Chagas disease (GI manifestation)"},
+    {id:"m2d",text:"Scleroderma (GI manifestation)"},
+    {id:"m2e",text:"Bariatric surgery (physiologic consequence)"}
+  ],
+  right:[
+    {id:"m2A",text:"Loss of inhibitory ENS neurons at LES → LES fails to relax"},
+    {id:"m2B",text:"Congenital aganglionosis of distal colon → IAS fails to relax → obstruction"},
+    {id:"m2C",text:"T. cruzi destroys Auerbach's plexus → esophageal/colonic dysmotility"},
+    {id:"m2D",text:"Fibrosis replaces smooth muscle → hypomotility, GERD, constipation"},
+    {id:"m2E",text:"Eliminates receptive relaxation → early satiety with small meals"}
+  ],
+  pairs:{m2a:"m2A",m2b:"m2B",m2c:"m2C",m2d:"m2D",m2e:"m2E"}
+}
+];
+
+/* ==========================================
+   DATA: TEST TRAPS
+   ========================================== */
+const traps=[
+{
+  statement:'"The BER (basic electrical rhythm) consists of action potentials."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> BER = <strong>resting membrane potentials</strong>, NOT action potentials. Slow waves reflect oscillations in RMP from metabolic activity of interstitial cells of Cajal. <strong>Action potentials ride on the PEAKS of slow waves</strong> — but only if the RMP is depolarized above −40 mV. This distinction is classic Step 1 bait."
+},
+{
+  statement:'"Segmentation serves only a mixing function and does not contribute to propulsion of chyme."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Segmentation has a <strong>dual function: mixing AND propulsion</strong>. By creating asymmetric pressure pockets, it produces net aboral movement while simultaneously mixing chyme with digestive enzymes. It can also propagate over <strong>longer areas</strong> of intestine than peristalsis."
+},
+{
+  statement:'"Peristalsis is the dominant GI motility pattern throughout all phases of feeding."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Peristalsis dominates <strong>early feeding</strong>. As feeding continues, <strong>segmentation becomes the predominant pattern</strong> because it maximizes absorption by keeping chyme in contact with mucosal surfaces longer. Peristalsis moves food too quickly for optimal absorption."
+},
+{
+  statement:'"The internal anal sphincter (IAS) is under voluntary skeletal muscle control."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> The IAS is <strong>smooth muscle</strong> under <strong>involuntary (autonomic/ENS) control</strong>. It relaxes reflexively during the defecation reflex. The <strong>EAS</strong> (external anal sphincter) is skeletal muscle under voluntary pudendal nerve control — this is what allows conscious deferral. Hirschsprung disease impairs IAS relaxation (aganglionic)."
+},
+{
+  statement:'"Motilin is released in response to food entering the stomach, thereby initiating the MMC."',
+  answer:false,
+  exp:"<strong>FALSE.</strong> Motilin is released during the <strong>fasting (interdigestive) period</strong> and triggers the MMC 'housekeeper wave.' The MMC <strong>stops when food enters the stomach</strong>. Confusing motilin with meal-stimulated hormones (gastrin, CCK, secretin) is a high-yield Step 1 trap. Motilin receptor agonists (e.g., erythromycin) are sometimes used as prokinetics."
+}
+];
+
+/* ==========================================
+   FLASHCARD LOGIC
+   ========================================== */
+let fcSeen=new Set();
+function renderFlashcards(){
+  const c=document.getElementById('fc-container');
+  c.innerHTML='';
+  flashcards.forEach((card,i)=>{
+    const div=document.createElement('div');
+    div.className='fc';
+    div.innerHTML=`<div class="fc-inner">
+      <div class="fc-front">
+        <div class="fc-label">Card ${i+1} of ${flashcards.length}</div>
+        <div class="fc-q">${card.q}</div>
+        <div class="fc-flip-hint">↻ Click to reveal answer</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-a">${card.a}</div>
+        <div class="fc-flip-hint">↻ Click to flip back</div>
+      </div>
+    </div>`;
+    div.onclick=()=>{
+      div.classList.toggle('flipped');
+      fcSeen.add(i);
+      document.getElementById('fc-counter').textContent=fcSeen.size+' / '+flashcards.length+' seen';
+      setTimeout(fixCardHeights,300);
+    };
+    c.appendChild(div);
+  });
+  setTimeout(fixCardHeights,100);
+}
+
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(card=>{
+    const front=card.querySelector('.fc-front');
+    const back=card.querySelector('.fc-back');
+    const origBackPos=back.style.position;
+    const origBackTrans=back.style.transform;
+    const origBackVis=back.style.visibility;
+    const origBackBfv=back.style.backfaceVisibility;
+    back.style.cssText='position:relative!important;transform:none!important;visibility:visible!important;backface-visibility:visible!important';
+    const h=Math.max(front.scrollHeight,back.scrollHeight)+24;
+    back.style.cssText='';
+    const minH=h+'px';
+    card.style.minHeight=minH;
+    card.querySelector('.fc-inner').style.minHeight=minH;
+    front.style.minHeight=minH;
+    back.style.minHeight=minH;
+  });
+}
+
+/* ==========================================
+   FIB LOGIC
+   ========================================== */
+function renderFIB(){
+  const c=document.getElementById('fib-container');
+  c.innerHTML='';
+  fibs.forEach((f,i)=>{
+    const div=document.createElement('div');
+    div.className='fib-card';
+    div.innerHTML=`<div class="fib-num">Question ${i+1} of ${fibs.length}</div>
+      <div class="fib-prompt">${f.prompt}</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" id="fib-inp-${i}" placeholder="Your answer..." onkeydown="if(event.key==='Enter')checkFIB(${i})">
+        <button class="fib-btn" onclick="checkFIB(${i})">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFIB(${i})">Reveal</button>
+      </div>
+      <div class="fib-hint">${f.hint}</div>
+      <div class="fib-feedback" id="fib-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+}
+
+function checkFIB(i){
+  const inp=document.getElementById('fib-inp-'+i);
+  const fb=document.getElementById('fib-fb-'+i);
+  const val=inp.value.trim().toLowerCase();
+  const ok=fibs[i].answers.some(a=>val===a.toLowerCase()||val.includes(a.toLowerCase())||a.toLowerCase().includes(val)&&val.length>2);
+  inp.className='fib-input '+(ok?'correct':'incorrect');
+  fb.className='fib-feedback '+(ok?'correct':'incorrect');
+  fb.innerHTML=ok?'✓ Correct!':'✗ Not quite — correct: <strong>'+fibs[i].answers[0]+'</strong>';
+}
+
+function revealFIB(i){
+  const inp=document.getElementById('fib-inp-'+i);
+  const fb=document.getElementById('fib-fb-'+i);
+  inp.value=fibs[i].answers[0];
+  inp.className='fib-input correct';
+  fb.className='fib-feedback correct';
+  fb.innerHTML='Revealed: <strong>'+fibs[i].answers[0]+'</strong>';
+}
+
+/* ==========================================
+   ORDERING LOGIC
+   ========================================== */
+let dragged=null;
+
+function renderOrderings(){
+  const c=document.getElementById('ordering-container');
+  c.innerHTML='';
+  orderings.forEach((drill,di)=>{
+    const shuffled=[...Array(drill.steps.length).keys()];
+    shuffleArr(shuffled);
+    let items=shuffled.map(si=>`<div class="order-item" draggable="true" data-pos="${si}"
+      ondragstart="odStart(event)" ondragover="odOver(event)"
+      ondragleave="odLeave(event)" ondrop="odDrop(event)" ondragend="odEnd(event)">
+      <span class="item-grip">⠿</span>
+      <span class="item-text">${drill.steps[si]}</span>
+    </div>`).join('');
+    c.innerHTML+=`<div class="order-drill" id="od-${di}">
+      <div class="drill-title">${di+1}. ${drill.title}</div>
+      <div class="drill-hint">${drill.hint}</div>
+      <div class="order-list" id="olist-${di}">${items}</div>
+      <div class="order-actions">
+        <button class="order-check-btn" onclick="checkOrder(${di})">✓ Check Order</button>
+        <button class="order-ghost-btn" onclick="resetOrder(${di})">↺ Shuffle Again</button>
+        <button class="order-ghost-btn" onclick="toggleAnswer(${di})">Show/Hide Answer</button>
+      </div>
+      <div class="order-feedback" id="ofb-${di}" style="display:none"></div>
+      <div class="order-answer" id="oanswer-${di}"></div>
+    </div>`;
+  });
+}
+
+function odStart(e){dragged=e.currentTarget;e.dataTransfer.effectAllowed='move';setTimeout(()=>dragged&&dragged.classList.add('dragging'),0);}
+function odOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';const t=e.currentTarget;if(t!==dragged)t.classList.add('drag-over');return false;}
+function odLeave(e){e.currentTarget.classList.remove('drag-over');}
+function odEnd(e){if(dragged)dragged.classList.remove('dragging');dragged=null;}
+function odDrop(e){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;
+  target.classList.remove('drag-over');
+  if(dragged&&target!==dragged){
+    const parent=dragged.parentNode;
+    const allItems=[...parent.querySelectorAll('.order-item')];
+    const di=allItems.indexOf(dragged);
+    const ti=allItems.indexOf(target);
+    if(di<ti){parent.insertBefore(dragged,target.nextSibling);}
+    else{parent.insertBefore(dragged,target);}
+  }
+  return false;
+}
+
+function checkOrder(di){
+  const list=document.getElementById('olist-'+di);
+  const items=[...list.querySelectorAll('.order-item')];
+  let allOk=true;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx)item.classList.add('correct-pos');
+    else{item.classList.add('wrong-pos');allOk=false;}
+  });
+  const fb=document.getElementById('ofb-'+di);
+  fb.style.display='block';
+  fb.textContent=allOk?'✓ Perfect! All steps are in the correct order.':'✗ Some steps are out of order — check the highlighted items.';
+  fb.className='order-feedback '+(allOk?'correct':'incorrect');
+}
+
+function resetOrder(di){
+  const list=document.getElementById('olist-'+di);
+  const items=[...list.querySelectorAll('.order-item')];
+  items.forEach(item=>item.classList.remove('correct-pos','wrong-pos'));
+  shuffleArr(items);
+  items.forEach(item=>list.appendChild(item));
+  const fb=document.getElementById('ofb-'+di);
+  fb.style.display='none';
+}
+
+function toggleAnswer(di){
+  const ans=document.getElementById('oanswer-'+di);
+  if(ans.style.display==='block'){ans.style.display='none';return;}
+  const drill=orderings[di];
+  ans.innerHTML='<strong style="color:#4ADE80">Correct Order:</strong><ol style="padding-left:20px;margin-top:8px;line-height:1.9">'+drill.steps.map((s,i)=>`<li style="color:#9CA3AF"><span style="color:#4ADE80;font-weight:600">${i+1}.</span> ${s}</li>`).join('')+'</ol>';
+  ans.style.display='block';
+}
+
+/* ==========================================
+   MATCHING LOGIC
+   ========================================== */
+let matchState={};
+
+function renderMatching(){
+  const c=document.getElementById('matching-container');
+  c.innerHTML='';
+  matchSets.forEach((set,si)=>{
+    matchState[si]={sel:null,matched:{},score:0};
+    const ls=[...set.left];shuffleArr(ls);
+    const rs=[...set.right];shuffleArr(rs);
+    const lHTML=ls.map(item=>`<div class="match-item" id="${item.id}" onclick="matchClick(${si},'left','${item.id}')">${item.text}</div>`).join('');
+    const rHTML=rs.map(item=>`<div class="match-item" id="${item.id}" onclick="matchClick(${si},'right','${item.id}')">${item.text}</div>`).join('');
+    c.innerHTML+=`<div class="match-set" id="mset-${si}">
+      <div class="match-set-title">${si+1}. ${set.title}</div>
+      <div class="match-set-hint">${set.hint}</div>
+      <div class="match-cols">
+        <div><div class="match-col-label">Terms</div>${lHTML}</div>
+        <div><div class="match-col-label">Definitions / Locations</div>${rHTML}</div>
+      </div>
+      <div class="match-score">Matched: <span class="correct-count" id="mscore-${si}">0</span> / ${set.left.length}</div>
+      <button class="match-reset-btn" onclick="resetMatch(${si})">↺ Reset Set</button>
+    </div>`;
+  });
+}
+
+function matchClick(si,side,id){
+  const state=matchState[si];
+  const set=matchSets[si];
+  if(state.matched[id])return;
+  if(side==='left'){
+    if(state.sel){document.getElementById(state.sel).classList.remove('selected');}
+    if(state.sel===id){state.sel=null;return;}
+    state.sel=id;
+    document.getElementById(id).classList.add('selected');
+  } else {
+    if(!state.sel)return;
+    const leftId=state.sel;
+    const correctRight=set.pairs[leftId];
+    if(id===correctRight){
+      document.getElementById(leftId).classList.remove('selected');
+      document.getElementById(leftId).classList.add('matched-correct');
+      document.getElementById(id).classList.add('matched-correct');
+      state.matched[leftId]=true;state.matched[id]=true;
+      state.score++;
+      document.getElementById('mscore-'+si).textContent=state.score;
+    } else {
+      document.getElementById(id).classList.add('flash-wrong');
+      setTimeout(()=>document.getElementById(id).classList.remove('flash-wrong'),600);
+      document.getElementById(leftId).classList.remove('selected');
+    }
+    state.sel=null;
+  }
+}
+
+function resetMatch(si){
+  matchState[si]={sel:null,matched:{},score:0};
+  document.getElementById('mscore-'+si).textContent='0';
+  matchSets[si].left.concat(matchSets[si].right).forEach(item=>{
+    const el=document.getElementById(item.id);
+    if(el)el.className='match-item';
+  });
+}
+
+/* ==========================================
+   TEST TRAPS LOGIC
+   ========================================== */
+function renderTraps(){
+  const c=document.getElementById('traps-container');
+  c.innerHTML='';
+  traps.forEach((trap,i)=>{
+    const div=document.createElement('div');
+    div.className='trap-card';
+    div.innerHTML=`<div class="trap-num">Trap ${i+1} of ${traps.length}</div>
+      <div class="trap-statement">${trap.statement}</div>
+      <div class="trap-btns" id="tbtns-${i}">
+        <button class="trap-btn trap-btn-true" onclick="selectTrap(${i},true)">TRUE</button>
+        <button class="trap-btn trap-btn-false" onclick="selectTrap(${i},false)">FALSE</button>
+      </div>
+      <div class="trap-exp" id="trap-exp-${i}"></div>`;
+    c.appendChild(div);
+  });
+}
+
+function selectTrap(i,choice){
+  const trap=traps[i];
+  const btns=document.getElementById('tbtns-'+i).querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correct=(choice===trap.answer);
+  const chosenBtn=btns[choice===true?0:1];
+  chosenBtn.classList.add(correct?'sel-correct':'sel-wrong');
+  const exp=document.getElementById('trap-exp-'+i);
+  exp.innerHTML=trap.exp;
+  exp.className='trap-exp '+(correct?'show-c':'show-w');
+}
+
+/* ==========================================
+   REFERENCE TABLES
+   ========================================== */
+function renderRef(){
+  document.getElementById('ref-container').innerHTML=`
+<div class="ref-section">
+  <div class="ref-title">BER Frequency by GI Segment</div>
+  <table class="ref-table">
+    <thead><tr><th>GI Segment</th><th>BER Frequency</th><th>Clinical Significance</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Duodenum</td><td>~12/min</td><td>Drives the rate of duodenal contractions; highest in GI</td></tr>
+      <tr><td class="key">Jejunum</td><td>~10–12/min</td><td>Gradually decreasing aborally</td></tr>
+      <tr><td class="key">Ileum</td><td>~8/min</td><td>Slowest in small intestine</td></tr>
+      <tr><td class="key">Stomach (antrum)</td><td>~3–5/min</td><td>Sets maximal gastric emptying rate</td></tr>
+      <tr><td class="key">Colon</td><td>~2–6/min</td><td>Very slow; BER increases dramatically during mass movements</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Key point:</strong> BER sets the MAXIMUM possible contraction rate — whether APs actually occur depends on the balance of depolarizing vs hyperpolarizing inputs at that moment.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">GI Motility Patterns — Summary by Region</div>
+  <table class="ref-table">
+    <thead><tr><th>Region</th><th>Motility Types</th><th>Primary Control</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Esophagus</td><td>Primary peristalsis (swallowing-triggered), Secondary peristalsis (distension-triggered)</td><td>Primary: medulla → vagus; Secondary: ENS (myenteric plexus)</td></tr>
+      <tr><td class="key">Stomach</td><td>MMC (fasting), Receptive relaxation (feeding), Peristalsis (antrum)</td><td>Motilin → MMC; Vagus + VIP → receptive relaxation</td></tr>
+      <tr><td class="key">Small Intestine</td><td>Peristalsis (early feeding), Segmentation (throughout feeding), MMC (fasting)</td><td>Peristalsis: vagus + myenteric; Segmentation: ENS intrinsic</td></tr>
+      <tr><td class="key">Large Intestine</td><td>Haustration (storage + dehydration), Mass movements (3–4×/day)</td><td>Haustration: ENS; Mass movements: vagus + gastrin/CCK</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Depolarizing vs Hyperpolarizing Agents</div>
+  <table class="ref-table">
+    <thead><tr><th>Depolarizing → Contraction</th><th>Mechanism</th><th>Hyperpolarizing → Relaxation</th><th>Mechanism</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Acetylcholine (ACh)</td><td>M3 → Gq → PLC → IP₃ → Ca²⁺</td><td class="key" style="color:#EF9A9A">VIP</td><td>Gs → ↑cAMP → PKA → MLCP</td></tr>
+      <tr><td class="key">Gastrin</td><td>CCK-B receptor → smooth muscle</td><td class="key" style="color:#EF9A9A">Nitric oxide (NO)</td><td>Guanylyl cyclase → ↑cGMP → PKG → MLCP</td></tr>
+      <tr><td class="key">Serotonin (5-HT)</td><td>5-HT₃/₄ receptors → depolarization</td><td class="key" style="color:#EF9A9A">Sympathetic (NE)</td><td>α₂ adrenergic → ↓ACh release; β → ↑cAMP</td></tr>
+      <tr><td class="key">Substance P (tachykinin)</td><td>NK1 receptor → smooth muscle contraction</td><td colspan="2"></td></tr>
+      <tr><td class="key">Stretch / distension</td><td>Mechanoreceptors → ENS → ACh</td><td colspan="2"></td></tr>
+    </tbody>
+  </table>
+</div>`;
+}
+
+/* ==========================================
+   UTILITIES
+   ========================================== */
+function shuffleArr(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+/* ==========================================
+   INIT
+   ========================================== */
+window.onload=()=>{
+  renderFlashcards();
+  renderFIB();
+  renderOrderings();
+  renderMatching();
+  renderTraps();
+  renderRef();
+};
+
+/* ── THEME TOGGLE ── */
+
+</script>
+</body>
+</html>

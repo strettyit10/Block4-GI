@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI05 Bile Workshop — Hub #1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back-btn">← Active Drill Hub</a>
+  </div>
+</nav>
+<div class="container">
+  <a href="../active-recall-hub.html" class="back-link">← Active Recall Hub</a>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hub-tag">Hub 1 · Core Concepts</div>
+    <h1>GI05 — <span>Bile Workshop: Making a Micelle</span></h1>
+    <div class="subtitle">Unstirred water layer · bile synthesis · amphipathic structure · CCK · enterohepatic circulation · micelle formation · colipase · steatorrhea</div>
+    <div class="source-strip">
+      <span class="source-badge"><strong>Source:</strong> GI05 Lecture Guide</span>
+      <span class="source-badge"><strong>LOs:</strong> 1–4</span>
+      <span class="source-badge"><strong>HoyaDocs GI Block</strong></span>
+    </div>
+  </div>
+
+  <!-- HUB PROGRESS -->
+  <div class="hub-prog">
+    <span class="hub-prog-label">GI05 Progress:</span>
+    <span class="hub-step current">Hub 1 — Core Concepts</span>
+    <span class="hub-arrow">→</span>
+    <a href="gi05-hub2-bile-workshop.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+    <span class="hub-arrow">→</span>
+    <a href="gi05-hub3-bile-workshop.html" class="hub-step next">Hub 3 — Practice Questions</a>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">LOs Covered</div></div>
+    <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Flashcards</div></div>
+    <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering Drills</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Matching Sets</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+    <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+    <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+    <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+    <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+  </div>
+
+  <!-- ═══════════════ FLASHCARDS ═══════════════ -->
+  <div class="tab-pane active" id="tab-flashcards">
+    <span class="section-label">LO 1 — The Unstirred Water Layer</span>
+    <div class="fc-progress"><span>Click any card to flip · <span class="prog-num">16</span> cards total</span></div>
+    <div class="fc-grid">
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 1 · UWL</div><div class="fc-q">What is the unstirred water layer (UWL) and what creates it?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">The UWL is an aqueous zone immediately adjacent to the brush border of enterocytes. It forms because <strong>laminar flow</strong> near the gut wall is slow, and <strong>mucus + HCO₃⁻</strong> secreted by goblet cells creates a stagnant water layer that chyme cannot penetrate by bulk flow.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 1 · UWL</div><div class="fc-q">Why can't dietary lipids cross the UWL on their own?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Lipids are <strong>hydrophobic</strong> — they aggregate into large fat droplets in the aqueous lumen. These droplets cannot diffuse through the aqueous UWL. They need an amphipathic carrier (bile/micelles) to transport them to the enterocyte surface.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 1 · Bile Role</div><div class="fc-q">What is the "lipid taxi" concept and who is the driver?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile forms <strong>micelles</strong> — spherical amphipathic aggregates with a <strong>hydrophobic core</strong> (holds dietary lipids) and a <strong>hydrophilic exterior</strong> (faces the aqueous UWL). The micelle is the "taxi"; bile is the driver — it carries lipids through water to the enterocyte.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 1 · Classic Trap</div><div class="fc-q">Does bile digest lipids? Explain.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>NO.</strong> Bile does NOT digest lipids. Digestion (hydrolysis of triglycerides) is performed by <strong>pancreatic lipase</strong>. Bile <em>emulsifies</em> fat droplets (↑ surface area) and <em>forms micelles</em> to transport lipids — but never chemically breaks them down.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 2 · Synthesis</div><div class="fc-q">Where is bile synthesized and from what backbone?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile is synthesized exclusively in <strong>hepatocytes</strong> from a <strong>cholesterol backbone</strong>. The rate-limiting enzyme for cholesterol synthesis is <strong>HMG-CoA reductase</strong> — the target of statins. Bile also contains phospholipids, metabolic waste, and bilirubin.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 2 · Structure</div><div class="fc-q">What makes primary bile amphipathic? Name the two types.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Conjugation with an amino acid adds a <strong>hydrophilic head</strong> to the lipophilic cholesterol backbone:<br>• <strong>Glycine</strong> → glycocholic acid<br>• <strong>Taurine</strong> → taurocholic acid<br>Result: amphipathic molecule — one end loves fat, one end loves water.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 2 · Primary vs Secondary</div><div class="fc-q">Distinguish primary vs secondary bile acids.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Primary bile:</strong> made by hepatocytes; amphipathic; forms micelles in small intestine (e.g., cholic acid, chenodeoxycholic acid).<br><strong>Secondary bile:</strong> primary bile deconjugated by colonic bacteria → mostly lipophilic; found in colon; <em>cannot</em> form micelles. (e.g., deoxycholic acid, lithocholic acid)</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 2 · Bilirubin</div><div class="fc-q">Trace bilirubin from RBC destruction to stool color.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Heme from RBC → <strong>unconjugated bilirubin</strong> (water-insoluble, albumin-bound) → liver conjugates with glucuronic acid → <strong>conjugated bilirubin</strong> (water-soluble) → secreted into bile → gut bacteria → <strong>urobilinogen</strong> (some excreted in urine) → <strong>stercobilin</strong> (brown stool color).</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 3 · CCK</div><div class="fc-q">What triggers CCK release and what are its 3 biliary effects?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Trigger:</strong> fat + protein in duodenum → I-cells release CCK.<br><strong>3 biliary effects:</strong><br>1. ↑ bile production by hepatocytes<br>2. Gallbladder contraction (releases stored bile)<br>3. Relaxation of the sphincter of Oddi (bile flows into duodenum)</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 3 · Enterohepatic</div><div class="fc-q">Describe enterohepatic circulation — where, how, and how much is recycled?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">After micelle delivery, bile remains in the lumen → travels to <strong>terminal ileum</strong> → actively reabsorbed via <strong>ASBT transporter</strong> → portal circulation → liver reuses it. The body recycles bile <strong>6–10×/day</strong>; only <strong>~10%</strong> is lost in feces per cycle.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 3 · Gallstones</div><div class="fc-q">What are the 3 types of gallstones, their composition, and radiology?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cholesterol</strong> (~80%): crystallized cholesterol; <em>radiolucent</em> on X-ray; 5 F's risk factors.<br><strong>Black pigment:</strong> calcium bilirubinate; <em>radiopaque</em>; chronic hemolysis (sickle cell).<br><strong>Brown pigment:</strong> bilirubinate + bacteria; <em>radiopaque</em>; biliary infection (E. coli).</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 4 · Micelle</div><div class="fc-q">Describe micelle structure and what lipid cargo it carries.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Micelle = spherical aggregate of primary bile molecules:<br>• <strong>Lipophilic ends face inward</strong> → surround and trap lipid cargo<br>• <strong>Hydrophilic ends face outward</strong> → interact with the aqueous UWL<br><strong>Cargo:</strong> free fatty acids, monoglycerides, fat-soluble vitamins (A,D,E,K), cholesterol.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 4 · Colipase</div><div class="fc-q">Why is colipase needed? How is it activated?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Bile's hydrophilic shell <strong>blocks pancreatic lipase</strong> from accessing the lipid core. Colipase binds the hydrophilic ends of bile, creating a "door" for lipase.<br><strong>Activation:</strong> pancreas secretes <em>pro-colipase</em> → trypsin cleaves it → active <strong>colipase</strong>.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 4 · Lipase Products</div><div class="fc-q">What does pancreatic lipase produce and where do the products go?</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Pancreatic lipase hydrolyzes triglycerides → <strong>2 free fatty acids + 1 monoglyceride</strong>. These diffuse passively off the micelle into the enterocyte (they are lipophilic). Inside the enterocyte: re-esterified → <strong>chylomicrons</strong> → lacteals (lymph) → thoracic duct → bloodstream.</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 4 · Steatorrhea</div><div class="fc-q">Define steatorrhea and list 4 causes.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Steatorrhea:</strong> excess fat in stool (>7 g/day); greasy, foul-smelling, floating, hard to flush.<br><strong>4 causes:</strong> ↓ bile (liver failure, obstruction), ↓ pancreatic lipase (CF, chronic pancreatitis), acid inactivation (ZES), terminal ileum resection (↓ bile reabsorption → depleted pool).</div></div>
+        </div>
+      </div>
+
+      <div class="fc" onclick="flipCard(this)">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">LO 4 · Fat Vitamins</div><div class="fc-q">Name the deficiencies from fat malabsorption — one clue per vitamin.</div><div class="fc-flip-hint">Tap to reveal →</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Vitamin A:</strong> night blindness → xerophthalmia.<br><strong>Vitamin D:</strong> rickets (children) / osteomalacia (adults).<br><strong>Vitamin E:</strong> hemolytic anemia, ataxia, peripheral neuropathy.<br><strong>Vitamin K:</strong> bleeding (↓ II, VII, IX, X, Protein C/S) → ↑ PT/INR.</div></div>
+        </div>
+      </div>
+
+    </div><!-- /fc-grid -->
+  </div>
+
+  <!-- ═══════════════ FILL-IN-BLANK ═══════════════ -->
+  <div class="tab-pane" id="tab-fib">
+    <span class="section-label">Complete each statement</span>
+    <div class="fib-list">
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 1 · LO 1</div>
+        <div class="fib-prompt">The aqueous zone immediately adjacent to the enterocyte brush border, created by slow laminar flow and mucus secretion, is called the ___________.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="your answer…" data-answer="unstirred water layer">
+          <button class="fib-btn" onclick="checkFib(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 2 · LO 1</div>
+        <div class="fib-prompt">Bile does NOT digest lipids — that job belongs to ___________. Bile's roles are emulsification and micelle formation.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="your answer…" data-answer="pancreatic lipase">
+          <button class="fib-btn" onclick="checkFib(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 3 · LO 2</div>
+        <div class="fib-prompt">Bile is synthesized exclusively in ___________ from a cholesterol backbone. The rate-limiting enzyme for cholesterol synthesis — and the target of statins — is ___________.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="cell type…" data-answer="hepatocytes">
+          <input class="fib-input" type="text" placeholder="enzyme…" data-answer="hmg-coa reductase" style="margin-left:8px">
+          <button class="fib-btn" onclick="checkFib2(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib2(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 4 · LO 2</div>
+        <div class="fib-prompt">Conjugation of the cholesterol backbone with ___________ produces glycocholic acid; conjugation with ___________ produces taurocholic acid. Both are ___________.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="amino acid 1…" data-answer="glycine">
+          <input class="fib-input" type="text" placeholder="amino acid 2…" data-answer="taurine" style="margin-left:8px">
+          <input class="fib-input" type="text" placeholder="property…" data-answer="amphipathic" style="margin-left:8px">
+          <button class="fib-btn" onclick="checkFib3(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib3(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 5 · LO 2</div>
+        <div class="fib-prompt">Secondary bile acids are formed when colonic bacteria ___________ primary bile, stripping the hydrophilic amino acid. Secondary bile is predominantly ___________ and cannot form micelles.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="process…" data-answer="deconjugate">
+          <button class="fib-btn" onclick="checkFib(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+        </div>
+        <div class="fib-hint">Hint: the answer for blank 2 is "lipophilic."</div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 6 · LO 3</div>
+        <div class="fib-prompt">When fat and protein enter the duodenum, ___________ cells release CCK. CCK causes gallbladder ___________ and ___________ of the sphincter of Oddi.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="cell type…" data-answer="i">
+          <input class="fib-input" type="text" placeholder="effect on GB…" data-answer="contraction" style="margin-left:8px">
+          <input class="fib-input" type="text" placeholder="effect on sphincter…" data-answer="relaxation" style="margin-left:8px">
+          <button class="fib-btn" onclick="checkFib3(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib3(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 7 · LO 3</div>
+        <div class="fib-prompt">Primary bile is actively reabsorbed in the ___________ via the ___________ transporter, then returns to the liver via the portal circulation — a process called enterohepatic circulation.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="location…" data-answer="terminal ileum">
+          <button class="fib-btn" onclick="checkFib(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+        </div>
+        <div class="fib-hint">Hint: transporter = ASBT (apical sodium-dependent bile acid transporter).</div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 8 · LO 3</div>
+        <div class="fib-prompt">The most common type of gallstone (~80%) is the ___________ stone, which is ___________ on plain X-ray (best seen on ultrasound). Risk factors include the 5 F's: Fat, Female, ___________, Forty, Fair.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="stone type…" data-answer="cholesterol">
+          <button class="fib-btn" onclick="checkFib(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+        </div>
+        <div class="fib-hint">Hint: blank 2 = "radiolucent"; blank 3 = "Fertile."</div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 9 · LO 4</div>
+        <div class="fib-prompt">In a micelle, the ___________ ends of bile face outward (toward the aqueous UWL) and the ___________ ends face inward (surrounding the lipid cargo).</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="outward-facing…" data-answer="hydrophilic">
+          <input class="fib-input" type="text" placeholder="inward-facing…" data-answer="lipophilic" style="margin-left:8px">
+          <button class="fib-btn" onclick="checkFib2(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib2(this)">Reveal</button>
+        </div>
+        <div class="fib-feedback"></div>
+      </div>
+
+      <div class="fib-card">
+        <div class="fib-num">FIB 10 · LO 4</div>
+        <div class="fib-prompt">Pancreatic lipase digests triglycerides into ___________ + ___________. These products are packaged into chylomicrons inside the enterocyte, then enter ___________ (lymphatics) for transport to the bloodstream.</div>
+        <div class="fib-row">
+          <input class="fib-input" type="text" placeholder="product 1…" data-answer="free fatty acids">
+          <input class="fib-input" type="text" placeholder="product 2…" data-answer="monoglycerides" style="margin-left:8px">
+          <button class="fib-btn" onclick="checkFib2(this)">Check</button>
+          <button class="fib-reveal-btn" onclick="revealFib2(this)">Reveal</button>
+        </div>
+        <div class="fib-hint">Hint: lymphatics = lacteals → thoracic duct.</div>
+        <div class="fib-feedback"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ ORDERING ═══════════════ -->
+  <div class="tab-pane" id="tab-ordering">
+    <div class="ordering-intro">
+      <strong>Drag-and-drop</strong> the steps into the correct order, then click <strong>Check Order</strong>. Click <strong>Reset</strong> to try again.
+    </div>
+
+    <!-- DRILL 1: Lipid Absorption Sequence -->
+    <div class="order-drill">
+      <div class="drill-title">Sequence 1 — The Full Lipid Absorption Cascade</div>
+      <div class="drill-subtitle">Order these 8 steps from fat entering the mouth to entering circulation</div>
+      <ul class="drag-list" id="order1" data-correct='["Lingual/gastric lipase begin minor lipid digestion in stomach","Fat enters duodenum → CCK released from I-cells","CCK: gallbladder contracts + sphincter of Oddi relaxes → bile flows in","Bile emulsifies fat globules → ↑ surface area for lipase","Bile forms micelles (hydrophilic shell, lipid core)","Trypsin activates pro-colipase → colipase opens micelle → lipase digests TG","Fatty acids + monoglycerides diffuse into enterocyte","Re-esterified into TG → chylomicrons → lacteals → thoracic duct → blood"]'>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Bile emulsifies fat globules → ↑ surface area for lipase</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Re-esterified into TG → chylomicrons → lacteals → thoracic duct → blood</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Fat enters duodenum → CCK released from I-cells</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Fatty acids + monoglycerides diffuse into enterocyte</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Lingual/gastric lipase begin minor lipid digestion in stomach</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Trypsin activates pro-colipase → colipase opens micelle → lipase digests TG</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Bile forms micelles (hydrophilic shell, lipid core)</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>CCK: gallbladder contracts + sphincter of Oddi relaxes → bile flows in</li>
+      </ul>
+      <div class="drill-actions">
+        <button class="check-btn" onclick="checkOrder('order1')">Check Order</button>
+        <button class="reset-btn" onclick="resetOrder('order1')">Reset</button>
+      </div>
+      <div class="order-feedback" id="order1-feedback"></div>
+    </div>
+
+    <!-- DRILL 2: Bile Synthesis to Micelle -->
+    <div class="order-drill">
+      <div class="drill-title">Sequence 2 — From Cholesterol to a Working Micelle</div>
+      <div class="drill-subtitle">Order these 6 steps in the bile synthesis and assembly pathway</div>
+      <ul class="drag-list" id="order2" data-correct='["HMG-CoA reductase synthesizes cholesterol in hepatocytes","Cholesterol conjugated with glycine/taurine → amphipathic primary bile acid","Bile stored and concentrated in gallbladder between meals","CCK triggers gallbladder contraction → bile secreted into duodenum","Primary bile emulsifies fat globules (↑ surface area)","Primary bile molecules arrange into micelles around lipid fragments"]'>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Primary bile molecules arrange into micelles around lipid fragments</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>CCK triggers gallbladder contraction → bile secreted into duodenum</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>HMG-CoA reductase synthesizes cholesterol in hepatocytes</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Primary bile emulsifies fat globules (↑ surface area)</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Cholesterol conjugated with glycine/taurine → amphipathic primary bile acid</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Bile stored and concentrated in gallbladder between meals</li>
+      </ul>
+      <div class="drill-actions">
+        <button class="check-btn" onclick="checkOrder('order2')">Check Order</button>
+        <button class="reset-btn" onclick="resetOrder('order2')">Reset</button>
+      </div>
+      <div class="order-feedback" id="order2-feedback"></div>
+    </div>
+
+    <!-- DRILL 3: Enterohepatic Circulation -->
+    <div class="order-drill">
+      <div class="drill-title">Sequence 3 — Enterohepatic Circulation Loop</div>
+      <div class="drill-subtitle">Order these 5 steps in the bile recycling pathway</div>
+      <ul class="drag-list" id="order3" data-correct='["Bile secreted into duodenum → forms micelles → carries lipids","Lipids diffuse off micelle into enterocyte; bile remains in lumen","Bile travels to terminal ileum","Active reabsorption via ASBT transporter → enters portal circulation","Returns to liver → reused; liver replaces ~10% lost in feces"]'>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Active reabsorption via ASBT transporter → enters portal circulation</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Bile secreted into duodenum → forms micelles → carries lipids</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Returns to liver → reused; liver replaces ~10% lost in feces</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Bile travels to terminal ileum</li>
+        <li class="drag-item" draggable="true"><span class="drag-handle">⠿</span>Lipids diffuse off micelle into enterocyte; bile remains in lumen</li>
+      </ul>
+      <div class="drill-actions">
+        <button class="check-btn" onclick="checkOrder('order3')">Check Order</button>
+        <button class="reset-btn" onclick="resetOrder('order3')">Reset</button>
+      </div>
+      <div class="order-feedback" id="order3-feedback"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MATCHING ═══════════════ -->
+  <div class="tab-pane" id="tab-matching">
+    <div class="match-intro">
+      <strong>Click a term on the left</strong>, then click its matching definition on the right. Correct pairs turn green; wrong pairs flash red. Complete all pairs to win!
+    </div>
+
+    <!-- MATCH 1: Bile Components & Functions -->
+    <div class="match-game">
+      <div class="match-title">Match 1 — Bile Components & Roles</div>
+      <div class="match-subtitle">6 pairs — match each component to its primary function</div>
+      <div class="match-cols">
+        <div>
+          <div class="match-col-label">Component</div>
+          <div class="match-items" id="match1-left">
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match1')">Cholesterol backbone</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match1')">Glycine conjugation</div>
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match1')">Conjugated bilirubin</div>
+            <div class="match-item" data-id="d" onclick="selectMatch(this,'match1')">HCO₃⁻ in bile</div>
+            <div class="match-item" data-id="e" onclick="selectMatch(this,'match1')">Secondary bile acids</div>
+            <div class="match-item" data-id="f" onclick="selectMatch(this,'match1')">Colipase</div>
+          </div>
+        </div>
+        <div>
+          <div class="match-col-label">Function / Description</div>
+          <div class="match-items" id="match1-right">
+            <div class="match-item" data-id="d" onclick="selectMatch(this,'match1')">Alkaline buffer — neutralizes acid chyme in duodenum</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match1')">Adds hydrophilic head → creates glycocholic acid</div>
+            <div class="match-item" data-id="f" onclick="selectMatch(this,'match1')">Binds hydrophilic shell of micelle → opens door for lipase</div>
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match1')">Lipophilic core of primary bile — derived from cholesterol synthesis</div>
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match1')">Water-soluble waste secreted into bile; gives stool brown color via stercobilin</div>
+            <div class="match-item" data-id="e" onclick="selectMatch(this,'match1')">Deconjugated by colonic bacteria; mostly lipophilic; cannot form micelles</div>
+          </div>
+        </div>
+      </div>
+      <div class="match-actions">
+        <button class="reset-btn" onclick="resetMatch('match1')">Reset</button>
+        <span class="match-score">Score: <span id="match1-score">0</span> / 6</span>
+      </div>
+    </div>
+
+    <!-- MATCH 2: Gallstone Types -->
+    <div class="match-game">
+      <div class="match-title">Match 2 — Gallstone Types & Associations</div>
+      <div class="match-subtitle">3 pairs — match each stone type to its key association</div>
+      <div class="match-cols">
+        <div>
+          <div class="match-col-label">Stone Type</div>
+          <div class="match-items" id="match2-left">
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match2')">Cholesterol stone</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match2')">Black pigment stone</div>
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match2')">Brown pigment stone</div>
+          </div>
+        </div>
+        <div>
+          <div class="match-col-label">Key Association</div>
+          <div class="match-items" id="match2-right">
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match2')">Biliary tract infection (E. coli); radiopaque</div>
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match2')">5 F's; radiolucent; ~80% of all stones</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match2')">Chronic hemolysis (sickle cell, thalassemia); radiopaque</div>
+          </div>
+        </div>
+      </div>
+      <div class="match-actions">
+        <button class="reset-btn" onclick="resetMatch('match2')">Reset</button>
+        <span class="match-score">Score: <span id="match2-score">0</span> / 3</span>
+      </div>
+    </div>
+
+    <!-- MATCH 3: Fat Malabsorption Causes -->
+    <div class="match-game">
+      <div class="match-title">Match 3 — Causes of Steatorrhea</div>
+      <div class="match-subtitle">5 pairs — match each disease to its mechanism of fat malabsorption</div>
+      <div class="match-cols">
+        <div>
+          <div class="match-col-label">Disease/Condition</div>
+          <div class="match-items" id="match3-left">
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match3')">Zollinger-Ellison syndrome</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match3')">Terminal ileum resection</div>
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match3')">Cystic fibrosis</div>
+            <div class="match-item" data-id="d" onclick="selectMatch(this,'match3')">Abetalipoproteinemia</div>
+            <div class="match-item" data-id="e" onclick="selectMatch(this,'match3')">Primary biliary cholangitis</div>
+          </div>
+        </div>
+        <div>
+          <div class="match-col-label">Mechanism</div>
+          <div class="match-items" id="match3-right">
+            <div class="match-item" data-id="c" onclick="selectMatch(this,'match3')">Pancreatic duct obstruction → absent lipase → undigested TG</div>
+            <div class="match-item" data-id="e" onclick="selectMatch(this,'match3')">Autoimmune destruction of intrahepatic bile ducts → ↓ bile delivery</div>
+            <div class="match-item" data-id="a" onclick="selectMatch(this,'match3')">↑↑ Acid inactivates bile salts and pancreatic lipase</div>
+            <div class="match-item" data-id="d" onclick="selectMatch(this,'match3')">Absent MTP → enterocytes absorb lipids but cannot form chylomicrons</div>
+            <div class="match-item" data-id="b" onclick="selectMatch(this,'match3')">Bile acid malabsorption → depleted bile pool → ↓ micelle formation</div>
+          </div>
+        </div>
+      </div>
+      <div class="match-actions">
+        <button class="reset-btn" onclick="resetMatch('match3')">Reset</button>
+        <span class="match-score">Score: <span id="match3-score">0</span> / 5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TEST TRAPS ═══════════════ -->
+  <div class="tab-pane" id="tab-traps">
+    <div class="trap-intro">
+      <strong>True or False?</strong> These statements target the most common exam misconceptions on bile physiology. Select your answer to see the explanation.
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 1 · LO 1</div>
+      <div class="trap-statement">"Bile digests dietary fat by breaking down triglycerides into fatty acids and glycerol."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> Bile does NOT digest fat. Digestion (hydrolysis of triglycerides) is performed by <strong>pancreatic lipase</strong>. Bile emulsifies fat droplets (increases surface area) and forms micelles to transport lipids through the UWL — but it has no enzymatic activity on lipids.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 2 · LO 2</div>
+      <div class="trap-statement">"Secondary bile acids are amphipathic and can form micelles in the colon."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> Secondary bile acids are formed when gut bacteria <em>deconjugate</em> primary bile in the colon — stripping the hydrophilic amino acid. Without the hydrophilic head, secondary bile is predominantly <strong>lipophilic</strong> and <em>cannot</em> form micelles. Only primary bile (in the small intestine) forms micelles.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 3 · LO 2</div>
+      <div class="trap-statement">"Statins reduce bile synthesis because HMG-CoA reductase directly synthesizes bile acids."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE (nuance).</strong> HMG-CoA reductase synthesizes <em>cholesterol</em>, which is the backbone for bile acids. Statins indirectly reduce bile acid synthesis by lowering cholesterol availability. The direct rate-limiting step for bile acid synthesis FROM cholesterol is cholesterol 7α-hydroxylase — not HMG-CoA reductase.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 4 · LO 3</div>
+      <div class="trap-statement">"CCK causes contraction of the sphincter of Oddi to increase bile pressure in the gallbladder."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> CCK causes <strong>relaxation</strong> of the sphincter of Oddi — not contraction. Relaxation allows bile to flow freely from the common bile duct into the duodenum. Simultaneously, CCK causes gallbladder contraction to push stored bile out. Sphincter of Oddi <em>contraction</em> would obstruct bile flow.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 5 · LO 3</div>
+      <div class="trap-statement">"After delivering lipids to enterocytes, bile molecules are absorbed along with the fatty acids into the enterocyte."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> Bile molecules stay in the intestinal lumen after delivering their lipid cargo. They travel down to the <strong>terminal ileum</strong>, where they are actively reabsorbed via the ASBT transporter into the portal circulation — not into enterocytes with the lipids. This is enterohepatic circulation.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 6 · LO 3</div>
+      <div class="trap-statement">"Cholesterol gallstones are radiopaque and easily visible on plain abdominal X-ray."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> Cholesterol stones are <strong>radiolucent</strong> — pure cholesterol does not absorb X-rays well. They are <em>not</em> visible on plain X-ray and are best detected by <strong>ultrasound</strong> (echogenic foci with posterior acoustic shadowing). It is <em>pigment stones</em> (black and brown) that are radiopaque.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 7 · LO 4</div>
+      <div class="trap-statement">"Colipase is needed because pancreatic lipase cannot work in the presence of bile at all."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE (nuance).</strong> Pancreatic lipase can work in the absence of bile (e.g., in the stomach where lingual/gastric lipase acts). However, when bile is present and forming micelles, the hydrophilic shell blocks lipase access. Colipase overcomes this <em>bile-specific</em> inhibition — it's not that lipase can never work without colipase.</div>
+    </div>
+
+    <div class="trap-card">
+      <div class="trap-num">Trap 8 · LO 4</div>
+      <div class="trap-statement">"In Zollinger-Ellison syndrome, steatorrhea occurs because gastrin directly inhibits bile synthesis in the liver."</div>
+      <div class="trap-btns">
+        <button class="trap-btn true-btn" onclick="answerTrap(this,false)">TRUE</button>
+        <button class="trap-btn false-btn" onclick="answerTrap(this,true)">FALSE</button>
+      </div>
+      <div class="trap-explanation"><strong>FALSE.</strong> Gastrin does not directly inhibit bile synthesis. In ZES, the gastrinoma produces massive amounts of gastrin → ↑↑ acid secretion → the duodenal pH drops so low that it <strong>inactivates bile salts and pancreatic lipase</strong> (both require pH ~6–7). Steatorrhea results from acid inactivation, not from any direct effect on bile synthesis.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ REFERENCE ═══════════════ -->
+  <div class="tab-pane" id="tab-reference">
+
+    <div class="ref-section">
+      <h3>LO Summary — GI05 Bile Workshop</h3>
+      <table>
+        <thead><tr><th>LO</th><th>Core Concept</th><th>Key Fact</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Unstirred Water Layer (UWL)</td><td>Aqueous barrier from laminar flow + mucus; lipids (hydrophobic) need micelles to cross</td></tr>
+          <tr><td><strong>2</strong></td><td>Bile Synthesis & Structure</td><td>Hepatocytes synthesize from cholesterol; conjugated with glycine/taurine → amphipathic; primary bile forms micelles; secondary bile does not</td></tr>
+          <tr><td><strong>3</strong></td><td>Secretion, Regulation & Recycling</td><td>CCK (I-cells) → gallbladder contraction + sphincter of Oddi relaxation; enterohepatic circulation via terminal ileum ASBT; ~10% lost/cycle</td></tr>
+          <tr><td><strong>4</strong></td><td>Micelle Formation & Fat Malabsorption</td><td>Hydrophilic shell outward; colipase (activated by trypsin) opens door for lipase; TG → 2 FA + 1 MG → chylomicrons; steatorrhea → fat-soluble vitamin deficiency</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-section">
+      <h3>Gallstone Quick Reference</h3>
+      <table>
+        <thead><tr><th>Type</th><th>Composition</th><th>Risk Factors</th><th>X-Ray</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cholesterol (~80%)</strong></td><td>Crystallized cholesterol</td><td>5 F's: Fat, Female, Fertile, Forty, Fair; OCP, pregnancy, rapid weight loss</td><td>Radiolucent</td></tr>
+          <tr><td><strong>Black pigment</strong></td><td>Calcium bilirubinate</td><td>Chronic hemolysis (sickle cell, hereditary spherocytosis, thalassemia), cirrhosis</td><td>Radiopaque</td></tr>
+          <tr><td><strong>Brown pigment</strong></td><td>Bilirubinate + cholesterol + bacteria</td><td>Biliary infection (E. coli, Clonorchis sinensis)</td><td>Radiopaque</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-section">
+      <h3>Causes of Steatorrhea — Step 1 Framework</h3>
+      <table>
+        <thead><tr><th>Mechanism</th><th>Example</th><th>Key Fact</th></tr></thead>
+        <tbody>
+          <tr><td>↓ Bile production</td><td>Liver failure, PBC, PSC</td><td>No bile → no micelles</td></tr>
+          <tr><td>Bile duct obstruction</td><td>Gallstones, pancreatic cancer</td><td>Pale/clay-colored stools</td></tr>
+          <tr><td>↓ Bile reabsorption</td><td>Terminal ileum resection (Crohn's)</td><td>Bile acid diarrhea + steatorrhea</td></tr>
+          <tr><td>↓ Pancreatic lipase</td><td>CF, chronic pancreatitis</td><td>Undigested TG in stool</td></tr>
+          <tr><td>Acid inactivation</td><td>Zollinger-Ellison syndrome</td><td>↑↑ Acid inactivates bile + lipase</td></tr>
+          <tr><td>Mucosal damage</td><td>Celiac disease, Whipple disease</td><td>Enterocytes can't absorb</td></tr>
+          <tr><td>↓ Chylomicron assembly</td><td>Abetalipoproteinemia</td><td>Absent MTP → fat stuck in enterocytes; acanthocytes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-section">
+      <h3>Fat-Soluble Vitamin Deficiencies</h3>
+      <table>
+        <thead><tr><th>Vitamin</th><th>Deficiency Manifestations</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>Night blindness → xerophthalmia (dry eyes, corneal ulcers)</td></tr>
+          <tr><td><strong>D</strong></td><td>Rickets (children) / Osteomalacia (adults) / Osteoporosis; ↓ Ca²⁺ absorption</td></tr>
+          <tr><td><strong>E</strong></td><td>Hemolytic anemia, ataxia, peripheral neuropathy (spinocerebellar degeneration)</td></tr>
+          <tr><td><strong>K</strong></td><td>Bleeding: ↓ factors II, VII, IX, X, Protein C/S → ↑ PT/INR; ecchymoses</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ── TAB SWITCHING ── */
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+/* ── FIB (single blank) ── */
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const input=card.querySelector('.fib-input');
+  const ans=input.dataset.answer.toLowerCase().trim();
+  const val=input.value.toLowerCase().trim();
+  const fb=card.querySelector('.fib-feedback');
+  if(!val){fb.className='fib-feedback incorrect';fb.textContent='Please enter an answer.';return;}
+  const ok=val===ans||ans.split(',').some(a=>val===a.trim())||levenshtein(val,ans)<=2;
+  input.className='fib-input '+(ok?'correct':'incorrect');
+  fb.className='fib-feedback '+(ok?'correct':'incorrect');
+  fb.textContent=ok?'✓ Correct! Answer: '+input.dataset.answer:'✗ Not quite. Answer: '+input.dataset.answer;
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const input=card.querySelector('.fib-input');
+  input.value=input.dataset.answer;
+  input.className='fib-input correct';
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';
+  fb.textContent='Answer revealed: '+input.dataset.answer;
+}
+/* ── FIB (two blanks) ── */
+function checkFib2(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allOk=true;
+  inputs.forEach(input=>{
+    const ans=input.dataset.answer.toLowerCase().trim();
+    const val=input.value.toLowerCase().trim();
+    const ok=val===ans||ans.split(',').some(a=>val===a.trim())||levenshtein(val,ans)<=2;
+    input.className='fib-input '+(ok?'correct':'incorrect');
+    if(!ok)allOk=false;
+  });
+  fb.className='fib-feedback '+(allOk?'correct':'incorrect');
+  fb.textContent=allOk?'✓ Both correct!':'✗ Check your answers — correct answers shown in red fields.';
+  if(!allOk)inputs.forEach(i=>{if(i.classList.contains('incorrect'))i.placeholder=i.dataset.answer;});
+}
+function revealFib2(btn){
+  const card=btn.closest('.fib-card');
+  card.querySelectorAll('.fib-input').forEach(i=>{i.value=i.dataset.answer;i.className='fib-input correct';});
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answers revealed.';
+}
+/* ── FIB (three blanks) ── */
+function checkFib3(btn){checkFib2(btn);}
+function revealFib3(btn){revealFib2(btn);}
+
+function levenshtein(a,b){
+  const m=a.length,n=b.length;const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
+  return d[m][n];
+}
+
+/* ── DRAG-AND-DROP ORDERING ── */
+let dragSrc=null;
+document.querySelectorAll('.drag-list').forEach(list=>{
+  list.addEventListener('dragstart',e=>{
+    dragSrc=e.target.closest('.drag-item');
+    if(dragSrc)dragSrc.classList.add('dragging');
+  });
+  list.addEventListener('dragover',e=>{
+    e.preventDefault();
+    const target=e.target.closest('.drag-item');
+    if(target&&target!==dragSrc){target.classList.add('drag-over');}
+  });
+  list.addEventListener('dragleave',e=>{
+    const target=e.target.closest('.drag-item');
+    if(target)target.classList.remove('drag-over');
+  });
+  list.addEventListener('drop',e=>{
+    e.preventDefault();
+    const target=e.target.closest('.drag-item');
+    if(target&&target!==dragSrc&&dragSrc){
+      const allItems=[...list.querySelectorAll('.drag-item')];
+      const si=allItems.indexOf(dragSrc),ti=allItems.indexOf(target);
+      if(si<ti)target.after(dragSrc);else target.before(dragSrc);
+      target.classList.remove('drag-over');
+    }
+  });
+  list.addEventListener('dragend',e=>{
+    document.querySelectorAll('.drag-item').forEach(i=>i.classList.remove('dragging','drag-over'));
+    dragSrc=null;
+  });
+});
+
+function checkOrder(listId){
+  const list=document.getElementById(listId);
+  const correct=JSON.parse(list.dataset.correct);
+  const items=[...list.querySelectorAll('.drag-item')];
+  const texts=items.map(i=>i.textContent.replace('⠿','').trim());
+  let allOk=true;
+  items.forEach((item,i)=>{
+    const ok=texts[i]===correct[i];
+    item.classList.remove('order-correct','order-wrong');
+    item.classList.add(ok?'order-correct':'order-wrong');
+    if(!ok)allOk=false;
+  });
+  const fb=document.getElementById(listId+'-feedback');
+  fb.className='order-feedback '+(allOk?'correct':'incorrect');
+  fb.textContent=allOk?'✓ Perfect order!':'✗ Not quite — correct positions highlighted. Check the red items.';
+}
+function resetOrder(listId){
+  const list=document.getElementById(listId);
+  const items=[...list.querySelectorAll('.drag-item')];
+  items.forEach(i=>i.classList.remove('order-correct','order-wrong'));
+  for(let i=items.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    list.appendChild(items[j]);
+    items.splice(j,1);
+    items.splice(i,0,list.children[list.children.length-1]);
+  }
+  const fb=document.getElementById(listId+'-feedback');
+  fb.className='order-feedback';fb.textContent='';
+}
+
+/* ── MATCHING ── */
+let matchState={};
+function selectMatch(item,gameId){
+  if(item.classList.contains('matched-correct'))return;
+  const side=item.closest('[id$="-left"]')?'left':'right';
+  if(!matchState[gameId])matchState[gameId]={left:null,right:null,score:0};
+  const state=matchState[gameId];
+  const panel=document.getElementById(gameId+'-'+(side==='left'?'left':'right'));
+  panel.querySelectorAll('.match-item:not(.matched-correct)').forEach(i=>i.classList.remove('selected'));
+  item.classList.add('selected');
+  state[side]=item;
+  if(state.left&&state.right){
+    if(state.left.dataset.id===state.right.dataset.id){
+      state.left.classList.add('matched-correct');state.left.classList.remove('selected');
+      state.right.classList.add('matched-correct');state.right.classList.remove('selected');
+      state.score++;document.getElementById(gameId+'-score').textContent=state.score;
+    } else {
+      state.left.classList.add('matched-wrong');state.right.classList.add('matched-wrong');
+      setTimeout(()=>{
+        state.left.classList.remove('matched-wrong','selected');
+        state.right.classList.remove('matched-wrong','selected');
+      },600);
+    }
+    state.left=null;state.right=null;
+  }
+}
+function resetMatch(gameId){
+  matchState[gameId]={left:null,right:null,score:0};
+  document.querySelectorAll('#'+gameId+'-left .match-item, #'+gameId+'-right .match-item').forEach(i=>{
+    i.classList.remove('matched-correct','matched-wrong','selected');
+  });
+  document.getElementById(gameId+'-score').textContent='0';
+}
+
+/* ── TEST TRAPS ── */
+function answerTrap(btn,isCorrectChoice){
+  const card=btn.closest('.trap-card');
+  if(card.querySelector('.trap-explanation.show'))return;
+  const allBtns=card.querySelectorAll('.trap-btn');
+  allBtns.forEach(b=>b.disabled=true);
+  btn.classList.add(isCorrectChoice?'selected-correct':'selected-wrong');
+  card.querySelector('.trap-explanation').classList.add('show');
+}
+
+/* ── THEME TOGGLE ── */
+
+
+</script>
+</body>
+</html>
