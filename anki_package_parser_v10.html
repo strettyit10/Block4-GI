@@ -103,6 +103,8 @@
   <input type="text" id="custom-resource-input" placeholder="e.g. #AK_Step1_v12::MySource" style="display:none" oninput="onConfigChange()">
   <label id="subject-label">Subject <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
   <input type="text" id="subject-input" placeholder="e.g. Endocrinology, Reproductive…" value="Endocrinology" oninput="onConfigChange()">
+  <label id="heading-label" style="display:none">Heading <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
+  <input type="text" id="heading-input" style="display:none" placeholder="e.g. 01_Bacteria, 02_Viruses…" oninput="onConfigChange()">
   <div class="preview-block">
     <div class="preview-label">Matching tags that look like:</div>
     <div class="preview-tag" id="tag-preview"></div>
@@ -183,6 +185,10 @@ function getSubject() { return document.getElementById('subject-input').value.tr
 function getFullPrefix() {
   const b = getResourceBase();
   if (!b) return '';
+  if (resourceUsesHeading()) {
+    const h = getHeading();
+    return h ? `${b}::${h}::` : `${b}::`;
+  }
   if (resourceSkipsSubject()) return `${b}::`;
   const sub = getSubject();
   return sub ? `${b}::${sub}::` : `${b}::`;
@@ -190,7 +196,11 @@ function getFullPrefix() {
 
 function updatePreview() {
   const base = getResourceBase() || '#AK_Step1_v12::Resource';
-  if (resourceSkipsSubject()) {
+  if (resourceUsesHeading()) {
+    const heading = getHeading() || '<Heading>';
+    document.getElementById('tag-preview').innerHTML =
+      `<span class="seg-matched">${esc(base)}::${esc(heading)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  } else if (resourceSkipsSubject()) {
     document.getElementById('tag-preview').innerHTML =
       `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
   } else {
@@ -203,13 +213,20 @@ function resourceSkipsSubject() {
   const v = document.getElementById('prefix-select').value;
   return v === '#AK_Step1_v12::#Pathoma' || v.startsWith('#AK_Step1_v12::#Sketchy');
 }
+function resourceUsesHeading() {
+  return document.getElementById('prefix-select').value.startsWith('#AK_Step1_v12::#Sketchy');
+}
+function getHeading() { return document.getElementById('heading-input').value.trim(); }
 function onConfigChange() {
   const isCustom = document.getElementById('prefix-select').value === 'custom';
   const noSubject = resourceSkipsSubject();
+  const hasHeading = resourceUsesHeading();
   document.getElementById('custom-resource-label').style.display = isCustom ? '' : 'none';
   document.getElementById('custom-resource-input').style.display = isCustom ? '' : 'none';
   document.getElementById('subject-label').style.display = noSubject ? 'none' : '';
   document.getElementById('subject-input').style.display = noSubject ? 'none' : '';
+  document.getElementById('heading-label').style.display = hasHeading ? '' : 'none';
+  document.getElementById('heading-input').style.display = hasHeading ? '' : 'none';
   updatePreview();
   if (cachedNoteRows) reparse();
 }
@@ -286,6 +303,7 @@ function resetAll() {
   document.getElementById('tree-wrap').innerHTML = '';
   document.getElementById('search').value = '';
   document.getElementById('reset-btn').style.display = 'none';
+  document.getElementById('heading-input').value = '';
   const fileInput = document.querySelector('#drop-zone input');
   if (fileInput) fileInput.value = '';
 }
