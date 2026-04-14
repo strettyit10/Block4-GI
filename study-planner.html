@@ -397,6 +397,10 @@ body.embed-mode .topbar { padding-top: 10px; padding-bottom: 6px; }
 body.embed-mode .topbar h1 { font-size: 1.05rem; }
 body.embed-mode .topbar-sub { font-size: 0.7rem; }
 body.embed-mode .main { padding-top: 0; }
+/* Hide the planner's internal tab-nav when embedded — the parent provides tabs */
+body.embed-mode .tab-nav .tab-btn { display: none !important; }
+body.embed-mode .tab-nav { padding: 0; margin: 0 0 10px; border-bottom: none; justify-content: flex-end; }
+body.embed-mode #topbar-pct { margin-left: 0 !important; margin-bottom: 0 !important; }
 </style>
 </head>
 <body>
@@ -1625,6 +1629,47 @@ function applyEmbedMode(){
 }
 applyEmbedMode();
 
+// In embed mode, switch to the tab requested by the parent on first load.
+function applyInitialEmbedTab(){
+  try {
+    const params = new URLSearchParams(location.search);
+    if(params.get('embed') !== '1') return;
+    const t = params.get('tab');
+    if(t && ['thisweek','planner','dashboard'].includes(t) && typeof switchTab === 'function'){
+      switchTab(t);
+    }
+  } catch(e) {}
+}
+
+// When embedded, listen for cloud-sync events from the parent. The parent
+// pulls fresh state from Firestore after Google sign-in, writes it to
+// localStorage, then posts a message telling us to reload.
+function reloadPlannerFromLocalStorage(){
+  try {
+    // loadState() reads STORAGE_KEY from localStorage and reassigns STATE.
+    if(typeof loadState === 'function') loadState();
+    if(typeof renderLecturePlanner === 'function') renderLecturePlanner();
+    if(typeof renderDashboard === 'function') renderDashboard();
+    if(typeof renderThisWeek === 'function') renderThisWeek();
+  } catch(e) { console.error('Planner reload error:', e); }
+}
+window.addEventListener('message', (ev) => {
+  if(!ev || !ev.data) return;
+  if(ev.data.type === 'hoyadocs-planner-reload'){
+    reloadPlannerFromLocalStorage();
+  } else if(ev.data.type === 'hoyadocs-switch-tab' && ev.data.tab){
+    if(typeof switchTab === 'function' && ['thisweek','dashboard','planner'].includes(ev.data.tab)){
+      switchTab(ev.data.tab);
+    }
+  }
+});
+// Also catch cross-document storage events (belt-and-suspenders)
+window.addEventListener('storage', (ev) => {
+  if(ev.key === 'gi-planner-v2'){
+    reloadPlannerFromLocalStorage();
+  }
+});
+
 
 // ══════════════════════════════════════════════════════════════
 //  EXPORT TO HTML (formatted, interactive)
@@ -1891,6 +1936,7 @@ function init(){
   renderThisWeek();
   renderDashboard();
   renderLecturePlanner();
+  applyInitialEmbedTab();
 }
 
 // ══════════════════════════════════════════════════════════════
