@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI08 Abdominal Viscera I — Gastrointestinal Tract — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi08-abdominal-viscera-gi-tract.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>Abdominal Viscera I — Gastrointestinal Tract <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 08 · GI Block · Anatomy — Abdominal Viscera I — LOs 1–3
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI08 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> GI Block LOs 1–3</div>
+    <div class="source-badge"><strong>Review:</strong> Netter Anatomy Abdomen</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid GI Anatomy</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi08-hub2-abdominal-viscera-gi-tract.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi08-hub3-abdominal-viscera-gi-tract.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">20</span> cards total</span><span>LOs 1–2</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Foregut Vasculature</div><div class="fc-q">What artery supplies the foregut (distal esophagus to D2), at what level does it arise, and name the three branches of the celiac trunk.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Celiac trunk</strong> at <strong>T12/L1</strong><br><br>Three branches (<strong>LSC</strong>): <strong>Left gastric, Splenic, Common hepatic</strong><br><br>Left gastric → lesser curvature stomach; Splenic → spleen + short gastrics; Common hepatic → right gastric, GDA, hepatic artery proper</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Midgut Vasculature</div><div class="fc-q">What artery supplies the midgut (D3 to proximal 2/3 transverse colon), at what level, and name three of its key branches?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Superior mesenteric artery (SMA)</strong> at <strong>L1</strong><br><br>Key branches: <strong>ileocolic, right colic, middle colic, jejunal arteries, ileal arteries</strong><br><br>Jejunal arteries have <strong>long vasa recta, few arcades</strong>; ileal arteries have <strong>short vasa recta, many arcades</strong></div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Hindgut Vasculature</div><div class="fc-q">What artery supplies the hindgut (distal 1/3 transverse colon to upper rectum), at what level, and what are its three branches?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Inferior mesenteric artery (IMA)</strong> at <strong>L3</strong><br><br>Three branches: <strong>left colic, sigmoid arteries, superior rectal</strong><br><br>Note: pelvic splanchnics are parasympathetic (S2-S4), unlike lumbar splanchnics (sympathetic L1-L2)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Portal Triad</div><div class="fc-q">In the hepatoduodenal ligament, name the three structures of the portal triad in order from POSTERIOR to ANTERIOR and list a clinical mnemonic.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Posterior to anterior: <strong>Portal vein (posterior), Hepatic artery proper (left), Common bile duct (right)</strong><br><br>Mnemonic: <strong>VHD</strong> — Vein, Hepatic artery, Duct<br><br>Clinical: Pringle maneuver compresses hepatoduodenal ligament to control hepatic hemorrhage</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Gastroduodenal Artery</div><div class="fc-q">Describe the course of the gastroduodenal (GDA) artery relative to the duodenum, and what happens clinically if there is a posterior duodenal ulcer?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">GDA runs <strong>posterior to D1</strong><br><br><strong>Posterior duodenal ulcer</strong> → erodes into GDA → <strong>massive upper GI hemorrhage</strong> (classic Step 1 trap)<br><br>Anterior ulcer → peritonitis (perforates into peritoneal cavity)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Marginal Artery</div><div class="fc-q">What is the marginal artery of Drummond, why is it clinically important, and where is the watershed zone that is most vulnerable to ischemia?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Marginal artery of Drummond</strong> = continuous colonic arcade formed by anastomoses of colic arteries<br><br>Watershed zone at <strong>splenic flexure (SMA/IMA junction)</strong><br><br>Vulnerable after <strong>AAA repair</strong> → ischemic colitis at splenic flexure and rectosigmoid junction</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Duodenum Four-Part</div><div class="fc-q">Describe the peritoneal classification and key features of each duodenal segment (D1 through D4).</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>D1 (superior):</strong> intraperitoneal, posterior to stomach<br><strong>D2 (descending):</strong> retroperitoneal, ampulla of Vater on medial wall<br><strong>D3 (horizontal):</strong> retroperitoneal, crossed by SMA (SMA syndrome risk)<br><strong>D4 (ascending):</strong> retroperitoneal, suspensory ligament of Treitz attaches at D3/D4 junction<br><br>Mnemonic: Only D1 intraperitoneal; D2-D4 retroperitoneal</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Jejunum vs Ileum</div><div class="fc-q">Compare jejunum and ileum: wall thickness, mesenteric fat, plicae, vasa recta, arcades, and Peyer's patches.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Jejunum:</strong> larger diameter, thicker wall, LESS fat, tall close-packed plicae, LONG vasa recta, FEW simple arcades, NO Peyer's<br><br><strong>Ileum:</strong> smaller diameter, thinner wall, MORE fat, low sparse plicae, SHORT vasa recta, MANY complex arcades, abundant Peyer's patches</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Peritoneal SAM</div><div class="fc-q">State the peritoneal classification rule "SAD PUCKER" and list what each intraperitoneal structure requires for mobility.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>SAD PUCKER = intraperitoneal:</strong> Stomach, Appendix, Duodenum (D1 only), Pancreatic TAIL, Uterus, Colon (transverse &amp; sigmoid), Kidneys (NO — retroperitoneal!), Esophagus (NO — retroperitoneal!), Rectum (upper only)<br><br>All others D2-D4, pancreas (head/body/neck), colon (ascending/descending), lower rectum = <strong>retroperitoneal</strong></div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Innervation Summary</div><div class="fc-q">For foregut, midgut, and hindgut: list parasympathetic nerve, sympathetic splanchnic nerve, spinal level, and referred pain location.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Foregut:</strong> vagus, greater splanchnic (T5-T9), celiac ganglia, <strong>epigastric pain</strong><br><strong>Midgut:</strong> vagus, lesser splanchnic (T10-T11), SMA ganglia, <strong>periumbilical pain</strong><br><strong>Hindgut:</strong> <strong>pelvic splanchnics (S2-S4) NOT vagus</strong>, lumbar splanchnics (L1-L2), IMA ganglia, <strong>hypogastric/suprapubic pain</strong></div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Lymphatic Drainage</div><div class="fc-q">What is the pathway of GI lymphatics from the gut wall to the thorax? Name key stations and the final vessel.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Gut wall → regional lymph nodes (celiac, SMA, IMA nodes) → cisterna chyli (at L1) → <strong>thoracic duct</strong> → left venous angle (confluence of left internal jugular + left subclavian vein)<br><br>Foregut → celiac; midgut → SMA; hindgut → IMA nodes</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Virchow's Node</div><div class="fc-q">What is Virchow's node (Troisier's sign), where is it, and what malignancy is classically associated?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Virchow's node</strong> = enlarged left supraclavicular lymph node from metastatic intra-abdominal malignancy<br><br>Pathway: intra-abdominal cancer → thoracic duct → left venous angle → left supraclavicular nodes<br><br>Classic: gastric cancer (gastric CA)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Portosystemic Anastomoses</div><div class="fc-q">In portal hypertension, name three portosystemic anastomoses and the vessels involved in each, plus the clinical sign for one.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>1. Esophageal varices:</strong> left gastric vein ↔ azygos vein<br><strong>2. Caput medusae:</strong> paraumbilical veins ↔ superficial epigastric vein<br><strong>3. Anorectal varices:</strong> superior rectal vein ↔ middle/inferior rectal veins<br><br>Note: Also portopulmonary shunts</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Stomach Anatomy</div><div class="fc-q">Describe the anatomical regions of the stomach (cardia, fundus, body, pylorus) and its two curvatures with their arterial supply.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Regions: <strong>cardia → fundus → body → pylorus/antrum</strong><br><br><strong>Lesser curvature:</strong> left gastric + right gastric arteries<br><strong>Greater curvature:</strong> left gastroomental + right gastroomental arteries<br><br>Greater omentum = "policeman of the abdomen" (migrates to inflammation)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Colon Features</div><div class="fc-q">Name three distinctive gross anatomical features of the colon (as opposed to small intestine) and explain why they are present.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>1. Taeniae coli:</strong> three longitudinal muscle bands (incomplete circular coat)<br><strong>2. Haustra:</strong> outpouchings between taeniae (characteristic shape)<br><strong>3. Omental appendages:</strong> small fat-filled pouches on visceral peritoneum<br><br>Result of incomplete muscularization and colon's water-absorption role</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Referred Pain Mechanism</div><div class="fc-q">Explain why visceral abdominal pain is often referred to the dermatome, and give three classic examples of referred pain patterns.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> visceral + somatic afferents converge on same dorsal horn neurons → brain mislocalizes to dermatome<br><br><strong>Examples:</strong><br>• Cholecystitis: epigastric → <strong>right shoulder/scapula</strong> (phrenic C3-C5)<br>• Pancreatitis: epigastric → <strong>back</strong> (retroperitoneal)<br>• Appendicitis: <strong>periumbilical first</strong> (visceral midgut) then <strong>RLQ</strong> (somatic)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Appendicitis vs Meckel</div><div class="fc-q">State the Meckel's 2's rule and describe how appendicitis pain migration differs from a symptomatic Meckel's diverticulum.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Meckel's 2's rule:</strong> 2% population, 2 feet from ileocecal valve, 2 inches long, 2:1 male, 2% have complications (bleeding, obstruction)<br><br><strong>Appendicitis pain:</strong> periumbilical (midgut visceral) → RLQ (McBurney's point, somatic)<br><strong>Meckel's pain:</strong> typically RLQ or periumbilical (same midgut supply as ileum)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Omental Foramen</div><div class="fc-q">Describe the omental foramen (foramen of Winslow): what it connects, and its four borders.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Connects <strong>greater peritoneal sac</strong> ↔ <strong>lesser sac</strong><br><br>Four borders:<br><strong>Anterior:</strong> hepatoduodenal ligament (portal triad)<br><strong>Posterior:</strong> IVC<br><strong>Superior:</strong> caudate lobe of liver<br><strong>Inferior:</strong> D1<br><br>Clinical: allows fingers to enter lesser sac during surgical exploration</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Ligament of Treitz</div><div class="fc-q">What is the ligament of Treitz, where does it attach, and what is its clinical significance?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Suspensory ligament of Treitz</strong> = musculofascial band from D4/D3 junction to right crus of diaphragm<br><br>Attaches at junction of retroperitoneal D4 and intraperitoneal jejunum<br><br><strong>Significance:</strong> anatomical boundary between <strong>upper and lower GI tract</strong>; upper endoscopy stops here; location of ligament of Treitz fixates the duodenojejunal flex</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Lymph Pathway</div><div class="fc-q">Trace the pathway of lymph from a GI structure to the venous angle, naming key stations and the final vessel.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">GI mucosa → regional nodes (celiac, SMA, IMA nodes depending on foregut/midgut/hindgut) → <strong>cisterna chyli at L1</strong> → <strong>thoracic duct</strong> → <strong>left venous angle</strong> (confluence of left internal jugular + left subclavian veins)<br><br>Clinical: Virchow's node (left supraclavicular lymph node enlargement) can indicate metastatic gastric cancer via retrograde thoracic duct spread</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL IN THE BLANK ══════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 01 — LO 1</div>
+      <div class="fib-prompt">The foregut extends from the distal esophagus to the ___________ and is supplied by the ___________ at the level of ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="endpoint..." data-answers="d2,duodenum 2,second duodenum">
+        <input class="fib-input" type="text" placeholder="artery..." data-answers="celiac trunk,celiac">
+        <input class="fib-input" type="text" placeholder="spinal level..." data-answers="t12,t12/l1,l1,t12-l1">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 02 — LO 1</div>
+      <div class="fib-prompt">The three branches of the celiac trunk are the ___________, ___________, and ___________, remembered by the acronym ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="branch 1..." data-answers="left gastric">
+        <input class="fib-input" type="text" placeholder="branch 2..." data-answers="splenic">
+        <input class="fib-input" type="text" placeholder="branch 3..." data-answers="common hepatic">
+        <input class="fib-input" type="text" placeholder="acronym..." data-answers="lsc">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 03 — LO 1</div>
+      <div class="fib-prompt">The superior mesenteric artery supplies the midgut from ___________ to ___________ at the level of ___________. Jejunal arteries have ___________ vasa recta, while ileal arteries have ___________ vasa recta.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="start..." data-answers="d3">
+        <input class="fib-input" type="text" placeholder="end..." data-answers="proximal 2/3 transverse colon,proximal transverse colon">
+        <input class="fib-input" type="text" placeholder="level..." data-answers="l1">
+        <input class="fib-input" type="text" placeholder="jejunal..." data-answers="long">
+        <input class="fib-input" type="text" placeholder="ileal..." data-answers="short">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 04 — LO 1</div>
+      <div class="fib-prompt">A posterior duodenal ulcer erodes into the ___________ artery causing ___________. An anterior ulcer perforates into the ___________ causing ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="artery..." data-answers="gastroduodenal,gda">
+        <input class="fib-input" type="text" placeholder="complication..." data-answers="hemorrhage,gi bleed,upper gi bleed">
+        <input class="fib-input" type="text" placeholder="space..." data-answers="peritoneal cavity,peritoneum">
+        <input class="fib-input" type="text" placeholder="complication..." data-answers="peritonitis">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 05 — LO 1</div>
+      <div class="fib-prompt">In the portal triad (hepatoduodenal ligament), the structure that is POSTERIOR is the ___________, the structure that is ANTERIOR-LEFT is the ___________, and the structure that is ANTERIOR-RIGHT is the ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="posterior..." data-answers="portal vein">
+        <input class="fib-input" type="text" placeholder="ant-left..." data-answers="hepatic artery,hepatic artery proper">
+        <input class="fib-input" type="text" placeholder="ant-right..." data-answers="common bile duct">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 06 — LO 1</div>
+      <div class="fib-prompt">The watershed area between the SMA and IMA is at the ___________ and is particularly vulnerable to ischemia after ___________ surgery.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="location..." data-answers="splenic flexure">
+        <input class="fib-input" type="text" placeholder="surgery..." data-answers="aaa,aaa repair,abdominal aortic aneurysm">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 07 — LO 1</div>
+      <div class="fib-prompt">Only the ___________ is intraperitoneal; duodenal segments ___________, ___________, and ___________ are retroperitoneal.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="intraperitoneal..." data-answers="d1">
+        <input class="fib-input" type="text" placeholder="retro 1..." data-answers="d2">
+        <input class="fib-input" type="text" placeholder="retro 2..." data-answers="d3">
+        <input class="fib-input" type="text" placeholder="retro 3..." data-answers="d4">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 08 — LO 1</div>
+      <div class="fib-prompt">The ___________ phase of innervation affects foregut at spinal level ___________, midgut at spinal level ___________, and hindgut at spinal level ___________. However, hindgut parasympathetics come from the ___________, not the vagus.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="phase..." data-answers="sympathetic">
+        <input class="fib-input" type="text" placeholder="foregut level..." data-answers="t5-t9,t9">
+        <input class="fib-input" type="text" placeholder="midgut level..." data-answers="t10-t11,t10">
+        <input class="fib-input" type="text" placeholder="hindgut level..." data-answers="l1-l2,l1">
+        <input class="fib-input" type="text" placeholder="hindgut PSNS..." data-answers="pelvic splanchnics,pelvic splanchnic">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 09 — LO 2</div>
+      <div class="fib-prompt">The ___________ is a continuous arcade of colonic blood vessels formed by anastomoses of the colic arteries. The pancreatic ___________ is intraperitoneal, while the pancreatic ___________, ___________, and ___________ are retroperitoneal.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="arcade..." data-answers="marginal artery,marginal artery of drummond">
+        <input class="fib-input" type="text" placeholder="intraperitoneal part..." data-answers="tail">
+        <input class="fib-input" type="text" placeholder="retro 1..." data-answers="head">
+        <input class="fib-input" type="text" placeholder="retro 2..." data-answers="body,neck">
+        <input class="fib-input" type="text" placeholder="retro 3..." data-answers="neck,body">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 10 — LO 3</div>
+      <div class="fib-prompt">Appendicitis classically presents with pain beginning in the ___________ region (midgut visceral afferent) that later localizes to the ___________ region at McBurney's point. The ___________ ligament marks the boundary between upper and lower GI tract.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="initial region..." data-answers="periumbilical,umbilical">
+        <input class="fib-input" type="text" placeholder="final region..." data-answers="rlq,right lower quadrant">
+        <input class="fib-input" type="text" placeholder="ligament..." data-answers="ligament of treitz,suspensory ligament,treitz">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Instructions:</strong> Drag and drop the items into the correct order, then click "Check Order." Use "Show Answer" if you get stuck.
+  </div>
+
+  <!-- Drill 1: Embryologic Gut Regions -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 1 — Embryologic Gut Regions: Foregut → Hindgut</div>
+    <div class="drill-hint">Arrange these embryologic divisions from most proximal to most distal, with key structures in each.</div>
+    <div class="order-list" id="order-list-1" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-1')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Hindgut: distal 1/3 transverse colon → upper rectum (IMA)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Foregut: distal esophagus → D2 (Celiac trunk)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Midgut: D3 → proximal 2/3 transverse colon (SMA)</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','order-fb-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-1"></div>
+    <div class="order-answer" id="order-ans-1">
+      <ol><li><span>Foregut (Celiac trunk, T12/L1):</span> distal esophagus, stomach, D1-D2, liver, pancreatic head/body, spleen</li><li><span>Midgut (SMA, L1):</span> D3-D4, jejunum, ileum, cecum, appendix, ascending colon, proximal 2/3 transverse colon</li><li><span>Hindgut (IMA, L3):</span> distal 1/3 transverse colon, descending colon, sigmoid, upper rectum</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 2: Celiac Trunk Branches -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 2 — Celiac Trunk Branches: LSC Order</div>
+    <div class="drill-hint">Arrange the three celiac branches in the standard teaching sequence (L-S-C).</div>
+    <div class="order-list" id="order-list-2" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-2')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Splenic artery → spleen, short gastrics, left gastroomental</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Common hepatic artery → right gastric, GDA, hepatic artery proper</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Left gastric artery → lesser curvature, esophageal branches</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','order-fb-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-2"></div>
+    <div class="order-answer" id="order-ans-2">
+      <ol><li><span>Left gastric</span> — small, supplies lesser curvature + esophagus</li><li><span>Splenic</span> — largest celiac branch, tortuous course, supplies spleen + short gastrics + left gastroomental</li><li><span>Common hepatic</span> → divides into right gastric (to greater curvature), GDA (posterior to D1, risk of ulcer hemorrhage), and hepatic artery proper (to liver)</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 3: SMA Branches Along Colon -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 3 — SMA Colonic Branches: Proximal → Distal</div>
+    <div class="drill-hint">Arrange the named SMA branches that supply the colon from proximal to distal.</div>
+    <div class="order-list" id="order-list-3" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-3')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Middle colic → transverse colon (midgut/SMA)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Ileocolic → cecum + appendix + terminal ileum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Right colic → ascending colon</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','order-fb-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-3"></div>
+    <div class="order-answer" id="order-ans-3">
+      <ol><li><span>Ileocolic</span> — most distal SMA branch; supplies cecum, appendix, terminal ileum</li><li><span>Right colic</span> — supplies ascending colon</li><li><span>Middle colic</span> — supplies transverse colon (proximal 2/3 is SMA/midgut, but runs across abdomen)</li><li>Jejunal and ileal branches also come from SMA trunk</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 4: Arterial Progression by Spinal Level -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 4 — Major GI Arteries by Spinal Level: Superior → Inferior</div>
+    <div class="drill-hint">Arrange the three major GI arteries in order from superior (high) spinal level to inferior (low) spinal level.</div>
+    <div class="order-list" id="order-list-4" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-4')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-4')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">IMA at L3 (hindgut) — lowest</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-4')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">SMA at L1 (midgut) — middle</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-4')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Celiac trunk at T12/L1 (foregut) — highest</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-4','order-fb-4')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-4')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-4"></div>
+    <div class="order-answer" id="order-ans-4">
+      <ol><li><span>Celiac trunk at T12/L1:</span> foregut supply (stomach, D1-D2, liver, pancreas, spleen)</li><li><span>SMA at L1:</span> midgut supply (D3-proximal 2/3 colon, small intestine)</li><li><span>IMA at L3:</span> hindgut supply (distal 1/3 colon to upper rectum)</li><li>Clinical pearl: All three major trunks arise from abdominal aorta between T12-L3</li></ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATCHING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Instructions:</strong> Click an item on the left, then click its match on the right. Correct pairs turn green; wrong pairs flash red.
+  </div>
+
+  <!-- Set 1: GI Segment ↔ Vasculature -->
+  <div class="match-set">
+    <div class="match-set-title">Set 1 — GI Segment ↔ Arterial Supply</div>
+    <div class="match-set-hint">Match each GI segment to its primary arterial supply.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">GI Segment</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Stomach + D1-D2</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Jejunum + Ileum</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Cecum + Appendix</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Sigmoid + Upper Rectum</div>
+      </div>
+      <div>
+        <div class="match-col-label">Arterial Supply</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Ileocolic (SMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Left gastric, splenic, common hepatic (celiac)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Sigmoid arteries (IMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Jejunal + ileal arteries (SMA)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms1-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms1')">Reset</button>
+  </div>
+
+  <!-- Set 2: GI Segment ↔ Referred Pain -->
+  <div class="match-set">
+    <div class="match-set-title">Set 2 — GI Segment ↔ Referred Pain Location</div>
+    <div class="match-set-hint">Match each embryologic region to its characteristic referred pain location.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">GI Region</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Foregut (stomach to D2)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">Midgut (D3 to prox 2/3 colon)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Hindgut (dist 1/3 colon to rectum)</div>
+      </div>
+      <div>
+        <div class="match-col-label">Referred Pain Location</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">Periumbilical (around belly button)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Epigastric (upper middle abdomen)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Hypogastric/Suprapubic (lower middle abdomen)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms2-score">0</span>/3 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms2')">Reset</button>
+  </div>
+
+  <!-- Set 3: Spinal Level ↔ Splanchnic Nerve → GI Region -->
+  <div class="match-set">
+    <div class="match-set-title">Set 3 — Spinal Level ↔ Nerve ↔ GI Region</div>
+    <div class="match-set-hint">Match spinal cord levels and nerve types to their sympathetic innervation of GI regions.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Spinal Level + SNS Nerve</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">T5–T9 (greater splanchnic)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">T10–T11 (lesser splanchnic)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">L1–L2 (lumbar splanchnic)</div>
+      </div>
+      <div>
+        <div class="match-col-label">GI Region + Ganglion</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Hindgut → IMA ganglia</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Foregut → Celiac ganglia</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Midgut → SMA ganglia</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms3-score">0</span>/3 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms3')">Reset</button>
+  </div>
+
+  <!-- Set 4: Peritoneal Classification -->
+  <div class="match-set">
+    <div class="match-set-title">Set 4 — GI Structure ↔ Peritoneal Classification</div>
+    <div class="match-set-hint">Match each structure to whether it is intraperitoneal or retroperitoneal.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Structure</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="1">Duodenum D1</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="2">Duodenum D2-D4</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="3">Pancreatic tail</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="4">Pancreatic head + body</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="5">Transverse colon</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="6">Ascending colon</div>
+      </div>
+      <div>
+        <div class="match-col-label">Classification</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="2">Retroperitoneal</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="1">Intraperitoneal</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="6">Retroperitoneal</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="3">Intraperitoneal</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="5">Intraperitoneal</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="4">Retroperitoneal</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms4-score">0</span>/6 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms4')">Reset</button>
+  </div>
+</div>
+
+<!-- ══ TEST TRAPS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    <strong>Test Trap Mode:</strong> Each statement is either TRUE or FALSE as written. Many are designed to catch common exam errors. Click T or F — then read the explanation carefully.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 01 — LO 1</div>
+    <div class="trap-statement">"The pelvic splanchnics provide sympathetic innervation to the hindgut."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> This is a CLASSIC trap! Pelvic splanchnics (S2–S4) are <strong>PARASYMPATHETIC</strong>, not sympathetic. All other splanchnics (greater, lesser, lumbar) are sympathetic. The hindgut parasympathetics come from pelvic splanchnics (NOT vagus). Sympathetic = lumbar splanchnics (L1–L2).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 02 — LO 1</div>
+    <div class="trap-statement">"A posterior duodenal ulcer that erodes into the gastroduodenal artery will cause peritonitis because it perforates into the peritoneal cavity."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Posterior duodenal ulcer → GDA erosion → <strong>massive upper GI hemorrhage</strong> (not peritonitis). An ANTERIOR ulcer that perforates causes peritonitis. The key: posterior ulcer bleeds into the vessel; anterior ulcer perforates into the peritoneal cavity.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 03 — LO 1</div>
+    <div class="trap-statement">"The pancreatic head and body are intraperitoneal structures, while the pancreatic tail is retroperitoneal."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> This is reversed. The pancreatic <strong>tail is INTRAPERITONEAL</strong> (it hangs freely in the greater omentum). The pancreatic head, neck, and body are RETROPERITONEAL. Remember: only the TAIL is mobile (intraperitoneal); the rest is fixed (retroperitoneal).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 04 — LO 1</div>
+    <div class="trap-statement">"Both D1 and D2 are intraperitoneal segments of the duodenum."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Only <strong>D1 is intraperitoneal</strong>. D2, D3, and D4 are all retroperitoneal. This is often tested: "Which segment is intraperitoneal?" Answer = D1 only. Mnemonic: "Only D1 intraperitoneal; D2–D4 retro."</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 05 — LO 2</div>
+    <div class="trap-statement">"After a spinal cord injury at T10 that severs the spinal cord, the patient will lose sympathetic innervation to the entire GI tract including the hindgut."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Spinal cord injury at T10 severs the greater and lesser splanchnics (foregut &amp; midgut), BUT the lumbar splanchnics (L1–L2) exit below T10, so hindgut sympathetics remain intact. Additionally, hindgut parasympathetics (pelvic splanchnics S2–S4) also exit below T10 and remain intact.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 06 — LO 3</div>
+    <div class="trap-statement">"The splenic flexure is a common site of ischemic colitis BECAUSE it has rich, redundant blood supply and excellent collateralization."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The splenic flexure is a watershed zone (SMA/IMA junction) with <strong>POOR collateralization</strong> — that's why it's vulnerable to ischemia, especially after AAA repair. Similarly, the rectosigmoid junction is another watershed area. "Watershed" = end-artery junction = vulnerable.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 07 — LO 3</div>
+    <div class="trap-statement">"Appendicitis pain begins in the RLQ at McBurney's point because the appendix is supplied by the ileocolic artery (midgut)."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Yes, the appendix is midgut (ileocolic artery) BUT appendicitis pain classically begins <strong>PERIUMBILICAL</strong> (visceral midgut afferent via T10), then localizes to RLQ (parietal somatic pain at McBurney's point). Periumbilical pain then RLQ is pathognomonic for appendicitis.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 08 — LO 1</div>
+    <div class="trap-statement">"The ligament of Treitz marks the junction between the intraperitoneal jejunum and the retroperitoneal duodenum (D3/D4)."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>TRUE.</strong> The suspensory ligament of Treitz attaches the duodenojejunal flexion (D4/D3 junction in the retroperitoneum) to the right crus of the diaphragm, marking the boundary between UPPER GI tract (duodenum) and LOWER GI tract (jejunum). It's where upper endoscopy stops.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">GI Segment → Vasculature, Innervation, Referred Pain</div>
+    <table class="ref-table">
+      <thead><tr><th>Segment</th><th>Artery (Level)</th><th>SNS Nerve</th><th>PSNS Nerve</th><th>Referred Pain</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Foregut (esophagus–D2)</td><td>Celiac (T12/L1)</td><td>Greater splanchnic (T5–T9) → celiac ganglia</td><td>Vagus</td><td>Epigastric</td></tr>
+        <tr><td class="key">Midgut (D3–prox 2/3 colon)</td><td>SMA (L1)</td><td>Lesser splanchnic (T10–T11) → SMA ganglia</td><td>Vagus</td><td>Periumbilical</td></tr>
+        <tr><td class="key">Hindgut (dist 1/3 colon–upper rectum)</td><td>IMA (L3)</td><td>Lumbar splanchnic (L1–L2) → IMA ganglia</td><td><strong>Pelvic splanchnic (S2–S4)</strong> NOT vagus</td><td>Hypogastric/Suprapubic</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Peritoneal Classification (SAD PUCKER)</div>
+    <table class="ref-table">
+      <thead><tr><th>Intraperitoneal</th><th>Retroperitoneal</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stomach, Appendix, Duodenum (D1 only)</strong><br>Pancreatic TAIL, (Uterus), (Colon: transverse & sigmoid)</td><td><strong>D2–D4, Pancreatic head/body/neck</strong><br>Ascending colon, descending colon, upper rectum</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Jejunum vs. Ileum: Key Distinguishing Features</div>
+    <table class="ref-table">
+      <thead><tr><th>Feature</th><th>Jejunum</th><th>Ileum</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Diameter</td><td><strong>Larger</strong> (~2.5 cm)</td><td>Smaller (~2 cm)</td></tr>
+        <tr><td class="key">Wall thickness</td><td>Thicker</td><td>Thinner</td></tr>
+        <tr><td class="key">Mesenteric fat</td><td><strong>LESS fat</strong></td><td><strong>MORE fat</strong></td></tr>
+        <tr><td class="key">Plicae circulares</td><td>Tall, closely-packed</td><td>Low, sparse</td></tr>
+        <tr><td class="key">Vasa recta</td><td><strong>LONG</strong></td><td><strong>SHORT</strong></td></tr>
+        <tr><td class="key">Arcades</td><td>FEW, simple</td><td>MANY, complex</td></tr>
+        <tr><td class="key">Peyer's patches</td><td>Absent/rare</td><td>Abundant</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Duodenum: 4-Part Review</div>
+    <table class="ref-table">
+      <thead><tr><th>Segment</th><th>Peritoneal Status</th><th>Key Feature</th><th>Clinical Pearl</th></tr></thead>
+      <tbody>
+        <tr><td class="key">D1 (superior)</td><td>Intraperitoneal</td><td>Posterior to stomach; GDA posterior to D1</td><td>Posterior ulcer → GDA erosion → hemorrhage</td></tr>
+        <tr><td class="key">D2 (descending)</td><td>Retroperitoneal</td><td>Ampulla of Vater on medial wall</td><td>Major duodenal papilla enters here; receive bile + pancreatic juice</td></tr>
+        <tr><td class="key">D3 (horizontal)</td><td>Retroperitoneal</td><td>Crossed by SMA anteriorly</td><td>SMA syndrome: SMA compresses D3 → nausea, vomiting, weight loss</td></tr>
+        <tr><td class="key">D4 (ascending)</td><td>Retroperitoneal</td><td>Suspensory ligament of Treitz attaches here</td><td>Upper/lower GI boundary; upper endoscopy stops here</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Portal Triad (Hepatoduodenal Ligament)</div>
+    <table class="ref-table">
+      <thead><tr><th>Position</th><th>Structure</th><th>Function</th><th>Clinical Note</th></tr></thead>
+      <tbody>
+        <tr><td class="key">POSTERIOR</td><td>Portal vein</td><td>Drains intestinal blood to liver (first-pass metabolism)</td><td>Pringle maneuver compresses hepatoduodenal ligament → stops hepatic hemorrhage</td></tr>
+        <tr><td class="key">ANTERIOR-LEFT</td><td>Hepatic artery proper</td><td>Oxygenated blood to liver</td><td>May be encountered during cholecystectomy</td></tr>
+        <tr><td class="key">ANTERIOR-RIGHT</td><td>Common bile duct</td><td>Carries bile from liver/GB to duodenum</td><td>Strictures, stones, choledochitis are common pathology</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-note">
+    <strong>Key Traps Summary:</strong>
+    Pelvic splanchnics = parasympathetic (NOT sympathetic) · Posterior D1 ulcer = hemorrhage (NOT peritonitis) · Pancreatic tail = intraperitoneal (NOT retro) · Only D1 intraperitoneal (D2–D4 retro) · Appendicitis pain: periumbilical THEN RLQ · Splenic flexure = watershed (POOR collateral) · Ligament of Treitz = upper/lower GI boundary
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp; GI08 Hub 1 — Core Concepts &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div><!-- /container -->
+
+<script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    inner.style.height=front.scrollHeight+'px';
+  });
+});
+// Tab switching
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+// FIB check
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+
+// Drag-and-Drop Ordering
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// Matching
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+
+// Test Traps
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+
+/* ── THEME TOGGLE ── */
+
+
+</script>
+</body>
+</html>
