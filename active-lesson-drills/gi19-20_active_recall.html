@@ -1,0 +1,816 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.f textarea{width:100%;border:1px solid #CBD5E1;border-radius:6px;font-size:12px;background:transparent;outline:none;padding:4px 6px;color:#1e293b;resize:vertical;min-height:52px}
+.f textarea:focus{border-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}.fb-row{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid #DBEAFE}.fb-row:last-child{border-bottom:none}.fb-row:nth-child(even){background:#F0F7FF}.fb-row:nth-child(odd){background:#fff}.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Lecture 19–20: Intestinal Pathology — Active Recall</h2>
+  <a href="gi19-20_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 19–20 (LOs 1–8). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 19–20 — Intestinal Pathology (HoyaDocs)</strong>
+  Focus on: Meckel's rule of 2's, obstruction mechanisms, IBD (Crohn vs UC), celiac serology, ischemic bowel, diverticular disease, colonic polyps, and colorectal cancer sequencing.
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">Congenital & Diverticula</div>
+  <div class="tab" onclick="sw(1)">Obstruction & Hernias</div>
+  <div class="tab" onclick="sw(2)">Ischemic Bowel & Malabsorption</div>
+  <div class="tab" onclick="sw(3)">Celiac & IBD Overview</div>
+  <div class="tab" onclick="sw(4)">IBD Deep Dive & Diverticulitis</div>
+  <div class="tab" onclick="sw(5)">Polyps & Colorectal Cancer</div>
+  <div class="tab" onclick="sw(6)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: CONGENITAL & DIVERTICULA ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — Meckel's rule of 2's, true vs pseudo diverticula, ectopic tissue complications, Hirschsprung RET mutations</div>
+
+<div class="sec">Diverticula classification (LO1)</div>
+<table>
+  <tr><th>Feature</th><th>True Diverticulum</th><th>Pseudo (False) Diverticulum</th></tr>
+  <tr><td class="rl">Wall layers</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Origin</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Example</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Can contain ectopic tissue?</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Meckel diverticulum — rule of 2's (LO1)</div>
+<div class="warn">EXAM CLASSIC: Everything about Meckel comes in 2's — memorize this mnemonic cold.</div>
+<div class="fg3">
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Population & Size</div>
+    <div class="f"><label>% of population affected</label><input></div>
+    <div class="f"><label>Length of diverticulum</label><input></div>
+    <div class="f"><label>Distance from ileocecal valve</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Ectopic Tissue & Presentation</div>
+    <div class="f"><label>Number of ectopic tissue types</label><input></div>
+    <div class="f"><label>Name 2 types of ectopic tissue present</label><input></div>
+    <div class="f"><label>Age of symptom onset (years)</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Embryology</div>
+    <div class="f"><label>What embryologic structure fails to regress?</label><input></div>
+    <div class="f"><label>When should this regress (gestation week)?</label><input></div>
+    <div class="f"><label>Meckel scan detects what tissue?</label><input></div>
+  </div>
+</div>
+
+<div class="sec">Meckel diverticulum complications (LO1)</div>
+<table>
+  <tr><th>Complication</th><th>Mechanism / Key Feature</th><th>Most Common in Which Age?</th></tr>
+  <tr><td class="rl">GI bleeding</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Obstruction</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Volvulus</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Diverticulitis</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Hirschsprung disease — pathogenesis & diagnosis (LO1)</div>
+<div class="fg">
+  <div class="f"><label>Embryologic defect (what fails)?</label><input></div>
+  <div class="f"><label>Gene mutation classically implicated</label><input></div>
+  <div class="f"><label>Name the missing cell population</label><input></div>
+  <div class="f"><label>Histology of affected segment — what's absent?</label><input></div>
+  <div class="f"><label>Biopsy shows ↑ what nerve fiber marker (acetylcholinesterase staining)?</label><input></div>
+  <div class="f"><label>Classic presentation — age at diagnosis</label><input></div>
+  <div class="f"><label>Location of most common defect (how far proximal)?</label><input></div>
+  <div class="f"><label>Association with Down syndrome — increased risk how many-fold?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb0',a0)">Reveal answers</button>
+<div id="fb0" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 1: OBSTRUCTION & HERNIAS ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — Types of hernia, strangulation vs simple obstruction, adhesions, volvulus, intussusception lead points, imaging clues</div>
+
+<div class="sec">Hernia classification & anatomy (LO2)</div>
+<table>
+  <tr><th>Hernia Type</th><th>Anatomic Location</th><th>Risk Factors / Pathogenesis</th><th>Strangulation Risk?</th></tr>
+  <tr><td class="rl">Hiatal hernia</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Umbilical hernia</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Ventral/incisional</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Inguinal hernia</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Femoral hernia</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Obstruction types — mechanisms (LO2)</div>
+<div class="warn">KEY: Simple obstruction = reduced lumen. Strangulation = compromised blood supply. Strangulation is surgical emergency (necrosis within 6–8 hrs).</div>
+<table>
+  <tr><th>Obstruction Type</th><th>Mechanism</th><th>Leads to Strangulation?</th><th>Surgical Emergency?</th></tr>
+  <tr><td class="rl">Adhesions (most common)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Volvulus</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Intussusception</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Hernia (incarcerated)</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Comparison of obstruction presentations (LO2)</div>
+<table>
+  <tr><th>Feature</th><th>Adhesions</th><th>Volvulus</th><th>Intussusception</th></tr>
+  <tr><td class="rl">Most common location</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Classic imaging finding</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Age of presentation</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Bloody stool ("current jelly")?</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Volvulus pathophysiology (LO2)</div>
+<div class="fg">
+  <div class="f"><label>Sigmoid volvulus — classic presentation (age, risk factors)</label><input></div>
+  <div class="f"><label>Cecal volvulus — mechanism vs sigmoid difference</label><input></div>
+  <div class="f"><label>AXR finding: "bird's beak" sign — what does it indicate?</label><input></div>
+  <div class="f"><label>Barium/air enema therapeutic mechanism for sigmoid volvulus</label><input></div>
+  <div class="f"><label>Why cecal volvulus often requires surgery while sigmoid can be non-surgical</label><input></div>
+</div>
+
+<div class="sec">Intussusception clinical pearls (LO2)</div>
+<div class="fg">
+  <div class="f"><label>Classic age of presentation</label><input></div>
+  <div class="f"><label>Lead point in adults (3 common causes)</label><input></div>
+  <div class="f"><label>Classic symptom triad</label><input></div>
+  <div class="f"><label>Ultrasound finding: "target sign" or "doughnut sign" represents what?</label><input></div>
+  <div class="f"><label>Non-operative reduction approach + contraindications</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb1',a1)">Reveal answers</button>
+<div id="fb1" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 2: ISCHEMIC BOWEL & MALABSORPTION ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 3 · LO 4</div>
+<div class="on-exam">ON EXAM — Watershed zones, SMA embolism pain out of proportion, acute vs chronic ischemia, malabsorption causes, fat-soluble vitamin deficiency pattern</div>
+
+<div class="sec">Ischemic bowel disease — arterial territories (LO3)</div>
+<table>
+  <tr><th>Artery</th><th>Embryologic Origin</th><th>Structures Supplied</th><th>Watershed Zone Vulnerability</th></tr>
+  <tr><td class="rl">Celiac</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">SMA (Midgut)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">IMA (Hindgut)</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Acute mesenteric ischemia — types & clues (LO3)</div>
+<div class="warn">CLASSIC STEP 1 CLUE: Severe periumbilical pain OUT OF PROPORTION to soft abdominal exam. This is the pathognomonic presentation before peritoneal signs develop.</div>
+<table>
+  <tr><th>Type</th><th>Cause</th><th>Vascular Pathology</th><th>Risk Factors</th></tr>
+  <tr><td class="rl">Arterial embolism (most common)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Arterial thrombosis</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Venous thrombosis</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Non-occlusive (vasoconstriction)</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Chronic mesenteric ischemia (LO3)</div>
+<div class="fg">
+  <div class="f"><label>"Intestinal angina" mechanism — why does eating trigger pain?</label><input></div>
+  <div class="f"><label>Classic triad of symptoms</label><input></div>
+  <div class="f"><label>Why weight loss is pronounced despite adequate intake</label><input></div>
+  <div class="f"><label>Diagnostic test of choice + findings</label><input></div>
+</div>
+
+<div class="sec">Malabsorption — causes & classification (LO4)</div>
+<div class="warn">Malabsorption = inadequate absorption due to mucosal disease, pancreatic insufficiency, or luminal problems (e.g., bile salt deficiency).</div>
+<table>
+  <tr><th>Category</th><th>Mechanism</th><th>Example Conditions (2)</th></tr>
+  <tr><td class="rl">Mucosal disease</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Pancreatic insufficiency</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Luminal / bile problems</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Fat-soluble vitamin (ADEK) deficiency patterns (LO4)</div>
+<div class="fg3">
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Vitamin A</div>
+    <div class="f"><label>Deficiency → manifestation</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Vitamin D</div>
+    <div class="f"><label>Deficiency → manifestation</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Vitamin E</div>
+    <div class="f"><label>Deficiency → manifestation</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Vitamin K</div>
+    <div class="f"><label>Deficiency → manifestation</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">B12 Absorption</div>
+    <div class="f"><label>Where absorbed (segment)</label><input></div>
+    <div class="f"><label>Cofactor requirement</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Bile Salt Circulation</div>
+    <div class="f"><label>Where reabsorbed (segment)</label><input></div>
+    <div class="f"><label>Loss of reabsorption → effect</label><input></div>
+  </div>
+</div>
+
+<button class="btn" onclick="rev('fb2',a2)">Reveal answers</button>
+<div id="fb2" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 3: CELIAC & IBD OVERVIEW ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 4 · LO 5</div>
+<div class="on-exam">ON EXAM — Celiac serology (tTG-IgA, EMA, anti-endomysial), villous atrophy histology, HLA-DQ2/DQ8, IBD vs IBS, extraintestinal manifestations</div>
+
+<div class="sec">Celiac disease — pathogenesis (LO4)</div>
+<div class="fg">
+  <div class="f"><label>Trigger antigen (protein in gluten)</label><input></div>
+  <div class="f"><label>Genetic predisposition — HLA types required</label><input></div>
+  <div class="f"><label>Autoantigen that forms immune complexes</label><input></div>
+  <div class="f"><label>Pathophysiology: which intestinal cells are damaged?</label><input></div>
+</div>
+
+<div class="sec">Celiac disease — serology & histology (LO4)</div>
+<table>
+  <tr><th>Test</th><th>Marker</th><th>Sensitivity / Specificity</th><th>What It Detects</th></tr>
+  <tr><td class="rl">First-line serology</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Endomysial antibody</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Gold standard biopsy</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Celiac histologic stages (Marsh classification) (LO4)</div>
+<div class="fg">
+  <div class="f"><label>Stage 0 (Normal)</label><input></div>
+  <div class="f"><label>Stage 1 (Infiltration only)</label><input></div>
+  <div class="f"><label>Stage 3 (Partial villous atrophy) — what % villous height lost?</label><input></div>
+  <div class="f"><label>Stage 3c (Total villous atrophy) — appearance + crypt hyperplasia</label><input></div>
+</div>
+
+<div class="sec">IBD overview — ulcerative colitis vs Crohn disease (LO5)</div>
+<div class="warn">KEY: Both are chronic relapsing-remitting inflammatory bowel diseases, but location, depth, and extraintestinal manifestations differ dramatically.</div>
+<table>
+  <tr><th>Feature</th><th>Ulcerative Colitis</th><th>Crohn Disease</th></tr>
+  <tr><td class="rl">Location(s)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Depth of inflammation</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Continuous vs patchy</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Rectal involvement</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Bloody diarrhea?</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">IBD complications — extraintestinal manifestations (LO5)</div>
+<div class="fg3">
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Ocular</div>
+    <div class="f"><label>3 ocular complications</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Rheumatologic</div>
+    <div class="f"><label>Arthritis types + HLA association</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Hepatic</div>
+    <div class="f"><label>2 hepatic complications</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Skin</div>
+    <div class="f"><label>2 dermatologic manifestations</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Vascular</div>
+    <div class="f"><label>Thrombotic risk — mechanism</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Renal</div>
+    <div class="f"><label>Kidney stone composition in IBD</label><input></div>
+  </div>
+</div>
+
+<button class="btn" onclick="rev('fb3',a3)">Reveal answers</button>
+<div id="fb3" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 4: IBD DEEP DIVE & DIVERTICULITIS ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LO 5 · LO 6</div>
+<div class="on-exam">ON EXAM — Crohn pathognomonic findings (fissuring ulcers, fistulas, strictures), UC cancer risk, toxic megacolon, diverticulitis imaging & complications</div>
+
+<div class="sec">Crohn disease — distinctive pathologic features (LO5)</div>
+<div class="warn">PATHOGNOMONIC: Crohn has skip lesions, fissuring ulcers, fistulas, and can affect any part of GI tract from mouth to anus. Full-thickness inflammation.</div>
+<div class="fg">
+  <div class="f"><label>Characteristic histology pattern (non-continuous)</label><input></div>
+  <div class="f"><label>Ulcer morphology — "fissuring" or "knife-like"?</label><input></div>
+  <div class="f"><label>Cobblestone appearance — what causes it?</label><input></div>
+  <div class="f"><label>Fistula formation — why only in Crohn (transmural) + 3 types</label><input></div>
+  <div class="f"><label>Stricture formation — pathophysiology</label><input></div>
+</div>
+
+<div class="sec">UC vs Crohn — complications (LO5)</div>
+<table>
+  <tr><th>Complication</th><th>UC Only</th><th>Crohn Only</th><th>Both</th></tr>
+  <tr><td class="rl">Toxic megacolon</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Colorectal cancer risk (magnitude)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Perforation</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Fistulas</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Abdominal abscess</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Diverticular disease — pathogenesis & epidemiology (LO6)</div>
+<div class="fg">
+  <div class="f"><label>Definition: pseudo-diverticula contain which layers?</label><input></div>
+  <div class="f"><label>Pathophysiology — ↑intraluminal pressure herniates at what sites?</label><input></div>
+  <div class="f"><label>Western diet risk factors — 3 mechanisms</label><input></div>
+  <div class="f"><label>Asian populations — different location pattern, why?</label><input></div>
+</div>
+
+<div class="sec">Diverticulitis — clinical presentation & imaging (LO6)</div>
+<table>
+  <tr><th>Feature</th><th>Uncomplicated Diverticulitis</th><th>Complicated (Perforation/Abscess/Fistula)</th></tr>
+  <tr><td class="rl">Location of pain (sigmoid typical)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Classic imaging (CT)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Associated peritoneal signs</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Management approach</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Diverticulitis complications (LO6)</div>
+<div class="fg3">
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Fistula</div>
+    <div class="f"><label>Colovesical fistula → symptoms</label><input></div>
+    <div class="f"><label>Why female patients spared colovesical fistula</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Recurrence & Management</div>
+    <div class="f"><label>% recurrence after 1st episode (uncomplicated)</label><input></div>
+    <div class="f"><label>Elective colectomy after how many episodes?</label><input></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:#1D4ED8">Right-sided Diverticulitis</div>
+    <div class="f"><label>Why mimics appendicitis</label><input></div>
+    <div class="f"><label>Epidemiology — which populations more common?</label><input></div>
+  </div>
+</div>
+
+<button class="btn" onclick="rev('fb4',a4)">Reveal answers</button>
+<div id="fb4" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 5: POLYPS & COLORECTAL CANCER ═══ -->
+<div class="panel" id="p5">
+<div class="lo-tag">LO 7 · LO 8</div>
+<div class="on-exam">ON EXAM — Polyp histology & malignant potential, adenoma-carcinoma sequence, Lynch syndrome vs FAP, CRC staging (TNM), high-grade dysplasia management</div>
+
+<div class="sec">Colonic polyps — classification & risk (LO7)</div>
+<table>
+  <tr><th>Polyp Type</th><th>Histology</th><th>Malignant Potential</th><th>Management</th></tr>
+  <tr><td class="rl">Hyperplastic polyp</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Sessile serrated polyp (SSP)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Tubular adenoma</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Villous adenoma</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Tubulovillous adenoma</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Adenoma-carcinoma sequence — genetics (LO8)</div>
+<div class="warn">The canonical multi-hit hypothesis: APC loss → KRAS activation → TP53 loss → invasive carcinoma. Takes ~10 years average.</div>
+<table>
+  <tr><th>Hit #</th><th>Gene</th><th>% of Adenomas with Mutation</th><th>Functional Change</th></tr>
+  <tr><td class="rl">Hit 1 (Early)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Hit 2 (Intermediate)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Hit 3 (Late)</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Familial CRC syndromes (LO8)</div>
+<table>
+  <tr><th>Syndrome</th><th>Gene(s)</th><th>Inheritance</th><th>Polyp Burden & Cancer Risk</th><th>Extraintestinal Features</th></tr>
+  <tr><td class="rl">Familial Adenomatous Polyposis (FAP)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Lynch syndrome (HNPCC)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">PTEN Hamartoma Syndrome (Cowden)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Peutz-Jeghers Syndrome</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Colorectal cancer — TNM staging (LO8)</div>
+<div class="warn">T = depth of tumor penetration, N = lymph node involvement, M = distant metastases. Stage I (T1–T2 N0) has ~90% 5-yr survival; Stage IV has ~10%.</div>
+<table>
+  <tr><th>TNM Component</th><th>Depth / Extent</th></tr>
+  <tr><td class="rl">T1</td><td><input></td></tr>
+  <tr><td class="rl">T2</td><td><input></td></tr>
+  <tr><td class="rl">T3</td><td><input></td></tr>
+  <tr><td class="rl">T4a</td><td><input></td></tr>
+  <tr><td class="rl">T4b</td><td><input></td></tr>
+  <tr><td class="rl">N0, N1, N2</td><td><input></td></tr>
+  <tr><td class="rl">M0 vs M1</td><td><input></td></tr>
+</table>
+
+<div class="sec">CRC metastatic patterns & prognosis (LO8)</div>
+<div class="fg">
+  <div class="f"><label>Most common site of hematogenous mets</label><input></div>
+  <div class="f"><label>Lymphatic spread — typical progression</label><input></div>
+  <div class="f"><label>Mucinous adenocarcinoma — prognosis vs typical</label><input></div>
+  <div class="f"><label>Microsatellite instability (MSI-H) — Lynch vs sporadic prevalence</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb5',a5)">Reveal answers</button>
+<div id="fb5" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 6: PRACTICE QUESTIONS ═══ -->
+<div class="panel" id="p6">
+<div class="lo-tag">LO 1–8 · USMLE Step 1 Style</div>
+<div class="on-exam">8 questions — cover all 8 LOs. High-yield vignettes and pathophysiology.</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q1. A 5-year-old boy presents with painless rectal bleeding for 3 weeks. Colonoscopy is unremarkable, and the bleeding has decreased. A technetium-99m pertechnetate scan is ordered. What ectopic tissue is the scan designed to identify, and where is it located?</div>
+  <div class="pq-choices">
+    A. Ectopic pancreatic tissue in the ileum at Meckel's diverticulum<br>
+    B. Ectopic gastric mucosa in the ileum at Meckel's diverticulum<br>
+    C. Heterotopic colonic mucosa in the upper jejunum<br>
+    D. Ectopic stomach wall in the antimesenteric border of ileum<br>
+    E. Adenomatous polyp in the terminal ileum
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>B — Ectopic gastric mucosa in the ileum at Meckel's diverticulum</strong><br>Meckel's diverticulum is a remnant of the vitelline duct and frequently contains ectopic gastric mucosa, which secretes acid and can ulcerate adjacent ileal mucosa → painless GI bleeding (most common complication in children). The scan uses Tc-99m pertechnetate, which localizes to gastric mucosa. Located on the antimesenteric border, typically within 2 feet of the ileocecal valve (Rule of 2's: 2%, 2 feet, 2 inches, age 2).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q2. A 68-year-old man with cognitive impairment and severe chronic constipation presents with acute abdominal distension, vomiting, and abdominal pain localized to the left lower quadrant. Abdominal X-ray shows a massively dilated sigmoid colon with a "bird's beak" appearance at the rectosigmoid junction. What is the diagnosis, and why is this patient at particularly high risk?</div>
+  <div class="pq-choices">
+    A. Cecal volvulus; risk factors include chronic laxative abuse and institutionalization<br>
+    B. Sigmoid volvulus; risk factors include cognitive impairment, institutionalization, and chronic constipation<br>
+    C. Adhesive small bowel obstruction; previous abdominal surgery is the major risk<br>
+    D. Diverticulitis with perforation; elderly age and male gender increase risk<br>
+    E. Intussusception in adults; malignancy as a lead point in the elderly
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>B — Sigmoid volvulus; risk factors include cognitive impairment, institutionalization, and chronic constipation</strong><br>Sigmoid volvulus = axial twist of the sigmoid colon, classically in institutionalized elderly with cognitive impairment and chronic constipation. The "bird's beak" is pathognomonic (twist at rectosigmoid junction). Risk: immobility, laxative abuse, neuropsychiatric conditions. Can be decompressed non-operatively with endoscopic reduction or barium enema in many cases, but surgery may be needed if blood supply is compromised (strangulation).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q3. A 2-year-old girl presents with colicky abdominal pain, palpable abdominal mass, and "currant jelly" stools. Abdominal ultrasound demonstrates a target (doughnut) sign. Which of the following BEST describes the pathophysiology of this condition?</div>
+  <div class="pq-choices">
+    A. Adhesions between bowel loops cause partial luminal obstruction<br>
+    B. One segment of bowel telescopes into an adjacent segment, compromising blood supply<br>
+    C. A congenital diverticulum acts as a lead point, twisting the intestine<br>
+    D. Increased intraluminal pressure herniates the mucosa through the muscularis<br>
+    E. Bacterial infection causes villous necrosis and hemorrhagic diarrhea
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>B — One segment of bowel telescopes into an adjacent segment, compromising blood supply</strong><br>Intussusception = invagination of proximal bowel into distal bowel (most commonly ileocolic). Classic in children 6 months–3 years (peak 1–2 yrs). Presents with colicky pain, palpable mass, and "currant jelly" (blood-stained) stools. Ultrasound target sign = cross-section of invaginated mesentery + blood vessels surrounded by bowel wall. Non-operative reduction via air enema is successful in >70% if performed early; surgery if perforation or failed reduction.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q4. A 45-year-old man with a history of atrial fibrillation presents with acute-onset severe periumbilical pain. Physical examination reveals a soft abdomen with minimal peritoneal signs. CT angiography shows an embolus occluding the superior mesenteric artery. Which segment of bowel is at GREATEST risk, and why is the "pain out of proportion" sign clinically significant?</div>
+  <div class="pq-choices">
+    A. Gastric antrum; early ulceration causes severe visceral pain<br>
+    B. Terminal ileum; mesenteric ischemia causes loss of absorptive capacity<br>
+    C. Jejunum, ileum, and right colon; visceral afferents signal ischemia before peritoneal signs develop<br>
+    D. Descending and sigmoid colon; the IMA is collateral-dependent<br>
+    E. Entire small intestine; SMA supplies all segments equally and is the primary blood supply
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>C — Jejunum, ileum, and right colon; visceral afferents signal ischemia before peritoneal signs develop</strong><br>SMA supplies jejunum, ileum, cecum, ascending colon, and proximal 2/3 of transverse colon (midgut). SMA embolism is a surgical emergency with high mortality if diagnosis is delayed. The pathognomonic clue is severe pain OUT OF PROPORTION to exam — visceral afferents detect ischemia before transmural necrosis and perforation occur, before peritoneal signs manifest. Elevated lactate, bloody diarrhea, and shock are late findings. Diagnosis: CT angiography. Treatment: immediate surgical revascularization or thrombectomy.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q5. A 28-year-old woman presents with chronic diarrhea, weight loss, and iron-deficiency anemia. Serologic testing shows elevated tissue transglutaminase (tTG) IgA and positive endomysial antibodies. Small bowel biopsy demonstrates villous atrophy with increased intraepithelial lymphocytes and crypt hyperplasia. Which of the following HLA types is she MOST likely to carry, and what dietary component triggers this pathology?</div>
+  <div class="pq-choices">
+    A. HLA-B27; bacterial lipopolysaccharide<br>
+    B. HLA-DQ2 or HLA-DQ8; gliadin (a wheat gluten protein)<br>
+    C. HLA-DR3; gliadin and related cereal proteins<br>
+    D. No specific HLA type required; IgE-mediated hypersensitivity to milk proteins<br>
+    E. HLA-A2; tissue damage from molecular mimicry against commensal bacteria
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>B — HLA-DQ2 or HLA-DQ8; gliadin (a wheat gluten protein)</strong><br>Celiac disease is an autoimmune enteropathy triggered by gluten (specifically gliadin) in genetically predisposed individuals (HLA-DQ2 ~95%, HLA-DQ8 ~5%). Gliadin peptides are deamidated by tissue transglutaminase (tTG) → recognized by autoreactive T cells → mucosal inflammation → villous atrophy. Serology: tTG-IgA (most sensitive/specific) and endomysial antibodies. Biopsy is gold standard. HLA-DQ2/DQ8 is necessary but not sufficient (~3% of population carry it; only ~3% of carriers develop disease). Dietary trigger is gluten elimination (wheat, barley, rye).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q6. A 35-year-old man with a 10-year history of crampy abdominal pain, diarrhea, and weight loss undergoes colonoscopy. Multiple areas of inflammation are noted with intervening normal-appearing mucosa (skip lesions). Biopsy reveals transmural inflammation with granulomas. Which complication is he at GREATEST risk for developing, and how does it differ pathophysiologically from ulcerative colitis?</div>
+  <div class="pq-choices">
+    A. Toxic megacolon; occurs exclusively in inflammatory bowel disease with continuous inflammation<br>
+    B. Colorectal cancer; both UC and Crohn carry equal cancer risk after 10 years of disease<br>
+    C. Fistula and stricture formation; transmural inflammation in Crohn allows penetration to involve adjacent structures<br>
+    D. Massive hemorrhage; loss of colonic vasculature is more extensive in Crohn than UC<br>
+    E. Fulminant colitis; mucosa-limited disease in Crohn allows rapid progression to perforation
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>C — Fistula and stricture formation; transmural inflammation in Crohn allows penetration to involve adjacent structures</strong><br>Crohn disease is characterized by TRANSMURAL (full-thickness) inflammation with skip lesions, fissuring ulcers, and penetrating inflammation. This leads to fistulas (to other bowel loops, skin, or bladder), strictures (from fibrosis), and abscesses — unique to Crohn. Ulcerative colitis is LIMITED TO THE MUCOSA AND SUBMUCOSA → continuous inflammation in colon only → bloody diarrhea without fistulas. Toxic megacolon and CRC risk are seen in both, but fistulization is Crohn-specific. Granulomas on biopsy are pathognomonic for Crohn (~40% of cases).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q7. A 64-year-old man with a history of chronic constipation and diverticulosis presents with acute left lower quadrant pain, fever, and leukocytosis. CT imaging reveals diverticula with pericolic fat stranding and a small fluid collection. He is treated conservatively with bowel rest and antibiotics. At follow-up 6 months later, he reports recurrent episodes of abdominal pain and has noticed pneumaturia (air in urine). What complication has developed, and why is it more common in men?</div>
+  <div class="pq-choices">
+    A. Colovesical fistula; more common in men because the bladder is directly anterior to the sigmoid colon without the uterus interposing<br>
+    B. Chronic diverticulitis with abscess formation; men have more extensive diverticula than women<br>
+    C. Colorectal cancer arising from long-standing inflammation; older age is the predominant risk factor<br>
+    D. Adhesions from recurrent inflammation causing small bowel obstruction; men have more visceral adhesions<br>
+    E. Pericolic abscess with rupture into peritoneum; severe sepsis in men but not women
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>A — Colovesical fistula; more common in men because the bladder is directly anterior to the sigmoid colon without the uterus interposing</strong><br>Diverticulitis complicated by fistulization most commonly involves colovesical fistula (sigmoid → bladder) due to anatomic proximity. Pneumaturia (air in urine) and fecaluria are pathognomonic. More common in men because women have the uterus between sigmoid and bladder, protecting against fistula formation (women more prone to colovaginal fistula if hysterectomy has been performed). Colovaginal fistula presents with feculent vaginal discharge. Other fistulas: coloenteric, colocutaneous. Fistulous diverticulitis often requires elective colectomy after acute phase resolves.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q8. A 42-year-old woman is found to have a 1.2 cm tubular adenoma during routine colonoscopy with no other polyps noted. The adenoma is removed completely with clear margins. What is the recommended surveillance interval for the next colonoscopy, and what molecular event is she at risk of NOT having prevented through polypectomy?</div>
+  <div class="pq-choices">
+    A. Return in 1 year; adenomatous polyps that are not removed progress to carcinoma within 2–3 years<br>
+    B. Return in 5 years; even small adenomas contain both KRAS and TP53 mutations<br>
+    C. Return in 10 years; small adenomas have not yet acquired the TP53 mutation necessary for malignant transformation<br>
+    D. Return in 3 years; all adenomas progress to cancer if given sufficient time (adenoma-carcinoma sequence)<br>
+    E. Return in 2 years; the small size suggests aggressive biology and early acquisition of KRAS mutation
+  </div>
+  <button class="pq-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Reveal answer</button>
+  <div class="pq-ans"><strong>C — Return in 10 years; small adenomas have not yet acquired the TP53 mutation necessary for malignant transformation</strong><br>The adenoma-carcinoma sequence is a multi-hit process: APC loss (early) → KRAS activation (intermediate) → TP53 loss (late) → invasion. Small adenomas (<1 cm) typically have NOT yet acquired the TP53 mutation, so polypectomy effectively prevents cancer development. Surveillance: 1 adenoma <1 cm → 10 years; 2–3 adenomas or 1 adenoma ≥1 cm → 5 years; ≥4 adenomas or any with high-grade dysplasia → 3 years. The process takes ~10 years average from adenoma to cancer, giving a window for screening and surveillance to prevent CRC.</div>
+</div>
+
+</div>
+
+<script>
+function sw(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',i===n)});
+  document.querySelectorAll('.panel').forEach((p,i)=>{p.classList.toggle('active',i===n)});
+}
+
+const a0={
+  'True Diverticulum wall layers':'All 3 (mucosa + submucosa + muscularis)',
+  'Pseudo Diverticulum wall layers':'Mucosa + submucosa only',
+  'True origin':'Congenital (developmental failure)',
+  'Pseudo origin':'Acquired (increased intraluminal pressure)',
+  'True example':'Meckel diverticulum',
+  'Pseudo example':'Colonic diverticulosis',
+  'Meckel 2% population':'2% of general population affected',
+  'Meckel distance':'Within 2 feet of ileocecal valve',
+  'Meckel length':'2 inches long',
+  'Meckel symptom age':'Symptomatic by age 2 years',
+  'Meckel ectopic tissue types':'2 types: gastric mucosa and pancreatic tissue',
+  'Vitelline duct embryology':'Should regress by week 7 of gestation',
+  'Meckel ectopic gastric tissue mechanism':'Secretes acid → ulcerates adjacent ileum → painless rectal bleeding (most common complication in children)',
+  'Meckel obstruction mechanism':'Diverticulum acts as lead point for volvulus, intussusception, or adhesion',
+  'Meckel scan':'Technetium-99m pertechnetate detects ectopic gastric mucosa',
+  'Hirschsprung embryologic defect':'Neural crest cells fail to migrate into distal colon',
+  'Hirschsprung gene':'RET mutation (proto-oncogene)',
+  'Hirschsprung missing cells':'Ganglion cells (enteric neurons)',
+  'Hirschsprung histology':'Absence of ganglion cells + nerve fibers in myenteric and submucosal plexuses',
+  'Hirschsprung acetylcholinesterase staining':'Increased nerve fiber staining (hypertrophic nerve trunks)',
+  'Hirschsprung presentation age':'Newborn fails to pass meconium (within first 48 hours)',
+  'Hirschsprung location':'Usually rectosigmoid junction; can extend more proximally',
+  'Hirschsprung Down syndrome risk':'10–20 fold increased risk in Down syndrome'
+};
+
+const a1={
+  'Hiatal hernia location':'Esophageal hiatus of diaphragm',
+  'Hiatal hernia pathogenesis':'Increased intra-abdominal pressure, age-related muscle laxity, smoking, obesity',
+  'Hiatal strangulation risk':'No, usually uncomplicated (Type I most common)',
+  'Umbilical location':'Umbilical ring (congenital weakness)',
+  'Umbilical pathogenesis':'Patent umbilical opening, increased abdominal pressure',
+  'Umbilical strangulation':'Rare, most close spontaneously by age 5',
+  'Ventral location':'Surgical incision site',
+  'Ventral pathogenesis':'Post-surgical (incisional), obesity, wound infection, poor healing',
+  'Ventral strangulation':'Moderate risk, higher if narrow neck',
+  'Inguinal location':'Inguinal canal (above inguinal ligament)',
+  'Inguinal pathogenesis':'Congenital weakness (patent processus vaginalis) or acquired (straining, heavy lifting, pregnancy)',
+  'Inguinal strangulation':'HIGH RISK (up to 10% of inguinal hernias; males >> females)',
+  'Femoral location':'Femoral ring (below inguinal ligament, medial to femoral vessels)',
+  'Femoral pathogenesis':'Femoral ring weakness; rare; females >> males',
+  'Femoral strangulation':'HIGHEST RISK (~20% strangulation rate); surgical emergency',
+  'Simple obstruction':'Lumen reduced; blood supply intact',
+  'Adhesions mechanism':'Fibrous bands from previous surgery, peritonitis, or radiation bind bowel loops',
+  'Adhesions strangulation':'LOW risk for strangulation',
+  'Adhesions surgical emergency':'No (usually managed conservatively initially)',
+  'Volvulus mechanism':'Bowel twists on its mesentery → lumen obstructed + blood supply compromised',
+  'Volvulus strangulation':'HIGH RISK (blood supply rapidly compromised)',
+  'Volvulus surgical emergency':'YES (necrosis within 6–8 hours)',
+  'Intussusception mechanism':'Proximal segment (intussusceptum) invaginates into distal segment (intussuscipiens)',
+  'Intussusception strangulation':'HIGH RISK if not reduced promptly',
+  'Intussusception surgical emergency':'YES if >24–48 hrs or failed non-operative reduction',
+  'Adhesions most common location':'Small bowel (jejunum and ileum)',
+  'Adhesions classic imaging':'No distinctive sign; "transition point" where bowel becomes narrow',
+  'Volvulus location':'Sigmoid colon (most common) or cecum',
+  'Volvulus imaging':'Bird\'s beak sign (twisted mesentery at point of torsion)',
+  'Intussusception location':'Ileocolic junction (classic in children)',
+  'Intussusception imaging':'Target sign or doughnut sign (cross-section of invaginated mesentery)',
+  'Intussusception age':'6 months to 3 years (peak 1–2 years); rare in adults',
+  'Intussusception bloody stool':'Yes, "currant jelly" stools (blood-stained)',
+  'Sigmoid volvulus age':'Institutionalized elderly (mean age ~65)',
+  'Sigmoid volvulus risk factors':'Cognitive impairment, immobility, chronic constipation, neuropsychiatric drugs, chronic laxative abuse',
+  'Cecal volvulus pathophysiology':'More mobile cecal wall allows twisting on its mesentery; less common but higher perforation risk than sigmoid',
+  'Cecal volvulus management':'Usually requires surgical intervention (non-operative reduction less successful)',
+  'Volvulus therapeutic enema':'Barium or air enema can decompress sigmoid volvulus by straightening the twist (works in ~70%)',
+  'Adhesions from surgery timing':'Can form years after initial operation'
+};
+
+const a2={
+  'Celiac artery embryologic origin':'Foregut',
+  'Celiac territory':'Distal esophagus, stomach, duodenum (proximal 2 parts), liver, gallbladder, spleen, pancreatic head',
+  'Celiac watershed':'None (supplied alone by Celiac)',
+  'SMA embryologic origin':'Midgut',
+  'SMA territory':'Duodenum (distal 3rd & 4th parts), jejunum, ileum, cecum, ascending colon, proximal 2/3 transverse colon',
+  'SMA watershed':'Splenic flexure (SMA/IMA border) — MOST VULNERABLE to ischemia',
+  'IMA embryologic origin':'Hindgut',
+  'IMA territory':'Distal 1/3 transverse colon, descending colon, sigmoid colon, upper rectum',
+  'IMA watershed':'Rectosigmoid junction (IMA/pudendal border) — second vulnerable zone',
+  'Acute mesenteric ischemia classic clue':'Severe periumbilical pain OUT OF PROPORTION to soft abdominal exam (visceral afferents detect ischemia before peritoneal signs)',
+  'SMA embolism trigger':'Atrial fibrillation or cardiac thrombus',
+  'SMA thrombosis risk':'Atherosclerotic stenosis (chronic ischemia may precede acute)',
+  'Venous thrombosis trigger':'Hypercoagulable states, portal hypertension, pancreatitis, malignancy',
+  'Non-occlusive ischemia cause':'Severe hypotension, hypoxemia, vasoconstrictors → splanchnic vasoconstriction without occlusion',
+  'Arterial embolism most common':'Yes, 50–60% of acute mesenteric ischemia',
+  'Intestinal angina mechanism':'Postprandial increased blood flow demand cannot be met by stenosed mesenteric vessels → pain provoked by eating',
+  'Chronic mesenteric ischemia triad':'Postprandial abdominal pain + weight loss (food fear) + diarrhea',
+  'Chronic ischemia weight loss cause':'Malabsorption (intestinal mucosal ischemia) + reduced intake from pain',
+  'Chronic mesenteric ischemia diagnosis':'CT angiography or MR angiography (shows stenosis)',
+  'Mucosal disease malabsorption':'Epithelial damage reduces surface area and nutrient transport; example: celiac disease, tropical sprue, Whipple disease',
+  'Pancreatic insufficiency cause':'Reduced pancreatic enzyme secretion; example: chronic pancreatitis, cystic fibrosis',
+  'Luminal malabsorption cause':'Reduced bile salts for fat emulsification or impaired micelle formation; example: biliary cirrhosis, bile acid sequestrant use, ileal resection',
+  'Vitamin A deficiency':'Night blindness, Bitot spots, squamous metaplasia (corneal xerosis)',
+  'Vitamin D deficiency':'Osteomalacia (bone pain, muscle weakness), hypocalcemia, secondary hyperparathyroidism',
+  'Vitamin E deficiency':'Neurologic: ataxia, neuropathy, spinocerebellar degeneration',
+  'Vitamin K deficiency':'Coagulopathy (prolonged PT/INR, easy bruising, bleeding)',
+  'B12 absorption segment':'Terminal ileum (requires intrinsic factor from parietal cells)',
+  'B12 cofactor':'Intrinsic factor (glycoprotein secreted by gastric parietal cells)',
+  'Bile salt reabsorption segment':'Terminal ileum (ileocecal region)',
+  'Bile salt loss effect':'Reduced reabsorption → more bile acids lost in stool → increased fecal fat (steatorrhea) and diarrhea'
+};
+
+const a3={
+  'Celiac trigger antigen':'Gliadin (prolamin protein in wheat gluten)',
+  'Celiac genetic predisposition':'HLA-DQ2 (~95% of patients) or HLA-DQ8 (~5%)',
+  'Celiac autoantigen':'Tissue transglutaminase (tTG); deamidation of gliadin peptides creates epitope recognized by autoreactive T cells',
+  'Celiac intestinal damage':'Villous atrophy (flattening of villi) → reduced absorptive surface',
+  'First-line celiac serology':'tTG-IgA (tissue transglutaminase IgA antibody) — most sensitive and specific',
+  'Celiac serology sensitivity/specificity':'~98% sensitivity, ~95% specificity for tTG-IgA',
+  'Endomysial antibody test':'Anti-endomysial IgA (EMA) — very specific but less sensitive than tTG-IgA',
+  'Celiac biopsy finding':'Villous atrophy (Marsh stage 3 or higher) with increased intraepithelial lymphocytes and crypt hyperplasia',
+  'Marsh Stage 0':'Normal — intact villi, normal crypt-to-villous ratio',
+  'Marsh Stage 1':'Infiltration only — increased intraepithelial lymphocytes, normal villous architecture',
+  'Marsh Stage 3 (Partial)':'Partial villous atrophy — villi lost 25–75% of height',
+  'Marsh Stage 3c (Total)':'Total villous atrophy (flattened) + crypt hyperplasia (crypt height >1:1 to villous height)',
+  'UC location':'Colon and rectum only (may extend into distal ileum — "backwash ileitis")',
+  'Crohn location':'ANY part of GI tract from mouth to anus; commonly terminal ileum + cecum',
+  'UC inflammation depth':'Mucosa and submucosa only',
+  'Crohn inflammation depth':'Transmural (full thickness)',
+  'UC continuous':'Continuous inflammation (no skip lesions)',
+  'Crohn continuous':'Patchy (skip lesions — normal tissue between inflamed areas)',
+  'UC rectal involvement':'ALWAYS involved (continuous from rectum proximally)',
+  'Crohn rectal involvement':'Often spared (may have isolated ileocolic disease)',
+  'UC bloody diarrhea':'Yes, classically bloody (mucosal ulcers)',
+  'Crohn bloody diarrhea':'Less common (no mucosal ulceration)',
+  'IBD ocular complications':'Anterior uveitis, posterior uveitis, episcleritis',
+  'IBD rheumatologic':'Arthritis (large joint, peripheral, non-erosive) + HLA-B27 association in some',
+  'IBD hepatic':'Primary sclerosing cholangitis (PSC) + primary biliary cholangitis (PBC)',
+  'IBD dermatologic':'Erythema nodosum + pyoderma gangrenosum',
+  'IBD thrombotic risk':'Hypercoagulable state (increased pro-coagulants, endothelial activation) → DVT/PE/mesenteric thrombosis',
+  'IBD renal stones':'Calcium oxalate (hyperoxaluria from fat malabsorption)'
+};
+
+const a4={
+  'Crohn skip lesions':'Non-continuous patches of inflammation with intervening normal mucosa',
+  'Crohn ulcer morphology':'Fissuring ulcers ("knife-like," penetrating inflammation)',
+  'Cobblestone appearance':'Intersecting linear ulcers with residual mucosa creating irregular mucosal pattern',
+  'Crohn fistula formation':'Transmural (full-thickness) inflammation allows penetration through wall → fistulas to other bowel, bladder, skin, or perineum',
+  'Crohn fistula types':'Enteroenteric (bowel-to-bowel), enterovesical (bowel-to-bladder), enterocutaneous (bowel-to-skin), rectovaginal (in females)',
+  'Crohn stricture formation':'Fibrosis from chronic transmural inflammation → luminal narrowing; "string sign" on barium study',
+  'Toxic megacolon UC':'YES, primarily UC (mucosal inflammation can lead to fulminant necrosis)',
+  'Toxic megacolon Crohn':'Rare (transmural Crohn usually has other complications first)',
+  'Toxic megacolon both':'Both can develop, but more characteristic of UC',
+  'CRC risk UC after 10 yrs':'~2–4% (cumulative risk ~20% after 20 years)',
+  'CRC risk Crohn':'Lower than UC (~0.5–1% per 10 years) but still elevated vs general population',
+  'UC perforation':'Yes, can occur with severe inflammation or toxic megacolon (medical emergency)',
+  'Crohn perforation':'Yes, especially with transmural deep ulcers + fistulization',
+  'UC fistulas':'NO (mucosal disease only)',
+  'Crohn fistulas':'YES (pathognomonic for transmural disease)',
+  'UC abscess':'Rare; inflammation limited to mucosa',
+  'Crohn abscess':'Common (result of perforating ulcers with contained perforation)',
+  'Diverticula wall composition':'Mucosa + submucosa only (pseudo-diverticula)',
+  'Colonic diverticula herniation site':'Penetrate at points where blood vessels enter muscularis ("natural weak points")',
+  'High-pressure mechanism':'Increased intraluminal pressure (LDL, straining, chronic constipation) → herniation through muscularis',
+  'Western diet risk — low fiber':'↑Colonic pressure needed to move hard stool',
+  'Western diet risk — refined carbs':'Dysbiosis alters bacterial fermentation → abnormal colonic pressures',
+  'Western diet risk — reduced fluid':'Dehydration → harder stool → ↑pressure',
+  'Asian population pattern':'Right-sided diverticula more common (genetic differences in colonic muscle architecture)',
+  'Uncomplicated diverticulitis pain':'LLQ pain (sigmoid typically affected)',
+  'Complicated diverticulitis pain':'LLQ pain + peritoneal signs if perforation/abscess',
+  'CT findings uncomplicated':'Diverticula + pericolic fat stranding',
+  'CT findings complicated':'Diverticula + abscess/free fluid/fistula ± free air',
+  'Uncomplicated management':'Bowel rest, clear liquids initially, antibiotics (outpatient if mild)',
+  'Complicated management':'NPO, IV antibiotics, possible abscess drainage/colectomy',
+  'Colovesical fistula symptoms':'Pneumaturia (air in urine) + fecaluria (feces in urine) + recurrent UTI',
+  'Why men prone to colovesical':'Bladder is directly anterior to sigmoid colon; uterus in women interposes protection',
+  'Colovaginal fistula women':'Occurs post-hysterectomy or rarely from Crohn; presents with feculent vaginal discharge',
+  'Recurrence rate after 1st episode':'~20% (many can be managed conservatively)',
+  'Elective colectomy indication':'After 2–3 episodes of uncomplicated or 1 episode of complicated diverticulitis',
+  'Right-sided diverticulitis mimics':'Appendicitis (can be indistinguishable; diagnosed at surgery)',
+  'Right-sided prevalence':'More common in Asian populations; rare in Western populations'
+};
+
+const a5={
+  'Hyperplastic polyp histology':'Elongated crypts with sawtooth outline; superficial only',
+  'Hyperplastic malignant potential':'Very low (<1%)',
+  'Hyperplastic management':'Not removed if <5 mm; resect if >5 mm for diagnostic confirmation',
+  'SSP histology':'Irregular crypts with sessile morphology; extends deeper than hyperplastic',
+  'SSP malignant potential':'Moderate to high (30–50% risk of progression to cancer if not removed)',
+  'SSP management':'Always resect; surveillance at 3–5 years',
+  'Tubular adenoma histology':'Tubular glands with circumscribed margin; adenomatous epithelium',
+  'Tubular malignant potential':'5–10% if <1 cm; increases with size and villous component',
+  'Tubular management':'Resect completely; surveillance 5–10 years',
+  'Villous adenoma histology':'Frond-like villous projections (>75% villous component)',
+  'Villous malignant potential':'HIGHEST (up to 40% depending on size); already has cancer focus in 10–15%',
+  'Villous management':'Resect completely; often requires surgery if large; surveillance 3 years',
+  'Tubulovillous histology':'Mixed tubular and villous components (25–75% villous)',
+  'Tubulovillous malignant potential':'Intermediate (10–30%)',
+  'Tubulovillous management':'Resect completely; surveillance 3–5 years',
+  'APC gene Hit 1':'Early; present in ~80% of adenomas; loss of tumor suppressor → initiates adenoma formation',
+  'KRAS gene Hit 2':'Intermediate; present in ~40% of adenomas; activating mutation → promotes cell proliferation',
+  'TP53 gene Hit 3':'Late; present in ~50% of cancers; loss of p53 (guardian of genome) → genomic instability + invasion',
+  'FAP gene':'APC (adenomatous polyposis coli)',
+  'FAP inheritance':'Autosomal dominant',
+  'FAP polyp burden':'Hundreds to thousands of polyps throughout colon by age 30',
+  'FAP cancer risk':'Near 100% by age 50 if untreated (preventive colectomy recommended by age 20–25)',
+  'FAP extraintestinal':'Osteomas, epidermoid cysts, desmoid tumors, fundic gland polyps, congenital hypertrophy of retinal pigment epithelium (CHRPE)',
+  'Lynch syndrome genes':'MLH1, MSH2, MSH6, PMS2 (mismatch repair genes)',
+  'Lynch inheritance':'Autosomal dominant',
+  'Lynch polyp burden':'Few polyps (not polyposis) but accelerated progression to cancer',
+  'Lynch cancer risk':'~70% lifetime CRC risk; also increased risk of endometrial, ovarian, stomach, small bowel cancers',
+  'Lynch extraintestinal':'Endometrial cancer (often presents before CRC), ovarian cancer',
+  'Cowden (PTEN) gene':'PTEN',
+  'Cowden inheritance':'Autosomal dominant',
+  'Cowden polyps':'Hamartomatous polyps throughout GI tract (not adenomas)',
+  'Cowden cancer risk':'Increased CRC risk; also breast, thyroid, endometrial cancers',
+  'Cowden extraintestinal':'Macrocephaly, trichilemmomas, breast/thyroid cancers',
+  'Peutz-Jeghers gene':'STK11 (LKB1)',
+  'Peutz-Jeghers inheritance':'Autosomal dominant',
+  'Peutz-Jeghers polyps':'Hamartomatous polyps (smooth muscle core); dark perioral pigmentation (lips, buccal mucosa)',
+  'Peutz-Jeghers cancer risk':'Increased GI cancers (but polyps themselves are hamartomatous, not adenomatous)',
+  'Peutz-Jeghers extraintestinal':'Perioral pigmentation, breast/pancreatic/lung cancers',
+  'T1 CRC':'Invasion into submucosa (but not muscularis propria)',
+  'T2 CRC':'Invasion through muscularis propria into subserosa/pericolorectal fat',
+  'T3 CRC':'Invasion through entire bowel wall into pericolorectal fat/pericolic fat (beyond visceral peritoneum)',
+  'T4a CRC':'Invasion through visceral peritoneum to reach peritoneal surface',
+  'T4b CRC':'Direct invasion of adjacent structures (e.g., bladder, prostate, small bowel)',
+  'N0 N1 N2 staging':'N0 = no regional nodes involved | N1 = 1–3 nodes | N2 = 4+ nodes',
+  'M0 vs M1':'M0 = no distant mets | M1 = distant metastases present',
+  'CRC liver mets':'Most common site of hematogenous metastasis (portal circulation drains to liver)',
+  'CRC lymphatic spread':'Progresses along lymphatic vessels to regional nodes; presence of nodal mets worsens prognosis (~25% 5-yr survival with N2 vs ~70% with N0)',
+  'Mucinous adenocarcinoma prognosis':'Worse prognosis than typical adenocarcinoma; mucin-producing → worse cell differentiation',
+  'MSI-H Lynch syndrome':'MLH1, MSH2, MSH6, PMS2 deficiency → 15% of CRC; higher in Lynch',
+  'MSI-H sporadic prevalence':'~5% of sporadic CRC (usually MLH1 methylation, not mutation)'
+};
+
+function rev(id,obj){
+  const el=document.getElementById(id);
+  el.style.display='block';
+  el.innerHTML='<strong>Answer key:</strong><br><br>'+Object.entries(obj).map(([k,v])=>`<b>${k}:</b> ${v}`).join('<br><br>');
+}
+</script>
+</body></html>

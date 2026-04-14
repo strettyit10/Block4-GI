@@ -1,0 +1,663 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#14532d;color:#fff;border-color:#14532d}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#14532d}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#14532d}
+.f textarea{width:100%;border:1px solid #CBD5E1;border-radius:6px;font-size:12px;background:transparent;outline:none;padding:4px 6px;color:#1e293b;resize:vertical;min-height:52px}
+.f textarea:focus{border-color:#14532d}
+.btn{background:#14532d;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#0f3d23}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #D1E7DD}.fb-header{background:#14532d;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}.fb-row{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid #D1E7DD}.fb-row:last-child{border-bottom:none}.fb-row:nth-child(even){background:#F1F8F6}.fb-row:nth-child(odd){background:#fff}.fb-q{font-size:11px;font-weight:700;color:#14532d;padding:7px 10px;border-right:1px solid #D1E7DD;line-height:1.5}.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #14532d;background:#D1F0DF;color:#14532d;cursor:pointer}
+.pq-btn:hover{background:#B7EAC8}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #D1E7DD}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Pathology Lab — Active Recall</h2>
+  <a href="gi22_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 22 (LOs 1–4). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 22 — GI Pathology Lab (HoyaDocs)</strong>
+  Focus on: Histology by organ (esophagus/stomach/SI/colon) + Pathogenesis of GERD/Barrett's/gastritis/peptic ulcer/H. pylori/IBD + Crohn's vs UC comparison + GI tumors (esophageal SCC/adenoCA, gastric CA, GIST, carcinoid, colorectal CA, FAP).
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">GI Histology Essentials</div>
+  <div class="tab" onclick="sw(1)">Esophageal Pathology</div>
+  <div class="tab" onclick="sw(2)">Gastric & SI Pathology</div>
+  <div class="tab" onclick="sw(3)">IBD & Colonic Disorders</div>
+  <div class="tab" onclick="sw(4)">GI Tumors & Neoplasia</div>
+  <div class="tab" onclick="sw(5)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: GI HISTOLOGY ESSENTIALS ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — Stratified squamous vs columnar epithelium, villi/crypts, parietal/chief/G cells, goblet cells, Brunner's vs Peyer's patches</div>
+
+<div class="sec">Epithelial Lining by Organ (LO1)</div>
+<table>
+<thead><tr><th>Organ</th><th>Epithelium Type</th><th>Unique Feature/Finding</th></tr></thead>
+<tbody>
+<tr><td class="rl">Esophagus</td><td><input placeholder="e.g., stratified squamous"></td><td><input placeholder="e.g., no serosa, mucous glands"></td></tr>
+<tr><td class="rl">Stomach</td><td><input placeholder="e.g., simple columnar"></td><td><input placeholder="e.g., rugae, parietal cells"></td></tr>
+<tr><td class="rl">Small Intestine</td><td><input placeholder="e.g., simple columnar"></td><td><input placeholder="e.g., villi, brush border"></td></tr>
+<tr><td class="rl">Colon</td><td><input placeholder="e.g., simple columnar"></td><td><input placeholder="e.g., straight crypts, NO villi"></td></tr>
+</tbody>
+</table>
+
+<div class="sec">Stomach Cell Types (LO1)</div>
+<div class="fg3">
+<div class="f"><label>Parietal Cell: Secretes</label><input placeholder="HCl + intrinsic factor"></div>
+<div class="f"><label>Chief Cell: Secretes</label><input placeholder="Pepsinogen"></div>
+<div class="f"><label>G Cell: Secretes</label><input placeholder="Gastrin (antrum)"></div>
+<div class="f"><label>Mucous Neck Cell: Secretes</label><input placeholder="Protective mucus"></div>
+<div class="f"><label>Goblet Cell Location</label><input placeholder="SI and colon (more in ileum)"></div>
+<div class="f"><label>Paneth Cell Function</label><input placeholder="Defensins; crypt stem niche"></div>
+</div>
+
+<div class="sec">Small Intestine Key Features (LO1)</div>
+<div class="fg">
+<div class="f"><label>Villi Function</label><input placeholder="Increase absorptive surface area"></div>
+<div class="f"><label>Brush Border</label><input placeholder="Microvilli on enterocytes (apical surface)"></div>
+<div class="f"><label>Crypts of Lieberkühn</label><input placeholder="Base of villi; contain stem cells + Paneth"></div>
+<div class="f"><label>Lacteals</label><input placeholder="Lymph capillaries in lamina propria; absorb chylomicrons"></div>
+<div class="f"><label>Brunner's Glands: Location</label><input placeholder="Duodenum ONLY; neutralize acid"></div>
+<div class="f"><label>Peyer's Patches: Location</label><input placeholder="Ileum ONLY; MALT immune surveillance"></div>
+</div>
+
+<div class="warn">High-yield: "Brunner's Duodenum, Peyer's Ileum" — each confined to ONE segment. Villi = SI only. Straight crypts + abundant goblet cells = colon.</div>
+
+<button class="btn" onclick="rev('fb0',a0)">Reveal answers</button>
+<div class="fb" id="fb0"></div>
+</div>
+
+<!-- ═══ TAB 1: ESOPHAGEAL PATHOLOGY ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — GERD histology, Barrett's (goblet cells = metaplasia), infectious esophagitis gross/histo, varices location & complication</div>
+
+<div class="sec">GERD & Reflux Esophagitis (LO2)</div>
+<div class="fg">
+<div class="f"><label>Pathogenesis</label><input placeholder="Incompetent LES → acid reflux → squamous damage"></div>
+<div class="f"><label>Key Histology Finding</label><input placeholder="Basal zone hyperplasia, elongated papillae, eosinophils"></div>
+<div class="f"><label>3 Major Complications</label><input placeholder="Barrett's esophagus, stricture, adenocarcinoma"></div>
+</div>
+
+<div class="sec">Barrett's Esophagus (LO2)</div>
+<div class="fg">
+<div class="f"><label>Pathogenesis (1 word)</label><input placeholder="Metaplasia"></div>
+<div class="f"><label>Definitive Histology Feature</label><input placeholder="Goblet cells (intestinal-type columnar epithelium)"></div>
+<div class="f"><label>Malignancy Risk Increase</label><input placeholder="30-40× increased risk of adenocarcinoma"></div>
+<div class="f"><label>Progression Sequence</label><input placeholder="Barrett's → low-grade dysplasia → high-grade dysplasia → adenoCA"></div>
+</div>
+
+<div class="sec">Candida vs HSV Esophagitis (LO2)</div>
+<table>
+<thead><tr><th>Feature</th><th>Candida Esophagitis</th><th>HSV Esophagitis</th></tr></thead>
+<tbody>
+<tr><td>Gross appearance</td><td><input placeholder="Tan-yellow pseudomembranes on erythema"></td><td><input placeholder="Punched-out ulcers, brown-red base"></td></tr>
+<tr><td>Key histology</td><td><input placeholder="Fungal pseudohyphae/yeast forms"></td><td><input placeholder="Ground-glass nuclei; Cowdry type A"></td></tr>
+<tr><td>Treatment</td><td><input placeholder="Fluconazole"></td><td><input placeholder="Acyclovir"></td></tr>
+</tbody>
+</table>
+
+<div class="sec">Esophageal Varices (LO2)</div>
+<div class="fg">
+<div class="f"><label>Pathogenesis (1-2 words)</label><input placeholder="Portal hypertension → blood diversion"></div>
+<div class="f"><label>Gross appearance</label><input placeholder="Linear dark blue dilated submucosal veins"></div>
+<div class="f"><label>Location in esophagus</label><input placeholder="Lower 1/3 (left gastric ↔ esophageal veins)"></div>
+<div class="f"><label>Clinical presentation</label><input placeholder="Painless massive hematemesis; can be fatal"></div>
+<div class="f"><label>2 Treatments</label><input placeholder="Endoscopic band ligation; sclerotherapy/TIPS; propranolol prophylaxis"></div>
+</div>
+
+<button class="btn" onclick="rev('fb1',a1)">Reveal answers</button>
+<div class="fb" id="fb1"></div>
+</div>
+
+<!-- ═══ TAB 2: GASTRIC & SI PATHOLOGY ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — Acute gastritis causes/histology, stress ulcers (Curling vs Cushing), peptic ulcer depth (through muscularis mucosae), H. pylori urease+, celiac villous atrophy</div>
+
+<div class="sec">Acute Gastritis & Stress Ulcers (LO2)</div>
+<div class="fg">
+<div class="f"><label>NSAID mechanism of injury</label><input placeholder="Inhibit COX → ↓ prostaglandin → ↓ mucus/bicarb"></div>
+<div class="f"><label>Alcohol effect</label><input placeholder="Direct mucosal irritant; disrupts barrier"></div>
+<div class="f"><label>Acute gastritis histology</label><input placeholder="Neutrophil infiltration of mucosa"></td></div>
+<div class="f"><label>Curling ulcer setting</label><input placeholder="Severe burns (fire → curl up)"></div>
+<div class="f"><label>Curling ulcer mechanism</label><input placeholder="↓ plasma volume → mucosal ischemia"></div>
+<div class="f"><label>Cushing ulcer setting</label><input placeholder="CNS injury / increased ICP (brain)"></div>
+<div class="f"><label>Cushing ulcer mechanism</label><input placeholder="Vagal stimulation → ↑ gastric acid (most dangerous)"></div>
+</div>
+
+<div class="sec">Peptic Ulcer Disease (LO2)</div>
+<div class="fg">
+<div class="f"><label>Definition: Breach extends through</label><input placeholder="Muscularis mucosae into submucosa/deeper"></div>
+<div class="f"><label>Most common location</label><input placeholder="Duodenum (anterior wall 1st part); then stomach lesser curvature"></div>
+<div class="f"><label>DU pain character</label><input placeholder="Epigastric pain RELIEVED by eating"></div>
+<div class="f"><label>GU pain character</label><input placeholder="Epigastric pain WORSENED by eating"></div>
+<div class="f"><label>Most common complication</label><input placeholder="Bleeding (melena/hematemesis)"></div>
+<div class="f"><label>Other complications</label><input placeholder="Perforation, obstruction, pancreatic penetration"></div>
+</div>
+
+<div class="sec">H. pylori Infection (LO2)</div>
+<div class="fg">
+<div class="f"><label>Organism morphology</label><input placeholder="Gram-negative, microaerophilic, spiral rod"></div>
+<div class="f"><label>Virulence mechanism</label><input placeholder="Urease → NH₃ → neutralizes acid; CagA + VacA toxins"></div>
+<div class="f"><label>Definitive histology stain</label><input placeholder="Methylene blue or Giemsa stain (small curved rods)"></div>
+<div class="f"><label>% of duodenal ulcers H. pylori-associated</label><input placeholder="95%"></div>
+<div class="f"><label>Triple therapy drugs (×3)</label><input placeholder="PPI + clarithromycin + amoxicillin × 14 days"></div>
+<div class="f"><label>Associated gastric tumor</label><input placeholder="Adenocarcinoma (intestinal type), MALT lymphoma"></div>
+<div class="f"><label>Carcinogen classification</label><input placeholder="Group 1 carcinogen (WHO)"></div>
+</div>
+
+<div class="sec">Celiac Disease (LO2)</div>
+<div class="fg">
+<div class="f"><label>Causative protein</label><input placeholder="Gliadin (component of gluten)"></div>
+<div class="f"><label>HLA association</label><input placeholder="HLA-DQ2 or HLA-DQ8 (>95%)"></div>
+<div class="f"><label>Key histology finding</label><input placeholder="Villous atrophy + crypt hyperplasia + ↑ IELs"></div>
+<div class="f"><label>Serology test</label><input placeholder="Anti-tissue transglutaminase (anti-tTG) IgA"></div>
+<div class="f"><label>Treatment</label><input placeholder="Strict gluten-free diet"></div>
+<div class="f"><label>Refractory complication</label><input placeholder="Enteropathy-associated T-cell lymphoma (EATL)"></div>
+</div>
+
+<div class="sec">Meckel Diverticulum (LO2)</div>
+<div class="fg">
+<div class="f"><label>Embryologic origin</label><input placeholder="Persistence of vitelline duct (omphalomesenteric duct)"></div>
+<div class="f"><label>Location</label><input placeholder="2 feet from ileocecal valve, ileal side"></div>
+<div class="f"><label>Rule of 2s: % of population</label><input placeholder="2%"></div>
+<div class="f"><label>Rule of 2s: length (cm)</label><input placeholder="2 cm"></div>
+<div class="f"><label>Rule of 2s: gender male:female</label><input placeholder="2:1"></div>
+<div class="f"><label>Ectopic tissue found in ~50%</label><input placeholder="Gastric mucosa (secretes acid → ulceration)"></div>
+<div class="f"><label>Presentation</label><input placeholder="Painless GI bleeding (dark red stools), obstruction, or inflammation"></div>
+</div>
+
+<button class="btn" onclick="rev('fb2',a2)">Reveal answers</button>
+<div class="fb" id="fb2"></div>
+</div>
+
+<!-- ═══ TAB 3: IBD & COLONIC DISORDERS ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 3</div>
+<div class="on-exam">ON EXAM — Crohn's vs UC location/pattern/depth, transmural vs mucosal, skip lesions, crypt abscess, extraintestinal manifestations, complications</div>
+
+<div class="sec">Crohn's vs Ulcerative Colitis Comparison (LO3)</div>
+<table>
+<thead><tr><th>Feature</th><th>Crohn's Disease</th><th>Ulcerative Colitis</th></tr></thead>
+<tbody>
+<tr><td class="rl">Location</td><td><input placeholder="Any part mouth-anus; ileocecal junction typical"></td><td><input placeholder="Colon only; starts at rectum, extends proximally"></td></tr>
+<tr><td class="rl">Pattern</td><td><input placeholder="Skip lesions (patches of normal intervening)"></td><td><input placeholder="Continuous inflammation (no skip)"></td></tr>
+<tr><td class="rl">Depth of inflammation</td><td><input placeholder="Transmural (all layers → fistulas)"></td><td><input placeholder="Mucosal + submucosa only"></td></tr>
+<tr><td class="rl">Cobblestone mucosa</td><td><input placeholder="Present (from fissuring ulcers)"></td><td><input placeholder="Absent"></td></tr>
+<tr><td class="rl">Fistulas</td><td><input placeholder="Common (transmural)"></td><td><input placeholder="Rare (mucosal only)"></td></tr>
+<tr><td class="rl">Pseudopolyps</td><td><input placeholder="Yes (regenerating mucosa)"></td><td><input placeholder="Yes (regenerating mucosa)"></td></tr>
+<tr><td class="rl">Crypt abscess</td><td><input placeholder="Can occur"></td><td><input placeholder="Hallmark feature"></td></tr>
+<tr><td class="rl">Cancer risk</td><td><input placeholder="Moderate (25× normal)"></td><td><input placeholder="High (25-40× normal); colonic IBD-CA surveillance"></td></tr>
+</tbody>
+</table>
+
+<div class="sec">Crohn's Disease Features (LO3)</div>
+<div class="fg">
+<div class="f"><label>Hallmark histology (1 word)</label><input placeholder="Granulomas"></div>
+<div class="f"><label>% with granulomas</label><input placeholder="30-50%"></div>
+<div class="f"><label>Complications (×3)</label><input placeholder="Fistulas, strictures, abscesses"></div>
+<div class="f"><label>Surgical outcome (% recurrence)</label><input placeholder="High recurrence even after resection (>50%)"></div>
+</div>
+
+<div class="sec">Ulcerative Colitis Features (LO3)</div>
+<div class="fg">
+<div class="f"><label>Hallmark histology</label><input placeholder="Crypt abscess + mucosal ulceration (no granulomas)"></div>
+<div class="f"><label>Always involves</label><input placeholder="Rectum (never spares it)"></div>
+<div class="f"><label>Proximal extent variable</label><input placeholder="Rectum only (proctitis) up to pancolitis"></div>
+<div class="f"><label>Fulminant/toxic megacolon risk</label><input placeholder="Higher than Crohn's"></div>
+<div class="f"><label>Total colectomy curative?</label><input placeholder="Yes (removes diseased colon = cure)"></div>
+</div>
+
+<div class="sec">Extraintestinal Manifestations of IBD (LO3)</div>
+<div class="fg3">
+<div class="f"><label>Joint: HLA-B27+</label><input placeholder="Ankylosing spondylitis, sacroiliitis"></div>
+<div class="f"><label>Joint: HLA-B27−</label><input placeholder="Peripheral arthritis, erythema nodosum"></div>
+<div class="f"><label>Eye</label><input placeholder="Uveitis, episcleritis"></div>
+<div class="f"><label>Skin</label><input placeholder="Erythema nodosum, pyoderma gangrenosum"></div>
+<div class="f"><label>Liver</label><input placeholder="Primary sclerosing cholangitis (PSC); more with UC"></div>
+<div class="f"><label>Kidney</label><input placeholder="Nephrolithiasis (↑ oxalate absorption in Crohn's)"></div>
+</div>
+
+<button class="btn" onclick="rev('fb3',a3)">Reveal answers</button>
+<div class="fb" id="fb3"></div>
+</div>
+
+<!-- ═══ TAB 4: GI TUMORS & NEOPLASIA ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LO 4</div>
+<div class="on-exam">ON EXAM — Esophageal SCC vs adenoCA location, Barrett's adenoCA risk, gastric adenoCA H. pylori, GIST c-KIT mutation, carcinoid 5-HT, colorectal adenoCA sequence (APC/KRAS/TP53), FAP APC gene</div>
+
+<div class="sec">Esophageal Tumors (LO4)</div>
+<table>
+<thead><tr><th>Type</th><th>Location in Esophagus</th><th>Risk Factors</th><th>Histology</th></tr></thead>
+<tbody>
+<tr><td class="rl">Squamous Cell Carcinoma (SCC)</td><td><input placeholder="Upper/middle 1/3"></td><td><input placeholder="Smoking + alcohol (synergistic)"></td><td><input placeholder="Keratin pearls, intercellular bridges"></td></tr>
+<tr><td class="rl">Adenocarcinoma</td><td><input placeholder="Lower 1/3 / GEJ"></td><td><input placeholder="GERD + Barrett's metaplasia"></td><td><input placeholder="Glandular; from Barrett's columnar epithelium"></td></tr>
+</tbody>
+</table>
+
+<div class="sec">Gastric Tumors (LO4)</div>
+<div class="fg">
+<div class="f"><label>Intestinal-type gastric CA: H. pylori-associated %</label><input placeholder="70-80%"></div>
+<div class="f"><label>Diffuse/signet-ring CA: primary cell type</label><input placeholder="Signet ring cells (intracellular mucin)"></div>
+<div class="f"><label>Gastric CA metastasis: bilateral ovaries (buzzword)</label><input placeholder="Krukenberg tumor"></div>
+<div class="f"><label>Gastric CA metastasis: periumbilical nodule</label><input placeholder="Sister Mary Joseph nodule"></div>
+<div class="f"><label>Gastric CA metastasis: left supraclavicular node</label><input placeholder="Virchow's node (Troisier sign)"></div>
+</div>
+
+<div class="sec">Gastrointestinal Stromal Tumor (GIST) (LO4)</div>
+<div class="fg">
+<div class="f"><label>Cell of origin</label><input placeholder="Interstitial cells of Cajal (myenteric pacemaker)"></div>
+<div class="f"><label>Genetic mutation (85%)</label><input placeholder="c-KIT (CD117) receptor tyrosine kinase"></div>
+<div class="f"><label>Most common location</label><input placeholder="Stomach (60%), then small intestine (30%)"></div>
+<div class="f"><label>Histology pattern</label><input placeholder="Spindle cells in interlacing bundles"></div>
+<div class="f"><label>IHC positive for (×2)</label><input placeholder="CD117 (c-KIT) + CD34"></div>
+<div class="f"><label>IHC negative for</label><input placeholder="Desmin (distinguishes from leiomyoma)"></div>
+<div class="f"><label>Targeted therapy</label><input placeholder="Imatinib (Gleevec) — tyrosine kinase inhibitor"></div>
+</div>
+
+<div class="sec">Carcinoid Tumor (Neuroendocrine) (LO4)</div>
+<div class="fg">
+<div class="f"><label>Origin</label><input placeholder="Enterochromaffin/Kulchitsky cells (gut epithelium)"></div>
+<div class="f"><label>Secreted hormone</label><input placeholder="Serotonin (5-HT) + other vasoactive substances"></div>
+<div class="f"><label>Most common site overall</label><input placeholder="Appendix (usually benign)"></div>
+<div class="f"><label>Most likely to cause carcinoid syndrome</label><input placeholder="Ileum/small intestine (metastases to liver)"></div>
+<div class="f"><label>Histology</label><input placeholder="Uniform nests of small round cells; salt-and-pepper chromatin"></div>
+<div class="f"><label>Carcinoid syndrome requirement</label><input placeholder="Hepatic metastases (bypass hepatic 5-HT inactivation)"></div>
+<div class="f"><label>Carcinoid syndrome clinical (×4)</label><input placeholder="Flushing, diarrhea, wheezing, right-sided valvular disease"></div>
+<div class="f"><label>Diagnostic test</label><input placeholder="↑ Urine 5-HIAA (5-hydroxyindoleacetic acid)"></div>
+<div class="f"><label>Treatment</label><input placeholder="Octreotide (somatostatin analog); surgical resection"></div>
+</div>
+
+<div class="sec">Colonic Polyps & Colorectal Cancer (LO4)</div>
+<table>
+<thead><tr><th>Feature</th><th>Tubular Adenoma</th><th>Villous Adenoma</th></tr></thead>
+<tbody>
+<tr><td class="rl">Architecture</td><td><input placeholder="Tubular/round glands; pedunculated (stalk)"></td><td><input placeholder="Finger-like villous; sessile (broad base)"></td></tr>
+<tr><td class="rl">Malignancy risk</td><td><input placeholder="Lower (~5%)"></td><td><input placeholder="Higher (~40%); villous=villainous"></td></tr>
+<tr><td class="rl">Secretory function</td><td><input placeholder="Minimal"></td><td><input placeholder="Secretes K+-rich mucus → hypokalemia"></td></tr>
+<tr><td class="rl">Size >2 cm significance</td><td><input placeholder="↑↑ malignancy risk"></td><td><input placeholder="Any villous = higher risk"></td></tr>
+</tbody>
+</table>
+
+<div class="sec">Familial Adenomatous Polyposis (FAP) (LO4)</div>
+<div class="fg">
+<div class="f"><label>Genetic mutation</label><input placeholder="APC tumor suppressor gene (chromosome 5q21)"></div>
+<div class="f"><label>Inheritance pattern</label><input placeholder="Autosomal dominant"></div>
+<div class="f"><label>Polyp count</label><input placeholder="Hundreds to thousands"></div>
+<div class="f"><label>Lifetime colorectal cancer risk if untreated</label><input placeholder="100%"></div>
+<div class="f"><label>Average age of CRC</label><input placeholder="39 years"></div>
+<div class="f"><label>Prophylactic treatment</label><input placeholder="Total colectomy by age 20-25"></div>
+<div class="f"><label>Gardner syndrome</label><input placeholder="FAP + osteomas + desmoid tumors + epidermoid cysts"></div>
+<div class="f"><label>Turcot syndrome</label><input placeholder="FAP + brain tumors"></div>
+</div>
+
+<div class="sec">Colorectal Adenocarcinoma (LO4)</div>
+<div class="fg">
+<div class="f"><label>Adenoma-Carcinoma Sequence (×4 mutations)</label><input placeholder="APC → KRAS → SMAD4/DCC → TP53"></div>
+<div class="f"><label>Timeline</label><input placeholder="~10-15 years (rationale for screening at 45)"></div>
+<div class="f"><label>Left colon/sigmoid gross pattern</label><input placeholder="Annular napkin-ring (encircling lumen)"></div>
+<div class="f"><label>Left colon presentation</label><input placeholder="Obstructive symptoms: constipation, change in stool caliber"></div>
+<div class="f"><label>Right colon gross pattern</label><input placeholder="Fungating/polypoid (into lumen)"></div>
+<div class="f"><label>Right colon presentation</label><input placeholder="Occult bleeding → iron deficiency anemia"></div>
+<div class="f"><label>TNM staging components</label><input placeholder="Depth of wall invasion (T), lymph nodes (N), distant mets (M)"></div>
+<div class="f"><label>Tumor marker (not screening)</label><input placeholder="CEA (carcinoembryonic antigen); monitor recurrence"></div>
+</div>
+
+<div class="sec">Lynch Syndrome (HNPCC) (LO4)</div>
+<div class="fg">
+<div class="f"><label>Gene mutations (DNA mismatch repair)</label><input placeholder="MLH1, MSH2, MSH6, PMS2"></div>
+<div class="f"><label>Resulting phenotype</label><input placeholder="Microsatellite instability (MSI-high)"></div>
+<div class="f"><label>Colon predominance</label><input placeholder="Right-sided colon"></div>
+<div class="f"><label>Histology subtype</label><input placeholder="Mucinous adenocarcinoma"></div>
+<div class="f"><label>Prognosis vs sporadic CRC</label><input placeholder="Better prognosis"></div>
+<div class="f"><label>Screening recommendation</label><input placeholder="Colonoscopy every 1-2 years from age 20-25"></div>
+</div>
+
+<div class="warn">Colorectal cancer screening (average risk): Start at age 45 (updated from 50); repeat q10yr if normal. FAP: start age 10-12. Lynch: age 20-25.</div>
+
+<button class="btn" onclick="rev('fb4',a4)">Reveal answers</button>
+<div class="fb" id="fb4"></div>
+</div>
+
+<!-- ═══ TAB 5: PRACTICE QS ═══ -->
+<div class="panel" id="p5">
+
+<div class="pq-box">
+  <div class="pq-q">Q1 (LO1 — Histology). A medical student examines a gastric biopsy showing tall, bright pink pyramidal cells in the fundic glands, each with an abundance of eosinophilic cytoplasm. What is the primary secretory product of these cells?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(0,0)">A. Pepsinogen</button>
+    <button class="pq-btn" onclick="reveal(0,1)">B. Hydrochloric acid + Intrinsic factor</button>
+    <button class="pq-btn" onclick="reveal(0,2)">C. Gastrin</button>
+    <button class="pq-btn" onclick="reveal(0,3)">D. Mucus</button>
+  </div>
+  <div class="pq-ans" id="q0ans" style="display:none"><strong>B — Parietal (oxyntic) cells</strong><br>These bright pink eosinophilic cells are parietal cells, found primarily in the fundus and body. They secrete both HCl (via H+/K+ ATPase) and intrinsic factor (required for B12 absorption in terminal ileum).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q2 (LO1 — Histology). A 5-year-old presents with severe diarrhea. A small bowel biopsy shows flattened villi, increased intraepithelial lymphocytes, crypt hyperplasia, and absence of a brush border. Which histologic finding is MOST specific for celiac disease?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(1,0)">A. Crypt hyperplasia</button>
+    <button class="pq-btn" onclick="reveal(1,1)">B. Villous atrophy</button>
+    <button class="pq-btn" onclick="reveal(1,2)">C. Plasma cell infiltration of lamina propria + villous atrophy</button>
+    <button class="pq-btn" onclick="reveal(1,3)">D. Increased intraepithelial lymphocytes alone</button>
+  </div>
+  <div class="pq-ans" id="q1ans" style="display:none"><strong>C — Villous atrophy + immune infiltration</strong><br>While villous atrophy can occur in other conditions (tropical sprue, Whipple's), the combination of villous atrophy with significant plasma cell infiltration of the lamina propria (B cells sensitized to gliadin) is characteristic of celiac disease. Serology (anti-tTG IgA) confirms diagnosis.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q3 (LO2 — Pathogenesis). A 55-year-old with a 20-year history of daily heartburn presents with dysphagia. Endoscopy shows a segment of dark/erythematous mucosa in the distal esophagus, distinct from pale squamous epithelium above. A biopsy reveals columnar epithelium with goblet cells. What is the MOST serious long-term complication of this condition?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(2,0)">A. Esophageal perforation</button>
+    <button class="pq-btn" onclick="reveal(2,1)">B. Esophageal stricture</button>
+    <button class="pq-btn" onclick="reveal(2,2)">C. Esophageal adenocarcinoma (30-40× increased risk)</button>
+    <button class="pq-btn" onclick="reveal(2,3)">D. Acute esophageal variceal bleeding</button>
+  </div>
+  <div class="pq-ans" id="q2ans" style="display:none"><strong>C — Esophageal adenocarcinoma</strong><br>This patient has Barrett's esophagus (metaplasia: squamous → columnar with goblet cells). The defining histologic feature is goblet cells. While stricture and ulceration are complications of GERD alone, the 30-40× increased risk of adenocarcinoma is the most serious long-term sequela. Regular surveillance is needed.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q4 (LO2 — Pathogenesis). A 28-year-old man presents with epigastric pain relieved by eating, and a biopsy shows chronic inflammation with small curved spiral rods visible on methylene blue staining. The organism produces urease. What is the pathogenic mechanism by which this organism causes mucosal damage?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(3,0)">A. Direct secretion of HCl into the lumen</button>
+    <button class="pq-btn" onclick="reveal(3,1)">B. Urease → NH₃ neutralizes gastric acid, allowing bacterial colonization + CagA/VacA toxins trigger inflammation</button>
+    <button class="pq-btn" onclick="reveal(3,2)">C. Competition with parietal cells for absorbing B12</button>
+    <button class="pq-btn" onclick="reveal(3,3)">D. Inhibition of prostaglandin synthesis</D>
+  </div>
+  <div class="pq-ans" id="q3ans" style="display:none"><strong>B — Urease → NH₃ + toxins</strong><br>H. pylori uses urease to convert urea → ammonia, neutralizing the acidic environment and allowing survival in gastric mucus. The organism then secretes CagA protein and vacuolating toxin (VacA), triggering chronic inflammatory cascade. This causes chronic gastritis, ulceration, and increased risk of gastric cancer (Group 1 carcinogen).</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q5 (LO2 — Pathogenesis). A 32-year-old woman with long-standing GERD is found to have a duodenal ulcer. Which of the following best explains why duodenal ulcers are 10× more common than gastric ulcers despite the duodenum being protected by pancreatic HCO₃⁻?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(4,0)">A. The duodenum lacks protective mucus</button>
+    <button class="pq-btn" onclick="reveal(4,1)">B. H. pylori preferentially infects the duodenum, and >95% of duodenal ulcers are H. pylori-associated</button>
+    <button class="pq-btn" onclick="reveal(4,2)">C. Duodenal enterocytes cannot secrete HCO₃⁻</C>
+    <button class="pq-btn" onclick="reveal(4,3)">D. NSAIDs are more absorbed in the duodenum</button>
+  </div>
+  <div class="pq-ans" id="q4ans" style="display:none"><strong>B — H. pylori association (>95% of DU)</strong><br>95% of duodenal ulcers are H. pylori-associated (vs 70-80% of gastric ulcers). The gastric antral location of H. pylori leads to increased gastrin release → increased acid secretion → duodenal mucosal damage. Even though the duodenum has HCO₃⁻ protection, chronic hypersecretion overwhelms this defense.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q6 (LO3 — IBD). A 24-year-old male with inflammatory bowel disease presents with right lower quadrant pain, fever, and bloody diarrhea. CT shows a dilated loop of terminal ileum with mesenteric fat stranding. Colonoscopy reveals skip lesions with a cobblestone appearance and deep fissuring ulcers. Biopsy shows transmural inflammation with granulomas. Which extraintestinal manifestation is MOST likely in this patient?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(5,0)">A. Primary sclerosing cholangitis (PSC)</button>
+    <button class="pq-btn" onclick="reveal(5,1)">B. Ankylosing spondylitis (HLA-B27+ arthropathy) or peripheral arthritis</button>
+    <button class="pq-btn" onclick="reveal(5,2)">C. Erythema nodosum + pyoderma gangrenosum</button>
+    <button class="pq-btn" onclick="reveal(5,3)">D. Uveitis + episcleritis</D>
+  </div>
+  <div class="pq-ans" id="q5ans" style="display:none"><strong>B — HLA-B27+ or HLA-B27− arthritis</strong><br>This patient has Crohn's disease (skip lesions, transmural, ileocecal location, granulomas). While PSC is more common in UC, arthritis (both HLA-B27+ ankylosing spondylitis/sacroiliitis and HLA-B27− peripheral arthritis) is common in BOTH Crohn's and UC. Erythema nodosum and ocular manifestations also occur, but arthritis is most common.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q7 (LO3 — IBD). A 31-year-old woman with ulcerative colitis spanning the entire colon develops toxic megacolon. Which of the following best explains why total colectomy would be curative for her inflammatory bowel disease?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(6,0)">A. Removal of the colon eliminates the primary source of inflammatory cytokine production</button>
+    <button class="pq-btn" onclick="reveal(6,1)">B. UC is confined to the colon — removing the diseased organ removes the source of disease (mucosal/submucosal only, NOT transmural)</B>
+    <button class="pq-btn" onclick="reveal(6,2)">C. The colon's role in water reabsorption is unnecessary for life</C>
+    <button class="pq-btn" onclick="reveal(6,3)">D. Post-colectomy ileostomy normalizes intestinal pH</D>
+  </div>
+  <div class="pq-ans" id="q6ans" style="display:none"><strong>B — UC is confined to colon; mucosal disease only</strong><br>Ulcerative colitis, by definition, is confined to the colon with MUCOSAL and SUBMUCOSAL inflammation only (NOT transmural like Crohn's). Removing the entire colon eliminates the diseased tissue and cures the disease. In contrast, Crohn's can recur even after surgery (transmural disease can affect any GI segment). Total colectomy is curative for UC.</div>
+</div>
+
+<div class="pq-box">
+  <div class="pq-q">Q8 (LO4 — Tumors). A 58-year-old man presents with painless massive hematemesis. Endoscopy reveals dark blue linear dilated veins in the lower 1/3 of the esophagus. CT shows cirrhosis and portal vein enlargement. What is the PRIMARY mechanism by which portal hypertension causes esophageal varices?</div>
+  <div class="pq-choices">
+    <button class="pq-btn" onclick="reveal(7,0)">A. Direct invasion of esophageal wall by hepatic cancer cells</button>
+    <button class="pq-btn" onclick="reveal(7,1)">B. Increased pressure in the portal system → blood diverted through portosystemic anastomoses (left gastric ↔ esophageal veins) → submucosal venous dilation</B>
+    <button class="pq-btn" onclick="reveal(7,2)">C. Splenomegaly compressing the esophageal veins directly</C>
+    <button class="pq-btn" onclick="reveal(7,3)">D. Hepatic failure → decreased clotting factors → spontaneous esophageal bleeding</D>
+  </div>
+  <div class="pq-ans" id="q7ans" style="display:none"><strong>B — Portal HTN diverts blood through anastomoses</strong><br>Portal hypertension (from cirrhosis, thrombosis, etc.) increases pressure in the portal system. Blood is diverted through portosystemic anastomoses, including the left gastric vein ↔ esophageal veins. This causes submucosal esophageal veins to dilate (varices). Varices are painless until they rupture (massive hemorrhage).</div>
+</div>
+
+</div>
+
+<script>
+function sw(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',i===n)});
+  document.querySelectorAll('.panel').forEach((p,i)=>{p.classList.toggle('active',i===n)});
+}
+
+function reveal(qnum, aindex){
+  const ans = document.getElementById('q'+qnum+'ans');
+  ans.style.display = ans.style.display === 'none' ? 'block' : 'none';
+}
+
+const a0={
+  'Esophagus epithelium':'Non-keratinized stratified squamous epithelium',
+  'Esophagus unique':'No serosa (facilitates rapid CA spread); submucosal mucous glands for lubrication',
+  'Stomach epithelium':'Simple columnar mucous epithelium',
+  'Stomach unique':'Rugae (large mucosal folds); gastric pits → glands with parietal + chief cells',
+  'SI epithelium':'Simple columnar with brush border (microvilli)',
+  'SI unique':'Villi (×10 increase in SA) + crypts; enterocytes with brush border; lacteals in lamina propria',
+  'Colon epithelium':'Simple columnar (no brush border enzyme activity)',
+  'Colon unique':'NO villi; straight parallel crypts; abundant goblet cells; taeniae coli → haustra',
+  'Parietal cells':'HCl + intrinsic factor (B12 absorption in terminal ileum)',
+  'Chief cells':'Pepsinogen (inactive → pepsin by HCl at pH <3.5)',
+  'G cells':'Gastrin (released in antrum → ↑ HCl)',
+  'Mucous neck cells':'Protective mucus in upper gland neck',
+  'Goblet cells':'Mucus; increase in number from duodenum → ileum',
+  'Paneth cells':'Defensins + lysozyme (innate immunity); support crypt stem cell niche',
+  'Villi function':'Dramatic increase in absorptive surface area (200-300× over flat tube)',
+  'Brush border':'Microvilli on apical surface of enterocytes; site of final digestion + absorption',
+  'Crypts of Lieberkühn':'Tubular glands at base of villi; contain stem cells (renew epithelium q3-5 days) + Paneth cells',
+  'Lacteals':'Lymphatic capillaries in lamina propria; absorb long-chain FA + chylomicrons → bypass liver via thoracic duct',
+  'Brunner\'s glands':'Submucosal mucous glands in DUODENUM ONLY; neutralize gastric acid (HCl)',
+  'Peyer\'s patches':'Lymphoid aggregates in ILEUM ONLY; MALT (gut-associated lymphoid tissue); immune surveillance'
+};
+
+const a1={
+  'GERD pathogenesis':'Incompetent LES → acid reflux → squamous mucosal damage (worsened by obesity, fatty foods, alcohol, tobacco, hiatal hernia)',
+  'GERD symptoms':'Heartburn (pyrosis), regurgitation, dysphagia (late)',
+  'Reflux esophagitis histology':'Basal zone hyperplasia of squamous epithelium + elongated papillae + eosinophilic infiltrate (eosinophils in squamous mucosa)',
+  'GERD complications':'Barrett\'s esophagus, stricture, ulceration, adenocarcinoma',
+  'Barrett\'s pathogenesis':'Chronic GERD → metaplasia: squamous → intestinal-type columnar epithelium with goblet cells (intestinal metaplasia)',
+  'Barrett\'s histology (definitive)':'Goblet cells in esophageal biopsy (columnar epithelium with goblet cells above GEJ)',
+  'Barrett\'s adenoCA risk':'30-40× increased risk of esophageal adenocarcinoma',
+  'Barrett\'s progression':'Barrett\'s → low-grade dysplasia → high-grade dysplasia → adenocarcinoma',
+  'Candida esophagitis gross':'Tan-yellow plaques (pseudomembranes) on erythematous mucosa; lower esophagus',
+  'Candida histology':'Fungal pseudohyphae + yeast forms invading superficial mucosa',
+  'Candida patient':'Immunosuppressed (AIDS, steroids, chemo) or poorly-controlled diabetes',
+  'Candida treatment':'Fluconazole (systemic antifungal)',
+  'HSV esophagitis gross':'Punched-out ulcers with brown-red base; sharply demarcated from pale normal mucosa',
+  'HSV histology':'Ground-glass nuclear inclusions (Cowdry type A); multinucleation of squamous cells',
+  'HSV esophagitis patient':'Immunosuppressed (AIDS, transplant)',
+  'HSV treatment':'Acyclovir',
+  'Esophageal varices pathogenesis':'Portal hypertension → increased pressure in portal system → blood diverted through portosystemic anastomoses → esophageal submucosal veins become engorged/dilated',
+  'Varices gross':'Linear dark blue dilated submucosal veins at lower esophagus',
+  'Varices histology':'Dilated, thin-walled vessels in submucosa; ruptured varix shows surrounding inflammation + hemorrhage',
+  'Varices location':'Lower 1/3 of esophagus (left gastric vein ↔ esophageal veins)',
+  'Varices complication':'Variceal rupture → massive upper GI hemorrhage → hematemesis (painless) → can be fatal (mortality 20-30% per episode)',
+  'Varices treatment':'Endoscopic band ligation, sclerotherapy, TIPS, propranolol (prophylaxis)'
+};
+
+const a2={
+  'NSAID injury mechanism':'Inhibit COX → ↓ prostaglandin synthesis → ↓ mucus + bicarb protection → mucosal injury',
+  'Alcohol effect on stomach':'Direct mucosal irritant; disrupts mucosal barrier',
+  'Acute gastritis histology':'Neutrophil infiltration of the gastric mucosa',
+  'Curling ulcer':'Severe burns → ↓ plasma volume → mucosal ischemia → ulceration',
+  'Cushing ulcer':'CNS injury/↑ ICP → vagal stimulation → ↑ gastric acid secretion (most likely to perforate)',
+  'PUD definition':'Breach in mucosa extending through muscularis mucosae into submucosa (or deeper); distinguishes from erosion (superficial)',
+  'PUD location':'Duodenum most common (anterior wall of first part) > stomach (lesser curvature of antrum/body)',
+  'DU pain pattern':'Epigastric pain relieved by eating',
+  'GU pain pattern':'Epigastric pain worsened by eating',
+  'PUD complications':'Bleeding (most common — melena/hematemesis), perforation, obstruction, penetration into pancreas',
+  'H. pylori morphology':'Gram-negative, microaerophilic, urease-positive spiral rod',
+  'H. pylori virulence':'Urease → NH₃ neutralizes acid allowing survival in mucus; CagA protein + vacuolating toxin (VacA) trigger inflammation',
+  'H. pylori stain':'Methylene blue stain (or Giemsa) shows small curved-to-spiral rod-shaped bacteria in surface epithelial mucus',
+  'H. pylori % DU associated':'95% of duodenal ulcers',
+  'H. pylori % GU associated':'70-80% of gastric ulcers',
+  'H. pylori diagnosis':'Urea breath test (gold standard non-invasive) | serology (IgG) | fecal antigen | biopsy (CLO test/histology with methylene blue/Giemsa)',
+  'H. pylori diseases':'Chronic gastritis (antral), peptic ulcer disease, gastric adenocarcinoma (intestinal type), gastric MALT lymphoma',
+  'H. pylori treatment':'Triple therapy: PPI + clarithromycin + amoxicillin × 14 days (or quadruple if resistant)',
+  'H. pylori & MALT':'H. pylori eradication can cause regression of low-grade gastric MALT lymphoma',
+  'H. pylori carcinogen':'Group 1 carcinogen (WHO)',
+  'Celiac pathogenesis':'Sensitivity to gliadin (gluten component) → immune-mediated destruction of small bowel mucosa → malabsorption',
+  'Celiac HLA':'HLA-DQ2 or HLA-DQ8 (>95%)',
+  'Celiac histology':'Villous atrophy, crypt hyperplasia, ↑ intraepithelial lymphocytes (IELs), plasma cell infiltration of lamina propria',
+  'Celiac serology':'Anti-tissue transglutaminase (anti-tTG) IgA; anti-endomysial antibodies (IgA)',
+  'Celiac symptoms':'Chronic diarrhea, steatorrhea, bloating; malabsorption → iron deficiency anemia, folate deficiency, fat-soluble vitamin deficiency (ADEK), osteoporosis',
+  'Celiac treatment':'Strict gluten-free diet → mucosal recovery',
+  'Celiac complication':'Enteropathy-associated T-cell lymphoma (EATL) in refractory cases',
+  'Meckel diverticulum origin':'Persistence of vitelline duct (omphalomesenteric duct)',
+  'Meckel location':'2 feet from ileocecal valve, on ileal side',
+  'Meckel rule of 2s':'2% population | 2 cm length | 2:1 male:female | 2 types of ectopic tissue | 2 years to present (typically <2 yrs)',
+  'Meckel ectopic tissue (50%)':'Gastric mucosa (secretes acid → ulceration of adjacent ileal mucosa)',
+  'Meckel presentation':'Painless GI bleeding (dark red stools), obstruction (from intussusception), inflammation (diverticulitis)'
+};
+
+const a3={
+  'Crohn\'s location':'Any part of GI tract from mouth to anus; ileocecal junction typical',
+  'Crohn\'s pattern':'Skip lesions (patches of normal mucosa intervening between inflamed areas)',
+  'Crohn\'s depth':'Transmural (affects all layers) → fistulas, strictures, abscesses',
+  'Crohn\'s cobblestone':'Present (from fissuring ulcers creating creeping fat)',
+  'Crohn\'s fistulas':'Common (due to transmural inflammation)',
+  'UC location':'Colon only; always starts at rectum, extends proximally (continuous)',
+  'UC pattern':'Continuous inflammation (no skip lesions)',
+  'UC depth':'Mucosal + submucosal only (NOT transmural)',
+  'UC cobblestone':'Absent',
+  'UC fistulas':'Rare (mucosal disease only)',
+  'Pseudopolyps':'Both Crohn\'s and UC (regenerating/granulation tissue)',
+  'Crypt abscess':'UC hallmark; Crohn\'s can occur but less characteristic',
+  'Crohn\'s hallmark histology':'Granulomas (30-50% of biopsies)',
+  'Crohn\'s complications':'Fistulas, strictures, intra-abdominal abscesses',
+  'Crohn\'s recurrence after surgery':'>50% (high recurrence despite resection)',
+  'UC cancer risk':'High (25-40× normal) — need colonic IBD-CA surveillance',
+  'Crohn\'s cancer risk':'Moderate (25× normal)',
+  'UC vs Crohn\'s curative surgery':'UC: yes (colectomy curative). Crohn\'s: no (can recur elsewhere)',
+  'UC fulminant risk':'Higher than Crohn\'s; toxic megacolon more common',
+  'IBD extraintestinal: HLA-B27+':'Ankylosing spondylitis, sacroiliitis',
+  'IBD extraintestinal: HLA-B27−':'Peripheral arthritis, erythema nodosum',
+  'IBD extraintestinal eye':'Uveitis, episcleritis',
+  'IBD extraintestinal skin':'Erythema nodosum, pyoderma gangrenosum',
+  'IBD extraintestinal liver':'Primary sclerosing cholangitis (PSC; more common with UC)',
+  'IBD extraintestinal kidney':'Nephrolithiasis (↑ oxalate absorption in Crohn\'s due to fat malabsorption)'
+};
+
+const a4={
+  'Esophageal SCC location':'Upper/middle 1/3 of esophagus',
+  'Esophageal SCC risk factors':'Smoking + alcohol (synergistic)',
+  'Esophageal SCC histology':'Keratin pearls, intercellular bridges',
+  'Esophageal adenoCA location':'Lower 1/3 / gastroesophageal junction',
+  'Esophageal adenoCA risk factors':'GERD + Barrett\'s metaplasia',
+  'Esophageal adenoCA histology':'Glandular; arises from Barrett\'s columnar epithelium',
+  'Gastric CA: H. pylori-associated %':'70-80% of intestinal-type adenocarcinoma',
+  'Diffuse gastric CA cell type':'Signet ring cells (intracellular mucin droplets)',
+  'Diffuse gastric CA synonym':'Linitis plastica ("leather bottle stomach")',
+  'Krukenberg tumor':'Gastric (or colon) cancer metastasizing to both ovaries → bilateral ovarian enlargement with signet ring cells',
+  'Sister Mary Joseph nodule':'Periumbilical subcutaneous metastasis (palpable umbilical nodule from gastric cancer)',
+  'Virchow\'s node (Troisier sign)':'Left supraclavicular lymphadenopathy from GI (esp gastric) cancer metastasis via thoracic duct',
+  'GIST cell of origin':'Interstitial cells of Cajal (pacemaker cells of myenteric plexus)',
+  'GIST genetic mutation (85%)':'c-KIT (CD117) receptor tyrosine kinase activating mutation',
+  'GIST other mutation (15%)':'PDGFRA mutation',
+  'GIST location':'Stomach (60%), small intestine (30%)',
+  'GIST location in wall':'Muscularis propria → submucosal mass',
+  'GIST histology':'Spindle cells in interlacing bundles (most common); ± epithelioid pattern',
+  'GIST IHC positive':'CD117 (c-KIT) + CD34',
+  'GIST IHC negative':'Desmin (distinguishes from leiomyoma)',
+  'GIST prognosis determinants':'Mitotic rate, tumor size, location (gastric = better than SI)',
+  'GIST treatment':'Surgical resection; imatinib (Gleevec) tyrosine kinase inhibitor for unresectable/metastatic',
+  'Carcinoid origin':'Enterochromaffin/Kulchitsky cells (neuroendocrine cells in gut epithelium)',
+  'Carcinoid secretion':'Serotonin (5-HT) + other vasoactive substances',
+  'Carcinoid most common site':'Appendix (usually benign)',
+  'Carcinoid most metastatic site':'Small intestine/ileum (most likely to cause carcinoid syndrome)',
+  'Carcinoid histology':'Uniform nests of small round cells; salt-and-pepper chromatin; IHC: chromogranin A, synaptophysin positive',
+  'Carcinoid syndrome requirement':'Hepatic metastases (serotonin bypasses hepatic first-pass inactivation)',
+  'Carcinoid syndrome features':'Flushing (episodic cutaneous), diarrhea (watery/secretory), wheezing (bronchospasm), right-sided valvular heart disease (tricuspid regurgitation, pulmonic stenosis)',
+  'Carcinoid diagnosis':'↑ urine 5-HIAA (5-hydroxyindoleacetic acid — serotonin metabolite)',
+  'Carcinoid treatment':'Octreotide (somatostatin analog) for symptom control; surgical resection',
+  'Tubular adenoma architecture':'Tubular/round glands; pedunculated (on a stalk)',
+  'Tubular adenoma malignancy':'Lower risk (~5%)',
+  'Villous adenoma architecture':'Finger-like villous projections; sessile (broad base)',
+  'Villous adenoma malignancy':'Higher risk (~40%); "villous = villainous"',
+  'Villous adenoma secretion':'K+-rich mucus → hypokalemia (secretory diarrhea)',
+  'FAP genetic mutation':'APC tumor suppressor gene (chromosome 5q21)',
+  'FAP inheritance':'Autosomal dominant',
+  'FAP polyp count':'Hundreds to thousands of adenomatous polyps throughout colon',
+  'FAP cancer risk':'100% lifetime risk of colorectal cancer if untreated',
+  'FAP cancer age':'Average age of CRC = 39 years',
+  'FAP treatment':'Prophylactic total colectomy by age 20-25',
+  'Gardner syndrome':'FAP + osteomas + desmoid tumors + epidermoid cysts',
+  'Turcot syndrome':'FAP + brain tumors',
+  'CRC adenoma-carcinoma sequence':'APC mutation → KRAS mutation → SMAD4/DCC loss → TP53 mutation → invasive carcinoma',
+  'CRC sequence timeline':'~10-15 years (rationale for screening at age 45)',
+  'Left colon CRC gross':'Annular "napkin-ring" / encircling lesion → lumen narrowing',
+  'Left colon CRC presentation':'Obstructive symptoms: constipation, change in stool caliber, colicky pain',
+  'Right colon CRC gross':'Fungating/polypoid growth into lumen',
+  'Right colon CRC presentation':'Occult bleeding → iron deficiency anemia (fatigue, pallor); palpable right-sided mass',
+  'TNM staging':'T = depth of wall invasion | N = lymph node involvement | M = distant metastasis',
+  'Dukes staging':'A = confined to mucosa | B = through wall | C = lymph nodes involved | D = distant mets',
+  'CRC tumor marker':'CEA (carcinoembryonic antigen; not for screening but for monitoring recurrence after resection)',
+  'CRC metastasis route':'Liver (hematogenous via portal vein) → lungs → peritoneum; bone/brain less common',
+  'Lynch syndrome genes':'DNA mismatch repair: MLH1, MSH2, MSH6, PMS2',
+  'Lynch syndrome phenotype':'Microsatellite instability (MSI-high)',
+  'Lynch syndrome location':'Right-sided colon predominance',
+  'Lynch syndrome histology':'Mucinous adenocarcinoma',
+  'Lynch syndrome prognosis':'Better than sporadic CRC',
+  'Lynch syndrome screening':'Colonoscopy every 1-2 years starting age 20-25',
+  'CRC screening average risk':'Age 45 (updated from 50); repeat q10yr if normal',
+  'CRC screening FAP':'Start age 10-12; prophylactic colectomy by 20-25',
+  'CRC screening Lynch':'Age 20-25; colonoscopy q1-2 years'
+};
+
+function rev(id,obj){
+  const el=document.getElementById(id);
+  el.style.display='block';
+  el.innerHTML='<strong>Answer key:</strong><br><br>'+Object.entries(obj).map(([k,v])=>`<b>${k}:</b> ${v}`).join('<br><br>');
+}
+</script>
+</body></html>

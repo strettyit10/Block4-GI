@@ -1,0 +1,582 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.f textarea{width:100%;border:1px solid #CBD5E1;border-radius:6px;font-size:12px;background:transparent;outline:none;padding:4px 6px;color:#1e293b;resize:vertical;min-height:52px}
+.f textarea:focus{border-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}.fb-row{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid #DBEAFE}.fb-row:last-child{border-bottom:none}.fb-row:nth-child(even){background:#F0F7FF}.fb-row:nth-child(odd){background:#fff}.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Pharmacology — Active Recall</h2>
+  <a href="gi23_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 23 (LOs 1–9). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 23 — GI Pharmacology (HoyaDocs)</strong>
+  Focus on: parietal cell targets (H2/PPI/antacids), H. pylori triple vs quadruple therapy, GERD stepwise treatment, antiemetics (5-HT3/5-HT4/muscarinic), prokinetics, laxative classifications (onset), antidiarrheals, and IBD biologics (anti-TNF vs anti-IL-23).
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">Acid Suppression</div>
+  <div class="tab" onclick="sw(1)">H. pylori Therapy</div>
+  <div class="tab" onclick="sw(2)">Antacids &amp; GERD</div>
+  <div class="tab" onclick="sw(3)">Antiemetics</div>
+  <div class="tab" onclick="sw(4)">Laxatives &amp; Antidiarrheals</div>
+  <div class="tab" onclick="sw(5)">IBD Drugs</div>
+  <div class="tab" onclick="sw(6)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: ACID SUPPRESSION ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — parietal cell targets (H+/K+-ATPase, H2R, M3R), H2 blockers vs PPIs (potency/onset), P-CABs, side effects of long-term PPI (hypomagnesemia, B12/Ca2+, C. diff risk)</div>
+
+<div class="sec">Parietal cell inputs — what stimulates acid secretion? (3 pathways)</div>
+<div class="fg3">
+  <div class="f"><label>Pathway 1 — _______ cell releases histamine → H2 receptor</label><input></div>
+  <div class="f"><label>Pathway 2 — Parasympathetic (vagus) releases _______ → M3 receptor</label><input></div>
+  <div class="f"><label>Pathway 3 — _______ cells release gastrin → CCK-B receptor</label><input></div>
+</div>
+
+<div class="sec">Drug classes targeting acid — name mechanism + 1 example</div>
+<table>
+  <tr><th>Drug Class</th><th>MOA</th><th>Example</th><th>Speed</th></tr>
+  <tr><td class="rl">Antacids</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">H2 receptor blockers</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">PPIs (proton pump inhibitors)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P-CABs</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">H2 blockers vs PPIs — key differences</div>
+<div class="fg">
+  <div class="f"><label>H2 blocker: reversible or irreversible block?</label><input></div>
+  <div class="f"><label>PPI: reversible or irreversible block?</label><input></div>
+  <div class="f"><label>Which is more potent (reduces acid more)?</label><input></div>
+  <div class="f"><label>Which has faster onset?</label><input></div>
+  <div class="f"><label>Name 2 H2 blockers</label><input></div>
+  <div class="f"><label>Name 3 PPIs</label><input></div>
+</div>
+
+<div class="sec">PPI side effects — chronic use complications (fill 4)</div>
+<div class="fg">
+  <div class="f"><label>Electrolyte — causes seizures/arrhythmias if low</label><input></div>
+  <div class="f"><label>Vitamin deficiency — intrinsic factor needed for absorption</label><input></div>
+  <div class="f"><label>Mineral deficiency — reduced absorption in alkaline stomach</label><input></div>
+  <div class="f"><label>What does PPI-induced achlorhydria increase risk of?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb0',a0)">Reveal answers</button>
+<div id="fb0" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 1: H. PYLORI THERAPY ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — quadruple vs triple therapy regimens, which antibiotics, bismuth role, why combination (resistance + PPI dual role), eradication testing (test timing + method)</div>
+
+<div class="sec">H. pylori basics — survival + pathogenesis</div>
+<div class="fg">
+  <div class="f"><label>What enzyme does H. pylori produce to survive gastric acid?</label><input></div>
+  <div class="f"><label>This enzyme converts urea into _______ and _______, the second of which buffers local acid</label><input></div>
+  <div class="f"><label>Untreated H. pylori → chronic gastritis + risk of what 2 serious sequelae?</label><input></div>
+</div>
+
+<div class="sec">H. pylori diagnosis — methods</div>
+<table>
+  <tr><th>Test</th><th>Mechanism / What It Detects</th><th>Invasive?</th></tr>
+  <tr><td class="rl">Urea breath test</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Stool antigen</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">CLO test (biopsy)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Serology (IgG)</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Quadruple therapy regimen — name all 4 drugs + duration</div>
+<div class="warn">MNEMONIC ALERT: Quadruple = 2 ABX + PPI + Bismuth. This is the current standard.</div>
+<table>
+  <tr><th>Component</th><th>Drug Name(s)</th><th>Duration</th></tr>
+  <tr><td class="rl">Antibiotic #1</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Antibiotic #2</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Acid suppression</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Antimicrobial coating</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Why PPI is essential in the regimen (2 reasons)</div>
+<div class="fg">
+  <div class="f"><label>Reason 1 — treatment goal (healing)</label><input></div>
+  <div class="f"><label>Reason 2 — antibiotic efficacy (pH-dependent)</label><input></div>
+</div>
+
+<div class="sec">Post-treatment monitoring — eradication testing</div>
+<div class="fg">
+  <div class="f"><label>Test for eradication how many weeks after completing antibiotics?</label><input></div>
+  <div class="f"><label>Which test to use (2 acceptable methods)</label><input></div>
+  <div class="f"><label>Why NOT use serology (IgG) for follow-up?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb1',a1)">Reveal answers</button>
+<div id="fb1" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 2: ANTACIDS & GERD ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 3</div>
+<div class="on-exam">ON EXAM — antacid choice (Mg/Ca/Al side effects), stepwise GERD treatment (lifestyle → antacid → H2 → PPI), LES physiology, PPIs > H2 for erosive disease</div>
+
+<div class="sec">Individual antacids — GI side effects mnemonic</div>
+<table>
+  <tr><th>Antacid</th><th>Side Effect(s)</th><th>Mnemonic / Tip</th></tr>
+  <tr><td class="rl">Magnesium hydroxide</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Aluminum hydroxide</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Calcium carbonate</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Sodium bicarbonate</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Mg + Al 50/50 combo</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">GERD stepwise treatment algorithm</div>
+<div class="warn">Step-wise GERD therapy: empiric treatment first, escalate if inadequate response or if erosive disease confirmed.</div>
+<div class="fg">
+  <div class="f"><label>Step 1 (initial) — non-pharmacologic</label><input></div>
+  <div class="f"><label>Step 2 (mild symptoms) — which drug class?</label><input></div>
+  <div class="f"><label>Step 3 (moderate or persistent) — which drug class?</label><input></div>
+  <div class="f"><label>Step 4 (erosive disease confirmed) — which drug preferred?</label><input></div>
+</div>
+
+<div class="sec">LES and acid reflux mechanics</div>
+<div class="fg">
+  <div class="f"><label>What is the LES and what keeps it normally closed?</label><input></div>
+  <div class="f"><label>What hormones/drugs RELAX the LES (promote reflux)?</label><input></div>
+  <div class="f"><label>What is the pathophysiology of Barrett's esophagus?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb2',a2)">Reveal answers</button>
+<div id="fb2" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 3: ANTIEMETICS ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 5 · LO 6</div>
+<div class="on-exam">ON EXAM — 5-HT3 antagonists (chemo nausea), 5-HT4 agonists (prokinetics), muscarinic antagonists (motion sickness), metoclopramide (TARDIVE DYSKINESIA risk, D2 block), chemotherapy-induced nausea mechanism</div>
+
+<div class="sec">Vomiting reflex anatomy — CTZ and NTS</div>
+<div class="fg">
+  <div class="f"><label>CTZ = chemoreceptor trigger zone; where is it located?</label><input></div>
+  <div class="f"><label>Is CTZ inside or outside the blood-brain barrier?</label><input></div>
+  <div class="f"><label>NTS = nucleus tractus solitarius; what does it do?</label><input></div>
+  <div class="f"><label>Name 3 inputs to the vomiting center that can trigger nausea</label><input></div>
+</div>
+
+<div class="sec">Antiemetic drugs — class, MOA, clinical use</div>
+<table>
+  <tr><th>Drug / Class</th><th>MOA</th><th>Best For / Indication</th></tr>
+  <tr><td class="rl">Ondansetron (Zofran)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Granisetron</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Metoclopramide (Reglan)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Prochlorperazine (Compazine)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Scopolamine</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Diphenhydramine (Benadryl)</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">5-HT3 antagonists vs 5-HT4 agonists — comparison</div>
+<div class="fg">
+  <div class="f"><label>5-HT3 antagonist examples (2)</label><input></div>
+  <div class="f"><label>5-HT3 use — what type of nausea?</label><input></div>
+  <div class="f"><label>5-HT4 agonist examples (2)</label><input></div>
+  <div class="f"><label>5-HT4 use — what GI problem does it treat?</label><input></div>
+</div>
+
+<div class="sec">Metoclopramide — MOA + major side effect concern</div>
+<div class="fg">
+  <div class="f"><label>Metoclopramide blocks which dopamine receptor?</label><input></div>
+  <div class="f"><label>What is the serious long-term neurological side effect?</label><input></div>
+  <div class="f"><label>Risk is highest if used > _______ months at high dose</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb3',a3)">Reveal answers</button>
+<div id="fb3" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 4: LAXATIVES & ANTIDIARRHEALS ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LO 7 · LO 8</div>
+<div class="on-exam">ON EXAM — laxative onset categories (bulk/osmotic/stimulant timing), diphenoxylate vs loperamide, when to AVOID antidiarrheals (toxin-mediated/invasive), ORS rationale (glucose-sodium coupling)</div>
+
+<div class="sec">Laxative classification by onset — name drugs in each category</div>
+<table>
+  <tr><th>Laxative Type</th><th>Onset</th><th>MOA</th><th>Example Drug(s)</th></tr>
+  <tr><td class="rl">Bulk</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Osmotic</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Stimulant</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Stool softener</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Antidiarrheals — drugs + mechanism</div>
+<div class="fg">
+  <div class="f"><label>Diphenoxylate (Lomotil) — MOA + concern</label><input></div>
+  <div class="f"><label>Loperamide (Imodium) — MOA + difference from diphenoxylate</label><input></div>
+  <div class="f"><label>Bismuth subsalicylate (Pepto-Bismol) — MOA</label><input></div>
+</div>
+
+<div class="sec">When to AVOID antidiarrheals — contraindications</div>
+<div class="warn">CRITICAL: Never give antidiarrheals in inflammatory diarrhea (toxin-mediated or invasive). They worsen outcomes by trapping toxins/bacteria.</div>
+<div class="fg">
+  <div class="f"><label>Condition: C. difficile toxin-mediated diarrhea → why avoid diphenoxylate/loperamide?</label><input></div>
+  <div class="f"><label>Condition: Shigella or EAEC invasive diarrhea → why avoid?</label><input></div>
+  <div class="f"><label>General rule: avoid antidiarrheals if _______ and _______ are present</label><input></div>
+</div>
+
+<div class="sec">Diarrhea management — ORS and fluid/electrolyte rationale</div>
+<div class="fg">
+  <div class="f"><label>ORS contains what 2 key components that work synergistically?</label><input></div>
+  <div class="f"><label>Mechanism: how does this combo reduce stool losses?</label><input></div>
+  <div class="f"><label>Why is ORS preferred over plain water?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb4',a4)">Reveal answers</button>
+<div id="fb4" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 5: IBD DRUGS ═══ -->
+<div class="panel" id="p5">
+<div class="lo-tag">LO 9</div>
+<div class="on-exam">ON EXAM — 5-ASA location (colon-targeted for UC), anti-TNF biologics (infliximab/adalimumab both GI+systemic), anti-IL-23 (risankizumab), Crohn's vs UC drug choice, steroid role (acute flare only)</div>
+
+<div class="sec">IBD classification — Crohn's vs UC key differences</div>
+<table>
+  <tr><th>Feature</th><th>Crohn's Disease</th><th>Ulcerative Colitis</th></tr>
+  <tr><td class="rl">Location(s)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Depth of inflammation</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Complications (fistula/stricture?)</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">5-ASA compounds — drugs + mechanism</div>
+<div class="fg">
+  <div class="f"><label>What does 5-ASA stand for?</label><input></div>
+  <div class="f"><label>Mesalamine (Asacol) — how is it formulated for colon delivery?</label><input></div>
+  <div class="f"><label>Sulfasalazine — what is it + why useful?</label><input></div>
+  <div class="f"><label>Role of 5-ASA in Crohn's vs UC: which is better indicated?</label><input></div>
+</div>
+
+<div class="sec">Biologic agents — anti-TNF and anti-IL-23</div>
+<table>
+  <tr><th>Drug</th><th>Target / MOA</th><th>GI + Systemic Effect?</th><th>Crohn's / UC?</th></tr>
+  <tr><td class="rl">Infliximab (Remicade)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Adalimumab (Humira)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Risankizumab</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Steroids in IBD — role and limitations</div>
+<div class="fg">
+  <div class="f"><label>When are systemic steroids (prednisone) used in IBD?</label><input></div>
+  <div class="f"><label>Why are steroids NOT used for maintenance therapy?</label><input></div>
+  <div class="f"><label>What is budesonide and when is it used?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb5',a5)">Reveal answers</button>
+<div id="fb5" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 6: PRACTICE QS ═══ -->
+<div class="panel" id="p6">
+<div class="lo-tag">Practice Questions</div>
+
+<div class="pq-box">
+<div class="pq-q">Q1: Acid suppression mechanism</div>
+<div class="pq-choices">A 38-year-old man with erosive GERD is started on omeprazole. Which of the following best describes the mechanism of this drug?
+<br><br>A) Reversible blockade of H₂ histamine receptors on parietal cells
+<br>B) Irreversible blockade of the H⁺/K⁺-ATPase (proton pump) in parietal cell canaliculus
+<br>C) Neutralization of existing gastric acid via alkaline ions
+<br>D) Inhibition of gastrin release from G cells
+<br>E) Competitive blockade of H⁺/K⁺-ATPase (reversible)</div>
+<button class="pq-btn" onclick="rq(this,0)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Omeprazole is a proton pump inhibitor (PPI) that irreversibly blockades the H⁺/K⁺-ATPase. This is the final common pathway for acid secretion, making PPIs the most potent acid suppressors. They are activated in the acidic canalicular space and bind irreversibly to the pump. A is H₂ blockers (reversible). C is antacids. D is not a mechanism of any major acid-suppressive drug. E describes P-CABs, which are newer.</div>
+
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q2: H. pylori eradication regimen</div>
+<div class="pq-choices">A 45-year-old woman is diagnosed with H. pylori by urea breath test and presents with a peptic ulcer. She is prescribed quadruple therapy. Which of the following is the correct combination?
+<br><br>A) Amoxicillin + Clarithromycin + PPI
+<br>B) Metronidazole + Tetracycline + PPI + Bismuth subsalicylate
+<br>C) Levofloxacin + Clarithromycin + H₂ blocker
+<br>D) Amoxicillin + Doxycycline + PPI + Antacid
+<br>E) Triple therapy is sufficient; quadruple is not standard</div>
+<button class="pq-btn" onclick="rq(this,1)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Quadruple therapy (the current standard per Medical Letter) consists of: Metronidazole + Tetracycline + PPI + Bismuth subsalicylate for 7–14 days. The PPI reduces acid (heals ulcer) AND improves antibiotic efficacy. Bismuth has intrinsic antimicrobial activity. A is older triple therapy (falling out of favor). C uses wrong drugs. D mixes different agents. E is incorrect; quadruple is now preferred due to clarithromycin resistance.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q3: Antacid side effects</div>
+<div class="pq-choices">A patient is given aluminum hydroxide for 2 weeks to treat GERD symptoms. Which side effect would you expect?
+<br><br>A) Diarrhea and hypermagnesemia
+<br>B) Constipation and phosphate depletion
+<br>C) Hypercalcemia and bloating
+<br>D) Hypomagnesemia and loose stools
+<br>E) Metabolic alkalosis and muscle weakness</div>
+<button class="pq-btn" onclick="rq(this,2)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Aluminum hydroxide causes CONSTIPATION (not diarrhea) and binds phosphate in the gut, leading to phosphate depletion. Magnesium hydroxide does the opposite (diarrhea). Remember: "Mg = Must Go" (diarrhea), "Al = All Locked Up" (constipation).</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q4: 5-HT3 antagonists and chemotherapy nausea</div>
+<div class="pq-choices">A 52-year-old woman receiving chemotherapy for breast cancer develops severe nausea. She is prescribed ondansetron IV before her next infusion. What is the mechanism of this drug?
+<br><br>A) Dopamine antagonist at the CTZ
+<br>B) Blocks 5-HT3 receptors, preventing vagal afferent signaling from GI to vomiting center
+<br>C) M1 muscarinic receptor antagonist (motion sickness pathway)
+<br>D) Increases gastric motility via 5-HT4 agonism
+<br>E) Reduces intracranial pressure in the CTZ</div>
+<button class="pq-btn" onclick="rq(this,3)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Ondansetron (and other setrons like granisetron) are selective 5-HT3 receptor antagonists. They block 5-HT3 receptors on vagal afferent neurons, preventing the transmission of chemotherapy-induced nausea signals to the vomiting center. A is metoclopramide. C is scopolamine/antihistamines. D is cisapride/prucalopride (prokinetics). E is not a mechanism of any antiemetic.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q5: Metoclopramide safety concern</div>
+<div class="pq-choices">A 40-year-old man with gastroparesis is treated with metoclopramide for 18 months at standard doses. He begins to develop involuntary orofacial movements. Which adverse effect is this consistent with?
+<br><br>A) Extrapyramidal side effects (acute dystonia)
+<br>B) Neuroleptic malignant syndrome
+<br>C) Tardive dyskinesia
+<br>D) Parkinsonism (tremor)
+<br>E) Akathisia</div>
+<button class="pq-btn" onclick="rq(this,4)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Tardive dyskinesia (involuntary dyskinetic movements, especially orofacial) is a serious long-term risk of metoclopramide (a D2 blocker), especially with prolonged use (>3 months) at higher doses. This is an FDA black box warning. A/B/D/E are other dopamine antagonist side effects but occur acutely. The 18-month duration and specific presentation point to tardive dyskinesia.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q6: Laxative onset classification</div>
+<div class="pq-choices">An elderly patient with constipation needs immediate bowel evacuation for a colonoscopy tomorrow morning. Which laxative has the fastest onset (hours)?
+<br><br>A) Psyllium husk (Metamucil)
+<br>B) Magnesium citrate (osmotic)
+<br>C) Docusate (stool softener)
+<br>D) Bisacodyl (stimulant)
+<br>E) Mineral oil</div>
+<button class="pq-btn" onclick="rq(this,5)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Osmotic laxatives like magnesium citrate work within 2–3 hours by drawing water into the intestinal lumen. This makes them ideal for rapid bowel evacuation (prep). A (bulk) takes 12–24 hours. C (softener) is very slow. D (stimulant) takes 6–12 hours. E (mineral oil) takes 6–8 hours.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q7: Antidiarrheal contraindication</div>
+<div class="pq-choices">A 35-year-old man presents with acute bloody diarrhea, fever, and positive stool culture for Shigella. He requests medication to stop the diarrhea. What is the best recommendation?
+<br><br>A) Prescribe loperamide (Imodium) to reduce symptoms
+<br>B) Prescribe diphenoxylate with atropine (Lomotil)
+<br>C) Avoid antidiarrheals; they worsen invasive bacterial infections by trapping organisms and toxins
+<br>D) Give bismuth subsalicylate for symptom relief
+<br>E) Both A and B are acceptable first-line treatments</div>
+<button class="pq-btn" onclick="rq(this,6)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Antidiarrheals (loperamide, diphenoxylate) are CONTRAINDICATED in invasive bacterial diarrhea (Shigella, EAEC, Salmonella, Campylobacter) and toxin-mediated diarrhea (C. difficile, Enterotoxigenic E. coli) because they trap organisms/toxins in the gut, prolonging infection and worsening complications. Supportive care with ORS is preferred. D (bismuth) is less problematic but still used cautiously.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q8: IBD drug choice — anti-TNF vs anti-IL-23</div>
+<div class="pq-choices">A 28-year-old woman is diagnosed with moderate Crohn's disease and is started on anti-TNF biologic therapy with infliximab. Which of the following best describes infliximab's role in IBD?
+<br><br>A) It blocks IL-23 signaling, preventing Th17 differentiation
+<br>B) It is a monoclonal antibody that binds TNF-α, preventing its interaction with TNFR1 and TNFR2, reducing pro-inflammatory cascade
+<br>C) It inhibits 5-HT4 receptors to reduce intestinal motility
+<br>D) It replaces missing 5-ASA at mucosal sites
+<br>E) It repairs the intestinal barrier by blocking zonula occludens proteins</div>
+<button class="pq-btn" onclick="rq(this,7)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Infliximab is a chimeric monoclonal antibody against TNF-α. It binds TNF and prevents its interaction with tumor necrosis factor receptors, reducing the pro-inflammatory Th1/Th17 response in both GI and systemic sites. A describes anti-IL-23 agents like risankizumab (newer, also effective). C is antiemetic/prokinetic. D and E are not mechanisms of biologics.</div>
+</div>
+
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+
+function sw(n){
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tabs[n].classList.add('active');
+  panels[n].classList.add('active');
+}
+
+const a0={
+  'Parietal cell input 1 (histamine) — released by':'ECL cells',
+  'H2 blocker examples':'Famotidine, Cimetidine (or ranitidine)',
+  'PPI examples':'Omeprazole, Pantoprazole, Lansoprazole',
+  'H2 blocker vs PPI: reversible or irreversible?':'H2 blocker = reversible; PPI = irreversible (proton pump)',
+  'H2 blocker onset vs PPI':'H2 blocker = faster (1-2 hours); PPI = slower (days to reach full effect)',
+  'Which is more potent?':'PPI is more potent (direct block of final common pathway)',
+  'PPI electrolyte concern (seizures/arrhythmias if low)':'Magnesium (Hypomagnesemia)',
+  'PPI vitamin deficiency':'Vitamin B12 (loses intrinsic factor in achlorhydric stomach)',
+  'PPI mineral deficiency (reduced absorption)':'Calcium (or Phosphate)',
+  'Chronic PPI use increases risk of':'Clostridioides difficile infection (loss of gastric acid barrier)'
+};
+
+const a1={
+  'H. pylori enzyme for acid survival':'Urease',
+  'Urease converts urea into':'NH₃ (ammonia) and CO₂ (carbon dioxide)',
+  'Untreated H. pylori sequelae (2)':'MALT lymphoma, Gastric adenocarcinoma',
+  'Urea breath test mechanism':'Patient ingests radiolabeled urea; H. pylori urease breaks it down → detectable ¹³CO₂ in breath',
+  'Urea breath test invasive?':'No (non-invasive)',
+  'Stool antigen mechanism':'Detects H. pylori antigens in feces',
+  'CLO test mechanism':'Endoscopic biopsy sample + urease substrate → color change if H. pylori present',
+  'Serology (IgG) for eradication testing?':'No (NOT recommended for follow-up; stays positive after eradication)',
+  'Quadruple therapy antibiotic #1':'Metronidazole',
+  'Quadruple therapy antibiotic #2':'Tetracycline',
+  'Quadruple therapy acid suppression':'PPI (any — omeprazole, pantoprazole, etc.)',
+  'Quadruple therapy antimicrobial coating':'Bismuth subsalicylate (Pepto-Bismol)',
+  'Duration of quadruple therapy':'7–14 days (antibiotics); PPI + bismuth continued until ulcer heals',
+  'PPI purpose in regimen #1':'Heals the ulcer (reduces acid)',
+  'PPI purpose in regimen #2':'Improves antibiotic efficacy (raises pH to near-neutral)',
+  'Post-treatment eradication testing — weeks after antibiotics':'4 weeks',
+  'Test method for eradication follow-up':'Urea breath test or stool antigen'
+};
+
+const a2={
+  'Magnesium hydroxide side effect':'Diarrhea (osmotically active)',
+  'Mg side effect mnemonic':'Mg = Must Go',
+  'Aluminum hydroxide side effect':'Constipation',
+  'Al side effect mnemonic':'Al = All Locked Up',
+  'Calcium carbonate side effects':'Gas, bloating, constipation',
+  'Sodium bicarbonate side effects':'CO₂ gas (bloating, belching)',
+  'Mg + Al 50/50 combo side effects':'Balanced (GI effects cancel)',
+  'GERD step 1 (initial/mild)':'Lifestyle modifications (weight loss, raise HOB, avoid triggers, etc.)',
+  'GERD step 2 (mild symptoms)':'On-demand antacids or H2 blocker (e.g., famotidine)',
+  'GERD step 3 (moderate or persistent)':'Once-daily PPI (e.g., omeprazole)',
+  'GERD step 4 (erosive disease confirmed)':'PPI (more potent than H2 blockers for healing)',
+  'LES physiology — what keeps it normally closed?':'Resting tone maintained by VIP/NO inhibitory neurons',
+  'What hormones/drugs relax the LES?':'Nitrates, CCK, chocolate, caffeine, alcohol, anticholinergics',
+  'Barrett esophagus pathophysiology':'Chronic acid reflux → metaplasia of squamous epithelium → columnar (intestinal-type) epithelium in esophagus → increased cancer risk'
+};
+
+const a3={
+  'CTZ location':'Postrema (area postrema), at base of 4th ventricle, OUTSIDE blood-brain barrier',
+  'CTZ outside or inside BBB?':'OUTSIDE (chemoreceptive trigger zone is chemosensitive)',
+  'NTS function':'Nucleus tractus solitarius receives inputs and integrates signals to the vomiting center (dorsal motor nucleus)',
+  'Three inputs to vomiting center':'(1) CTZ (chemoreceptors — drugs, toxins, motion), (2) GI mechanoreceptors via vagus, (3) Vestibular system',
+  'Ondansetron MOA':'5-HT3 receptor antagonist on vagal afferents',
+  'Granisetron MOA':'5-HT3 receptor antagonist (same as ondansetron)',
+  '5-HT3 antagonist best for':'Chemotherapy-induced nausea & vomiting (CINV), post-operative nausea/vomiting',
+  'Metoclopramide MOA':'Dopamine (D2) antagonist at CTZ + weak 5-HT4 agonist (prokinetic effect)',
+  'Metoclopramide best for':'Gastroparesis, post-op nausea, migraine-associated nausea (short-term)',
+  'Prochlorperazine MOA':'Dopamine antagonist (D2) at CTZ',
+  'Prochlorperazine best for':'General nausea/vomiting (GI, post-op, migraine)',
+  'Scopolamine MOA':'Muscarinic (M1) antagonist — blocks ACh on vestibular nuclei',
+  'Scopolamine best for':'Motion sickness, vestibular vertigo',
+  'Diphenhydramine MOA':'H1 antihistamine + anticholinergic (M1 block)',
+  'Diphenhydramine best for':'Motion sickness, vestibular nausea',
+  '5-HT4 agonist examples':'Cisapride, Prucalopride',
+  '5-HT4 use':'Gastroparesis (increases acetylcholine release → ↑motility)',
+  'Metoclopramide D2 receptor target':'Chemoreceptor trigger zone (CTZ) dopamine receptors',
+  'Metoclopramide serious long-term side effect':'Tardive dyskinesia (involuntary orofacial/limb movements)',
+  'Tardive dyskinesia risk if >______ months':'3 months (at high dose or prolonged use)'
+};
+
+const a4={
+  'Bulk laxative onset':'12–24 hours',
+  'Bulk laxative MOA':'Absorbs water, increases stool bulk → triggers peristalsis',
+  'Bulk laxative examples':'Psyllium husk (Metamucil), methylcellulose',
+  'Osmotic laxative onset':'2–3 hours',
+  'Osmotic laxative MOA':'Draws water into intestinal lumen (osmotic gradient)',
+  'Osmotic laxative examples':'Magnesium citrate, Lactulose, Polyethylene glycol (MiraLAX)',
+  'Stimulant laxative onset':'6–12 hours',
+  'Stimulant laxative MOA':'Directly stimulates smooth muscle contraction + increases secretion',
+  'Stimulant laxative examples':'Bisacodyl (Dulcolax), Senna, Castor oil',
+  'Stool softener onset':'Days (slow)',
+  'Stool softener MOA':'Reduces surface tension, allows water penetration into stool',
+  'Stool softener examples':'Docusate (Colace), Mineral oil',
+  'Diphenoxylate mechanism':'μ-opioid agonist in GI tract → ↓motility, ↑absorption',
+  'Diphenoxylate concern':'Contains atropine (anticholinergic) to discourage abuse, potential for opioid dependence',
+  'Loperamide mechanism':'μ-opioid agonist (peripheral only, poor BBB penetration)',
+  'Loperamide vs diphenoxylate — key difference':'Loperamide does NOT cross BBB (no abuse potential); diphenoxylate does slightly + has atropine added',
+  'Bismuth subsalicylate MOA':'Antimicrobial, anti-inflammatory, forms protective mucosal coating',
+  'When to AVOID antidiarrheals — condition 1':'Clostridium difficile toxin-mediated diarrhea (toxin gets trapped)',
+  'When to AVOID antidiarrheals — condition 2':'Invasive bacterial diarrhea (Shigella, EAEC, Salmonella, Campylobacter)',
+  'General rule: avoid antidiarrheals if _______ and _______':'Fever and bloody diarrhea (signs of invasion/inflammation)'  ,
+  'ORS key components (2)':'Glucose and Sodium',
+  'ORS mechanism of action':'Glucose-sodium co-transporter (SGLT1) drives electrolyte + water absorption (even during diarrhea)',
+  'ORS preferred over water because':'Water alone may worsen osmotic diarrhea; ORS replaces lost electrolytes + reduces net fluid loss'
+};
+
+const a5={
+  'Crohn location(s)':'Anywhere from mouth to anus (segmental, skip lesions); most common = terminal ileum',
+  'UC location(s)':'Colon and rectum only (continuous)',
+  'Crohn depth':'Transmural (all layers, including muscularis propria)',
+  'UC depth':'Mucosa + submucosa only (superficial)',
+  'Crohn complications':'Fistulas, strictures, abscesses (transmural disease)',
+  'UC complications':'Toxic megacolon, perforation (fulminant), increased cancer risk',
+  '5-ASA stands for':'5-Aminosalicylic acid',
+  'Mesalamine formulation':'pH-dependent coating (dissolves at pH >6) → delivers 5-ASA to terminal ileum/colon',
+  'Sulfasalazine composition':'5-ASA linked to sulfapyridine (prodrug); sulfapyridine cleaved by colonic bacteria → releases active 5-ASA',
+  '5-ASA better indicated in':'Ulcerative colitis (colon-targeted); less effective in Crohn (can be used but biologics preferred)',
+  'Infliximab target':'TNF-α (monoclonal antibody chimeric)',
+  'Infliximab effect':'Reduces Th1/Th17 pro-inflammatory response (GI + systemic)',
+  'Infliximab indication':'Crohn disease AND Ulcerative colitis (both)',
+  'Adalimumab target':'TNF-α (fully human monoclonal antibody)',
+  'Adalimumab effect':'Same as infliximab (TNF blockade)',
+  'Adalimumab indication':'Crohn disease AND UC',
+  'Risankizumab target':'IL-23 (blocks IL-23 signaling → prevents Th17 differentiation)',
+  'Risankizumab effect':'Reduces Th17 (different pathway than TNF)',
+  'Risankizumab indication':'Crohn disease (newer, increasingly used)',
+  'Steroids in IBD use':'Acute flares only (predisone, methylprednisolone, or topical budesonide for distal disease)',
+  'Steroids NOT used for':'Maintenance therapy (too many side effects with long-term use)',
+  'Budesonide':'Inhaled/topical corticosteroid with high first-pass liver metabolism → minimal systemic absorption; used for distal/mild Crohn'
+};
+
+function rev(id,obj){
+  const el=document.getElementById(id);
+  el.style.display='block';
+  el.innerHTML='<div class="fb-header">Answer Key</div>'+Object.entries(obj).map(([k,v])=>`<div class="fb-row"><div class="fb-q">${k}</div><div class="fb-a">${v}</div></div>`).join('');
+}
+
+function rq(btn,idx){
+  const box=btn.closest('.pq-box');
+  const ans=box.querySelector('.pq-ans');
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide':'Reveal';
+}
+</script>
+</body>
+</html>
