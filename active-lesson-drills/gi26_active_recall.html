@@ -1,0 +1,472 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .pq-choices{margin-left:4px}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">Parasitology — Active Recall</h2>
+  <a href="gi26_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 26 (LOs 1–4). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 26 — Parasitology (HoyaDocs)</strong>
+  Focus on: luminal protozoa (Entamoeba, Giardia, Cryptosporidium, acid-fast trio); blood/tissue protozoa (Leishmania, Chagas, Malaria, Toxoplasma, Babesia); nematodes (Ascaris, Enterobius, hookworm, Strongyloides, Trichinella, Toxocara); cestodes (Taenia, Diphyllobothrium, Echinococcus) and trematodes (Schistosoma).
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">Luminal Protozoa</div>
+  <div class="tab" onclick="sw(1)">Blood &amp; Tissue Protozoa</div>
+  <div class="tab" onclick="sw(2)">Nematodes</div>
+  <div class="tab" onclick="sw(3)">Cestodes &amp; Trematodes</div>
+  <div class="tab" onclick="sw(4)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: LUMINAL PROTOZOA ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — Entamoeba histolytica (flask ulcers, liver abscess), Giardia lamblia (foul fatty stools, hikers/daycare), Cryptosporidium (HIV CD4 &lt;100, acid-fast oocysts), Cyclospora/Cystoisospora</div>
+
+<div class="sec">Entamoeba histolytica</div>
+<div class="fg">
+  <div class="f"><label>Infective form</label><input></div>
+  <div class="f"><label>Pathogenic form in tissue</label><input></div>
+  <div class="f"><label>Transmission route</label><input></div>
+  <div class="f"><label>Colonoscopy finding (ulcer shape)</label><input></div>
+  <div class="f"><label>Extraintestinal manifestation</label><input></div>
+  <div class="f"><label>Classic abscess contents description</label><input></div>
+  <div class="f"><label>Stool microscopy finding</label><input></div>
+  <div class="f"><label>Serology use</label><input></div>
+  <div class="f"><label>Treatment — invasive disease</label><input></div>
+  <div class="f"><label>Treatment — luminal clearance</label><input></div>
+</div>
+
+<div class="sec">Giardia lamblia</div>
+<div class="fg">
+  <div class="f"><label>Morphology (buzzwords)</label><input></div>
+  <div class="f"><label>Transmission</label><input></div>
+  <div class="f"><label>Classic exposure</label><input></div>
+  <div class="f"><label>Host defect prone to infection</label><input></div>
+  <div class="f"><label>Clinical features</label><input></div>
+  <div class="f"><label>Best diagnostic test</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Cryptosporidium parvum/hominis</div>
+<div class="fg">
+  <div class="f"><label>Host at risk</label><input></div>
+  <div class="f"><label>Clinical in immunocompetent</label><input></div>
+  <div class="f"><label>Clinical in immunocompromised (HIV CD4 &lt;100)</label><input></div>
+  <div class="f"><label>Stain on stool</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Modified acid-fast oocyst trio — name all three</div>
+<div class="fg3">
+  <div class="f"><label>#1</label><input></div>
+  <div class="f"><label>#2</label><input></div>
+  <div class="f"><label>#3</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: Chronic foul fatty (steatorrhea) diarrhea after camping/hiking with well water → <em>Giardia</em>. "Crypto in HIV" has no great treatment; restore CD4 with ART.</div>
+</div>
+
+<!-- ═══ TAB 1: BLOOD/TISSUE PROTOZOA ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — Leishmania (visceral = kala-azar, cutaneous); Trypanosoma cruzi = Chagas (cardiomyopathy, megaesophagus/colon, kissing bug); Plasmodium (P. falciparum vs vivax/ovale vs malariae); Toxoplasma; Babesia</div>
+
+<div class="sec">Leishmania</div>
+<div class="fg">
+  <div class="f"><label>Vector</label><input></div>
+  <div class="f"><label>Form in vector</label><input></div>
+  <div class="f"><label>Form in human macrophages</label><input></div>
+  <div class="f"><label>Visceral disease name</label><input></div>
+  <div class="f"><label>Visceral clinical</label><input></div>
+  <div class="f"><label>Cutaneous clinical</label><input></div>
+  <div class="f"><label>Treatment options</label><input></div>
+</div>
+
+<div class="sec">Trypanosoma cruzi — Chagas disease</div>
+<div class="fg">
+  <div class="f"><label>Vector</label><input></div>
+  <div class="f"><label>Transmission route (to human)</label><input></div>
+  <div class="f"><label>Geographic exposure</label><input></div>
+  <div class="f"><label>Acute clinical (Romaña sign)</label><input></div>
+  <div class="f"><label>Chronic cardiac manifestation</label><input></div>
+  <div class="f"><label>Chronic GI manifestations (2)</label><input></div>
+  <div class="f"><label>Diagnosis</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Plasmodium species</div>
+<table>
+  <tr><th>Species</th><th>Fever periodicity</th><th>Key feature</th></tr>
+  <tr><td class="rl">P. falciparum</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P. vivax</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P. ovale</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P. malariae</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P. knowlesi</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Malaria — key treatment</div>
+<div class="fg">
+  <div class="f"><label>Uncomplicated treatment</label><input></div>
+  <div class="f"><label>Severe falciparum — drug of choice</label><input></div>
+  <div class="f"><label>Drug for vivax/ovale hypnozoites</label><input></div>
+  <div class="f"><label>What to check before primaquine</label><input></div>
+  <div class="f"><label>Resistance factor — sickle cell trait protects how?</label><input></div>
+</div>
+
+<div class="sec">Toxoplasma gondii</div>
+<div class="fg">
+  <div class="f"><label>Definitive host</label><input></div>
+  <div class="f"><label>Transmission routes (3)</label><input></div>
+  <div class="f"><label>Immunocompetent adult illness</label><input></div>
+  <div class="f"><label>AIDS (CD4 &lt;100) finding</label><input></div>
+  <div class="f"><label>Congenital triad</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Babesia</div>
+<div class="fg">
+  <div class="f"><label>Vector</label><input></div>
+  <div class="f"><label>Geography (US)</label><input></div>
+  <div class="f"><label>Classic finding on blood smear</label><input></div>
+  <div class="f"><label>At-risk host</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: "Maltese cross" = Babesia (intraerythrocytic, tetrad). "Ring form" and banana gametocyte = P. falciparum.</div>
+</div>
+
+<!-- ═══ TAB 2: NEMATODES ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 3</div>
+<div class="on-exam">ON EXAM — Ascaris (largest roundworm), Enterobius (pinworm, Scotch-tape), hookworm (Necator/Ancylostoma, iron deficiency), Strongyloides (autoinfection/hyperinfection), Trichinella (muscle cysts, undercooked pork/bear), Toxocara (VLM/OLM)</div>
+
+<div class="sec">Match nematode → exposure → disease</div>
+<table>
+  <tr><th>Nematode</th><th>Classic exposure/route</th><th>Signature disease/finding</th><th>Treatment</th></tr>
+  <tr><td class="rl">Ascaris lumbricoides</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Enterobius vermicularis (pinworm)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Hookworm (Necator/Ancylostoma)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Strongyloides stercoralis</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Trichinella spiralis</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Toxocara canis/cati</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Enterobius (pinworm) specifics</div>
+<div class="fg">
+  <div class="f"><label>Classic symptom</label><input></div>
+  <div class="f"><label>Diagnostic test</label><input></div>
+  <div class="f"><label>Treatment (+ household contacts?)</label><input></div>
+</div>
+
+<div class="sec">Hookworm — pathophysiology</div>
+<div class="fg">
+  <div class="f"><label>Why iron deficiency anemia</label><input></div>
+  <div class="f"><label>Skin sign (entry)</label><input></div>
+  <div class="f"><label>Pulmonary phase (Löffler)</label><input></div>
+</div>
+
+<div class="sec">Strongyloides — unique features</div>
+<div class="fg">
+  <div class="f"><label>Why "autoinfection"</label><input></div>
+  <div class="f"><label>Hyperinfection trigger</label><input></div>
+  <div class="f"><label>Clinical picture in hyperinfection</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Trichinella — clinical triad</div>
+<div class="fg3">
+  <div class="f"><label>GI (days 1–7)</label><input></div>
+  <div class="f"><label>Muscle phase (weeks 2+)</label><input></div>
+  <div class="f"><label>Classic lab finding</label><input></div>
+</div>
+
+<div class="sec">Toxocara — larva migrans</div>
+<div class="fg">
+  <div class="f"><label>Visceral larva migrans clinical</label><input></div>
+  <div class="f"><label>Ocular larva migrans clinical</label><input></div>
+  <div class="f"><label>Who — classic host</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: Always screen at-risk patients for Strongyloides BEFORE steroids or other immunosuppression to prevent lethal hyperinfection.</div>
+</div>
+
+<!-- ═══ TAB 3: CESTODES & TREMATODES ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 4</div>
+<div class="on-exam">ON EXAM — Taenia solium (neurocysticercosis), Taenia saginata (beef), Diphyllobothrium (B12 deficiency), Echinococcus (hydatid cyst), Schistosoma (S. mansoni/japonicum vs haematobium — bladder cancer)</div>
+
+<div class="sec">Cestode framework — definitive vs intermediate host</div>
+<div class="fg">
+  <div class="f"><label>Definition: definitive host</label><input></div>
+  <div class="f"><label>Definition: intermediate host</label><input></div>
+</div>
+
+<div class="sec">Match cestode → exposure → signature disease</div>
+<table>
+  <tr><th>Cestode</th><th>Exposure</th><th>Signature</th><th>Treatment</th></tr>
+  <tr><td class="rl">Taenia solium (pork)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Taenia saginata (beef)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Diphyllobothrium latum (fish)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Echinococcus granulosus</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Neurocysticercosis — high-yield</div>
+<div class="fg">
+  <div class="f"><label>How humans become intermediate host</label><input></div>
+  <div class="f"><label>Brain imaging finding</label><input></div>
+  <div class="f"><label>Most common presenting symptom</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Echinococcus (hydatid cyst) — high-yield</div>
+<div class="fg">
+  <div class="f"><label>Exposure/reservoir</label><input></div>
+  <div class="f"><label>Organ most commonly affected</label><input></div>
+  <div class="f"><label>Risk of needle aspiration</label><input></div>
+  <div class="f"><label>Treatment</label><input></div>
+</div>
+
+<div class="sec">Diphyllobothrium latum — the fish tapeworm</div>
+<div class="fg">
+  <div class="f"><label>Source food</label><input></div>
+  <div class="f"><label>Deficiency caused</label><input></div>
+  <div class="f"><label>Mechanism of deficiency</label><input></div>
+</div>
+
+<div class="sec">Schistosoma — species differences</div>
+<table>
+  <tr><th>Species</th><th>Geography</th><th>Primary site</th><th>Chronic complication</th></tr>
+  <tr><td class="rl">S. mansoni</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">S. japonicum</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">S. haematobium</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Schistosoma — general</div>
+<div class="fg">
+  <div class="f"><label>Intermediate host</label><input></div>
+  <div class="f"><label>Mode of human infection</label><input></div>
+  <div class="f"><label>Acute syndrome (Katayama fever)</label><input></div>
+  <div class="f"><label>Treatment (all species)</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: S. haematobium → squamous cell carcinoma of the bladder (not TCC!). Eggs with terminal spine → S. haematobium. Lateral spine → S. mansoni.</div>
+</div>
+
+<!-- ═══ TAB 4: PRACTICE ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LOs 1–4</div>
+
+<div class="pq-box">
+<div class="pq-q">Q1: Hikers and foul fatty diarrhea</div>
+<div class="pq-choices">A 32-year-old returns from a camping trip where she drank untreated stream water. For 3 weeks she has had foul-smelling, greasy, floating stools, bloating, and weight loss. Which organism + treatment?
+<br><br>A) Cryptosporidium; nitazoxanide
+<br>B) Giardia lamblia; metronidazole (or tinidazole)
+<br>C) Entamoeba histolytica; metronidazole + paromomycin
+<br>D) Cyclospora; TMP-SMX
+<br>E) Rotavirus; supportive</div>
+<button class="pq-btn" onclick="rq(this,0)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Giardia is classic for prolonged foul fatty diarrhea after untreated water (hikers, daycare, travel). Diagnosis: stool antigen or ova & parasite (pear-shaped trophozoites, "owl-eyes"). Treat with metronidazole or tinidazole.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q2: HIV + CD4 &lt;100 + watery diarrhea</div>
+<div class="pq-choices">A 38-year-old man with AIDS (CD4 = 42) has 3 weeks of profuse watery diarrhea. Modified acid-fast stain of stool shows 4–6 μm oocysts. Organism?
+<br><br>A) Giardia lamblia
+<br>B) Entamoeba histolytica
+<br>C) Cryptosporidium parvum
+<br>D) Cyclospora cayetanensis
+<br>E) Isospora (Cystoisospora) belli</div>
+<button class="pq-btn" onclick="rq(this,1)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Cryptosporidium — small (4–6 μm) modified acid-fast oocysts; severe chronic diarrhea in AIDS. Treatment is limited (nitazoxanide); best therapy is CD4 recovery with ART. Cyclospora oocysts are larger (~10 μm); Cystoisospora (Isospora) are oval and acid-fast, treated with TMP-SMX.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q3: Chagas cardiomyopathy</div>
+<div class="pq-choices">A 52-year-old Bolivian man presents with progressive CHF and dysphagia. ECG: RBBB + LAFB. Echo: apical aneurysm. Dilated megaesophagus on barium swallow. Which organism + vector?
+<br><br>A) T. brucei; tsetse fly
+<br>B) T. cruzi; reduviid (kissing) bug
+<br>C) Leishmania donovani; sandfly
+<br>D) Babesia microti; Ixodes tick
+<br>E) P. falciparum; Anopheles mosquito</div>
+<button class="pq-btn" onclick="rq(this,2)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Chagas disease (Trypanosoma cruzi) is transmitted by the reduviid ("kissing") bug in Latin America. Chronic sequelae: dilated cardiomyopathy with apical aneurysm and conduction disease (RBBB + LAFB), megaesophagus and megacolon. Treatment: benznidazole or nifurtimox.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q4: Malaria relapse</div>
+<div class="pq-choices">A patient treated 3 months ago for uncomplicated P. vivax malaria with chloroquine returns with recurrent fever and parasitemia. Which drug should have been added initially to prevent relapse?
+<br><br>A) Atovaquone-proguanil
+<br>B) Mefloquine
+<br>C) Primaquine (after G6PD testing)
+<br>D) Doxycycline
+<br>E) Artesunate</div>
+<button class="pq-btn" onclick="rq(this,3)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>P. vivax and P. ovale produce hypnozoites (dormant liver forms) → relapse. Add primaquine (or tafenoquine) to eradicate hypnozoites, AFTER checking G6PD status (risk of hemolysis).</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q5: Strongyloides hyperinfection</div>
+<div class="pq-choices">A 60-year-old Vietnamese man is started on high-dose prednisone for asthma. One week later he develops bloody sputum, abdominal pain, sepsis, and gram-negative bacteremia (E. coli). Filariform larvae are seen in sputum. What should have been done prior to steroids?
+<br><br>A) Stool ova & parasite and empiric ivermectin
+<br>B) Nothing — Strongyloides is rare in the US
+<br>C) Blood smear for malaria
+<br>D) Colonoscopy
+<br>E) Chest X-ray only</div>
+<button class="pq-btn" onclick="rq(this,4)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>A</strong><br><br>Strongyloides can persist asymptomatically for decades via autoinfection. Steroids/immunosuppression trigger hyperinfection with massive larval dissemination, bacteremia from gut translocation (polymicrobial GNR sepsis), and ARDS. Screen with serology and stool; treat with ivermectin.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q6: Neurocysticercosis</div>
+<div class="pq-choices">A 28-year-old recent immigrant from rural Mexico presents with new-onset seizures. MRI shows multiple small cystic lesions with scolex visible inside. Most likely organism + transmission route?
+<br><br>A) Taenia saginata; ingestion of undercooked beef
+<br>B) Taenia solium; ingestion of eggs (fecal-oral, often from a human tapeworm carrier)
+<br>C) Echinococcus; ingestion of dog eggs
+<br>D) Toxocara; ingestion of dog eggs
+<br>E) Toxoplasma; ingestion of cat oocysts</div>
+<button class="pq-btn" onclick="rq(this,5)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Neurocysticercosis = cysts in the CNS from ingestion of Taenia solium EGGS (not larvae in undercooked pork, which causes intestinal taeniasis). Humans become an accidental intermediate host. Treatment: albendazole + steroids + anticonvulsants.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q7: B12 deficiency from fish</div>
+<div class="pq-choices">A 40-year-old sushi enthusiast is found to have macrocytic anemia with elevated MMA and hypersegmented neutrophils. Stool O&P: operculated eggs. Organism and mechanism?
+<br><br>A) Diphyllobothrium latum; competes for dietary B12
+<br>B) Ascaris; intestinal malabsorption
+<br>C) Giardia; villous blunting
+<br>D) Tropheryma whipplei; enteritis
+<br>E) Schistosoma; chronic blood loss</div>
+<button class="pq-btn" onclick="rq(this,6)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>A</strong><br><br>Diphyllobothrium latum (fish tapeworm) competes for dietary B12 → megaloblastic anemia. Exposure: raw/undercooked freshwater fish (sushi, sashimi, smoked salmon). Treat with praziquantel.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q8: Hydatid cyst</div>
+<div class="pq-choices">A 45-year-old sheep rancher has a large cystic liver lesion with "eggshell" calcification and daughter cysts. Serology: Echinococcus positive. Best management?
+<br><br>A) Percutaneous aspiration alone
+<br>B) Albendazole + careful surgical resection or PAIR (Puncture-Aspirate-Inject-Reaspirate) — avoid uncontrolled spillage (anaphylaxis/spread)
+<br>C) Metronidazole
+<br>D) Observation only
+<br>E) Ivermectin</div>
+<button class="pq-btn" onclick="rq(this,7)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Echinococcus (hydatid cyst): albendazole ± PAIR or surgical resection. Do NOT simply aspirate — uncontrolled spillage can cause anaphylaxis and seeding of daughter cysts.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q9: Pinworm</div>
+<div class="pq-choices">A 6-year-old has nocturnal perianal itching. Scotch-tape test shows oval eggs flattened on one side. Best management?
+<br><br>A) Topical hydrocortisone
+<br>B) Metronidazole
+<br>C) Albendazole or mebendazole for patient AND household contacts; repeat dose in 2 weeks
+<br>D) Ivermectin for patient only
+<br>E) Praziquantel</div>
+<button class="pq-btn" onclick="rq(this,8)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Enterobius (pinworm): classic nocturnal perianal pruritus. Diagnose with Scotch-tape test (morning). Treat patient + household contacts with albendazole or pyrantel pamoate; repeat in 2 weeks to kill newly hatched eggs.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q10: Schistosoma and bladder cancer</div>
+<div class="pq-choices">A 35-year-old Egyptian man has painless hematuria. Urinalysis: RBCs + eggs with a terminal spine. Cystoscopy: squamous cell carcinoma of the bladder. Which Schistosoma species?
+<br><br>A) S. mansoni
+<br>B) S. japonicum
+<br>C) S. haematobium
+<br>D) S. mekongi
+<br>E) S. intercalatum</div>
+<button class="pq-btn" onclick="rq(this,9)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>S. haematobium → bladder (terminal-spined eggs) → chronic inflammation → squamous cell carcinoma (NOT transitional). Mansoni/japonicum affect mesenteric veins → chronic liver fibrosis (pipestem) and portal hypertension. Treat all with praziquantel.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q11: Toxoplasma in AIDS</div>
+<div class="pq-choices">A 45-year-old with AIDS (CD4 = 50) has headache and hemiparesis. MRI: multiple ring-enhancing lesions. Serology: Toxoplasma IgG positive. Best initial therapy?
+<br><br>A) Radiation therapy
+<br>B) Pyrimethamine + sulfadiazine + leucovorin
+<br>C) Amphotericin B
+<br>D) Artesunate
+<br>E) Ganciclovir</div>
+<button class="pq-btn" onclick="rq(this,10)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>AIDS + ring-enhancing brain lesions + Toxo IgG+ → treat empirically with pyrimethamine + sulfadiazine + leucovorin. TMP-SMX for PJP prophylaxis also prevents toxoplasmosis reactivation.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q12: Babesia</div>
+<div class="pq-choices">A 65-year-old splenectomized man from Nantucket develops fever, hemolytic anemia, and fatigue. Smear: small intraerythrocytic ring forms and a "Maltese cross." Vector?
+<br><br>A) Reduviid bug
+<br>B) Ixodes scapularis tick
+<br>C) Anopheles mosquito
+<br>D) Sandfly
+<br>E) Tsetse fly</div>
+<button class="pq-btn" onclick="rq(this,11)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Babesia microti is transmitted by the Ixodes scapularis tick (same vector as Lyme and anaplasmosis). Maltese cross = pathognomonic. Especially severe in asplenic/elderly. Treat with atovaquone + azithromycin (or clindamycin + quinine for severe disease).</div>
+</div>
+
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+
+function sw(n){
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tabs[n].classList.add('active');
+  panels[n].classList.add('active');
+}
+
+function rq(btn,idx){
+  const box=btn.closest('.pq-box');
+  const ans=box.querySelector('.pq-ans');
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide':'Reveal';
+}
+</script>
+</body></html>
