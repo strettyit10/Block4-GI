@@ -90,14 +90,14 @@
   <select id="prefix-select" onchange="onConfigChange()">
     <option value="#AK_Step1_v12::#Bootcamp">Bootcamp</option>
     <option value="#AK_Step1_v12::#B&B">Boards &amp; Beyond (B&amp;B)</option>
-    <option value="#AK_Step1_v12::Pathoma">Pathoma</option>
+    <option value="#AK_Step1_v12::#Pathoma">Pathoma</option>
     <option value="#AK_Step1_v12::Sketchy">Sketchy</option>
     <option value="#AK_Step1_v12::Physeo">Physeo</option>
     <option value="custom">Custom…</option>
   </select>
   <label id="custom-resource-label" style="display:none">Custom prefix</label>
   <input type="text" id="custom-resource-input" placeholder="e.g. #AK_Step1_v12::MySource" style="display:none" oninput="onConfigChange()">
-  <label>Subject <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
+  <label id="subject-label">Subject <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
   <input type="text" id="subject-input" placeholder="e.g. Endocrinology, Reproductive…" value="Endocrinology" oninput="onConfigChange()">
   <div class="preview-block">
     <div class="preview-label">Matching tags that look like:</div>
@@ -172,24 +172,39 @@ function getResourceBase() {
 }
 function getResourceName() {
   const s = document.getElementById('prefix-select').value;
-  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::Pathoma':'Pathoma','#AK_Step1_v12::Sketchy':'Sketchy','#AK_Step1_v12::Physeo':'Physeo'};
+  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::Sketchy':'Sketchy','#AK_Step1_v12::Physeo':'Physeo'};
   return s === 'custom' ? (document.getElementById('custom-resource-input').value.split('::').pop() || 'Resource') : (map[s] || s);
 }
 function getSubject() { return document.getElementById('subject-input').value.trim(); }
 function getFullPrefix() {
-  const b = getResourceBase(), sub = getSubject();
-  return b ? (sub ? `${b}::${sub}::` : `${b}::`) : '';
+  const b = getResourceBase();
+  if (!b) return '';
+  if (resourceSkipsSubject()) return `${b}::`;
+  const sub = getSubject();
+  return sub ? `${b}::${sub}::` : `${b}::`;
 }
 
 function updatePreview() {
-  const base = getResourceBase() || '#AK_Step1_v12::Resource', subject = getSubject() || '<Subject>';
-  document.getElementById('tag-preview').innerHTML =
-    `<span class="seg-matched">${esc(base)}::${esc(subject)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  const base = getResourceBase() || '#AK_Step1_v12::Resource';
+  if (resourceSkipsSubject()) {
+    document.getElementById('tag-preview').innerHTML =
+      `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  } else {
+    const subject = getSubject() || '<Subject>';
+    document.getElementById('tag-preview').innerHTML =
+      `<span class="seg-matched">${esc(base)}::${esc(subject)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  }
+}
+function resourceSkipsSubject() {
+  return document.getElementById('prefix-select').value === '#AK_Step1_v12::#Pathoma';
 }
 function onConfigChange() {
   const isCustom = document.getElementById('prefix-select').value === 'custom';
+  const noSubject = resourceSkipsSubject();
   document.getElementById('custom-resource-label').style.display = isCustom ? '' : 'none';
   document.getElementById('custom-resource-input').style.display = isCustom ? '' : 'none';
+  document.getElementById('subject-label').style.display = noSubject ? 'none' : '';
+  document.getElementById('subject-input').style.display = noSubject ? 'none' : '';
   updatePreview();
   if (cachedNoteRows) reparse();
 }
