@@ -153,9 +153,10 @@ function formatSubNum(chapterNum, subNum) {
   if (chapterNum === null || subNum === null) return '';
   return `${chapterNum}.${String(subNum).padStart(2, '0')}`;
 }
+function stripLeadingNum(s) { return s.replace(/^\d+\s*/, ''); }
 function mappedLabel(chapterRaw, subRaw) {
   const num = formatSubNum(getChapterNum(chapterRaw), getSubchapterNum(subRaw));
-  return num ? `${num} ${label(subRaw)}` : label(subRaw);
+  return num ? `${num} ${stripLeadingNum(label(subRaw))}` : label(subRaw);
 }
 
 function getResourceBase() {
@@ -308,7 +309,7 @@ function renderTable() {
       return `<tr>
         <td class="chapter-cell">${esc(label(r.chapter))}</td>
         <td class="subchapter-cell">${esc(label(r.subchapter))}</td>
-        <td class="mapped-cell">${num ? `<span class="mapped-num">${esc(num)}</span>` : ''}${esc(label(r.subchapter))}</td>
+        <td class="mapped-cell">${num ? `<span class="mapped-num">${esc(num)}</span>` : ''}${esc(num ? stripLeadingNum(label(r.subchapter)) : label(r.subchapter))}</td>
         <td class="count-cell">${r.count}</td>
         <td class="tag-cell">${esc(r.tag)}</td>
       </tr>`;
