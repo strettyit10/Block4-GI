@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HoyaDocs | Daily Checklist</title>
+
+<script>(function(){const t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ══════════════════════════════════════
+   DESIGN TOKENS — matching HoyaDocs hub
+══════════════════════════════════════ */
+:root {
+  --sb:         #0d2416;
+  --sb-hover:   rgba(255,255,255,0.07);
+  --sb-line:    rgba(255,255,255,0.09);
+  --bg:         #f4f8f5;
+  --surface:    #ffffff;
+  --ink:        #0f172a;
+  --ink-2:      #334155;
+  --ink-3:      #64748b;
+  --rule:       #e2e8f0;
+  --card-sh:    0 1px 3px rgba(0,0,0,0.05);
+  --bc-blue-bg: #eef4ff; --bc-blue-br: #c7d9f5; --bc-blue-tx: #1f4b99;
+  --bc-grn-bg:  #edfdf4; --bc-grn-br:  #a7f3c9; --bc-grn-tx:  #166534;
+  --bc-ros-bg:  #fff1f2; --bc-ros-br:  #fda4af; --bc-ros-tx:  #9f1239;
+  --bc-pur-bg:  #f5f0ff; --bc-pur-br:  #d8b4fe; --bc-pur-tx:  #6d28d9;
+  --bc-amb-bg:  #fffbeb; --bc-amb-br:  #fde68a; --bc-amb-tx:  #92400e;
+  --hero-em:    #166534;
+  --accent:     #166534;
+  --accent-soft:#dcfce7;
+  --done-bg:    #f0fdf4;
+  --done-text:  #86efac;
+  --streak-bg:  #fef3c7;
+  --streak-tx:  #92400e;
+}
+
+[data-theme="dark"] {
+  --bg:         #0a1f10;
+  --surface:    #122b1a;
+  --ink:        #f1f5f9;
+  --ink-2:      #cbd5e1;
+  --ink-3:      #94a3b8;
+  --rule:       #1e4a2a;
+  --card-sh:    0 1px 3px rgba(0,0,0,0.4);
+  --bc-blue-bg: #1a2744; --bc-blue-br: #2d4a8a; --bc-blue-tx: #6ba3e8;
+  --bc-grn-bg:  #0a2218; --bc-grn-br:  #1a5c35; --bc-grn-tx:  #5dbf87;
+  --bc-ros-bg:  #250a12; --bc-ros-br:  #6b1a2e; --bc-ros-tx:  #e06b8a;
+  --bc-pur-bg:  #1a1033; --bc-pur-br:  #4c1d95; --bc-pur-tx:  #a78bfa;
+  --bc-amb-bg:  #2a1f0a; --bc-amb-br:  #7c5a1a; --bc-amb-tx:  #fbbf24;
+  --hero-em:    #4ade80;
+  --accent:     #4ade80;
+  --accent-soft:#0a2218;
+  --done-bg:    #0a2218;
+  --done-text:  #34d399;
+  --streak-bg:  #2a1f0a;
+  --streak-tx:  #fbbf24;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  transition: background 0.2s, color 0.2s;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ══════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════ */
+.shell { display: flex; min-height: 100vh; }
+
+/* SIDEBAR — matches hub */
+.sidebar {
+  width: 232px; flex-shrink: 0;
+  background: var(--sb);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  padding: 28px 18px 24px;
+  overflow-y: auto;
+  transition: background 0.2s;
+}
+
+.sb-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.sb-name {
+  font-size: 1.35rem; font-weight: 900; color: #fff;
+  letter-spacing: -0.01em; flex: 1;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.25);
+}
+.dark-toggle {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; color: rgba(255,255,255,0.7);
+  flex-shrink: 0;
+}
+.dark-toggle:hover { background: rgba(255,255,255,0.16); }
+.sb-block {
+  font-size: 0.72rem; font-weight: 500;
+  color: rgba(255,255,255,0.42);
+  margin-bottom: 26px; padding-left: 2px;
+}
+.sb-section-label {
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: #ffffff; margin-bottom: 6px; padding: 0 8px;
+}
+.sb-nav { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
+.sb-link {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 10px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,0.60);
+  transition: background 0.13s, color 0.13s;
+}
+.sb-link:hover { background: var(--sb-hover); color: rgba(255,255,255,0.92); }
+.sb-link.active { background: rgba(255,255,255,0.12); color: #fff; }
+.sb-link-icon {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; flex-shrink: 0;
+}
+.sb-icon-green { background: rgba(74,180,120,0.32); }
+.sb-icon-amber { background: rgba(245,158,11,0.32); }
+.sb-icon-blue  { background: rgba(99,140,220,0.32); }
+.sb-icon-rose  { background: rgba(220,90,110,0.32); }
+.sb-rule { height: 1px; background: var(--sb-line); margin: 4px 0 18px; }
+.sb-spacer { flex: 1; }
+
+/* MAIN */
+.main { flex: 1; min-width: 0; background: var(--bg); transition: background 0.2s; }
+.main-inner { max-width: 860px; padding: 40px 48px 80px; }
+
+/* HERO */
+.hero { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+.hero-eyebrow {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 12px;
+}
+.hero-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900; letter-spacing: -0.045em;
+  color: var(--ink); line-height: 1.05; margin-bottom: 10px;
+}
+.hero-title em { font-style: normal; color: var(--hero-em); }
+.hero-sub { font-size: 0.9rem; color: var(--ink-2); line-height: 1.6; }
+
+/* DATE NAV */
+.date-nav {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 16px; margin-bottom: 4px;
+}
+.date-nav button {
+  padding: 6px 14px; border-radius: 8px;
+  border: 1px solid var(--rule); background: var(--surface);
+  color: var(--ink-2); font-size: 0.82rem; font-weight: 600;
+  box-shadow: var(--card-sh);
+  transition: all 0.14s;
+}
+.date-nav button:hover { border-color: var(--accent); color: var(--accent); }
+.date-nav .today-btn {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.date-nav .today-btn:hover { opacity: 0.9; }
+.date-nav .current-date {
+  font-size: 1rem; font-weight: 700; color: var(--ink);
+  flex: 1; text-align: center;
+}
+
+/* ══════════════════════════════════════
+   PROGRESS CARD
+══════════════════════════════════════ */
+.progress-card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 20px 24px;
+  box-shadow: var(--card-sh);
+  margin-bottom: 16px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.progress-header h3 { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+.progress-pct { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.03em; color: var(--accent); }
+.progress-bar { height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #34d399); border-radius: 4px; transition: width 0.4s ease; }
+.progress-stats {
+  display: flex; gap: 16px; margin-top: 10px;
+  font-size: 0.78rem; color: var(--ink-3); font-weight: 500;
+}
+.progress-stats span { display: flex; align-items: center; gap: 5px; }
+.stat-dot { width: 7px; height: 7px; border-radius: 50%; }
+.stat-dot.done { background: var(--accent); }
+.stat-dot.pending { background: var(--rule); }
+.stat-dot.skipped { background: var(--ink-3); }
+
+/* TIMER */
+.timer-card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 14px 24px;
+  box-shadow: var(--card-sh); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 16px;
+  transition: background 0.2s;
+}
+.timer-display {
+  font-size: 1.6rem; font-weight: 800;
+  font-family: 'Inter', monospace; letter-spacing: -0.02em;
+  color: var(--accent); min-width: 90px;
+}
+.timer-label { color: var(--ink-3); font-size: 0.82rem; flex: 1; font-weight: 500; }
+.timer-btns { display: flex; gap: 6px; }
+.timer-btns button {
+  padding: 7px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 600;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--ink-2);
+}
+.timer-btns button.start { background: var(--accent); color: #fff; border-color: var(--accent); }
+.timer-btns button.stop { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+/* ══════════════════════════════════════
+   PHASE SECTIONS
+══════════════════════════════════════ */
+.section-divider { display: flex; align-items: center; gap: 14px; margin: 28px 0 16px; }
+.section-divider-icon { font-size: 1.1rem; }
+.section-divider-text { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }
+.section-divider-line { flex: 1; height: 1px; background: var(--accent); opacity: 0.3; }
+.section-divider-badge {
+  font-size: 0.7rem; font-weight: 700; padding: 3px 10px;
+  border-radius: 999px; background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* SESSION CARD */
+.session-card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 18px 22px;
+  box-shadow: var(--card-sh); margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.session-label {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.session-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+.block-tag {
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 6px;
+}
+.block-tag.gi { background: var(--bc-grn-bg); color: var(--bc-grn-tx); border: 1px solid var(--bc-grn-br); }
+.block-tag.repro { background: var(--bc-ros-bg); color: var(--bc-ros-tx); border: 1px solid var(--bc-ros-br); }
+.block-tag.endo { background: var(--bc-amb-bg); color: var(--bc-amb-tx); border: 1px solid var(--bc-amb-br); }
+.block-tag.course { background: var(--bc-blue-bg); color: var(--bc-blue-tx); border: 1px solid var(--bc-blue-br); }
+
+/* TASK ITEMS */
+.task {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.task:last-child { border-bottom: none; }
+.task input[type="checkbox"] {
+  width: 17px; height: 17px; margin-top: 3px;
+  accent-color: var(--accent); cursor: pointer; flex-shrink: 0;
+  border-radius: 4px;
+}
+.task-text { flex: 1; font-size: 0.85rem; line-height: 1.5; color: var(--ink-2); font-weight: 500; }
+.task.done .task-text { text-decoration: line-through; color: var(--ink-3); opacity: 0.6; }
+.task-time {
+  font-size: 0.72rem; font-weight: 600; color: var(--ink-3);
+  white-space: nowrap; padding: 2px 8px;
+  background: var(--bg); border-radius: 6px;
+}
+.task-subtasks {
+  margin-top: 6px; padding-left: 10px;
+  font-size: 0.82rem; color: var(--ink-3);
+}
+.task-subtasks div { padding: 2px 0; }
+.skip-badge {
+  font-size: 0.62rem; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+  background: var(--done-bg); color: var(--done-text);
+  letter-spacing: 0.03em;
+}
+.task.auto-skip .task-text { text-decoration: line-through; color: var(--ink-3); opacity: 0.5; }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center; padding: 60px 20px;
+  color: var(--ink-3);
+}
+.empty-state h2 { color: var(--ink); font-weight: 800; margin-bottom: 6px; }
+
+/* ══════════════════════════════════════
+   END OF DAY
+══════════════════════════════════════ */
+.eod-card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 20px 24px;
+  box-shadow: var(--card-sh); margin-top: 24px;
+}
+.eod-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.eod-card textarea {
+  width: 100%; background: var(--bg); border: 1px solid var(--rule);
+  color: var(--ink); border-radius: 10px; padding: 12px;
+  font-family: inherit; font-size: 0.85rem; resize: vertical; min-height: 60px;
+  transition: border-color 0.14s;
+}
+.eod-card textarea:focus { outline: none; border-color: var(--accent); }
+.eod-card button {
+  margin-top: 10px; padding: 9px 24px;
+  background: var(--accent); border: none; color: #fff;
+  border-radius: 8px; font-weight: 700; font-size: 0.85rem;
+  transition: opacity 0.14s;
+}
+.eod-card button:hover { opacity: 0.9; }
+
+/* ══════════════════════════════════════
+   HISTORY HEATMAP
+══════════════════════════════════════ */
+.history-card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 20px 24px;
+  box-shadow: var(--card-sh); margin-top: 16px;
+}
+.history-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 14px; }
+.streak-bar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; padding: 8px 14px;
+  background: var(--streak-bg); border-radius: 10px;
+  font-size: 0.82rem; font-weight: 600; color: var(--streak-tx);
+}
+.streak-fire { font-size: 1.2em; }
+.streak-num { font-size: 1.2em; font-weight: 900; }
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 4px;
+}
+.history-day {
+  aspect-ratio: 1; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; font-weight: 700; cursor: pointer;
+  position: relative; transition: transform 0.1s;
+}
+.history-day:hover { transform: scale(1.15); }
+.history-day.future { background: var(--bg); color: var(--ink-3); border: 1px solid var(--rule); }
+.history-day.no-data { background: var(--bg); color: var(--ink-3); border: 1px dashed var(--rule); }
+.history-day.low { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.history-day.mid { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.history-day.high { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.history-day.perfect { background: var(--accent); color: #fff; }
+.history-day.today-marker { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+[data-theme="dark"] .history-day.low { background: #2a0f0f; color: #fca5a5; border-color: #4a1515; }
+[data-theme="dark"] .history-day.mid { background: #2a1f0a; color: #fbbf24; border-color: #4a3510; }
+[data-theme="dark"] .history-day.high { background: #0a2218; color: #4ade80; border-color: #1a4a2a; }
+[data-theme="dark"] .history-day.perfect { background: var(--accent); color: #000; }
+
+.history-tooltip {
+  display: none; position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 4px 10px; border-radius: 6px;
+  font-size: 0.72rem; white-space: nowrap; z-index: 10; font-weight: 600;
+}
+.history-day:hover .history-tooltip { display: block; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-inner { padding: 20px 16px 60px; }
+  .timer-card { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-name">HoyaDocs</div>
+      <button class="dark-toggle" onclick="toggleTheme()" title="Toggle dark mode">🌓</button>
+    </div>
+    <div class="sb-block">GI Block · Daily Checklist</div>
+
+    <div class="sb-section-label">Navigate</div>
+    <div class="sb-nav">
+      <a class="sb-link" href="index.html"><span class="sb-link-icon sb-icon-green">🏠</span> Study Hub Home</a>
+      <a class="sb-link" href="study-planner.html"><span class="sb-link-icon sb-icon-blue">📅</span> Study Planner</a>
+      <a class="sb-link active" href="daily_checklist.html"><span class="sb-link-icon sb-icon-amber">✅</span> Daily Checklist</a>
+      <a class="sb-link" href="active_recall_hub.html"><span class="sb-link-icon sb-icon-rose">🧠</span> Active Recall</a>
+      <a class="sb-link" href="QuestionBank.html"><span class="sb-link-icon sb-icon-blue">❓</span> Question Bank</a>
+    </div>
+
+    <div class="sb-rule"></div>
+    <div class="sb-section-label">Quick Links</div>
+    <div class="sb-nav">
+      <a class="sb-link" href="resource-mapping/gi_mapping.html"><span class="sb-link-icon">📊</span> Resource Map</a>
+      <a class="sb-link" href="resource-mapping/gi_resource_hub.html"><span class="sb-link-icon">📚</span> Resource Hub</a>
+    </div>
+
+    <div class="sb-spacer"></div>
+    <div style="font-size:0.65rem;color:rgba(255,255,255,0.3);padding:0 8px;">v1.0 · Built for ADHD brains</div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="main-inner" id="app"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// THEME TOGGLE
+// ============================================================
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch(e) {}
+}
+
+// ============================================================
+// EMBEDDED SCHEDULE
+// ============================================================
+const SCHEDULE = [{"date":"2026-04-06","week":"Week 1","day":"Mon","block":"GI","title":"IL GI Overview","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Physeo (49 min):\n  \u2022 physeo-phys 5.01 Gastrointestinal Overview (24 min, 61 cards)\n  \u2022 physeo-phys 5.05 Hormones (25 min, 50 cards)\n4. Unsuspend 246 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~3.1 hr (154 min active + 30 min breaks)","after":"1. AM Anki reviews (10 min)\n2. Watch Bootcamp for reinforcement (27 min):\n  \u2022 2.02 Tongue and Gustation (15 min, 20 cards)\n  \u2022 2.06 Salivary Glands (12 min, 21 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 246 cards to unsuspend\n  \u2022 Physeo: 111 new cards\n  \u2022 Bootcamp: 41 new cards\n  \u2022 B&B: 94 new cards\n\nPM session: ~45 min for new cards\nAM session: ~10 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Mon Apr 06 (same day)\nHub 2: Fri Apr 10 (+4 days)\nHub 3: Tue Apr 14 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-06","week":"Week 1","day":"Mon","block":"GI","title":"Introduction/Motility","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Physeo (49 min):\n  \u2022 physeo-phys 5.01 Gastrointestinal Overview (24 min) \u2014 \u2713 DONE (from IL GI Overview), skip\n  \u2022 physeo-phys 5.05 Hormones (25 min) \u2014 \u2713 DONE (from IL GI Overview), skip\n4. Unsuspend 314 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~3.1 hr (154 min active + 30 min breaks)","after":"1. AM Anki reviews (10 min)\n2. Watch Bootcamp for reinforcement (55 min):\n  \u2022 8.01 General Principles Duodenum (13 min, 16 cards)\n  \u2022 8.02 Jejunum and Ileum General Principles (10 min, 20 cards)\n  \u2022 9.01 General Overview (20 min, 14 cards)\n  \u2022 9.02 Pectinate Line (12 min, 7 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 203 cards to unsuspend\n  \u2022 Bootcamp: 57 new cards\n  \u2022 B&B: 146 new cards\nAlready active (no action needed):\n  \u2022 Physeo: 111 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~10 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Mon Apr 06 (same day)\nHub 2: Fri Apr 10 (+4 days)\nHub 3: Tue Apr 14 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-07","week":"Week 1","day":"Tue","block":"GI","title":"GA Lab #1: Abdominal Wall and Inguinal Region","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"NEW: 116 cards to unsuspend\n  \u2022 Bootcamp: 46 new cards\n  \u2022 B&B: 70 new cards\n\nPM session: ~45 min for new cards\nAM session: ~10 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"\u2014"},{"date":"2026-04-08","week":"Week 1","day":"Wed","block":"GI","title":"Optional Block 3 Review","type":"Optional","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (10 min)\n2. Review notes if attended","anki":"Review existing cards: 10 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-09","week":"Week 1","day":"Thu","block":"GI","title":"GA Lab #2: Peritoneal Cavity and Foregut Derivatives","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"Review related lecture cards: 10 min AM","hub":"\u2014"},{"date":"2026-04-10","week":"Week 1","day":"Fri","block":"GI","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (10 min)","anki":"Review existing cards: 10 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-13","week":"Week 2","day":"Mon","block":"REPRO","title":"MANDATORY Module Orientation","type":"Mandatory","course":"Embr-HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (15 min)","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-04-13","week":"Week 2","day":"Mon","block":"REPRO","title":"Urogenital System","type":"Session","course":"Embr","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon Apr 13 (same day)\nHub 2: Fri Apr 17 (+4 days)\nHub 3: Tue Apr 21 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-13","week":"Week 2","day":"Mon","block":"GI","title":"Poisoning Conference and Cases","type":"Session","course":"Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Sketchy (20 min):\n  \u2022 sketchy-pharm 1.01 Antiemetic Agents (20 min, 37 cards)\n4. Unsuspend 89 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.5 hr (125 min active + 25 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch B&B for reinforcement (23 min):\n  \u2022 3.16 Gastrointestinal Pharmacology (23 min, 52 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 89 cards to unsuspend\n  \u2022 B&B: 52 new cards\n  \u2022 Sketchy: 37 new cards\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Mon Apr 13 (same day)\nHub 2: Fri Apr 17 (+4 days)\nHub 3: Tue Apr 21 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-14","week":"Week 2","day":"Tue","block":"GI","title":"GI Lab","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (160 min):\n  \u2022 10.01 Oral Cavity (7 min, 24 cards)\n  \u2022 10.02 Salivary Gland (7 min, 21 cards)\n  \u2022 10.03 Esophagus (28 min, 83 cards)\n  \u2022 10.04 Stomach (36 min, 97 cards)\n  \u2022 10.05 Small Bowel (32 min, 121 cards)\n  \u2022 10.06 Appendix (19 min, 10 cards)\n  \u2022 10.07 Inflammatory Bowel Disease (0 min, 45 cards)\n  \u2022 10.08 Colon (22 min, 92 cards)\n  \u2022 10.09 Colorectal Carcinoma (9 min, 35 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 160 min saved)\n3. Unsuspend 986 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch Bootcamp for reinforcement (18 min):\n  \u2022 4.01 General Principles (18 min, 23 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 986 cards to unsuspend\n  \u2022 Physeo: 435 new cards\n  \u2022 Pathoma: 528 new cards\n  \u2022 Bootcamp: 23 new cards\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Tue Apr 14 (same day)\nHub 2: Sat Apr 18 (+4 days)\nHub 3: Wed Apr 22 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-14","week":"Week 2","day":"Tue","block":"GI","title":"Treatment of Peptic Ulcer Slides","type":"Session","course":"Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Sketchy (60 min):\n  \u2022 sketchy-pharm 1.01 Antiemetic Agents (20 min) \u2014 \u2713 DONE (from Poisoning Conference and Cases), skip\n  \u2022 sketchy-pharm 1.02 H2 Receptor Blockers & PPIs (23 min, 22 cards)\n  \u2022 sketchy-pharm 1.03 Laxatives (17 min, 21 cards)\n  \u2022 sketchy-pharm 1.04 Antidiarrheal Agents (0 min, 12 cards)\n4. Unsuspend 416 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~3.2 hr (165 min active + 30 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch B&B for reinforcement (46 min):\n  \u2022 3.01 Esophageal Disorders (23 min, 80 cards)\n  \u2022 \u2713 DONE: 3.16 Gastrointestinal Pharmacology (23 min) \u2014 skip, from Poisoning Conference and Cases\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 327 cards to unsuspend\n  \u2022 Physeo: 126 new cards\n  \u2022 Bootcamp: 66 new cards\n  \u2022 B&B: 80 new cards\n  \u2022 Sketchy: 55 new cards\nAlready active (no action needed):\n  \u2022 B&B: 52 cards already active (overlap)\n  \u2022 Sketchy: 37 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Tue Apr 14 (same day)\nHub 2: Sat Apr 18 (+4 days)\nHub 3: Wed Apr 22 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-14","week":"Week 2","day":"Tue","block":"GI","title":"Treatment of GERD and Other GI Disorders","type":"Session","course":"Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Sketchy (60 min):\n  \u2022 sketchy-pharm 1.01 Antiemetic Agents (20 min) \u2014 \u2713 DONE (from Poisoning Conference and Cases), skip\n  \u2022 sketchy-pharm 1.02 H2 Receptor Blockers & PPIs (23 min) \u2014 \u2713 DONE (from Treatment of Peptic Ulcer Slides), skip\n  \u2022 sketchy-pharm 1.03 Laxatives (17 min) \u2014 \u2713 DONE (from Treatment of Peptic Ulcer Slides), skip\n  \u2022 sketchy-pharm 1.04 Antidiarrheal Agents (0 min) \u2014 \u2713 DONE (from Treatment of Peptic Ulcer Slides), skip\n4. Unsuspend 416 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~3.2 hr (165 min active + 30 min breaks)","after":"1. AM Anki reviews (15 min)\n2. B&B \u2014 all already covered, skip:\n  \u2022 \u2713 DONE: 3.01 Esophageal Disorders (23 min) \u2014 skip, from Treatment of Peptic Ulcer Slides\n  \u2022 \u2713 DONE: 3.16 Gastrointestinal Pharmacology (23 min) \u2014 skip, from Poisoning Conference and Cases\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"All 525 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~15 min","hub":"Hub 1: Tue Apr 14 (same day)\nHub 2: Sat Apr 18 (+4 days)\nHub 3: Wed Apr 22 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-14","week":"Week 2","day":"Tue","block":"GI","title":"GI Development Primer Quiz DUE 11:59","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 15 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-15","week":"Week 2","day":"Wed","block":"GI","title":"GI Infections","type":"Session","course":"Micro","before":"\u2605 Watch Sketchy BEFORE lecture (72 min):\n  \u2022 sketchy-micro 2.03 Clostridium botulinum (8 min, 13 cards)\n  \u2022 sketchy-micro 2.04 Clostridium perfringens (9 min, 15 cards)\n  \u2022 sketchy-micro 2.05 Clostridioides difficile (6 min, 24 cards)\n  \u2022 sketchy-micro 2.07 Listeria monocytogenes (5 min, 18 cards)\n  \u2022 sketchy-micro 5.04 Shigella spp. (9 min, 22 cards)\n  \u2022 sketchy-micro 5.05 Escherichia coli (ETEC, EHEC) (8 min, 34 cards)\n  \u2022 sketchy-micro 5.06 Yersinia enterocolitica & pestis (5 min, 22 cards)\n  \u2022 sketchy-micro 5.07 Campylobacter jejuni (6 min, 12 cards)\n  \u2022 sketchy-micro 5.08 Vibrio spp. (6 min, 20 cards)\n  \u2022 sketchy-micro 5.09 Helicobacter pylori (10 min, 25 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Sketchy already done before lecture \u2014 72 min saved)\n3. Unsuspend 294 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch B&B for reinforcement (23 min):\n  \u2022 3.12 Intestinal Disorders (23 min, 75 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 294 cards to unsuspend\n  \u2022 Bootcamp: 14 new cards\n  \u2022 B&B: 75 new cards\n  \u2022 Sketchy: 205 new cards\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Wed Apr 15 (same day)\nHub 2: Sun Apr 19 (+4 days)\nHub 3: Thu Apr 23 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-15","week":"Week 2","day":"Wed","block":"GI","title":"Parasitology","type":"Session","course":"Micro","before":"\u2605 Watch Sketchy BEFORE lecture (8 min):\n  \u2022 sketchy-micro 5.01 Klebsiella pneumoniae, Enterobacter spp., Serratia marcescens (8 min, 26 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Sketchy already done before lecture \u2014 8 min saved)\n3. Unsuspend 113 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. B&B \u2014 all already covered, skip:\n  \u2022 \u2713 DONE: 3.12 Intestinal Disorders (23 min) \u2014 skip, from GI Infections\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 38 cards to unsuspend\n  \u2022 Physeo: 12 new cards\n  \u2022 Sketchy: 26 new cards\nAlready active (no action needed):\n  \u2022 B&B: 75 cards already active (overlap)\n\nPM session: ~30 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Wed Apr 15 (same day)\nHub 2: Sun Apr 19 (+4 days)\nHub 3: Thu Apr 23 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-15","week":"Week 2","day":"Wed","block":"GI","title":"GA Lab #3: Midgut and Hindgut Derivatives","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"Review related lecture cards: 15 min AM","hub":"\u2014"},{"date":"2026-04-15","week":"Week 2","day":"Wed","block":"REPRO","title":"IL Urogenital Primer - Quiz DUE at 11:59PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-04-16","week":"Week 2","day":"Thu","block":"GI","title":"Intestinal Pathology Case Review","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (31 min):\n  \u2022 10.07 Inflammatory Bowel Disease (0 min, 45 cards)\n  \u2022 10.08 Colon (22 min, 92 cards)\n  \u2022 10.09 Colorectal Carcinoma (9 min, 35 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 31 min saved)\n3. Unsuspend 615 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch B&B for reinforcement (67 min):\n  \u2022 3.13 Inflammatory Bowel Disease (20 min, 69 cards)\n  \u2022 3.14 Colon Cancer (24 min, 81 cards)\n  \u2022 \u2713 DONE: 3.12 Intestinal Disorders (23 min) \u2014 skip, from GI Infections\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 240 cards to unsuspend\n  \u2022 Bootcamp: 90 new cards\n  \u2022 B&B: 150 new cards\nAlready active (no action needed):\n  \u2022 Physeo: 128 cards already active (overlap)\n  \u2022 Pathoma: 172 cards already active (overlap)\n  \u2022 B&B: 75 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Thu Apr 16 (same day)\nHub 2: Mon Apr 20 (+4 days)\nHub 3: Fri Apr 24 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-16","week":"Week 2","day":"Thu","block":"GI","title":"Retroperitoneum","type":"Session","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch B&B (29 min):\n  \u2022 1.02 Gastrointestinal Anatomy (11 min, 28 cards)\n  \u2022 1.03 Gastrointestinal Blood Supply (18 min, 63 cards)\n4. Unsuspend 97 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.6 hr (134 min active + 25 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Watch Bootcamp for reinforcement (11 min):\n  \u2022 7.01 General Principles (11 min, 6 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 69 cards to unsuspend\n  \u2022 Bootcamp: 6 new cards\n  \u2022 B&B: 63 new cards\nAlready active (no action needed):\n  \u2022 B&B: 28 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~15 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Thu Apr 16 (same day)\nHub 2: Mon Apr 20 (+4 days)\nHub 3: Fri Apr 24 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-16","week":"Week 2","day":"Thu","block":"REPRO","title":"Female Reproductive System","type":"Session","course":"Hist","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 16 (same day)\nHub 2: Mon Apr 20 (+4 days)\nHub 3: Fri Apr 24 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-16","week":"Week 2","day":"Thu","block":"GI","title":"Medically Assisted Nutrition and Hydration: Ethical Issues and Clinical Grounding","type":"Session","course":"Ethics","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 15 min AM + 15 min PM","hub":"Hub 1: Thu Apr 16 (same day)\nHub 2: Mon Apr 20 (+4 days)\nHub 3: Fri Apr 24 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-16","week":"Week 2","day":"Thu","block":"GI","title":"IL Trudy's Ulcer (assignment Apr 26!)","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 15 min AM + 15 min PM","hub":"Hub 1: Thu Apr 16 (same day)\nHub 2: Mon Apr 20 (+4 days)\nHub 3: Fri Apr 24 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-17","week":"Week 2","day":"Fri","block":"GI","title":"Abdominal Pain","type":"Session","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 15 min AM + 15 min PM","hub":"Hub 1: Fri Apr 17 (same day)\nHub 2: Tue Apr 21 (+4 days)\nHub 3: Sat Apr 25 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-17","week":"Week 2","day":"Fri","block":"REPRO","title":"Male Reproductive System","type":"Session","course":"Hist","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (15 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri Apr 17 (same day)\nHub 2: Tue Apr 21 (+4 days)\nHub 3: Sat Apr 25 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-17","week":"Week 2","day":"Fri","block":"GI","title":"MANDATORY Foundational Round","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (15 min)","anki":"Review existing cards: 15 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-19","week":"Week 2","day":"Sun","block":"REPRO","title":"SDL Worksheet DUE at 11:59 PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 15 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-04-20","week":"Week 3","day":"Mon","block":"ENDO","title":"Module Introduction/Introduction to Hormones","type":"Session","course":"Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon Apr 20 (same day)\nHub 2: Fri Apr 24 (+4 days)\nHub 3: Tue Apr 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-20","week":"Week 3","day":"Mon","block":"ENDO","title":"Hypothalamic Pituitary Hormone Relationships I","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon Apr 20 (same day)\nHub 2: Fri Apr 24 (+4 days)\nHub 3: Tue Apr 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-20","week":"Week 3","day":"Mon","block":"GI","title":"Liver and Biliary Tract","type":"Session","course":"Hist","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch B&B (12 min):\n  \u2022 1.05 Liver Gallbladder and Pancreas (12 min, 36 cards)\n4. Unsuspend 36 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.3 hr (117 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch B&B for reinforcement (12 min):\n  \u2022 1.05 Liver Gallbladder and Pancreas (12 min, 36 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 36 cards to unsuspend\n  \u2022 B&B: 36 new cards\n\nPM session: ~29 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Mon Apr 20 (same day)\nHub 2: Fri Apr 24 (+4 days)\nHub 3: Tue Apr 28 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"Liver Disease I","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (42 min):\n  \u2022 11.03 Liver (42 min, 169 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 42 min saved)\n3. Unsuspend 819 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch B&B for reinforcement (71 min):\n  \u2022 3.02 Liver Disease (23 min, 84 cards)\n  \u2022 3.03 Cirrhosis (23 min, 44 cards)\n  \u2022 3.04 Liver Tumors (10 min, 24 cards)\n  \u2022 3.05 Wilson's Disease and Hemochromatosis (15 min, 49 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 819 cards to unsuspend\n  \u2022 Physeo: 201 new cards\n  \u2022 Pathoma: 169 new cards\n  \u2022 Bootcamp: 248 new cards\n  \u2022 B&B: 201 new cards\n\nPM session: ~45 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Tue Apr 21 (same day)\nHub 2: Sat Apr 25 (+4 days)\nHub 3: Wed Apr 29 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"Liver Disease II","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (42 min):\n  \u2022 11.03 Liver (42 min, 169 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 42 min saved)\n3. Unsuspend 819 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. B&B \u2014 all already covered, skip:\n  \u2022 \u2713 DONE: 3.02 Liver Disease (23 min) \u2014 skip, from Liver Disease I\n  \u2022 \u2713 DONE: 3.03 Cirrhosis (23 min) \u2014 skip, from Liver Disease I\n  \u2022 \u2713 DONE: 3.04 Liver Tumors (10 min) \u2014 skip, from Liver Disease I\n  \u2022 \u2713 DONE: 3.05 Wilson's Disease and Hemochromatosis (15 min) \u2014 skip, from Liver Disease I\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"All 1104 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~20 min","hub":"Hub 1: Tue Apr 21 (same day)\nHub 2: Sat Apr 25 (+4 days)\nHub 3: Wed Apr 29 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"Liver Enzymes","type":"Session","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Physeo (31 min):\n  \u2022 physeo-phys 5.03 Liver & Bilirubin Metabolism (31 min, 62 cards)\n4. Unsuspend 210 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.7 hr (136 min active + 25 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch B&B for reinforcement (53 min):\n  \u2022 2.02 Bilirubin (30 min, 64 cards)\n  \u2022 \u2713 DONE: 3.02 Liver Disease (23 min) \u2014 skip\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 126 cards to unsuspend\n  \u2022 Physeo: 62 new cards\n  \u2022 B&B: 64 new cards\nAlready active (no action needed):\n  \u2022 B&B: 84 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Tue Apr 21 (same day)\nHub 2: Sat Apr 25 (+4 days)\nHub 3: Wed Apr 29 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"GA Lab #4: Posterior Abdominal Wall","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"All 171 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~20 min","hub":"\u2014"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"Optional GA Review with Dr. Uren","type":"Optional","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (20 min)\n2. Review notes if attended","anki":"Review existing cards: 20 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-21","week":"Week 3","day":"Tue","block":"GI","title":"Poisoning Cases DUE 11:59pm","type":"Assignment","course":"Pharm","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"All 89 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~20 min","hub":"\u2014"},{"date":"2026-04-22","week":"Week 3","day":"Wed","block":"GI","title":"Pancreas Disease","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (14 min):\n  \u2022 11.01 Exocrine Pancreas (14 min, 60 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 14 min saved)\n3. Unsuspend 378 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch B&B for reinforcement (48 min):\n  \u2022 2.05 Exocrine Pancreas (15 min, 47 cards)\n  \u2022 3.10 Acute Pancreatitis (22 min, 54 cards)\n  \u2022 3.11 Chronic Pancreatitis & Pancreatic Cancer (11 min, 37 cards)\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 372 cards to unsuspend\n  \u2022 Physeo: 60 new cards\n  \u2022 Pathoma: 60 new cards\n  \u2022 Bootcamp: 114 new cards\n  \u2022 B&B: 138 new cards\nAlready active (no action needed):\n  \u2022 Bootcamp: 6 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Wed Apr 22 (same day)\nHub 2: Sun Apr 26 (+4 days)\nHub 3: Thu Apr 30 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-22","week":"Week 3","day":"Wed","block":"GI","title":"Liver/Pancreas Lab","type":"Session","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (53 min):\n  \u2022 11.02 Gallbladder & Biliary Tract (11 min, 55 cards)\n  \u2022 11.03 Liver (42 min, 169 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n   (Pathoma already done before lecture \u2014 53 min saved)\n3. Unsuspend 519 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch B&B for reinforcement (44 min):\n  \u2022 3.06 Gallstones (20 min, 65 cards)\n  \u2022 3.07 Biliary Disorders (14 min, 27 cards)\n  \u2022 \u2713 DONE: 3.04 Liver Tumors (10 min) \u2014 skip, from Liver Disease I\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 292 cards to unsuspend\n  \u2022 Physeo: 54 new cards\n  \u2022 Pathoma: 55 new cards\n  \u2022 Bootcamp: 91 new cards\n  \u2022 B&B: 92 new cards\nAlready active (no action needed):\n  \u2022 Pathoma: 169 cards already active (overlap)\n  \u2022 Bootcamp: 34 cards already active (overlap)\n  \u2022 B&B: 24 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Wed Apr 22 (same day)\nHub 2: Sun Apr 26 (+4 days)\nHub 3: Thu Apr 30 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-22","week":"Week 3","day":"Wed","block":"ENDO","title":"Hypothalamic Pituitary Hormone Relationships II","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed Apr 22 (same day)\nHub 2: Sun Apr 26 (+4 days)\nHub 3: Thu Apr 30 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-22","week":"Week 3","day":"Wed","block":"GI","title":"Mandatory Education Case Review Group A (Iron overload)","type":"Mandatory","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (31 min):\n  \u2022 10.07 Inflammatory Bowel Disease (0 min, 45 cards)\n  \u2022 10.08 Colon (22 min, 92 cards)\n  \u2022 10.09 Colorectal Carcinoma (9 min, 35 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (20 min)","anki":"All 788 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~20 min","hub":"\u2014"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"ENDO","title":"IL - Adrenal Hormone Synthesis and Action","type":"Session","course":"Biochem","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 23 (same day)\nHub 2: Mon Apr 27 (+4 days)\nHub 3: Fri May 01 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"ENDO","title":"IL - Sex Steroid Synthesis and Action","type":"Session","course":"Biochem","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 23 (same day)\nHub 2: Mon Apr 27 (+4 days)\nHub 3: Fri May 01 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"REPRO","title":"Endocrinology of the Ovary & Female Reproductive Tract I","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 23 (same day)\nHub 2: Mon Apr 27 (+4 days)\nHub 3: Fri May 01 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"REPRO","title":"Endocrinology of the Ovary & Female Reproductive Tract II","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 23 (same day)\nHub 2: Mon Apr 27 (+4 days)\nHub 3: Fri May 01 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"GI","title":"Mandatory Education Case Review Group B (Iron overload)","type":"Mandatory","course":"Path","before":"\u2605 Watch Pathoma BEFORE lecture (31 min):\n  \u2022 10.07 Inflammatory Bowel Disease (0 min, 45 cards)\n  \u2022 10.08 Colon (22 min, 92 cards)\n  \u2022 10.09 Colorectal Carcinoma (9 min, 35 cards)\nReview Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (20 min)","anki":"All 788 cards already active from prior lectures\nNo new cards to unsuspend\nAM reviews only: ~20 min","hub":"\u2014"},{"date":"2026-04-23","week":"Week 3","day":"Thu","block":"REPRO","title":"Embryology Paper Library Consultation Feedback Received by 11:59PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-04-24","week":"Week 3","day":"Fri","block":"GI","title":"PSW Cholera/Lactose Intolerance","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Watch Physeo (51 min):\n  \u2022 physeo-phys 5.01 Gastrointestinal Overview (24 min) \u2014 \u2713 DONE (from IL GI Overview), skip\n  \u2022 physeo-phys 5.02 Exocrine Pancreas & Metabolism (27 min, 45 cards)\n4. Unsuspend 341 new Anki cards \u2192 15 min PM session\n   \u2192 Total: ~3.1 hr (156 min active + 30 min breaks)","after":"1. AM Anki reviews (20 min)\n2. Watch Bootcamp for reinforcement (81 min):\n  \u2022 8.04 Nutrient Absorption (16 min, 35 cards)\n  \u2022 8.09 Celiac Disease Pathophysiology (9 min, 12 cards)\n  \u2022 8.10 Celiac Disease Presentation and Diagnostics (14 min, 13 cards)\n  \u2022 8.11 Lactose Intolerance (9 min, 6 cards)\n  \u2022 8.14 Additional Malabsorption Disorders (10 min, 17 cards)\n  \u2022 \u2713 DONE: 8.01 General Principles Duodenum (13 min) \u2014 skip, from Introduction/Motility\n  \u2022 \u2713 DONE: 8.02 Jejunum and Ileum General Principles (10 min) \u2014 skip, from Introduction/Motility\n3. Complete Hub 1 page for this lecture\n4. Flag weak areas from recall drill for weekend review","anki":"NEW: 196 cards to unsuspend\n  \u2022 Physeo: 45 new cards\n  \u2022 Bootcamp: 83 new cards\n  \u2022 B&B: 68 new cards\nAlready active (no action needed):\n  \u2022 Physeo: 61 cards already active (overlap)\n  \u2022 Bootcamp: 36 cards already active (overlap)\n  \u2022 B&B: 48 cards already active (overlap)\n\nPM session: ~45 min for new cards\nAM session: ~20 min reviews (grows weekly)\nSee Tags tab for exact ANKing tags","hub":"Hub 1: Fri Apr 24 (same day)\nHub 2: Tue Apr 28 (+4 days)\nHub 3: Sat May 02 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-24","week":"Week 3","day":"Fri","block":"ENDO","title":"Mandatory - Adrenal and Sex Steroid Hormone Synthesis & Action","type":"Mandatory","course":"Biochem","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (20 min)","anki":"Review existing cards: 20 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-04-24","week":"Week 3","day":"Fri","block":"GI","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (20 min)","anki":"Review existing cards: 20 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-24","week":"Week 3","day":"Fri","block":"GI","title":"Optional GI GA Practical Review (Snowball","type":"Optional","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (20 min)\n2. Review notes if attended","anki":"Review existing cards: 20 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-26","week":"Week 3","day":"Sun","block":"GI","title":"Trudy's Ulcer Assignment DUE 11:59pm","type":"Assignment","course":"Phys","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 20 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-27","week":"Week 4","day":"Mon","block":"GI","title":"GI GA Written Exam","type":"Exam","course":"Anat","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-04-27","week":"Week 4","day":"Mon","block":"GI","title":"GI GA Practical Exam","type":"Exam","course":"Anat","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-04-27","week":"Week 4","day":"Mon","block":"GI","title":"IL Clinical Conundrum - Mr. Q","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"Hub 1: Mon Apr 27 (same day)\nHub 2: Fri May 01 (+4 days)\nHub 3: Tue May 05 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-28","week":"Week 4","day":"Tue","block":"GI","title":"Module Wrap-Up","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"Hub 1: Tue Apr 28 (same day)\nHub 2: Sat May 02 (+4 days)\nHub 3: Wed May 06 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-28","week":"Week 4","day":"Tue","block":"ENDO","title":"Posterior Pituitary Hormones","type":"Session","course":"Phys, Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue Apr 28 (same day)\nHub 2: Sat May 02 (+4 days)\nHub 3: Wed May 06 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-28","week":"Week 4","day":"Tue","block":"REPRO","title":"Pelvic Structure & Neurovasculature","type":"Session","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue Apr 28 (same day)\nHub 2: Sat May 02 (+4 days)\nHub 3: Wed May 06 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-29","week":"Week 4","day":"Wed","block":"ENDO","title":"Pituitary Pathology","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed Apr 29 (same day)\nHub 2: Sun May 03 (+4 days)\nHub 3: Thu May 07 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-29","week":"Week 4","day":"Wed","block":"REPRO","title":"CCS 1: Ovary and Female Reproductive Tract","type":"Session","course":"Phys-Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed Apr 29 (same day)\nHub 2: Sun May 03 (+4 days)\nHub 3: Thu May 07 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-29","week":"Week 4","day":"Wed","block":"REPRO","title":"Pelvic Viscera & Perineum","type":"Session","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed Apr 29 (same day)\nHub 2: Sun May 03 (+4 days)\nHub 3: Thu May 07 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-29","week":"Week 4","day":"Wed","block":"GI","title":"PE-Advanced Abdominal Ex","type":"Session","course":"CP","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"Hub 1: Wed Apr 29 (same day)\nHub 2: Sun May 03 (+4 days)\nHub 3: Thu May 07 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-29","week":"Week 4","day":"Wed","block":"GI","title":"Abdominal Imaging","type":"Session","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"Hub 1: Wed Apr 29 (same day)\nHub 2: Sun May 03 (+4 days)\nHub 3: Thu May 07 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-04-30","week":"Week 4","day":"Thu","block":"GI","title":"Mandatory - Clinical Conundrum - Mr. Q","type":"Mandatory","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (25 min)","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-04-30","week":"Week 4","day":"Thu","block":"REPRO","title":"Sexual Health and Development Across the Lifespan I","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 30 (same day)\nHub 2: Mon May 04 (+4 days)\nHub 3: Fri May 08 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-30","week":"Week 4","day":"Thu","block":"REPRO","title":"Sexual Health and Development Across the Lifespan II","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 25 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu Apr 30 (same day)\nHub 2: Mon May 04 (+4 days)\nHub 3: Fri May 08 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-04-30","week":"Week 4","day":"Thu","block":"REPRO","title":"GA Lab #1 - Ischioanal Fossa and Perineum","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"Review related lecture cards: 25 min AM","hub":"\u2014"},{"date":"2026-05-01","week":"Week 4","day":"Fri","block":"GI","title":"PSW Chronic Pancreatitis","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (25 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"Hub 1: Fri May 01 (same day)\nHub 2: Tue May 05 (+4 days)\nHub 3: Sat May 09 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-05-01","week":"Week 4","day":"Fri","block":"GI","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (25 min)","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-03","week":"Week 4","day":"Sun","block":"GI","title":"Phys Quiz DUE at 11:59pm","type":"Assignment","course":"Phys","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 25 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-04","week":"Week 5","day":"Mon","block":"REPRO","title":"Endocrinology of Testes and Male Reproductive Tract","type":"Session","course":"Phys-Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon May 04 (same day)\nHub 2: Fri May 08 (+4 days)\nHub 3: Tue May 12 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-04","week":"Week 5","day":"Mon","block":"REPRO","title":"Ovary and Testes","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon May 04 (same day)\nHub 2: Fri May 08 (+4 days)\nHub 3: Tue May 12 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-04","week":"Week 5","day":"Mon","block":"REPRO","title":"GA Lab #2 - Pelvis: Viscera, Vasculature, Sacral Plexus","type":"Lab","course":"Anat","before":"Review relevant anatomy diagrams (10 min)","dayof":"1. Attend lab\n2. Review slides after\n3. Complete lab worksheet","after":"\u2014","anki":"Review related lecture cards: 30 min AM","hub":"\u2014"},{"date":"2026-05-05","week":"Week 5","day":"Tue","block":"REPRO","title":"Contraception","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 05 (same day)\nHub 2: Sat May 09 (+4 days)\nHub 3: Wed May 13 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-05","week":"Week 5","day":"Tue","block":"REPRO","title":"Fertility and Infertility","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 05 (same day)\nHub 2: Sat May 09 (+4 days)\nHub 3: Wed May 13 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-05","week":"Week 5","day":"Tue","block":"GI","title":"GI POCUS","type":"Session","course":"CP","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"Hub 1: Tue May 05 (same day)\nHub 2: Sat May 09 (+4 days)\nHub 3: Wed May 13 (+8 days)\nAnki: Continue daily reviews"},{"date":"2026-05-05","week":"Week 5","day":"Tue","block":"REPRO","title":"Embryology Paper DUE at 11:59 PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-06","week":"Week 5","day":"Wed","block":"REPRO","title":"Ovary/Testes Lab","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 06 (same day)\nHub 2: Sun May 10 (+4 days)\nHub 3: Thu May 14 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-06","week":"Week 5","day":"Wed","block":"REPRO","title":"Obstetrical/Placenta","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 06 (same day)\nHub 2: Sun May 10 (+4 days)\nHub 3: Thu May 14 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-06","week":"Week 5","day":"Wed","block":"REPRO","title":"Endocrinology of Pregnancy, Labor and Lactation","type":"Session","course":"Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 06 (same day)\nHub 2: Sun May 10 (+4 days)\nHub 3: Thu May 14 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-06","week":"Week 5","day":"Wed","block":"REPRO","title":"MANDATORY SG 5: Guideline","type":"Mandatory","course":"EBM","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-06","week":"Week 5","day":"Wed","block":"REPRO","title":"Optional RPD/GA Review","type":"Optional","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-07","week":"Week 5","day":"Thu","block":"REPRO","title":"Pregnancy 101","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 07 (same day)\nHub 2: Mon May 11 (+4 days)\nHub 3: Fri May 15 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-07","week":"Week 5","day":"Thu","block":"REPRO","title":"Pelvic Imaging","type":"Session","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 07 (same day)\nHub 2: Mon May 11 (+4 days)\nHub 3: Fri May 15 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-07","week":"Week 5","day":"Thu","block":"GI","title":"MANDATORY - Path Gross Conference","type":"Mandatory","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-07","week":"Week 5","day":"Thu","block":"REPRO","title":"Optional RPD/GA Practice Questions Review","type":"Optional","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-08","week":"Week 5","day":"Fri","block":"REPRO","title":"Psychosocial Aspects of Pregnancy and Postpartum","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri May 08 (same day)\nHub 2: Tue May 12 (+4 days)\nHub 3: Sat May 16 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-08","week":"Week 5","day":"Fri","block":"REPRO","title":"Menopause","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri May 08 (same day)\nHub 2: Tue May 12 (+4 days)\nHub 3: Sat May 16 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-08","week":"Week 5","day":"Fri","block":"GI","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-08","week":"Week 5","day":"Fri","block":"GI","title":"Optional Phys Quiz Review","type":"Optional","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-08","week":"Week 5","day":"Fri","block":"REPRO","title":"Optional RPD GA Practical Review (Snowball)","type":"Optional","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-11","week":"Week 6","day":"Mon","block":"REPRO","title":"GA Written Exam","type":"Exam","course":"Anat","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-05-11","week":"Week 6","day":"Mon","block":"REPRO","title":"GA Practical Exam","type":"Exam","course":"Anat","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-05-11","week":"Week 6","day":"Mon","block":"REPRO","title":"MANDATORY GA Lab Clean Up","type":"Mandatory","course":"Anat","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-12","week":"Week 6","day":"Tue","block":"REPRO","title":"Breast Diseases","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 12 (same day)\nHub 2: Sat May 16 (+4 days)\nHub 3: Wed May 20 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-12","week":"Week 6","day":"Tue","block":"ENDO","title":"Thyroid/Parathyroid/Adrenal","type":"Session","course":"Hist","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 12 (same day)\nHub 2: Sat May 16 (+4 days)\nHub 3: Wed May 20 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-12","week":"Week 6","day":"Tue","block":"ENDO","title":"Thyroid Hormone Synthesis and Action","type":"Session","course":"Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 12 (same day)\nHub 2: Sat May 16 (+4 days)\nHub 3: Wed May 20 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-12","week":"Week 6","day":"Tue","block":"REPRO","title":"PE - Female Pelvis and GYN Exam","type":"Session","course":"CP","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 12 (same day)\nHub 2: Sat May 16 (+4 days)\nHub 3: Wed May 20 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-12","week":"Week 6","day":"Tue","block":"REPRO","title":"Embryology Paper Critique DUE at 11:59 PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-13","week":"Week 6","day":"Wed","block":"REPRO","title":"Breast Clinical","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 13 (same day)\nHub 2: Sun May 17 (+4 days)\nHub 3: Thu May 21 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-13","week":"Week 6","day":"Wed","block":"ENDO","title":"Thyroid and Parathyroid Pathology","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 13 (same day)\nHub 2: Sun May 17 (+4 days)\nHub 3: Thu May 21 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-13","week":"Week 6","day":"Wed","block":"REPRO","title":"MANDATORY Sexual History Taking","type":"Mandatory","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-13","week":"Week 6","day":"Wed","block":"REPRO","title":"MANDATORY Panel - Ethical Issues in Reproduction and Beginning of Life","type":"Mandatory","course":"Ethics","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-13","week":"Week 6","day":"Wed","block":"REPRO","title":"Group A - Educational Case Review - DCIS","type":"Mandatory","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-14","week":"Week 6","day":"Thu","block":"ENDO","title":"Pancreatic Hormone Synthesis, Action and Regulation","type":"Session","course":"Phys, Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 14 (same day)\nHub 2: Mon May 18 (+4 days)\nHub 3: Fri May 22 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-14","week":"Week 6","day":"Thu","block":"ENDO","title":"Diagnosis and Treatment of Pituitary and Thyroid Disorders","type":"Session","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 14 (same day)\nHub 2: Mon May 18 (+4 days)\nHub 3: Fri May 22 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-14","week":"Week 6","day":"Thu","block":"REPRO","title":"PE - Breast Exam","type":"Session","course":"CP","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 14 (same day)\nHub 2: Mon May 18 (+4 days)\nHub 3: Fri May 22 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-14","week":"Week 6","day":"Thu","block":"REPRO","title":"MANDATORY SG Sexual History Taking","type":"Mandatory","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-14","week":"Week 6","day":"Thu","block":"REPRO","title":"Group B - Educational Case Review - DCIS","type":"Mandatory","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"REPRO","title":"Disorders of the Cervix/HPV","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (30 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri May 15 (same day)\nHub 2: Tue May 19 (+4 days)\nHub 3: Sat May 23 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"ENDO","title":"Mandatory TBL - Growth and Thyroid Hormones CCS","type":"Mandatory","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"REPRO","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (30 min)","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"GI","title":"Optional GI & RPD GA Written Post-Exam Review","type":"Optional","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"GI","title":"Optional Review with Dr. Mulroney","type":"Optional","course":"Phys/Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend if available (60 min)\n2. Skim lecture guide if skipped (20 min)","after":"1. Anki reviews (30 min)\n2. Review notes if attended","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-15","week":"Week 6","day":"Fri","block":"REPRO","title":"Embryology Paper Peer Evals and Optional Rebuttal DUE by 11:59 PM","type":"Assignment","course":"Embr","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 30 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-17","week":"Week 6","day":"Sun","block":"GI","title":"Radiology Case Assignment DUE at 11:59 PM","type":"Assignment","course":"DRT","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 30 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-18","week":"Week 7","day":"Mon","block":"REPRO","title":"Disorders of the Vulva and Uterus","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon May 18 (same day)\nHub 2: Fri May 22 (+4 days)\nHub 3: Tue May 26 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-18","week":"Week 7","day":"Mon","block":"REPRO","title":"GYN: Case Review","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon May 18 (same day)\nHub 2: Fri May 22 (+4 days)\nHub 3: Tue May 26 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-18","week":"Week 7","day":"Mon","block":"REPRO","title":"Breast/GYN Lab","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Mon May 18 (same day)\nHub 2: Fri May 22 (+4 days)\nHub 3: Tue May 26 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-18","week":"Week 7","day":"Mon","block":"ENDO","title":"Mandatory - Endocrinology, Gender Identity & Ethics Panel Discussion","type":"Mandatory","course":"Bioch","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-18","week":"Week 7","day":"Mon","block":"GI","title":"DRT Mandatory Session A - Radiology Review","type":"Mandatory","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-19","week":"Week 7","day":"Tue","block":"ENDO","title":"Pathophysiology of Diabetes Mellitus","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 19 (same day)\nHub 2: Sat May 23 (+4 days)\nHub 3: Wed May 27 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-19","week":"Week 7","day":"Tue","block":"ENDO","title":"Diabetes Type 1 Diagnosis and Treatment","type":"Session","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 19 (same day)\nHub 2: Sat May 23 (+4 days)\nHub 3: Wed May 27 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-19","week":"Week 7","day":"Tue","block":"ENDO","title":"Diabetes Type 2 Diagnosis and Treatment","type":"Session","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 19 (same day)\nHub 2: Sat May 23 (+4 days)\nHub 3: Wed May 27 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-20","week":"Week 7","day":"Wed","block":"REPRO","title":"Male Pelvis and GU Exam","type":"Session","course":"CP","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 20 (same day)\nHub 2: Sun May 24 (+4 days)\nHub 3: Thu May 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-20","week":"Week 7","day":"Wed","block":"ENDO","title":"Hypothalamic-Pituitary-Adrenal Axis","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 20 (same day)\nHub 2: Sun May 24 (+4 days)\nHub 3: Thu May 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-20","week":"Week 7","day":"Wed","block":"ENDO","title":"Adrenal Pathology","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 20 (same day)\nHub 2: Sun May 24 (+4 days)\nHub 3: Thu May 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-20","week":"Week 7","day":"Wed","block":"ENDO","title":"Diagnosis and Treatment of Adrenal Disorders","type":"Session","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 20 (same day)\nHub 2: Sun May 24 (+4 days)\nHub 3: Thu May 28 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-20","week":"Week 7","day":"Wed","block":"GI","title":"DRT Mandatory Session B - Radiology Review","type":"Mandatory","course":"DRT","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-21","week":"Week 7","day":"Thu","block":"REPRO","title":"Sexually Transmitted Infections","type":"Session","course":"Micro","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 21 (same day)\nHub 2: Mon May 25 (+4 days)\nHub 3: Fri May 29 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-21","week":"Week 7","day":"Thu","block":"REPRO","title":"CCS3: Sexuality, Illness and Disability","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 21 (same day)\nHub 2: Mon May 25 (+4 days)\nHub 3: Fri May 29 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-22","week":"Week 7","day":"Fri","block":"REPRO","title":"Prostate","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri May 22 (same day)\nHub 2: Tue May 26 (+4 days)\nHub 3: Sat May 30 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-22","week":"Week 7","day":"Fri","block":"ENDO","title":"Mandatory - Case Discussion: Pituitary & Thyroid Disorders","type":"Mandatory","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-22","week":"Week 7","day":"Fri","block":"GI","title":"MANDATORY Foundational Rounds","type":"Mandatory","course":"N/A","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM","hub":"\u2014"},{"date":"2026-05-22","week":"Week 7","day":"Fri","block":"REPRO","title":"IL Sexual Boundary Issue","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Fri May 22 (same day)\nHub 2: Tue May 26 (+4 days)\nHub 3: Sat May 30 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-25","week":"Week 8","day":"Mon","block":"REPRO","title":"Sexual Boundary Issues IL and Quiz due 11:59pm","type":"Assignment","course":"HS","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"Prostate Clinical","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 26 (same day)\nHub 2: Sat May 30 (+4 days)\nHub 3: Wed Jun 03 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"Hormone Therapy of Cancer","type":"Session","course":"Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 26 (same day)\nHub 2: Sat May 30 (+4 days)\nHub 3: Wed Jun 03 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"LGBT Health I","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 26 (same day)\nHub 2: Sat May 30 (+4 days)\nHub 3: Wed Jun 03 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"Intimate Partner Violence & Sexual Trauma","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Tue May 26 (same day)\nHub 2: Sat May 30 (+4 days)\nHub 3: Wed Jun 03 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"MANDATORY Rape Survivor Patient Panel","type":"Mandatory","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-26","week":"Week 8","day":"Tue","block":"REPRO","title":"Gross Image Assignment DUE 11:59pm","type":"Assignment","course":"Path","before":"Read assignment instructions (10 min)","dayof":"1. Complete assignment\n2. Review related lecture guide sections","after":"\u2014","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-27","week":"Week 8","day":"Wed","block":"REPRO","title":"LGBT Health II","type":"Session","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 27 (same day)\nHub 2: Sun May 31 (+4 days)\nHub 3: Thu Jun 04 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-27","week":"Week 8","day":"Wed","block":"REPRO","title":"MANDATORY SG LGBT Cases","type":"Mandatory","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-27","week":"Week 8","day":"Wed","block":"REPRO","title":"MANDATORY LGBT Panel Discussion","type":"Mandatory","course":"HS","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-05-27","week":"Week 8","day":"Wed","block":"ENDO","title":"Integrated Learning Session: Stress, Stress Hormones & Pathophysiology Integration","type":"Session","course":"Phys","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Wed May 27 (same day)\nHub 2: Sun May 31 (+4 days)\nHub 3: Thu Jun 04 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-28","week":"Week 8","day":"Thu","block":"ENDO","title":"Endocrine Lab","type":"Session","course":"Path","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 28 (same day)\nHub 2: Mon Jun 01 (+4 days)\nHub 3: Fri Jun 05 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-28","week":"Week 8","day":"Thu","block":"ENDO","title":"Diabetes Clinical Cases","type":"Session","course":"DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend lecture (60 min)\n2. Read Lecture Guide + Recall Drill (45 min)\n3. Anki: 15 min PM review session\n   \u2192 Total: ~2.1 hr (105 min active + 20 min breaks)","after":"1. AM Anki reviews (35 min)\n2. Complete Hub 1 page for this lecture\n3. Flag weak areas from recall drill for weekend review\n(Resource mapping coming \u2014 will update with specific videos)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"Hub 1: Thu May 28 (same day)\nHub 2: Mon Jun 01 (+4 days)\nHub 3: Fri Jun 05 (+8 days)\n(Repro/Endo hubs coming soon)\nAnki: Continue daily reviews"},{"date":"2026-05-28","week":"Week 8","day":"Thu","block":"ENDO","title":"Mandatory - Longitudinal Case Wrap-Up","type":"Mandatory","course":"Phys, DRT, Pharm","before":"Review Learning Objectives (5 min)\nSkim Lecture Guide section headers (5 min)","dayof":"1. Attend session (60 min)\n2. Review notes (30 min)","after":"1. Anki reviews (35 min)","anki":"Review existing cards: 35 min AM + 15 min PM\n(Resource mapping coming \u2014 will update)","hub":"\u2014"},{"date":"2026-06-01","week":"Exam","day":"Mon","block":"GI","title":"GI Module Exam","type":"Exam","course":"N/A","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-06-08","week":"Exam","day":"Mon","block":"REPRO","title":"RPD Exam 1","type":"Exam","course":"N/A","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"},{"date":"2026-06-11","week":"Exam","day":"Thu","block":"REPRO","title":"RPD Exam 2","type":"Exam","course":"N/A","before":"\u2014","dayof":"Take exam\nReview missed questions after","after":"\u2014","anki":"\u2014","hub":"\u2014"}];
+
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyAxP_5l7W0_8TC2rLJEKGk_xIwlLMzQT7M",
+  authDomain: "hoyadocs-checklist.firebaseapp.com",
+  projectId: "hoyadocs-checklist",
+  storageBucket: "hoyadocs-checklist.firebasestorage.app",
+  messagingSenderId: "1054034294907",
+  appId: "1:1054034294907:web:9396213f090a55b91bcade"
+};
+
+let fbApp, fbAuth, fbDb, fbUser = null;
+let syncStatus = 'offline'; // offline, syncing, synced, error
+let syncDebounce = null;
+
+async function initFirebase() {
+  try {
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js');
+    const { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut: fbSignOut } =
+      await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js');
+    const { getFirestore, doc, getDoc, setDoc } =
+      await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js');
+
+    fbApp = initializeApp(firebaseConfig);
+    fbAuth = getAuth(fbApp);
+    fbDb = getFirestore(fbApp);
+
+    // Expose for use in other functions
+    window._fb = { signInWithPopup, GoogleAuthProvider, fbSignOut, doc, getDoc, setDoc };
+
+    onAuthStateChanged(fbAuth, async (user) => {
+      fbUser = user;
+      if (user) {
+        await pullFromCloud();
+      }
+      render();
+    });
+  } catch (e) {
+    console.error('Firebase init error:', e);
+    syncStatus = 'error';
+  }
+}
+
+async function signIn() {
+  if (!fbAuth || !window._fb) return;
+  try {
+    const provider = new window._fb.GoogleAuthProvider();
+    await window._fb.signInWithPopup(fbAuth, provider);
+  } catch (e) {
+    console.error('Sign-in error:', e);
+    alert('Sign-in failed: ' + e.message);
+  }
+}
+
+async function signOutUser() {
+  if (!fbAuth || !window._fb) return;
+  try {
+    await window._fb.fbSignOut(fbAuth);
+    fbUser = null;
+    syncStatus = 'offline';
+    render();
+  } catch (e) { console.error('Sign-out error:', e); }
+}
+
+async function pushToCloud() {
+  if (!fbUser || !fbDb || !window._fb) return;
+  syncStatus = 'syncing';
+  render();
+  try {
+    const ref = window._fb.doc(fbDb, 'users', fbUser.uid);
+    await window._fb.setDoc(ref, {
+      state: JSON.stringify(state),
+      updatedAt: new Date().toISOString(),
+      email: fbUser.email
+    });
+    syncStatus = 'synced';
+  } catch (e) {
+    console.error('Push error:', e);
+    syncStatus = 'error';
+  }
+  render();
+}
+
+async function pullFromCloud() {
+  if (!fbUser || !fbDb || !window._fb) return;
+  syncStatus = 'syncing';
+  try {
+    const ref = window._fb.doc(fbDb, 'users', fbUser.uid);
+    const snap = await window._fb.getDoc(ref);
+    if (snap.exists()) {
+      const cloudState = JSON.parse(snap.data().state);
+      // Merge: cloud wins for days that have more tasks checked
+      for (const [date, cloudDay] of Object.entries(cloudState.days || {})) {
+        const local = state.days[date];
+        if (!local) {
+          state.days[date] = cloudDay;
+        } else {
+          const localChecked = Object.keys(local.tasks || {}).length;
+          const cloudChecked = Object.keys(cloudDay.tasks || {}).length;
+          if (cloudChecked > localChecked) {
+            state.days[date] = cloudDay;
+          } else if (cloudChecked === localChecked) {
+            // Merge tasks from both
+            state.days[date].tasks = { ...cloudDay.tasks, ...local.tasks };
+            state.days[date].notes = local.notes || cloudDay.notes;
+            state.days[date].totalTime = Math.max(local.totalTime || 0, cloudDay.totalTime || 0);
+          }
+        }
+      }
+      saveLocal();
+    }
+    syncStatus = 'synced';
+  } catch (e) {
+    console.error('Pull error:', e);
+    syncStatus = 'error';
+  }
+}
+
+function debouncedSync() {
+  if (!fbUser) return;
+  clearTimeout(syncDebounce);
+  syncDebounce = setTimeout(() => pushToCloud(), 2000);
+}
+
+// STATE (local + cloud)
+// ============================================================
+const STATE_KEY = 'hoyadocs_checklist_v2';
+let state = { days: {} };
+
+function loadState() {
+  try { const s = localStorage.getItem(STATE_KEY); if (s) state = JSON.parse(s); } catch(e) {}
+}
+function saveLocal() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function saveState() {
+  saveLocal();
+  debouncedSync();
+}
+function getDayState(ds) {
+  if (!state.days[ds]) state.days[ds] = { tasks: {}, notes: '', savedAt: null, totalTime: 0 };
+  return state.days[ds];
+}
+
+// ============================================================
+// DATE
+// ============================================================
+let currentDate = new Date(); currentDate.setHours(0,0,0,0);
+
+function fmtDate(d) { return d.toISOString().split('T')[0]; }
+function fmtDisplay(d) {
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+}
+function getSessionsForDate(ds) { return SCHEDULE.filter(s => s.date === ds); }
+
+// ============================================================
+// PARSE TASKS
+// ============================================================
+function parseTasks(text, phase) {
+  if (!text || text === '—') return [];
+  const lines = text.split('\n');
+  const tasks = [];
+  let cur = null;
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t.startsWith('→') || (t.startsWith('(') && !t.includes('DONE'))) continue;
+    const isNum = /^\d+\.\s/.test(t);
+    const isStar = t.startsWith('★');
+    const isBullet = t.startsWith('•');
+    const isDone = t.includes('DONE') && t.includes('skip');
+    const timeM = t.match(/(\d+)\s*min/);
+    if (isNum || isStar) {
+      cur = {
+        id: `${phase}_${tasks.length}`,
+        text: t.replace(/^\d+\.\s*/, '').replace(/^★\s*/, '★ '),
+        time: timeM ? parseInt(timeM[1]) : null,
+        isDone: isDone, isPreDone: isDone, subtasks: []
+      };
+      tasks.push(cur);
+    } else if (isBullet && cur) {
+      cur.subtasks.push({ text: t.replace(/^•\s*/, ''), isDone: isDone || (t.includes('DONE') && t.includes('skip')), isPreDone: isDone || (t.includes('DONE') && t.includes('skip')) });
+    } else if (isBullet) {
+      tasks.push({ id: `${phase}_${tasks.length}`, text: t.replace(/^•\s*/, ''), time: null, isDone, isPreDone: isDone, subtasks: [] });
+    } else if (cur && t.includes('done before')) {
+      cur.text += ` ${t}`;
+    }
+  }
+  return tasks;
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+let timerInterval = null, timerSeconds = 0, timerRunning = false;
+
+function startTimer() {
+  timerRunning = true;
+  timerInterval = setInterval(() => { timerSeconds++; updateTimerEl(); }, 1000);
+  render();
+}
+function stopTimer() {
+  clearInterval(timerInterval); timerRunning = false;
+  const ds = getDayState(fmtDate(currentDate));
+  ds.totalTime = (ds.totalTime||0) + timerSeconds;
+  saveState(); timerSeconds = 0; render();
+}
+function resetTimer() { clearInterval(timerInterval); timerRunning = false; timerSeconds = 0; render(); }
+function updateTimerEl() {
+  const el = document.getElementById('timer-el');
+  if (el) {
+    const h = Math.floor(timerSeconds/3600), m = Math.floor((timerSeconds%3600)/60), s = timerSeconds%60;
+    el.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function calcProgress(ds, sessions) {
+  const day = getDayState(ds);
+  let total=0, done=0, skipped=0;
+  for (const sess of sessions) {
+    for (const ph of ['before','dayof','after']) {
+      const tasks = parseTasks(sess[ph], `${sess.title}_${ph}`);
+      for (const t of tasks) {
+        if (t.isPreDone) { skipped++; continue; }
+        total++;
+        if (day.tasks[`${sess.title}|${ph}|${t.id}`]) done++;
+      }
+    }
+  }
+  return { total, done, skipped, pct: total > 0 ? Math.round((done/total)*100) : 0 };
+}
+
+function calcStreak() {
+  let streak = 0;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let d = new Date(today); d.setDate(d.getDate()-1);
+  while (streak < 60) {
+    const ds = fmtDate(d);
+    const sess = getSessionsForDate(ds);
+    if (sess.length === 0) { d.setDate(d.getDate()-1); continue; }
+    if (calcProgress(ds, sess).pct >= 70) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  const ts = getSessionsForDate(fmtDate(today));
+  if (ts.length > 0 && calcProgress(fmtDate(today), ts).pct >= 70) streak++;
+  return streak;
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  const ds = fmtDate(currentDate);
+  const sessions = getSessionsForDate(ds);
+  const isToday = ds === fmtDate(new Date());
+  const day = getDayState(ds);
+  const prog = calcProgress(ds, sessions);
+  const streak = calcStreak();
+  let h = '';
+
+  // Hero
+  h += `<div class="hero">
+    <div class="hero-eyebrow">DAILY CHECKLIST</div>
+    <h1 class="hero-title">${isToday ? "Today's" : ''} <em>Game Plan</em></h1>
+    <div class="hero-sub">Your complete study checklist — check off tasks as you go.</div>
+    <div class="date-nav">
+      <button onclick="navDate(-1)">← Prev</button>
+      <button class="today-btn" onclick="goToday()">Today</button>
+      <button onclick="navDate(1)">Next →</button>
+      <div class="current-date">${fmtDisplay(currentDate)}${isToday ? '' : ''}</div>
+    </div>
+  </div>`;
+
+  if (sessions.length === 0) {
+    h += `<div class="empty-state"><h2>No sessions scheduled</h2><p>Nothing on the calendar for this date. Use the arrows to navigate.</p></div>`;
+  } else {
+    // Progress
+    h += `<div class="progress-card">
+      <div class="progress-header">
+        <h3>Day Progress</h3>
+        <div class="progress-pct">${prog.pct}%</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${prog.pct}%"></div></div>
+      <div class="progress-stats">
+        <span><span class="stat-dot done"></span> ${prog.done} done</span>
+        <span><span class="stat-dot pending"></span> ${prog.total - prog.done} remaining</span>
+        ${prog.skipped > 0 ? `<span><span class="stat-dot skipped"></span> ${prog.skipped} auto-skipped</span>` : ''}
+        ${day.totalTime > 0 ? `<span>⏱ ${Math.floor(day.totalTime/3600)}h ${Math.floor((day.totalTime%3600)/60)}m studied</span>` : ''}
+      </div>
+    </div>`;
+
+    // Timer
+    h += `<div class="timer-card">
+      <div class="timer-display" id="timer-el">${timerRunning ? '' : '0:00:00'}</div>
+      <div class="timer-label">${timerRunning ? 'Studying...' : 'Pomodoro — start when you begin a task'}</div>
+      <div class="timer-btns">
+        ${timerRunning ? `<button class="stop" onclick="stopTimer()">■ Stop</button>` : `<button class="start" onclick="startTimer()">▶ Start</button>`}
+        <button onclick="resetTimer()">Reset</button>
+      </div>
+    </div>`;
+
+    // Phases
+    const phases = [
+      { key:'before', icon:'🌙', title:'Day Before Lecture', desc:'Evening prep' },
+      { key:'dayof', icon:'📖', title:'Day Of Lecture', desc:'Primary study' },
+      { key:'after', icon:'🔄', title:'Day After Lecture', desc:'Reinforcement' },
+    ];
+
+    for (const phase of phases) {
+      let phaseTasks = [], phaseHtml = '';
+      for (const sess of sessions) {
+        const tasks = parseTasks(sess[phase.key], `${sess.title}_${phase.key}`);
+        if (!tasks.length) continue;
+        const blockClass = sess.block === 'GI' ? 'gi' : sess.block === 'REPRO' ? 'repro' : 'endo';
+        phaseHtml += `<div class="session-card"><div class="session-label">
+          <span class="session-title">${esc(sess.title)}</span>
+          <span class="block-tag ${blockClass}">${sess.block}</span>
+          <span class="block-tag course">${sess.course}</span>
+        </div>`;
+        for (const t of tasks) {
+          const key = `${sess.title}|${phase.key}|${t.id}`;
+          const checked = t.isPreDone || day.tasks[key];
+          phaseTasks.push({ key, checked, skip: t.isPreDone });
+          phaseHtml += `<div class="task ${checked ? 'done' : ''} ${t.isPreDone ? 'auto-skip' : ''}">
+            <input type="checkbox" ${checked ? 'checked' : ''} ${t.isPreDone ? 'disabled' : ''}
+              onchange="toggle('${key.replace(/'/g,"\\'")}', this.checked)">
+            <div class="task-text">
+              ${t.isPreDone ? '<span class="skip-badge">SKIP</span> ' : ''}${esc(t.text)}
+              ${t.subtasks.length ? '<div class="task-subtasks">' + t.subtasks.map(st =>
+                `<div style="${st.isPreDone ? 'text-decoration:line-through;opacity:0.5' : ''}">${st.isPreDone ? '<span class="skip-badge">SKIP</span> ' : '• '}${esc(st.text)}</div>`
+              ).join('') + '</div>' : ''}
+            </div>
+            ${t.time ? `<span class="task-time">${t.time}m</span>` : ''}
+          </div>`;
+        }
+        phaseHtml += `</div>`;
+      }
+      const pd = phaseTasks.filter(t=>t.checked).length, pt = phaseTasks.length;
+      if (pt > 0) {
+        h += `<div class="section-divider">
+          <span class="section-divider-icon">${phase.icon}</span>
+          <span class="section-divider-text">${phase.title}</span>
+          <span class="section-divider-line"></span>
+          <span class="section-divider-badge">${pd}/${pt}</span>
+        </div>${phaseHtml}`;
+      }
+    }
+
+    // Anki
+    let ankiHtml = '';
+    for (const sess of sessions) {
+      if (!sess.anki || sess.anki === '—') continue;
+      const tasks = parseTasks(sess.anki, `${sess.title}_anki`);
+      if (!tasks.length) continue;
+      const bc = sess.block === 'GI' ? 'gi' : sess.block === 'REPRO' ? 'repro' : 'endo';
+      ankiHtml += `<div class="session-card"><div class="session-label">
+        <span class="session-title">${esc(sess.title)}</span>
+        <span class="block-tag ${bc}">${sess.block}</span>
+      </div>`;
+      for (const t of tasks) {
+        const key = `${sess.title}|anki|${t.id}`;
+        const checked = day.tasks[key];
+        ankiHtml += `<div class="task ${checked?'done':''}">
+          <input type="checkbox" ${checked?'checked':''} onchange="toggle('${key.replace(/'/g,"\\'")}',this.checked)">
+          <div class="task-text">${esc(t.text)}
+            ${t.subtasks.length ? '<div class="task-subtasks">' + t.subtasks.map(st => `<div>• ${esc(st.text)}</div>`).join('') + '</div>' : ''}
+          </div>
+        </div>`;
+      }
+      ankiHtml += `</div>`;
+    }
+    if (ankiHtml) {
+      h += `<div class="section-divider">
+        <span class="section-divider-icon">🃏</span>
+        <span class="section-divider-text">Anki</span>
+        <span class="section-divider-line"></span>
+      </div>${ankiHtml}`;
+    }
+
+    // EOD
+    h += `<div class="eod-card">
+      <h3>End of Day Reflection</h3>
+      <textarea id="eod" placeholder="How did today go? What was hard? What will you change tomorrow?"
+        oninput="saveNotes(this.value)">${esc(day.notes||'')}</textarea>
+      <button onclick="saveDay(this)">Save Day & Log Progress</button>
+    </div>`;
+
+    // Cloud Sync panel
+    h += '<div class="eod-card" style="margin-top:12px">';
+    if (fbUser) {
+      const statusIcon = syncStatus === 'synced' ? '☁️ Synced' : syncStatus === 'syncing' ? '⏳ Syncing...' : syncStatus === 'error' ? '⚠️ Sync error' : '☁️';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between">';
+      h += '<h3>Cloud Sync</h3>';
+      h += '<span style="font-size:0.78rem;color:var(--ink-3);font-weight:600">' + statusIcon + '</span>';
+      h += '</div>';
+      h += '<div style="display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 14px;background:var(--bg);border-radius:10px">';
+      h += '<img src="' + (fbUser.photoURL || '') + '" style="width:28px;height:28px;border-radius:50%;border:1px solid var(--rule)" onerror="this.style.display=\'none\'">';
+      h += '<div style="flex:1;font-size:0.82rem"><div style="font-weight:700;color:var(--ink)">' + esc(fbUser.displayName || 'User') + '</div>';
+      h += '<div style="color:var(--ink-3);font-size:0.75rem">' + esc(fbUser.email || '') + '</div></div>';
+      h += '<button onclick="pushToCloud()" style="padding:6px 14px;font-size:0.78rem;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer">Sync Now</button>';
+      h += '<button onclick="signOutUser()" style="padding:6px 14px;font-size:0.78rem;background:var(--surface);color:var(--ink-3);border:1px solid var(--rule);border-radius:6px;font-weight:600;cursor:pointer">Sign Out</button>';
+      h += '</div>';
+      h += '<div style="font-size:0.72rem;color:var(--ink-3);margin-top:8px">Progress auto-syncs when you check tasks. Works on any device — just sign in.</div>';
+    } else {
+      h += '<h3>Sync Across Devices</h3>';
+      h += '<div style="margin-top:10px;text-align:center;padding:16px">';
+      h += '<button onclick="signIn()" style="padding:10px 28px;font-size:0.9rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px">';
+      h += '<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>';
+      h += 'Sign in with Google</button>';
+      h += '<div style="font-size:0.78rem;color:var(--ink-3);margin-top:10px">Sign in to sync your progress across all your devices</div>';
+      h += '</div>';
+    }
+    h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule)">';
+    h += '<button id="export-btn" onclick="exportProgress()" style="flex:1;min-width:120px;padding:7px 14px;font-size:0.78rem;background:var(--surface);border:1px solid var(--rule);color:var(--ink-2);border-radius:6px;font-weight:600;cursor:pointer">Export .json</button>';
+    h += '<label style="flex:1;min-width:120px;padding:7px 14px;font-size:0.78rem;background:var(--surface);border:1px solid var(--rule);color:var(--ink-2);border-radius:6px;font-weight:600;text-align:center;cursor:pointer">';
+    h += 'Import .json<input type="file" accept=".json" onchange="importProgress(this)" style="display:none">';
+    h += '</label></div>';
+    h += '</div>';
+  }
+
+  // History
+  h += renderHistory(streak);
+  document.getElementById('app').innerHTML = h;
+  if (timerRunning) updateTimerEl();
+}
+
+function renderHistory(streak) {
+  const start = new Date('2026-04-06'), end = new Date('2026-06-11');
+  const today = new Date(); today.setHours(0,0,0,0);
+  let h = `<div class="history-card"><h3>Study History</h3>
+    <div class="streak-bar"><span class="streak-fire">🔥</span>
+    <span class="streak-num">${streak}</span> day streak (70%+ completion)</div>
+    <div class="history-grid">`;
+  let d = new Date(start);
+  while (d <= end) {
+    const ds = fmtDate(d);
+    const sess = getSessionsForDate(ds);
+    const isTdy = ds === fmtDate(today);
+    const isCur = ds === fmtDate(currentDate);
+    const isFut = d > today;
+    let cls = 'future', tip = `${d.getMonth()+1}/${d.getDate()}`;
+    if (sess.length > 0 && !isFut) {
+      const p = calcProgress(ds, sess);
+      if (p.total === 0) { cls = 'no-data'; tip += ' · no tasks'; }
+      else if (p.pct === 100) { cls = 'perfect'; tip += ` · ${p.pct}%`; }
+      else if (p.pct >= 70) { cls = 'high'; tip += ` · ${p.pct}%`; }
+      else if (p.pct >= 40) { cls = 'mid'; tip += ` · ${p.pct}%`; }
+      else if (p.pct > 0) { cls = 'low'; tip += ` · ${p.pct}%`; }
+      else { cls = 'no-data'; tip += ' · not started'; }
+    } else if (!sess.length) { cls = 'no-data'; }
+    h += `<div class="history-day ${cls} ${isTdy?'today-marker':''}" onclick="goToDate('${ds}')"
+      style="${isCur ? 'outline:2px solid var(--accent);outline-offset:1px;' : ''}">${d.getDate()}
+      <div class="history-tooltip">${tip}</div></div>`;
+    d.setDate(d.getDate()+1);
+  }
+  return h + `</div></div>`;
+}
+
+// ============================================================
+// HANDLERS
+// ============================================================
+function toggle(key, checked) {
+  const d = getDayState(fmtDate(currentDate));
+  if (checked) d.tasks[key] = true; else delete d.tasks[key];
+  saveState(); render();
+}
+function navDate(n) { currentDate.setDate(currentDate.getDate()+n); render(); }
+function goToday() { currentDate = new Date(); currentDate.setHours(0,0,0,0); render(); }
+function goToDate(ds) { currentDate = new Date(ds+'T00:00:00'); render(); }
+function saveNotes(v) { getDayState(fmtDate(currentDate)).notes = v; saveState(); }
+function saveDay(btn) {
+  getDayState(fmtDate(currentDate)).savedAt = new Date().toISOString();
+  saveState();
+  btn.textContent = '✓ Saved!'; btn.style.background = '#166534';
+  setTimeout(() => { btn.textContent = 'Save Day & Log Progress'; btn.style.background = ''; }, 2000);
+}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+
+// ============================================================
+// SYNC ACROSS DEVICES
+// ============================================================
+function exportProgress() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'hoyadocs_progress_' + fmtDate(new Date()) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  const btn = document.getElementById('export-btn');
+  if (btn) { btn.textContent = 'Downloaded!'; setTimeout(() => { btn.textContent = 'Export Progress'; }, 2000); }
+}
+
+function importProgress(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (imported.days) {
+        for (const date of Object.keys(imported.days)) {
+          const dayData = imported.days[date];
+          const existing = state.days[date];
+          if (!existing) {
+            state.days[date] = dayData;
+          } else {
+            const merged = Object.assign({}, existing.tasks, dayData.tasks);
+            state.days[date] = {
+              tasks: merged,
+              notes: dayData.notes || existing.notes,
+              savedAt: dayData.savedAt || existing.savedAt,
+              totalTime: Math.max(dayData.totalTime || 0, existing.totalTime || 0)
+            };
+          }
+        }
+        saveState(); render();
+        alert('Progress imported and merged successfully!');
+      }
+    } catch(err) { alert('Error: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+
+// INIT
+loadState();
+render();
+initFirebase();
+</script>
+</body>
+</html>
