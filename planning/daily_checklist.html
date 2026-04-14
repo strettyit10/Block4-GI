@@ -491,25 +491,49 @@ button { font-family: inherit; cursor: pointer; }
 .history-day:hover .history-tooltip { display: block; }
 
 /* RESPONSIVE */
-@media (max-width: 960px) {
-  /* Stack the shell and move the sidebar to the bottom of the flow */
+@media (max-width: 1100px) {
+  /* Stack the shell and move the sidebar to the bottom of the flow so the
+     main content (Daily Checklist + Planner) gets the full page width, and
+     Navigate / Quick Links are still reachable as a horizontal strip at the
+     bottom of the viewport. */
   .shell { flex-direction: column; }
   .sidebar {
     order: 2;                  /* push sidebar after main content */
     width: 100%;
     height: auto;
-    position: static;
+    position: sticky;          /* sticks to the bottom while scrolling */
+    top: auto;
+    bottom: 0;
+    z-index: 20;
     flex-direction: row;
     align-items: center;
     padding: 10px 16px;
     gap: 10px;
     flex-wrap: nowrap;
     overflow-x: auto;
+    border-top: 1px solid var(--sb-line);
+    box-shadow: 0 -4px 14px rgba(0,0,0,0.18);
   }
   .sb-brand      { margin-bottom: 0; flex: 0 0 auto; }
   .sb-block      { display: none; }
-  .sb-rule       { display: none; }
-  .sb-section-label { display: none; }
+  .sb-rule       {
+    /* Re-purpose as a small vertical divider between Navigate and Quick Links */
+    display: block;
+    width: 1px;
+    height: 22px;
+    margin: 0 4px;
+    flex: 0 0 auto;
+  }
+  .sb-section-label {
+    /* Keep the section labels visible as small inline chips */
+    display: inline-block;
+    margin: 0 2px 0 4px;
+    padding: 0;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.55);
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
   .sb-spacer     { display: none; }
   .sb-nav {
     display: flex;
@@ -517,6 +541,7 @@ button { font-family: inherit; cursor: pointer; }
     gap: 4px;
     margin-bottom: 0;
     flex-wrap: nowrap;
+    flex: 0 0 auto;
   }
   .sb-link {
     padding: 6px 10px;
@@ -531,9 +556,13 @@ button { font-family: inherit; cursor: pointer; }
   /* Hide the version tag on small screens */
   .sidebar > div[style*="v1.0"] { display: none !important; }
   .main { order: 1; }
-  .main-inner { padding: 20px 16px 40px; }
+  .main-inner { padding: 20px 16px 80px; }  /* extra bottom padding so content clears the sticky bar */
   .tab-bar { padding: 10px 16px 0; }
   .timer-card { flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .sb-section-label { display: none; }  /* drop labels when space is tight */
+  .sb-rule { display: none; }
 }
 @media (max-width: 480px) {
   .sb-nav { gap: 2px; }
