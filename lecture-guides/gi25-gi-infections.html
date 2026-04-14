@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 25: GI Infections — HoyaDocs GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0 140px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px;
+            transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+
+        .sidebar-footer {
+            position: fixed; bottom: 0; left: 0; width: 220px;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+            z-index: 102;
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+
+        h4.collapsible-h4 { cursor: pointer; user-select: none; }
+        h4.collapsible-h4:hover { background: #bfdbfe; }
+        h4.collapsible-h4 .h4-chevron { display: inline-block; font-size: 11px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        h4.collapsible-h4.collapsed .h4-chevron { transform: rotate(-90deg); }
+
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+
+        /* On This Page TOC — neutral gray */
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #1e40af; }
+
+        /* LOs Covered box — neutral gray with blue left border */
+        .lo-covered { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #1e3a5f; }
+
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .reveal-btn { background: #2563eb; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .answer { display: none; margin-top: 12px; background: #f0fdf4; border-left: 3px solid #16a34a; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #166534; }
+
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; background: none !important; padding: 0 !important; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+
+        /* ══ Mobile Responsive ════════════════════════════════════════════════ */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn {
+            display: none;
+            position: fixed; top: 12px; left: 12px; z-index: 200;
+            background: #1e293b; border: none; border-radius: 6px;
+            padding: 8px 11px; cursor: pointer; color: white; font-size: 20px;
+            line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 99;
+        }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar { transform: translateX(-240px); z-index: 150; }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main { margin-left: 0 !important; padding: 60px 16px 30px 16px !important; max-width: 100% !important; }
+            .header h1 { font-size: 22px !important; }
+            .header p { font-size: 14px !important; }
+            .lo-section { padding: 20px 16px !important; }
+            .lo-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px !important; }
+            .lo-toc ol { padding-left: 14px; }
+            .export-actions { flex-direction: column; }
+            .buzzwords { gap: 4px; }
+            .buzzword { font-size: 11px; padding: 2px 8px; }
+        }
+        @media (max-width: 480px) {
+            div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+            div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+            .main { padding: 55px 12px 24px 12px !important; }
+            .lo-acc-header { flex-wrap: wrap; gap: 6px !important; }
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs &#8599;</a>
+        <h2>Lecture 25</h2>
+        <p>GI Infections</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">&#128203; Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">&#129440; LO 1 &middot; Diarrhea Pathogens</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">&#129494; LO 2 &middot; Clinical Syndromes</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">&#127973; LO 3 &middot; Intraabdominal</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">&#9999;&#65039; Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">&#128424;&#65039;</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">&#128196;</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/gi_resource_hub.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<main class="main">
+    <div class="header">
+        <h1>Lecture 25: GI Infections</h1>
+        <p>HoyaDocs &mdash; GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB ══ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 25 &mdash; Overview</h2>
+        <p class="lo-subtitle" style="margin-bottom:24px;">GI Infections &middot; Princy N. Kumar, M.D. &middot; HoyaDocs GI Block</p>
+
+        <div class="lo-content">
+
+            <!-- ─────────── PAGE SUMMARY CARDS ─────────── -->
+            <h3 style="color:#1e3a5f; font-size:18px; margin-bottom:14px; margin-top:10px;">&#128203; Page Summary</h3>
+            <p style="color:#475569; font-size:13px; margin-bottom:18px;">Four tabs, three learning objectives, twelve USMLE-style practice questions. Use the cards below to jump directly to any tab.</p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:14px; margin-bottom:32px;">
+
+                <!-- LO1 CARD -->
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:10px; padding:16px 18px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                    <div style="color:#1e3a5f; font-weight:700; font-size:14px; margin-bottom:6px;">TAB 2 &middot; LO 1</div>
+                    <h4 style="color:#1e3a5f; font-size:15px; margin:0 0 10px 0; background:none; padding:0;">Pathogens of Infectious Diarrhea</h4>
+                    <p style="color:#1e293b; font-size:12.5px; margin:0 0 10px 0; line-height:1.5;">Viral, bacterial (invasive vs. toxigenic), preformed-toxin, and protozoal etiologies of acute infectious diarrhea. Includes Rotavirus, Norovirus, Campylobacter, Salmonella, Shigella, the five E.&nbsp;coli pathotypes, Yersinia, Vibrio, and Listeria.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#1e3a5f;">
+                        <span><strong>Topics:</strong> 8 sections</span>
+                        <a href="#practice" onclick="showSection('practice', event)" style="color:#2563eb; text-decoration:none; font-weight:600;">Practice Q1&ndash;Q4 &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- LO2 CARD -->
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:10px; padding:16px 18px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                    <div style="color:#166534; font-weight:700; font-size:14px; margin-bottom:6px;">TAB 3 &middot; LO 2</div>
+                    <h4 style="color:#166534; font-size:15px; margin:0 0 10px 0; background:none; padding:0;">Clinical Syndromes of Diarrhea</h4>
+                    <p style="color:#1e293b; font-size:12.5px; margin:0 0 10px 0; line-height:1.5;">Syndromic differential by mechanism: watery (cholera, ETEC, viral, protozoal), dysentery (Shigella, EHEC, Campylobacter, invasive Salmonella, Entamoeba), preformed-toxin food poisoning, traveler&rsquo;s diarrhea, and C.&nbsp;difficile colitis.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#166534;">
+                        <span><strong>Topics:</strong> 6 syndromes</span>
+                        <a href="#practice" onclick="showSection('practice', event)" style="color:#15803d; text-decoration:none; font-weight:600;">Practice Q5&ndash;Q8 &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- LO3 CARD -->
+                <div style="background:#ede9fe; border:1px solid #c4b5fd; border-radius:10px; padding:16px 18px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                    <div style="color:#5b21b6; font-weight:700; font-size:14px; margin-bottom:6px;">TAB 4 &middot; LO 3</div>
+                    <h4 style="color:#5b21b6; font-size:15px; margin:0 0 10px 0; background:none; padding:0;">Intraabdominal Infections</h4>
+                    <p style="color:#1e293b; font-size:12.5px; margin:0 0 10px 0; line-height:1.5;">Normal flora and empiric coverage, H.&nbsp;pylori and its disease associations, pyogenic vs. amebic liver abscess, intraperitoneal abscess, and the three classifications of peritonitis (SBP, secondary, CAPD).</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#5b21b6;">
+                        <span><strong>Topics:</strong> 6 sections</span>
+                        <a href="#practice" onclick="showSection('practice', event)" style="color:#7c3aed; text-decoration:none; font-weight:600;">Practice Q9&ndash;Q12 &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ─────────── EXPAND / COLLAPSE CONTROLS ─────────── -->
+            <div style="margin:28px 0 18px 0; padding:14px 16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; display:flex; flex-wrap:wrap; align-items:center; gap:10px;">
+                <span style="color:#475569; font-size:13px; font-weight:600; margin-right:6px;">&#9881;&#65039; Display controls:</span>
+                <button onclick="expandAll()" style="background:#2563eb; color:white; border:none; border-radius:6px; padding:7px 14px; font-size:12.5px; font-weight:600; cursor:pointer;">Expand All Sections</button>
+                <button onclick="collapseAll()" style="background:#64748b; color:white; border:none; border-radius:6px; padding:7px 14px; font-size:12.5px; font-weight:600; cursor:pointer;">Collapse All Sections</button>
+                <span style="color:#64748b; font-size:12px; margin-left:4px;">(applies to the open LO tab)</span>
+            </div>
+
+            <!-- ─────────── OFFICIAL LEARNING OBJECTIVES MAP ─────────── -->
+            <h3 style="color:#1e3a5f; font-size:18px; margin-bottom:12px; margin-top:30px;">&#127919; Official Learning Objectives Map</h3>
+            <p style="color:#475569; font-size:13px; margin-bottom:18px;">Click any LO below to see which page sections cover that objective and which practice questions test it.</p>
+
+            <!-- LO 1 ACCORDION -->
+            <div class="lo-accordion" style="margin-bottom:12px; border:1px solid #93c5fd; border-radius:8px; overflow:hidden;">
+                <div class="lo-accordion-header" onclick="toggleAccordion(this)" style="background:#dbeafe; padding:14px 18px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:#1e3a5f; font-weight:700; font-size:14px;">
+                        <span style="display:inline-block; background:#2563eb; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; font-size:12px; margin-right:10px;">1</span>
+                        Identify the pathogens of infectious diarrhea and the clinical syndromes they produce.
+                    </span>
+                    <span class="lo-accordion-chevron" style="color:#1e3a5f; font-size:14px;">&#9660;</span>
+                </div>
+                <div class="lo-accordion-body" style="display:none; padding:16px 20px; background:white;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div>
+                            <div style="color:#1e3a5f; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Sections &amp; Subheadings</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#diarrhea-definitions" onclick="showSection('lo1', event, 'diarrhea-definitions')" style="color:#2563eb; text-decoration:none;">&#8226; Definitions &amp; Epidemiology</a></li>
+                                <li><a href="#viral-pathogens" onclick="showSection('lo1', event, 'viral-pathogens')" style="color:#2563eb; text-decoration:none;">&#8226; Viral Pathogens (Rota, Noro)</a></li>
+                                <li><a href="#bacterial-overview" onclick="showSection('lo1', event, 'bacterial-overview')" style="color:#2563eb; text-decoration:none;">&#8226; Bacterial Pathogens (table)</a></li>
+                                <li><a href="#campylobacter" onclick="showSection('lo1', event, 'campylobacter')" style="color:#2563eb; text-decoration:none;">&#8226; Campylobacter, Salmonella, Shigella</a></li>
+                                <li><a href="#ecoli" onclick="showSection('lo1', event, 'ecoli')" style="color:#2563eb; text-decoration:none;">&#8226; E. coli pathotypes &amp; Vibrio</a></li>
+                                <li><a href="#preformed-toxins" onclick="showSection('lo1', event, 'preformed-toxins')" style="color:#2563eb; text-decoration:none;">&#8226; Preformed-Toxin Food Poisoning</a></li>
+                                <li><a href="#protozoa-overview" onclick="showSection('lo1', event, 'protozoa-overview')" style="color:#2563eb; text-decoration:none;">&#8226; Protozoal Pathogens</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="color:#1e3a5f; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Practice Questions</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#2563eb; text-decoration:none;">&#8226; Q1 &mdash; ETEC traveler&rsquo;s diarrhea toxins</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#2563eb; text-decoration:none;">&#8226; Q2 &mdash; Rotavirus structure</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#2563eb; text-decoration:none;">&#8226; Q3 &mdash; Campylobacter &amp; GBS/Reiter&rsquo;s</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#2563eb; text-decoration:none;">&#8226; Q4 &mdash; Salmonella osteomyelitis in SCD</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 2 ACCORDION -->
+            <div class="lo-accordion" style="margin-bottom:12px; border:1px solid #86efac; border-radius:8px; overflow:hidden;">
+                <div class="lo-accordion-header" onclick="toggleAccordion(this)" style="background:#dcfce7; padding:14px 18px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:#166534; font-weight:700; font-size:14px;">
+                        <span style="display:inline-block; background:#16a34a; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; font-size:12px; margin-right:10px;">2</span>
+                        Describe the key clinical syndromes of infectious diarrhea and their distinguishing features.
+                    </span>
+                    <span class="lo-accordion-chevron" style="color:#166534; font-size:14px;">&#9660;</span>
+                </div>
+                <div class="lo-accordion-body" style="display:none; padding:16px 20px; background:white;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div>
+                            <div style="color:#166534; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Sections &amp; Subheadings</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#syndrome-framework" onclick="showSection('lo2', event, 'syndrome-framework')" style="color:#15803d; text-decoration:none;">&#8226; Syndromic Framework &amp; Master Table</a></li>
+                                <li><a href="#watery-diarrhea" onclick="showSection('lo2', event, 'watery-diarrhea')" style="color:#15803d; text-decoration:none;">&#8226; Watery Diarrhea (cholera, ETEC, viral)</a></li>
+                                <li><a href="#dysentery" onclick="showSection('lo2', event, 'dysentery')" style="color:#15803d; text-decoration:none;">&#8226; Dysentery (Shigella, EHEC, Campy)</a></li>
+                                <li><a href="#food-poisoning" onclick="showSection('lo2', event, 'food-poisoning')" style="color:#15803d; text-decoration:none;">&#8226; Preformed-Toxin Food Poisoning</a></li>
+                                <li><a href="#travelers-diarrhea" onclick="showSection('lo2', event, 'travelers-diarrhea')" style="color:#15803d; text-decoration:none;">&#8226; Traveler&rsquo;s Diarrhea</a></li>
+                                <li><a href="#c-diff" onclick="showSection('lo2', event, 'c-diff')" style="color:#15803d; text-decoration:none;">&#8226; C. difficile Colitis</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="color:#166534; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Practice Questions</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#15803d; text-decoration:none;">&#8226; Q5 &mdash; B. cereus fried rice</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#15803d; text-decoration:none;">&#8226; Q6 &mdash; EHEC &amp; HUS management</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#15803d; text-decoration:none;">&#8226; Q7 &mdash; C. difficile oral vancomycin</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#15803d; text-decoration:none;">&#8226; Q8 &mdash; Cholera toxin mechanism</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 3 ACCORDION -->
+            <div class="lo-accordion" style="margin-bottom:12px; border:1px solid #c4b5fd; border-radius:8px; overflow:hidden;">
+                <div class="lo-accordion-header" onclick="toggleAccordion(this)" style="background:#ede9fe; padding:14px 18px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:#5b21b6; font-weight:700; font-size:14px;">
+                        <span style="display:inline-block; background:#7c3aed; color:white; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; font-size:12px; margin-right:10px;">3</span>
+                        Identify the common intraabdominal infections, their typical pathogens, and their management.
+                    </span>
+                    <span class="lo-accordion-chevron" style="color:#5b21b6; font-size:14px;">&#9660;</span>
+                </div>
+                <div class="lo-accordion-body" style="display:none; padding:16px 20px; background:white;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div>
+                            <div style="color:#5b21b6; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Sections &amp; Subheadings</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#normal-flora" onclick="showSection('lo3', event, 'normal-flora')" style="color:#7c3aed; text-decoration:none;">&#8226; Normal Flora &amp; Empiric Coverage</a></li>
+                                <li><a href="#h-pylori" onclick="showSection('lo3', event, 'h-pylori')" style="color:#7c3aed; text-decoration:none;">&#8226; Helicobacter pylori</a></li>
+                                <li><a href="#liver-abscess" onclick="showSection('lo3', event, 'liver-abscess')" style="color:#7c3aed; text-decoration:none;">&#8226; Liver Abscess (pyogenic vs. amebic)</a></li>
+                                <li><a href="#intraperitoneal-abscess" onclick="showSection('lo3', event, 'intraperitoneal-abscess')" style="color:#7c3aed; text-decoration:none;">&#8226; Intraperitoneal Abscess</a></li>
+                                <li><a href="#peritonitis" onclick="showSection('lo3', event, 'peritonitis')" style="color:#7c3aed; text-decoration:none;">&#8226; Peritonitis (SBP, Secondary, CAPD)</a></li>
+                                <li><a href="#other-intraabd" onclick="showSection('lo3', event, 'other-intraabd')" style="color:#7c3aed; text-decoration:none;">&#8226; Other Site-Specific Infections</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="color:#5b21b6; font-weight:700; font-size:12.5px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Practice Questions</div>
+                            <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.9;">
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#7c3aed; text-decoration:none;">&#8226; Q9 &mdash; SBP empiric ceftriaxone</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#7c3aed; text-decoration:none;">&#8226; Q10 &mdash; H. pylori clarithromycin resistance</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#7c3aed; text-decoration:none;">&#8226; Q11 &mdash; Amebic liver abscess Rx</a></li>
+                                <li><a href="#practice" onclick="showSection('practice', event)" style="color:#7c3aed; text-decoration:none;">&#8226; Q12 &mdash; Secondary peritonitis anaerobes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1 TAB ══ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 &mdash; Pathogens That Cause Infectious Diarrhea</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Viruses, Bacteria (invasive + toxigenic), Preformed Toxins &middot; HoyaDocs GI Block</p>
+
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 1:</strong> Review the different pathogens that cause infectious diarrhea</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#diarrhea-definitions">Defining Diarrhea &amp; Big-Picture Pathogen Classes</a></li>
+                    <li><a href="#viral-pathogens">Viral Pathogens</a></li>
+                    <li><a href="#rotavirus">&nbsp;&nbsp;&#8627; Rotavirus</a></li>
+                    <li><a href="#norovirus">&nbsp;&nbsp;&#8627; Norovirus</a></li>
+                    <li><a href="#bacterial-overview">Bacterial Pathogens &mdash; Frequency &amp; Overview</a></li>
+                    <li><a href="#campylobacter">&nbsp;&nbsp;&#8627; Campylobacter</a></li>
+                    <li><a href="#salmonella">&nbsp;&nbsp;&#8627; Salmonella (non-typhoidal + typhoid)</a></li>
+                    <li><a href="#shigella">&nbsp;&nbsp;&#8627; Shigella</a></li>
+                    <li><a href="#ecoli">&nbsp;&nbsp;&#8627; Pathogenic E. coli (5 types)</a></li>
+                    <li><a href="#yersinia">&nbsp;&nbsp;&#8627; Yersinia</a></li>
+                    <li><a href="#vibrio">&nbsp;&nbsp;&#8627; Vibrio species</a></li>
+                    <li><a href="#listeria">&nbsp;&nbsp;&#8627; Listeria</a></li>
+                    <li><a href="#preformed-toxins">Preformed Toxin (&ldquo;Food Poisoning&rdquo;) Bugs</a></li>
+                    <li><a href="#protozoa-overview">Protozoa &mdash; At-a-Glance</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1: Definitions & Big Picture ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="diarrhea-definitions"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Defining Diarrhea &amp; Big-Picture Pathogen Classes
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Infectious diarrhea is defined by frequency (&gt;3 stools/day), volume (&gt;200 g/day in adults), and form (&ldquo;takes the shape of its container&rdquo;). <em>Acute</em> = &lt;2 weeks duration.</p>
+
+                <h4 id="diarrhea-def">&#128207; Clinical Definition</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Frequency:</strong> &gt;3 stools/day</li>
+                        <li><strong>Volume:</strong> &gt;200 g/day in adults on a Western diet</li>
+                        <li><strong>Form:</strong> Stool takes the shape of its container (watery/unformed)</li>
+                        <li><strong>Acute diarrhea:</strong> illness lasting &lt;2 weeks</li>
+                    </ul>
+                </div>
+
+                <h4 id="pathogen-buckets">&#129516; The Three Big Pathogen Buckets</h4>
+                <div class="h4-body">
+                    <p>For Step 1, memorize these three categories and which bugs live in each:</p>
+                    <table>
+                        <thead>
+                            <tr><th>Category</th><th>Representative Pathogens</th><th>Most Common?</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Viruses</strong></td><td>Rotavirus, Norovirus, Adenovirus, Astrovirus, Calicivirus, Enterovirus, Coronavirus</td><td>Most common overall cause of gastroenteritis</td></tr>
+                            <tr><td><strong>Bacteria</strong></td><td>Campylobacter, Salmonella, Shigella, Yersinia, E. coli, Vibrio, Listeria, C. difficile + preformed-toxin bugs (S. aureus, B. cereus, C. perfringens, C. botulinum)</td><td>More likely in <em>severe</em> diarrhea</td></tr>
+                            <tr><td><strong>Protozoa &amp; Parasites</strong></td><td>Entamoeba histolytica, Giardia, Cryptosporidium, Cyclospora, Isospora, Microsporidia, roundworms</td><td>Less common; often chronic or travel-related (detailed in GI26)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="freq-bacterial">&#128202; Frequency of Bacterial Isolates in Stool Cultures</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Campylobacter:</strong> ~42% (most common)</li>
+                        <li><strong>Salmonella:</strong> ~32%</li>
+                        <li><strong>Shigella:</strong> ~19%</li>
+                        <li><strong>E. coli O157:H7:</strong> ~0.14% without visible blood; rises to ~7.8% when blood is visible</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>&#9889; High-Yield:</strong>
+                        <ul>
+                            <li><em>Viruses</em> are the most common cause of gastroenteritis overall, but <em>bacteria</em> dominate when diarrhea is severe or bloody.</li>
+                            <li>&ldquo;Most common bacterial cause of diarrhea in the US&rdquo; = <strong>Campylobacter</strong>.</li>
+                            <li>If the stem has visible blood in the stool, think bacteria (especially EHEC, Shigella, Campylobacter, Salmonella) or Entamoeba.</li>
+                        </ul>
+                    </div>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: &ldquo;Most common&rdquo; depends on what you&rsquo;re counting <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Most common gastroenteritis overall</strong> = viral (Norovirus in adults, Rotavirus in unvaccinated kids).</li>
+                            <li><strong>Most common bacterial cause</strong> = Campylobacter.</li>
+                            <li><strong>Most common cause of traveler&rsquo;s diarrhea</strong> = ETEC.</li>
+                            <li>Don&rsquo;t conflate these &mdash; exam writers love this distinction.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2: Viral Pathogens ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="viral-pathogens"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Viral Pathogens
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Viruses are the <em>most common</em> cause of gastroenteritis. Classic Step-1 picks: Rotavirus (unvaccinated kids), Norovirus (outbreaks on cruise ships, dorms, nursing homes).</p>
+
+                <h4 id="rotavirus">&#128136;&#8205;&#9794;&#65039; Rotavirus</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Structure:</strong> Segmented dsRNA virus (Reoviridae).</li>
+                        <li><strong>Who gets it:</strong> The single most important viral cause of severe dehydrating diarrhea in children worldwide. Adults usually only mildly affected (parents, daycare workers, healthcare personnel).</li>
+                        <li><strong>Transmission:</strong> Fecal-oral route.</li>
+                        <li><strong>Incubation:</strong> &lt;48 hours.</li>
+                        <li><strong>Clinical:</strong> Vomiting, <strong>non-bloody watery diarrhea</strong>, low-grade fever. 30&ndash;50% also have respiratory symptoms. Ranges from asymptomatic shedding to severe dehydration, seizures, even death.</li>
+                        <li><strong>Diagnosis:</strong> EIA on stool (commonly used); PCR available.</li>
+                        <li><strong>Prevention:</strong> Live oral rotavirus vaccine is routine in the US.</li>
+                    </ul>
+                </div>
+
+                <h4 id="norovirus">&#128674; Norovirus</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Structure:</strong> Non-enveloped ssRNA virus (Caliciviridae).</li>
+                        <li><strong>Epidemiology:</strong> Most common cause of viral gastroenteritis in adults in the US. Infamous on <strong>cruise ships and college dorms</strong> &mdash; outbreaks spread rapidly.</li>
+                        <li><strong>Contagiousness:</strong> An infected person sheds <em>billions</em> of viral particles; as few as <strong>18 particles</strong> can infect another person.</li>
+                        <li><strong>Incubation:</strong> 12&ndash;48 hours.</li>
+                        <li><strong>Clinical:</strong> Abrupt-onset <em>vomiting</em> (&ldquo;winter vomiting syndrome&rdquo;), watery non-bloody diarrhea with abdominal cramps, nausea. Symptoms last 24&ndash;72 hours.</li>
+                        <li><strong>Complication:</strong> Dehydration &mdash; serious in young children, elderly, and immunocompromised.</li>
+                        <li><strong>Diagnosis:</strong> RT-qPCR on stool.</li>
+                        <li><strong>Management:</strong> Hydration + supportive care.</li>
+                    </ul>
+                </div>
+
+                <h4 id="other-viruses">&#128373;&#65039; Other Viral Causes (know they exist)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Adenovirus</strong> (types 40, 41) &mdash; pediatric diarrhea.</li>
+                        <li><strong>Astrovirus, Calicivirus, Enterovirus, Coronavirus</strong> &mdash; generally mild self-limited disease.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Rotavirus vs. Norovirus <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Rotavirus</strong> = unvaccinated infant/toddler, severe dehydration, dsRNA segmented (Reovirus family).</li>
+                            <li><strong>Norovirus</strong> = adults on a cruise ship/dorm outbreak, vomiting predominant, ssRNA non-enveloped (Calicivirus family).</li>
+                            <li>Both give <em>non-bloody</em> watery diarrhea &mdash; if the stem has blood, it&rsquo;s not a virus.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3: Bacterial Overview ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="bacterial-overview"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Bacterial Pathogens &mdash; Master Comparison
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; This master table is the single highest-yield asset for LO 1. Commit it to memory.</p>
+
+                <h4 id="bacterial-table">&#128208; Invasive vs. Toxigenic Bacteria</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Organism</th><th>Gram/Morphology</th><th>Source</th><th>Mechanism</th><th>Hallmark</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Campylobacter jejuni</strong></td><td>Gm(&ndash;) curved rod, grows at 42&deg;C</td><td>Undercooked poultry, raw milk, contaminated water, puppies</td><td>Invasive</td><td>#1 US bacterial diarrhea; &plusmn;bloody; complicated by <em>Guillain-Barr&eacute;</em> &amp; reactive arthritis</td></tr>
+                            <tr><td><strong>Salmonella (non-typhoidal)</strong></td><td>Gm(&ndash;) rod, H<sub>2</sub>S&nbsp;+</td><td>Raw eggs (transovarial), poultry, undercooked meat, <em>pet reptiles</em></td><td>Invasive</td><td>Symptoms 6&ndash;48 hr after ingestion; antibiotics <em>prolong</em> carriage state</td></tr>
+                            <tr><td><strong>Salmonella typhi / paratyphi</strong></td><td>Gm(&ndash;) rod</td><td>Human-only reservoir; contaminated food/water</td><td>Systemic invasion via M cells &rarr; macrophages &rarr; RES</td><td><strong>Enteric fever</strong>: rose spots, relative bradycardia, hepatosplenomegaly; gallbladder carrier state</td></tr>
+                            <tr><td><strong>Shigella</strong></td><td>Gm(&ndash;) rod, non-motile, non-H<sub>2</sub>S</td><td>Human-only; fecal-oral (daycares)</td><td>Invasive + Shiga toxin</td><td>Very low inoculum (~10 bugs); <em>dysentery</em> with tenesmus</td></tr>
+                            <tr><td><strong>E. coli</strong> (5 pathotypes)</td><td>Gm(&ndash;) rod, lactose+</td><td>Food/water (varies by type)</td><td>Varies (toxin vs. invasion vs. adherence)</td><td>See E. coli table below</td></tr>
+                            <tr><td><strong>Yersinia enterocolitica</strong></td><td>Gm(&ndash;) rod (requires <em>cold enrichment</em>)</td><td>Undercooked pork, chitterlings, tofu, unpasteurized milk</td><td>Invasive</td><td>Pseudoappendicitis (RLQ pain, fever) in children</td></tr>
+                            <tr><td><strong>Vibrio cholerae</strong></td><td>Gm(&ndash;) comma-shaped, oxidase+</td><td>Shellfish, contaminated water, street vendors</td><td>Cholera toxin &rarr; &uarr;cAMP &rarr; secretion</td><td>Rice-water stools, massive volume loss</td></tr>
+                            <tr><td><strong>Vibrio parahaemolyticus</strong></td><td>Gm(&ndash;) comma</td><td>Raw/undercooked seafood</td><td>Invasive/toxin</td><td>Explosive watery diarrhea; wound infections from salt water</td></tr>
+                            <tr><td><strong>Vibrio vulnificus</strong></td><td>Gm(&ndash;) comma</td><td>Raw oysters; salt water exposure</td><td>Tissue invasion</td><td><em>Hemorrhagic bullae</em>, necrosis, sepsis &mdash; deadly in cirrhotics</td></tr>
+                            <tr><td><strong>Listeria monocytogenes</strong></td><td>Gm(<strong>+</strong>) rod, tumbling motility, grows at 3&deg;C</td><td>Hot dogs, deli meats, soft cheeses, unpasteurized milk</td><td>Intracellular</td><td>Pregnancy, neonatal meningitis, immunocompromised systemic illness</td></tr>
+                            <tr><td><strong>Clostridioides difficile</strong></td><td>Gm(+) anaerobic spore-former</td><td>Antibiotic exposure (clinda, FQs, penicillins, cephs); hospital</td><td>Toxins A &amp; B &rarr; pseudomembranous colitis</td><td>Antibiotic-associated diarrhea; NAP1/BI/027 hypervirulent strain</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="campylobacter">&#127831; Campylobacter jejuni &mdash; Deep Dive</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Morphology:</strong> Gram-negative <strong>curved/S-shaped rod</strong>. Cultured at <strong>42&deg;C</strong> on special selective media.</li>
+                        <li><strong>Sources:</strong> Chicken (huge one), unpasteurized milk, contaminated water, puppies.</li>
+                        <li><strong>Clinical spectrum:</strong> Loose stools &rarr; massive watery OR grossly bloody diarrhea. Fever, malaise, crampy abdominal pain.</li>
+                        <li><strong>Typical course:</strong> Self-limited; empiric antibiotics reserved for severe cases.</li>
+                        <li><strong>Prolonged disease</strong> in patients with hypogammaglobulinemia.</li>
+                    </ul>
+                    <p><strong>Major complications (very high-yield):</strong></p>
+                    <ul>
+                        <li><strong>Guillain-Barr&eacute; syndrome</strong> &mdash; ascending flaccid paralysis; incidence ~1:1000 infections. Especially <em>C. jejuni</em> serotype O:19 and <em>C. upsaliensis</em>.</li>
+                        <li><strong>Reactive arthritis (Reiter&rsquo;s syndrome)</strong> &mdash; rare.</li>
+                        <li><strong>Septicemia</strong> with <em>C. fetus</em> &mdash; debilitated/immunocompromised hosts (alcoholics, DM, malignancy).</li>
+                    </ul>
+                </div>
+
+                <h4 id="salmonella">&#129370; Salmonella &mdash; Non-Typhoidal vs. Typhoidal</h4>
+                <div class="h4-body">
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>Non-Typhoidal (S. typhimurium, enteritidis, choleraesuis)
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <ul>
+                            <li><strong>Sources:</strong> Raw/undercooked poultry, eggs (transovarial contamination of intact shells!), reptile pets (turtles, iguanas).</li>
+                            <li><strong>Onset:</strong> 6&ndash;48 hours after ingestion.</li>
+                            <li><strong>Clinical:</strong> Fever, nausea, vomiting, diarrhea (may be bloody), abdominal cramps.</li>
+                            <li><strong>Septicemia:</strong> Especially with <em>S. choleraesuis</em>; highest risk in pediatric, geriatric, and AIDS patients. <em>Osteomyelitis in sickle cell disease</em> is a classic association.</li>
+                            <li><strong>Treatment:</strong> <strong>Do not give antibiotics routinely</strong> &mdash; they prolong the carrier state. Reserve for severely ill, &gt;50 y/o, immunocompromised, or those with sepsis.</li>
+                        </ul>
+                    </div>
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>Typhoid Fever (S. typhi / paratyphi)
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <ul>
+                            <li><strong>Reservoir:</strong> Humans only (person-to-person). No animal reservoir.</li>
+                            <li><strong>Inoculum:</strong> Very small &mdash; easily transmitted. Rapidly multiplies if food left at room temperature.</li>
+                            <li><strong>Pathogenesis:</strong> Bacteria translocate through intestinal wall &rarr; engulfed by macrophages &rarr; hematogenous spread to liver, spleen, bone marrow. Gallbladder becomes a reservoir and reseeds the intestine.</li>
+                            <li><strong>Clinical:</strong> High fevers, chills, headache, malaise, anorexia; diarrhea OR constipation; <strong>rose spots</strong> on the abdomen; <strong>relative bradycardia</strong>; hepatosplenomegaly; neuropsychiatric signs (delirium, &ldquo;picking at bedsheets&rdquo;).</li>
+                            <li><strong>Complications:</strong> Intestinal perforation at 3&ndash;4 weeks.</li>
+                            <li><strong>Diagnosis:</strong> <strong>Blood and bone marrow cultures</strong> (bone marrow has the highest yield).</li>
+                            <li><strong>Treatment:</strong> Fluoroquinolones or broad-spectrum cephalosporins (ceftriaxone).</li>
+                            <li><strong>Prevention:</strong> <em>S. typhi</em> vaccine available (~65% efficacy).</li>
+                            <li><strong>High-risk carriers:</strong> Patients with biliary disease; women (&ldquo;Typhoid Mary&rdquo;).</li>
+                        </ul>
+                        <div class="mnemonic">
+                            <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                                <div class="mnemonic-header" style="margin-bottom:0;">&#129504; Mnemonic: Typhoid Triad &mdash; &ldquo;FRBD&rdquo;</div>
+                                <span class="mnemonic-chevron">&#9660;</span>
+                            </div>
+                            <div class="mnemonic-body collapsed">
+                                <p><strong>Typhoid = FRBD</strong></p>
+                                <ul>
+                                    <li><strong>F</strong>ever (high, stepwise)</li>
+                                    <li><strong>R</strong>ose spots on the abdomen</li>
+                                    <li><strong>B</strong>radycardia (relative, despite fever)</li>
+                                    <li><strong>D</strong>eranged sensorium (delirium) &amp; hepatosplenomegaly</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 id="shigella">&#129471; Shigella</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Species:</strong> <em>S. sonnei</em> (most common in developed countries), <em>S. flexneri</em> (developing countries), <em>S. dysenteriae</em> (most severe disease, produces the classic Shiga toxin), <em>S. boydii</em> (rare).</li>
+                        <li><strong>Reservoir:</strong> Humans only. Spread <em>person-to-person</em> by fecal-oral route.</li>
+                        <li><strong>Inoculum:</strong> Extremely low (as few as 10 organisms) &mdash; explains high secondary attack rate in daycares.</li>
+                        <li><strong>At-risk groups:</strong> Young children in daycare/nurseries, their siblings and parents, institutionalized patients, men who have sex with men.</li>
+                        <li><strong>Clinical:</strong> Begins as watery diarrhea &rarr; within 1&ndash;2 days progresses to abdominal cramps, <strong>tenesmus</strong>, and bloody mucoid stools (classic <em>dysentery</em>).</li>
+                        <li><strong>Treatment:</strong> Unlike non-typhoidal Salmonella, <em>antibiotics shorten symptom duration and fecal shedding</em>.</li>
+                    </ul>
+                </div>
+
+                <h4 id="ecoli">&#129440; Pathogenic E. coli &mdash; Five Pathotypes</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Type</th><th>Site</th><th>Mechanism</th><th>Clinical</th><th>Classic Setting</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>EPEC</strong> (Enteropathogenic)</td><td>Small intestine</td><td>Adherence (effacement of microvilli)</td><td>Watery diarrhea, vomiting, low fever</td><td>Infant diarrhea in developing countries (&ldquo;P&rdquo; = <strong>P</strong>ediatric)</td></tr>
+                            <tr><td><strong>ETEC</strong> (Enterotoxigenic)</td><td>Small intestine</td><td>Heat-<strong>L</strong>abile toxin (&uarr;cAMP, cholera-like) + Heat-<strong>S</strong>table toxin (&uarr;cGMP)</td><td>Watery diarrhea, no blood, low fever</td><td><strong>#1 Traveler&rsquo;s diarrhea</strong>; stool culture negative</td></tr>
+                            <tr><td><strong>EHEC</strong> (Enterohemorrhagic)</td><td>Large intestine</td><td>Shiga-<em>like</em> toxin (O157:H7 serotype most common)</td><td>Initial watery &rarr; <strong>grossly bloody</strong> diarrhea, severe abdominal pain, <em>no fever</em>; can progress to <strong>HUS</strong> (5&ndash;10%)</td><td>Undercooked ground beef, unpasteurized apple cider, petting zoos</td></tr>
+                            <tr><td><strong>EIEC</strong> (Enteroinvasive)</td><td>Large intestine</td><td>Invasion (Shigella-like)</td><td>Fever, cramping, watery &rarr; dysenteric scant bloody stools</td><td>Developing countries</td></tr>
+                            <tr><td><strong>EAEC</strong> (Enteroaggregative)</td><td>Small intestine</td><td>Stacked-brick adherence, toxins</td><td>Persistent watery diarrhea &plusmn;vomiting, dehydration, low fever</td><td>Infants in developing countries; traveler&rsquo;s diarrhea</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <strong>&#9889; EHEC Diagnosis Pearl:</strong>
+                        <ul>
+                            <li><strong>Sorbitol-MacConkey (SMAC) agar</strong>: EHEC <em>does not ferment sorbitol</em> &rarr; colorless colonies (normal E. coli ferments sorbitol and is pink).</li>
+                            <li>Ingestion of <strong>fewer than 100 organisms</strong> is sufficient to cause disease.</li>
+                            <li>Confirm with serogrouping for O157:H7 or immunoassay for Shiga-like toxin.</li>
+                            <li><strong>Do NOT give antibiotics</strong> for EHEC &mdash; they increase HUS risk.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 id="yersinia">&#127805; Yersinia enterocolitica / pseudotuberculosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Morphology:</strong> Gram-negative rod in the Enterobacteriaceae family.</li>
+                        <li><strong>Lab note:</strong> Requires <em>cold enrichment</em> &mdash; not routinely isolated on standard stool cultures.</li>
+                        <li><strong>Sources:</strong> Undercooked pork, <em>chitterlings</em>, tofu, unpasteurized milk; exposure in child-care settings.</li>
+                        <li><strong>Presentations:</strong>
+                            <ul>
+                                <li><strong>Pseudoappendicitis</strong>: RLQ pain, fever, leukocytosis &mdash; mimics appendicitis in children.</li>
+                                <li><strong>Enteric fever-like syndrome</strong>.</li>
+                                <li><strong>Septicemia</strong> in iron-overloaded patients (thalassemia, hemochromatosis) because Yersinia scavenges iron.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treat septicemia</strong> with fluoroquinolones or third-generation cephalosporins.</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                            <div class="mnemonic-header" style="margin-bottom:0;">&#129504; Mnemonic: Reactive Arthritis Triggers &mdash; &ldquo;SSCY(C)&rdquo;</div>
+                            <span class="mnemonic-chevron">&#9660;</span>
+                        </div>
+                        <div class="mnemonic-body collapsed">
+                            <p><strong>SSCY(C) &mdash; Reiter&rsquo;s / Reactive Arthritis Triggers</strong></p>
+                            <ul>
+                                <li><strong>S</strong>almonella</li>
+                                <li><strong>S</strong>higella</li>
+                                <li><strong>C</strong>ampylobacter</li>
+                                <li><strong>Y</strong>ersinia</li>
+                                <li>(<strong>C</strong>hlamydia &mdash; GU trigger)</li>
+                            </ul>
+                            <p>Presentation: &ldquo;Can&rsquo;t see, can&rsquo;t pee, can&rsquo;t climb a tree&rdquo; &mdash; conjunctivitis, urethritis, arthritis.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 id="vibrio">&#127754; Vibrio Species</h4>
+                <div class="h4-body">
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>V. cholerae
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <ul>
+                            <li>Gram-negative <strong>comma-shaped</strong> rod, oxidase-positive.</li>
+                            <li>Not routinely cultured; requires <strong>TCBS</strong> selective media (yellow colonies).</li>
+                            <li>Sources: contaminated water, fish, shellfish, street vendors in endemic areas.</li>
+                            <li>Cholera toxin ADP-ribosylates Gs &rarr; persistent activation of adenylate cyclase &rarr; &uarr;cAMP &rarr; chloride &amp; water secretion.</li>
+                            <li>Profuse watery <strong>&ldquo;rice-water&rdquo;</strong> diarrhea with flecks of mucus; vomiting; rapid progression to severe dehydration, metabolic acidosis, hypokalemia, hypovolemic shock.</li>
+                            <li>Treatment: aggressive <strong>oral rehydration</strong> (glucose-salt solution exploits Na<sup>+</sup>-glucose cotransport); tetracycline/doxycycline shortens duration.</li>
+                        </ul>
+                    </div>
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>V. parahaemolyticus
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <ul>
+                            <li>Source: raw/undercooked seafood, especially shellfish.</li>
+                            <li>Self-limited explosive watery diarrhea, nausea/vomiting, abdominal cramps, headache, low-grade fever.</li>
+                            <li>Can also cause <strong>wound infections</strong> after contaminated salt-water exposure.</li>
+                        </ul>
+                    </div>
+                    <h5 class="h5-subheading collapsed" onclick="toggleH5(this)">
+                        <span class="h5-chevron">&#9660;</span>V. vulnificus
+                    </h5>
+                    <div class="h5-body collapsed">
+                        <ul>
+                            <li>Raw oysters / salt-water exposure.</li>
+                            <li>Devastating wound infection: erythema &rarr; <strong>hemorrhagic bullae</strong> &rarr; tissue necrosis, septicemia.</li>
+                            <li><strong>Cirrhotics and iron-overloaded</strong> patients are at very high risk for fulminant sepsis and death.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 id="listeria">&#129476; Listeria monocytogenes</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Morphology:</strong> Short <strong>Gram-positive</strong> rod. Tumbling motility at room temperature. Grows at refrigeration temperatures (~3&deg;C) &mdash; the classic &ldquo;cold enrichment&rdquo; bug.</li>
+                        <li><strong>Sources:</strong> Hot dogs, deli meats, <em>fresh soft cheeses</em> (queso fresco, brie), unpasteurized milk, ice cream.</li>
+                        <li><strong>At-risk populations:</strong> Pregnant women, neonates, elderly, immunocompromised (especially impaired cell-mediated immunity), diabetics.</li>
+                        <li><strong>Clinical syndromes:</strong>
+                            <ul>
+                                <li>Febrile gastroenteritis in healthy adults (mild, self-limited).</li>
+                                <li>Pregnancy: &ldquo;flu-like&rdquo; illness with fever &rarr; <em>transplacental transmission</em> &rarr; neonatal infection (granulomatosis infantiseptica, neonatal sepsis, meningitis).</li>
+                                <li>Immunocompromised: bacteremia, <strong>meningoencephalitis</strong> (classic adult meningitis pathogen at extremes of age).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treatment:</strong> Ampicillin (&plusmn; gentamicin).</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Antibiotics make things <em>worse</em> for two bugs <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Non-typhoidal Salmonella</strong>: antibiotics prolong the fecal carrier state.</li>
+                            <li><strong>EHEC (O157:H7)</strong>: antibiotics trigger SOS-response release of Shiga-like toxin &rarr; &uarr;risk of HUS.</li>
+                            <li>For both, the right answer on exam is usually &ldquo;<em>supportive care / hydration only</em>.&rdquo;</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4: Preformed Toxins ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="preformed-toxins"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Preformed-Toxin (&ldquo;Food Poisoning&rdquo;) Bugs
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; These bugs don&rsquo;t need to colonize the gut &mdash; the <em>toxin</em> is already in the food when you eat it. The giveaway is a <strong>very short incubation</strong> (hours) and <em>no fever</em>.</p>
+
+                <h4 id="preformed-table">&#129364; Preformed-Toxin Comparison</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Organism</th><th>Classic Food</th><th>Incubation</th><th>Symptoms</th><th>Toxin</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>S. aureus</strong></td><td>Mayo salads, custard pastries, ham, potato salad, ice cream</td><td><strong>~4 hr</strong> (range 1&ndash;8)</td><td>Severe <em>vomiting</em>, abdominal pain, nausea, &plusmn;diarrhea; <strong>no fever</strong>; resolves &lt;24 hr</td><td>Enterotoxin (heat-stable superantigen)</td></tr>
+                            <tr><td><strong>Bacillus cereus (emetic)</strong></td><td><strong>Reheated fried rice</strong></td><td><strong>&lt;6 hr</strong> (mean 2)</td><td>Vomiting, nausea, cramps</td><td>Cereulide (heat-stable)</td></tr>
+                            <tr><td><strong>Bacillus cereus (diarrheal)</strong></td><td>Meat, vegetables</td><td>&gt;6 hr (mean 9)</td><td>Diarrhea, nausea, cramps (8&ndash;24 hr)</td><td>Heat-<em>labile</em> enterotoxin</td></tr>
+                            <tr><td><strong>Clostridium perfringens</strong></td><td>Reheated meats, gravy</td><td>8&ndash;24 hr</td><td>Watery diarrhea, cramps, <em>no fever, no vomiting</em>; lasts 24&ndash;48 hr</td><td>Type-A enterotoxin</td></tr>
+                            <tr><td><strong>Clostridium botulinum</strong></td><td>Home-canned vegetables, honey (infants)</td><td>12&ndash;36 hr</td><td><em>Descending flaccid paralysis</em>, diplopia, dysphagia &mdash; NOT a diarrhea syndrome</td><td>Botulinum toxin (cleaves SNARE proteins)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="staph-details">&#127830; S. aureus Food Poisoning &mdash; Details</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>One of the most common food-borne illnesses in the US.</li>
+                        <li>Toxin is <em>preformed</em> in the food &mdash; reheating food does <strong>not</strong> destroy the heat-stable enterotoxin.</li>
+                        <li>Classic foods: processed meats (ham, salted pork), custard-filled pastries, potato salad, ice cream &mdash; anything handled by a colonized worker and left at room temperature.</li>
+                        <li>~50% of outbreaks traced to asymptomatic carriers (especially nasal/oropharyngeal).</li>
+                        <li>Onset mean ~4 hr; symptoms resolve within 24 hr.</li>
+                        <li>Treatment: <strong>supportive only &mdash; no antibiotics</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4 id="clost-details">&#129529; Clostridium Food Poisoning Highlights</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>C. perfringens:</strong> incubation 8&ndash;24 hr; abdominal cramps + watery diarrhea; <em>no fever, nausea, or vomiting</em>. Resolves 24&ndash;48 hr. Typical source: meat kept warm too long (cafeteria-style buffets).</li>
+                        <li><strong>C. botulinum:</strong> ingestion of preformed botulinum toxin in home-canned goods (or spores in honey for infants) &rarr; descending flaccid paralysis. Not a diarrhea syndrome &mdash; know it as a differential.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Know the incubation-period fingerprint <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>&lt;6 hr + vomiting dominates</strong> &rarr; preformed toxin (S. aureus or B. cereus emetic).</li>
+                            <li><strong>8&ndash;16 hr + diarrhea dominates</strong> &rarr; C. perfringens or B. cereus diarrheal.</li>
+                            <li><strong>&gt;16 hr, bloody, with fever</strong> &rarr; invasive bacterial (Salmonella, Shigella, Campylobacter, EHEC/EIEC).</li>
+                            <li>Fried rice at a Chinese restaurant + vomiting in 2 hours = <em>Bacillus cereus</em> (emetic).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 5: Protozoa Overview ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="protozoa-overview"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Protozoa &amp; Parasites &mdash; At a Glance
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Protozoal infections are covered in depth in GI26, but Dr. Kumar wants you to know which bugs belong in the &ldquo;non-bacterial, non-viral&rdquo; infectious-diarrhea bucket.</p>
+
+                <h4 id="protozoa-quick">&#129516; Quick-Hit Protozoal Pathogens</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Entamoeba histolytica</strong> &mdash; bloody diarrhea (amebic dysentery), <em>flask-shaped</em> colonic ulcers, <strong>anchovy-paste liver abscess</strong>. Travel to endemic region.</li>
+                        <li><strong>Giardia intestinalis (lamblia)</strong> &mdash; <em>fatty/foul-smelling</em> diarrhea, bloating, cramps after camping/drinking stream water. Trophozoites and cysts on stool.</li>
+                        <li><strong>Cryptosporidium parvum</strong> &mdash; severe chronic watery diarrhea in AIDS (CD4 &lt;100); acid-fast oocysts.</li>
+                        <li><strong>Cyclospora cayetanensis</strong> &mdash; imported berries/produce; prolonged watery diarrhea.</li>
+                        <li><strong>Isospora (Cystoisospora) belli</strong> &mdash; AIDS-associated watery diarrhea; oocysts on stool.</li>
+                        <li><strong>Microsporidia (Septata, Enterocytozoon)</strong> &mdash; chronic diarrhea in AIDS.</li>
+                        <li><strong>Roundworms</strong> &mdash; Ascaris, Strongyloides, hookworms (Necator, Ancylostoma).</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Don&rsquo;t confuse Entamoeba with Giardia <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Entamoeba</strong> = <em>bloody</em> dysentery + liver abscess. Invasive to colonic mucosa (flask ulcers).</li>
+                            <li><strong>Giardia</strong> = <em>non-bloody, fatty, foul-smelling</em> stool. Non-invasive; stays in the small intestine.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── TYU ── -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo1">&#129504; Testing Your Understanding!</h4>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 1, Question 1</h4>
+                    <p>A 7-year-old presents with 2 days of bloody diarrhea after eating at a backyard cookout. Stool culture on sorbitol-MacConkey agar shows colorless (non-fermenting) colonies. She develops anemia, thrombocytopenia, and an acute rise in creatinine. Why would antibiotics be the <em>wrong</em> treatment here, and what pathogen is responsible?</p>
+                    <p class="option"><em>Consider: SMAC sorbitol-negative, Shiga-like toxin, HUS triad, SOS response</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: EHEC (E. coli O157:H7). Antibiotics increase toxin release via the SOS response and worsen HUS risk.</strong>
+                        <p style="margin-top:10px;">EHEC is the only Shiga-toxin-producing E. coli you&rsquo;ll see on Step 1 in the US context. It&rsquo;s sorbitol-negative on SMAC (colorless colonies), whereas normal stool E. coli ferments sorbitol to pink colonies. The Shiga-<em>like</em> toxin (Stx) inhibits the 28S rRNA of the 60S ribosomal subunit on endothelial cells, damaging renal and cerebral microvasculature and producing the HUS triad: microangiopathic hemolytic anemia, thrombocytopenia, and acute kidney injury. Antibiotics that induce the bacterial SOS response (especially TMP-SMX and fluoroquinolones) up-regulate the lambdoid prophage carrying the <em>stx</em> gene and can paradoxically increase toxin release. Management is <strong>supportive hydration and dialysis as needed</strong>; eculizumab may be considered in severe atypical cases.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 1, Question 2</h4>
+                    <p>Two pregnant women are in clinic. One ate a salad with queso fresco two weeks ago and now has fever, myalgias, and mild diarrhea. The other ate raw oysters at a seafood bar; she has cirrhosis and now presents with fever and hemorrhagic skin bullae. Identify each organism and explain why each host population is uniquely vulnerable.</p>
+                    <p class="option"><em>Consider: Gram-positive cold grower, transplacental transmission, iron/cirrhosis susceptibility</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: (1) Listeria monocytogenes in pregnancy; (2) Vibrio vulnificus in cirrhosis.</strong>
+                        <p style="margin-top:10px;">Listeria is a Gram-positive rod that uniquely grows at refrigeration temperatures &mdash; soft cheeses and deli meats are the classic vectors. It invades intracellularly and is controlled by cell-mediated immunity, which is physiologically blunted in pregnancy. Transplacental spread causes granulomatosis infantiseptica or neonatal meningitis/sepsis. Treat with <strong>ampicillin</strong> (&plusmn; gentamicin).<br><br>Vibrio vulnificus is a Gram-negative comma-shaped rod acquired from raw oysters or salt-water wounds. Cirrhotics and patients with iron overload (hemochromatosis, thalassemia) are strikingly susceptible because free iron fuels the organism&rsquo;s virulence. It produces a characteristic hemorrhagic bullous skin lesion and can progress rapidly to septic shock with &gt;50% mortality. Treat with doxycycline + a third-generation cephalosporin; aggressive debridement may be needed.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 2 TAB ══ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 2 &mdash; Clinical Syndromes of Infectious Diarrhea</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Watery, Dysentery, Food Poisoning, Traveler&rsquo;s, C. difficile &middot; HoyaDocs GI Block</p>
+
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 2:</strong> Understand the different clinical manifestations of and pathogens that cause watery diarrhea, dysentery, food poisoning, traveler&rsquo;s diarrhea, and C. difficile</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#syndrome-framework">The 5-Syndrome Framework</a></li>
+                    <li><a href="#watery-diarrhea">Watery (Secretory / Non-Inflammatory) Diarrhea</a></li>
+                    <li><a href="#dysentery">Dysentery (Inflammatory Bloody Diarrhea)</a></li>
+                    <li><a href="#food-poisoning">Food Poisoning (Preformed Toxin)</a></li>
+                    <li><a href="#travelers-diarrhea">Traveler&rsquo;s Diarrhea</a></li>
+                    <li><a href="#c-diff">Clostridioides difficile Infection</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1: Framework ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="syndrome-framework"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> The 5-Syndrome Framework
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Clinically, infectious diarrhea sorts into five testable syndromes. Each has a distinctive time-course, stool character, and bug list.</p>
+
+                <h4 id="syndrome-table">&#128197; Syndrome-by-Syndrome Master Table</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Syndrome</th><th>Stool</th><th>Onset</th><th>Top Pathogens</th><th>Testing Angle</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Watery (non-inflammatory)</strong></td><td>Voluminous, non-bloody, no WBCs</td><td>Hours&ndash;days</td><td>Vibrio cholerae, ETEC, Rotavirus, Norovirus, Cryptosporidium, Giardia</td><td>Secretory mechanism: &uarr;cAMP or &uarr;cGMP; treat with rehydration</td></tr>
+                            <tr><td><strong>Dysentery (inflammatory)</strong></td><td>Scant, bloody, mucoid, WBCs+</td><td>1&ndash;7 days</td><td>Shigella, EHEC, EIEC, Campylobacter, invasive Salmonella, Entamoeba histolytica</td><td>Tenesmus, fever, LLQ pain; consider HUS with EHEC</td></tr>
+                            <tr><td><strong>Food poisoning</strong></td><td>Vomiting &gt; diarrhea; non-bloody</td><td><strong>&lt;6 hr</strong> (preformed toxin)</td><td>S. aureus, B. cereus (emetic), C. perfringens, C. botulinum</td><td>Short incubation + no fever = preformed toxin</td></tr>
+                            <tr><td><strong>Traveler&rsquo;s diarrhea</strong></td><td>Watery, usually non-bloody</td><td>Within 2 weeks of arrival</td><td>ETEC (#1), EAEC, Campylobacter, Norovirus, Salmonella, Shigella</td><td>Prophylaxis with bismuth; treat with azithromycin or ciprofloxacin + loperamide (adults)</td></tr>
+                            <tr><td><strong>C. difficile</strong></td><td>Watery; leukocytosis; may be bloody</td><td>Days&ndash;weeks after antibiotics</td><td>C. difficile toxins A &amp; B</td><td>Pseudomembranous colitis; toxic megacolon; recurrence common</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="mechanism-buckets">&#128295; Secretory vs. Invasive vs. Osmotic Mechanisms</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Secretory (non-inflammatory):</strong> Toxin-mediated &uarr;cAMP or &uarr;cGMP drives active Cl<sup>&ndash;</sup> and water secretion. High volume, no WBCs, no blood. Examples: cholera toxin, ETEC LT/ST, C. difficile toxins.</li>
+                        <li><strong>Invasive (inflammatory):</strong> Organism breaches epithelium &rarr; inflammation, bleeding, WBCs in stool. Examples: Shigella, EIEC, Campylobacter, invasive Salmonella.</li>
+                        <li><strong>Osmotic:</strong> Unabsorbed solute draws water in (e.g., post-infectious lactase deficiency, Giardia-associated fat malabsorption).</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Stool WBCs are the key discriminator <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>WBCs + blood in stool</strong> &rarr; inflammatory (invasive) diarrhea &rarr; think Shigella, Campylobacter, EHEC, EIEC, Salmonella, Entamoeba.</li>
+                            <li><strong>No WBCs, no blood, huge volumes</strong> &rarr; secretory &rarr; cholera, ETEC, viruses.</li>
+                            <li>EHEC is the trap: bloody but often <em>no fever</em> and no fecal WBCs (because it&rsquo;s toxin-mediated endothelial injury, not inflammation).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2: Watery Diarrhea ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="watery-diarrhea"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Watery (Secretory / Non-Inflammatory) Diarrhea
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Voluminous, non-bloody, high-volume losses. The core issue is <em>secretion</em>, not <em>inflammation</em> &mdash; dehydration is the main threat.</p>
+
+                <h4 id="cholera-syndrome">&#127754; Cholera (V. cholerae)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Hallmark:</strong> Abrupt-onset <em>&ldquo;rice-water&rdquo; stool</em> &mdash; colorless, flecks of mucus, fishy odor; can exceed 1 L/hour.</li>
+                        <li><strong>Mechanism:</strong> Cholera toxin ADP-ribosylates Gs &rarr; constitutively active adenylate cyclase &rarr; &uarr;cAMP &rarr; sustained Cl<sup>&ndash;</sup> secretion through CFTR.</li>
+                        <li><strong>Sequelae:</strong> Hypovolemic shock, metabolic acidosis, hypokalemia.</li>
+                        <li><strong>Management:</strong> Aggressive <strong>oral rehydration solution</strong> (glucose-salt: exploits SGLT1 Na<sup>+</sup>-glucose cotransporter, which is intact even when CFTR is hijacked). Doxycycline/tetracycline shortens illness.</li>
+                    </ul>
+                </div>
+
+                <h4 id="etec-watery">&#9992;&#65039; ETEC</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Two toxins: <strong>heat-Labile (LT)</strong> acts like cholera toxin (&uarr;cAMP); <strong>heat-Stable (ST)</strong> activates guanylate cyclase (&uarr;cGMP).</li>
+                        <li>Watery diarrhea + cramps, low-grade fever; usually self-limited within 3&ndash;4 days.</li>
+                        <li>Most common cause of traveler&rsquo;s diarrhea worldwide.</li>
+                    </ul>
+                </div>
+
+                <h4 id="viral-watery">&#129440; Viral Gastroenteritis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Rotavirus:</strong> Severe dehydrating non-bloody diarrhea in young children; vomit + fever common; respiratory symptoms in 30&ndash;50%.</li>
+                        <li><strong>Norovirus:</strong> Explosive vomiting + watery diarrhea; classic outbreaks on cruise ships, dorms; short, intense illness 24&ndash;72 hr.</li>
+                    </ul>
+                </div>
+
+                <h4 id="protozoa-watery">&#129516; Protozoal Watery Diarrhea</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Giardia:</strong> Greasy, foul-smelling, non-bloody stools; bloating; after camping or daycare exposure.</li>
+                        <li><strong>Cryptosporidium:</strong> Severe chronic watery diarrhea in AIDS (CD4 &lt;100) &mdash; may lose 10&ndash;20 L/day.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: ORS still works in cholera &mdash; here&rsquo;s why <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Cholera toxin activates CFTR-mediated Cl<sup>&ndash;</sup> secretion, but <strong>SGLT1</strong> (Na<sup>+</sup>/glucose cotransport) remains fully functional.</li>
+                            <li>Oral rehydration solution with glucose + salt drives Na<sup>+</sup> absorption via SGLT1 &rarr; water follows.</li>
+                            <li>This is why the classic ORS is &ldquo;salty sugar water&rdquo; &mdash; cheap, life-saving, Nobel-level insight.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3: Dysentery ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="dysentery"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Dysentery (Inflammatory Bloody Diarrhea)
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Dysentery = small-volume, frequent, <em>bloody</em> stools with tenesmus and fever. Always think invasion of the colonic mucosa.</p>
+
+                <h4 id="shigellosis-clinical">&#129471; Shigellosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Very low inoculum (~10 organisms) &rarr; daycare outbreaks.</li>
+                        <li>1&ndash;2 days of watery diarrhea &rarr; progresses to abdominal cramps, <strong>tenesmus</strong>, scant bloody-mucoid stools.</li>
+                        <li>Shiga toxin (especially <em>S. dysenteriae</em>) can precipitate HUS analogous to EHEC.</li>
+                        <li>Antibiotics shorten duration and reduce shedding (fluoroquinolones, TMP-SMX, azithromycin).</li>
+                    </ul>
+                </div>
+
+                <h4 id="ehec-clinical">&#129384; EHEC (O157:H7)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Starts watery; progresses to grossly bloody &ldquo;hemorrhagic colitis&rdquo; with severe abdominal pain.</li>
+                        <li>Notably often <strong>afebrile</strong> &mdash; distinguishes from Shigella/Campylobacter.</li>
+                        <li>5&ndash;10% develop <strong>HUS</strong> (microangiopathic hemolytic anemia, thrombocytopenia, AKI), especially children.</li>
+                        <li>Classic exposures: undercooked ground beef, unpasteurized apple cider, petting zoos, contaminated leafy greens.</li>
+                        <li>Treat supportively; <strong>avoid antibiotics and antimotility agents</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4 id="campy-clinical">&#127831; Campylobacter</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most common US bacterial cause of diarrhea.</li>
+                        <li>Crampy pain, fever, watery &plusmn;bloody stools; self-limited over a week.</li>
+                        <li><strong>Guillain-Barr&eacute;</strong> (most common post-infectious GBS trigger worldwide) and <em>reactive arthritis</em> are classic sequelae.</li>
+                    </ul>
+                </div>
+
+                <h4 id="salmonella-clinical">&#129370; Invasive Salmonella &amp; Entamoeba</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Salmonella (non-typhoidal):</strong> may cause bloody diarrhea with fever; watch for osteomyelitis in sickle-cell disease.</li>
+                        <li><strong>Entamoeba histolytica:</strong> bloody/mucoid stool, <em>flask-shaped</em> colonic ulcers, possible <em>&ldquo;anchovy paste&rdquo;</em> liver abscess. Treat with metronidazole + luminal agent (paromomycin) to eradicate cysts.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Bloody diarrhea without fever &rarr; think EHEC <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Shigella, Campylobacter, Salmonella, and EIEC all cause <em>fever + bloody diarrhea</em>.</li>
+                            <li>EHEC is the outlier: severe abdominal pain + gross blood but classically <strong>afebrile</strong> &mdash; the Shiga-like toxin directly injures endothelium without inducing significant mucosal inflammation.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4: Food Poisoning ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="food-poisoning"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Food Poisoning (Preformed Toxin Syndromes)
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Key features: very short incubation (hours), vomiting usually predominates, no fever, symptoms resolve in &lt;48 hr.</p>
+
+                <h4 id="staph-clinical">&#127830; S. aureus Food Poisoning</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Incubation mean ~4 hr</strong> (classically 1&ndash;8 hr).</li>
+                        <li>Severe vomiting &gt; diarrhea, nausea, cramping. No fever.</li>
+                        <li>Classic foods: mayo-based salads, cream-filled pastries, potato salad, ham, ice cream &mdash; anything handled by a carrier and left unrefrigerated.</li>
+                        <li>Self-limited within 24 hr. <strong>Supportive care only &mdash; no antibiotics.</strong></li>
+                    </ul>
+                </div>
+
+                <h4 id="bcereus-clinical">&#127834; Bacillus cereus</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Emetic form:</strong> &lt;6 hr incubation after <em>reheated fried rice</em>; preformed heat-stable cereulide toxin. Vomiting dominates.</li>
+                        <li><strong>Diarrheal form:</strong> 6&ndash;15 hr incubation after meats/vegetables; heat-labile enterotoxin produced in gut. Watery diarrhea + cramps.</li>
+                        <li>Both self-limited.</li>
+                    </ul>
+                </div>
+
+                <h4 id="perfringens-clinical">&#129529; C. perfringens</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>8&ndash;24 hr after reheated meats/gravy (buffets, catered events).</li>
+                        <li>Watery diarrhea + abdominal cramps; <strong>no fever, no vomiting</strong>.</li>
+                        <li>Resolves in 24&ndash;48 hr.</li>
+                    </ul>
+                </div>
+
+                <h4 id="botulism-clinical">&#128565; Botulism (differentiator)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Preformed <em>botulinum toxin</em> (home-canned goods); infant botulism from spores in honey.</li>
+                        <li>Not a diarrhea syndrome &mdash; produces <em>descending flaccid paralysis</em> (diplopia, dysphagia, dysarthria), then progressive limb weakness.</li>
+                        <li>Treat with equine antitoxin (adults) or human-derived BabyBIG (infants).</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Reheating doesn&rsquo;t fix preformed toxins <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>S. aureus enterotoxin and B. cereus cereulide are <em>heat-stable</em>. Reheating the food kills the bacteria but leaves the toxin intact.</li>
+                            <li>This is why sitting food at room temperature is so dangerous &mdash; a few hours at warm temperature lets bacteria grow and secrete toxin.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 5: Traveler's Diarrhea ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="travelers-diarrhea"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Traveler&rsquo;s Diarrhea
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Defined as &ge;3 loose stools/day in a traveler to a developing region. <strong>ETEC is #1</strong>. Most cases are watery, self-limited, and resolve in 3&ndash;5 days.</p>
+
+                <h4 id="travelers-pathogens">&#128747;&#65039; Top Pathogens by Frequency</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>ETEC</strong> (most common overall)</li>
+                        <li><strong>EAEC</strong></li>
+                        <li><strong>Campylobacter</strong> &mdash; increasingly prominent in Southeast Asia</li>
+                        <li>Norovirus (cruise ships, resorts)</li>
+                        <li>Salmonella, Shigella (if dysenteric features)</li>
+                        <li>Protozoa (Giardia, Cryptosporidium, Cyclospora, Entamoeba) if chronic &gt;2 weeks</li>
+                    </ul>
+                </div>
+
+                <h4 id="travelers-mgmt">&#128138; Prevention &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Prevention:</strong> Bottled/treated water; avoid raw vegetables, unpeeled fruits, ice, street food. Bismuth subsalicylate can decrease incidence.</li>
+                        <li><strong>Empiric therapy</strong> for moderate-severe cases in adults: <strong>azithromycin</strong> (preferred in Southeast Asia due to Campylobacter FQ-resistance) or <strong>ciprofloxacin</strong>; loperamide added for symptom control if no fever/bloody stools.</li>
+                        <li><strong>Avoid loperamide</strong> in dysenteric (bloody/febrile) disease &mdash; risk of toxic megacolon.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Traveler &ne; EIEC <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Default assumption for a stem featuring traveler&rsquo;s diarrhea should be ETEC.</li>
+                            <li>If the vignette emphasizes bloody, invasive, dysentery-like symptoms, pivot to Shigella, Campylobacter, Salmonella, EIEC, or Entamoeba &mdash; not ETEC.</li>
+                            <li>Chronic (&gt;2 weeks) watery traveler&rsquo;s diarrhea after camping or freshwater exposure &rarr; think <em>Giardia</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 6: C. difficile ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="c-diff"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Clostridioides difficile Infection (CDI)
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; The quintessential <em>antibiotic-associated diarrhea</em>. Gram-positive anaerobic <strong>spore-former</strong> that overgrows after normal flora are wiped out.</p>
+
+                <h4 id="cdiff-risk">&#128137; Risk Factors &amp; Offending Antibiotics</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Classically implicated antibiotics:</strong> <em>Clindamycin</em> (historic), <strong>fluoroquinolones</strong>, penicillins, <strong>cephalosporins</strong> &mdash; but essentially <em>any</em> antibiotic can precipitate CDI.</li>
+                        <li><strong>Other risks:</strong> hospitalization, advanced age, PPIs, inflammatory bowel disease, chemotherapy.</li>
+                        <li><strong>Hypervirulent strain: NAP1/BI/027</strong> produces increased toxin and a binary toxin &rarr; severe disease, outbreaks.</li>
+                    </ul>
+                </div>
+
+                <h4 id="cdiff-clinical">&#129730; Clinical Presentation</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Watery diarrhea within days to weeks of antibiotic exposure; often with <em>fever, leukocytosis</em>, &plusmn;blood in stool.</li>
+                        <li>Severe disease: marked leukocytosis (&gt;15,000), elevated creatinine, pseudomembranous colitis on endoscopy (yellow-white plaques on the colonic mucosa).</li>
+                        <li><strong>Fulminant CDI:</strong> hypotension, ileus, <strong>toxic megacolon</strong>, colonic perforation.</li>
+                        <li>Recurrence in <strong>10&ndash;25%</strong> of treated patients.</li>
+                    </ul>
+                </div>
+
+                <h4 id="cdiff-dx">&#128269; Diagnosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Primary test:</strong> Detection of toxins A and B in stool &mdash; commonly by EIA (enzyme immunoassay); NAAT (PCR) for the <em>tcdB</em> gene is highly sensitive.</li>
+                        <li><strong>Two-step algorithm:</strong> GDH (glutamate dehydrogenase antigen) screen &rarr; confirm with toxin EIA or PCR.</li>
+                        <li><strong>Endoscopic finding:</strong> pseudomembranous colitis &mdash; adherent yellow-white plaques.</li>
+                        <li>Do not test asymptomatic patients (carriage is common).</li>
+                    </ul>
+                </div>
+
+                <h4 id="cdiff-mgmt">&#128138; Management</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Discontinue the offending antibiotic</strong> when possible.</li>
+                        <li><strong>Mild-moderate (initial episode):</strong> oral <strong>vancomycin</strong> 125 mg PO QID &times;10 days, or oral <strong>fidaxomicin</strong> (lower recurrence).</li>
+                        <li><strong>Severe/fulminant:</strong> oral vancomycin (higher dose) + IV <strong>metronidazole</strong>; consider colectomy for toxic megacolon/perforation.</li>
+                        <li><strong>Recurrent CDI:</strong> tapered vancomycin, fidaxomicin, or <strong>fecal microbiota transplantation</strong>; bezlotoxumab (anti-toxin B mAb) to prevent recurrence.</li>
+                        <li>Elderly and hospitalized patients are at highest risk for complications.</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                            <div class="mnemonic-header" style="margin-bottom:0;">&#129504; Mnemonic: C. diff Culprit Antibiotics &mdash; &ldquo;4 C&rsquo;s&rdquo;</div>
+                            <span class="mnemonic-chevron">&#9660;</span>
+                        </div>
+                        <div class="mnemonic-body collapsed">
+                            <p><strong>The 4 C&rsquo;s of C. difficile:</strong></p>
+                            <ul>
+                                <li><strong>C</strong>lindamycin</li>
+                                <li><strong>C</strong>ephalosporins (especially 3rd-gen)</li>
+                                <li><strong>C</strong>iprofloxacin / Fluoroquinolones</li>
+                                <li><strong>C</strong>arbapenems / any broad-spectrum antibiotic</li>
+                            </ul>
+                            <p>(Historically also &ldquo;<strong>P</strong>enicillins&rdquo; &mdash; so really &ldquo;4 C&rsquo;s + P&rdquo;.)</p>
+                        </div>
+                    </div>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Metronidazole is no longer first-line for most CDI <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Per IDSA (2017&rarr;) and ACG guidelines, <strong>oral vancomycin or fidaxomicin</strong> are first-line for both initial and recurrent CDI in adults.</li>
+                            <li>Metronidazole is now reserved for scenarios where vanco/fidaxo unavailable, or as IV adjunct in <em>severe/fulminant</em> disease with ileus.</li>
+                            <li>Old First Aid editions still listed metronidazole &mdash; don&rsquo;t get tricked on updated questions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── TYU ── -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo2">&#129504; Testing Your Understanding!</h4>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 2, Question 1</h4>
+                    <p>A church potluck features rice, creamed chicken, and potato salad left on the table for several hours. Three attendees are ill within 3 hours with vomiting and cramps. A fourth attendee becomes ill 10 hours later with watery diarrhea but no vomiting. Assuming two distinct pathogens are involved, name each, the toxin mechanism, and predict the stool WBCs.</p>
+                    <p class="option"><em>Consider: preformed toxin incubation, emetic vs. diarrheal bugs, fecal leukocytes</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: (1) S. aureus (preformed enterotoxin) in the first cohort; (2) C. perfringens (late incubation, diarrhea-dominant, no vomiting) in the fourth attendee. Both are non-inflammatory &mdash; stool WBCs should be absent.</strong>
+                        <p style="margin-top:10px;">S. aureus produces a heat-stable enterotoxin that acts as a superantigen on vagal afferents &rarr; intense vomiting within 1&ndash;8 hours (mean 4 hours). Potato salad and custard pastries are classic vectors. C. perfringens type A produces an enterotoxin in the gut after ingestion of spores; the 8&ndash;24 hour incubation and predominance of diarrhea without vomiting are the tells. Reheated meats/gravy are classic. Both mechanisms are toxin-mediated and non-inflammatory, so stool fecal leukocytes are negative and no colonic invasion occurs. Management is supportive rehydration &mdash; <strong>no antibiotics</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 2, Question 2</h4>
+                    <p>A 72-year-old inpatient finishes a 5-day course of ceftriaxone for pneumonia and develops frequent watery diarrhea, fever, and a WBC of 22,000. Stool NAAT is positive for <em>tcdB</em>. Flexible sigmoidoscopy shows yellow-white adherent plaques on the colon. What drug should be started, what drug should be <em>avoided</em>, and what mechanism underlies pseudomembrane formation?</p>
+                    <p class="option"><em>Consider: toxins A &amp; B, actin disruption, vanc/fidaxo/metro, loperamide risks</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: Start <em>oral vancomycin</em> (or fidaxomicin). <em>Avoid antimotility agents</em> like loperamide. Pseudomembranes form when toxins A and B glucosylate Rho-family GTPases, disrupting the actin cytoskeleton &rarr; enterocyte death, fibrin/mucin/neutrophil plaques.</strong>
+                        <p style="margin-top:10px;">C. difficile toxin B (and to a lesser extent toxin A) inactivates Rho/Rac GTPases by monoglucosylation, collapsing actin filaments and tight junctions &mdash; cells round up and slough off, and the resulting inflammatory exudate forms the classic yellow-white pseudomembrane. In a patient with severe features (WBC &gt;15,000, creatinine rise, hypotension), you can add IV metronidazole to oral vancomycin. Loperamide prolongs toxin contact time and can precipitate toxic megacolon. Recurrence is common (10&ndash;25%) &mdash; fidaxomicin has lower recurrence rates; refractory/recurrent cases often get fecal microbiota transplantation.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 3 TAB ══ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 3 &mdash; Intraabdominal Infections</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">H. pylori, Liver &amp; Intraperitoneal Abscess, Peritonitis, Normal Flora &middot; HoyaDocs GI Block</p>
+
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objective Covered</div>
+                <ul>
+                    <li><strong>LO 3:</strong> Review the clinical manifestations of common intraabdominal infections</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#normal-flora">Mouth-to-Anus: Normal Flora &amp; Potential Pathogens</a></li>
+                    <li><a href="#h-pylori">Helicobacter pylori</a></li>
+                    <li><a href="#liver-abscess">Pyogenic Liver Abscess</a></li>
+                    <li><a href="#intraperitoneal-abscess">Intraperitoneal Abscess</a></li>
+                    <li><a href="#peritonitis">Peritonitis (Secondary, SBP, CAPD)</a></li>
+                    <li><a href="#other-intraabd">Other Intraabdominal Infections</a></li>
+                </ol>
+            </div>
+
+            <!-- ── SECTION 1: Normal Flora ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="normal-flora"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Mouth-to-Anus: Normal Flora &amp; Potential Pathogens
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; When the GI mucosa is breached (perforation, trauma, surgery, necrosis), commensal organisms seed deeper spaces and become pathogens. Knowing the normal flora tells you what antibiotic coverage you need.</p>
+
+                <h4 id="mouth-flora">&#128068; Normal Mouth Flora (Potential Pathogens)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Aerobic Gram-positive:</strong> Viridans streptococci, <em>Streptococcus pneumoniae</em>.</li>
+                        <li><strong>Anaerobes:</strong> Fusobacterium, Veillonella, Prevotella, Peptostreptococcus.</li>
+                    </ul>
+                    <p>Clinical relevance: dental infections, aspiration pneumonia, mouth/neck abscesses, Ludwig&rsquo;s angina.</p>
+                </div>
+
+                <h4 id="gut-flora">&#129722; Normal Gut Flora (Potential Pathogens)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Aerobic Gram-negative:</strong> <em>E. coli</em> (dominant), Klebsiella, Enterobacter, Proteus.</li>
+                        <li><strong>Aerobic Gram-positive:</strong> <em>Enterococcus</em>.</li>
+                        <li><strong>Anaerobes:</strong> <em>Bacteroides fragilis</em> (dominant anaerobe), Clostridium, Peptostreptococcus.</li>
+                    </ul>
+                    <p>Clinical relevance: when you spill gut flora into the peritoneum (perforated diverticulum, appendicitis, surgical anastomotic leak), you need <strong>anaerobic + Gram-negative coverage</strong>.</p>
+                </div>
+
+                <h4 id="empiric-coverage">&#128137; Empiric Coverage for Intraabdominal Infections</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Options:</strong> piperacillin/tazobactam, ceftriaxone + metronidazole, or a carbapenem (for severe/hospital-onset disease).</li>
+                        <li><strong>Key principle:</strong> Cover <strong>enteric Gram-negatives + anaerobes</strong>. Add anti-enterococcal coverage in healthcare-associated or severe disease.</li>
+                        <li><em>Practical advice from Dr. Kumar&rsquo;s slides:</em> &ldquo;Give anaerobic coverage even if no anaerobes grow on cultures&rdquo; &mdash; anaerobes are hard to culture.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Match the bug to the breach site <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Upper GI/biliary source</strong> &rarr; enteric Gram-negatives + Enterococcus dominate (fewer anaerobes).</li>
+                            <li><strong>Distal small bowel or colon source</strong> &rarr; anaerobes (Bacteroides fragilis) + E. coli dominate.</li>
+                            <li>Always cover anaerobes empirically for intraperitoneal abscesses &mdash; they seed from colonic flora and are frequently culture-negative.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 2: H. pylori ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="h-pylori"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Helicobacter pylori
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Curved Gram-negative urease-positive rod that colonizes the gastric mucus layer; the dominant infectious cause of peptic ulcer disease and gastric cancer worldwide.</p>
+
+                <h4 id="hp-epi">&#128209; Epidemiology &amp; Disease Associations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Causes ~<strong>80% of all gastric ulcers</strong> and ~<strong>90% of duodenal ulcers</strong>.</li>
+                        <li>Major risk factor for:
+                            <ul>
+                                <li><strong>Gastric adenocarcinoma</strong> of the body/antrum (not the cardia).</li>
+                                <li><strong>Gastric MALT lymphoma</strong> (low-grade MALToma often regresses after eradication).</li>
+                            </ul>
+                        </li>
+                        <li>Paradox: <strong>H. pylori is protective</strong> against GERD and lower esophageal/gastric cardia adenocarcinoma &mdash; eradicating asymptomatic colonization is therefore controversial.</li>
+                    </ul>
+                </div>
+
+                <h4 id="hp-mechanism">&#129514; Pathogenesis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Urease</strong> generates ammonia from urea, neutralizing gastric acid and enabling colonization of the mucus layer.</li>
+                        <li><strong>Flagella + spiral shape</strong> permit burrowing into mucus.</li>
+                        <li><strong>Virulence factors:</strong> CagA (cancer-associated), VacA (vacuolating cytotoxin) &rarr; epithelial damage &rarr; chronic active gastritis &rarr; ulcer, metaplasia, carcinoma.</li>
+                    </ul>
+                </div>
+
+                <h4 id="hp-dx">&#128269; Diagnosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Test only if you plan to treat.</strong> Indications: active PUD or history of PUD without documented cure, low-grade MALT lymphoma, early gastric cancer, unexplained iron-deficiency anemia.</li>
+                        <li><strong>Non-invasive tests:</strong>
+                            <ul>
+                                <li><em>Urea breath test</em>: highly sensitive and specific; detects urease activity by breath <sup>13</sup>CO<sub>2</sub>.</li>
+                                <li><em>Stool antigen</em>: sensitivity and specificity ~95%.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Invasive (endoscopic) tests:</strong>
+                            <ul>
+                                <li><em>Rapid urease (CLO) test</em> on biopsy &mdash; fast, inexpensive.</li>
+                                <li><em>Gastric biopsy histology</em>: <strong>Warthin-Starry silver stain</strong> is the gold standard (100% sensitivity and specificity).</li>
+                                <li>Culture &mdash; rarely performed.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Hold PPIs / antibiotics / bismuth</strong> before testing (can false-negative urea breath and stool antigen).</li>
+                        <li><strong>Confirm eradication</strong> post-treatment with urea breath or stool antigen (repeat endoscopy if ulcer was complicated).</li>
+                    </ul>
+                </div>
+
+                <h4 id="hp-tx">&#128138; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>First-line (quadruple therapy):</strong>
+                            <ul>
+                                <li><em>Bismuth quadruple:</em> PPI + bismuth + metronidazole + tetracycline &times; 14 days &mdash; preferred where clarithromycin resistance is high (&gt;15%).</li>
+                                <li><em>Concomitant (non-bismuth quadruple):</em> PPI + clarithromycin + amoxicillin + metronidazole &times; 14 days.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Avoid</strong> clarithromycin-based triple therapy if prior macrolide exposure or regional resistance.</li>
+                        <li>Penicillin-allergic? Substitute levofloxacin-based regimen or tetracycline + metronidazole.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: H. pylori location determines risk <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Antrum-predominant colonization</strong> &rarr; &uarr;gastrin &rarr; hyperchlorhydria &rarr; <em>duodenal</em> ulcer.</li>
+                            <li><strong>Body/corpus-predominant colonization</strong> &rarr; atrophic gastritis with hypochlorhydria &rarr; <em>gastric</em> adenocarcinoma and ulcer.</li>
+                            <li>H. pylori-associated adenocarcinoma affects the <em>body and antrum</em>, NOT the cardia &mdash; cardia cancers are associated with GERD and Barrett&rsquo;s, which H. pylori protects against.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 3: Liver Abscess ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="liver-abscess"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Pyogenic Liver Abscess
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Most common type of visceral abscess. Predominant source is <em>biliary tract</em> or <em>portal seeding</em> from a bowel source.</p>
+
+                <h4 id="liver-abx-bacteriology">&#129722; Bacteriology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Gut flora (~85%)</strong> &mdash; biliary/portal seeding from cholangitis, diverticulitis, appendicitis.
+                            <ul>
+                                <li>Enterobacterales (E. coli, Klebsiella &mdash; especially <em>K. pneumoniae</em> in Asian populations).</li>
+                                <li>Streptococci (milleri group).</li>
+                                <li>Anaerobes (Bacteroides fragilis).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Skin/mouth flora</strong> &mdash; from bacteremia, IV drug use, endocarditis.</li>
+                        <li><strong>Entamoeba histolytica</strong> &mdash; &ldquo;anchovy-paste&rdquo; abscess in travelers from endemic regions; right lobe predominant.</li>
+                    </ul>
+                </div>
+
+                <h4 id="liver-abx-clin">&#129495;&#8205;&#9794;&#65039; Clinical &amp; Diagnosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Symptoms:</strong> Fever, chills, RUQ pain, anorexia, weight loss, <em>hiccups</em>, shoulder pain (diaphragmatic irritation).</li>
+                        <li><strong>Labs:</strong> Leukocytosis, elevated alkaline phosphatase (hepatobiliary marker), &plusmn;transaminitis, elevated inflammatory markers.</li>
+                        <li><strong>Imaging:</strong> <strong>CT or ultrasound</strong> &mdash; shows a fluid-filled lesion &plusmn;internal septations.</li>
+                        <li>Blood cultures positive in ~50%.</li>
+                    </ul>
+                </div>
+
+                <h4 id="liver-abx-mgmt">&#128138; Management</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Drainage</strong> (image-guided CT/US percutaneous drain, surgery for multiloculated).</li>
+                        <li><strong>Empiric antibiotics:</strong> cover streptococci, enteric Gram-negatives, and <em>anaerobes</em> &mdash; typically ceftriaxone + metronidazole, or piperacillin/tazobactam.</li>
+                        <li>Duration: 4&ndash;6 weeks depending on drainage and clinical response.</li>
+                        <li><em>Practical pearl:</em> <strong>Cover anaerobes even if cultures are negative.</strong></li>
+                        <li>Amebic abscess &mdash; treat with metronidazole + luminal agent (paromomycin). Usually does not require drainage unless &gt;10 cm or imminent rupture.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Pyogenic vs. amebic liver abscess <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Pyogenic</strong>: often multiple, from biliary source; mixed gut flora; requires drainage + antibiotics.</li>
+                            <li><strong>Amebic</strong>: usually <em>single, right lobe</em>, in traveler from endemic area; serology for Entamoeba; treat with metronidazole (drainage often unnecessary).</li>
+                            <li>Don&rsquo;t aspirate pure amebic abscesses routinely &mdash; they&rsquo;re classically culture-negative (&ldquo;anchovy paste&rdquo; fluid is sterile).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 4: Intraperitoneal Abscess ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="intraperitoneal-abscess"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Intraperitoneal Abscess
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Localized walled-off infection within the peritoneal cavity. Forms after perforation, diverticulitis, appendicitis, or post-operative leak.</p>
+
+                <h4 id="abscess-clinical">&#129495;&#8205;&#9792;&#65039; Clinical Features</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Persistent fever, chills, abdominal pain, mass effect (early satiety, urinary frequency, obstructive symptoms).</li>
+                        <li>Leukocytosis; elevated inflammatory markers.</li>
+                        <li>Classic locations: subphrenic, subhepatic, pelvic (pouch of Douglas), inter-loop.</li>
+                    </ul>
+                </div>
+
+                <h4 id="abscess-dx">&#128269; Diagnosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>CT with contrast</strong> is the test of choice.</li>
+                        <li>Ultrasound for pelvic or superficial abscess.</li>
+                    </ul>
+                </div>
+
+                <h4 id="abscess-mgmt">&#128138; Management</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Source control = drainage.</strong> Image-guided percutaneous drain whenever possible; surgery for inaccessible or multiloculated collections.</li>
+                        <li><strong>Empiric antibiotics:</strong> streptococci + enteric Gram-negatives + anaerobes &mdash; pip-tazo, carbapenems, or ceftriaxone + metronidazole.</li>
+                        <li>Antibiotics are <em>adjunctive</em>; source control is the key to cure.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Antibiotics alone don&rsquo;t cure abscesses <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Abscesses have low pH, low O<sub>2</sub>, and thick fibrin walls &mdash; antibiotics penetrate poorly.</li>
+                            <li>If a stem describes a defined abscess cavity that hasn&rsquo;t been drained, the next best step is <em>percutaneous drainage</em>, not another antibiotic.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 5: Peritonitis ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="peritonitis"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Peritonitis &mdash; Primary, Secondary, &amp; CAPD-Associated
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Inflammation of the peritoneum &mdash; classified by route of infection. Each type has a different bug profile and management.</p>
+
+                <h4 id="peritonitis-types">&#129516; Three Classifications</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Type</th><th>Mechanism</th><th>Typical Pathogens</th><th>Key Clinical Setting</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Primary &ndash; SBP</strong></td><td>Spontaneous translocation of gut flora into ascites</td><td>E. coli (most common), Klebsiella, Streptococcus pneumoniae, Enterococcus</td><td>Cirrhotic with ascites; abdominal pain, fever, encephalopathy</td></tr>
+                            <tr><td><strong>Secondary</strong></td><td>Complication of perforation or pathology: PUD, cholecystitis, appendicitis, diverticulitis, ischemia</td><td>Mixed: E. coli + anaerobes (Bacteroides) + Enterococcus + streptococci</td><td>Surgical abdomen; &ldquo;peritoneal signs&rdquo; (rigidity, rebound)</td></tr>
+                            <tr><td><strong>CAPD-associated</strong></td><td>Skin/line colonizers infect via peritoneal dialysis catheter</td><td><em>Staphylococcus epidermidis</em> (#1), S. aureus, streptococci, Gram-negatives</td><td>Cloudy dialysate in a PD patient &plusmn;abdominal pain</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 id="sbp-detail">&#129348; Spontaneous Bacterial Peritonitis (SBP)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Diagnosis: ascitic fluid <strong>PMN &ge;250 cells/mm&sup3;</strong> OR positive ascites culture (usually <em>monomicrobial</em>, unlike secondary peritonitis).</li>
+                        <li>Treatment: <strong>ceftriaxone</strong> or cefotaxime &times; 5 days.</li>
+                        <li>Primary prophylaxis: norfloxacin or TMP-SMX in high-risk cirrhotics (low ascitic protein, prior SBP, GI bleed).</li>
+                        <li>Outcomes: mortality ~20%; recurrence &gt;50% within 1 year without secondary prophylaxis.</li>
+                    </ul>
+                </div>
+
+                <h4 id="secondary-detail">&#128084; Secondary Peritonitis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Polymicrobial &mdash; cover Gram-negatives, anaerobes, &plusmn;Enterococcus.</li>
+                        <li>Requires <strong>surgical source control</strong> (repair perforation, drain abscess, resect ischemic bowel) in addition to antibiotics.</li>
+                        <li>Clue on ascitic tap: multiple organisms growing, high protein, often glucose &lt;50 mg/dL, LDH elevated &mdash; suggests secondary cause (look for perforation).</li>
+                    </ul>
+                </div>
+
+                <h4 id="capd-detail">&#129514; CAPD (Peritoneal Dialysis) Peritonitis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Cloudy effluent + abdominal pain in PD patient.</li>
+                        <li>Dialysate WBC &gt;100/mm&sup3; with &gt;50% PMNs is diagnostic.</li>
+                        <li>Gram-positive skin flora predominate &mdash; empiric vancomycin + a cephalosporin (or aminoglycoside) <strong>intraperitoneally</strong>.</li>
+                        <li>Persistent infection &rarr; catheter removal.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Monomicrobial vs. polymicrobial culture <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>SBP (primary)</strong> = almost always <em>monomicrobial</em>. A <em>polymicrobial</em> ascitic culture in a cirrhotic should prompt an aggressive hunt for a perforation (i.e., secondary peritonitis).</li>
+                            <li>Other secondary-peritonitis ascites clues: glucose &lt;50, protein &gt;1 g/dL, LDH above the upper limit of normal (Runyon&rsquo;s criteria).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECTION 6: Other ── -->
+            <h3 class="collapsible-h3 collapsed" onclick="toggleSection(this)"
+                id="other-intraabd"
+                style="font-size:16px; font-weight:700; margin-top:25px; margin-bottom:12px;">
+                <span class="section-chevron">&#9660;</span> Other Intraabdominal Infections (Quick Hits)
+            </h3>
+            <div class="section-body collapsed">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Dr. Kumar&rsquo;s second half also surveys these &mdash; know the setting and the offending bug.</p>
+
+                <h4 id="other-conditions">&#129516; Site-by-Site Recap</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Cholecystitis / Cholangitis:</strong> Ascending infection from biliary obstruction &mdash; E. coli, Klebsiella, Enterococcus, anaerobes. Charcot&rsquo;s triad (fever + RUQ pain + jaundice) &rarr; cholangitis; Reynolds pentad adds hypotension + confusion for suppurative cholangitis.</li>
+                        <li><strong>Appendicitis:</strong> Polymicrobial luminal obstruction &rarr; mural ischemia &rarr; perforation. E. coli + Bacteroides. Treat with appendectomy + perioperative Gram-negative/anaerobic antibiotics.</li>
+                        <li><strong>Diverticulitis:</strong> Microperforation of a colonic diverticulum &rarr; left lower quadrant pain, fever. Mixed colonic flora. Uncomplicated: outpatient metronidazole + ciprofloxacin (or amoxicillin/clavulanate). Complicated (abscess, perforation): hospitalization &plusmn;drainage &plusmn;surgery.</li>
+                        <li><strong>Neutropenic typhlitis (cecitis):</strong> Necrotizing inflammation of cecum in chemotherapy/neutropenic patients &mdash; mixed enteric flora; treat with broad-spectrum antibiotics, antifungal coverage if refractory.</li>
+                        <li><strong>Proctitis (STI-related):</strong> Gonorrhea, chlamydia, herpes, syphilis in receptive anal intercourse; tenesmus, rectal discharge.</li>
+                    </ul>
+                    <hr class="section-rule">
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Cholangitis is a surgical/procedural emergency <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Charcot&rsquo;s triad = ascending cholangitis: treat with fluids, broad-spectrum antibiotics, and <strong>emergent biliary decompression via ERCP</strong>.</li>
+                            <li>Reynolds pentad (add hypotension + altered mental status) signals suppurative cholangitis &mdash; ICU-level care; mortality is very high without urgent drainage.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── TYU ── -->
+            <div class="tyu-section">
+                <h4 id="tyu-lo3">&#129504; Testing Your Understanding!</h4>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 3, Question 1</h4>
+                    <p>A 58-year-old man with alcoholic cirrhosis and chronic ascites presents with two days of diffuse abdominal pain, low-grade fever, and new confusion. Paracentesis shows ascitic PMNs of 750 cells/mm<sup>3</sup>, glucose 95 mg/dL, protein 0.8 g/dL, and a <em>monomicrobial</em> E. coli culture. Explain the most likely diagnosis, empiric therapy, and a key secondary-prevention strategy.</p>
+                    <p class="option"><em>Consider: SBP criteria, gut translocation, ceftriaxone, norfloxacin prophylaxis</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: Spontaneous bacterial peritonitis (SBP). Empiric ceftriaxone (or cefotaxime) &times; 5 days. Long-term oral fluoroquinolone (norfloxacin) prophylaxis is indicated after the first episode.</strong>
+                        <p style="margin-top:10px;">SBP is diagnosed by ascitic fluid PMNs &ge;250/mm<sup>3</sup> in a cirrhotic with ascites; the fluid is typically low-protein (impaired opsonin delivery) and monomicrobial. E. coli is the #1 organism because translocation of gut flora across a leaky intestinal barrier is the pathogenesis. Third-generation cephalosporins are standard empiric therapy. Add IV albumin (1.5 g/kg day 1, 1 g/kg day 3) in patients with creatinine &gt;1 mg/dL, BUN &gt;30, or bilirubin &gt;4 &mdash; this reduces the risk of hepatorenal syndrome and improves survival. Recurrence exceeds 50% in the year after a first episode, so long-term norfloxacin (or TMP-SMX or ciprofloxacin) prophylaxis is indicated. <em>Polymicrobial</em> growth or very high ascitic protein should prompt evaluation for secondary (surgical) peritonitis.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Testing Your Understanding &mdash; LO 3, Question 2</h4>
+                    <p>A 54-year-old woman with 6 months of epigastric pain develops melena. EGD reveals a clean-based duodenal ulcer. A rapid urease test on antral biopsy is positive. Six weeks after completing bismuth quadruple therapy, you are deciding how to confirm eradication. Why is simple repeat serology useless, what is the preferred non-invasive test, and what is the theoretical downside of treating her?</p>
+                    <p class="option"><em>Consider: IgG persistence, urea breath/stool antigen, H. pylori protective effects</em></p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer: Serology stays positive for years after cure (IgG persistence). Confirm eradication with a <em>urea breath test</em> or <em>stool antigen</em>, holding PPIs/antibiotics/bismuth beforehand. Downside: eradicating H. pylori may raise her risk of GERD and lower esophageal/gastric cardia adenocarcinoma.</strong>
+                        <p style="margin-top:10px;">H. pylori serology (IgG) reflects past or present infection and cannot discriminate active colonization from eradicated disease; it remains positive long after successful treatment. Urea breath test relies on labeled-CO<sub>2</sub> generation by active urease in the stomach and is rapidly accurate once treatment works. Stool antigen is a similarly reliable alternative. Hold PPIs for 2 weeks and antibiotics/bismuth for 4 weeks before either test to prevent false-negatives. The &ldquo;H. pylori dilemma&rdquo; is that colonization protects against GERD, Barrett&rsquo;s, and gastric-cardia adenocarcinoma by lowering acid output (atrophic body gastritis) &mdash; this is why we don&rsquo;t screen asymptomatic patients. In patients with PUD, MALT lymphoma, early gastric cancer, or unexplained iron-deficiency anemia, though, the benefits of eradication clearly outweigh the risks.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ PRACTICE QUESTIONS TAB ══ -->
+    <section class="practice-section lo-section" id="practice">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
+        <p class="lo-subtitle" style="margin-bottom:28px;">Lecture 25 &mdash; GI Infections &middot; HoyaDocs GI Block</p>
+        <div class="lo-content">
+
+            <!-- ── LO 1 GROUP ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:20px; background:none; padding:0;">LO 1 &mdash; Pathogens of Infectious Diarrhea (Q1&ndash;Q4)</h4>
+
+            <div class="practice-question">
+                <h4>Question 1</h4>
+                <p>A 22-year-old returns from a backpacking trip in Thailand with 3 days of watery, non-bloody diarrhea, abdominal cramps, and a low-grade fever. No vomiting. Stool culture is negative on routine media. Which toxin is most likely responsible?</p>
+                <p class="option">A. Shiga toxin</p>
+                <p class="option">B. Heat-labile and heat-stable enterotoxins</p>
+                <p class="option">C. Cholera toxin</p>
+                <p class="option">D. Toxin B (TcdB)</p>
+                <p class="option">E. Botulinum toxin</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; ETEC produces heat-labile (&uarr;cAMP) and heat-stable (&uarr;cGMP) enterotoxins; it is the #1 cause of traveler&rsquo;s diarrhea.</strong>
+                    <p style="margin-top:10px;">ETEC is not routinely identifiable on standard stool cultures, explaining the &ldquo;culture-negative&rdquo; clue. Cholera toxin (C) causes profuse rice-water diarrhea in endemic outbreaks, not this self-limited traveler picture. Shiga toxin (A) produces bloody diarrhea and risks HUS. Toxin B (D) implies C. difficile, which is antibiotic-associated. Botulinum toxin (E) causes flaccid paralysis, not diarrhea.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 2</h4>
+                <p>A 4-year-old unvaccinated child is hospitalized with vomiting, non-bloody watery diarrhea, fever, and respiratory symptoms. Stool EIA is positive. What is the structural feature of the causative organism?</p>
+                <p class="option">A. Segmented double-stranded RNA virus</p>
+                <p class="option">B. Non-enveloped single-stranded RNA virus (Caliciviridae)</p>
+                <p class="option">C. Gram-positive rod that grows at 3&deg;C</p>
+                <p class="option">D. Gram-negative curved rod that grows at 42&deg;C</p>
+                <p class="option">E. Protozoan acid-fast oocyst</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: A &mdash; Rotavirus is a segmented double-stranded RNA virus (Reoviridae).</strong>
+                    <p style="margin-top:10px;">The unvaccinated young child with winter viral gastroenteritis &plusmn;respiratory symptoms is classic Rotavirus; 30&ndash;50% have respiratory findings. (B) describes Norovirus, which causes cruise-ship/adult outbreaks. (C) is Listeria, (D) is Campylobacter, (E) is Cryptosporidium &mdash; all wrong demographics/presentations.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 3</h4>
+                <p>A 25-year-old develops bloody diarrhea, fever, and crampy abdominal pain 3 days after eating undercooked chicken at a cookout. Stool culture at 42&deg;C on selective medium grows a curved Gram-negative rod. Three weeks later he develops ascending flaccid paralysis. The most likely organism also causes which additional complication?</p>
+                <p class="option">A. Hemolytic uremic syndrome</p>
+                <p class="option">B. Ascending cholangitis</p>
+                <p class="option">C. Reactive arthritis (Reiter&rsquo;s)</p>
+                <p class="option">D. Typhoid fever</p>
+                <p class="option">E. Pseudoappendicitis</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: C &mdash; Campylobacter jejuni is classically linked to Guillain-Barr&eacute; syndrome AND reactive arthritis.</strong>
+                    <p style="margin-top:10px;">Campylobacter (curved Gram-negative rod, 42&deg;C selective culture, chicken source) is the most common US bacterial diarrhea and the most common worldwide antecedent of Guillain-Barr&eacute;. It is also a member of the &ldquo;SSCY(C)&rdquo; reactive arthritis group (Salmonella, Shigella, Campylobacter, Yersinia, Chlamydia). HUS (A) is EHEC/Shigella. Cholangitis (B) is biliary obstruction with gut flora. Typhoid (D) is S. typhi. Pseudoappendicitis (E) is Yersinia.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 4</h4>
+                <p>A 6-year-old child with sickle cell disease presents with fever and right femur pain. Blood cultures grow a Gram-negative H<sub>2</sub>S-producing rod. Which of the following best explains why this organism is particularly problematic in this patient population?</p>
+                <p class="option">A. Production of IgA protease</p>
+                <p class="option">B. Splenic autoinfarction impairs clearance of encapsulated and invasive organisms</p>
+                <p class="option">C. Low inoculum transmissibility from person to person</p>
+                <p class="option">D. Direct invasion via iron scavenging</p>
+                <p class="option">E. Preformed enterotoxin in contaminated food</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; Functional asplenia in sickle cell disease predisposes to invasive Salmonella infections, classically osteomyelitis.</strong>
+                    <p style="margin-top:10px;">Non-typhoidal Salmonella species cause osteomyelitis in sickle-cell patients because splenic microinfarcts eliminate clearance of bacteremia, and Salmonella has a tropism for infarcted bone. In the general population, S. aureus is the top cause of osteomyelitis; Salmonella is the outlier for sickle cell. IgA protease (A) is a feature of S. pneumoniae, H. influenzae, and Neisseria. Low-inoculum transmission (C) is Shigella. Iron scavenging (D) describes Yersinia in iron-overloaded hosts. Preformed toxin (E) is not the mechanism.</p>
+                </div>
+            </div>
+
+            <!-- ── LO 2 GROUP ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:28px; background:none; padding:0;">LO 2 &mdash; Clinical Syndromes (Q5&ndash;Q8)</h4>
+
+            <div class="practice-question">
+                <h4>Question 5</h4>
+                <p>A 29-year-old eats leftover fried rice from dinner the night before. Two hours later he develops severe vomiting and cramping; no fever. He feels better within 10 hours. What is the causative organism?</p>
+                <p class="option">A. Staphylococcus aureus</p>
+                <p class="option">B. Bacillus cereus (emetic form)</p>
+                <p class="option">C. Clostridium perfringens</p>
+                <p class="option">D. Norovirus</p>
+                <p class="option">E. Salmonella enteritidis</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; The reheated-fried-rice + short-incubation emetic picture is classic Bacillus cereus (cereulide toxin).</strong>
+                    <p style="margin-top:10px;">Cereulide is a heat-stable preformed toxin; re-heating does not destroy it. S. aureus food poisoning (A) also has a short incubation and vomiting, but the classic foods are custard pastries, mayo salads, and processed meats. C. perfringens (C) has an 8&ndash;24 hr incubation and is diarrhea-predominant. Norovirus (D) can also produce vomiting but with a longer 12&ndash;48 hr incubation and typically an outbreak context. Salmonella (E) is invasive, fever-positive, and has a 6&ndash;48 hr incubation.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 6</h4>
+                <p>A 4-year-old previously healthy girl presents after 4 days of watery diarrhea that turned bloody. She has abdominal pain but no fever. Labs show Hb 8 g/dL with schistocytes, platelets 55,000, BUN 65, creatinine 2.2. Which of the following is the most appropriate initial management?</p>
+                <p class="option">A. Empiric ciprofloxacin</p>
+                <p class="option">B. Oral metronidazole</p>
+                <p class="option">C. IV fluids and supportive care</p>
+                <p class="option">D. Loperamide and oral rehydration</p>
+                <p class="option">E. TMP-SMX and bismuth</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: C &mdash; EHEC with HUS is treated with supportive care; antibiotics and antimotility agents worsen toxin release and HUS severity.</strong>
+                    <p style="margin-top:10px;">The triad of microangiopathic hemolytic anemia, thrombocytopenia, and AKI in a child with preceding bloody diarrhea is hemolytic uremic syndrome, classically post-EHEC (O157:H7). Antibiotics (especially fluoroquinolones, TMP-SMX) induce the bacterial SOS response &rarr; up-regulate the lambdoid prophage carrying <em>stx</em> &rarr; increased toxin release &rarr; worse HUS. Loperamide increases toxin contact time and is contraindicated. Provide aggressive IV fluid resuscitation, monitor renal function, transfuse judiciously, and consider dialysis as needed.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 7</h4>
+                <p>A 68-year-old nursing home resident on day 5 of ceftriaxone for pneumonia develops 8 watery stools per day and a WBC of 24,000. Stool toxin EIA is positive. Sigmoidoscopy reveals adherent yellow-white plaques. Which agent is first-line?</p>
+                <p class="option">A. IV metronidazole alone</p>
+                <p class="option">B. Oral ciprofloxacin</p>
+                <p class="option">C. Oral vancomycin</p>
+                <p class="option">D. Rifaximin</p>
+                <p class="option">E. IV vancomycin</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: C &mdash; Oral vancomycin (or fidaxomicin) is first-line for CDI, per updated IDSA/ACG guidance.</strong>
+                    <p style="margin-top:10px;">Oral vancomycin reaches therapeutic luminal concentrations (it is not systemically absorbed), exactly where C. difficile resides. IV vancomycin (E) does NOT reach the colonic lumen and is inappropriate. Metronidazole (A) is no longer preferred for initial CDI but may be added IV in severe/fulminant disease with ileus. Fluoroquinolones (B) are often causative, not therapeutic. Rifaximin (D) is used for hepatic encephalopathy and traveler&rsquo;s diarrhea, not CDI.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 8</h4>
+                <p>A 52-year-old relief worker returns from Haiti with a single day of &ldquo;rice-water&rdquo; diarrhea exceeding 10 L and now has hypotension, hypokalemia, and metabolic acidosis. The toxin responsible acts by which mechanism?</p>
+                <p class="option">A. Activates guanylate cyclase via heat-stable enterotoxin</p>
+                <p class="option">B. ADP-ribosylates Gs, leading to persistent &uarr;cAMP and Cl<sup>&ndash;</sup> secretion</p>
+                <p class="option">C. Inactivates EF-2 via ADP-ribosylation</p>
+                <p class="option">D. Cleaves SNARE proteins at the neuromuscular junction</p>
+                <p class="option">E. Glucosylates Rho GTPases, disrupting actin cytoskeleton</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; Cholera toxin ADP-ribosylates Gs &rarr; locked-on adenylate cyclase &rarr; &uarr;cAMP &rarr; CFTR-mediated Cl<sup>&ndash;</sup> and water secretion.</strong>
+                    <p style="margin-top:10px;">This drives the massive &ldquo;rice-water&rdquo; stool. Treat with aggressive oral rehydration salts (the glucose-Na<sup>+</sup> SGLT1 cotransporter remains functional) + doxycycline. (A) is ETEC heat-stable toxin. (C) is diphtheria toxin and Pseudomonas exotoxin A. (D) is botulinum/tetanus toxin. (E) is C. difficile toxins A and B.</p>
+                </div>
+            </div>
+
+            <!-- ── LO 3 GROUP ── -->
+            <h4 style="color:#7c3aed; font-size:15px; margin-bottom:4px; margin-top:28px; background:none; padding:0;">LO 3 &mdash; Intraabdominal Infections (Q9&ndash;Q12)</h4>
+
+            <div class="practice-question">
+                <h4>Question 9</h4>
+                <p>A 64-year-old with Child-Pugh B cirrhosis presents with low-grade fever, diffuse abdominal pain, and new encephalopathy. Paracentesis shows 500 PMNs/mm<sup>3</sup> and grows a single organism on culture. Which empiric antibiotic is most appropriate?</p>
+                <p class="option">A. Vancomycin + aztreonam</p>
+                <p class="option">B. Ceftriaxone</p>
+                <p class="option">C. Oral vancomycin</p>
+                <p class="option">D. Piperacillin/tazobactam + vancomycin</p>
+                <p class="option">E. TMP-SMX</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; Ceftriaxone (or cefotaxime) is standard empiric therapy for SBP.</strong>
+                    <p style="margin-top:10px;">SBP (primary peritonitis) is defined by ascitic PMN &ge;250/mm<sup>3</sup> in a cirrhotic; monomicrobial growth (usually E. coli) supports the diagnosis. Third-generation cephalosporins cover the typical enteric Gram-negatives. Add IV albumin to reduce risk of hepatorenal syndrome. Oral vancomycin (C) is for CDI. Broader coverage (A, D) is reserved for nosocomial or healthcare-associated peritonitis. TMP-SMX (E) is a prophylactic option, not primary therapy.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 10</h4>
+                <p>A 48-year-old man is referred for dyspepsia. Endoscopy shows a duodenal ulcer; rapid urease test is positive. He is treated with bismuth quadruple therapy. Why should clarithromycin-based triple therapy have been avoided as empiric first-line today in many US regions?</p>
+                <p class="option">A. Clarithromycin is ineffective in achlorhydric stomachs</p>
+                <p class="option">B. Rising clarithromycin resistance (&gt;15%) has compromised cure rates</p>
+                <p class="option">C. Clarithromycin does not reach therapeutic levels in gastric mucus</p>
+                <p class="option">D. Clarithromycin is known to eradicate protective Lactobacillus species</p>
+                <p class="option">E. Clarithromycin accelerates bismuth metabolism</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; Regional clarithromycin resistance &gt;15% has dropped cure rates below acceptable thresholds; current guidelines favor bismuth or non-bismuth quadruple therapy empirically.</strong>
+                    <p style="margin-top:10px;">Triple therapy (PPI + clarithromycin + amoxicillin) was once standard but is now reserved for patients without prior macrolide exposure in low-resistance regions. Quadruple regimens (PPI + bismuth + metronidazole + tetracycline, or PPI + clarithromycin + amoxicillin + metronidazole) achieve higher eradication rates &times; 14 days. Confirm eradication with urea breath test or stool antigen 4 weeks post-treatment (off PPI).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 11</h4>
+                <p>A 34-year-old man returned from Mexico 2 months ago. He now presents with RUQ pain, low-grade fever, and an 8-cm right-hepatic-lobe fluid collection on ultrasound. Percutaneous drainage yields thick reddish-brown fluid with no organisms on Gram stain. What is the best therapy?</p>
+                <p class="option">A. Ceftriaxone + metronidazole</p>
+                <p class="option">B. Oral vancomycin</p>
+                <p class="option">C. Metronidazole + paromomycin</p>
+                <p class="option">D. Amphotericin B</p>
+                <p class="option">E. Praziquantel</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: C &mdash; Amebic liver abscess (Entamoeba histolytica): metronidazole clears tissue forms, then paromomycin (or iodoquinol) eliminates luminal cysts.</strong>
+                    <p style="margin-top:10px;">The right-lobe single abscess with reddish-brown (&ldquo;anchovy paste&rdquo;) sterile fluid in a returned traveler is pathognomonic. Serology (antibodies to E. histolytica) confirms. Antibiotics like ceftriaxone + metronidazole (A) would fit a pyogenic abscess &mdash; but pyogenic collections are usually polymicrobial with gut flora on Gram stain, not sterile. Paromomycin is essential to eradicate luminal cysts and prevent recurrence/transmission.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Question 12</h4>
+                <p>A 71-year-old man with a perforated sigmoid diverticulum is taken to the OR. Peritoneal fluid grows E. coli + Bacteroides fragilis + Enterococcus faecalis. What is the key mechanistic principle explaining the empirical antibiotic choice?</p>
+                <p class="option">A. Cover only Gram-negative organisms because anaerobes rarely matter</p>
+                <p class="option">B. Cover anaerobes empirically even if cultures are negative, since gut flora from the colon reliably seed these infections</p>
+                <p class="option">C. Antibiotics alone are adequate if they cover all three organisms</p>
+                <p class="option">D. Use narrow-spectrum therapy to preserve microbiome</p>
+                <p class="option">E. Prophylactic antifungals are always required</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>&#10003; Correct: B &mdash; Secondary peritonitis from a colonic perforation is polymicrobial with reliable anaerobic involvement; empiric anaerobic coverage (metronidazole, pip-tazo, carbapenems) is essential regardless of culture results.</strong>
+                    <p style="margin-top:10px;">Anaerobes, especially Bacteroides fragilis, are notoriously hard to culture but nearly always present in colonic perforations. &ldquo;Give anaerobic coverage even if anaerobes don&rsquo;t grow&rdquo; is a core teaching point. Surgical or percutaneous <em>source control</em> is also required &mdash; antibiotics alone cannot cure a walled-off abscess or fix a perforation. Narrow-spectrum therapy (D) is inappropriate at initial empiric coverage. Enterococcal coverage (ampicillin, vancomycin) is added for healthcare-associated or severe disease. Antifungals (E) are not routine unless risk factors (TPN, prolonged ICU, immunosuppression) are present.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH4(h4El) {
+        h4El.classList.toggle('collapsed');
+        const body = h4El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    // Used by Overview tab summary cards + LO Map links to jump to a tab
+    // and optionally scroll to a specific section within that tab.
+    function showSection(loId, event, targetId) {
+        if (event) event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        const sidebarLink = document.querySelector('.sidebar-link[onclick*="' + loId + '"]');
+        if (sidebarLink) sidebarLink.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+        if (targetId) {
+            setTimeout(function() {
+                const target = document.getElementById(targetId);
+                if (target) {
+                    // Expand the section if it's collapsed
+                    if (target.classList.contains('collapsed')) target.classList.remove('collapsed');
+                    const body = target.nextElementSibling;
+                    if (body && body.classList.contains('section-body') && body.classList.contains('collapsed')) {
+                        body.classList.remove('collapsed');
+                    }
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 60);
+        }
+    }
+
+    // Used by Overview tab LO Map accordion items
+    function toggleAccordion(headerEl) {
+        const body = headerEl.nextElementSibling;
+        if (!body) return;
+        const isOpen = body.style.display === 'block';
+        body.style.display = isOpen ? 'none' : 'block';
+        const chevron = headerEl.querySelector('.lo-accordion-chevron');
+        if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .answer { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture 25: GI Infections — HoyaDocs GI Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gi25-gi-infections.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function toggleMobileSidebar() {
+        document.querySelector('.sidebar').classList.toggle('mob-open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('mob-open');
+                document.querySelector('.sidebar-overlay').classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
