@@ -389,6 +389,14 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
   /* Hide less critical topbar buttons on very small screens */
   .topbar-icon-btn.hide-xs{display:none}
 }
+
+/* EMBED MODE (loaded inside Daily Checklist iframe) */
+body.embed-mode .topbar-back,
+body.embed-mode .embed-hide { display: none !important; }
+body.embed-mode .topbar { padding-top: 10px; padding-bottom: 6px; }
+body.embed-mode .topbar h1 { font-size: 1.05rem; }
+body.embed-mode .topbar-sub { font-size: 0.7rem; }
+body.embed-mode .main { padding-top: 0; }
 </style>
 </head>
 <body>
@@ -402,8 +410,9 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
       <h1 style="flex:unset">Study Planner</h1>
       <div class="topbar-sub">Block 4 · GI</div>
     </div>
-    <a href="https://docs.google.com/spreadsheets/d/1oMKX3NlM3xTTb3RDQ7VQsGdDEwuwEbfoX2mf09r-6K8/edit?usp=sharing" target="_blank" class="topbar-icon-btn hide-mobile">📋 Block 4 Checklist ↗</a>
+    <a href="https://docs.google.com/spreadsheets/d/1oMKX3NlM3xTTb3RDQ7VQsGdDEwuwEbfoX2mf09r-6K8/edit?usp=sharing" target="_blank" class="topbar-icon-btn hide-mobile embed-hide">📋 Block 4 Checklist ↗</a>
     <button class="topbar-icon-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    <button class="topbar-icon-btn" onclick="loadHoyaDocsPlan()" title="Load the recommended resources for each lecture based on the HoyaDocs study strategy">⭐ Load HoyaDocs Plan</button>
     <button class="btn-sm btn-reset" onclick="confirmReset()">↺ Reset All</button>
   </div>
 
@@ -1573,6 +1582,48 @@ function seedRecommended(){
   });
   saveState();
 }
+
+// Force-load the HoyaDocs recommended study plan (overrides current selections
+// for lectures in the RECOMMENDED map, but preserves task progress and IH).
+function loadHoyaDocsPlan(){
+  const msg = 'Load the HoyaDocs recommended study plan?\n\n'
+    + 'This will set each lecture to use the recommended resource combo '
+    + '(e.g. Physeo + Bootcamp for Phys lectures, Pathoma + B&B for Path, etc.).\n\n'
+    + 'Your task progress (watch, Anki set-up, subsections) is preserved. '
+    + 'Any resources you had selected outside the plan will be unchecked.';
+  if(!confirm(msg)) return;
+  Object.entries(RECOMMENDED).forEach(([id,recs])=>{
+    if(!STATE[id]) return;
+    TP_RES.forEach(r=>{
+      if(STATE[id][r]) STATE[id][r].included = recs.includes(r);
+    });
+  });
+  saveState();
+  // Re-render everything — planner cards, dashboard, this-week
+  if(typeof renderLecturePlanner==='function') renderLecturePlanner();
+  if(typeof renderDashboard==='function') renderDashboard();
+  if(typeof renderThisWeek==='function') renderThisWeek();
+  // Flash confirmation
+  const btns = document.querySelectorAll('[onclick^="loadHoyaDocsPlan"]');
+  btns.forEach(b=>{
+    const old = b.innerHTML;
+    b.innerHTML = '✓ Plan Loaded';
+    b.style.background = '#10b981';
+    b.style.color = '#fff';
+    setTimeout(()=>{ b.innerHTML = old; b.style.background=''; b.style.color=''; }, 2000);
+  });
+}
+
+// Detect embed mode (when loaded inside the Daily Checklist iframe)
+function applyEmbedMode(){
+  try {
+    const params = new URLSearchParams(location.search);
+    if(params.get('embed') === '1'){
+      document.body.classList.add('embed-mode');
+    }
+  } catch(e) {}
+}
+applyEmbedMode();
 
 
 // ══════════════════════════════════════════════════════════════
