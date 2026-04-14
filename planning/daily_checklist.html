@@ -1246,38 +1246,32 @@ function render() {
       return { total: totalMin, done: doneMin, remaining: totalMin - doneMin };
     })();
 
-    // ── ESTIMATED TIME ──
-    h += '<div class="progress-card" style="margin-bottom:12px;padding:14px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center">';
+    // ── SUMMARY ROW: Estimated Time · Day Progress · Backlog (3-across) ──
+    const blStats = getBacklogStats();
+    const hasBacklog = blStats.count > 0;
+    const hoursBehind = blStats.time / 60;
+    const sev = hoursBehind >= 8 ? 'high' : hoursBehind >= 3 ? 'mid' : 'low';
+    const sevColor = sev === 'high' ? '#b91c1c' : sev === 'mid' ? '#b45309' : 'var(--accent)';
+
+    // Wrapper grid: 3 equal columns when there's a backlog, otherwise 2 columns
+    h += '<div style="display:grid;grid-template-columns:' + (hasBacklog ? '1fr 1fr 1fr' : '1fr 1fr') + ';gap:12px;margin-bottom:16px;align-items:stretch">';
+
+    // ── ESTIMATED TIME (col 1) ──
+    h += '<div class="progress-card" style="margin-bottom:0;padding:14px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center">';
     if (timeEst.total > 0) {
       h += '<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3);margin-bottom:5px">Estimated Time</div>';
-      h += '<div style="display:flex;justify-content:center;gap:20px;align-items:baseline;flex-wrap:wrap">';
-      h += '<div><span style="font-size:1.4rem;font-weight:800;color:var(--accent)">' + fmtTime(timeEst.remaining) + '</span><div style="font-size:0.65rem;color:var(--ink-3);font-weight:600">remaining</div></div>';
-      h += '<div><span style="font-size:0.95rem;font-weight:700;color:var(--done-text)">' + fmtTime(timeEst.done) + '</span><div style="font-size:0.65rem;color:var(--ink-3);font-weight:600">completed</div></div>';
-      h += '<div><span style="font-size:0.95rem;font-weight:700;color:var(--ink-3)">' + fmtTime(timeEst.total) + '</span><div style="font-size:0.65rem;color:var(--ink-3);font-weight:600">total</div></div>';
+      h += '<div style="display:flex;justify-content:center;gap:14px;align-items:baseline;flex-wrap:wrap">';
+      h += '<div><span style="font-size:1.3rem;font-weight:800;color:var(--accent)">' + fmtTime(timeEst.remaining) + '</span><div style="font-size:0.62rem;color:var(--ink-3);font-weight:600">remaining</div></div>';
+      h += '<div><span style="font-size:0.9rem;font-weight:700;color:var(--done-text)">' + fmtTime(timeEst.done) + '</span><div style="font-size:0.62rem;color:var(--ink-3);font-weight:600">completed</div></div>';
+      h += '<div><span style="font-size:0.9rem;font-weight:700;color:var(--ink-3)">' + fmtTime(timeEst.total) + '</span><div style="font-size:0.62rem;color:var(--ink-3);font-weight:600">total</div></div>';
       h += '</div>';
     } else {
       h += '<div style="font-size:0.82rem;color:var(--ink-3)">No timed tasks today</div>';
     }
     h += '</div>';
 
-    // ── BACKLOG SUMMARY BANNER ──
-    const blStats = getBacklogStats();
-    if (blStats.count > 0) {
-      const hoursBehind = blStats.time / 60;
-      const sev = hoursBehind >= 8 ? 'high' : hoursBehind >= 3 ? 'mid' : 'low';
-      const sevColor = sev === 'high' ? '#b91c1c' : sev === 'mid' ? '#b45309' : 'var(--accent)';
-      h += '<div class="progress-card" style="padding:12px 18px;display:flex;align-items:center;gap:14px;border-left:4px solid ' + sevColor + '">';
-      h += '<div style="font-size:1.4rem">📚</div>';
-      h += '<div style="flex:1">';
-      h += '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3)">Backlog</div>';
-      h += '<div style="font-size:0.92rem;font-weight:700;color:' + sevColor + '">' + blStats.count + ' task' + (blStats.count === 1 ? '' : 's') + ' · <span style="font-size:1.05rem">' + fmtTime(blStats.time) + '</span> behind</div>';
-      h += '</div>';
-      h += '<button onclick="switchTab(\'backlog\')" style="padding:6px 14px;font-size:0.75rem;background:var(--surface);color:var(--ink-2);border:1px solid var(--rule);border-radius:6px;font-weight:700;cursor:pointer">View Backlog →</button>';
-      h += '</div>';
-    }
-
-    // ── PROGRESS ──
-    h += `<div class="progress-card">
+    // ── DAY PROGRESS (col 2) ──
+    h += `<div class="progress-card" style="margin-bottom:0">
       <div class="progress-header"><h3>Day Progress</h3><div class="progress-pct">${prog.pct}%</div></div>
       <div class="progress-bar"><div class="progress-fill" style="width:${prog.pct}%"></div></div>
       <div class="progress-stats">
@@ -1286,6 +1280,19 @@ function render() {
         ${day.totalTime > 0 ? '<span>⏱ ' + Math.floor(day.totalTime/3600) + 'h ' + Math.floor((day.totalTime%3600)/60) + 'm studied</span>' : ''}
       </div>
     </div>`;
+
+    // ── BACKLOG (col 3) — only when there are backlog items; label is a hyperlink ──
+    if (hasBacklog) {
+      h += '<div class="progress-card" style="margin-bottom:0;padding:12px 16px;display:flex;align-items:center;gap:12px;border-left:4px solid ' + sevColor + '">';
+      h += '<div style="font-size:1.4rem;flex:0 0 auto">📚</div>';
+      h += '<div style="flex:1;min-width:0">';
+      h += '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3)"><a href="#" onclick="switchTab(\'backlog\');return false;" style="color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;cursor:pointer">Backlog →</a></div>';
+      h += '<div style="font-size:0.9rem;font-weight:700;color:' + sevColor + '">' + blStats.count + ' task' + (blStats.count === 1 ? '' : 's') + ' · <span style="font-size:1rem">' + fmtTime(blStats.time) + '</span> behind</div>';
+      h += '</div>';
+      h += '</div>';
+    }
+
+    h += '</div>';  // close summary-row grid
 
     // ── TIMER ──
     h += `<div class="timer-card">
