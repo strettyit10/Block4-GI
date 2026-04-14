@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.f textarea{width:100%;border:1px solid #CBD5E1;border-radius:6px;font-size:12px;background:transparent;outline:none;padding:4px 6px;color:#1e293b;resize:vertical;min-height:52px}
+.f textarea:focus{border-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}.fb-row{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid #DBEAFE}.fb-row:last-child{border-bottom:none}.fb-row:nth-child(even){background:#F0F7FF}.fb-row:nth-child(odd){background:#fff}.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+.card{border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .inline-blank{width:120px}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">GI Infections — Active Recall</h2>
+  <a href="gi25_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 25 (LOs 1–3). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 25 — GI Infections (HoyaDocs)</strong>
+  Focus on: viral vs. bacterial vs. protozoal diarrhea; invasive vs. toxigenic bacteria; E. coli pathotypes; preformed-toxin food poisoning; clinical syndromes (watery/dysentery/food poisoning/traveler's/C. diff); intraabdominal infections (H. pylori, liver abscess, SBP, secondary peritonitis, CAPD peritonitis).
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">Viral &amp; Bacterial Bugs</div>
+  <div class="tab" onclick="sw(1)">E. coli, Vibrio, Toxins</div>
+  <div class="tab" onclick="sw(2)">Syndromes: Watery &amp; Dysentery</div>
+  <div class="tab" onclick="sw(3)">Traveler's &amp; C. difficile</div>
+  <div class="tab" onclick="sw(4)">Intraabdominal Infections</div>
+  <div class="tab" onclick="sw(5)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: VIRAL & BACTERIAL ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — clinical definition of diarrhea, viral vs bacterial vs protozoal buckets, Rotavirus/Norovirus triggers, invasive vs toxigenic bacterial framework, Campylobacter/Salmonella/Shigella/Yersinia/Listeria classic associations</div>
+
+<div class="sec">Clinical definition of diarrhea (frequency / volume / form / acute)</div>
+<div class="fg">
+  <div class="f"><label>Frequency threshold (stools/day)</label><input></div>
+  <div class="f"><label>Volume threshold (g/day, Western diet)</label><input></div>
+  <div class="f"><label>Form description</label><input></div>
+  <div class="f"><label>Acute diarrhea = duration ≤ ______</label><input></div>
+</div>
+
+<div class="sec">Three big pathogen buckets — name representative bugs in each</div>
+<table>
+  <tr><th>Category</th><th>Representative Pathogens</th><th>Most common feature</th></tr>
+  <tr><td class="rl">Viruses</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Bacteria</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Protozoa/Parasites</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Viral diarrhea — fill the pathogen profile</div>
+<table>
+  <tr><th>Feature</th><th>Rotavirus</th><th>Norovirus</th></tr>
+  <tr><td class="rl">Classic population</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Classic setting</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Mechanism (enterotoxin? malabsorption?)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Vaccine available?</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Invasive vs. toxigenic bacteria — label each bug</div>
+<table>
+  <tr><th>Bug</th><th>Invasive or Toxigenic?</th><th>Signature feature</th></tr>
+  <tr><td class="rl">Campylobacter jejuni</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Salmonella (non-typhoidal)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Salmonella Typhi</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Shigella</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Yersinia enterocolitica</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Listeria monocytogenes</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Vibrio cholerae</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Campylobacter — deep dive</div>
+<div class="fg">
+  <div class="f"><label>Most common classic exposure</label><input></div>
+  <div class="f"><label>Morphology on stain</label><input></div>
+  <div class="f"><label>Post-infectious autoimmune complication 1</label><input></div>
+  <div class="f"><label>Post-infectious complication 2 (arthritis)</label><input></div>
+</div>
+
+<div class="sec">Salmonella — typhoidal vs non-typhoidal</div>
+<table>
+  <tr><th>Feature</th><th>Non-typhoidal</th><th>Typhoidal (S. Typhi)</th></tr>
+  <tr><td class="rl">Reservoir</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Classic exposure</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Key clinical features</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Chronic carrier state site</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Treatment approach (antibiotics?)</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Shigella — classic associations</div>
+<div class="fg">
+  <div class="f"><label>Infectious dose (low or high?)</label><input></div>
+  <div class="f"><label>Classic setting/age</label><input></div>
+  <div class="f"><label>Toxin produced</label><input></div>
+  <div class="f"><label>Post-infectious complication (triad?)</label><input></div>
+</div>
+
+<div class="sec">Listeria — signature groups</div>
+<div class="fg3">
+  <div class="f"><label>Classic food sources (2)</label><input></div>
+  <div class="f"><label>Highest-risk host 1</label><input></div>
+  <div class="f"><label>Highest-risk host 2</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: "Most common" depends on what you're counting — overall gastroenteritis = <em>viral</em> (Norovirus/Rotavirus); most common <em>bacterial</em> = <em>Campylobacter</em>; most common <em>traveler's</em> = <em>ETEC</em>.</div>
+</div>
+
+<!-- ═══ TAB 1: E. COLI, VIBRIO, TOXINS ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 1</div>
+<div class="on-exam">ON EXAM — five E. coli pathotypes and their toxins/populations; Vibrio cholerae vs V. parahaemolyticus vs V. vulnificus; preformed-toxin bugs and their classic exposures/onsets</div>
+
+<div class="sec">Pathogenic E. coli — five pathotypes</div>
+<table>
+  <tr><th>Pathotype</th><th>Full name</th><th>Classic population/setting</th><th>Toxin/mechanism</th><th>Stool</th></tr>
+  <tr><td class="rl">ETEC</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">EPEC</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">EIEC</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">EHEC (O157:H7)</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">EAEC</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">EHEC deep dive — HUS</div>
+<div class="fg">
+  <div class="f"><label>HUS triad (3 components)</label><input></div>
+  <div class="f"><label>Toxin responsible for HUS</label><input></div>
+  <div class="f"><label>Why AVOID antibiotics in EHEC?</label><input></div>
+  <div class="f"><label>Classic food exposure</label><input></div>
+</div>
+
+<div class="sec">Vibrio species — match the setup</div>
+<table>
+  <tr><th>Species</th><th>Classic exposure</th><th>Clinical picture</th></tr>
+  <tr><td class="rl">V. cholerae</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">V. parahaemolyticus</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">V. vulnificus</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Cholera toxin — mechanism (enzyme / target G-protein / net effect)</div>
+<div class="fg3">
+  <div class="f"><label>Enzymatic activity</label><input></div>
+  <div class="f"><label>Target G-protein α-subunit</label><input></div>
+  <div class="f"><label>Net effect on cAMP / Cl⁻</label><input></div>
+</div>
+
+<div class="sec">Preformed-toxin ("food poisoning") comparison</div>
+<table>
+  <tr><th>Bug</th><th>Classic food</th><th>Onset</th><th>Key clinical picture</th></tr>
+  <tr><td class="rl">S. aureus</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">B. cereus (emetic form)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">B. cereus (diarrheal form)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">C. perfringens</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">C. botulinum</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">S. aureus food poisoning — why so fast?</div>
+<div class="fg">
+  <div class="f"><label>Why onset is ~2–6 hours (not 1–3 days)</label><input></div>
+  <div class="f"><label>Heat-stability of toxin (stable or labile?)</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: "Preformed toxin" ≠ infection. The toxin is already in the food. Reheating doesn't help (S. aureus toxin is heat-STABLE).</div>
+</div>
+
+<!-- ═══ TAB 2: WATERY & DYSENTERY ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — secretory vs invasive vs osmotic mechanism; cholera vs ETEC vs viral watery diarrhea; dysentery bugs (Shigella, EHEC, Campylobacter, Entamoeba, invasive Salmonella)</div>
+
+<div class="sec">Secretory vs. invasive vs. osmotic — mechanism + WBCs in stool</div>
+<table>
+  <tr><th>Type</th><th>Mechanism</th><th>Blood/WBCs in stool?</th><th>Prototype bug</th></tr>
+  <tr><td class="rl">Secretory (non-inflammatory)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Invasive (inflammatory)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Osmotic</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Cholera — classic features</div>
+<div class="fg">
+  <div class="f"><label>Stool description</label><input></div>
+  <div class="f"><label>Key physiologic problem (fluid/electrolyte)</label><input></div>
+  <div class="f"><label>Cornerstone treatment</label><input></div>
+  <div class="f"><label>Why ORS works despite active secretion</label><input></div>
+</div>
+
+<div class="sec">ETEC (traveler's-style watery)</div>
+<div class="fg">
+  <div class="f"><label>Two toxins produced (heat-labile + heat-stable)</label><input></div>
+  <div class="f"><label>LT toxin mechanism (↑ cAMP or cGMP?)</label><input></div>
+  <div class="f"><label>ST toxin mechanism (↑ cAMP or cGMP?)</label><input></div>
+</div>
+
+<div class="sec">Viral watery diarrhea — pick the bug by stem</div>
+<div class="fg">
+  <div class="f"><label>Cruise ship outbreak, adults</label><input></div>
+  <div class="f"><label>Daycare, unvaccinated infant, winter</label><input></div>
+</div>
+
+<div class="sec">Dysentery (inflammatory bloody diarrhea) — match pathogen to stem</div>
+<table>
+  <tr><th>Clinical clue</th><th>Pathogen</th></tr>
+  <tr><td>Bloody diarrhea + HUS after undercooked beef</td><td><input></td></tr>
+  <tr><td>Bloody mucoid diarrhea + febrile seizures in toddler + low inoculum</td><td><input></td></tr>
+  <tr><td>Bloody diarrhea after chicken, then ascending paralysis</td><td><input></td></tr>
+  <tr><td>Dysentery + flask-shaped ulcers + liver abscess</td><td><input></td></tr>
+  <tr><td>RLQ pain mimicking appendicitis (pseudoappendicitis)</td><td><input></td></tr>
+</table>
+
+<div class="sec">Entamoeba vs. E. coli O157:H7 — how to tell apart</div>
+<div class="fg">
+  <div class="f"><label>Entamoeba unique feature (extraintestinal spread)</label><input></div>
+  <div class="f"><label>EHEC unique feature (hematologic)</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: Bloody diarrhea + fever + Shigella → do NOT give anti-motility agents. Do NOT give antibiotics for EHEC (↑ HUS risk from Shiga toxin release).</div>
+</div>
+
+<!-- ═══ TAB 3: TRAVELER'S & C. DIFF ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 2</div>
+<div class="on-exam">ON EXAM — traveler's diarrhea top pathogens (ETEC #1), prophylaxis/treatment; C. difficile risk factors (antibiotics), toxins A/B, diagnosis (PCR/EIA), treatment (PO vancomycin or fidaxomicin), fulminant features</div>
+
+<div class="sec">Traveler's diarrhea — frequency ranking</div>
+<div class="fg">
+  <div class="f"><label>#1 cause (bacterial)</label><input></div>
+  <div class="f"><label>#2 cause (varies: Campy, Salmonella, Shigella)</label><input></div>
+  <div class="f"><label>Viral contribution</label><input></div>
+  <div class="f"><label>Protozoal contribution (prolonged cases)</label><input></div>
+</div>
+
+<div class="sec">Traveler's diarrhea — prevention + treatment</div>
+<div class="fg">
+  <div class="f"><label>Primary prevention advice (food/water)</label><input></div>
+  <div class="f"><label>Chemoprophylaxis drug (occasional use)</label><input></div>
+  <div class="f"><label>First-line treatment (moderate-severe)</label><input></div>
+  <div class="f"><label>Symptom control agent (avoid if bloody/febrile)</label><input></div>
+</div>
+
+<div class="sec">C. difficile — risk factors</div>
+<div class="fg">
+  <div class="f"><label>Top offending antibiotic class 1 (fluoroquinolones)</label><input></div>
+  <div class="f"><label>Top offending class 2 (broad-spectrum β-lactams — "-cillin"/carbapenems)</label><input></div>
+  <div class="f"><label>Top offending class 3 (cephalosporins — 3rd/4th gen)</label><input></div>
+  <div class="f"><label>Top offending class 4 (clindamycin)</label><input></div>
+  <div class="f"><label>Non-antibiotic risk — long-term acid suppression</label><input></div>
+  <div class="f"><label>Patient-population risk</label><input></div>
+</div>
+
+<div class="sec">C. difficile — toxins and damage</div>
+<div class="fg">
+  <div class="f"><label>Toxin A function</label><input></div>
+  <div class="f"><label>Toxin B function</label><input></div>
+  <div class="f"><label>Classic endoscopic finding</label><input></div>
+</div>
+
+<div class="sec">C. difficile — diagnosis</div>
+<div class="fg">
+  <div class="f"><label>Highly sensitive test</label><input></div>
+  <div class="f"><label>Confirmatory test (toxin detection)</label><input></div>
+  <div class="f"><label>Why test only symptomatic patients?</label><input></div>
+</div>
+
+<div class="sec">C. difficile — treatment</div>
+<table>
+  <tr><th>Scenario</th><th>Treatment</th></tr>
+  <tr><td class="rl">First episode, non-severe</td><td><input></td></tr>
+  <tr><td class="rl">Severe / fulminant</td><td><input></td></tr>
+  <tr><td class="rl">Recurrent (≥2nd recurrence)</td><td><input></td></tr>
+  <tr><td class="rl">Fulminant w/ ileus</td><td><input></td></tr>
+</table>
+
+<div class="warn">⚠️ Fulminant C. diff = hypotension/shock, ileus, toxic megacolon, perforation. Oral vancomycin + IV metronidazole; colectomy if deteriorating.</div>
+</div>
+
+<!-- ═══ TAB 4: INTRAABDOMINAL ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LO 3</div>
+<div class="on-exam">ON EXAM — normal flora and empiric coverage; H. pylori disease associations and triple/quadruple therapy; pyogenic vs amebic liver abscess; SBP vs secondary vs CAPD peritonitis (organism, diagnosis, treatment)</div>
+
+<div class="sec">Normal flora — potential pathogens</div>
+<div class="fg">
+  <div class="f"><label>Mouth flora pathogen 1 (viridans strep)</label><input></div>
+  <div class="f"><label>Mouth flora anaerobes (Peptostrep, Prevotella, Fusobacterium)</label><input></div>
+  <div class="f"><label>Gut flora aerobe #1 (gram-negative enteric)</label><input></div>
+  <div class="f"><label>Gut anaerobe #1</label><input></div>
+</div>
+
+<div class="sec">Empiric coverage for intraabdominal infections</div>
+<div class="fg">
+  <div class="f"><label>Must cover (aerobic gram-negatives)</label><input></div>
+  <div class="f"><label>Must cover (anaerobes, esp. below diaphragm)</label><input></div>
+  <div class="f"><label>Classic regimen (single-agent)</label><input></div>
+  <div class="f"><label>Classic regimen (combo w/ metronidazole)</label><input></div>
+</div>
+
+<div class="sec">H. pylori — disease associations</div>
+<div class="fg">
+  <div class="f"><label>Ulcer location (duodenal vs. gastric %)</label><input></div>
+  <div class="f"><label>Malignancy 1</label><input></div>
+  <div class="f"><label>Malignancy 2 (B-cell lymphoma)</label><input></div>
+  <div class="f"><label>Acid-survival enzyme</label><input></div>
+</div>
+
+<div class="sec">H. pylori — diagnosis + treatment</div>
+<table>
+  <tr><th>Test/Regimen</th><th>Details</th></tr>
+  <tr><td class="rl">Urea breath test</td><td><input></td></tr>
+  <tr><td class="rl">Stool antigen</td><td><input></td></tr>
+  <tr><td class="rl">CLO test</td><td><input></td></tr>
+  <tr><td class="rl">Triple therapy (classic)</td><td><input></td></tr>
+  <tr><td class="rl">Quadruple therapy (if macrolide resistance)</td><td><input></td></tr>
+  <tr><td class="rl">Eradication confirmation timing</td><td><input></td></tr>
+</table>
+
+<div class="sec">Pyogenic vs. amebic liver abscess</div>
+<table>
+  <tr><th>Feature</th><th>Pyogenic</th><th>Amebic</th></tr>
+  <tr><td class="rl">Source</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Typical organisms</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Lobe predilection</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Abscess contents description</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Treatment</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Peritonitis — three classifications</div>
+<table>
+  <tr><th>Type</th><th>Organism(s)</th><th>Diagnostic cutoff</th><th>Treatment</th></tr>
+  <tr><td class="rl">Primary (SBP) — cirrhosis/ascites</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Secondary (perforation, surgery)</td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">CAPD (peritoneal dialysis)</td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">SBP — high-yield specifics</div>
+<div class="fg">
+  <div class="f"><label>Ascitic PMN count cutoff (cells/μL)</label><input></div>
+  <div class="f"><label>Most common organism</label><input></div>
+  <div class="f"><label>First-line antibiotic</label><input></div>
+  <div class="f"><label>Secondary prophylaxis drug</label><input></div>
+</div>
+
+<div class="warn">🪤 TRAP: SBP is usually MONOmicrobial; polymicrobial ascitic fluid or very high PMN/WBC → think <em>secondary</em> (perforation/visceral source) — needs surgery, not just antibiotics.</div>
+</div>
+
+<!-- ═══ TAB 5: PRACTICE QUESTIONS ═══ -->
+<div class="panel" id="p5">
+<div class="lo-tag">LOs 1–3</div>
+
+<div class="pq-box">
+<div class="pq-q">Q1: Traveler's diarrhea pathogen</div>
+<div class="pq-choices">A 28-year-old medical student returns from a 2-week trip to Mexico with 3 days of profuse watery diarrhea, abdominal cramps, and no blood. Stool studies show a non-inflammatory profile. Which pathogen is most likely?
+<br><br>A) EHEC (O157:H7)
+<br>B) Shigella
+<br>C) ETEC
+<br>D) Campylobacter jejuni
+<br>E) Norovirus</div>
+<button class="pq-btn" onclick="rq(this,0)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>ETEC is the #1 cause of traveler's diarrhea — watery, secretory, non-inflammatory (LT toxin ↑ cAMP; ST toxin ↑ cGMP). EHEC and Shigella cause dysentery (bloody). Campylobacter is possible but less common in Mexico-origin traveler's diarrhea. Norovirus is plausible but less likely in this classic traveler presentation.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q2: HUS after undercooked beef</div>
+<div class="pq-choices">A 5-year-old develops bloody diarrhea 4 days after a barbecue. Five days later he is pale, lethargic, with petechiae, oliguria, and Cr 2.9. Smear shows schistocytes. Which organism and toxin?
+<br><br>A) Shigella + Shiga toxin
+<br>B) EHEC + Shiga-like toxin (Stx)
+<br>C) ETEC + heat-labile toxin
+<br>D) Salmonella + LPS
+<br>E) Campylobacter + cytolethal distending toxin</div>
+<button class="pq-btn" onclick="rq(this,1)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>EHEC O157:H7 produces Shiga-like toxin → HUS triad (microangiopathic hemolytic anemia, thrombocytopenia, AKI). Undercooked ground beef / unpasteurized dairy is classic. Avoid antibiotics and anti-motility agents (worsen HUS). Shigella also produces Shiga toxin but HUS is rare compared with EHEC.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q3: Preformed toxin — fast onset</div>
+<div class="pq-choices">Six people eat at a picnic; 3 hours later all develop vomiting and cramps. They recover within 24 hours. Which pathogen?
+<br><br>A) Salmonella
+<br>B) Campylobacter
+<br>C) S. aureus (preformed enterotoxin)
+<br>D) EHEC
+<br>E) C. difficile</div>
+<button class="pq-btn" onclick="rq(this,2)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>S. aureus produces a heat-stable preformed enterotoxin. Onset is 2–6 hours (toxin is already in the food — no time needed for replication). Vomiting predominates; resolution within 24–48 hours. B. cereus emetic form (fried rice) is the other classic fast-onset option.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q4: Invasive vs. toxigenic classification</div>
+<div class="pq-choices">A 34-year-old man has bloody diarrhea, fever, and leukocytosis after eating undercooked chicken. Stool WBCs positive; stool culture grows curved gram-negative rods with corkscrew motility at 42°C. Which organism + category?
+<br><br>A) ETEC — toxigenic
+<br>B) Campylobacter jejuni — invasive
+<br>C) Vibrio cholerae — toxigenic
+<br>D) Listeria — invasive
+<br>E) Norovirus — viral</div>
+<button class="pq-btn" onclick="rq(this,3)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Campylobacter jejuni = curved/comma-shaped gram-negative rods, motile, grows at 42°C. Classic exposure = undercooked poultry/unpasteurized milk. Invasive → bloody diarrhea + fever + stool WBCs. Post-infectious: Guillain-Barré (molecular mimicry with gangliosides) and reactive arthritis.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q5: C. difficile first-line therapy</div>
+<div class="pq-choices">A 67-year-old inpatient on IV ceftriaxone develops 10 watery stools/day. Stool PCR positive for C. difficile; toxin EIA positive. He is afebrile with normal vitals and WBC 14k. What is the first-line treatment?
+<br><br>A) IV metronidazole alone
+<br>B) Oral vancomycin OR oral fidaxomicin
+<br>C) Oral ciprofloxacin
+<br>D) Loperamide for symptom control
+<br>E) IV cefepime</div>
+<button class="pq-btn" onclick="rq(this,4)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Current first-line for non-severe/initial C. diff is oral vancomycin OR oral fidaxomicin (metronidazole has fallen out of first-line due to inferior cure rates). Fidaxomicin has lower recurrence. Stop the inciting antibiotic if possible. Loperamide is contraindicated (toxin trapping).</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q6: Spontaneous bacterial peritonitis</div>
+<div class="pq-choices">A 58-year-old man with alcoholic cirrhosis and ascites presents with fever and abdominal pain. Paracentesis: PMN 320/μL, single organism on gram stain (gram-negative rods). What is the diagnosis and most likely organism?
+<br><br>A) Secondary peritonitis — polymicrobial
+<br>B) SBP — E. coli
+<br>C) CAPD peritonitis — S. epidermidis
+<br>D) Tuberculous peritonitis — M. tuberculosis
+<br>E) Pancreatitis — sterile</div>
+<button class="pq-btn" onclick="rq(this,5)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>SBP is defined by ascitic PMN ≥250/μL in the setting of cirrhosis without a surgical source. Most common organism = <em>E. coli</em>, then Klebsiella, then S. pneumoniae. Treat with ceftriaxone × 5–7 d; long-term ciprofloxacin or TMP-SMX prophylaxis after first episode or in high-risk patients.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q7: Amebic liver abscess</div>
+<div class="pq-choices">A 33-year-old man returns from Mexico with 2 weeks of bloody diarrhea, RUQ pain, and fever. Ultrasound shows a single right-lobe liver lesion. Serology for E. histolytica is positive. Best initial treatment?
+<br><br>A) Percutaneous drainage alone
+<br>B) Metronidazole, followed by a luminal agent (paromomycin)
+<br>C) Ceftriaxone + metronidazole
+<br>D) Surgical resection of the abscess
+<br>E) Oral vancomycin</div>
+<button class="pq-btn" onclick="rq(this,6)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Amebic liver abscess: metronidazole (tissue amebicide) FIRST, then a luminal agent (paromomycin or iodoquinol) to clear intraluminal cysts and prevent relapse. Drainage usually not required. Classic "anchovy paste" abscess contents, right lobe, history of travel to endemic area.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q8: H. pylori eradication</div>
+<div class="pq-choices">A 45-year-old with a duodenal ulcer tests positive for H. pylori on urea breath testing. Which of the following is a standard first-line triple-therapy regimen?
+<br><br>A) Amoxicillin + metronidazole + bismuth (no PPI)
+<br>B) PPI + clarithromycin + amoxicillin
+<br>C) PPI alone for 8 weeks
+<br>D) PPI + tetracycline (no other antibiotic)
+<br>E) H2 blocker + clarithromycin monotherapy</div>
+<button class="pq-btn" onclick="rq(this,7)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Classic triple therapy: PPI + clarithromycin + amoxicillin for 14 days. Quadruple therapy (PPI + bismuth + metronidazole + tetracycline) is preferred in areas of high clarithromycin resistance or penicillin allergy. Confirm eradication ≥4 weeks after finishing antibiotics with urea breath test or stool antigen.</div>
+</div>
+
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+
+function sw(n){
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tabs[n].classList.add('active');
+  panels[n].classList.add('active');
+}
+
+function rq(btn,idx){
+  const box=btn.closest('.pq-box');
+  const ans=box.querySelector('.pq-ans');
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide':'Reveal';
+}
+</script>
+</body></html>
