@@ -429,9 +429,8 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 /* EMBED MODE (loaded inside Daily Checklist iframe) */
 body.embed-mode .topbar-back,
 body.embed-mode .embed-hide { display: none !important; }
-body.embed-mode .topbar { padding-top: 10px; padding-bottom: 6px; }
-body.embed-mode .topbar h1 { font-size: 1.05rem; }
-body.embed-mode .topbar-sub { font-size: 0.7rem; }
+/* Hide the entire top banner when embedded — the parent provides the shell */
+body.embed-mode .topbar { display: none !important; }
 body.embed-mode .main { padding-top: 0; }
 /* Hide the planner's internal tab-nav when embedded — the parent provides tabs */
 body.embed-mode .tab-nav .tab-btn { display: none !important; }
@@ -452,15 +451,14 @@ body.embed-mode #topbar-pct { margin-left: 0 !important; margin-bottom: 0 !impor
     </div>
     <a href="https://docs.google.com/spreadsheets/d/1oMKX3NlM3xTTb3RDQ7VQsGdDEwuwEbfoX2mf09r-6K8/edit?usp=sharing" target="_blank" class="topbar-icon-btn hide-mobile embed-hide">📋 Block 4 Checklist ↗</a>
     <button class="topbar-icon-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
-    <button class="topbar-icon-btn" onclick="loadHoyaDocsPlan()" title="Load the recommended resources for each lecture based on the HoyaDocs study strategy">⭐ Load HoyaDocs Plan</button>
-    <button class="btn-sm btn-reset" onclick="confirmReset()">↺ Reset All</button>
   </div>
 
   <!-- TAB NAV -->
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('thisweek')" data-tab="thisweek">📅 This Week</button>
     <button class="tab-btn" onclick="switchTab('dashboard')" data-tab="dashboard">📊 Dashboard</button>
-    <button class="tab-btn" onclick="switchTab('planner')" data-tab="planner">✅ Lecture Planner</button>
+    <button class="tab-btn" onclick="switchTab('planner')" data-tab="planner">🧠 ADHD Planner</button>
+    <button class="tab-btn" onclick="switchTab('customplanner')" data-tab="customplanner">🎨 Customizable Lecture Planner</button>
     <span style="margin-left:auto;margin-bottom:6px" class="topbar-badge" id="topbar-pct">0% Complete</span>
   </div>
 
@@ -499,7 +497,7 @@ body.embed-mode #topbar-pct { margin-left: 0 !important; margin-bottom: 0 !impor
           <div class="res-pill SK">🟤 Sketchy</div>
         </div>
         <p style="font-size:.8rem;color:var(--ink-3)">
-          <strong>Rule:</strong> In-House is optional and does <em>not</em> count against the 2 third-party limit. Select up to <strong>2 third-party resources</strong> per lecture.<br>
+          <strong>In-House</strong> is optional — toggle on or off as needed. <strong>Third-party resources</strong> (BC, BB, PT, PH, SK, FA) have no cap — select any combination that fits your study style.<br>
           <strong>Tasks per resource:</strong> Watch/Attend → Anki → Last Pass<br>
           <strong>Practice Problems:</strong> Track UWorld, Active Learning, Drill Hub, and Qbank progress per lecture.
         </p>
@@ -507,20 +505,21 @@ body.embed-mode #topbar-pct { margin-left: 0 !important; margin-bottom: 0 !impor
     </div>
   </div>
 
-  <!-- ══ TAB 2: LECTURE PLANNER ══ -->
+  <!-- ══ TAB 2: ADHD PLANNER ══ -->
   <div class="tab-panel" id="tab-planner">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <div class="section-title" style="margin-bottom:0">Lecture Planner <span>Select resources · track tasks per lecture</span></div>
+      <div class="section-title" style="margin-bottom:0">🧠 ADHD Planner <span>Focused view · only the resources prescribed in your Daily Checklist</span></div>
       <div class="planner-actions" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="max-warn" id="max-warn">⚠️ Max 2 third-party resources per lecture</div>
+        <button class="btn-sm" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700" onclick="loadHoyaDocsPlan()" title="Load the recommended resources for each lecture based on the HoyaDocs study strategy">⭐ Load HoyaDocs Plan</button>
         <button class="btn-sm" style="background:var(--surface);border-color:var(--rule);color:var(--ink-2);font-weight:600" onclick="exportData()">⬇ Export Data</button>
         <button class="btn-sm" style="background:var(--surface);border-color:var(--rule);color:var(--ink-2);font-weight:600" onclick="document.getElementById('import-input').click()">⬆ Import Data</button>
         <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(this)">
         <button class="btn-sm" style="background:var(--accent-light);border-color:var(--accent-br);color:var(--accent);font-weight:600" onclick="exportToHTML()">⬇ Export HTML</button>
+        <button class="btn-sm btn-reset" onclick="confirmReset()">↺ Reset All</button>
       </div>
     </div>
     <div class="limit-tip" style="margin-bottom:14px">
-      💡 <strong>In-House</strong> is optional — toggle it on/off as needed. It does <strong>not</strong> count against the 2 third-party resource limit. Track <strong>Watch / Anki / Last Pass</strong> and use <strong>Practice Problems</strong> dropdowns below each lecture.
+      🧠 <strong>ADHD Planner</strong> shows only the resources currently included for each lecture — matching what's in your Daily Checklist. Track <strong>Watch / Anki / Last Pass</strong> and use <strong>Practice Problems</strong> dropdowns below each lecture. Need to add or remove a resource? Use the <strong>🎨 Customizable Lecture Planner</strong> tab.
     </div>
     <div class="week-filter">
       <button class="wf-btn active" onclick="filterWeek('all',this)">All Weeks</button>
@@ -529,6 +528,31 @@ body.embed-mode #topbar-pct { margin-left: 0 !important; margin-bottom: 0 !impor
       <button class="wf-btn" onclick="filterWeek('Wk 3',this)">Week 3</button>
     </div>
     <div class="lec-grid" id="lec-grid"></div>
+  </div>
+
+  <!-- ══ TAB 2b: CUSTOMIZABLE LECTURE PLANNER ══ -->
+  <div class="tab-panel" id="tab-customplanner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div class="section-title" style="margin-bottom:0">🎨 Customizable Lecture Planner <span>Select or deselect any number of resources for each lecture</span></div>
+      <div class="planner-actions" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <button class="btn-sm" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700" onclick="loadHoyaDocsPlan()" title="Load the recommended resources for each lecture based on the HoyaDocs study strategy">⭐ Load HoyaDocs Plan</button>
+        <button class="btn-sm" style="background:var(--surface);border-color:var(--rule);color:var(--ink-2);font-weight:600" onclick="exportData()">⬇ Export Data</button>
+        <button class="btn-sm" style="background:var(--surface);border-color:var(--rule);color:var(--ink-2);font-weight:600" onclick="document.getElementById('import-input-custom').click()">⬆ Import Data</button>
+        <input type="file" id="import-input-custom" accept=".json" style="display:none" onchange="importData(this)">
+        <button class="btn-sm" style="background:var(--accent-light);border-color:var(--accent-br);color:var(--accent);font-weight:600" onclick="exportToHTML()">⬇ Export HTML</button>
+        <button class="btn-sm btn-reset" onclick="confirmReset()">↺ Reset All</button>
+      </div>
+    </div>
+    <div class="limit-tip" style="margin-bottom:14px">
+      🎨 <strong>Customizable Lecture Planner</strong> — toggle <strong>any number</strong> of resources (no cap). Every resource available for a lecture appears here, including those not currently in your Daily Checklist. Changes sync instantly to the ADHD Planner and Daily Checklist.
+    </div>
+    <div class="week-filter">
+      <button class="wf-btn active" onclick="filterWeek('all',this)">All Weeks</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 1',this)">Week 1</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 2',this)">Week 2</button>
+      <button class="wf-btn" onclick="filterWeek('Wk 3',this)">Week 3</button>
+    </div>
+    <div class="lec-grid" id="lec-grid-custom"></div>
   </div>
 
 
@@ -713,7 +737,7 @@ const RECOMMENDED = {
   0:['BC','PH'], 1:['BC','PH'], 2:['BB','PH'], 3:['BC','BB'],
   4:['BC','PH'], 5:['BB','PH'], 6:['BB','PH'], 7:['BC','BB'],
   8:['BB','PH'], 9:['BB','PH'], 10:['BC','PH'], 11:['PT','PH'],
-  12:['BC','PH'], 13:['PT','PH'], 14:['PH','SK'], 15:['PT','PH'],
+  12:['BC','PH'], 13:['PT','PH'], 14:['BB','SK'], 15:['PT','PH'],
   16:['PH','SK'], 17:['BB','PH'], 18:['BB','PH'], 19:['BB','PH'],
   20:['BB','PH'], 21:['BC','BB'], 22:['PT','PH'], 23:['BC','BB'],
   24:['PT','PH'], 25:['PT','PH'], 26:['BC','PH']
@@ -988,6 +1012,12 @@ function loadState(){
       const pp=STATE[l.id].practiceProblems;
       ['uworld','activeLearning','drillHub','qbank'].forEach(k=>{ if(!pp[k]) pp[k]='Not Started'; });
     }
+    // Sanity: don't mark a resource as included if the lecture doesn't offer it
+    TP_RES.forEach(r=>{
+      if(STATE[l.id][r] && STATE[l.id][r].included && !l.res[r]){
+        STATE[l.id][r].included=false;
+      }
+    });
   });
 }
 
@@ -1175,8 +1205,11 @@ function renderDashboard(){
 // ══════════════════════════════════════════════════════════════
 //  RENDER LECTURE PLANNER
 // ══════════════════════════════════════════════════════════════
-function renderLecturePlanner(weekFilter){
-  const grid=document.getElementById('lec-grid');
+function renderLecturePlanner(weekFilter, mode, gridId){
+  mode = mode || 'adhd';
+  gridId = gridId || (mode === 'custom' ? 'lec-grid-custom' : 'lec-grid');
+  const grid=document.getElementById(gridId);
+  if(!grid) return;
   grid.innerHTML='';
 
   LECTURES.forEach(l=>{
@@ -1188,11 +1221,13 @@ function renderLecturePlanner(weekFilter){
 
     const card=document.createElement('div');
     card.className='lec-card';
-    card.id=`lec-card-${l.id}`;
+    card.id=mode==='custom' ? `lec-card-${l.id}-custom` : `lec-card-${l.id}`;
+    card.dataset.lecId=l.id;
+    card.dataset.mode=mode;
 
     // Header
     card.innerHTML=`
-      <div class="lec-card-header" onclick="toggleLecCard(${l.id})">
+      <div class="lec-card-header" onclick="toggleLecCard(this)">
         <span class="lec-num">Lec ${l.num}</span>
         <span class="lec-date-badge">${l.date}</span>
         <span class="subj-badge subj-${l.subj}">${l.subj}</span>
@@ -1201,18 +1236,24 @@ function renderLecturePlanner(weekFilter){
           <div class="prog-bar-wrap" style="min-width:60px"><div class="prog-bar" style="width:${pct}%"></div></div>
           <span class="lec-pct">${pct}%</span>
         </div>
-        <span class="lec-watch-stat" id="lec-watch-${l.id}">📺 ${wDone}/${wTot} min &middot; <span style="color:${wRem===0?'var(--accent)':'#f59e0b'}">${wRem} min left</span></span>
+        <span class="lec-watch-stat" id="lec-watch-${l.id}${mode==='custom'?'-custom':''}">📺 ${wDone}/${wTot} min &middot; <span style="color:${wRem===0?'var(--accent)':'#f59e0b'}">${wRem} min left</span></span>
         <span class="lec-chevron">▼</span>
       </div>
       <div class="lec-body">
-        ${buildResRows(l, ls, tpCount)}
+        ${buildResRows(l, ls, tpCount, mode)}
       </div>`;
 
     grid.appendChild(card);
   });
 }
 
-function buildResRows(l, ls, tpCount){
+function renderBothPlanners(weekFilter){
+  renderLecturePlanner(weekFilter, 'adhd', 'lec-grid');
+  renderLecturePlanner(weekFilter, 'custom', 'lec-grid-custom');
+}
+
+function buildResRows(l, ls, tpCount, mode){
+  mode = mode || 'adhd';
   let html='';
 
   // Practice Problems section — shown FIRST
@@ -1241,17 +1282,30 @@ function buildResRows(l, ls, tpCount){
     </div>
   </div>`;
 
-  // In-House row
+  // In-House row — always shown
   html+=buildRow('IH', l, ls, true);
 
   // Third-party rows
+  // ADHD mode: only show INCLUDED resources (keeps view focused on what's actually prescribed)
+  // Custom mode: show ALL resources, including not-included (with "+ Include" button) and NA
   TP_RES.forEach(r=>{
-    if(!l.res[r]){ html+=buildRowNA(r); return; }
+    if(!l.res[r]){
+      if(mode==='custom') html+=buildRowNA(r);
+      return;
+    }
+    if(mode==='adhd' && !ls[r].included) return; // hide in ADHD view
     html+=buildRow(r, l, ls, false, tpCount);
   });
 
-  if(tpCount>=2){
-    html+=`<div class="limit-tip" style="margin-top:8px">✅ 2 third-party resources selected. Deselect one to choose a different resource.</div>`;
+  if(mode==='adhd'){
+    // Quick-add row: list the available-but-not-included resources as chips the user can click
+    const available = TP_RES.filter(r=>l.res[r] && !ls[r].included);
+    if(available.length){
+      html+=`<div class="adhd-add-row" style="margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px dashed var(--rule);display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <span style="font-size:.72rem;color:var(--ink-3);font-weight:600">+ Add optional:</span>
+        ${available.map(r=>`<button class="res-include-btn not-inc" style="font-size:.72rem;padding:4px 10px" onclick="toggleResource(${l.id},'${r}')">${RES_META[r].emoji||''} + ${RES_META[r].label||r}</button>`).join('')}
+      </div>`;
+    }
   }
 
   return html;
@@ -1261,15 +1315,13 @@ function buildRow(r, l, ls, isIH, tpCount){
   const meta=RES_META[r];
   const inc=ls[r].included;
   const rowCls=inc?r:'not-included '+r;
-  const canAdd=isIH||inc||(tpCount<2);
   const cards=l.anki?.[r]||0;
 
   let incBtn='';
   if(!isIH){
     const btnLabel=inc?'✓ Selected':'+ Include';
     const btnCls=inc?`res-include-btn ${r}`:`res-include-btn not-inc`;
-    const disabled=!canAdd&&!inc?'style="opacity:.4;cursor:not-allowed"':'';
-    incBtn=`<button class="${btnCls}" onclick="toggleResource(${l.id},'${r}')" ${disabled}>${btnLabel}</button>`;
+    incBtn=`<button class="${btnCls}" onclick="toggleResource(${l.id},'${r}')">${btnLabel}</button>`;
   } else {
     const btnLabel=inc?'✓ In-House':'+ In-House';
     const btnCls=inc?`res-include-btn IH`:`res-include-btn not-inc`;
@@ -1405,31 +1457,29 @@ function setResSub(id, r, subIdx, val){
 function setBCSub(id, subIdx, val){ setResSub(id,'BC',subIdx,val); }
 function setBBSub(id, subIdx, val){ setResSub(id,'BB',subIdx,val); }
 
-function toggleLecCard(id){
-  const card=document.getElementById(`lec-card-${id}`);
-  card.classList.toggle('open');
+function toggleLecCard(idOrEl){
+  // Accept either an id (legacy) or the header element (new)
+  let card;
+  if(typeof idOrEl === 'number' || typeof idOrEl === 'string'){
+    card = document.getElementById(`lec-card-${idOrEl}`);
+  } else if(idOrEl && idOrEl.closest){
+    card = idOrEl.closest('.lec-card');
+  }
+  if(card) card.classList.toggle('open');
 }
 
 function toggleResource(id, r){
   const ls=STATE[id];
   const wasInc=ls[r].included;
-  if(r!=='IH'){
-    const tp=countThirdParty(id);
-    if(!wasInc&&tp>=2){
-      // Flash warning
-      const warn=document.getElementById('max-warn');
-      warn.style.display='inline';
-      setTimeout(()=>warn.style.display='none',3000);
-      return;
-    }
-  }
   ls[r].included=!wasInc;
   saveState();
   const lec=LECTURES.find(l=>l.id===id);
   const newTp=countThirdParty(id);
-  // Re-render just this card's body
-  const body=document.querySelector(`#lec-card-${id} .lec-body`);
-  if(body) body.innerHTML=buildResRows(lec,ls,newTp);
+  // Re-render BOTH card bodies (ADHD + Custom tabs may each have a copy)
+  document.querySelectorAll(`[id="lec-card-${id}"] .lec-body, [id="lec-card-${id}-custom"] .lec-body`).forEach(body=>{
+    const mode = body.closest('[id$="-custom"]') ? 'custom' : 'adhd';
+    body.innerHTML=buildResRows(lec,ls,newTp,mode);
+  });
   updateLecHeader(id);
   renderDashboard();
 }
@@ -1447,18 +1497,31 @@ function setTask(id, r, task, val){
 function updateLecHeader(id){
   const {pct}=lecProgress(id);
   const {tot:wTot,done:wDone,remaining:wRem}=lecWatchStats(id);
-  const bar=document.querySelector(`#lec-card-${id} .prog-bar`);
-  const pctEl=document.querySelector(`#lec-card-${id} .lec-pct`);
-  const watchEl=document.getElementById(`lec-watch-${id}`);
-  if(bar) bar.style.width=pct+'%';
-  if(pctEl) pctEl.textContent=pct+'%';
-  if(watchEl) watchEl.innerHTML=`📺 ${wDone}/${wTot} min &middot; <span style="color:${wRem===0?'var(--accent)':'#f59e0b'}">${wRem} min left</span>`;
+  // Update BOTH ADHD + Custom copies if present
+  [`lec-card-${id}`, `lec-card-${id}-custom`].forEach(cid=>{
+    const bar=document.querySelector(`#${cid} .prog-bar`);
+    const pctEl=document.querySelector(`#${cid} .lec-pct`);
+    if(bar) bar.style.width=pct+'%';
+    if(pctEl) pctEl.textContent=pct+'%';
+  });
+  [`lec-watch-${id}`, `lec-watch-${id}-custom`].forEach(wid=>{
+    const watchEl=document.getElementById(wid);
+    if(watchEl) watchEl.innerHTML=`📺 ${wDone}/${wTot} min &middot; <span style="color:${wRem===0?'var(--accent)':'#f59e0b'}">${wRem} min left</span>`;
+  });
 }
 
 function filterWeek(wk, btn){
-  document.querySelectorAll('.wf-btn').forEach(b=>b.classList.remove('active'));
+  // Scope to the week-filter bar that contains the button
+  const bar = btn.closest('.week-filter');
+  if(bar) bar.querySelectorAll('.wf-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  renderLecturePlanner(wk);
+  // Determine which tab this filter belongs to
+  const panel = btn.closest('.tab-panel');
+  if(panel && panel.id === 'tab-customplanner'){
+    renderLecturePlanner(wk, 'custom', 'lec-grid-custom');
+  } else {
+    renderLecturePlanner(wk, 'adhd', 'lec-grid');
+  }
 }
 
 
@@ -1474,6 +1537,8 @@ function switchTab(name){
   });
   if(name==='dashboard') renderDashboard();
   if(name==='thisweek') renderThisWeek();
+  if(name==='planner') renderLecturePlanner(undefined,'adhd','lec-grid');
+  if(name==='customplanner') renderLecturePlanner(undefined,'custom','lec-grid-custom');
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1502,9 +1567,18 @@ function seedRecommended(){
   const hasAny=LECTURES.some(l=>TP_RES.some(r=>STATE[l.id][r].included));
   if(hasAny) return; // User already has selections — don't override
   Object.entries(RECOMMENDED).forEach(([id,recs])=>{
+    const lec=LECTURES.find(l=>String(l.id)===String(id));
+    if(!lec) return;
     recs.forEach(r=>{
-      if(STATE[id]&&STATE[id][r]) STATE[id][r].included=true;
+      // Only include if the resource actually exists for this lecture
+      if(STATE[id]&&STATE[id][r]&&lec.res[r]) STATE[id][r].included=true;
     });
+    // Fallback: if NO third-party resources got included but some are available,
+    // include the first available so the ADHD view isn't empty for this lecture.
+    const incCount = TP_RES.filter(r=>STATE[id][r].included).length;
+    if(incCount===0){
+      TP_RES.forEach(r=>{ if(lec.res[r] && STATE[id][r]) STATE[id][r].included=true; });
+    }
   });
   saveState();
 }
@@ -1520,13 +1594,23 @@ function loadHoyaDocsPlan(){
   if(!confirm(msg)) return;
   Object.entries(RECOMMENDED).forEach(([id,recs])=>{
     if(!STATE[id]) return;
+    const lec=LECTURES.find(l=>String(l.id)===String(id));
     TP_RES.forEach(r=>{
-      if(STATE[id][r]) STATE[id][r].included = recs.includes(r);
+      if(!STATE[id][r]) return;
+      // Only include if the resource actually exists for this lecture
+      STATE[id][r].included = recs.includes(r) && !!(lec && lec.res[r]);
     });
+    // Fallback: if no resources were included but some are available for this lecture,
+    // include everything available so the ADHD view isn't empty.
+    const incCount = TP_RES.filter(r=>STATE[id][r].included).length;
+    if(incCount===0 && lec){
+      TP_RES.forEach(r=>{ if(lec.res[r] && STATE[id][r]) STATE[id][r].included=true; });
+    }
   });
   saveState();
-  // Re-render everything — planner cards, dashboard, this-week
-  if(typeof renderLecturePlanner==='function') renderLecturePlanner();
+  // Re-render everything — planner cards (both views), dashboard, this-week
+  if(typeof renderBothPlanners==='function') renderBothPlanners();
+  else if(typeof renderLecturePlanner==='function') renderLecturePlanner();
   if(typeof renderDashboard==='function') renderDashboard();
   if(typeof renderThisWeek==='function') renderThisWeek();
   // Flash confirmation
@@ -1557,7 +1641,7 @@ function applyInitialEmbedTab(){
     const params = new URLSearchParams(location.search);
     if(params.get('embed') !== '1') return;
     const t = params.get('tab');
-    if(t && ['thisweek','planner','dashboard'].includes(t) && typeof switchTab === 'function'){
+    if(t && ['thisweek','planner','customplanner','dashboard'].includes(t) && typeof switchTab === 'function'){
       switchTab(t);
     }
   } catch(e) {}
@@ -1570,7 +1654,8 @@ function reloadPlannerFromLocalStorage(){
   try {
     // loadState() reads STORAGE_KEY from localStorage and reassigns STATE.
     if(typeof loadState === 'function') loadState();
-    if(typeof renderLecturePlanner === 'function') renderLecturePlanner();
+    if(typeof renderBothPlanners === 'function') renderBothPlanners();
+    else if(typeof renderLecturePlanner === 'function') renderLecturePlanner();
     if(typeof renderDashboard === 'function') renderDashboard();
     if(typeof renderThisWeek === 'function') renderThisWeek();
   } catch(e) { console.error('Planner reload error:', e); }
@@ -1841,7 +1926,7 @@ function importData(input){
       saveState();
       renderThisWeek();
       renderDashboard();
-      renderLecturePlanner();
+      renderBothPlanners();
       alert('Progress imported successfully!');
     } catch(err){
       alert('Import failed: '+err.message);
@@ -1857,7 +1942,7 @@ function init(){
   seedRecommended();
   renderThisWeek();
   renderDashboard();
-  renderLecturePlanner();
+  renderBothPlanners();
   applyInitialEmbedTab();
 }
 
