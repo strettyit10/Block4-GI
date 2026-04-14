@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 26: Parasitology — HoyaDocs GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0 140px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px;
+            transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+
+        .sidebar-footer {
+            position: fixed; bottom: 0; left: 0; width: 220px;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+            z-index: 102;
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+
+        .usmle-summary { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .usmle-header { font-weight: 700; color: #1e40af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .usmle-summary ul { margin-left: 18px; margin-top: 6px; }
+        .usmle-summary li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .usmle-summary p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+
+        h4.collapsible-h4 { cursor: pointer; user-select: none; }
+        h4.collapsible-h4:hover { background: #bfdbfe; }
+        h4.collapsible-h4 .h4-chevron { display: inline-block; font-size: 11px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        h4.collapsible-h4.collapsed .h4-chevron { transform: rotate(-90deg); }
+
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #1e40af; }
+
+        .lo-covered { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #1e3a5f; }
+
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .reveal-btn { background: #2563eb; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .answer { display: none; margin-top: 12px; background: #f0fdf4; border-left: 3px solid #16a34a; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #166534; }
+
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; background: none !important; padding: 0 !important; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+
+        /* ══ Mobile Responsive ════════════════════════════════════════════════ */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn {
+            display: none;
+            position: fixed; top: 12px; left: 12px; z-index: 200;
+            background: #1e293b; border: none; border-radius: 6px;
+            padding: 8px 11px; cursor: pointer; color: white; font-size: 20px;
+            line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 99;
+        }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar { transform: translateX(-240px); z-index: 150; }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main { margin-left: 0 !important; padding: 60px 16px 30px 16px !important; max-width: 100% !important; }
+            .header h1 { font-size: 22px !important; }
+            .header p { font-size: 14px !important; }
+            .lo-section { padding: 20px 16px !important; }
+            .lo-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px !important; }
+            .lo-toc ol { padding-left: 14px; }
+            .export-actions { flex-direction: column; }
+            .buzzwords { gap: 4px; }
+            .buzzword { font-size: 11px; padding: 2px 8px; }
+        }
+        @media (max-width: 480px) {
+            div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+            div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+            .main { padding: 55px 12px 24px 12px !important; }
+            .lo-acc-header { flex-wrap: wrap; gap: 6px !important; }
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs &#8599;</a>
+        <h2>Lecture 26</h2>
+        <p>Parasitology</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">&#128203; Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">&#129440; LO 1 &middot; Luminal Protozoa</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">&#129704; LO 2 &middot; Blood &amp; Tissue Protozoa</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">&#129422; LO 3 &middot; Nematodes</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">&#129429; LO 4 &middot; Cestodes &amp; Trematodes</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">&#9999;&#65039; Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">&#128424;&#65039;</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">&#128196;</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/gi_resource_hub.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<main class="main">
+    <div class="header">
+        <h1>Lecture 26: Parasitology</h1>
+        <p>HoyaDocs &mdash; GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB (built last) ══ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 26 &mdash; Overview</h2>
+        <p class="lo-subtitle">Parasitology &middot; HoyaDocs GI Block</p>
+        <div class="lo-content" id="overview-body">
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:6px; font-size:14px;">&#128100; Luminal GI Protozoa</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 1</strong><br>
+                        Entamoeba histolytica &middot; Giardia lamblia &middot; Cryptosporidium &middot; Cystoisospora &middot; Cyclospora &middot; modified acid-fast trio &middot; first-line therapies (metronidazole, nitazoxanide, TMP&ndash;SMX)<br>
+                        <em style="color:#475569;">Practice Qs: 1&ndash;3</em>
+                    </div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:6px; font-size:14px;">&#129440; Blood &amp; Tissue Protozoa</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 2</strong><br>
+                        Leishmania (cutaneous, mucocutaneous, visceral) &middot; Trypanosoma cruzi (Chagas) &middot; Plasmodium (4 species + knowlesi) &middot; hypnozoites &amp; primaquine &middot; Babesia &middot; Toxoplasma<br>
+                        <em style="color:#475569;">Practice Qs: 4&ndash;7</em>
+                    </div>
+                </div>
+                <div style="background:#f3e8ff; border:1px solid #d8b4fe; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#581c87; margin-bottom:6px; font-size:14px;">&#129422; Nematodes (Roundworms)</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 3</strong><br>
+                        Ascaris &middot; Trichuris &middot; Hookworm &middot; Enterobius &middot; Strongyloides (hyperinfection) &middot; Toxocara &middot; Trichinella &middot; albendazole vs. ivermectin vs. pyrantel<br>
+                        <em style="color:#475569;">Practice Qs: 8&ndash;10</em>
+                    </div>
+                </div>
+                <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#78350f; margin-bottom:6px; font-size:14px;">&#129410; Cestodes &amp; Trematodes</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Covers <strong>LO 4</strong><br>
+                        Taenia solium (neurocysticercosis) &middot; Taenia saginata &middot; Diphyllobothrium latum (B<sub>12</sub> deficiency) &middot; Echinococcus (hydatid) &middot; Schistosoma (mansoni, japonicum, haematobium) &middot; praziquantel is king<br>
+                        <em style="color:#475569;">Practice Qs: 11&ndash;12</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Recognize the life cycles, epidemiology, clinical presentation, diagnosis, and treatment of clinically relevant luminal GI protozoa</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Luminal Protozoa</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 1</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Entamoeba histolytica</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Giardia lamblia</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Cryptosporidium</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Cystoisospora &amp; Cyclospora</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Modified Acid-Fast Trio</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q3</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 2 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Recognize the life cycles, epidemiology, clinical presentation, diagnosis, and treatment of blood and tissue protozoa (Leishmania, Trypanosoma cruzi, Plasmodium, Babesia, Toxoplasma)</span>
+                    <span style="background:#dcfce7; color:#14532d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Blood &amp; Tissue</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 2</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Leishmania (3 forms)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Trypanosoma cruzi (Chagas)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Plasmodium &amp; Malaria</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Babesia microti</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Toxoplasma gondii</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q4, Q5, Q6, Q7</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 3 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Recognize the life cycles, epidemiology, clinical presentation, diagnosis, and treatment of clinically relevant helminthic nematodes</span>
+                    <span style="background:#f3e8ff; color:#581c87; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Nematodes</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 3</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Ascaris lumbricoides</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Trichuris trichiura</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Hookworm</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Enterobius vermicularis</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Strongyloides stercoralis</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Toxocara &amp; Trichinella</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q8, Q9, Q10</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 4 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Recognize the life cycles, epidemiology, clinical presentation, diagnosis, and treatment of clinically relevant cestodes (tapeworms) and trematodes (flukes)</span>
+                    <span style="background:#fef3c7; color:#78350f; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Cestodes &amp; Trematodes</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 4</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Taenia solium &amp; neurocysticercosis</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Taenia saginata</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Diphyllobothrium latum</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Echinococcus granulosus</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Schistosoma spp.</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q11, Q12</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1: LUMINAL PROTOZOA ══ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 1 &mdash; Luminal GI Protozoa</h2>
+        <p class="lo-subtitle">Entamoeba histolytica &middot; Giardia lamblia &middot; Cryptosporidium &middot; Cystoisospora &middot; Cyclospora</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Official Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1.</strong> Recognize the life cycles of clinically relevant luminal protozoa.</li>
+                    <li><strong>LO 2.</strong> Identify epidemiology (exposure, geography) that predisposes patients to luminal protozoal infections.</li>
+                    <li><strong>LO 3.</strong> Recognize important clinical manifestations of luminal protozoal infections.</li>
+                    <li><strong>LO 4.</strong> Identify the diagnosis and treatment of luminal protozoal infections.</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo1-entamoeba">Entamoeba histolytica &mdash; amebic colitis &amp; liver abscess</a></li>
+                    <li><a href="#lo1-giardia">Giardia lamblia &mdash; beaver fever / malabsorptive diarrhea</a></li>
+                    <li><a href="#lo1-crypto">Cryptosporidium &mdash; watery diarrhea in AIDS</a></li>
+                    <li><a href="#lo1-afb-trio">The Modified Acid-Fast Trio (Crypto / Cystoisospora / Cyclospora)</a></li>
+                    <li><a href="#lo1-tyu">Testing Your Understanding</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-entamoeba" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Entamoeba histolytica</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Flask-shaped ulcer</span>
+                    <span class="buzzword">Anchovy-paste abscess</span>
+                    <span class="buzzword">RUQ pain + returned traveler</span>
+                    <span class="buzzword">Gal/GalNAc lectin</span>
+                    <span class="buzzword">Metronidazole &rarr; paromomycin</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Entamoeba histolytica</em> (invasive protozoan). Morphologically identical species <em>E. dispar</em>, <em>E. moshkovskii</em>, <em>E. bangladeshi</em> are commensals only.</li>
+                        <li><strong>Transmission:</strong> fecal-oral &mdash; contaminated water/food; oral-anal sex (MSM).</li>
+                        <li><strong>Life cycle:</strong> ingest <strong>quadri-nucleate cyst</strong> &rarr; excystation in bowel lumen &rarr; uni-nucleate <strong>trophozoite</strong> (invasive form) &rarr; trophozoite either re-encysts (asymptomatic passer) or adheres via <strong>Gal/GalNAc-specific lectin</strong> &rarr; invades colonic mucosa &rarr; can spread to liver &rarr; abscess.</li>
+                    </ul>
+
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong>
+                        <ul>
+                            <li><strong>Gal/GalNAc lectin</strong> = the adhesin that mediates mucosal invasion. Classic Step 1 detail.</li>
+                            <li>Cysts = <strong>quadri-nucleate</strong> (4 nuclei); trophozoites = <strong>uni-nucleate</strong>, often with <strong>ingested RBCs</strong> on stool microscopy.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>~34&ndash;50 million cases worldwide, 100,000 deaths/yr.</li>
+                        <li>Endemic in <strong>Central/South America, Africa, India</strong>.</li>
+                        <li>3rd most common parasitic infection in the U.S. (immigrants, travelers, MSM).</li>
+                        <li>More severe disease in: young children, elderly, steroids/immunocompromised, pregnancy.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Syndrome</th><th>Presentation</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Asymptomatic cyst passer</strong></td><td>~80% of <em>E. histolytica</em> infections; all <em>E. dispar</em> / <em>E. moshkovskii</em> infections. Risk of downstream transmission.</td></tr>
+                            <tr><td><strong>Amebic colitis / dysentery</strong></td><td>Bloody mucoid diarrhea, crampy abdominal pain, tenesmus. Complications: toxic megacolon, <strong>ameboma</strong> (inflammatory mass mimicking cancer). Classic path: <strong>flask-shaped ulcer</strong>.</td></tr>
+                            <tr><td><strong>Amebic liver abscess</strong></td><td>Fever, RUQ pain, N/V, elevated LFTs, leukocytosis. <strong>Right lobe in 80%</strong>, more common in males. <strong>Often WITHOUT concomitant colitis.</strong> Aspirate &rarr; thick <strong>"anchovy-paste"</strong> reddish-brown sterile fluid.</td></tr>
+                            <tr><td><strong>Thoracic amebiasis</strong></td><td>~10% of liver-abscess pts. R-sided pleural effusion or empyema; 3% get pericarditis.</td></tr>
+                            <tr><td><strong>Cerebral abscess</strong></td><td>0.6&ndash;4.7% of liver-abscess patients.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Amebic vs. Pyogenic Liver Abscess <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            <ul>
+                                <li><strong>Amebic:</strong> solitary, <strong>R lobe</strong>, returned traveler (Mexico/C.&nbsp;South America), sterile &ldquo;anchovy-paste&rdquo; aspirate, positive serology &rarr; metronidazole + paromomycin.</li>
+                                <li><strong>Pyogenic:</strong> often multiple, usually polymicrobial (E. coli, Klebsiella, anaerobes), positive Gram stain/cultures &rarr; ceftriaxone + metronidazole + percutaneous drainage.</li>
+                                <li>Dead giveaway in a vignette: "thick reddish-brown fluid, no organisms on Gram stain" = amebic.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Diagnosis</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead>
+                            <tr><th>Test</th><th>Colitis</th><th>Liver Abscess</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Stool microscopy (O&amp;P)</td><td>25&ndash;60%</td><td>10&ndash;40%</td></tr>
+                            <tr><td>Stool antigen detection</td><td>80%</td><td>~40%</td></tr>
+                            <tr><td>Serum antigen detection</td><td>65%</td><td>&gt;95%</td></tr>
+                            <tr><td>Stool / abscess PCR</td><td>&gt;95%</td><td>&gt;95%</td></tr>
+                            <tr><td>Serology (indirect hemagglutination)</td><td>Acute 70% / Conv. &gt;90%</td><td>Acute 70&ndash;80% / Conv. &gt;90%</td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Workflow:</strong> for suspected liver abscess &rarr; CT/US + <strong>serology</strong> (most useful &mdash; positive in &gt;90% convalescent). Abscess Gram stain is sterile.</p>
+                </div>
+
+                <h4>Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Invasive disease (colitis or liver abscess):</strong> <strong>Metronidazole</strong> (or tinidazole) &mdash; kills tissue trophozoites.</li>
+                        <li><strong>Follow with a luminal agent</strong> to eradicate cysts: <strong>paromomycin</strong> (or diloxanide furoate, iodoquinol). Cysts do NOT respond to metronidazole &mdash; ~40&ndash;60% persist.</li>
+                        <li><strong>Asymptomatic cyst passer:</strong> paromomycin alone.</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#129504; MNEMONIC &mdash; "Metro first, Paro last"</span><span class="mnemonic-chevron">&#9660;</span></div>
+                        <div class="mnemonic-body">
+                            <p><strong>M</strong>etronidazole = <strong>M</strong>ucosal/tissue (trophozoites).</p>
+                            <p><strong>P</strong>aromomycin = <strong>P</strong>ersistent cysts in the lumen.</p>
+                            <p>Miss the luminal step = relapse + continued transmission.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-giardia" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Giardia lamblia</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Beaver fever</span>
+                    <span class="buzzword">Camping / stream water</span>
+                    <span class="buzzword">Fatty, foul-smelling diarrhea</span>
+                    <span class="buzzword">"Falling leaf" trophozoite</span>
+                    <span class="buzzword">Metronidazole / tinidazole</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Giardia lamblia</em> (a.k.a. <em>G. intestinalis</em>, <em>G. duodenalis</em>). Flagellated protozoan; trophozoites have a classic <strong>"falling leaf" motility</strong> with a central <strong>pear-shaped</strong> body and 2 nuclei ("smiley face").</li>
+                        <li><strong>Transmission:</strong> fecal-oral ingestion of <strong>cysts</strong>.</li>
+                        <li><strong>Life cycle:</strong> cyst &rarr; excystation in duodenum &rarr; trophozoites adhere to duodenal/jejunal villi via <strong>ventral sucking disk</strong> (no invasion!) &rarr; blunt villi &rarr; malabsorption &rarr; new cysts pass in stool.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Most commonly identified intestinal parasite in the U.S.</strong> (4&ndash;7% of stools).</li>
+                        <li>Transmission: <strong>recreational fresh water</strong> (lakes, streams, untreated well water) &mdash; beavers are a classic reservoir.</li>
+                        <li>Other: day care centers, MSM sexual transmission, international travel.</li>
+                        <li>Host risk factors: <strong>IgA deficiency / CVID</strong>, hypo/achlorhydria (PPI, post-gastrectomy).</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Incubation 1&ndash;2 weeks.</li>
+                        <li>Syndromes: asymptomatic cyst passage &rarr; acute self-limited diarrhea &rarr; chronic diarrhea with malabsorption.</li>
+                        <li>Classic features: <strong>foul-smelling, greasy, non-bloody</strong> diarrhea, bloating, flatulence, crampy abdominal pain, weight loss.</li>
+                        <li><strong>Post-giardia lactose intolerance</strong> is common (disaccharidase loss from villous blunting).</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong>
+                        <ul>
+                            <li><strong>No eosinophilia</strong> (protozoan, not a helminth).</li>
+                            <li><strong>No dysentery / no bloody stool</strong> (non-invasive).</li>
+                            <li>Classic vignette: hiker drinks stream water &rarr; 2 weeks later has bloating, foul-smelling greasy diarrhea.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong>
+                            <ul>
+                                <li>Stool O&amp;P (1 stool 60&ndash;80%; <strong>3 stools &gt;90%</strong>) &mdash; shedding is intermittent.</li>
+                                <li>Stool <strong>Giardia antigen EIA</strong> (85&ndash;95% sens / 90&ndash;100% spec) &mdash; often first-line now.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treatment:</strong> tinidazole or metronidazole (first line); alternatives: nitazoxanide, albendazole.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-crypto" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Cryptosporidium parvum &amp; hominis</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">AIDS + CD4 &lt;50</span>
+                    <span class="buzzword">Chronic watery diarrhea</span>
+                    <span class="buzzword">Chlorine-resistant oocyst</span>
+                    <span class="buzzword">Modified acid-fast stain</span>
+                    <span class="buzzword">Nitazoxanide</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Cryptosporidium parvum</em> and <em>C. hominis</em> (most common human species).</li>
+                        <li><strong>Transmission:</strong> ingestion of infectious <strong>oocysts</strong> (already sporulated, infectious on excretion).</li>
+                        <li><strong>Life cycle:</strong> oocyst &rarr; sporozoites released &rarr; invade <strong>intestinal epithelial cells</strong> but remain in a <strong>parasitophorous vacuole at the microvillus border</strong> (intracellular but <strong>extracytoplasmic</strong>) &rarr; asexual &rarr; sexual cycles &rarr; both thick-walled oocysts (environmental spread) and thin-walled oocysts (<strong>autoinfection</strong>).</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Oocysts are <strong>infectious at very low inocula</strong> and <strong>resistant to chlorine</strong> &mdash; why it causes large water-park / municipal water outbreaks.</li>
+                        <li>Classic U.S. outbreak: <strong>Milwaukee 1993</strong> (~403,000 infected via city water supply).</li>
+                        <li>Sources: agricultural runoff, well water, pools/water parks, day care centers, person-to-person.</li>
+                        <li>Most severely affected: <strong>children</strong> and patients with <strong>depressed cellular immunity (AIDS, CD4 &lt;100)</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Immunocompetent:</strong> self-limited watery diarrhea, cramps, nausea, low-grade fever; lasts 5&ndash;10 days.</li>
+                        <li><strong>Immunocompromised (HIV/AIDS, CD4 &lt;50):</strong> <strong>chronic, severe, secretory diarrhea</strong> &rarr; weight loss, malabsorption, electrolyte abnormalities.</li>
+                        <li><strong>Extraintestinal disease (AIDS):</strong> <strong>AIDS cholangiopathy</strong> (sclerosing-cholangitis-like biliary disease), pancreatitis, pneumonitis.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> <strong>not seen on routine O&amp;P</strong>. Order:
+                            <ul>
+                                <li><strong>Modified acid-fast (Ziehl-Neelsen) stain</strong> of stool &rarr; small (~5&nbsp;&micro;m) red oocysts.</li>
+                                <li>Cryptosporidium stool antigen / PCR.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treatment:</strong>
+                            <ul>
+                                <li><strong>Immunocompetent:</strong> supportive care; <strong>nitazoxanide</strong> shortens illness.</li>
+                                <li><strong>AIDS:</strong> antiparasitics alone are not curative &mdash; <strong>ART to restore CD4</strong> is the definitive treatment.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-afb-trio" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. The Modified Acid-Fast Trio</h3>
+            <div class="section-body">
+
+                <p><strong>All three cause watery diarrhea and stain with modified AFB:</strong></p>
+                <table>
+                    <thead>
+                        <tr><th>Organism</th><th>Oocyst Size</th><th>Classic Exposure</th><th>Treatment</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Cryptosporidium</strong></td><td>~5&nbsp;&micro;m</td><td>Contaminated water, AIDS</td><td>Nitazoxanide (+ ART)</td></tr>
+                        <tr><td><strong>Cystoisospora belli</strong> (formerly Isospora)</td><td>~25&nbsp;&micro;m oval</td><td>Central/South America, Africa, India; AIDS diarrhea</td><td><strong>TMP-SMX</strong></td></tr>
+                        <tr><td><strong>Cyclospora cayetanensis</strong></td><td>~8&ndash;10&nbsp;&micro;m</td><td><strong>Contaminated produce</strong> &mdash; raspberries, snow peas, cilantro (esp. <strong>Guatemala</strong>)</td><td><strong>TMP-SMX</strong></td></tr>
+                    </tbody>
+                </table>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#129504; MNEMONIC &mdash; "C-C-C &rarr; AFB"</span><span class="mnemonic-chevron">&#9660;</span></div>
+                    <div class="mnemonic-body">
+                        <p><strong>C</strong>rypto, <strong>C</strong>ystoisospora, <strong>C</strong>yclospora = acid-fast oocysts.</p>
+                        <p>Crypto is the <strong>smallest</strong> (5&nbsp;&micro;m), Cyclospora is <strong>double-sized</strong> (8&ndash;10&nbsp;&micro;m), Cystoisospora is the <strong>biggest oval</strong> (~25&nbsp;&micro;m).</p>
+                        <p>Treat <strong>Crypto with nitazoxanide</strong> (or ART); treat <strong>Cystoisospora &amp; Cyclospora with TMP-SMX</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Which one is it? <span class="trap-chevron">&#9660;</span></div>
+                    <div class="trap-body">
+                        <ul>
+                            <li><strong>AIDS + chronic watery diarrhea + biliary tree involvement</strong> &rarr; <strong>Cryptosporidium</strong>.</li>
+                            <li><strong>Raspberries/snow peas/cilantro outbreak (often Guatemala)</strong> &rarr; <strong>Cyclospora</strong>.</li>
+                            <li><strong>AIDS + eosinophilia + diarrhea in a traveler from Haiti/Central America</strong> &rarr; <strong>Cystoisospora</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo1-tyu">
+                <h4>&#129514; Testing Your Understanding</h4>
+
+                <div class="practice-question">
+                    <h4>TYU 1</h4>
+                    <p>A 28-year-old returns from Mexico with 3 weeks of intermittent bloody diarrhea and 1 week of right upper quadrant pain. CT shows a single 8-cm fluid collection in the right hepatic lobe. Aspirate is sterile and reddish-brown. What is the best next step?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: C &mdash; Amebic liver abscess. Treat invasive tissue trophozoites with metronidazole, then eradicate luminal cysts with paromomycin to prevent relapse and transmission.</strong>
+                        <p style="margin-top:10px;">Metronidazole alone fails in ~40&ndash;60% because it does not kill cysts. Ceftriaxone + metronidazole (A) covers a pyogenic abscess, which would be polymicrobial with organisms on Gram stain.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 2</h4>
+                    <p>A camper returns from a hike with 10 days of greasy, foul-smelling diarrhea, bloating, and flatulence. There is no blood and no fever. Stool O&amp;P &times; 1 is negative. What is the best next step?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: A &mdash; Classic Giardia. Shedding is intermittent, so single O&amp;P is only 60&ndash;80% sensitive; 3 samples get to &gt;90%, and stool Giardia antigen EIA is ~90% sens/spec.</strong>
+                        <p style="margin-top:10px;">Giardia is a non-invasive protozoan &mdash; no blood, no fever, no eosinophilia. Treat with tinidazole or metronidazole.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 3</h4>
+                    <p>An HIV-positive man with CD4 count 38 presents with 3 months of watery diarrhea and 15-lb weight loss. Stool modified acid-fast stain reveals small ~5-&micro;m red oocysts. What is the most important therapy?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: D &mdash; Cryptosporidium in AIDS. Antiparasitics alone are not curative at CD4 &lt;50; immune reconstitution via ART is the definitive treatment. Nitazoxanide may be added but is of limited benefit.</strong>
+                        <p style="margin-top:10px;">Don't miss AIDS cholangiopathy (sclerosing-cholangitis-like picture from Crypto in the biliary tree).</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 2: BLOOD & TISSUE PROTOZOA ══ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 2 &mdash; Blood &amp; Tissue Protozoa</h2>
+        <p class="lo-subtitle">Leishmania &middot; Trypanosoma cruzi &middot; Malaria (Plasmodium) &middot; Babesia</p>
+        <div class="lo-content">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Official Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1.</strong> Life cycles of blood and tissue protozoa (vector-borne with complex cycles).</li>
+                    <li><strong>LO 2.</strong> Epidemiology &mdash; geographic/vector exposure that defines each organism.</li>
+                    <li><strong>LO 3.</strong> Clinical manifestations of visceral, cutaneous, cardiac, and systemic protozoal disease.</li>
+                    <li><strong>LO 4.</strong> Diagnosis &amp; treatment of blood/tissue protozoa.</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo2-leish">Leishmania &mdash; cutaneous, mucosal, visceral</a></li>
+                    <li><a href="#lo2-tcruzi">Trypanosoma cruzi &mdash; Chagas disease</a></li>
+                    <li><a href="#lo2-malaria">Malaria &mdash; Plasmodium falciparum/vivax/ovale/malariae</a></li>
+                    <li><a href="#lo2-babesia">Babesia microti</a></li>
+                    <li><a href="#lo2-tyu">Testing Your Understanding</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-leish" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Leishmania</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Sandfly bite</span>
+                    <span class="buzzword">Non-healing ulcer</span>
+                    <span class="buzzword">Kala-azar pentad</span>
+                    <span class="buzzword">Amastigotes in macrophages</span>
+                    <span class="buzzword">Liposomal ampho B</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Transmission:</strong> bite of the <strong>female sandfly</strong> (<em>Phlebotomus</em> Old World; <em>Lutzomyia</em> New World).</li>
+                        <li><strong>Life cycle:</strong> sandfly injects <strong>promastigotes</strong> &rarr; taken up by macrophages &rarr; transform into <strong>amastigotes</strong> (no flagellum) inside phagolysosomes &rarr; replicate &rarr; infect other reticuloendothelial cells.</li>
+                        <li><strong>Histopath buzz:</strong> amastigotes in macrophages on Giemsa = small round bodies with a <strong>rod-shaped kinetoplast</strong> next to the nucleus.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Form</th><th>Species</th><th>Geography</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Visceral</strong> (Kala-azar)</td><td><em>L. donovani</em> (Old), <em>L. infantum/chagasi</em> (New)</td><td>India, Nepal, Bangladesh, Sudan, Brazil</td></tr>
+                            <tr><td><strong>Cutaneous</strong> &mdash; Old World</td><td><em>L. major, L. tropica</em></td><td>Middle East (Iran, Syria, Iraq, Afghanistan), North Africa &mdash; classic &ldquo;Baghdad boil&rdquo; in Iraq war vets</td></tr>
+                            <tr><td><strong>Cutaneous</strong> &mdash; New World</td><td><em>L. mexicana</em>, <em>L. braziliensis</em></td><td>Mexico, Central/South America</td></tr>
+                            <tr><td><strong>Mucosal (espundia)</strong></td><td><em>L. braziliensis</em> complex</td><td>Bolivia, Brazil, Peru</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <h5>Cutaneous Leishmaniasis</h5>
+                    <ul>
+                        <li><strong>Painless non-healing ulcer</strong> at bite site with <strong>raised/rolled indurated borders</strong>.</li>
+                        <li>Weeks-to-months after exposure; often on exposed skin (face, arms).</li>
+                    </ul>
+                    <h5>Mucosal Leishmaniasis (Espundia)</h5>
+                    <ul>
+                        <li>Erosive destruction of mucosal surfaces (nose, oropharynx, larynx) &mdash; can follow cutaneous disease years later.</li>
+                        <li>Predominantly <strong>South America</strong> (<em>L. braziliensis</em>).</li>
+                    </ul>
+                    <h5>Visceral Leishmaniasis (Kala-azar)</h5>
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD &mdash; Classic Pentad:</strong>
+                        <ul>
+                            <li>Prolonged <strong>fever</strong></li>
+                            <li><strong>Weight loss</strong></li>
+                            <li><strong>Hepatosplenomegaly</strong> (massive)</li>
+                            <li><strong>Pancytopenia</strong></li>
+                            <li><strong>Hypergammaglobulinemia</strong></li>
+                        </ul>
+                    </div>
+                    <p>Severe in AIDS, transplant, and malnourished patients. May cause GI diarrhea in AIDS. Can be fatal if untreated.</p>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong>
+                            <ul>
+                                <li>Cutaneous/mucosal: <strong>biopsy or scraping</strong> with Giemsa stain &rarr; amastigotes; PCR/culture.</li>
+                                <li>Visceral: <strong>splenic aspirate</strong> (highest yield) or <strong>bone marrow aspirate</strong>; serology (rK39 rapid test); PCR.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treatment:</strong>
+                            <ul>
+                                <li><strong>Visceral &rarr; liposomal amphotericin B</strong> (U.S. first line).</li>
+                                <li>Alternatives: pentavalent antimony (stibogluconate; risk of pancreatitis, arrhythmia), miltefosine, pentamidine.</li>
+                                <li>Selected cutaneous: fluconazole or ketoconazole.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-tcruzi" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Trypanosoma cruzi &mdash; Chagas Disease</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Kissing / Reduviid / Triatomine bug</span>
+                    <span class="buzzword">Romaña's sign</span>
+                    <span class="buzzword">Cardiomyopathy + megacolon + megaesophagus</span>
+                    <span class="buzzword">Central/South America</span>
+                    <span class="buzzword">Benznidazole / Nifurtimox</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Trypanosoma cruzi</em>.</li>
+                        <li><strong>Vector:</strong> blood-sucking <strong>triatomine (&ldquo;kissing / reduviid&rdquo;) bug</strong>.</li>
+                        <li><strong>Life cycle:</strong> bug bites face/mucous membranes and defecates at the bite; rubbing the feces into the wound introduces <strong>trypomastigotes</strong> &rarr; invade host cells &rarr; <strong>amastigotes</strong> replicate in muscle/neural tissue (heart, GI autonomic ganglia) &rarr; trypomastigotes recirculate.</li>
+                        <li>Other transmission: <strong>blood transfusion, solid organ transplant</strong>, congenital.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Endemic: <strong>Mexico, Central and South America</strong> (most prevalent in rural poverty).</li>
+                        <li>Only <strong>10&ndash;30%</strong> of infected patients develop chronic Chagas disease (often years to decades later).</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <h5>Acute Chagas</h5>
+                    <ul>
+                        <li><strong>Romaña's sign</strong> &mdash; unilateral painless periorbital/eyelid swelling from ocular inoculation.</li>
+                        <li>Chagoma (indurated nodule at bite site), fever, lymphadenopathy, hepatosplenomegaly.</li>
+                        <li>Rarely: myocarditis, meningoencephalitis (can be fatal, especially in children).</li>
+                    </ul>
+                    <h5>Chronic Chagas (10&ndash;30% of infected, &gt;10 yrs later)</h5>
+                    <ul>
+                        <li><strong>Dilated cardiomyopathy</strong> (apical aneurysm, heart block, arrhythmias, HF, sudden cardiac death). Typically <strong>right ventricle</strong> involved prominently.</li>
+                        <li><strong>Megaesophagus</strong> &mdash; dysphagia mimicking achalasia (destruction of enteric plexus).</li>
+                        <li><strong>Megacolon</strong> &mdash; chronic constipation, sigmoid volvulus risk.</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong> Brazilian/Central American patient with <strong>new cardiomyopathy + megacolon or megaesophagus</strong> = Chagas until proven otherwise.
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong>
+                            <ul>
+                                <li>Acute: trypomastigotes on <strong>Giemsa-stained peripheral blood smear</strong>; PCR.</li>
+                                <li>Chronic: <strong>serology</strong> (need 2 different assays for confirmation).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Treatment:</strong> <strong>benznidazole</strong> (first-line in U.S.) or <strong>nifurtimox</strong> &mdash; most effective in acute and early chronic disease.</li>
+                        <li>Chronic cardiomyopathy / mega-syndromes managed symptomatically (pacemakers, surgery).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-malaria" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Malaria (Plasmodium)</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Female Anopheles mosquito</span>
+                    <span class="buzzword">Cyclic fevers (tertian / quartan)</span>
+                    <span class="buzzword">Ring forms on thick/thin smear</span>
+                    <span class="buzzword">Cerebral malaria (P. falciparum)</span>
+                    <span class="buzzword">Primaquine for hypnozoites</span>
+                </div>
+
+                <h4>Species &amp; Epidemiology</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Species</th><th>Geography</th><th>Key Features</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>P. falciparum</strong></td><td>Sub-Saharan Africa, Papua New Guinea, Haiti, Indian subcontinent</td><td>Most pathogenic; persistent fevers; infects RBCs of <strong>ALL ages</strong>; NO hypnozoites; cerebral malaria</td></tr>
+                            <tr><td><strong>P. vivax</strong></td><td>C/S America, N Africa, Middle East, Indian subcontinent</td><td>Tertian (q48h) fever; infects <strong>reticulocytes only</strong>; <strong>hypnozoites &rarr; relapse</strong>; Duffy-antigen dependent (FyFy West Africans resistant)</td></tr>
+                            <tr><td><strong>P. ovale</strong></td><td>West Africa</td><td>Tertian fever; reticulocytes; <strong>hypnozoites &rarr; relapse</strong></td></tr>
+                            <tr><td><strong>P. malariae</strong></td><td>Worldwide (scattered)</td><td><strong>Quartan</strong> (q72h); infects mature RBCs; chronic infection for years; <strong>nephrotic syndrome</strong> (immune complex)</td></tr>
+                            <tr><td><strong>P. knowlesi</strong></td><td>Malaysia / SE Asia</td><td>Zoonotic from macaques; identical morphology to <em>P. malariae</em> but can cause severe disease</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Life Cycle</h4>
+                <div class="h4-body">
+                    <ol>
+                        <li>Female Anopheles bites (dusk&ndash;dawn) &rarr; injects <strong>sporozoites</strong> into bloodstream.</li>
+                        <li>Sporozoites travel to liver &rarr; invade hepatocytes &rarr; mature into <strong>tissue schizonts</strong> (or persist as <strong>hypnozoites</strong> in <em>vivax/ovale</em>).</li>
+                        <li>Schizont rupture releases 10,000&ndash;30,000 <strong>merozoites</strong> into blood &rarr; invade RBCs.</li>
+                        <li>Asexual blood cycle every <strong>48h</strong> (<em>falciparum, vivax, ovale</em>) or <strong>72h</strong> (<em>malariae</em>) &rarr; synchronized cytokine release = paroxysms (chills &rarr; fever &rarr; sweats).</li>
+                        <li>Some parasites form gametocytes &rarr; taken up by mosquito &rarr; sexual cycle &rarr; new sporozoites.</li>
+                    </ol>
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong>
+                        <ul>
+                            <li><strong>Hypnozoites</strong> exist only in <em>P. vivax</em> and <em>P. ovale</em> &rarr; they are the reason you need <strong>primaquine</strong> (kills hypnozoites). Must <strong>check G6PD first</strong> &mdash; primaquine causes hemolysis in G6PD-deficient patients.</li>
+                            <li><strong>Duffy-antigen negative (FyFy)</strong> individuals (most West Africans) are resistant to <em>P. vivax</em>.</li>
+                            <li><strong>HbS (sickle trait), HbC, G6PD deficiency, and α-thalassemia</strong> are all protective against falciparum malaria &mdash; hence evolutionary selection in endemic regions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>General: cyclic <strong>fevers, chills, rigors, sweats, headache</strong>, hemolytic anemia, thrombocytopenia, jaundice/abnormal LFTs, splenomegaly.</li>
+                        <li><strong>Tertian malaria (q48h):</strong> <em>P. vivax, ovale, falciparum</em>.</li>
+                        <li><strong>Quartan malaria (q72h):</strong> <em>P. malariae</em>.</li>
+                        <li><strong><em>P. falciparum</em> typically has persistent/daily fevers</strong> (not truly cyclic).</li>
+                    </ul>
+                    <h5>Severe / Complicated P. falciparum (&gt;5% parasitemia or organ dysfunction)</h5>
+                    <ul>
+                        <li><strong>Cerebral malaria</strong> (altered mental status, seizures, coma).</li>
+                        <li><strong>Lactic acidosis.</strong></li>
+                        <li><strong>Hypoglycemia.</strong></li>
+                        <li><strong>ARDS.</strong></li>
+                        <li><strong>Acute kidney injury / "Blackwater fever"</strong> (massive intravascular hemolysis with hemoglobinuria).</li>
+                    </ul>
+                    <p><em>Why is falciparum so severe?</em> RBCs <strong>cytoadhere and sequester in microvasculature</strong> of vital organs (brain, kidney) &mdash; and falciparum can infect RBCs of all ages, producing very high parasitemia.</p>
+                </div>
+
+                <h4>Diagnosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Thick &amp; thin blood smears &times; 3</strong> (Giemsa) &mdash; thick for screening/parasitemia, thin for species ID.</li>
+                        <li><strong>Rapid diagnostic tests (RDTs)</strong> detect HRP-2 or pLDH antigens.</li>
+                        <li>PCR for species confirmation / low parasitemia.</li>
+                    </ul>
+                    <h5>Smear Clues</h5>
+                    <ul>
+                        <li><strong>P. falciparum:</strong> small ring forms, <strong>multiple rings in one RBC</strong>, <strong>banana-shaped gametocytes</strong>, high parasitemia.</li>
+                        <li><strong>P. vivax / ovale:</strong> enlarged RBCs with <strong>Schüffner's dots</strong>; irregularly-shaped trophozoites.</li>
+                        <li><strong>P. malariae:</strong> band-form trophozoites.</li>
+                    </ul>
+                </div>
+
+                <h4>Treatment</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Scenario</th><th>First-Line Therapy</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Uncomplicated P. falciparum</strong> (parasitemia &lt;5%, no end-organ involvement)</td><td><strong>Artemether-lumefantrine (Coartem)</strong>; alternatives: atovaquone-proguanil, quinine+doxycycline, mefloquine</td></tr>
+                            <tr><td><strong>Severe / complicated P. falciparum</strong></td><td><strong>IV artesunate</strong> (IV quinidine if unavailable)</td></tr>
+                            <tr><td><strong>P. vivax / P. ovale</strong> (blood stage)</td><td>Chloroquine (if sensitive)</td></tr>
+                            <tr><td><strong>P. vivax / P. ovale</strong> (hypnozoite radical cure)</td><td><strong>Primaquine</strong> (or tafenoquine) &mdash; check G6PD first!</td></tr>
+                        </tbody>
+                    </table>
+                    <ul>
+                        <li><strong>Chloroquine-sensitive regions:</strong> Dominican Republic, Haiti, Middle East, Central America west of Panama Canal. <strong>Everywhere else assume resistance.</strong></li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Primaquine &amp; G6PD <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            <p><strong>Always screen for G6PD deficiency before giving primaquine or tafenoquine.</strong> Severe oxidative hemolysis can occur in deficient patients (classic in African, Mediterranean, SE Asian men).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-babesia" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Babesia microti (Babesiosis)</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Ixodes scapularis tick</span>
+                    <span class="buzzword">New England / Cape Cod / upper Midwest</span>
+                    <span class="buzzword">Hemolytic anemia + thrombocytopenia</span>
+                    <span class="buzzword">Maltese cross</span>
+                    <span class="buzzword">Atovaquone + azithromycin</span>
+                </div>
+
+                <h4>Key Points</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Babesia microti</em> (intraerythrocytic protozoan).</li>
+                        <li><strong>Vector:</strong> <strong>Ixodes scapularis tick</strong> (same as Lyme &amp; Anaplasma &mdash; co-infection common).</li>
+                        <li><strong>Geography:</strong> New England (esp. <strong>Cape Cod, Nantucket</strong>), Mid-Atlantic, upper Midwest, northern California.</li>
+                        <li>Other transmission: <strong>blood transfusion</strong>.</li>
+                        <li><strong>Severe disease risk factors:</strong> <strong>asplenia</strong>, elderly, immunocompromised.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Fever, chills, myalgias, fatigue.</li>
+                        <li><strong>Hemolytic anemia, thrombocytopenia, elevated AST/ALT</strong>.</li>
+                        <li>Severe: ARDS, DIC, hemoglobinuria, AKI.</li>
+                        <li><strong>20% co-infection with <em>Borrelia burgdorferi</em></strong> (Lyme); also with <em>Anaplasma</em>.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> <strong>Giemsa-stained peripheral smear</strong> &rarr; intraerythrocytic ring forms; pathognomonic <strong>&ldquo;Maltese cross&rdquo;</strong> tetrads (4 merozoites in a cross). <strong>No RBC pigment</strong> (unlike malaria). PCR and serology available.</li>
+                        <li><strong>Treatment:</strong>
+                            <ul>
+                                <li>Mild/moderate: <strong>atovaquone + azithromycin</strong>.</li>
+                                <li>Severe: <strong>quinine + clindamycin</strong>; consider <strong>RBC exchange transfusion</strong> if parasitemia &gt;10% or organ failure.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Babesia vs. Malaria on Smear <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            <ul>
+                                <li>Both have <strong>intra-erythrocytic ring forms</strong>.</li>
+                                <li><strong>Babesia:</strong> <strong>no RBC pigment (hemozoin)</strong>, no gametocytes, classic <strong>Maltese cross</strong>, exposure = Northeast US tick bite.</li>
+                                <li><strong>Malaria:</strong> pigment-filled schizonts/gametocytes, banana-shaped gametocytes in <em>falciparum</em>, exposure = travel to Africa/SE Asia.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo2-tyu">
+                <h4>&#129514; Testing Your Understanding</h4>
+
+                <div class="practice-question">
+                    <h4>TYU 1</h4>
+                    <p>A 40-year-old returns from a 2-week safari in Kenya with 4 days of fever and headache. He is now confused and unresponsive. Labs show hemolytic anemia, AKI, thrombocytopenia. Peripheral smear shows numerous small ring forms inside RBCs, with multiple rings per cell. What is the most likely pathogen?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: C &mdash; P. falciparum with cerebral malaria.</strong>
+                        <p style="margin-top:10px;">Key clues: Africa travel, severe multi-organ disease, multiple ring forms per RBC (falciparum infects RBCs of all ages &rarr; high parasitemia). Treat with <strong>IV artesunate</strong>. Babesia would be expected with Northeast U.S. exposure and Maltese-cross tetrads.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 2</h4>
+                    <p>A 55-year-old Brazilian woman presents with 2 weeks of dyspnea and lower-extremity edema. TTE shows biventricular dilation with an apical aneurysm and EF 28%. She also reports 20 years of progressive constipation and early satiety. What is the most likely diagnosis?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: B &mdash; Chronic Chagas disease.</strong>
+                        <p style="margin-top:10px;">The combination of <strong>dilated cardiomyopathy + GI mega-syndrome (megacolon, megaesophagus)</strong> in a South/Central American patient is classic. Treatment is benznidazole or nifurtimox, most effective in acute/early chronic disease; chronic cardiomyopathy is largely supportive.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 3</h4>
+                    <p>A 62-year-old splenectomized man from Cape Cod develops fevers, malaise, and dark urine 3 weeks after finding a tick on his groin. Labs: Hb 8.1, platelets 62K, AST/ALT 180/210, creatinine 2.4. Peripheral smear shows intra-erythrocytic ring forms and tetrad formations. What is the first-line therapy for this severe case?</p>                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Correct: D &mdash; Severe babesiosis in an asplenic patient. Quinine + clindamycin with consideration of RBC exchange transfusion for high parasitemia or end-organ damage.</strong>
+                        <p style="margin-top:10px;">Atovaquone + azithromycin (C) is fine for mild/moderate disease but is inadequate for severe presentations. Maltese-cross tetrads + New England tick exposure + asplenia &rarr; Babesia.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 3: NEMATODES ══ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 3 &mdash; Helminths: Nematodes (Roundworms)</h2>
+        <p class="lo-subtitle">Ascaris &middot; Trichuris &middot; Hookworm &middot; Enterobius &middot; Strongyloides &middot; Toxocara &middot; Trichinella</p>
+        <div class="lo-content" id="lo3-body">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Official Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1.</strong> Recognize nematode life cycles (soil-transmitted, skin-penetrating, autoinfection).</li>
+                    <li><strong>LO 2.</strong> Identify epidemiology (geography, sanitation, host behavior).</li>
+                    <li><strong>LO 3.</strong> Recognize clinical syndromes (GI, pulmonary, perianal, hyperinfection).</li>
+                    <li><strong>LO 4.</strong> Know diagnostic methods (O&amp;P, tape test, serology) and first-line therapy (albendazole, mebendazole, ivermectin, pyrantel).</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo3-framework">Nematode Life-Cycle Framework</a></li>
+                    <li><a href="#lo3-ascaris">Ascaris lumbricoides &mdash; giant roundworm / Loeffler syndrome</a></li>
+                    <li><a href="#lo3-trichuris">Trichuris trichiura &mdash; whipworm / rectal prolapse</a></li>
+                    <li><a href="#lo3-hookworm">Hookworm &mdash; iron-deficiency anemia</a></li>
+                    <li><a href="#lo3-enterobius">Enterobius vermicularis &mdash; pinworm</a></li>
+                    <li><a href="#lo3-strongyloides">Strongyloides stercoralis &mdash; autoinfection / hyperinfection</a></li>
+                    <li><a href="#lo3-toxocara">Toxocara &mdash; visceral/ocular larva migrans</a></li>
+                    <li><a href="#lo3-trichinella">Trichinella spiralis &mdash; undercooked meat</a></li>
+                    <li><a href="#lo3-tyu">Testing Your Understanding</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-framework" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Nematode Life-Cycle Framework</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Soil-transmitted</span>
+                    <span class="buzzword">Filariform larva</span>
+                    <span class="buzzword">Skin penetration</span>
+                    <span class="buzzword">Autoinfection</span>
+                    <span class="buzzword">SASH</span>
+                </div>
+
+                <h4>Three Routes of Acquisition</h4>
+                <div class="h4-body">
+                    <p>Nematodes (roundworms) are acquired by three dominant routes. Remembering the route immediately narrows diagnosis and therapy.</p>
+                    <table>
+                        <thead><tr><th>Route</th><th>Organisms</th><th>Signature Clinical Clue</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Fecal&ndash;oral (egg ingestion)</strong></td><td>Ascaris, Trichuris, Enterobius, Toxocara</td><td>Poor sanitation; children; pica/dirt exposure</td></tr>
+                            <tr><td><strong>Skin penetration (filariform larva)</strong></td><td>Hookworm (Ancylostoma, Necator), Strongyloides</td><td>Barefoot exposure to warm, moist soil; ground itch</td></tr>
+                            <tr><td><strong>Ingestion of undercooked meat</strong></td><td>Trichinella spiralis (pork, bear, wild game)</td><td>Periorbital edema + myositis + eosinophilia</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#129504; MNEMONIC &mdash; "Skin penetrators: SASH"</span><span class="mnemonic-chevron">&#9660;</span></div>
+                        <div class="mnemonic-body">
+                            <p><strong>S</strong>trongyloides &middot; <strong>A</strong>ncylostoma &middot; <strong>S</strong>chistosoma (trematode, also skin-penetrating) &middot; <strong>H</strong>ookworm (Necator). These all enter through bare feet or skin contact with contaminated water/soil.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-ascaris" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Ascaris lumbricoides &mdash; Giant Intestinal Roundworm</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Most prevalent helminth worldwide</span>
+                    <span class="buzzword">Loeffler syndrome</span>
+                    <span class="buzzword">Bowel obstruction in children</span>
+                    <span class="buzzword">Knobby mammillated eggs</span>
+                    <span class="buzzword">Albendazole</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Ascaris lumbricoides</em>; adult worms up to 30&nbsp;cm long.</li>
+                        <li><strong>Transmission:</strong> fecal&ndash;oral ingestion of embryonated eggs from contaminated soil/produce.</li>
+                        <li><strong>Life cycle:</strong> eggs hatch in small intestine &rarr; larvae <strong>penetrate gut wall &rarr; portal vein &rarr; liver &rarr; lungs</strong> (Loeffler pneumonitis) &rarr; coughed up and swallowed &rarr; mature into adult worms in jejunum.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most prevalent helminth worldwide &mdash; &gt;1 billion infected.</li>
+                        <li>Endemic in tropics with poor sanitation; often coinfection with Trichuris &amp; hookworm.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pulmonary phase (larval migration):</strong> Loeffler syndrome &mdash; cough, wheeze, transient pulmonary infiltrates with eosinophilia.</li>
+                        <li><strong>Intestinal phase:</strong> abdominal pain, malnutrition.</li>
+                        <li><strong>Heavy burden:</strong> <strong>bowel obstruction</strong> (classic pediatric vignette), biliary/pancreatic duct obstruction, cholangitis, pancreatitis.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> stool O&amp;P &mdash; characteristic knobby/mammillated eggs.</li>
+                        <li><strong>Treatment:</strong> <strong>albendazole</strong> or mebendazole (single dose).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-trichuris" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Trichuris trichiura &mdash; Whipworm</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Rectal prolapse in children</span>
+                    <span class="buzzword">Cecum/colon attachment</span>
+                    <span class="buzzword">Bipolar-plug eggs</span>
+                    <span class="buzzword">Bloody diarrhea</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Trichuris trichiura</em>.</li>
+                        <li><strong>Transmission:</strong> fecal&ndash;oral ingestion of embryonated eggs. No tissue/lung migration.</li>
+                        <li><strong>Life cycle:</strong> adults embed into the <strong>cecum/colon</strong> mucosa.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Light infection: usually asymptomatic.</li>
+                        <li>Heavy pediatric burden: chronic bloody diarrhea, anemia, and <strong>rectal prolapse</strong> (classic board clue).</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> football-shaped eggs with <strong>bipolar plugs</strong> on stool O&amp;P.</li>
+                        <li><strong>Treatment:</strong> albendazole or mebendazole &times; 3 days.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-hookworm" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Hookworm &mdash; Ancylostoma duodenale / Necator americanus</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Skin penetration (barefoot)</span>
+                    <span class="buzzword">Ground itch</span>
+                    <span class="buzzword">Iron-deficiency anemia</span>
+                    <span class="buzzword">Filariform larva</span>
+                    <span class="buzzword">Albendazole + iron</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogens:</strong> <em>Ancylostoma duodenale</em> and <em>Necator americanus</em>.</li>
+                        <li><strong>Transmission:</strong> <strong>filariform larva penetrates intact skin</strong> (often bare foot) on warm, moist soil.</li>
+                        <li><strong>Life cycle:</strong> skin &rarr; blood &rarr; lungs &rarr; coughed up &amp; swallowed &rarr; adult worms attach to small-intestinal mucosa and <strong>suck blood</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>&ldquo;Ground itch&rdquo; at site of skin entry.</li>
+                        <li>Chronic blood loss &rarr; <strong>iron-deficiency microcytic anemia</strong> (cardinal feature); in pregnancy/children may cause failure to thrive.</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong>
+                        <ul>
+                            <li>Pediatric IDA + barefoot rural exposure &rarr; think hookworm. Treat empirically with <strong>albendazole</strong> and iron replacement.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> stool O&amp;P (ovoid, thin-shelled eggs).</li>
+                        <li><strong>Treatment:</strong> albendazole or mebendazole; iron replacement.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-enterobius" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Enterobius vermicularis &mdash; Pinworm</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Nocturnal perianal itching</span>
+                    <span class="buzzword">Scotch-tape test</span>
+                    <span class="buzzword">Most common US helminth</span>
+                    <span class="buzzword">Pyrantel or albendazole</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Enterobius vermicularis</em>.</li>
+                        <li><strong>Transmission:</strong> fecal&ndash;oral via ingested eggs; autoinfection from scratching.</li>
+                        <li><strong>Life cycle:</strong> <strong>gravid female migrates to perianal skin at night</strong> to lay eggs &rarr; intense pruritus ani &rarr; scratching spreads eggs.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most common helminthic infection in the United States.</li>
+                        <li>Especially common in school-age children; spreads rapidly within households.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Nocturnal perianal itching</strong> is the hallmark; may be asymptomatic.</li>
+                        <li>Occasional vulvovaginitis or secondary bacterial infection from scratching.</li>
+                    </ul>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Pinworm diagnosis <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            Pinworm eggs are <strong>rarely seen in stool</strong>. If the vignette describes a child with night-time perianal itching and &ldquo;stool O&amp;P was negative,&rdquo; the next step is the <strong>cellophane (Scotch) tape test</strong> applied to the perianal skin in the early morning &mdash; not another stool sample.
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> <strong>Scotch-tape test</strong> &rarr; flattened, D-shaped eggs.</li>
+                        <li><strong>Treatment:</strong> <strong>albendazole</strong> or <strong>pyrantel pamoate</strong>; repeat in 2 weeks; treat entire household.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-strongyloides" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Strongyloides stercoralis &mdash; Autoinfection &amp; Hyperinfection</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Autoinfection</span>
+                    <span class="buzzword">Larva currens</span>
+                    <span class="buzzword">Hyperinfection in steroids / transplant</span>
+                    <span class="buzzword">Gram-negative bacteremia</span>
+                    <span class="buzzword">Ivermectin</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Strongyloides stercoralis</em>.</li>
+                        <li><strong>Transmission:</strong> filariform larva penetrates skin &rarr; lungs &rarr; gut.</li>
+                        <li><strong>Unique feature &mdash; autoinfection:</strong> larvae can transform into the infectious filariform form <strong>within the host</strong> and re-penetrate the gut wall or perianal skin, sustaining infection for decades.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Chronic infection:</strong> often subclinical; intermittent abdominal pain, diarrhea, urticaria, and <strong>larva currens</strong> (serpiginous migratory rash).</li>
+                        <li><strong>Hyperinfection / disseminated disease:</strong> in <em>immunocompromised</em> hosts (corticosteroids, organ transplant, HTLV-1). Presents with gram-negative bacteremia/meningitis (from bowel translocation), ARDS, and high mortality.</li>
+                    </ul>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; Steroids + Strongyloides = Catastrophe <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            A classic vignette: an immigrant given high-dose steroids for presumed asthma/COPD flare develops <em>E.&nbsp;coli</em> bacteremia and ARDS. This is Strongyloides hyperinfection &mdash; screen (serology) and treat with ivermectin <strong>before</strong> starting immunosuppression.
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> stool agar plate culture or serology &mdash; O&amp;P is insensitive (intermittent shedding). Suspect in any immigrant/refugee with unexplained eosinophilia.</li>
+                        <li><strong>Treatment:</strong> <strong>ivermectin</strong> (first line). Screen before chronic steroids or transplant.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-toxocara" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>7. Toxocara canis / cati &mdash; Visceral &amp; Ocular Larva Migrans</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Dog/cat feces</span>
+                    <span class="buzzword">Pica / sandbox exposure</span>
+                    <span class="buzzword">Eosinophilia + hepatosplenomegaly</span>
+                    <span class="buzzword">Unilateral retinal granuloma</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogens:</strong> <em>Toxocara canis</em> and <em>T. cati</em>.</li>
+                        <li><strong>Transmission:</strong> ingestion of eggs from <strong>dog/cat feces</strong> (pica &mdash; toddlers eating dirt or sandbox exposure).</li>
+                        <li><strong>Life cycle:</strong> larvae migrate systemically; humans are a dead-end host (no adult worms).</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Visceral larva migrans:</strong> hepatosplenomegaly, fever, <strong>eosinophilia</strong>, pulmonary infiltrates.</li>
+                        <li><strong>Ocular larva migrans:</strong> unilateral retinal granuloma mistaken for retinoblastoma &rarr; vision loss.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> serology (ELISA).</li>
+                        <li><strong>Treatment:</strong> albendazole &plusmn; corticosteroids for ocular disease.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-trichinella" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>8. Trichinella spiralis</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Undercooked pork / bear / wild game</span>
+                    <span class="buzzword">Periorbital edema</span>
+                    <span class="buzzword">Myositis</span>
+                    <span class="buzzword">Eosinophilia</span>
+                    <span class="buzzword">Elevated CK</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Trichinella spiralis</em>.</li>
+                        <li><strong>Transmission:</strong> ingestion of encysted larvae in <strong>undercooked pork, bear, or wild game</strong>.</li>
+                        <li><strong>Life cycle:</strong> larvae released in gut &rarr; enter circulation &rarr; encyst in <strong>striated muscle</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>GI prodrome (diarrhea) in the first week.</li>
+                        <li>Classic triad: <strong>periorbital edema + myositis (muscle pain) + eosinophilia</strong>, often with fever.</li>
+                        <li>Severe cases: myocarditis, encephalitis.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> serology and/or muscle biopsy showing encysted larvae; elevated CK.</li>
+                        <li><strong>Treatment:</strong> albendazole; steroids for severe myositis or CNS involvement.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>HIGH-YIELD &mdash; Nematode first-line therapy:</strong>
+                    <ul>
+                        <li><strong>Albendazole / mebendazole:</strong> Ascaris, Trichuris, hookworm, Enterobius, Toxocara, Trichinella.</li>
+                        <li><strong>Ivermectin:</strong> Strongyloides (first line); also onchocerciasis.</li>
+                        <li><strong>Pyrantel pamoate:</strong> alternative for Enterobius (safe in pregnancy).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section" id="lo3-tyu">
+                <h4>&#129514; Testing Your Understanding</h4>
+
+                <div class="practice-question">
+                    <h4>TYU 1</h4>
+                    <p>A 4-year-old from rural Kentucky presents with a microcytic anemia and mild abdominal pain. He is often barefoot outdoors. Stool O&amp;P shows thin-shelled, ovoid eggs. What is the most likely organism and best therapy?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> Hookworm (<em>Necator americanus</em>). Filariform larvae penetrated the skin; adult worms attach to intestinal mucosa and cause chronic blood loss &rarr; iron-deficiency anemia. <strong>Treat with albendazole</strong> + iron replacement.
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 2</h4>
+                    <p>A 62-year-old immigrant from the Caribbean is admitted for an asthma exacerbation and receives high-dose IV methylprednisolone. Two days later he develops fever, ARDS, and <em>E. coli</em> bacteremia. Eosinophilia is noted on admission labs. What is the most likely organism and treatment?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> <em>Strongyloides stercoralis</em> hyperinfection syndrome. Corticosteroids triggered autoinfection &rarr; massive larval dissemination with gram-negative bacteremia (bowel translocation) and pulmonary involvement. <strong>Treat with ivermectin</strong>; in retrospect this patient should have been screened with Strongyloides serology before steroids.
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 3</h4>
+                    <p>A 6-year-old girl is brought to the pediatrician for nightly perianal itching. Her two siblings have similar complaints. Stool O&amp;P is negative. What is the next best diagnostic step?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> <strong>Cellophane (Scotch) tape test</strong> applied to the perianal area in the early morning, which reveals flattened, D-shaped <em>Enterobius vermicularis</em> eggs. Stool O&amp;P is insensitive because the gravid female migrates to the perianal skin &mdash; not the gut lumen &mdash; to lay eggs. Treat the patient and entire household with albendazole or pyrantel pamoate, repeat in 2 weeks.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 4: CESTODES & TREMATODES ══ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">LO 4 &mdash; Helminths: Cestodes &amp; Trematodes</h2>
+        <p class="lo-subtitle">Taenia solium &middot; Taenia saginata &middot; D. latum &middot; Echinococcus &middot; Schistosoma</p>
+        <div class="lo-content" id="lo4-body">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Official Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1.</strong> Recognize life cycles of clinically relevant cestodes (tapeworms) and trematodes (flukes).</li>
+                    <li><strong>LO 2.</strong> Identify epidemiologic exposures (undercooked pork/beef/fish, freshwater snail contact, dog/sheep herding).</li>
+                    <li><strong>LO 3.</strong> Recognize major clinical syndromes (neurocysticercosis, B<sub>12</sub> deficiency, hydatid disease, schistosomiasis).</li>
+                    <li><strong>LO 4.</strong> Know diagnostics (O&amp;P, imaging, serology) and first-line treatment (praziquantel, albendazole).</li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo4-framework">Cestode Framework &mdash; definitive vs. intermediate host</a></li>
+                    <li><a href="#lo4-solium">Taenia solium &mdash; pork tapeworm &amp; neurocysticercosis</a></li>
+                    <li><a href="#lo4-saginata">Taenia saginata &mdash; beef tapeworm</a></li>
+                    <li><a href="#lo4-dlatum">Diphyllobothrium latum &mdash; fish tapeworm / B<sub>12</sub> deficiency</a></li>
+                    <li><a href="#lo4-echinococcus">Echinococcus granulosus &mdash; hydatid disease</a></li>
+                    <li><a href="#lo4-schistosoma">Schistosoma &mdash; mansoni / japonicum / haematobium</a></li>
+                    <li><a href="#lo4-tyu">Testing Your Understanding</a></li>
+                </ol>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-framework" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Cestode Framework &mdash; Definitive vs. Intermediate Host</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Cysticercus</span>
+                    <span class="buzzword">Definitive vs. intermediate host</span>
+                    <span class="buzzword">Praziquantel</span>
+                    <span class="buzzword">Albendazole (tissue phase)</span>
+                </div>
+
+                <h4>Route Overview</h4>
+                <div class="h4-body">
+                    <p>Cestodes (tapeworms) are acquired by ingesting larval cysts (cysticerci / metacestodes) in undercooked meat or fish, <em>or</em> by accidentally ingesting tapeworm eggs from contaminated food/water/dog feces. The clinical picture depends on whether the human serves as the <strong>definitive</strong> host (adult worm in gut) or the <strong>intermediate</strong> host (larval cyst in tissue).</p>
+                    <table>
+                        <thead><tr><th>Organism</th><th>Acquisition</th><th>Human Role</th><th>Key Syndrome</th><th>Treatment</th></tr></thead>
+                        <tbody>
+                            <tr><td><em>Taenia solium</em></td><td>Undercooked <strong>pork</strong> (larva) <em>or</em> ingest eggs (fecal&ndash;oral)</td><td>Definitive (gut worm) <em>or</em> intermediate (cysticerci)</td><td>Intestinal taeniasis <em>or</em> <strong>neurocysticercosis</strong></td><td>Praziquantel (intestinal); albendazole + steroids (neuro)</td></tr>
+                            <tr><td><em>Taenia saginata</em></td><td>Undercooked <strong>beef</strong></td><td>Definitive only</td><td>Mild taeniasis, motile proglottids in stool</td><td>Praziquantel</td></tr>
+                            <tr><td><em>Diphyllobothrium latum</em></td><td>Raw/undercooked <strong>freshwater fish</strong></td><td>Definitive</td><td>Vitamin <strong>B<sub>12</sub> deficiency &rarr; megaloblastic anemia</strong></td><td>Praziquantel + B<sub>12</sub></td></tr>
+                            <tr><td><em>Echinococcus granulosus</em></td><td>Ingest eggs from <strong>dog feces</strong> (sheep/dog regions)</td><td>Intermediate (hydatid cyst)</td><td><strong>Hepatic hydatid cyst</strong>; anaphylaxis if ruptured</td><td>Albendazole + PAIR or surgery</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-solium" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Taenia solium &mdash; Pork Tapeworm &amp; Neurocysticercosis</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Neurocysticercosis</span>
+                    <span class="buzzword">New-onset seizures (adult)</span>
+                    <span class="buzzword">Calcified scolex</span>
+                    <span class="buzzword">Albendazole + steroids</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Taenia solium</em>.</li>
+                        <li><strong>Two very different pictures:</strong>
+                            <ol>
+                                <li><strong>Taeniasis:</strong> ingest <em>larval cyst</em> (cysticercus) in undercooked pork &rarr; adult worm in intestine &rarr; usually mild GI symptoms.</li>
+                                <li><strong>Cysticercosis / neurocysticercosis:</strong> ingest <em>eggs</em> (fecal&ndash;oral from a human carrier) &rarr; larvae migrate to muscle, eye, or <strong>brain</strong> &rarr; form cysts.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Endemic in Latin America, sub-Saharan Africa, Asia.</li>
+                        <li>Seen in immigrants and travelers to endemic regions.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Intestinal taeniasis:</strong> mild abdominal symptoms; proglottids in stool.</li>
+                        <li><strong>Neurocysticercosis:</strong> <strong>new-onset seizures in adults</strong> from endemic regions &mdash; signature exam clue.</li>
+                        <li><strong>Imaging:</strong> multiple small cystic lesions with calcified scolex on CT/MRI.</li>
+                    </ul>
+
+                    <div class="exam-trap">
+                        <div class="trap-header" onclick="toggleTrap(this)">&#9888;&#65039; EXAM TRAP &mdash; New-onset seizure vignette <span class="trap-chevron">&#9660;</span></div>
+                        <div class="trap-body">
+                            An adult immigrant from Mexico/Central America with new-onset seizures and ring-enhancing or calcified brain lesions on CT = <strong>neurocysticercosis</strong>, not primary brain tumor or toxoplasmosis. Treat with albendazole + steroids.
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> stool O&amp;P for intestinal disease; CT/MRI + serology for cysticercosis.</li>
+                        <li><strong>Treatment:</strong>
+                            <ul>
+                                <li><strong>Intestinal taeniasis:</strong> praziquantel.</li>
+                                <li><strong>Neurocysticercosis:</strong> <strong>albendazole + corticosteroids</strong> (blunt inflammation from dying cysts) + anti-epileptics. Avoid treating purely inactive / calcified lesions.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-saginata" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Taenia saginata &mdash; Beef Tapeworm</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Undercooked beef</span>
+                    <span class="buzzword">Motile proglottids</span>
+                    <span class="buzzword">No cysticercosis</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Taenia saginata</em>.</li>
+                        <li><strong>Transmission:</strong> ingestion of cysticerci in undercooked <strong>beef</strong>.</li>
+                        <li>Humans are only the definitive host &mdash; cysticercosis does <em>not</em> occur with <em>T. saginata</em>.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Mild abdominal discomfort.</li>
+                        <li>Patients may notice <strong>motile proglottids</strong> in stool or underwear.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> proglottids / eggs on stool O&amp;P.</li>
+                        <li><strong>Treatment:</strong> praziquantel.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-dlatum" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Diphyllobothrium latum &mdash; Fish Tapeworm</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Raw freshwater fish</span>
+                    <span class="buzzword">B<sub>12</sub> deficiency</span>
+                    <span class="buzzword">Megaloblastic anemia</span>
+                    <span class="buzzword">Operculated eggs</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Diphyllobothrium latum</em>; adult worms can exceed 10 meters.</li>
+                        <li><strong>Transmission:</strong> ingestion of larvae in raw/undercooked <strong>freshwater fish</strong> (sushi, sashimi, ceviche, smoked fish).</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Often asymptomatic; mild abdominal symptoms.</li>
+                        <li>Worm <strong>competitively absorbs vitamin B<sub>12</sub></strong> &rarr; <strong>megaloblastic anemia</strong> and occasional neurologic symptoms in chronic infection.</li>
+                    </ul>
+
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD:</strong>
+                        <ul>
+                            <li>Patient with B<sub>12</sub> deficiency and megaloblastic anemia who eats raw freshwater fish &rarr; think <em>D. latum</em>.</li>
+                            <li>This is the only helminth that classically causes B<sub>12</sub> deficiency.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> operculated eggs on stool O&amp;P.</li>
+                        <li><strong>Treatment:</strong> praziquantel + B<sub>12</sub> replacement.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-echinococcus" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Echinococcus granulosus &mdash; Hydatid Disease</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Dog-sheep cycle</span>
+                    <span class="buzzword">Hepatic hydatid cyst</span>
+                    <span class="buzzword">Eggshell calcification</span>
+                    <span class="buzzword">Anaphylaxis if ruptured</span>
+                    <span class="buzzword">PAIR procedure</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogen:</strong> <em>Echinococcus granulosus</em>.</li>
+                        <li><strong>Life cycle:</strong> dogs are definitive hosts; sheep are usual intermediate hosts. Humans accidentally ingest eggs from dog feces.</li>
+                        <li><strong>Larvae</strong> migrate to the liver and form slow-growing <strong>hydatid cysts</strong>.</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology / Exposure</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Sheep-herding regions: Middle East, Mediterranean, South America, Central Asia.</li>
+                    </ul>
+                </div>
+
+                <h4>Clinical Manifestations</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Large <strong>hepatic cyst</strong> with daughter cysts (&ldquo;eggshell calcification&rdquo; on CT).</li>
+                        <li>Rupture &rarr; release of antigenic fluid &rarr; <strong>anaphylaxis</strong>.</li>
+                        <li>May also involve lung, bone, brain.</li>
+                    </ul>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> imaging (CT/US) + serology.</li>
+                        <li><strong>Treatment:</strong> albendazole pre/post-procedure + <strong>PAIR</strong> (Puncture, Aspiration, Injection of scolicidal agent, Re-aspiration) or surgical cystectomy. Do not simply aspirate without scolicide &mdash; spillage causes dissemination and anaphylaxis.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-schistosoma" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Schistosoma (Trematodes / Flukes)</h3>
+            <div class="section-body">
+
+                <div class="buzzwords">
+                    <span class="buzzword">Freshwater snail + skin penetration</span>
+                    <span class="buzzword">Pipe-stem fibrosis</span>
+                    <span class="buzzword">Hematuria</span>
+                    <span class="buzzword">Bladder SCC</span>
+                    <span class="buzzword">Praziquantel</span>
+                </div>
+
+                <h4>Organism &amp; Life Cycle</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pathogens:</strong> <em>S. mansoni</em>, <em>S. japonicum</em>, <em>S. haematobium</em>.</li>
+                        <li><strong>Life cycle:</strong> freshwater <strong>snail</strong> intermediate host releases cercariae &rarr; <strong>penetrate human skin</strong> during wading/swimming &rarr; mature into adult worms in venous plexuses (mesenteric or vesical).</li>
+                    </ul>
+                </div>
+
+                <h4>Epidemiology &amp; Chronic Syndromes</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Species</th><th>Geography</th><th>Venous Plexus</th><th>Chronic Disease</th></tr></thead>
+                        <tbody>
+                            <tr><td><em>S. mansoni</em></td><td>Sub-Saharan Africa, South America, Caribbean</td><td>Mesenteric</td><td>Intestinal fibrosis, <strong>periportal (&ldquo;pipe-stem&rdquo;) fibrosis &rarr; portal hypertension, varices</strong></td></tr>
+                            <tr><td><em>S. japonicum</em></td><td>East Asia</td><td>Mesenteric</td><td>Similar to mansoni; more severe hepatic disease</td></tr>
+                            <tr><td><em>S. haematobium</em></td><td>Africa, Middle East</td><td>Vesical (bladder)</td><td>Hematuria, bladder fibrosis, <strong>squamous cell carcinoma of the bladder</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Diagnosis &amp; Treatment</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Diagnosis:</strong> eggs on stool O&amp;P (mansoni/japonicum) or <strong>urine</strong> (haematobium). <em>S. mansoni</em> has a lateral spine; <em>S. haematobium</em> has a terminal spine.</li>
+                        <li><strong>Treatment:</strong> <strong>praziquantel</strong> for all species.</li>
+                    </ul>
+
+                    <div class="hy-box">
+                        <strong>HIGH-YIELD &mdash; Praziquantel is the antiplatyhelminth:</strong>
+                        <ul>
+                            <li><strong>Praziquantel</strong> treats virtually all flatworms: <em>Taenia, D. latum, Schistosoma, Clonorchis, Paragonimus</em>.</li>
+                            <li><strong>Albendazole</strong> is preferred for <em>tissue-phase</em> disease: neurocysticercosis, hydatid disease, nematodes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TYU -->
+            <div class="tyu-section" id="lo4-tyu">
+                <h4>&#129514; Testing Your Understanding</h4>
+
+                <div class="practice-question">
+                    <h4>TYU 1</h4>
+                    <p>A 34-year-old man who immigrated from Mexico 5 years ago presents after a witnessed seizure. MRI of the brain shows multiple small cystic lesions, one with a calcified center. What is the most likely diagnosis and appropriate therapy?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> Neurocysticercosis from <em>Taenia solium</em> egg ingestion. The calcified scolex within a cyst is classic. <strong>Treat with albendazole plus corticosteroids</strong> (steroids blunt the inflammatory response from dying larvae), plus anti-epileptics for seizure control.
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 2</h4>
+                    <p>A 45-year-old avid consumer of homemade gravlax and smoked freshwater trout presents with fatigue and pallor. Labs show macrocytic anemia with hypersegmented neutrophils and low B<sub>12</sub>. What is the most likely cause?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> <em>Diphyllobothrium latum</em> (fish tapeworm). It competitively absorbs B<sub>12</sub> in the intestine. Diagnose with stool O&amp;P (operculated eggs). Treat with praziquantel and replace B<sub>12</sub>.
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 3</h4>
+                    <p>A 27-year-old returns from 3 months in rural Egypt where he swam regularly in the Nile. He now has painless gross hematuria. Urinalysis shows ova with a terminal spine. What is the causative organism, and what long-term complication must be screened for?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>Answer:</strong> <em>Schistosoma haematobium</em> (terminal-spine egg, bladder venous plexus). Chronic infection causes bladder fibrosis and predisposes to <strong>squamous cell carcinoma of the bladder</strong>. Treat with praziquantel.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ PRACTICE QUESTIONS ══ -->
+    <section class="lo-section" id="practice">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Practice Questions</h2>
+        <p class="lo-subtitle">USMLE Step 1-style vignettes &middot; Parasitology</p>
+        <div class="lo-content" id="practice-body">
+
+            <p class="lo-subtitle" style="margin-bottom:18px;">Step 1&ndash;style vignettes spanning the four LOs. Click <em>Reveal Answer</em> after committing to your best choice.</p>
+
+            <div class="practice-question">
+                <h4>Q1</h4>
+                    <p>A 24-year-old man returns from a month of hiking in Colorado where he drank untreated stream water. He now has 10 days of foul-smelling, fatty, non-bloody diarrhea with bloating and belching. Stool O&amp;P shows pear-shaped, flagellated, binucleate trophozoites. What is the first-line therapy?</p>
+                                    <p class="option">A. Metronidazole</p>
+                    <p class="option">B. Praziquantel</p>
+                    <p class="option">C. Nitazoxanide</p>
+                    <p class="option">D. Albendazole</p>
+                    <p class="option">E. Ivermectin</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: A. Metronidazole.</strong> This is classic <em>Giardia lamblia</em> (pear-shaped binucleate trophozoite with two &quot;eyes,&quot; flagella; stream/beaver water). Tinidazole is an acceptable alternative. Nitazoxanide (C) is first line for <em>Cryptosporidium</em>, not Giardia.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q2</h4>
+                    <p>A 32-year-old man with AIDS (CD4 count 40) has 4 weeks of profuse, watery, non-bloody diarrhea and 10-lb weight loss. Modified acid-fast stain of stool reveals small (4&ndash;6 &mu;m) oocysts. What is the best treatment?</p>
+                                    <p class="option">A. Metronidazole</p>
+                    <p class="option">B. TMP&ndash;SMX</p>
+                    <p class="option">C. Nitazoxanide plus initiation of antiretroviral therapy</p>
+                    <p class="option">D. Paromomycin</p>
+                    <p class="option">E. Praziquantel</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: C. Nitazoxanide plus ART.</strong> <em>Cryptosporidium</em> (small modified acid-fast oocyst) in an AIDS patient. The most effective therapy is <strong>immune reconstitution with ART</strong>; nitazoxanide has modest activity. TMP&ndash;SMX (B) is for <em>Cystoisospora</em> and <em>Cyclospora</em>, which have larger oocysts.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q3</h4>
+                    <p>A 40-year-old man returns from a 2-week trip to rural Mexico with fever, RUQ pain, and tender hepatomegaly. Ultrasound shows a 6-cm subcapsular liver abscess. Serology for <em>Entamoeba histolytica</em> is positive; stool O&amp;P is negative. What is the best treatment?</p>
+                                    <p class="option">A. Metronidazole alone</p>
+                    <p class="option">B. Metronidazole followed by paromomycin</p>
+                    <p class="option">C. Percutaneous drainage alone</p>
+                    <p class="option">D. Praziquantel</p>
+                    <p class="option">E. Albendazole</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Metronidazole followed by paromomycin (or other luminal agent such as iodoquinol).</strong> Metronidazole kills invasive trophozoites in tissue; a luminal agent is required afterward to eradicate cysts in the colon and prevent relapse. Drainage is reserved for large or impending-rupture abscesses.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q4</h4>
+                    <p>A 28-year-old refugee from Ethiopia presents with 2 weeks of fevers spiking every 48 hours, malaise, and jaundice. Giemsa-stained thick and thin smears show ring forms and <strong>Schüffner stippling</strong> in enlarged red cells. Which drug(s) are required?</p>
+                                    <p class="option">A. Chloroquine only</p>
+                    <p class="option">B. Chloroquine plus primaquine (after G6PD testing)</p>
+                    <p class="option">C. Artemether&ndash;lumefantrine only</p>
+                    <p class="option">D. Mefloquine only</p>
+                    <p class="option">E. IV artesunate</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Chloroquine plus primaquine after G6PD testing.</strong> Schüffner stippling + 48-hour (tertian) fever = <em>P. vivax</em> or <em>P. ovale</em>. These species form <strong>hypnozoites</strong> in the liver that require primaquine (or tafenoquine) for radical cure. Always screen for G6PD deficiency before giving primaquine (hemolysis risk).
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q5</h4>
+                    <p>A 50-year-old man traveled to Ghana and returns with fever, confusion, and renal failure. A thin blood smear shows banana-shaped gametocytes and heavy parasitemia (8%). What is the best initial therapy?</p>
+                                    <p class="option">A. Oral chloroquine</p>
+                    <p class="option">B. Oral atovaquone&ndash;proguanil</p>
+                    <p class="option">C. IV artesunate</p>
+                    <p class="option">D. Primaquine</p>
+                    <p class="option">E. Doxycycline</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: C. IV artesunate.</strong> Banana-shaped gametocytes and high parasitemia (&ge;5%) with end-organ dysfunction define <strong>severe <em>P. falciparum</em></strong>. Severe malaria requires parenteral artesunate. <em>P. falciparum</em> does NOT form hypnozoites &mdash; no primaquine needed for radical cure.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q6</h4>
+                    <p>A 58-year-old man on Nantucket in August develops fever, chills, and fatigue. He is asplenic from prior trauma. CBC shows hemolytic anemia. Blood smear reveals ring forms and a tetrad (&quot;Maltese cross&quot;) in red cells. What is the most likely organism?</p>
+                                    <p class="option">A. <em>P. falciparum</em></p>
+                    <p class="option">B. <em>Babesia microti</em></p>
+                    <p class="option">C. <em>Trypanosoma cruzi</em></p>
+                    <p class="option">D. <em>Leishmania donovani</em></p>
+                    <p class="option">E. <em>Ehrlichia chaffeensis</em></p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. <em>Babesia microti</em>.</strong> Northeast US / Ixodes tick exposure, asplenia (severe disease), and the <strong>tetrad (Maltese cross)</strong> on smear are diagnostic. Treat with atovaquone + azithromycin (mild&ndash;moderate) or clindamycin + quinine (severe). No hypnozoites &mdash; Babesia is a piroplasm, not a Plasmodium.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q7</h4>
+                    <p>A 35-year-old man from rural Bolivia now lives in the US and is being evaluated for cardiomyopathy. Echo shows dilated cardiomyopathy and an apical aneurysm. Serology for <em>Trypanosoma cruzi</em> is positive. Which other clinical feature is most likely?</p>
+                                    <p class="option">A. Megaesophagus/megacolon</p>
+                    <p class="option">B. Splenomegaly with pancytopenia</p>
+                    <p class="option">C. Cutaneous nodule with satellite lesions</p>
+                    <p class="option">D. Hepatic hydatid cyst</p>
+                    <p class="option">E. Periorbital edema with myositis</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: A. Megaesophagus/megacolon.</strong> Chronic Chagas disease destroys autonomic ganglia &rarr; cardiomyopathy <em>plus</em> megaorgan syndromes (achalasia-like dysphagia, chronic constipation/megacolon). Vector: reduviid &quot;kissing bug&quot; (Latin America). Treat chronic disease with benznidazole or nifurtimox.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q8</h4>
+                    <p>A 10-year-old boy from rural Kentucky has microcytic anemia, pallor, and a history of walking barefoot. Stool O&amp;P shows ovoid, thin-shelled eggs. What is the best therapy?</p>
+                                    <p class="option">A. Metronidazole</p>
+                    <p class="option">B. Albendazole plus iron</p>
+                    <p class="option">C. Praziquantel</p>
+                    <p class="option">D. Ivermectin</p>
+                    <p class="option">E. TMP&ndash;SMX</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Albendazole plus iron.</strong> Hookworm (<em>Necator</em>/<em>Ancylostoma</em>) &mdash; skin penetration by filariform larvae, chronic blood loss, iron-deficiency anemia.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q9</h4>
+                    <p>A 62-year-old man from Puerto Rico starts high-dose prednisone for an asthma exacerbation. Three days later he develops fever, ARDS, and gram-negative bacteremia. Admission labs had shown eosinophilia. Which condition was missed?</p>
+                                    <p class="option">A. Ascaris lumbricoides</p>
+                    <p class="option">B. Trichuris trichiura</p>
+                    <p class="option">C. Strongyloides stercoralis (hyperinfection)</p>
+                    <p class="option">D. Taenia solium</p>
+                    <p class="option">E. Giardia lamblia</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: C. <em>Strongyloides stercoralis</em> hyperinfection.</strong> Autoinfection + steroid immunosuppression &rarr; massive larval dissemination with gram-negative bacteremia (gut translocation) and pulmonary involvement. Screen (serology) and treat with ivermectin <em>before</em> immunosuppression.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q10</h4>
+                    <p>A 6-year-old girl has 3 weeks of nighttime perianal itching. Two siblings are affected. Stool O&amp;P is negative. What is the next best step?</p>
+                                    <p class="option">A. Repeat stool O&amp;P</p>
+                    <p class="option">B. Scotch-tape test</p>
+                    <p class="option">C. Serology for <em>Toxocara</em></p>
+                    <p class="option">D. Colonoscopy</p>
+                    <p class="option">E. Empiric metronidazole</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Scotch-tape test.</strong> Pinworm eggs are laid on perianal skin; stool O&amp;P is insensitive. Treat the child and household with albendazole or pyrantel pamoate; repeat in 2 weeks.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q11</h4>
+                    <p>A 34-year-old man from Mexico presents after a first-time generalized tonic-clonic seizure. MRI reveals multiple small brain cysts, one with a central calcification. What is the best therapy?</p>
+                                    <p class="option">A. Praziquantel alone</p>
+                    <p class="option">B. Albendazole plus corticosteroids</p>
+                    <p class="option">C. Metronidazole</p>
+                    <p class="option">D. Ivermectin</p>
+                    <p class="option">E. Surgical resection of all cysts</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Albendazole plus corticosteroids.</strong> Neurocysticercosis (<em>Taenia solium</em> larval cysts in CNS). Steroids blunt the inflammatory response to dying cysts. Add anti-epileptics. Avoid treating purely inactive/calcified lesions.
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <h4>Q12</h4>
+                    <p>A 27-year-old returns from wading in the Nile and now has gross hematuria. Urinalysis reveals eggs with a <strong>terminal spine</strong>. What is the long-term complication to screen for?</p>
+                                    <p class="option">A. Hepatocellular carcinoma</p>
+                    <p class="option">B. Squamous cell carcinoma of the bladder</p>
+                    <p class="option">C. Adenocarcinoma of the colon</p>
+                    <p class="option">D. Cholangiocarcinoma</p>
+                    <p class="option">E. Renal cell carcinoma</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">
+                    <strong>Answer: B. Squamous cell carcinoma of the bladder.</strong> <em>Schistosoma haematobium</em> (terminal-spine egg; vesical plexus) &rarr; chronic bladder inflammation &rarr; squamous metaplasia &rarr; SCC. Treat with praziquantel.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH4(h4El) {
+        h4El.classList.toggle('collapsed');
+        const body = h4El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .answer { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture 26: Parasitology — HoyaDocs GI Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gi26-parasitology.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function toggleMobileSidebar() {
+        document.querySelector('.sidebar').classList.toggle('mob-open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('mob-open');
+                document.querySelector('.sidebar-overlay').classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
