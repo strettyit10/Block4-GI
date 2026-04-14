@@ -91,8 +91,12 @@
     <option value="#AK_Step1_v12::#Bootcamp">Bootcamp</option>
     <option value="#AK_Step1_v12::#B&B">Boards &amp; Beyond (B&amp;B)</option>
     <option value="#AK_Step1_v12::#Pathoma">Pathoma</option>
-    <option value="#AK_Step1_v12::Sketchy">Sketchy</option>
-    <option value="#AK_Step1_v12::Physeo">Physeo</option>
+    <option disabled>── Sketchy ──</option>
+    <option value="#AK_Step1_v12::#SketchyMicro">Sketchy Micro</option>
+    <option value="#AK_Step1_v12::#SketchyPath">Sketchy Path</option>
+    <option value="#AK_Step1_v12::#SketchyPharm">Sketchy Pharm</option>
+    <option value="#AK_Step1_v12::#SketchyAnatomy">Sketchy Anatomy</option>
+    <option value="#AK_Step1_v12::#Physeo">Physeo</option>
     <option value="custom">Custom…</option>
   </select>
   <label id="custom-resource-label" style="display:none">Custom prefix</label>
@@ -172,7 +176,7 @@ function getResourceBase() {
 }
 function getResourceName() {
   const s = document.getElementById('prefix-select').value;
-  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::Sketchy':'Sketchy','#AK_Step1_v12::Physeo':'Physeo'};
+  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::#SketchyMicro':'Sketchy Micro','#AK_Step1_v12::#SketchyPath':'Sketchy Path','#AK_Step1_v12::#SketchyPharm':'Sketchy Pharm','#AK_Step1_v12::#SketchyAnatomy':'Sketchy Anatomy','#AK_Step1_v12::#Physeo':'Physeo'};
   return s === 'custom' ? (document.getElementById('custom-resource-input').value.split('::').pop() || 'Resource') : (map[s] || s);
 }
 function getSubject() { return document.getElementById('subject-input').value.trim(); }
@@ -196,7 +200,8 @@ function updatePreview() {
   }
 }
 function resourceSkipsSubject() {
-  return document.getElementById('prefix-select').value === '#AK_Step1_v12::#Pathoma';
+  const v = document.getElementById('prefix-select').value;
+  return v === '#AK_Step1_v12::#Pathoma' || v.startsWith('#AK_Step1_v12::#Sketchy');
 }
 function onConfigChange() {
   const isCustom = document.getElementById('prefix-select').value === 'custom';
