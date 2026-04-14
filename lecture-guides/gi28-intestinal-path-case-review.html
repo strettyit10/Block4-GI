@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 28: Intestinal Pathology Case Review — HoyaDocs GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0 140px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px;
+            transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+
+        .sidebar-footer {
+            position: fixed; bottom: 0; left: 0; width: 220px;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+            z-index: 102;
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #1e40af; }
+
+        .lo-covered { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #1e3a5f; }
+
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .reveal-btn { background: #2563eb; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .answer { display: none; margin-top: 12px; background: #f0fdf4; border-left: 3px solid #16a34a; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #166534; }
+
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; background: none !important; padding: 0 !important; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+
+        /* ══ Mobile Responsive ════════════════════════════════════════════════ */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn {
+            display: none;
+            position: fixed; top: 12px; left: 12px; z-index: 200;
+            background: #1e293b; border: none; border-radius: 6px;
+            padding: 8px 11px; cursor: pointer; color: white; font-size: 20px;
+            line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 99;
+        }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar { transform: translateX(-240px); z-index: 150; }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main { margin-left: 0 !important; padding: 60px 16px 30px 16px !important; max-width: 100% !important; }
+            .header h1 { font-size: 22px !important; }
+            .header p { font-size: 14px !important; }
+            .lo-section { padding: 20px 16px !important; }
+            .lo-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px !important; }
+            .lo-toc ol { padding-left: 14px; }
+            .export-actions { flex-direction: column; }
+            .buzzwords { gap: 4px; }
+            .buzzword { font-size: 11px; padding: 2px 8px; }
+        }
+        @media (max-width: 480px) {
+            div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+            div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+            .main { padding: 55px 12px 24px 12px !important; }
+            .lo-acc-header { flex-wrap: wrap; gap: 6px !important; }
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs &#8599;</a>
+        <h2>Lecture 28</h2>
+        <p>Intestinal Pathology Case Review</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">&#128203; Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">&#129735; LO 1 &middot; IBD (Crohn &amp; UC)</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">&#129516; LO 2 &middot; C. difficile Colitis</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">&#128168; LO 3 &middot; Diverticular Disease</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">&#129440; LO 4 &middot; Polyps &amp; Colon Cancer</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">&#9999;&#65039; Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">&#128424;&#65039;</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">&#128196;</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/gi_resource_hub.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<main class="main">
+    <div class="header">
+        <h1>Lecture 28: Intestinal Pathology Case Review</h1>
+        <p>HoyaDocs &mdash; GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB (built last) ══ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 28 &mdash; Overview</h2>
+        <p class="lo-subtitle">Intestinal Pathology Case Review &middot; HoyaDocs GI Block</p>
+        <div class="lo-content" id="overview-body">
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#7f1d1d; margin-bottom:6px; font-size:14px;">&#129704; LO 1 &middot; IBD (Crohn &amp; UC)</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>Cases 1 &amp; 2</strong><br>
+                        Crohn (skip lesions, transmural, granulomas, CHRISTMAS) &middot; UC (continuous, mucosa-only, ULCCCERS, bloody diarrhea) &middot; side-by-side compare table &middot; IBD-associated CRC (p53 first) &middot; surveillance (7 y, PSC annual)<br>
+                        <em style="color:#475569;">Practice Qs: 1&ndash;4, 11&ndash;13</em>
+                    </div>
+                </div>
+                <div style="background:#ffedd5; border:1px solid #fdba74; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#7c2d12; margin-bottom:6px; font-size:14px;">&#129529; LO 2 &middot; <em>C. difficile</em> Colitis</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>Case 3</strong><br>
+                        Gram+ spore-former &middot; Toxins A &amp; B &middot; Pseudomembrane (volcano lesion) &middot; Antibiotic risk factors (4 Cs) &middot; NAAT/EIA/GDH testing &middot; Oral vancomycin or fidaxomicin &middot; FMT for recurrence<br>
+                        <em style="color:#475569;">Practice Qs: 5&ndash;6, 14</em>
+                    </div>
+                </div>
+                <div style="background:#fef9c3; border:1px solid #fde047; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#713f12; margin-bottom:6px; font-size:14px;">&#128165; LO 3 &middot; Diverticular Disease</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>Case 4</strong><br>
+                        False diverticula at vasa recta &middot; Sigmoid = narrow radius = high pressure &middot; LLQ pain + fever = diverticulitis &middot; Painless hematochezia = diverticular bleed &middot; Pericolic abscess &middot; Colovesical fistula &middot; High-fiber prevention<br>
+                        <em style="color:#475569;">Practice Qs: 7&ndash;8, 15</em>
+                    </div>
+                </div>
+                <div style="background:#ede9fe; border:1px solid #c4b5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#4c1d95; margin-bottom:6px; font-size:14px;">&#129518; LO 4 &middot; Polyps &amp; Colorectal Cancer</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>Case 5</strong><br>
+                        Tubular vs villous vs sessile serrated &middot; &ldquo;Big/Villous/Bad&rdquo; risk features &middot; APC &rarr; KRAS &rarr; p53 (CIN) &middot; BRAF &rarr; CIMP &rarr; MSI (serrated) &middot; Right = anemic, Left = obstructing apple-core &middot; FAP / Lynch &middot; pembrolizumab for MSI-H<br>
+                        <em style="color:#475569;">Practice Qs: 9&ndash;10, 16&ndash;18</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <!-- LO 1 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Identify the signs and symptoms of selected diseases of the small and large intestines and develop a differential diagnosis</span>
+                    <span style="background:#fee2e2; color:#7f1d1d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Signs &amp; Differential</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered across</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Case 1 / 2 vignettes (IBD)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Case 3 (pseudomembranous)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Case 4 (diverticular)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Case 5 (CRC)</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q3, Q5, Q7, Q9</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 2 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Review the pathogenesis, gross/histologic, and molecular findings of selected small and large intestinal diseases</span>
+                    <span style="background:#ffedd5; color:#7c2d12; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Pathogenesis &amp; Path</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered across</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Crohn granulomas / UC crypt architecture</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Toxin A/B &amp; volcano lesion</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">False diverticulum at vasa recta</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Molecular CRC pathways</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q2, Q4, Q6, Q8, Q17</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 3 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Describe the differences and similarities between Crohn disease and ulcerative colitis</span>
+                    <span style="background:#fee2e2; color:#7f1d1d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Crohn vs UC</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 1</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Crohn deep dive</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">UC deep dive</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Side-by-side compare table</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">IBD-associated CRC</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1&ndash;Q4, Q11&ndash;Q13</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LO 4 -->
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Review the polyps of the large intestine and the molecular progression from adenoma to carcinoma</span>
+                    <span style="background:#ede9fe; color:#4c1d95; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Polyps &amp; CRC</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 4</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Polyp classification</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Adenomas (tubular/villous)</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Serrated pathway</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">CIN vs MSI molecular pathways</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Right vs Left CRC presentation</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q9, Q10, Q16, Q17, Q18</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1 — IBD: Crohn & UC ══ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title">LO 1 &mdash; Inflammatory Bowel Disease (Crohn &amp; UC)</h2>
+        <p class="lo-subtitle">Cases 1 &amp; 2 &middot; HoyaDocs GI Block</p>
+        <div class="lo-content" id="lo1-body">
+
+            <div class="lo-covered">
+                <div class="lo-covered-title">Learning Objectives Covered</div>
+                <ul>
+                    <li><strong>LO 1:</strong> Identify signs, symptoms, and differential diagnosis of small and large intestine disease</li>
+                    <li><strong>LO 2:</strong> Review pathogenesis + gross/histologic/molecular features of IBD</li>
+                    <li><strong>LO 3:</strong> Characterize clinical and pathologic differences and similarities of Crohn vs ulcerative colitis</li>
+                </ul>
+            </div>
+
+            <div class="lo-toc">
+                <div class="lo-toc-title">On This Page</div>
+                <ol>
+                    <li><a href="#lo1-case1">Case 1: 24y man, abdominal pain + anemia (Crohn)</a></li>
+                    <li><a href="#lo1-crohn">Crohn Disease &mdash; clinical, pathology, natural history</a></li>
+                    <li><a href="#lo1-case2">Case 2: 39y woman, recurrent bloody diarrhea (UC)</a></li>
+                    <li><a href="#lo1-uc">Ulcerative Colitis &mdash; clinical, pathology, extraintestinal</a></li>
+                    <li><a href="#lo1-compare">Crohn vs UC &mdash; side-by-side</a></li>
+                    <li><a href="#lo1-cancer">IBD-associated colorectal cancer &amp; surveillance</a></li>
+                    <li><a href="#lo1-tyu">Testing Your Understanding</a></li>
+                </ol>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <!-- ─── Case 1 ─── -->
+            <h3 class="collapsible-h3" id="lo1-case1" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Case 1 &mdash; 24-year-old man with abdominal pain + anemia</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; A young adult with 6 months of abdominal pain, fatigue, RLQ tenderness, microcytic anemia, and occult GI bleeding who has a proximal-colon lesion on colonoscopy is the classic Crohn disease vignette.</p>
+
+                <div class="buzzwords">
+                    <span class="buzzword">Young adult + RLQ pain</span>
+                    <span class="buzzword">Microcytic anemia (Fe-def)</span>
+                    <span class="buzzword">Occult blood</span>
+                    <span class="buzzword">Skip lesions / proximal colon</span>
+                    <span class="buzzword">Terminal ileum involvement</span>
+                </div>
+
+                <h4>&#128203; Clinical Vignette</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>24-year-old man: 6 months of abdominal pain and fatigue</li>
+                        <li>Afebrile, pale, mild RLQ tenderness, active bowel sounds, no palpable mass</li>
+                        <li>Labs: <strong>Hgb 8.9 g/dL, Hct 26.7%, MCV 74</strong> (microcytic anemia from chronic GI blood loss/malabsorption), Plt 255k, WBC 7.78k</li>
+                        <li>Stool: <strong>occult blood positive</strong></li>
+                        <li>Colonoscopy: lesion seen in proximal colon (skip distribution suggests Crohn)</li>
+                    </ul>
+                </div>
+
+                <h4>&#129504; Differential Diagnosis &amp; Best Answer</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Dx</th><th>Fit?</th><th>Why fits / doesn't fit</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Crohn disease</strong></td><td>&#9989; Best</td><td>Young adult, chronic RLQ pain (ileocecal), iron-deficiency anemia, occult bleeding, proximal/skip colon involvement</td></tr>
+                            <tr><td>Acute appendicitis</td><td>&#10060;</td><td>Acute (hours-days), localized McBurney tenderness, fever, leukocytosis &mdash; not 6 months of pain with anemia</td></tr>
+                            <tr><td>Angiodysplasia</td><td>&#10060;</td><td>Elderly (70+); painless overt LGIB or occult anemia; right colon vascular ectasia &mdash; wrong age/pain pattern</td></tr>
+                            <tr><td>Meckel diverticulum</td><td>&#10060;</td><td>Painless melena/hematochezia in young child (&lt;2y); rarely symptomatic in 20s</td></tr>
+                            <tr><td>Diverticulosis</td><td>&#10060;</td><td>&gt;60y, usually painless hematochezia from sigmoid; no RLQ chronic pain</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <strong>Lightning High-Yield:</strong>
+                        <ul>
+                            <li><strong>Answer: A &mdash; Crohn disease</strong></li>
+                            <li>Key trigger words: young adult + RLQ chronic pain + microcytic anemia + occult blood + proximal colon lesion</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Crohn Disease Deep Dive ─── -->
+            <h3 class="collapsible-h3" id="lo1-crohn" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Crohn Disease &mdash; Clinical, Pathology, Natural History</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Crohn = transmural, segmental ("skip") inflammation that can involve ANY site from mouth to anus, with the terminal ileum most commonly affected; the pathognomonic histologic feature is the <strong>non-caseating granuloma</strong>.</p>
+
+                <h4>&#128101; Epidemiology &amp; Presentation</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Bimodal peak: 15&ndash;35 and 50&ndash;70; slight female predominance in adults</li>
+                        <li>Risk factors: Ashkenazi Jewish ancestry, <strong>NOD2/CARD15 mutations</strong>, Western diet, <strong>smoking (worsens Crohn, protects UC)</strong></li>
+                        <li>Classic symptoms: chronic RLQ/periumbilical pain, non-bloody or occult-blood-positive diarrhea, weight loss, fatigue, fever, oral aphthous ulcers</li>
+                        <li>Complications drive the clinical picture: <strong>strictures (fibrostenotic), fistulas (enteroenteric, enterovesical, perianal), abscesses, malabsorption, B<sub>12</sub> deficiency</strong> (terminal ileum)</li>
+                    </ul>
+                </div>
+
+                <h4>&#128269; Gross Pathology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Skip lesions</strong>: discontinuous inflammation with intervening normal mucosa</li>
+                        <li><strong>Cobblestone mucosa</strong>: linear fissured ulcers between edematous mucosal islands</li>
+                        <li><strong>Creeping fat</strong>: mesenteric fat wraps around the bowel serosa (transmural inflammation pulls in adipose)</li>
+                        <li><strong>"String sign" on barium imaging</strong>: narrow, rigid, fibrotic terminal ileum</li>
+                        <li>Strictures, fissures, fistulas, bowel-wall thickening (transmural &rarr; "hosepipe")</li>
+                        <li>Site: <strong>terminal ileum + right colon most common</strong>; can involve ANY segment of GI tract (mouth to anus); rectal sparing common</li>
+                    </ul>
+                </div>
+
+                <h4>&#128300; Histology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Non-caseating granulomas</strong> &mdash; pathognomonic (but present in only ~35% of biopsies); clusters of epithelioid macrophages &plusmn; multinucleated giant cells; NO central necrosis (distinguishes from TB)</li>
+                        <li><strong>Transmural inflammation</strong>: all 4 layers &mdash; mucosa, submucosa, muscularis, serosa</li>
+                        <li>Lymphoid aggregates (often 4+ per section), deep fissuring ulcers</li>
+                        <li>Chronicity markers: <strong>crypt architectural distortion</strong> (branching, shortening), pyloric metaplasia, Paneth cell metaplasia in left colon</li>
+                        <li>Neutrophilic crypt abscesses are seen but are NOT specific to Crohn</li>
+                    </ul>
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                            <div class="mnemonic-header">&#129504; Mnemonic: "CHRISTMAS" for Crohn</div>
+                            <span class="mnemonic-chevron">&#9660;</span>
+                        </div>
+                        <div class="mnemonic-body collapsed">
+                            <ul>
+                                <li><strong>C</strong> &mdash; Cobblestone mucosa</li>
+                                <li><strong>H</strong> &mdash; High temperature (low-grade fever)</li>
+                                <li><strong>R</strong> &mdash; Reduced lumen (strictures, string sign)</li>
+                                <li><strong>I</strong> &mdash; Intestinal fistulas</li>
+                                <li><strong>S</strong> &mdash; Skip lesions</li>
+                                <li><strong>T</strong> &mdash; Transmural inflammation</li>
+                                <li><strong>M</strong> &mdash; Malabsorption + B<sub>12</sub> deficiency</li>
+                                <li><strong>A</strong> &mdash; Abdominal pain (RLQ), non-caseating granulomAs</li>
+                                <li><strong>S</strong> &mdash; Submucosal fibrosis, Smoking worsens</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>&#128167; Pathogenesis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Genetic susceptibility (NOD2/CARD15, ATG16L1, IL23R) + environmental trigger (microbiome, smoking) &rarr; dysregulated T<sub>H</sub>1/T<sub>H</sub>17 response to commensal gut flora</li>
+                        <li>Chronic transmural inflammation &rarr; granulomas, fibrosis (&rarr; strictures), deep penetration (&rarr; fistulas/abscesses)</li>
+                    </ul>
+                </div>
+
+                <h4>&#128198; Natural History</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>At diagnosis, ~70% have inflammatory (non-stricturing, non-penetrating) disease</li>
+                        <li>Over 10+ years, disease evolves toward <strong>fibrostenotic</strong> (strictures) and <strong>penetrating</strong> (fistulas/abscesses) phenotypes</li>
+                        <li>&gt;50% require surgery within 10 years; recurrence at anastomosis is common</li>
+                        <li><strong>Perianal fistulas/abscesses</strong> occur in 25&ndash;30% &mdash; a Crohn-defining complication; UC does NOT cause perianal fistulas</li>
+                    </ul>
+                </div>
+
+                <h4>&#128104;&#8205;&#9877;&#65039; Extraintestinal Manifestations (IBD Overall)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Skin:</strong> erythema nodosum (tender shin nodules), pyoderma gangrenosum (ulcer with violaceous border)</li>
+                        <li><strong>Eyes:</strong> uveitis, episcleritis</li>
+                        <li><strong>Joints:</strong> peripheral arthritis, sacroiliitis, ankylosing spondylitis (HLA-B27)</li>
+                        <li><strong>Hepatobiliary:</strong> primary sclerosing cholangitis (PSC, much more common in UC), gallstones (Crohn &mdash; bile-acid malabsorption)</li>
+                        <li><strong>Renal:</strong> oxalate kidney stones (Crohn &mdash; fat malabsorption &rarr; calcium binds fat &rarr; free oxalate absorbed)</li>
+                    </ul>
+                </div>
+
+                <hr class="section-rule">
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Granulomas in Crohn vs TB vs Sarcoid
+                        <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Crohn = NON-caseating, loose granulomas</strong> on a background of chronic transmural inflammation and crypt distortion.</li>
+                            <li><strong>TB = CASEATING granulomas</strong> with central necrosis, acid-fast bacilli on stain &mdash; ileocecal TB mimics Crohn grossly but histology and AFB stain differentiate.</li>
+                            <li><strong>Sarcoid = non-caseating</strong> too, but systemic (lung/lymph nodes predominate) and lacks Crohn's transmural distribution + crypt distortion.</li>
+                            <li>If a USMLE stem says "caseating granuloma of terminal ileum" &rarr; think <strong>intestinal TB (Mycobacterium bovis or tuberculosis)</strong>, NOT Crohn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Case 2 ─── -->
+            <h3 class="collapsible-h3" id="lo1-case2" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Case 2 &mdash; 39-year-old woman with recurrent bloody diarrhea</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Recurrent relapsing-remitting episodes of bloody diarrhea, cramping, and occult blood &mdash; with stool negative for ova/parasites &mdash; pointing to <strong>ulcerative colitis</strong>.</p>
+
+                <div class="buzzwords">
+                    <span class="buzzword">Relapsing bloody diarrhea</span>
+                    <span class="buzzword">12y recurrent episodes</span>
+                    <span class="buzzword">No O&amp;P</span>
+                    <span class="buzzword">Continuous from rectum</span>
+                    <span class="buzzword">Pseudopolyps</span>
+                </div>
+
+                <h4>&#128203; Clinical Vignette</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>39y woman: 1 month of abdominal cramps + diarrhea (6 stools/day)</li>
+                        <li>History of similar <strong>self-limited episodes over 12 years</strong>, each lasting ~2 weeks</li>
+                        <li>Stool: <strong>occult blood positive</strong>, no ova/parasites</li>
+                        <li>Colonoscopy (terminal ileum &rarr; colon): colonic mucosal inflammation consistent with UC</li>
+                    </ul>
+                </div>
+
+                <h4>&#129504; Complication Risk &amp; Best Answer</h4>
+                <div class="h4-body">
+                    <table>
+                        <thead><tr><th>Complication</th><th>Fit?</th><th>Why</th></tr></thead>
+                        <tbody>
+                            <tr><td>Diverticulitis</td><td>&#10060;</td><td>Diverticular disease is unrelated to UC</td></tr>
+                            <tr><td><strong>Adenocarcinoma</strong></td><td>&#9989; Best</td><td>Long-standing UC (&gt;8&ndash;10y) &rarr; dysplasia &rarr; colorectal adenocarcinoma; risk rises steeply with extent and duration</td></tr>
+                            <tr><td>Perirectal fistula</td><td>&#10060;</td><td>Perianal fistulas are Crohn, NOT UC (mucosal-only, no transmural tracking)</td></tr>
+                            <tr><td>Fat malabsorption</td><td>&#10060;</td><td>UC spares the small bowel &mdash; no fat/B<sub>12</sub> malabsorption</td></tr>
+                            <tr><td>Primary biliary cirrhosis</td><td>&#10060;</td><td>UC is linked to <strong>PSC</strong>, NOT PBC (distractor)</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="hy-box">
+                        <strong>Lightning High-Yield:</strong>
+                        <ul>
+                            <li><strong>Answer: B &mdash; adenocarcinoma.</strong> UC patients with pancolitis have up to 18&times; the colorectal cancer risk of the general population.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>&#128269; Histology &mdash; Chronicity Marker on Biopsy</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Question 4 answer: <strong>Crypt architectural disarray/distortion</strong> (E) &mdash; branching, shortening, and loss of parallel crypt orientation indicate <strong>chronic</strong> colitis (UC or Crohn)</li>
+                        <li><strong>Crypt abscesses</strong> (D) = acute inflammation (neutrophils in crypt lumina), seen in both infectious colitis and active IBD; do NOT by themselves distinguish acute from chronic</li>
+                        <li>Superficial mucosal hemorrhage (B) and lymphocytic infiltrate (A) &mdash; nonspecific</li>
+                        <li>Brunner gland hyperplasia (C) &mdash; duodenal finding, irrelevant</li>
+                    </ul>
+                    <div class="hy-box">
+                        <strong>Lightning High-Yield:</strong>
+                        <ul>
+                            <li>Biopsy <strong>chronic markers</strong>: crypt distortion, basal plasmacytosis, Paneth cell metaplasia in left colon, pyloric metaplasia, atrophy</li>
+                            <li>Biopsy <strong>acute markers</strong>: neutrophilic cryptitis, crypt abscesses, mucosal erosions/hemorrhage</li>
+                            <li><strong>Chronic + active</strong> = acute-on-chronic flare (most IBD biopsies look like this)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── UC Deep Dive ─── -->
+            <h3 class="collapsible-h3" id="lo1-uc" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Ulcerative Colitis &mdash; Clinical, Pathology, Complications</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; UC = continuous mucosal/submucosal inflammation that ALWAYS starts in the rectum and extends proximally in a single contiguous swath; limited to the colon; classic symptom is <strong>bloody diarrhea with mucus</strong>.</p>
+
+                <h4>&#128101; Epidemiology &amp; Clinical Presentation</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Peak onset 15&ndash;35 years; second smaller peak 50&ndash;70</li>
+                        <li>Smoking is <strong>protective</strong> (opposite of Crohn); appendectomy also protective</li>
+                        <li>Classic presentation: <strong>bloody diarrhea, mucus in stool, lower abdominal pain/cramps, fecal urgency, tenesmus</strong></li>
+                        <li>Relapsing-remitting course; flares triggered by infection, NSAIDs, stress</li>
+                    </ul>
+                </div>
+
+                <h4>&#128269; Gross Pathology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Continuous, confluent inflammation from rectum proximally</strong> (NO skip lesions)</li>
+                        <li>Rectum ALWAYS involved; extent categorized as <strong>proctitis &rarr; left-sided colitis &rarr; pancolitis</strong></li>
+                        <li>Friable, erythematous, granular mucosa with superficial ulcers; loss of haustra (<strong>"lead-pipe" colon</strong> on imaging in advanced disease)</li>
+                        <li><strong>Pseudopolyps</strong>: residual islands of regenerating mucosa between ulcers</li>
+                        <li><strong>Backwash ileitis</strong>: mild terminal ileum inflammation adjacent to an inflamed cecum in pancolitis (does NOT equal Crohn)</li>
+                        <li>Disease is <strong>mucosal + submucosal only</strong> &mdash; does NOT go transmural except in toxic megacolon</li>
+                    </ul>
+                </div>
+
+                <h4>&#128300; Histology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Crypt distortion + crypt abscesses</strong> in the colon</li>
+                        <li>Confluent mucosal inflammation; lymphoplasmacytic infiltrate concentrated in the lamina propria</li>
+                        <li>Goblet cell depletion, Paneth cell metaplasia in left colon</li>
+                        <li><strong>NO granulomas</strong>, no transmural inflammation (except toxic megacolon)</li>
+                    </ul>
+                </div>
+
+                <h4>&#128680; Severe Complications</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Toxic megacolon:</strong> severe dilation (&gt;6 cm transverse colon) with systemic toxicity (fever, tachycardia, leukocytosis); high perforation risk &mdash; AVOID anti-diarrheals and opiates which precipitate it</li>
+                        <li><strong>Perforation, massive hemorrhage</strong></li>
+                        <li><strong>Colorectal cancer</strong> (next section)</li>
+                        <li><strong>PSC</strong>: ~5% of UC patients; "onion-skin fibrosis" of bile ducts; beaded strictures on MRCP/ERCP; p-ANCA positive; &uarr; risk of cholangiocarcinoma</li>
+                    </ul>
+                </div>
+
+                <hr class="section-rule">
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: "Pseudopolyps" are not neoplastic
+                        <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li>Pseudopolyps in UC are <strong>regenerative mucosa between ulcers</strong>, NOT adenomas. They do NOT carry cancer risk themselves.</li>
+                            <li>True neoplastic risk in UC comes from <strong>flat dysplasia</strong> arising in inflamed mucosa &mdash; which is why surveillance colonoscopies must take extensive random biopsies (and chromoendoscopy enhances detection).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Crohn vs UC Compare ─── -->
+            <h3 class="collapsible-h3" id="lo1-compare" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Crohn vs UC &mdash; Side-by-Side Table</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; This is the single highest-yield table in IBD &mdash; memorize every row.</p>
+
+                <table>
+                    <thead><tr><th>Feature</th><th>Crohn Disease</th><th>Ulcerative Colitis</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Location</strong></td><td>Mouth &rarr; anus; <strong>terminal ileum + RIGHT colon</strong> most common; rectum often spared</td><td><strong>Colon only; rectum ALWAYS involved</strong>; extends proximally; can have backwash ileitis</td></tr>
+                        <tr><td><strong>Distribution</strong></td><td>Skip lesions (discontinuous)</td><td>Continuous (no skips)</td></tr>
+                        <tr><td><strong>Depth</strong></td><td><strong>Transmural</strong> (all 4 layers)</td><td>Mucosa + submucosa only</td></tr>
+                        <tr><td><strong>Gross appearance</strong></td><td>Cobblestoning, creeping fat, strictures, fissures, fistulas; "string sign"; skip segments</td><td>Continuous friable mucosa, pseudopolyps, loss of haustra (lead-pipe colon)</td></tr>
+                        <tr><td><strong>Histology</strong></td><td><strong>Non-caseating granulomas</strong>, transmural lymphoid aggregates, crypt distortion</td><td>Crypt abscesses, crypt distortion, goblet depletion; <strong>NO granulomas</strong></td></tr>
+                        <tr><td><strong>Classic symptom</strong></td><td>Non-bloody (or occult blood) diarrhea, RLQ pain, weight loss</td><td><strong>Bloody diarrhea + mucus</strong>, tenesmus, LLQ/lower abdominal cramps</td></tr>
+                        <tr><td><strong>Complications</strong></td><td>Strictures, fistulas (enteroenteric, perianal, enterovesical), abscesses, B<sub>12</sub>/bile acid malabsorption, kidney stones (oxalate), gallstones</td><td>Toxic megacolon, perforation, massive hemorrhage, colorectal cancer, PSC</td></tr>
+                        <tr><td><strong>Smoking</strong></td><td><strong>Worsens</strong> Crohn</td><td><strong>Protects</strong> against UC (don't encourage patients to smoke though!)</td></tr>
+                        <tr><td><strong>Surgery</strong></td><td>NOT curative &mdash; recurs at anastomosis</td><td><strong>Colectomy is curative</strong></td></tr>
+                        <tr><td><strong>Serology</strong></td><td>ASCA positive; p-ANCA negative</td><td><strong>p-ANCA positive</strong>; ASCA negative</td></tr>
+                        <tr><td><strong>Associated gene</strong></td><td>NOD2/CARD15, ATG16L1, IL23R</td><td>HLA-B27 (for ankylosing spondylitis), HLA-DR2</td></tr>
+                        <tr><td><strong>Cancer risk</strong></td><td>&uarr; (lower than UC, but small-bowel adenocarcinoma also at risk)</td><td>&uarr;&uarr;&uarr; (up to 18&times; in pancolitis)</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header collapsed" onclick="toggleMnemonic(this)">
+                        <div class="mnemonic-header">&#129504; Mnemonic: "ULCCCERS" for Ulcerative Colitis</div>
+                        <span class="mnemonic-chevron">&#9660;</span>
+                    </div>
+                    <div class="mnemonic-body collapsed">
+                        <ul>
+                            <li><strong>U</strong> &mdash; Ulcerations continuous</li>
+                            <li><strong>L</strong> &mdash; Large intestine only (Limited to colon), Lead-pipe</li>
+                            <li><strong>C</strong> &mdash; Crypt abscesses</li>
+                            <li><strong>C</strong> &mdash; Colorectal cancer</li>
+                            <li><strong>C</strong> &mdash; Curable with Colectomy</li>
+                            <li><strong>E</strong> &mdash; Extends proximally from rectum</li>
+                            <li><strong>R</strong> &mdash; Rectum always involved</li>
+                            <li><strong>S</strong> &mdash; Sclerosing cholangitis (PSC), Smoking protects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── IBD-Associated CRC ─── -->
+            <h3 class="collapsible-h3" id="lo1-cancer" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. IBD-Associated Colorectal Cancer &amp; Surveillance</h3>
+            <div class="section-body">
+                <p style="font-weight:600; color:#1e293b; margin-bottom:10px;">&#11088; Colorectal cancer accounts for 10&ndash;15% of IBD deaths; IBD patients are <strong>6&times; more likely</strong> to develop CRC than the general population and develop it at a younger mean age (40&ndash;50 vs 60).</p>
+
+                <h4>&#128200; Risk Factors</h4>
+                <div class="h4-box">
+                    <ul>
+                        <li><strong>Extent of colitis</strong>: pancolitis &gt;&gt; left-sided &gt; proctitis (standardized incidence ratio ~14&times; for pancolitis)</li>
+                        <li><strong>Duration</strong>: cumulative CRC risk rises after 7&ndash;8 years; ~2% at 10y, ~8% at 20y, ~18% at 30y</li>
+                        <li><strong>PSC</strong>: dramatically increases CRC risk &mdash; colonoscopy annually from diagnosis</li>
+                        <li>Family history of CRC, young age at IBD diagnosis, chronic inflammation severity</li>
+                    </ul>
+                </div>
+
+                <h4>&#129516; Molecular Mechanism &mdash; Inflammation-Dysplasia-Carcinoma</h4>
+                <div class="h4-body">
+                    <p>IBD-CRC arises through a different sequence than sporadic CRC:</p>
+                    <table>
+                        <thead><tr><th>Feature</th><th>Sporadic CRC</th><th>IBD-CRC</th></tr></thead>
+                        <tbody>
+                            <tr><td>Initiating event</td><td><strong>APC loss</strong> (early)</td><td><strong>p53 mutation (early)</strong> from chronic inflammation DNA damage</td></tr>
+                            <tr><td>Intermediate</td><td>K-ras activation</td><td>K-ras activation</td></tr>
+                            <tr><td>Late event</td><td>p53 loss</td><td><strong>APC loss (late)</strong></td></tr>
+                            <tr><td>Precursor</td><td>Adenomatous polyp</td><td><strong>Flat dysplasia</strong> in inflamed mucosa</td></tr>
+                            <tr><td>Mean age</td><td>~60y</td><td><strong>40&ndash;50y</strong> (younger)</td></tr>
+                            <tr><td>Morphology</td><td>Usually single, polypoid</td><td>Multifocal, flat, often <strong>mucinous/signet-ring</strong>; synchronous CRCs more common</td></tr>
+                            <tr><td>Site (UC-CRC)</td><td>Any colon segment</td><td><strong>Rectum + sigmoid most common in UC</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>&#128269; Surveillance Guidelines</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Begin surveillance colonoscopy <strong>after 7&ndash;8 years of colitis</strong> (both UC and Crohn-colitis)</li>
+                        <li>Decrease interval as disease duration increases (usually every 1&ndash;3 years)</li>
+                        <li><strong>PSC + UC: annual colonoscopy from diagnosis</strong></li>
+                        <li>Traditional approach: random 4-quadrant biopsies every 10 cm ("at least 33 biopsies") &mdash; samples only 0.05&ndash;0.1% of colonic surface</li>
+                        <li><strong>Chromoendoscopy</strong> (spray dye onto mucosa) enhances detection of flat neoplasia invisible on white light &mdash; now preferred</li>
+                    </ul>
+                </div>
+
+                <hr class="section-rule">
+                <div class="exam-trap">
+                    <div class="trap-header collapsed" onclick="toggleTrap(this)">
+                        &#9888;&#65039; TRAP: Sporadic vs IBD-CRC molecular sequence
+                        <span class="trap-chevron">&#9660;</span>
+                    </div>
+                    <div class="trap-body collapsed">
+                        <ul>
+                            <li><strong>Sporadic sequence:</strong> APC &rarr; K-ras &rarr; p53 (APC first; think Adenoma-first)</li>
+                            <li><strong>IBD-CRC sequence:</strong> p53 &rarr; K-ras &rarr; APC (p53 first from chronic inflammatory DNA damage; APC is a late event)</li>
+                            <li>USMLE favorite: "What is the EARLIEST molecular event in a 45y UC patient's colon cancer?" &rarr; <strong>p53 mutation</strong>, not APC.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── TYU ─── -->
+            <div class="tyu-section" id="lo1-tyu">
+                <h4>&#129514; Testing Your Understanding</h4>
+
+                <div class="practice-question">
+                    <h4>TYU 1</h4>
+                    <p>A 28-year-old man with a 5-year history of Crohn disease presents with fever, foul-smelling vaginal discharge in his female partner who has not been sexually active with anyone else, and air in his bladder on CT (pneumaturia). What complication is he most likely experiencing and what pathologic feature explains it?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer:</strong> <strong>Enterovesical (and possibly enteroenteric/enterovaginal) fistula</strong> from <strong>transmural inflammation</strong>. Crohn disease penetrates all four layers of the bowel wall, allowing sinus tracts and fistulas to form between bowel and adjacent structures &mdash; bladder (pneumaturia, recurrent polymicrobial UTIs), vagina (stool passing through vaginal discharge), skin (enterocutaneous), or other bowel loops. This is Crohn-defining and does NOT occur in UC (mucosal-only disease).
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 2</h4>
+                    <p>A 46-year-old woman with 15 years of pancolitis (UC) undergoes surveillance colonoscopy. Random biopsies show <em>flat dysplasia</em> without a polypoid mass. She has no family history of cancer. What is the underlying pathway driving her cancer risk, and what is the next step?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer:</strong> <strong>Inflammation-dysplasia-carcinoma sequence</strong> driven by chronic mucosal DNA damage. In IBD-CRC the molecular sequence is <strong>p53 (early) &rarr; K-ras &rarr; APC (late)</strong>, opposite to the sporadic APC&rarr;K-ras&rarr;p53 sequence. Flat dysplasia in long-standing pancolitis is a high-risk lesion; guideline-based management is <strong>total proctocolectomy</strong> (curative and eliminates ongoing CRC risk). Chromoendoscopy may be used adjunctively for mapping before surgery.
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>TYU 3</h4>
+                    <p>A 32-year-old Ashkenazi Jewish smoker presents with chronic diarrhea, RLQ pain, and a perianal abscess. Biopsy of the terminal ileum shows non-caseating granulomas and transmural lymphoid aggregates. Name three counseling points about modifiable risk factors or complications you would discuss.</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">
+                        <strong>&#10003; Answer:</strong>
+                        <ul style="margin-top:8px;">
+                            <li><strong>Smoking cessation</strong> &mdash; smoking worsens Crohn activity and increases surgical recurrence (opposite of UC, where smoking is protective).</li>
+                            <li><strong>B<sub>12</sub> monitoring and supplementation</strong> &mdash; the terminal ileum absorbs B<sub>12</sub>; chronic inflammation or surgical resection causes deficiency and megaloblastic anemia.</li>
+                            <li><strong>Kidney stone risk</strong> &mdash; fat malabsorption from ileal disease &rarr; intraluminal calcium binds fat &rarr; free oxalate absorbed &rarr; calcium oxalate stones. Encourage hydration, low-oxalate diet, and consider oral calcium supplementation.</li>
+                            <li>(Bonus: perianal fistulas/abscesses suggest aggressive phenotype; early biologic therapy &mdash; e.g., anti-TNF &mdash; may be warranted.)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 2 — C. difficile / Pseudomembranous Colitis ══ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title">LO 2 &middot; <em>C. difficile</em> &amp; Pseudomembranous Colitis</h2>
+        <p class="lo-text">Recognize the classic vignette (antibiotic-treated, hospitalized, ileus), diagnose <em>C. difficile</em> infection, understand its toxin-mediated pathogenesis, and choose appropriate testing and treatment.</p>
+        <div class="lo-content" id="lo2-body">
+            <div class="lo-covered">
+                <strong>Covers LOs:</strong> 1 (signs/symptoms &amp; differential of small &amp; large bowel disease), 2 (pathogenesis &amp; gross/histologic features)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo2-case3">1. Case 3 &mdash; hospitalized 65y woman with ileus</a></li>
+                    <li><a href="#lo2-cdiff">2. <em>C. difficile</em> &mdash; microbiology &amp; pathogenesis</a></li>
+                    <li><a href="#lo2-clinical">3. Clinical spectrum &amp; risk factors</a></li>
+                    <li><a href="#lo2-pathology">4. Gross &amp; histologic features</a></li>
+                    <li><a href="#lo2-diagnosis">5. Diagnostic testing</a></li>
+                    <li><a href="#lo2-treatment">6. Treatment &amp; recurrence</a></li>
+                    <li><a href="#lo2-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo2-body')">Expand all</button>
+                <button onclick="collapseAll('lo2-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-case3" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Case 3 &mdash; 65-year-old hospitalized woman with abdominal distention</h3>
+            <div class="section-body">
+                <div class="hy-box">
+                    <strong>Vignette:</strong> A 65-year-old woman is hospitalized for pneumonia complicated by septicemia. She has required <span class="buzzword">multiple antibiotics</span> and was intubated and mechanically ventilated. On <span class="buzzword">day 20 of hospitalization</span>, she has <span class="buzzword">abdominal distention</span>, <span class="buzzword">absent bowel sounds</span>, and an abdominal radiograph showing <span class="buzzword">dilated loops of small bowel (ileus)</span>. Labs: <span class="buzzword">leukocytosis</span> and <span class="buzzword">hypoalbuminemia</span>. Colonoscopy reveals <span class="buzzword">yellow-white plaques (pseudomembranes)</span>.
+                </div>
+
+                <h4>What is the most likely diagnosis? (Q5)</h4>
+                <div class="h4-body">
+                    <p><strong>Answer: A. Pseudomembranous enterocolitis</strong> &mdash; essentially always caused by <em>C. difficile</em> in this setting.</p>
+                    <p>Classic USMLE buzzword triad: <strong>recent antibiotics + hospitalized patient + yellow-white pseudomembranes on colonoscopy</strong>.</p>
+                </div>
+
+                <h4>Why not the other choices?</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Gas gangrene / myonecrosis</strong> &mdash; <em>Clostridium perfringens</em> soft-tissue infection, not colitis.</li>
+                        <li><strong>Ulcerative proctitis</strong> &mdash; distal UC; would show chronic bloody diarrhea, not acute ileus after antibiotics.</li>
+                        <li><strong>Ischemic bowel</strong> &mdash; sudden pain out of proportion, older vasculopath; watershed areas (splenic flexure, rectosigmoid); hematochezia not pseudomembranes.</li>
+                        <li><strong>Toxic megacolon</strong> &mdash; a <em>complication</em> of severe C. diff or UC (colon &gt;6 cm, systemic toxicity); not the primary diagnosis here.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Ileus does not rule out C. diff</div>
+                    <div class="trap-body">
+                        Students often expect <strong>profuse watery diarrhea</strong>. In severe C. diff, the colon becomes atonic &rarr; <strong>ileus &rarr; no diarrhea at all</strong>. Abdominal distention + recent antibiotics + leukocytosis should still trigger C. diff workup (and toxic megacolon concern).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-cdiff" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. <em>C. difficile</em> &mdash; Microbiology &amp; Pathogenesis</h3>
+            <div class="section-body">
+                <h4>Organism</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><span class="buzzword">Gram-positive</span>, <span class="buzzword">spore-forming</span>, obligate <span class="buzzword">anaerobe</span>.</li>
+                        <li>Spores resist alcohol hand sanitizer and most disinfectants &rarr; <strong>wash hands with soap &amp; water</strong>; clean rooms with <strong>bleach</strong>.</li>
+                        <li>Transmitted <span class="buzzword">fecal-oral route</span> (Q6 answer = <strong>E</strong>).</li>
+                    </ul>
+                </div>
+
+                <h4>Toxins A and B (the real weapons)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Toxin A (TcdA)</strong> &mdash; enterotoxin &rarr; fluid secretion + inflammation.</li>
+                        <li><strong>Toxin B (TcdB)</strong> &mdash; cytotoxin &rarr; disrupts cytoskeleton.</li>
+                        <li>Both glucosylate and <strong>inactivate Rho/Rac GTPases</strong> &rarr; actin depolymerization &rarr; tight-junction breakdown &rarr; apoptosis &amp; neutrophil-rich inflammation &rarr; <strong>pseudomembrane</strong>.</li>
+                        <li><strong>Only toxigenic strains cause disease.</strong> Nontoxigenic carriage is possible and usually asymptomatic.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Q6 distractors</div>
+                    <div class="trap-body">
+                        <ul>
+                            <li><strong>A. Gram-negative</strong> &mdash; false; it is gram-positive.</li>
+                            <li><strong>B. Invasive</strong> &mdash; false; disease is <em>toxin-mediated</em>, not invasive.</li>
+                            <li><strong>C. Antifungals</strong> &mdash; false; <em>antibacterials</em> (clindamycin, cephalosporins, fluoroquinolones) are the classic culprits.</li>
+                            <li><strong>D. 30% of outpatients colonized</strong> &mdash; false; ~3% outpatients, ~20&ndash;30% of <em>hospitalized</em> patients.</li>
+                            <li><strong>E. Fecal-oral spread</strong> &mdash; <span style="color: #047857; font-weight: 600;">CORRECT</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Clinical Spectrum &amp; Risk Factors</h3>
+            <div class="section-body">
+                <h4>Spectrum of disease</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Asymptomatic carrier</li>
+                        <li>Mild-moderate diarrhea (watery, non-bloody, foul-smelling)</li>
+                        <li>Cramping lower abdominal pain, low-grade fever, malaise, anorexia</li>
+                        <li>Leukocytosis (can be dramatic &mdash; WBC &gt;15,000)</li>
+                        <li>Hypoalbuminemia (protein-losing)</li>
+                        <li><strong>Pseudomembranous colitis</strong></li>
+                        <li><strong>Ileus / toxic megacolon / perforation</strong> (severe, complicated CDI)</li>
+                    </ul>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: &ldquo;4 Cs&rdquo; &mdash; high-risk antibiotics</div>
+                    <div class="mnemonic-body">
+                        <strong>C</strong>lindamycin, <strong>C</strong>ephalosporins, <strong>C</strong>iprofloxacin (fluoroquinolones), <strong>C</strong>arbapenems. Essentially, broad-spectrum antibiotics that wipe out normal flora &rarr; C. diff overgrowth.
+                    </div>
+                </div>
+
+                <h4>Risk factors</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Antibiotic exposure</strong> (within 3 months, especially within 1 month)</li>
+                        <li>Hospitalization or long-term care facility residence</li>
+                        <li>Age &gt;65</li>
+                        <li>Proton pump inhibitors (weaker but real)</li>
+                        <li>Immunosuppression, IBD, recent GI surgery</li>
+                    </ul>
+                </div>
+
+                <h4>CDI definition</h4>
+                <div class="h4-body">
+                    <div class="hy-box">
+                        Acute onset of diarrhea <strong>PLUS</strong> documented toxigenic <em>C. difficile</em> (or its toxin) <strong>AND</strong> no other documented cause for diarrhea.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-pathology" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Gross &amp; Histologic Features</h3>
+            <div class="section-body">
+                <h4>Gross (endoscopy)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><span class="buzzword">Yellow-white plaques (pseudomembranes)</span>, 2&ndash;10 mm, scattered on an erythematous base.</li>
+                        <li>Plaques can coalesce in severe disease to form a confluent &ldquo;membrane.&rdquo;</li>
+                        <li>Most prominent in the <strong>rectosigmoid</strong> but can be pancolonic.</li>
+                    </ul>
+                </div>
+
+                <h4>Microscopic (the &ldquo;volcano&rdquo; lesion)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><span class="buzzword">Volcano / mushroom-shaped eruption</span> of <strong>fibrin + neutrophils + necrotic epithelial debris + mucin</strong> emerging from a damaged crypt.</li>
+                        <li>Superficial mucosal necrosis; lamina propria filled with neutrophils.</li>
+                        <li>Adjacent mucosa may look near-normal (patchy distribution).</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Pseudomembrane vs true membrane</div>
+                    <div class="trap-body">
+                        The &ldquo;pseudo&rdquo; is histologic: it is <strong>not</strong> a layered connective-tissue structure &mdash; it is a plug of inflammatory exudate sitting on ulcerated mucosa. Contrast with diphtheritic true membrane (pharynx) or fibropurulent exudate.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-diagnosis" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Diagnostic Testing</h3>
+            <div class="section-body">
+                <h4>Comparison of available tests</h4>
+                <div class="h4-body">
+                    <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse: collapse; font-size: 14px;">
+                        <thead>
+                            <tr style="background:#f1f5f9;">
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Test</th>
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Sensitivity</th>
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Specificity</th>
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;"><strong>NAAT (PCR)</strong></td><td style="padding:8px; border:1px solid #e2e8f0;">High (85&ndash;100%)</td><td style="padding:8px; border:1px solid #e2e8f0;">High (94&ndash;100%)</td><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Preferred</strong> in acute disease; detects toxin genes. Risk: false-positive in colonized patients.</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Toxin A/B EIA (ELISA)</strong></td><td style="padding:8px; border:1px solid #e2e8f0;">Low</td><td style="padding:8px; border:1px solid #e2e8f0;">High</td><td style="padding:8px; border:1px solid #e2e8f0;">Confirms active toxin production; often paired with NAAT or GDH.</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;"><strong>GDH antigen</strong></td><td style="padding:8px; border:1px solid #e2e8f0;">High</td><td style="padding:8px; border:1px solid #e2e8f0;">Low</td><td style="padding:8px; border:1px solid #e2e8f0;">Good <em>screening</em> test (rule out); doesn&rsquo;t distinguish toxigenic vs nontoxigenic.</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Toxigenic culture / CCNA</td><td style="padding:8px; border:1px solid #e2e8f0;">High</td><td style="padding:8px; border:1px solid #e2e8f0;">High</td><td style="padding:8px; border:1px solid #e2e8f0;">Reference standards; slow, limited diagnostic use.</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Endoscopy with biopsy</td><td style="padding:8px; border:1px solid #e2e8f0;">Undefined</td><td style="padding:8px; border:1px solid #e2e8f0;">Undefined</td><td style="padding:8px; border:1px solid #e2e8f0;">Reserved for diagnostic uncertainty (e.g., IBD vs CDI); risk of perforation in severe disease.</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <h4>Practical testing algorithm</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Only test patients with <strong>&ge;3 unformed stools in 24h</strong> (do not test asymptomatic carriers).</li>
+                        <li>Common two-step: <strong>GDH + toxin EIA</strong>; discordant results resolved with NAAT.</li>
+                        <li>Do not re-test &ldquo;cure&rdquo; &mdash; patients can shed toxin genes for weeks after clinical resolution.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-treatment" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Treatment &amp; Recurrence</h3>
+            <div class="section-body">
+                <h4>Initial episode</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Stop the offending antibiotic</strong> if possible.</li>
+                        <li><strong>Oral vancomycin</strong> or <strong>fidaxomicin</strong> &times; 10 days (first-line per current IDSA guidelines).</li>
+                        <li>Metronidazole is a second-line alternative when vancomycin/fidaxomicin are unavailable.</li>
+                        <li><strong>Fulminant CDI</strong> (ileus, megacolon, shock): high-dose oral vancomycin + IV metronidazole &plusmn; rectal vancomycin; urgent surgical consult.</li>
+                    </ul>
+                </div>
+
+                <h4>Recurrent CDI</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Recurrence rate ~20% after first episode, &gt;40% after second.</li>
+                        <li>Options: tapered-pulsed vancomycin, fidaxomicin, bezlotoxumab (anti-toxin B monoclonal).</li>
+                        <li><strong>Fecal microbiota transplant (FMT)</strong> for multiply-recurrent disease &mdash; restores normal flora.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield:</strong> Do <strong>not</strong> use antimotility agents (loperamide) in active CDI &mdash; retention of toxin worsens colitis and risk of toxic megacolon.
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo2-tyu">
+                <h3>Testing Your Understanding</h3>
+
+                <h4>TYU 1</h4>
+                <p>A 72-year-old man completed a course of ceftriaxone for pneumonia 2 weeks ago. He now has 8 watery stools daily and a WBC of 22,000. Stool NAAT is positive for <em>C. difficile</em> toxin gene but toxin EIA is negative. How should this be interpreted, and what is the best next step?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>Discordant NAAT(+)/EIA(&minus;) can mean either active toxin production below the EIA detection limit or colonization. In a <strong>symptomatic</strong> patient with high WBC and recent antibiotic use, <strong>treat as CDI</strong> (clinical diagnosis trumps EIA). Start oral vancomycin or fidaxomicin for 10 days and stop any unnecessary antibiotics. Do not rely on the negative EIA alone to withhold therapy.</p>
+                </div>
+
+                <h4>TYU 2</h4>
+                <p>Why are alcohol-based hand rubs inadequate for infection control in CDI, and what is the correct approach?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><em>C. difficile</em> forms <strong>spores</strong> that are highly resistant to alcohol. Effective control requires <strong>soap-and-water hand washing</strong> (mechanical removal), <strong>contact precautions</strong> (gown + gloves), and <strong>environmental cleaning with a sporicidal agent such as bleach</strong>. Private rooms and dedicated equipment minimize fecal-oral spread.</p>
+                </div>
+
+                <h4>TYU 3</h4>
+                <p>A patient with severe CDI develops abdominal distention, absent bowel sounds, and colonic diameter of 7 cm on imaging. They have not had diarrhea for 24 hours. Why is the absence of diarrhea dangerous rather than reassuring?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>Cessation of diarrhea in severe CDI often reflects <strong>ileus or toxic megacolon</strong>, not improvement. Toxin and organisms are retained in a dilated atonic colon, raising risk of perforation. Management includes stopping antimotility agents, aggressive combined IV metronidazole + high-dose oral (or per-NG) vancomycin &plusmn; rectal vancomycin, and urgent surgical evaluation (possible subtotal colectomy).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 3 — Diverticular Disease ══ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title">LO 3 &middot; Diverticular Disease</h2>
+        <p class="lo-text">Understand the anatomic defect that underlies colonic diverticulosis, the classic presentation of diverticulitis and diverticular bleeding, and the complications that drive management.</p>
+        <div class="lo-content" id="lo3-body">
+            <div class="lo-covered">
+                <strong>Covers LOs:</strong> 1 (signs/symptoms &amp; differential), 2 (pathogenesis &amp; gross/histologic features)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo3-case4">1. Case 4 &mdash; 65y F with hematochezia &amp; sigmoid outpouchings</a></li>
+                    <li><a href="#lo3-anatomy">2. Anatomy &amp; pathophysiology of a diverticulum</a></li>
+                    <li><a href="#lo3-clinical">3. Clinical spectrum &mdash; diverticulosis &rarr; diverticulitis</a></li>
+                    <li><a href="#lo3-bleeding">4. Diverticular bleeding</a></li>
+                    <li><a href="#lo3-complications">5. Complications (incl. pericolic abscess)</a></li>
+                    <li><a href="#lo3-management">6. Management &amp; prevention</a></li>
+                    <li><a href="#lo3-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo3-body')">Expand all</button>
+                <button onclick="collapseAll('lo3-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-case4" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Case 4 &mdash; 65-year-old woman with hematochezia</h3>
+            <div class="section-body">
+                <div class="hy-box">
+                    <strong>Vignette:</strong> A 65-year-old woman has <span class="buzzword">hematochezia</span>. Stool is positive for occult blood. CT of the abdomen shows <span class="buzzword">numerous air-filled, 1-cm outpouchings of the sigmoid and descending colon</span>. Colonoscopy shows small-mouthed diverticula.
+                </div>
+
+                <h4>Although rare, which long-term complication is most likely? (Q7)</h4>
+                <div class="h4-body">
+                    <p><strong>Answer: D. Pericolic abscess.</strong></p>
+                    <p>20% of patients with diverticulosis eventually develop diverticulitis; of these, perforation or micro-perforation can seal locally &rarr; <strong>pericolic (or pelvic) abscess</strong>. Adenocarcinoma, malabsorption, UC, and toxic megacolon are not typical complications of diverticular disease.</p>
+                </div>
+
+                <h4>Pathophysiology question (Q8)</h4>
+                <div class="h4-body">
+                    <p><strong>Answer: E. Nerves, vasa recta, and connective-tissue sheaths penetrate the muscle coat.</strong></p>
+                    <p>Diverticula are <em>false</em> diverticula (mucosa + submucosa only) that herniate through the muscularis propria at points where the <strong>vasa recta penetrate the circular muscle layer</strong> &mdash; a naturally weak spot.</p>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Q8 distractors</div>
+                    <div class="trap-body">
+                        <ul>
+                            <li><strong>A. Lack of haustral folds</strong> &mdash; false; haustra are present. <em>Excess</em> segmentation (high intraluminal pressure) drives the defect.</li>
+                            <li><strong>B. High-fiber diet alleviates acute pressure</strong> &mdash; false; high fiber is for <em>prevention</em>. Acute diverticulitis &rarr; <strong>bowel rest</strong>.</li>
+                            <li><strong>C. Most common in thin-walled cecum</strong> &mdash; false; most common in <strong>sigmoid</strong> in Western populations.</li>
+                            <li><strong>D. Crypt abscesses</strong> &mdash; false; that is an IBD histology, not diverticular.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-anatomy" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Anatomy &amp; Pathophysiology of a Diverticulum</h3>
+            <div class="section-body">
+                <h4>True vs false diverticulum</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>True diverticulum</strong> &mdash; all 3 layers (mucosa, submucosa, muscularis). Example: Meckel.</li>
+                        <li><strong>False (pseudo) diverticulum</strong> &mdash; only mucosa + submucosa herniating through muscular wall. <span class="buzzword">Colonic diverticula are false.</span></li>
+                    </ul>
+                </div>
+
+                <h4>The weak point &mdash; where vasa recta pierce the wall</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>The circular muscle layer is penetrated by <strong>nerves, vasa recta, and connective-tissue sheaths</strong> on the mesenteric side of the antimesenteric taeniae.</li>
+                        <li>These penetration points are inherently weak &rarr; mucosa/submucosa herniate outward when intraluminal pressure rises.</li>
+                    </ul>
+                </div>
+
+                <h4>Why the sigmoid?</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Narrowest lumen of the colon &rarr; <strong>highest pressure</strong> per Laplace&rsquo;s law (T = P &times; r; narrow r generates highest wall stress for a given pressure).</li>
+                        <li>Exaggerated segmentation, chronic constipation, low-fiber (low-bulk) stool all raise pressure.</li>
+                    </ul>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: &ldquo;Sigmoid is where the Scary Small Sacs Squeeze&rdquo;</div>
+                    <div class="mnemonic-body">
+                        Sigmoid = Small radius = Sky-high pressure. Also: in Western diets 95% of diverticula are in the sigmoid; in Asian populations, right-sided diverticula predominate.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Clinical Spectrum &mdash; Diverticulosis to Diverticulitis</h3>
+            <div class="section-body">
+                <h4>Diverticulosis (the anatomic finding)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Prevalence rises sharply with age; ~50% of adults &gt;60 in the US.</li>
+                        <li><strong>Most patients are asymptomatic</strong>.</li>
+                        <li>Risk factors: age, low-fiber Western diet, obesity, NSAIDs, smoking, connective tissue disorders (Marfan, Ehlers-Danlos).</li>
+                    </ul>
+                </div>
+
+                <h4>Diverticulitis (the complication)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Occurs in ~20% of diverticulosis patients.</li>
+                        <li>Mechanism: <strong>fecalith obstructs the diverticular neck &rarr; stasis &rarr; micro-perforation &rarr; inflammation</strong>.</li>
+                        <li>Presentation: <span class="buzzword">LLQ pain</span> (&ldquo;left-sided appendicitis&rdquo;), fever, leukocytosis, sometimes palpable mass.</li>
+                        <li>CT is the diagnostic test of choice &mdash; pericolic fat stranding, wall thickening, abscess if present.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Do NOT colonoscope acute diverticulitis</div>
+                    <div class="trap-body">
+                        Acute inflammation raises perforation risk. Colonoscopy is reserved for <strong>6&ndash;8 weeks after resolution</strong> to rule out concurrent malignancy (and should be done at least once in every first-time diverticulitis patient).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-bleeding" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Diverticular Bleeding</h3>
+            <div class="section-body">
+                <h4>Why it bleeds</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>The same vasa recta that create the weak point get stretched over the diverticular dome.</li>
+                        <li>Chronic injury &rarr; <strong>asymmetric rupture of an arterial vasa recta</strong> into the lumen.</li>
+                        <li><strong>Painless, sudden, large-volume hematochezia</strong> &mdash; a classic USMLE stem.</li>
+                    </ul>
+                </div>
+
+                <h4>Key clinical pattern</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most common cause of <strong>painless lower GI bleeding in adults &gt;60</strong>.</li>
+                        <li>Most bleeds (75&ndash;80%) stop spontaneously.</li>
+                        <li>Paradoxically, bleeding diverticula are often <strong>right-sided</strong> even though diverticulitis is sigmoid-predominant &mdash; right-sided diverticula have wider necks and thinner overlying mucosa.</li>
+                        <li><strong>Hematochezia</strong> most common from sigmoid; <strong>melena</strong> possible from right colon.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-complications" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Complications</h3>
+            <div class="section-body">
+                <h4>Hinchey classification of diverticulitis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>I</strong> &mdash; pericolic abscess (small, confined)</li>
+                        <li><strong>II</strong> &mdash; pelvic / distant intra-abdominal abscess</li>
+                        <li><strong>III</strong> &mdash; purulent peritonitis</li>
+                        <li><strong>IV</strong> &mdash; feculent peritonitis (free perforation)</li>
+                    </ul>
+                </div>
+
+                <h4>Other complications</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Fistula</strong> &mdash; most commonly <strong>colovesical</strong> (men more than women because women&rsquo;s uterus is between colon and bladder); presents with <em>pneumaturia</em> or fecaluria.</li>
+                        <li><strong>Stricture / obstruction</strong> from scarring after recurrent attacks.</li>
+                        <li><strong>Free perforation</strong> &rarr; peritonitis, sepsis.</li>
+                        <li><strong>Diverticular bleeding</strong> (see above).</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield:</strong> New <em>colovesical fistula</em> in an older adult? Think <strong>diverticular disease</strong> (most common), then Crohn disease or malignancy.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-management" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Management &amp; Prevention</h3>
+            <div class="section-body">
+                <h4>Uncomplicated diverticulitis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Outpatient: bowel rest + oral antibiotics (e.g., ciprofloxacin + metronidazole or amoxicillin-clavulanate) in selected patients.</li>
+                        <li>Inpatient: NPO, IV fluids, IV antibiotics covering enteric gram-negatives and anaerobes.</li>
+                    </ul>
+                </div>
+
+                <h4>Complicated diverticulitis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Abscess &gt;3 cm &rarr; <strong>percutaneous drainage</strong> + antibiotics.</li>
+                        <li>Peritonitis, free perforation, failure of medical therapy &rarr; <strong>surgery</strong> (Hartmann procedure or primary anastomosis).</li>
+                    </ul>
+                </div>
+
+                <h4>Prevention / long-term</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>High-fiber diet</strong>, regular exercise, weight loss. Nuts and seeds are <em>no longer</em> believed to cause diverticulitis (older teaching; modern data do not support restriction).</li>
+                        <li>Elective sigmoidectomy considered after recurrent attacks or in immunocompromised patients.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo3-tyu">
+                <h3>Testing Your Understanding</h3>
+
+                <h4>TYU 1</h4>
+                <p>A 68-year-old man presents with 2 days of LLQ pain, fever, and leukocytosis. CT reveals sigmoid wall thickening, pericolic fat stranding, and a 4.5-cm fluid collection with air. What is the appropriate management?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>This is <strong>complicated diverticulitis with pericolic abscess (Hinchey I&ndash;II)</strong>. For abscesses &gt;3&ndash;4 cm, the preferred approach is <strong>CT-guided percutaneous drainage plus broad-spectrum IV antibiotics</strong> (covering enteric gram-negatives and anaerobes). Elective sigmoid resection is considered 6&ndash;8 weeks later. Colonoscopy is performed after recovery to exclude underlying malignancy.</p>
+                </div>
+
+                <h4>TYU 2</h4>
+                <p>A 74-year-old woman with known diverticulosis suddenly passes a large volume of bright red blood per rectum without abdominal pain. Hemodynamically she is stable. What is the likely source, and what is the most appropriate diagnostic next step?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>Classic <strong>painless diverticular hemorrhage</strong> from an arterial vasa recta ruptured into the diverticular lumen. After resuscitation, the next step is typically <strong>colonoscopy</strong> (diagnostic and therapeutic &mdash; clips/epinephrine injection). If bleeding is too brisk for endoscopy, <strong>CT angiography</strong> can localize active extravasation; if unstable, angiography with embolization is used.</p>
+                </div>
+
+                <h4>TYU 3</h4>
+                <p>A 70-year-old man with a history of recurrent diverticulitis now complains of pneumaturia and recurrent UTIs. Imaging shows air in the bladder. What is the likely diagnosis and why?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Colovesical fistula</strong>, most commonly a complication of diverticular disease in older men (women&rsquo;s uterus typically shields the bladder). Recurrent sigmoid inflammation erodes into the adjacent bladder dome &rarr; bacteria and air track into the urinary tract. Workup includes CT with oral contrast, cystoscopy, and often colonoscopy to exclude malignancy. Definitive management is surgical resection of the fistula and affected colon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 4 — Polyps & Colorectal Cancer ══ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title">LO 4 &middot; Polyps &amp; Colorectal Cancer</h2>
+        <p class="lo-text">Classify colonic polyps, recognize which have malignant potential, and trace the molecular adenoma&ndash;carcinoma sequence that drives sporadic colorectal cancer.</p>
+        <div class="lo-content" id="lo4-body">
+            <div class="lo-covered">
+                <strong>Covers LOs:</strong> 1 (signs/symptoms &amp; differential), 2 (gross/histologic/molecular pathogenesis), 4 (polyps of the large bowel and molecular adenoma&rarr;carcinoma progression)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo4-case5">1. Case 5 &mdash; 70y M with obstructing descending colon mass</a></li>
+                    <li><a href="#lo4-polyps">2. Classification of colonic polyps</a></li>
+                    <li><a href="#lo4-adenomas">3. Adenomas (neoplastic polyps) &amp; risk features</a></li>
+                    <li><a href="#lo4-serrated">4. Serrated polyps &amp; the serrated pathway</a></li>
+                    <li><a href="#lo4-molecular">5. Molecular adenoma&ndash;carcinoma sequence</a></li>
+                    <li><a href="#lo4-crc">6. Colon cancer &mdash; clinical, gross, histology, staging</a></li>
+                    <li><a href="#lo4-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo4-body')">Expand all</button>
+                <button onclick="collapseAll('lo4-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-case5" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Case 5 &mdash; 70y M with obstructing descending colon mass</h3>
+            <div class="section-body">
+                <div class="hy-box">
+                    <strong>Vignette:</strong> A 70-year-old man has a screening colonoscopy that reveals a large <strong>villous adenoma</strong>. Assuming it is <em>not</em> removed, 5 years later he has <span class="buzzword">constipation</span>, <span class="buzzword">microcytic anemia</span>, and a <span class="buzzword">5-kg weight loss</span>. At surgery there is a <span class="buzzword">7-cm mass encircling the descending colon (apple-core lesion)</span>.
+                </div>
+
+                <h4>Which neoplasm is he now most likely to have? (Q9)</h4>
+                <div class="h4-body">
+                    <p><strong>Answer: C. Adenocarcinoma.</strong></p>
+                    <p>A villous adenoma that is left in place can progress via the adenoma&ndash;carcinoma sequence to <strong>invasive adenocarcinoma</strong>. Left-sided tumors tend to be <strong>annular/obstructing</strong> (&ldquo;apple-core&rdquo; lesion) and present with changes in bowel habits, obstruction, and hematochezia.</p>
+                </div>
+
+                <h4>Which lesion has the highest risk of malignant transformation? (Q10)</h4>
+                <div class="h4-body">
+                    <p><strong>Answer: D. Villous adenoma.</strong></p>
+                    <p>Villous adenomas have approximately <strong>10&times; the risk of becoming colorectal cancer</strong> compared with tubular adenomas. Hyperplastic polyps (&lt;1 cm), fundic gland polyps, and leiomyomas have very low or essentially no malignant potential.</p>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: &ldquo;Villous&rdquo; = &ldquo;Villainous&rdquo;</div>
+                    <div class="trap-body">
+                        The higher the <strong>villous</strong> component and the <strong>larger the size (&gt;4 cm)</strong>, the higher the risk of carcinoma. High-grade dysplasia at any size is also high-risk. Tubulovillous is intermediate risk. Size, villous histology, and high-grade dysplasia are the three adenoma features that drive surveillance intervals.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-polyps" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Classification of Colonic Polyps</h3>
+            <div class="section-body">
+                <h4>By malignant potential</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Neoplastic (precancerous)</strong>
+                            <ul>
+                                <li>Tubular adenoma (most common, &lt;25% villous)</li>
+                                <li>Tubulovillous adenoma (25&ndash;75% villous)</li>
+                                <li>Villous adenoma (&gt;75% villous) &mdash; highest risk</li>
+                                <li>Sessile serrated adenoma / polyp (SSA/P)</li>
+                                <li>Traditional serrated adenoma (TSA) &mdash; rare</li>
+                            </ul>
+                        </li>
+                        <li><strong>Non-neoplastic (low/no risk)</strong>
+                            <ul>
+                                <li>Hyperplastic polyp (small left-sided, usually &lt;5 mm)</li>
+                                <li>Juvenile (hamartomatous &mdash; sporadic, usually benign)</li>
+                                <li>Peutz-Jeghers hamartomatous polyp</li>
+                                <li>Inflammatory polyp (pseudopolyp from IBD)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h4>By gross appearance</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Pedunculated</strong> &mdash; on a stalk, usually tubular adenomas; easier to resect endoscopically.</li>
+                        <li><strong>Sessile</strong> &mdash; broad-based; villous and sessile serrated polyps tend to be sessile; harder to resect.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield:</strong> Only <strong>adenomas</strong> (tubular, tubulovillous, villous) and <strong>sessile serrated</strong> lesions are truly precancerous. Small distal hyperplastic polyps are <strong>not</strong>.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-adenomas" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Adenomas (Neoplastic Polyps)</h3>
+            <div class="section-body">
+                <h4>Tubular adenoma</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most common adenoma; typically <strong>pedunculated</strong>, small.</li>
+                        <li>Histology: tightly packed, tubular glands with <strong>low-grade dysplasia</strong> (elongated, hyperchromatic nuclei, pseudostratification).</li>
+                        <li>Low malignant potential when small (&lt;1 cm).</li>
+                    </ul>
+                </div>
+
+                <h4>Villous adenoma</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Often <strong>sessile</strong>, &ldquo;cauliflower-like&rdquo; gross appearance.</li>
+                        <li>Histology: long, finger-like villi with dysplastic epithelium.</li>
+                        <li>~10&times; higher malignancy risk than tubular.</li>
+                        <li>Large villous adenomas in the rectum can rarely cause <strong>secretory diarrhea</strong> with hypokalemia (McKittrick-Wheelock syndrome).</li>
+                    </ul>
+                </div>
+
+                <h4>Risk features driving malignant potential</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Size &gt;1 cm</strong> (especially &gt;4 cm &mdash; risk approaches 40%)</li>
+                        <li><strong>Villous histology</strong></li>
+                        <li><strong>High-grade dysplasia</strong></li>
+                        <li>Sessile base (incomplete resection risk)</li>
+                    </ul>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: &ldquo;Big, Villous, Bad&rdquo;</div>
+                    <div class="mnemonic-body">
+                        Three adenoma features that raise cancer risk: <strong>B</strong>ig (&gt;1 cm), <strong>V</strong>illous architecture, <strong>B</strong>ad (high-grade) dysplasia.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-serrated" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Serrated Polyps &amp; the Serrated Pathway</h3>
+            <div class="section-body">
+                <h4>Hyperplastic polyp</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Small (&lt;5 mm), usually distal colon/rectum.</li>
+                        <li>Histology: serrated (&ldquo;saw-toothed&rdquo;) crypts in the <strong>upper</strong> third; no dysplasia.</li>
+                        <li><strong>No malignant potential</strong> when typical.</li>
+                    </ul>
+                </div>
+
+                <h4>Sessile serrated adenoma/polyp (SSA/P)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Usually <strong>right-sided</strong>, flat, often covered by mucus cap &mdash; easy to miss.</li>
+                        <li>Serrations extend <strong>to the crypt base</strong> with basal dilation and lateral branching (&ldquo;L&rdquo;- and &ldquo;T&rdquo;-shaped crypts).</li>
+                        <li>Molecular: <strong>BRAF</strong> V600E mutation &rarr; <strong>CpG island methylator phenotype (CIMP)</strong> &rarr; <strong>MLH1 silencing</strong> &rarr; <strong>microsatellite instability (MSI)</strong>.</li>
+                        <li><strong>Precancerous</strong> &mdash; drives ~20&ndash;30% of colorectal cancers (the &ldquo;serrated pathway&rdquo;).</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Hyperplastic vs sessile serrated</div>
+                    <div class="trap-body">
+                        Small <strong>distal (rectosigmoid)</strong> hyperplastic polyps = benign. Large or <strong>right-sided</strong> &ldquo;hyperplastic-looking&rdquo; polyps should be treated as <strong>sessile serrated</strong> until proven otherwise &mdash; they are precancerous and require surveillance.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-molecular" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Molecular Pathways of Colorectal Cancer</h3>
+            <div class="section-body">
+                <h4>Chromosomal instability (CIN) / Classic adenoma&ndash;carcinoma sequence (~80% of sporadic CRC)</h4>
+                <div class="h4-body">
+                    <p>Normal epithelium &rarr; <strong>APC loss</strong> &rarr; hyperproliferative epithelium / early adenoma &rarr; <strong>KRAS activation</strong> &rarr; late adenoma &rarr; <strong>p53 loss</strong> &rarr; invasive carcinoma.</p>
+                    <ul>
+                        <li><strong>APC</strong> (5q): first hit, Wnt/&beta;-catenin dysregulation.</li>
+                        <li><strong>KRAS</strong> (12p): drives growth of adenomas.</li>
+                        <li><strong>p53</strong> (17p) / SMAD4 / DCC: final transformation to invasive cancer.</li>
+                        <li><strong>Familial Adenomatous Polyposis (FAP)</strong>: germline APC mutation &rarr; hundreds of adenomas, near-100% cancer risk by age 40 &rarr; prophylactic colectomy.</li>
+                    </ul>
+                </div>
+
+                <h4>Microsatellite instability (MSI) / Mismatch repair pathway (~15% of sporadic CRC)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Sporadic</strong>: arises from the <strong>serrated pathway</strong> &mdash; BRAF mutation + CIMP &rarr; MLH1 promoter hypermethylation &rarr; MSI.</li>
+                        <li><strong>Lynch syndrome (HNPCC)</strong>: germline mismatch repair gene mutation (<em>MLH1, MSH2, MSH6, PMS2</em>) &rarr; right-sided CRC, young age, associated endometrial/ovarian/gastric/urothelial cancers.</li>
+                        <li>MSI tumors tend to be right-sided, mucinous, with prominent lymphocytic infiltrate (&ldquo;Crohn-like&rdquo; reaction) and <strong>better prognosis</strong>; they respond to immune checkpoint inhibitors.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield sequence:</strong> <span class="buzzword">APC &rarr; KRAS &rarr; p53</span> (CIN, left-sided) vs <span class="buzzword">BRAF &rarr; CIMP &rarr; MLH1 silencing &rarr; MSI</span> (serrated, right-sided).
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: IBD-associated CRC is different</div>
+                    <div class="trap-body">
+                        In IBD-associated CRC the molecular sequence is <strong>p53 first, APC later</strong> (opposite of sporadic). That is why flat dysplasia arises in chronically inflamed mucosa before any adenoma forms &mdash; random biopsy surveillance is needed.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-crc" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Colon Cancer &mdash; Clinical, Gross, Histology, Staging</h3>
+            <div class="section-body">
+                <h4>Right-sided vs left-sided presentation</h4>
+                <div class="h4-body">
+                    <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse: collapse; font-size: 14px;">
+                        <thead>
+                            <tr style="background:#f1f5f9;">
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Feature</th>
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Right colon (cecum/ascending)</th>
+                                <th style="text-align:left; padding:8px; border:1px solid #cbd5e1;">Left colon (descending/sigmoid)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Gross morphology</td><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Exophytic / polypoid</strong> (wide lumen)</td><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Annular / &ldquo;apple-core&rdquo;</strong> (narrow lumen)</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Classic presentation</td><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Occult bleed &rarr; iron-deficiency anemia</strong>, weight loss, fatigue</td><td style="padding:8px; border:1px solid #e2e8f0;"><strong>Obstruction, change in bowel habits, hematochezia</strong></td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Molecular</td><td style="padding:8px; border:1px solid #e2e8f0;">MSI / serrated pathway more common</td><td style="padding:8px; border:1px solid #e2e8f0;">Classic APC&rarr;KRAS&rarr;p53 CIN</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #e2e8f0;">Prognosis (stage-adjusted)</td><td style="padding:8px; border:1px solid #e2e8f0;">Generally comparable (MSI subset may do better)</td><td style="padding:8px; border:1px solid #e2e8f0;">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <h4>Histology</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Most are <strong>adenocarcinoma</strong>, graded well / moderately / poorly differentiated.</li>
+                        <li><strong>Mucinous adenocarcinoma</strong> (&gt;50% extracellular mucin) &mdash; worse prognosis; more common in MSI.</li>
+                        <li><strong>Signet-ring cell carcinoma</strong> &mdash; aggressive, poor prognosis.</li>
+                    </ul>
+                </div>
+
+                <h4>Staging and prognosis</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>TNM / AJCC staging</strong> (depth of invasion T, regional LN N, distant M) &mdash; preferred system.</li>
+                        <li><strong>Dukes classification</strong> (historic): A = mucosa/submucosa, B = through muscularis, C = LN, D = distant.</li>
+                        <li>Liver is the most common distant metastasis (portal venous drainage); rectum can metastasize to lung via systemic veins.</li>
+                        <li>CEA is used for <strong>surveillance</strong> after treatment, not screening.</li>
+                        <li>Overall 5-year survival ~65% (varies by stage: &gt;90% stage I, &lt;15% stage IV).</li>
+                    </ul>
+                </div>
+
+                <h4>Screening (brief)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Average-risk screening now typically begins at <strong>age 45</strong>.</li>
+                        <li>Options: colonoscopy every 10 y (gold standard), FIT annually, stool DNA (Cologuard) every 3 y, CT colonography every 5 y.</li>
+                        <li>High-risk groups (Lynch, FAP, IBD, family history) need earlier and more frequent surveillance.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo4-tyu">
+                <h3>Testing Your Understanding</h3>
+
+                <h4>TYU 1</h4>
+                <p>A 68-year-old man presents with fatigue. Labs show microcytic anemia (Hgb 9.1, MCV 72). He denies overt bleeding. Colonoscopy reveals a large polypoid mass in the cecum. What type of lesion is most likely and what molecular pathway is most often responsible?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>Right-sided colon cancer classically presents with <strong>occult GI bleeding &rarr; iron-deficiency anemia</strong> and fatigue (wide lumen + cecal stool is liquid, so no obstruction). Right-sided tumors more often arise via the <strong>serrated pathway: BRAF mutation &rarr; CIMP &rarr; MLH1 silencing &rarr; microsatellite instability (MSI)</strong>. These tumors tend to be mucinous, have a lymphocytic infiltrate, and respond to checkpoint inhibitor therapy.</p>
+                </div>
+
+                <h4>TYU 2</h4>
+                <p>A 42-year-old woman has hundreds of adenomatous polyps throughout her colon on colonoscopy. Her father died of colon cancer at 38. What is the diagnosis, the underlying genetic defect, and the definitive management?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Familial adenomatous polyposis (FAP)</strong> &mdash; autosomal dominant, caused by germline mutation of the <em>APC</em> tumor-suppressor gene on chromosome 5q21. Cancer risk approaches 100% by age 40 if untreated, so definitive management is <strong>prophylactic total colectomy</strong> (typically in the second decade of life). Variants: Gardner syndrome (FAP + desmoid tumors, osteomas, dental abnormalities), Turcot syndrome (FAP + CNS tumors, typically medulloblastoma).</p>
+                </div>
+
+                <h4>TYU 3</h4>
+                <p>A 36-year-old man has right-sided colon cancer. Family history: mother with endometrial cancer at 45, maternal uncle with colon cancer at 48. Tumor testing shows loss of MSH2 expression and high microsatellite instability. What is the diagnosis and what additional cancers should he be screened for?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Lynch syndrome (HNPCC)</strong> &mdash; autosomal dominant germline mutation of a mismatch repair gene (most commonly <em>MLH1</em> or <em>MSH2</em>; also <em>MSH6</em>, <em>PMS2</em>). Diagnosis driven by young age, right-sided colon cancer, MSI-high tumor, and family history (Amsterdam / Bethesda criteria). Screen for associated cancers: <strong>endometrial</strong> (most common extracolonic), ovarian, gastric, small bowel, urothelial (ureter/renal pelvis), hepatobiliary, and skin (Muir-Torre variant &mdash; sebaceous tumors). Start colonoscopy at age 20&ndash;25 (every 1&ndash;2 years), plus gynecologic surveillance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ PRACTICE QUESTIONS ══ -->
+    <section class="lo-section" id="practice">
+        <h2 class="lo-title">Practice Questions &mdash; USMLE Step 1 Style</h2>
+        <p class="lo-text">Original lecture questions (Q1&ndash;Q10) plus additional Step 1-style vignettes across all four LOs. Reveal each answer after your attempt to see the reasoning.</p>
+        <div class="lo-content" id="practice-body">
+
+            <div class="lo-controls">
+                <button onclick="expandAll('practice-body')">Expand all</button>
+                <button onclick="collapseAll('practice-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="practice-lecture" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>Section A &mdash; Original Lecture Questions (Q1&ndash;Q10)</h3>
+            <div class="section-body">
+
+                <div class="practice-question">
+                    <h4>Q1</h4>
+                    <p>A 24-year-old man has abdominal pain and fatigue for 6 months. He is afebrile and appears pale. Exam: mild RLQ tenderness, no masses, bowel sounds active. Labs: Hgb 8.9, MCV 74, Plt 255K, WBC 7.8K. Stool is positive for occult blood. Colonoscopy shows aphthous ulcers and skip lesions in the proximal colon. Which of the following is most likely to cause this patient&rsquo;s illness?</p>
+                    <p class="option">A. Crohn disease</p>
+                    <p class="option">B. Acute appendicitis</p>
+                    <p class="option">C. Angiodysplasia</p>
+                    <p class="option">D. Meckel diverticulum</p>
+                    <p class="option">E. Diverticulosis</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: A. Crohn disease.</strong> Young adult with chronic abdominal pain, iron-deficiency anemia, RLQ tenderness, and skip-lesion colonoscopic findings is classic. Acute appendicitis would present acutely with RLQ pain and fever. Angiodysplasia and diverticulosis cause painless bleeding, typically in older adults. Meckel diverticulum more often presents in children with painless bleeding.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q2</h4>
+                    <p>Which pathologic feature of Crohn disease can be seen on biopsies?</p>
+                    <p class="option">A. Eosinophilic mucosal infiltrate</p>
+                    <p class="option">B. Crypt abscess</p>
+                    <p class="option">C. Brunner gland hyperplasia</p>
+                    <p class="option">D. Noncaseating granuloma</p>
+                    <p class="option">E. Thickened apical subepithelial collagen layer</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: D. Noncaseating granuloma.</strong> Granulomas are present in ~35% of Crohn biopsies and are <em>highly specific</em> (not sensitive). Crypt abscesses occur in both UC and Crohn but are more prominent in UC. Eosinophilic mucosa suggests eosinophilic gastroenteritis. Brunner gland hyperplasia is duodenal (peptic injury). Thickened subepithelial collagen is collagenous colitis.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q3</h4>
+                    <p>A 39-year-old woman has had recurrent bloody diarrhea and cramping for 12 years, consistent with ulcerative colitis. She is at greatest risk for developing which of the following complications?</p>
+                    <p class="option">A. Diverticulitis</p>
+                    <p class="option">B. Adenocarcinoma</p>
+                    <p class="option">C. Perirectal fistula formation</p>
+                    <p class="option">D. Fat malabsorption</p>
+                    <p class="option">E. Primary biliary cirrhosis</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: B. Adenocarcinoma.</strong> After ~10 years of UC, cumulative CRC risk climbs dramatically (especially with pancolitis or PSC). Perirectal fistulas are Crohn. Fat malabsorption is an ileal/small-bowel problem (Crohn, not UC). UC is associated with <strong>primary sclerosing cholangitis</strong>, not primary biliary cirrhosis/cholangitis.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q4</h4>
+                    <p>What changes on colon biopsies indicate chronicity versus an acute event in UC?</p>
+                    <p class="option">A. Lymphocytic infiltrate</p>
+                    <p class="option">B. Superficial mucosal hemorrhage</p>
+                    <p class="option">C. Brunner gland hyperplasia</p>
+                    <p class="option">D. Crypt abscess</p>
+                    <p class="option">E. Crypt architectural disarray</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: E. Crypt architectural disarray</strong> (branching, distortion, dropout, basal plasmacytosis) is the histologic hallmark of chronicity. Crypt abscesses can occur acutely. Lymphocytic infiltrate is nonspecific. Brunner gland hyperplasia is duodenal.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q5</h4>
+                    <p>A 65-year-old hospitalized woman, treated with multiple antibiotics and recently ventilated, develops abdominal distention with ileus on day 20. Labs show leukocytosis and hypoalbuminemia. Colonoscopy shows yellow-white plaques on erythematous mucosa. What is the most likely diagnosis?</p>
+                    <p class="option">A. Pseudomembranous enterocolitis</p>
+                    <p class="option">B. Gas gangrene with myonecrosis</p>
+                    <p class="option">C. Ulcerative proctitis</p>
+                    <p class="option">D. Ischemic bowel disease</p>
+                    <p class="option">E. Toxic megacolon</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: A. Pseudomembranous enterocolitis.</strong> The classic combo of recent antibiotics, hospitalization, and yellow-white pseudomembranes is diagnostic of <em>C. difficile</em> colitis. Toxic megacolon is a complication but not the primary diagnosis here.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q6</h4>
+                    <p>What is true about <em>C. difficile</em> infection?</p>
+                    <p class="option">A. Caused by a gram-negative bacterium</p>
+                    <p class="option">B. It is invasive, producing toxins A and B</p>
+                    <p class="option">C. Exposure to antifungals is a main cause</p>
+                    <p class="option">D. 30% of outpatients are colonized</p>
+                    <p class="option">E. It is spread via the fecal-oral route</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: E. Fecal-oral route.</strong> <em>C. difficile</em> is a gram-<strong>positive</strong> spore-forming anaerobe; disease is <strong>toxin-mediated</strong> (not invasive); <strong>antibacterials</strong> (not antifungals) drive overgrowth; ~20&ndash;30% of hospitalized (not outpatient) adults are colonized.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q7</h4>
+                    <p>A 65-year-old woman with sigmoid diverticulosis has hematochezia. CT shows 1-cm air-filled sigmoid outpouchings. Although rare, which long-term complication is most likely?</p>
+                    <p class="option">A. Adenocarcinoma</p>
+                    <p class="option">B. Malabsorption</p>
+                    <p class="option">C. Ulcerative colitis</p>
+                    <p class="option">D. Pericolic abscess</p>
+                    <p class="option">E. Toxic megacolon</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: D. Pericolic abscess.</strong> About 20% of diverticulosis patients develop diverticulitis; localized microperforation leads to pericolic or pelvic abscess. Diverticular disease is not a precursor to CRC, UC, malabsorption, or toxic megacolon.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q8</h4>
+                    <p>What is true about the pathophysiology of diverticular disease?</p>
+                    <p class="option">A. Risk increased from lack of haustral folds</p>
+                    <p class="option">B. In acute settings, a high-fiber diet can alleviate pressure</p>
+                    <p class="option">C. The most common site is in the thin-walled cecum</p>
+                    <p class="option">D. Crypt abscesses are common</p>
+                    <p class="option">E. Nerves, vasa recta, and connective tissue sheaths penetrate the muscle coat</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: E.</strong> The muscularis propria is penetrated by nerves, vasa recta, and connective tissue &mdash; these are the weak spots where mucosa/submucosa herniate. In Western populations, the <strong>sigmoid</strong> (not cecum) is the most common site. Acute diverticulitis is managed with bowel rest (not high fiber); high fiber is for prevention. Crypt abscesses are IBD histology.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q9</h4>
+                    <p>A 70-year-old man has a villous adenoma seen on screening colonoscopy that is not removed. Five years later he has constipation, microcytic anemia, and 5-kg weight loss. At surgery there is a 7-cm mass encircling the descending colon. Which neoplasm is he now most likely to have?</p>
+                    <p class="option">A. Villous adenoma</p>
+                    <p class="option">B. Carcinoid tumor</p>
+                    <p class="option">C. Adenocarcinoma</p>
+                    <p class="option">D. Mucinous cystadenoma</p>
+                    <p class="option">E. Leiomyosarcoma</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C. Adenocarcinoma.</strong> Untreated villous adenomas progress via APC &rarr; KRAS &rarr; p53 to invasive adenocarcinoma. Left-sided tumors present as annular &ldquo;apple-core&rdquo; lesions with obstruction, change in bowel habits, and hematochezia.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q10</h4>
+                    <p>Which of the following lesions found on colonoscopy has the highest risk of transforming into a malignancy?</p>
+                    <p class="option">A. A pedunculated tubular adenoma</p>
+                    <p class="option">B. An 8-mm hyperplastic polyp</p>
+                    <p class="option">C. A fundic gland polyp</p>
+                    <p class="option">D. A villous adenoma</p>
+                    <p class="option">E. An 8-mm leiomyoma</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: D. Villous adenoma</strong> &mdash; ~10&times; the malignant potential of a tubular adenoma. Small hyperplastic polyps, fundic gland polyps, and leiomyomas are essentially benign.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <h3 class="collapsible-h3" id="practice-extra" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>Section B &mdash; Additional Step 1-Style Questions</h3>
+            <div class="section-body">
+
+                <div class="practice-question">
+                    <h4>Q11</h4>
+                    <p>A 28-year-old man with a 4-year history of bloody diarrhea is found on colonoscopy to have continuous inflammation extending from the rectum to the splenic flexure, with loss of haustra on imaging (&ldquo;lead-pipe colon&rdquo;). Which extraintestinal complication has a surveillance implication that requires <em>annual</em> colonoscopy from the time of its diagnosis?</p>
+                    <p class="option">A. Erythema nodosum</p>
+                    <p class="option">B. Ankylosing spondylitis</p>
+                    <p class="option">C. Primary sclerosing cholangitis</p>
+                    <p class="option">D. Uveitis</p>
+                    <p class="option">E. Pyoderma gangrenosum</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C. PSC.</strong> UC + PSC dramatically raises CRC risk. Guidelines recommend <strong>annual colonoscopy from the time of PSC diagnosis</strong>, regardless of UC duration. Other extraintestinal manifestations do not independently alter CRC screening intervals.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q12</h4>
+                    <p>A 30-year-old woman with Crohn disease involving the terminal ileum develops steatorrhea and is found to have megaloblastic anemia. Which of the following best explains her findings?</p>
+                    <p class="option">A. Lactose intolerance</p>
+                    <p class="option">B. Bacterial overgrowth producing folate</p>
+                    <p class="option">C. Loss of bile-salt reabsorption and vitamin B12 absorption</p>
+                    <p class="option">D. Pancreatic insufficiency</p>
+                    <p class="option">E. Gluten sensitivity</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C.</strong> The terminal ileum is the site of <strong>bile-salt reabsorption</strong> (bile-salt loss &rarr; fat malabsorption / steatorrhea) and <strong>B12&ndash;intrinsic factor absorption</strong> (loss &rarr; megaloblastic anemia). This explains why Crohn disease involving the ileum &mdash; or surgical resection of the ileum &mdash; causes this dual pattern.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q13</h4>
+                    <p>A 35-year-old man with long-standing UC undergoes surveillance colonoscopy. Random biopsies show <strong>flat high-grade dysplasia</strong> without a visible mass. What is the recommended management?</p>
+                    <p class="option">A. Repeat colonoscopy in 6 months</p>
+                    <p class="option">B. Endoscopic mucosal resection</p>
+                    <p class="option">C. Topical 5-ASA</p>
+                    <p class="option">D. Total proctocolectomy</p>
+                    <p class="option">E. Azathioprine escalation</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: D. Total proctocolectomy.</strong> Flat, invisible high-grade dysplasia in UC has a high concurrent / subsequent cancer risk and cannot be reliably resected endoscopically. Current guidelines support colectomy. Visible, well-demarcated dysplastic lesions may be amenable to endoscopic resection with close surveillance, but flat HGD typically warrants surgery.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q14</h4>
+                    <p>A 68-year-old man hospitalized for pneumonia develops profuse watery diarrhea after 5 days of ceftriaxone. Stool GDH is positive; toxin EIA is positive. He is clinically mild (WBC 11K, no renal dysfunction). What is first-line therapy?</p>
+                    <p class="option">A. Oral metronidazole</p>
+                    <p class="option">B. Oral vancomycin</p>
+                    <p class="option">C. IV vancomycin</p>
+                    <p class="option">D. Loperamide</p>
+                    <p class="option">E. Fecal microbiota transplant</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: B. Oral vancomycin</strong> (or fidaxomicin) &times; 10 days is first-line for any CDI under current IDSA guidance. Metronidazole is second-line only. <strong>IV vancomycin does not reach the colon lumen</strong> and is ineffective. Loperamide is contraindicated. FMT is reserved for recurrent disease.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q15</h4>
+                    <p>A 73-year-old man presents with a single episode of painless hematochezia. He is stable. Colonoscopy shows multiple right-sided diverticula, one with a visible vessel. What vessel is responsible for this bleeding?</p>
+                    <p class="option">A. Superior mesenteric vein</p>
+                    <p class="option">B. Inferior hemorrhoidal plexus</p>
+                    <p class="option">C. Vasa recta</p>
+                    <p class="option">D. Marginal artery of Drummond</p>
+                    <p class="option">E. Inferior epigastric artery</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C. Vasa recta.</strong> Diverticula herniate through the colonic wall exactly where the vasa recta pierce the muscularis. Chronic injury can cause asymmetric arterial rupture of a vasa recta into the diverticular lumen, producing painless, brisk lower GI bleeding. Right-sided diverticula bleed disproportionately because they are wider-mouthed with thinner overlying mucosa.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q16</h4>
+                    <p>A 24-year-old man is referred after a screening colonoscopy showed &gt;100 tubular adenomas throughout the colon. Genetic testing confirms a germline <em>APC</em> mutation. Which of the following is he also at elevated risk for?</p>
+                    <p class="option">A. Pheochromocytoma</p>
+                    <p class="option">B. Medullary thyroid carcinoma</p>
+                    <p class="option">C. Desmoid tumors and osteomas of the jaw</p>
+                    <p class="option">D. Hemangioblastomas</p>
+                    <p class="option">E. Schwannomas</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C. Desmoid tumors and osteomas of the jaw</strong> &mdash; features of <strong>Gardner syndrome</strong>, an FAP variant. Gardner also includes dental abnormalities, epidermoid cysts, and congenital hypertrophy of the retinal pigment epithelium. Turcot = FAP + medulloblastoma. MEN2, VHL, and NF2 syndromes explain the other choices.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q17</h4>
+                    <p>A 52-year-old man has a 1.5-cm right-sided polyp removed at screening colonoscopy. Histology shows serrated crypts extending to the base with lateral L-shaped extensions. Molecular testing reveals <strong>BRAF</strong> V600E mutation and MLH1 promoter hypermethylation. What lesion is this, and what future CRC subtype does it predispose to?</p>
+                    <p class="option">A. Hyperplastic polyp &mdash; no increased risk</p>
+                    <p class="option">B. Tubular adenoma &mdash; CIN pathway CRC</p>
+                    <p class="option">C. Sessile serrated lesion &mdash; MSI-high CRC via serrated pathway</p>
+                    <p class="option">D. Juvenile polyp &mdash; no increased risk</p>
+                    <p class="option">E. Peutz-Jeghers polyp &mdash; small-bowel adenocarcinoma</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: C.</strong> Basal crypt serration and L-/T-shaped extensions with BRAF mutation + MLH1 hypermethylation define a <strong>sessile serrated lesion</strong>. These progress along the <strong>serrated pathway</strong> (BRAF &rarr; CIMP &rarr; MLH1 silencing) to <strong>MSI-high, right-sided colorectal cancers</strong> &mdash; often mucinous with a prominent lymphocytic infiltrate and responsive to immune checkpoint inhibitors.</p>
+                    </div>
+                </div>
+
+                <div class="practice-question">
+                    <h4>Q18</h4>
+                    <p>A 66-year-old man with metastatic colon cancer has tumor testing showing deficient mismatch repair / MSI-high status. Which treatment is most likely to benefit him?</p>
+                    <p class="option">A. Imatinib</p>
+                    <p class="option">B. Cetuximab</p>
+                    <p class="option">C. Bevacizumab</p>
+                    <p class="option">D. Pembrolizumab</p>
+                    <p class="option">E. Trastuzumab</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                    <div class="answer">
+                        <p><strong>Answer: D. Pembrolizumab</strong> (anti-PD-1). MSI-high / dMMR tumors produce neoantigens and respond strongly to immune checkpoint inhibitors &mdash; now a standard first-line option in metastatic MSI-high CRC. Cetuximab requires wild-type <em>RAS</em>/<em>BRAF</em>; bevacizumab is anti-VEGF; imatinib targets GIST (c-KIT); trastuzumab targets HER2-amplified tumors.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .answer { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture 28: Intestinal Pathology Case Review — HoyaDocs GI Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gi28-intestinal-path-case-review.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function toggleMobileSidebar() {
+        document.querySelector('.sidebar').classList.toggle('mob-open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('mob-open');
+                document.querySelector('.sidebar-overlay').classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
