@@ -96,7 +96,10 @@
     <option value="#AK_Step1_v12::#SketchyPath">Sketchy Path</option>
     <option value="#AK_Step1_v12::#SketchyPharm">Sketchy Pharm</option>
     <option value="#AK_Step1_v12::#SketchyAnatomy">Sketchy Anatomy</option>
+    <option value="#AK_Step1_v12::#FirstAid">First Aid</option>
     <option value="#AK_Step1_v12::#Physeo">Physeo</option>
+    <option disabled>── In-House ──</option>
+    <option value="Block4">Block 4</option>
     <option value="custom">Custom…</option>
   </select>
   <label id="custom-resource-label" style="display:none">Custom prefix</label>
@@ -178,7 +181,7 @@ function getResourceBase() {
 }
 function getResourceName() {
   const s = document.getElementById('prefix-select').value;
-  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::#SketchyMicro':'Sketchy Micro','#AK_Step1_v12::#SketchyPath':'Sketchy Path','#AK_Step1_v12::#SketchyPharm':'Sketchy Pharm','#AK_Step1_v12::#SketchyAnatomy':'Sketchy Anatomy','#AK_Step1_v12::#Physeo':'Physeo'};
+  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#FirstAid':'First Aid','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::#SketchyMicro':'Sketchy Micro','#AK_Step1_v12::#SketchyPath':'Sketchy Path','#AK_Step1_v12::#SketchyPharm':'Sketchy Pharm','#AK_Step1_v12::#SketchyAnatomy':'Sketchy Anatomy','#AK_Step1_v12::#Physeo':'Physeo','Block4':'Block 4'};
   return s === 'custom' ? (document.getElementById('custom-resource-input').value.split('::').pop() || 'Resource') : (map[s] || s);
 }
 function getSubject() { return document.getElementById('subject-input').value.trim(); }
@@ -211,10 +214,11 @@ function updatePreview() {
 }
 function resourceSkipsSubject() {
   const v = document.getElementById('prefix-select').value;
-  return v === '#AK_Step1_v12::#Pathoma' || v.startsWith('#AK_Step1_v12::#Sketchy');
+  return v === '#AK_Step1_v12::#Pathoma' || v.startsWith('#AK_Step1_v12::#Sketchy') || v === 'Block4';
 }
 function resourceUsesHeading() {
-  return document.getElementById('prefix-select').value.startsWith('#AK_Step1_v12::#Sketchy');
+  const v = document.getElementById('prefix-select').value;
+  return v.startsWith('#AK_Step1_v12::#Sketchy') || v === 'Block4';
 }
 function getHeading() { return document.getElementById('heading-input').value.trim(); }
 function onConfigChange() {
