@@ -72,8 +72,12 @@
   .tree-children { padding-left: 18px; border-left: 0.5px solid #e5e5e5; margin-left: 5px; }
   .tree-children.collapsed { display: none; }
   .leaf-row { display: flex; align-items: baseline; gap: 6px; padding: 2px 4px; flex-wrap: nowrap; border-radius: 6px; }
-  .leaf-row:hover { background: #f7f7f5; }
+  .leaf-row:hover { background: transparent; }
+  .leaf-block:hover .leaf-row { background: transparent; }
   .leaf-indent { width: 12px; flex-shrink: 0; }
+  .leaf-block { border-radius: 6px; }
+  .leaf-block:hover { background: #f7f7f5; }
+  .leaf-extra-tag { padding-left: 56px; }
 </style>
 </head>
 <body>
@@ -267,7 +271,8 @@ function resetAll() {
 }
 
 function extractRows(noteRows, prefix) {
-  const tagMap = {};
+  const subMap = {};
+  const tagCounts = {};
   const prefixLower = prefix.toLowerCase();
   for (const row of noteRows) {
     const tags = (row[0] || '').trim().split(/\s+/);
@@ -277,14 +282,24 @@ function extractRows(noteRows, prefix) {
       if (!tag.toLowerCase().startsWith(prefixLower)) continue;
       const parts = tag.slice(prefix.length).split('::');
       if (parts.length < 2 || !parts[0] || !parts[1]) continue;
-      const key = parts[0] + '|||' + parts[1] + '|||' + tag;
-      tagMap[key] = (tagMap[key] || 0) + 1;
+      const chapter = parts[0];
+      const subchapter = parts[1];
+      const key = chapter + '|||' + subchapter;
+      if (!subMap[key]) {
+        subMap[key] = { chapter, subchapter, count: 0, tags: [] };
+        tagCounts[key] = {};
+      }
+      subMap[key].count += 1;
+      if (!tagCounts[key][tag]) {
+        tagCounts[key][tag] = true;
+        subMap[key].tags.push(tag);
+      }
     }
   }
-  return Object.entries(tagMap).map(([k, count]) => {
-    const [chapter, subchapter, tag] = k.split('|||');
-    return { chapter, subchapter, count, tag };
-  }).sort((a, b) => a.chapter.localeCompare(b.chapter) || a.subchapter.localeCompare(b.subchapter));
+  // Keep .tag as first tag for backward compat, .tags has all
+  const result = Object.values(subMap);
+  for (const r of result) { r.tag = r.tags[0] || ''; }
+  return result.sort((a, b) => a.chapter.localeCompare(b.chapter) || a.subchapter.localeCompare(b.subchapter));
 }
 
 function showSummary() {
@@ -306,7 +321,7 @@ function switchTab(name) {
 
 function getFiltered() {
   const q = (document.getElementById('search').value || '').toLowerCase();
-  return q ? allRows.filter(r => r.chapter.toLowerCase().includes(q) || r.subchapter.toLowerCase().includes(q) || r.tag.toLowerCase().includes(q)) : allRows;
+  return q ? allRows.filter(r => r.chapter.toLowerCase().includes(q) || r.subchapter.toLowerCase().includes(q) || r.tags.some(t => t.toLowerCase().includes(q))) : allRows;
 }
 function getSorted(rows) {
   const cols = ['chapter','subchapter','mapped','count','tag'];
@@ -332,7 +347,7 @@ function renderTable() {
         <td class="subchapter-cell">${esc(label(r.subchapter))}</td>
         <td class="mapped-cell">${num ? `<span class="mapped-num">${esc(num)}</span>` : ''}${esc(num ? stripLeadingNum(label(r.subchapter)) : label(r.subchapter))}</td>
         <td class="count-cell">${r.count}</td>
-        <td class="tag-cell">${esc(r.tag)}</td>
+        <td class="tag-cell">${r.tags.map(t => esc(t)).join('<br>')}</td>
       </tr>`;
     }).join('')}</tbody></table>`;
 }
@@ -364,7 +379,11 @@ function renderTree() {
     for (const row of chapterMap[chapter]) {
       const subNum = getSubchapterNum(row.subchapter);
       const numLabel = formatSubNum(chapterNum, subNum);
-      html += `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(numLabel)}</span><span class="t-subchapter">${esc(label(row.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(row.tag)}</span></div>`;
+      html += `<div class="leaf-block"><div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(numLabel)}</span><span class="t-subchapter">${esc(label(row.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(row.tags[0])}</span></div>`;
+      for (let ti = 1; ti < row.tags.length; ti++) {
+        html += `<div class="leaf-row leaf-extra-tag"><span class="leaf-indent"></span><span class="t-arrow">→</span><span class="t-tag">${esc(row.tags[ti])}</span></div>`;
+      }
+      html += `</div>`;
     }
     html += `</div></div>`;
   }
@@ -395,7 +414,7 @@ function buildHierarchy() {
       chapter: label(ch),
       subchapters: chapterMap[ch].map(r => {
         const subNum = getSubchapterNum(r.subchapter);
-        return { number: formatSubNum(chapterNum, subNum), subchapter: label(r.subchapter), tag: r.tag };
+        return { number: formatSubNum(chapterNum, subNum), subchapter: label(r.subchapter), tags: r.tags };
       })
     };
   })};
@@ -409,7 +428,10 @@ function exportHierarchyText() {
     lines.push(`\n${ch.chapter}`);
     for (const sub of ch.subchapters) {
       const num = sub.number ? `${sub.number} ` : '';
-      lines.push(`  * ${num}${sub.subchapter} → ${sub.tag}`);
+      lines.push(`  * ${num}${sub.subchapter}`);
+      for (const t of sub.tags) {
+        lines.push(`      → ${t}`);
+      }
     }
   }
   downloadText(lines.join('\n'), 'hierarchy.txt');
@@ -419,11 +441,15 @@ function exportHierarchyJSON() {
 }
 
 function toDelimited(rows, sep) {
-  const headers = ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag'];
+  const maxTags = Math.max(1, ...rows.map(r => r.tags.length));
+  const headers = ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards'];
+  for (let i = 0; i < maxTags; i++) headers.push(i === 0 ? 'Tag' : `Tag ${i + 1}`);
   const escape = v => sep===',' ? `"${String(v).replace(/"/g,'""')}"` : String(v);
   return [headers.join(sep), ...rows.map(r => {
     const ml = mappedLabel(r.chapter, r.subchapter);
-    return [label(r.chapter), label(r.subchapter), ml, r.count, r.tag].map(escape).join(sep);
+    const base = [label(r.chapter), label(r.subchapter), ml, r.count];
+    for (let i = 0; i < maxTags; i++) base.push(r.tags[i] || '');
+    return base.map(escape).join(sep);
   })].join('\n');
 }
 function downloadText(text, filename) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download = filename; a.click(); }
