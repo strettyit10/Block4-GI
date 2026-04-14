@@ -323,7 +323,7 @@ function extractRows(noteRows, prefix) {
     const tags = (row[0] || '').trim().split(/\s+/);
     for (const rawTag of tags) {
       if (!rawTag) continue;
-      const tag = rawTag.startsWith('#') ? rawTag : '#' + rawTag;
+      const tag = (prefix.startsWith('#') && !rawTag.startsWith('#')) ? '#' + rawTag : rawTag;
       if (!tag.toLowerCase().startsWith(prefixLower)) continue;
       const parts = tag.slice(prefix.length).split('::');
       let heading = '', chapter, subchapter;
