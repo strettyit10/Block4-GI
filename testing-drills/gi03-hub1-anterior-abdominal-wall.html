@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI03 Anterior Abdominal Wall — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../active-recall-hub.html" class="nav-back-btn">← Active Drill Hub</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>Anterior Abdominal Wall <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 03 · GI Block · Anterior Abdominal Wall, Inguinal Region &amp; Peritoneum — LOs 1–4
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI03 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> GI Block LOs 1–4</div>
+    <div class="source-badge"><strong>Review:</strong> Moore's Anatomy Ch. 2</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid Hernia & Abdominal Wall</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi03-hub2-anterior-abdominal-wall.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi03-hub3-anterior-abdominal-wall.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">17</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Test Traps</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">LOs</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">17</span> cards total</span><span>LOs 1–4</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Wall Layers</div><div class="fc-q">Name the 9 layers of the anterior abdominal wall from superficial to deep. Group by "Rules of 3s".</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Superficial (3):</strong> Skin, Camper's fascia (fatty), Scarpa's fascia (membranous)<br><strong>Middle (3):</strong> External oblique, Internal oblique, Transversus abdominis<br><strong>Deep (3):</strong> Transversalis fascia, Extraperitoneal fat, Parietal peritoneum</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Rectus Sheath</div><div class="fc-q">Describe rectus sheath composition ABOVE vs. BELOW the arcuate line.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Above arcuate line:</strong> Anterior = EO+IO, Posterior = TA+TF<br><strong>Below arcuate line:</strong> Anterior = EO+IO+TA, Posterior = TF only<br><strong>Arcuate line location:</strong> ~50% distance from pubis to xiphoid (~3 cm above ASIS)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Scarpa's Fascia</div><div class="fc-q">Scarpa's fascia: what does it continue into, and what does it NOT enter?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Continues as:</strong> Dartos muscle (scrotum) or round ligament sheath (females)<br><strong>Does NOT continue into:</strong> Thigh (blocked by fascia lata) or down leg<br><strong>Clinical:</strong> Straddle injuries spread into scrotum/perineum, NOT down leg</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Inguinal Canal</div><div class="fc-q">Define the inguinal canal: length, path, locations of deep and superficial rings.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Length:</strong> ~4 cm<br><strong>Path:</strong> Inferolaterally from deep ring (lateral to epigastric vessels) → superficial ring (medial to ASIS)<br><strong>Deep ring:</strong> In transversalis fascia<br><strong>Superficial ring:</strong> Defect in EO aponeurosis medial to ASIS</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Inguinal Canal Walls</div><div class="fc-q">Name the 4 walls of the inguinal canal: anterior, posterior, superior, inferior.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Anterior:</strong> EO aponeurosis + part of IO<br><strong>Posterior:</strong> Transversalis fascia + conjoint tendon<br><strong>Superior (roof):</strong> Arching fibers of IO + TA<br><strong>Inferior (floor):</strong> Inguinal ligament + lacunar ligament + pectineal ligament</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Spermatic Cord</div><div class="fc-q">Enumerate the contents of the spermatic cord (mnemonic: 3 A's, 3 V's, 3 N's).</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Arteries (3):</strong> Testicular (from aorta!), Artery to vas (IMA), Cremasteric (IEA)<br><strong>Veins (3):</strong> Testicular (IVC/renal), Venae comitantes, Cremasteric<br><strong>Nerves (3):</strong> Genital branch GF, Cremasteric (from GF), Sympathetic<br>Plus: Vas deferens, lymphatics, fibrous remnants</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Cremasteric Reflex</div><div class="fc-q">Cremasteric reflex: afferent arc, efferent arc, and clinical significance?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Afferent:</strong> Genital branch GF nerve (L1-L2) from upper medial thigh<br><strong>Efferent:</strong> Genital branch GF nerve → cremasteric muscle<br><strong>Clinical:</strong> ABSENT reflex = red flag for testicular torsion; also absent above L1 (spinal shock)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Testicular Descent</div><div class="fc-q">Name 3 stages of testicular descent in males and the role of the gubernaculum.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Stage 1 (transabdominal):</strong> Testis descends to inguinal ring<br><strong>Stage 2 (inguinal):</strong> Testis + gubernaculum traverse canal<br><strong>Stage 3 (scrotal):</strong> Gubernaculum attaches to scrotum; testis pulled down<br><strong>Females:</strong> Gubernaculum = ovarian ligament + round ligament</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Scrotal Layers</div><div class="fc-q">List the 8 scrotal layers from skin to peritoneum and their correspondences to abdominal wall.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>1. Skin (darkly pigmented)<br>2. Camper's fascia<br>3. Dartos (cont. of Scarpa's)<br>4. External spermatic fascia (from EO)<br>5. Cremasteric fascia (from IO)<br>6. Internal spermatic fascia (from TF)<br>7. Tunica vaginalis (embryologic peritoneum)<br>8. Testis/epididymis</strong></div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Peritoneum</div><div class="fc-q">Define visceral vs. parietal peritoneum. Name the main peritoneal cavities (males vs. females).</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Visceral:</strong> Covers organs<br><strong>Parietal:</strong> Lines wall<br><strong>Males:</strong> Greater sac, omental bursa, 2 paracolic gutters, 2 pericolic gutters, rectovesical pouch<br><strong>Females:</strong> Same BUT rectovesical = rectouterine pouch; tubes open into peritoneal cavity</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Hesselbach's Triangle</div><div class="fc-q">Define Hesselbach's triangle (inguinal triangle) by its 3 borders. What hernia type occurs here?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Borders:</strong> Inferior epigastric vessels (lateral), Rectus abdominis edge (medial), Inguinal ligament (inferior)<br><strong>Hernia type:</strong> DIRECT inguinal hernia<br><strong>Mnemonic:</strong> R.I.P. = Rectus, Inferior epigastric, Poupart's ligament</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Hernia Classification</div><div class="fc-q">Compare direct vs. indirect inguinal vs. femoral hernia: location, frequency, strangulation risk.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Indirect (60%):</strong> Lateral to epigastric vessels, passes through both rings, wider neck, lower strangulation risk<br><strong>Direct (25%):</strong> Medial to epigastric vessels, only superficial ring, narrower neck, higher strangulation risk<br><strong>Femoral (10-15%):</strong> Below inguinal ligament, HIGHEST strangulation risk (narrowest)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Other Hernias</div><div class="fc-q">Describe umbilical, epigastric, and incisional hernias: location, timing, and management.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Umbilical:</strong> Through linea alba at umbilicus, common in infants (close spontaneously), adults with ↑IAP<br><strong>Epigastric:</strong> Through linea alba between xiphoid-umbilicus, small defect, high incarceration risk, needs repair<br><strong>Incisional:</strong> Through surgical scar, risk ↑ with infection/poor healing/obesity</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Abdominal Arteries</div><div class="fc-q">Name the arteries of the anterior abdominal wall: inferior epigastric, superficial epigastric, superficial circumflex iliac. Origins and territories?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Inferior epigastric:</strong> From EIA, courses medially in rectus sheath posterior wall<br><strong>Superficial epigastric:</strong> From femoral artery, supplies lower abdomen skin<br><strong>Superficial circumflex iliac:</strong> From femoral artery, supplies ASIS region<br><strong>Clinical:</strong> Superior epigastric (from ITA) + inferior = landmark in hernia surgery</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Innervation</div><div class="fc-q">Segmental dermatomes T7-T12, L1 of abdominal wall. What are the motor nerves?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Dermatomes:</strong> T7 at xiphoid, T10 at umbilicus, L1 at midpoint umbilicus-ASIS<br><strong>Motor:</strong> T7-T11 intercostal nerves (between obliques), T12 subcostal, L1 iliohypogastric + ilioinguinal<br><strong>Clinical:</strong> Thoracic blocks for upper wall; spinal anesthesia T10 blocks pain below umbilicus</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Lymphatics</div><div class="fc-q">Lymphatic drainage of anterior abdominal wall: superficial vs. deep, and the watershed at umbilicus.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Superficial above umbilicus:</strong> Ipsilateral axillary nodes<br><strong>Superficial below umbilicus:</strong> Inguinal nodes (Cloquet's node medial to femoral vein)<br><strong>Deep:</strong> Para-aortic nodes<br><strong>Watershed importance:</strong> Skin cancer location dictates spread (head/axilla vs. groin)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — TRAM Flap</div><div class="fc-q">What is a TRAM flap, what is it used for, and what is the key contraindication?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>TRAM:</strong> Transverse Rectus Abdominis Myocutaneous flap<br><strong>Use:</strong> Breast reconstruction (uses rectus + overlying skin/fascia)<br><strong>Contraindication:</strong> Prior hernia repair or liposuction in rectus sheath (disrupts epigastric vessels → flap necrosis)<br><strong>Alternative:</strong> DIEP flap (preserves rectus muscle)</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL IN THE BLANK ══════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 01 — LO 1</div>
+      <div class="fib-prompt">The <strong>inguinal ligament</strong> (Poupart's ligament) runs from the <strong>ASIS</strong> to the <strong>___________</strong>. It forms the inferior border of the inguinal canal.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="landmark..." data-answers="pubic tubercle,pubictubercle">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 02 — LO 1</div>
+      <div class="fib-prompt">The <strong>lacunar ligament</strong> is a medial extension of the inguinal ligament that attaches to the <strong>___________</strong> and forms the medial border of the femoral ring.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="bony attachment..." data-answers="pectineal ligament,cooper's ligament,pecten pubis">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 03 — LO 4</div>
+      <div class="fib-prompt">A <strong>direct inguinal hernia</strong> protrudes through the <strong>___________</strong> wall of the inguinal canal, <strong>medial to</strong> the inferior epigastric vessels, within Hesselbach's triangle.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="which wall..." data-answers="posterior,back">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 04 — LO 1</div>
+      <div class="fib-prompt">The <strong>gubernaculum</strong> guides testicular descent and is continuous superiorly with the <strong>___________</strong> and inferiorly attaches to the <strong>___________</strong>.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="superior structure..." data-answers="mesorchium">
+        <input class="fib-input" type="text" placeholder="inferior structure..." data-answers="dartos,scrotal skin">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 05 — LO 1</div>
+      <div class="fib-prompt">In females, the ovarian ligament is homologous to the gubernaculum testis, and the <strong>round ligament of the uterus</strong> is homologous to the <strong>___________</strong>.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="male structure..." data-answers="spermatic cord">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 06 — LO 1</div>
+      <div class="fib-prompt">The <strong>rectus abdominis</strong> is enclosed in the rectus sheath. Below the arcuate line, the posterior sheath is <strong>absent</strong> and the rectus muscle lies directly on the <strong>___________</strong>.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="underlying structure..." data-answers="transversalis fascia,transversalis">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 07 — LO 1</div>
+      <div class="fib-prompt">Scarpa's fascia of the anterior abdominal wall is continuous with the <strong>___________</strong> in the scrotum (males) but does NOT continue into the <strong>___________</strong> due to attachment of fascia lata.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="scrotal structure..." data-answers="dartos,dartos muscle">
+        <input class="fib-input" type="text" placeholder="region it doesn't enter..." data-answers="thigh,leg">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 08 — LO 3</div>
+      <div class="fib-prompt">The <strong>parietal peritoneum</strong> lines the abdominal wall and is derived embryologically from <strong>___________</strong>, while <strong>visceral peritoneum</strong> covering organs is derived from <strong>___________</strong>.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="parietal source..." data-answers="somatopleure">
+        <input class="fib-input" type="text" placeholder="visceral source..." data-answers="splanchnopleure">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Instructions:</strong> Drag and drop the items into the correct order, then click "Check Order." Use "Show Answer" if you get stuck.
+  </div>
+
+  <!-- Drill 1: GI Wall Layers -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 1 — GI Wall Layers: Innermost → Outermost</div>
+    <div class="drill-hint">Arrange these four layers from the innermost (luminal side) to the outermost.</div>
+    <div class="order-list" id="order-list-1" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-1')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Muscularis externa (propria)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mucosa</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Serosa / Adventitia</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Submucosa</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','order-fb-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-1"></div>
+    <div class="order-answer" id="order-ans-1">
+      <ol><li><span>Mucosa</span> — epithelium, lamina propria, muscularis mucosae</li><li><span>Submucosa</span> — contains Meissner's plexus, blood vessels</li><li><span>Muscularis externa</span> — circular (inner) + longitudinal (outer); Auerbach's plexus between them</li><li><span>Serosa/Adventitia</span> — outermost connective tissue layer</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 2: GI Segments -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 2 — GI Segments: Mouth → Anus</div>
+    <div class="drill-hint">Arrange these 7 segments in the correct order of food travel.</div>
+    <div class="order-list" id="order-list-2" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-2')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Jejunum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Esophagus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="7"><span class="item-grip">⠿</span><span class="item-text">Colon</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mouth / Pharynx</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Duodenum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="6"><span class="item-grip">⠿</span><span class="item-text">Ileum</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Stomach</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','order-fb-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-2"></div>
+    <div class="order-answer" id="order-ans-2">
+      <ol><li><span>Mouth/Pharynx</span></li><li><span>Esophagus</span></li><li><span>Stomach</span></li><li><span>Duodenum</span> — bile + pancreatic juice enter here</li><li><span>Jejunum</span> — most absorption</li><li><span>Ileum</span> — B12 + bile salts absorbed; Peyer's patches</li><li><span>Colon</span> — water/electrolyte reabsorption; stool formation</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 3: Peristaltic Reflex Sequence -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 3 — Peristaltic Reflex: Correct Sequence</div>
+    <div class="drill-hint">Arrange the steps of the peristaltic reflex in the order they occur.</div>
+    <div class="order-list" id="order-list-3" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-3')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Descending inhibition: VIP + NO relax muscle below the bolus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">ENS sensory neurons activated → interneurons process signal</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Bolus moves aborally (toward anus)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Mechanoreceptors detect wall distension from intraluminal bolus</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Ascending excitation: ACh + Substance P contract muscle above the bolus</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','order-fb-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-3"></div>
+    <div class="order-answer" id="order-ans-3">
+      <ol><li><span>Mechanoreceptors detect distension</span></li><li><span>ENS sensory neurons → interneurons</span></li><li><span>Ascending excitation (ACh + SP)</span> — contraction oral/above</li><li><span>Descending inhibition (VIP + NO)</span> — relaxation aboral/below</li><li><span>Bolus moves aborally</span></li></ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATCHING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Instructions:</strong> Click an item on the left, then click its match on the right. Correct pairs turn green; wrong pairs flash red.
+  </div>
+
+  <!-- Set 1: Cell → Product -->
+  <div class="match-set">
+    <div class="match-set-title">Set 1 — Gastric Cell Type → Secretory Product</div>
+    <div class="match-set-hint">Match each cell type to its primary secretory product.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Cell Type</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Parietal cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Chief cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">G cell</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Paneth cell</div>
+      </div>
+      <div>
+        <div class="match-col-label">Primary Product</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Gastrin</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">HCl + Intrinsic factor</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Defensins + Lysozyme</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Pepsinogen</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms1-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms1')">Reset</button>
+  </div>
+
+  <!-- Set 2: ENS Neurotransmitter → Effect -->
+  <div class="match-set">
+    <div class="match-set-title">Set 2 — ENS Neurotransmitter → Primary GI Effect</div>
+    <div class="match-set-hint">Match each neurotransmitter to its primary GI effect.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Neurotransmitter</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Acetylcholine (ACh)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">VIP</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Nitric Oxide (NO)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Serotonin (5-HT)</div>
+      </div>
+      <div>
+        <div class="match-col-label">Primary GI Effect</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">↑Secretion + smooth muscle relaxation</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Initiates peristaltic + secretory reflexes via ENS</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">↑Motility + ↑Secretion (excitatory)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Sphincter and smooth muscle relaxation (LES)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms2-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms2')">Reset</button>
+  </div>
+
+  <!-- Set 3: Artery → GI Territory -->
+  <div class="match-set">
+    <div class="match-set-title">Set 3 — Artery → GI Territory</div>
+    <div class="match-set-hint">Match each artery to the GI structures it primarily supplies.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Artery</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Celiac trunk</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Superior Mesenteric Artery (SMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Inferior Mesenteric Artery (IMA)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Portal vein</div>
+      </div>
+      <div>
+        <div class="match-col-label">Territory</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Distal transverse colon → upper rectum (hindgut)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Stomach, liver, spleen, pancreas (foregut)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Drains intestinal blood to liver (first-pass metabolism)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Small intestine + proximal 2/3 of transverse colon (midgut)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms3-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms3')">Reset</button>
+  </div>
+</div>
+
+<!-- ══ TEST TRAPS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    <strong>Test Trap Mode:</strong> Each statement is either TRUE or FALSE as written. Many are designed to catch common exam errors. Click T or F — then read the explanation carefully.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 01 — LO 1</div>
+    <div class="trap-statement">"Auerbach's plexus controls secretion, while Meissner's plexus controls motility."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> This is reversed! Auerbach's (myenteric) plexus = MOTILITY (between circular &amp; longitudinal muscle). Meissner's (submucosal) plexus = SECRETION. Mnemonic: <strong>"My Sub"</strong> — Myenteric = Motility, Submucosal = Secretion.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 02 — LO 1</div>
+    <div class="trap-statement">"In Hirschsprung disease, the DILATED segment of colon is the aganglionic segment that cannot relax."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Classic trap! The AGANGLIONIC segment is NARROW and tonically contracted. The DILATED segment is PROXIMAL to the obstruction — it has NORMAL ganglion cells, it's just backed up with stool because nothing can pass through below it.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 03 — LO 2</div>
+    <div class="trap-statement">"Gastrin, CCK, and secretin are secreted directly into the GI lumen where they act on food to promote digestion."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> GI hormones are ALWAYS secreted into the BLOOD (portal circulation), not the lumen. They travel systemically to reach target organs (e.g., gastrin travels from G cells in the antrum through blood to stimulate parietal cells). Only digestive enzymes go into the lumen.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 04 — LO 3</div>
+    <div class="trap-statement">"Vomiting leads to metabolic acidosis because stomach acid is lost."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Vomiting causes METABOLIC ALKALOSIS. When HCl is lost from the stomach, the body loses H⁺ → blood becomes relatively more basic. The correct pairing: <strong>vomiting → metabolic alkalosis + hypokalemia</strong>; diarrhea → metabolic acidosis + hypokalemia (lose HCO₃⁻).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 05 — LO 4</div>
+    <div class="trap-statement">"A patient with complete vagotomy (all vagal fibers cut) will have no peristalsis because the ENS requires vagal input to function."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The ENS can function INDEPENDENTLY of extrinsic innervation (vagus, spinal cord). Transplanted, extrinsically denervated intestinal segments still peristalse. The vagus MODULATES and amplifies ENS activity but is NOT required for basic GI function.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 06 — LO 5</div>
+    <div class="trap-statement">"Nitric oxide (NO) from ENS neurons causes contraction of the LES to maintain the barrier against acid reflux."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> NO causes RELAXATION, not contraction. In fact, NO is responsible for relaxing the LES to allow swallowed food to pass into the stomach. When inhibitory NO neurons at the LES are destroyed (as in achalasia), the LES FAILS TO RELAX → food cannot enter the stomach → progressive esophageal dilation.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 07 — LO 6</div>
+    <div class="trap-statement">"B12 is absorbed in the jejunum, where the majority of nutrient absorption occurs."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> B12 (and bile salts) are specifically absorbed in the TERMINAL ILEUM — not the jejunum. The jejunum is the major site of general nutrient absorption, but B12 requires intrinsic factor (from parietal cells) and is exclusively absorbed in the ileum. This is why ileal disease/resection causes B12 deficiency.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 08 — LO 7</div>
+    <div class="trap-statement">"Sympathetic stimulation of the GI tract increases peristalsis and secretion to facilitate digestion during periods of stress."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Sympathetic stimulation ("fight or flight") DECREASES GI motility and secretion, INCREASES sphincter tone, and causes vasoconstriction in the gut. It essentially shunts blood and energy away from digestion during stress. It is PARASYMPATHETIC ("rest and digest") that promotes GI function.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">GI Wall Layers & Plexuses</div>
+    <table class="ref-table">
+      <thead><tr><th>Layer (Inside→Out)</th><th>Key Contents</th><th>Plexus</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Mucosa</td><td>Epithelium, lamina propria, muscularis mucosae</td><td>—</td></tr>
+        <tr><td class="key">Submucosa</td><td>Blood vessels, lymphatics, dense CT</td><td>Meissner's (submucosal) → SECRETION</td></tr>
+        <tr><td class="key">Muscularis externa</td><td>Inner circular + outer longitudinal smooth muscle</td><td>Auerbach's (myenteric) → MOTILITY (between the two muscle layers)</td></tr>
+        <tr><td class="key">Serosa/Adventitia</td><td>Outermost CT; serosa = intraperitoneal; adventitia = retroperitoneal</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Key Gastric Cell Types</div>
+    <table class="ref-table">
+      <thead><tr><th>Cell</th><th>Location</th><th>Product</th><th>Step 1 Hook</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Parietal</td><td>Fundus/body</td><td>HCl + Intrinsic factor</td><td>Target of PPIs, H2 blockers; B12 deficiency if lost</td></tr>
+        <tr><td class="key">Chief</td><td>Fundus/body</td><td>Pepsinogen → pepsin (pH &lt;3.5)</td><td>Inactive at high pH; activated by acid</td></tr>
+        <tr><td class="key">G cells</td><td>Antrum + duodenum</td><td>Gastrin → ↑HCl</td><td>Zollinger-Ellison = gastrinoma → excess gastrin → ulcers</td></tr>
+        <tr><td class="key">Goblet cells</td><td>SI + colon</td><td>Mucus</td><td>↓ in IBD (Crohn's); goblet cell metaplasia in Barrett's esophagus</td></tr>
+        <tr><td class="key">Paneth cells</td><td>Crypt base (SI)</td><td>Defensins, lysozyme</td><td>Innate immunity; dysregulated in Crohn's disease</td></tr>
+        <tr><td class="key">Enterochromaffin</td><td>Throughout GI</td><td>Serotonin (5-HT)</td><td>90% of body's serotonin; carcinoid tumors release 5-HT → flushing, diarrhea</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">ENS Neurotransmitters — Quick Reference</div>
+    <table class="ref-table">
+      <thead><tr><th>NT</th><th>Effect</th><th>Clinical Relevance</th></tr></thead>
+      <tbody>
+        <tr><td class="key">ACh</td><td>↑Motility, ↑Secretion</td><td>Atropine blocks → ↓motility; neostigmine stimulates</td></tr>
+        <tr><td class="key">Substance P</td><td>↑Contraction (ascending/oral limb)</td><td>Co-released with ACh in excitatory neurons</td></tr>
+        <tr><td class="key">VIP</td><td>↑Secretion, ↓Muscle tone</td><td>VIPoma → watery diarrhea (WDHA/Verner-Morrison)</td></tr>
+        <tr><td class="key">Nitric Oxide (NO)</td><td>↓Muscle tone (descending/aboral)</td><td>Achalasia = loss of NO neurons at LES → fails to relax</td></tr>
+        <tr><td class="key">5-HT (serotonin)</td><td>↑Peristalsis + secretion (via 5-HT3/5-HT4)</td><td>Ondansetron (5-HT3 antagonist) = antiemetic; metoclopramide (5-HT4) = prokinetic</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Fluid Balance Summary</div>
+    <table class="ref-table">
+      <thead><tr><th>Source</th><th>Volume/Day</th><th>Key Contents</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Ingested fluids</td><td>~2 L</td><td>—</td></tr>
+        <tr><td class="key">Saliva</td><td>~1.5 L</td><td>Amylase, IgA, bicarbonate; pH 6–7</td></tr>
+        <tr><td class="key">Gastric juice</td><td>~2 L</td><td>HCl (pH 1.5–2), pepsinogen, IF, mucus</td></tr>
+        <tr><td class="key">Pancreatic juice</td><td>~1.5 L</td><td>HCO₃⁻ + zymogens (trypsinogen, lipase, amylase)</td></tr>
+        <tr><td class="key">Bile</td><td>~0.5 L</td><td>Bile salts, bilirubin, cholesterol; pH 7–8</td></tr>
+        <tr><td class="key">Intestinal secretions</td><td>~1.5–2 L</td><td>Water, electrolytes, mucus</td></tr>
+        <tr><td class="key">TOTAL → small intestine</td><td>~9–10 L</td><td>Small intestine absorbs ~8.5 L; colon ~400 mL; feces ~100–200 mL</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-note">
+    <strong>Acid-Base Mnemonic:</strong> Vomiting = lose HCl = metabolic <strong>alkalosis</strong> + hypokalemia &nbsp;|&nbsp; Diarrhea = lose HCO₃⁻ = metabolic <strong>acidosis</strong> + hypokalemia
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp; GI03 Hub 1 — Core Concepts &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div><!-- /container -->
+
+<script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    inner.style.height=front.scrollHeight+'px';
+  });
+});
+// Tab switching
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+// FIB check
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+
+// Drag-and-Drop Ordering
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// Matching
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+
+// Test Traps
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+
+/* ── THEME TOGGLE ── */
+
+
+</script>
+</body>
+</html>
