@@ -332,6 +332,42 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .bb-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
 .bb-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
 
+/* ── PT SUBCHAPTERS ── */
+.pt-subs-wrap{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:12px;border-left:2px solid var(--c-pt-br)}
+.pt-sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;
+  background:rgba(192,56,10,.05);font-size:.74rem;color:var(--c-pt-tx)}
+[data-theme="dark"] .pt-sub-row{background:rgba(252,165,165,.06)}
+.pt-sub-row.done-sub{background:rgba(192,56,10,.12);text-decoration:line-through;opacity:.65}
+[data-theme="dark"] .pt-sub-row.done-sub{background:rgba(252,165,165,.12)}
+.pt-sub-cb{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--c-pt-tx);white-space:nowrap;flex-shrink:0}
+.pt-sub-label{flex:1;min-width:0}
+.pt-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+.pt-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+
+/* ── PH SUBCHAPTERS ── */
+.ph-subs-wrap{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:12px;border-left:2px solid var(--c-ph-br)}
+.ph-sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;
+  background:rgba(106,13,173,.05);font-size:.74rem;color:var(--c-ph-tx)}
+[data-theme="dark"] .ph-sub-row{background:rgba(196,181,253,.06)}
+.ph-sub-row.done-sub{background:rgba(106,13,173,.12);text-decoration:line-through;opacity:.65}
+[data-theme="dark"] .ph-sub-row.done-sub{background:rgba(196,181,253,.12)}
+.ph-sub-cb{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--c-ph-tx);white-space:nowrap;flex-shrink:0}
+.ph-sub-label{flex:1;min-width:0}
+.ph-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+.ph-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+
+/* ── SK SUBCHAPTERS ── */
+.sk-subs-wrap{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:12px;border-left:2px solid var(--c-sk-br)}
+.sk-sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;
+  background:rgba(133,77,14,.05);font-size:.74rem;color:var(--c-sk-tx)}
+[data-theme="dark"] .sk-sub-row{background:rgba(252,211,77,.06)}
+.sk-sub-row.done-sub{background:rgba(133,77,14,.12);text-decoration:line-through;opacity:.65}
+[data-theme="dark"] .sk-sub-row.done-sub{background:rgba(252,211,77,.12)}
+.sk-sub-cb{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--c-sk-tx);white-space:nowrap;flex-shrink:0}
+.sk-sub-label{flex:1;min-width:0}
+.sk-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+.sk-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+
 /* ── MOBILE ── */
 @media(max-width:700px){
   /* Topbar */
@@ -883,26 +919,30 @@ let STATE = {};
 
 function defaultPP(){ return {uworld:'Not Started',activeLearning:'Not Started',drillHub:'Not Started',qbank:'Not Started'}; }
 
-function bcDefaultSubs(l){
+// Resources that support per-subchapter checkboxes (any resource with a subs[] array)
+const SUBS_RES = ['BC','BB','PT','PH','SK'];
+
+function resHasSubs(l, r){
+  return Array.isArray(l.res?.[r]?.subs) && l.res[r].subs.length > 0;
+}
+
+function resDefaultSubs(l, r){
   // Returns an array of false values matching subchapter count
-  const subs=l.res?.BC?.subs||[];
+  const subs=l.res?.[r]?.subs||[];
   return subs.map(()=>false);
 }
 
-function bbDefaultSubs(l){
-  const subs=l.res?.BB?.subs||[];
-  return subs.map(()=>false);
-}
+// Back-compat aliases
+function bcDefaultSubs(l){ return resDefaultSubs(l,'BC'); }
+function bbDefaultSubs(l){ return resDefaultSubs(l,'BB'); }
 
 function defaultState(){
   const s={};
   LECTURES.forEach(l=>{
     s[l.id]={IH:{included:true,watch:false,ankiSetUp:false}};
     TP_RES.forEach(r=>{
-      if(r==='BC'){
-        s[l.id][r]={included:false,ankiSetUp:false,subs:bcDefaultSubs(l)};
-      } else if(r==='BB'){
-        s[l.id][r]={included:false,ankiSetUp:false,subs:bbDefaultSubs(l)};
+      if(SUBS_RES.includes(r) && resHasSubs(l,r)){
+        s[l.id][r]={included:false,ankiSetUp:false,subs:resDefaultSubs(l,r)};
       } else {
         s[l.id][r]={included:false,watch:false,ankiSetUp:false};
       }
@@ -918,41 +958,29 @@ function loadState(){
     if(raw) STATE=JSON.parse(raw);
     else STATE=defaultState();
   } catch(e){ STATE=defaultState(); }
-  // Ensure all keys exist + migrate practiceProblems + migrate BC/BB subs
+  // Ensure all keys exist + migrate practiceProblems + migrate per-subchapter arrays
   LECTURES.forEach(l=>{
     if(!STATE[l.id]) STATE[l.id]=defaultState()[l.id];
     if(!STATE[l.id].IH) STATE[l.id].IH={included:true,watch:false,ankiSetUp:false};
     TP_RES.forEach(r=>{
+      const hasSubs = SUBS_RES.includes(r) && resHasSubs(l,r);
       if(!STATE[l.id][r]){
-        if(r==='BC') STATE[l.id][r]={included:false,ankiSetUp:false,subs:bcDefaultSubs(l)};
-        else if(r==='BB') STATE[l.id][r]={included:false,ankiSetUp:false,subs:bbDefaultSubs(l)};
+        if(hasSubs) STATE[l.id][r]={included:false,ankiSetUp:false,subs:resDefaultSubs(l,r)};
         else STATE[l.id][r]={included:false,watch:false,ankiSetUp:false};
-      } else if(r==='BC'){
+      } else if(hasSubs){
         // Migrate: ensure subs array exists with correct length
-        const expected=(l.res?.BC?.subs||[]).length;
-        if(!Array.isArray(STATE[l.id].BC.subs)){
+        const expected=(l.res[r].subs||[]).length;
+        if(!Array.isArray(STATE[l.id][r].subs)){
           // Old format had watch:bool — seed subs based on old watch value
-          const oldWatch=STATE[l.id].BC.watch||false;
-          STATE[l.id].BC.subs=Array(expected).fill(oldWatch);
-          delete STATE[l.id].BC.watch;
-        } else if(STATE[l.id].BC.subs.length!==expected){
+          const oldWatch=STATE[l.id][r].watch||false;
+          STATE[l.id][r].subs=Array(expected).fill(oldWatch);
+          delete STATE[l.id][r].watch;
+        } else if(STATE[l.id][r].subs.length!==expected){
           // Resize: pad with false or trim
-          const cur=STATE[l.id].BC.subs;
-          STATE[l.id].BC.subs=Array.from({length:expected},(_,i)=>cur[i]||false);
+          const cur=STATE[l.id][r].subs;
+          STATE[l.id][r].subs=Array.from({length:expected},(_,i)=>cur[i]||false);
         }
-        if(STATE[l.id].BC.ankiSetUp===undefined) STATE[l.id].BC.ankiSetUp=false;
-      } else if(r==='BB'){
-        // Migrate: ensure BB subs array exists with correct length
-        const expected=(l.res?.BB?.subs||[]).length;
-        if(!Array.isArray(STATE[l.id].BB.subs)){
-          const oldWatch=STATE[l.id].BB.watch||false;
-          STATE[l.id].BB.subs=Array(expected).fill(oldWatch);
-          delete STATE[l.id].BB.watch;
-        } else if(STATE[l.id].BB.subs.length!==expected){
-          const cur=STATE[l.id].BB.subs;
-          STATE[l.id].BB.subs=Array.from({length:expected},(_,i)=>cur[i]||false);
-        }
-        if(STATE[l.id].BB.ankiSetUp===undefined) STATE[l.id].BB.ankiSetUp=false;
+        if(STATE[l.id][r].ankiSetUp===undefined) STATE[l.id][r].ankiSetUp=false;
       }
     });
     if(!STATE[l.id].practiceProblems) STATE[l.id].practiceProblems=defaultPP();
@@ -976,19 +1004,18 @@ function countThirdParty(id){
   return TP_RES.filter(r=>STATE[id][r].included).length;
 }
 
-function bcAllSubsWatched(id){
+function resAllSubsWatched(id, r){
   const ls=STATE[id]; const lec=LECTURES.find(l=>l.id===id);
-  const subs=lec.res?.BC?.subs||[];
+  const subs=lec.res?.[r]?.subs||[];
   if(!subs.length) return false;
-  return (ls.BC.subs||[]).every(v=>v===true);
+  const stateSubs=(ls[r]&&ls[r].subs)||[];
+  if(stateSubs.length===0) return false;
+  return stateSubs.every(v=>v===true);
 }
 
-function bbAllSubsWatched(id){
-  const ls=STATE[id]; const lec=LECTURES.find(l=>l.id===id);
-  const subs=lec.res?.BB?.subs||[];
-  if(!subs.length) return false;
-  return (ls.BB.subs||[]).every(v=>v===true);
-}
+// Back-compat
+function bcAllSubsWatched(id){ return resAllSubsWatched(id,'BC'); }
+function bbAllSubsWatched(id){ return resAllSubsWatched(id,'BB'); }
 
 function lecWatchStats(id){
   const ls=STATE[id];
@@ -999,14 +1026,8 @@ function lecWatchStats(id){
     if(!ls[r].included||!lec.res[r]) return;
     const m=lec.res[r].min||0;
     tot+=m;
-    if(r==='BC'){
-      const subs=lec.res.BC?.subs||[];
-      if(subs.length>0){ if(bcAllSubsWatched(id)) done+=m; }
-      else { if(ls.BC.watch) done+=m; }
-    } else if(r==='BB'){
-      const subs=lec.res.BB?.subs||[];
-      if(subs.length>0){ if(bbAllSubsWatched(id)) done+=m; }
-      else { if(ls.BB.watch) done+=m; }
+    if(SUBS_RES.includes(r) && resHasSubs(lec,r)){
+      if(resAllSubsWatched(id,r)) done+=m;
     } else {
       if(ls[r].watch) done+=m;
     }
@@ -1026,24 +1047,11 @@ function lecProgress(id){
   // Third-party
   TP_RES.forEach(r=>{
     if(!ls[r].included||!lec.res[r]) return;
-    if(r==='BC'){
-      // BC: each subchapter watch = 1 task; ankiSetUp = 1 task
-      const bcSubs=lec.res.BC?.subs||[];
-      if(bcSubs.length>0){
-        bcSubs.forEach((_,i)=>{ tot++; if((ls.BC.subs||[])[i]) done++; });
-      } else {
-        tot++; if(ls.BC.watch) done++; // no subs — fall back to single watch
-      }
-      tot++; if(ls.BC.ankiSetUp) done++; // ankiSetUp always counts
-    } else if(r==='BB'){
-      // BB: each subchapter watch = 1 task; ankiSetUp = 1 task
-      const bbSubs=lec.res.BB?.subs||[];
-      if(bbSubs.length>0){
-        bbSubs.forEach((_,i)=>{ tot++; if((ls.BB.subs||[])[i]) done++; });
-      } else {
-        tot++; if(ls.BB.watch) done++;
-      }
-      tot++; if(ls.BB.ankiSetUp) done++;
+    if(SUBS_RES.includes(r) && resHasSubs(lec,r)){
+      // Each subchapter watch = 1 task; ankiSetUp = 1 task
+      const subs=lec.res[r].subs||[];
+      subs.forEach((_,i)=>{ tot++; if((ls[r].subs||[])[i]) done++; });
+      tot++; if(ls[r].ankiSetUp) done++;
     } else {
       TASKS.forEach(t=>{ tot++; if(ls[r][t]) done++; });
     }
@@ -1083,38 +1091,17 @@ function globalStats(){
       if(!ls[r].included||!l.res[r]) return;
       selectedLecs++;
       const m=l.res[r].min||0;
-      if(r==='BC'){
+      if(SUBS_RES.includes(r) && resHasSubs(l,r)){
         totalMin+=m;
-        if(bcAllSubsWatched(l.id)) doneMin+=m;
-        const bcSubs=l.res.BC?.subs||[];
-        if(bcSubs.length>0){
-          bcSubs.forEach((_,i)=>{
-            totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
-            if((ls.BC.subs||[])[i]){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
-          });
-        } else {
-          totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
-          if(ls.BC.watch){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
-        }
+        if(resAllSubsWatched(l.id,r)) doneMin+=m;
+        const subs=l.res[r].subs||[];
+        subs.forEach((_,i)=>{
+          totalTasks++;byRes[r].tot++;byWeek[wk].tot++;
+          if((ls[r].subs||[])[i]){doneTasks++;byRes[r].done++;byWeek[wk].done++;}
+        });
         // ankiSetUp
-        totalTasks++;byRes.BC.tot++;byWeek[wk].tot++;
-        if(ls.BC.ankiSetUp){doneTasks++;byRes.BC.done++;byWeek[wk].done++;}
-      } else if(r==='BB'){
-        totalMin+=m;
-        if(bbAllSubsWatched(l.id)) doneMin+=m;
-        const bbSubs=l.res.BB?.subs||[];
-        if(bbSubs.length>0){
-          bbSubs.forEach((_,i)=>{
-            totalTasks++;byRes.BB.tot++;byWeek[wk].tot++;
-            if((ls.BB.subs||[])[i]){doneTasks++;byRes.BB.done++;byWeek[wk].done++;}
-          });
-        } else {
-          totalTasks++;byRes.BB.tot++;byWeek[wk].tot++;
-          if(ls.BB.watch){doneTasks++;byRes.BB.done++;byWeek[wk].done++;}
-        }
-        // ankiSetUp
-        totalTasks++;byRes.BB.tot++;byWeek[wk].tot++;
-        if(ls.BB.ankiSetUp){doneTasks++;byRes.BB.done++;byWeek[wk].done++;}
+        totalTasks++;byRes[r].tot++;byWeek[wk].tot++;
+        if(ls[r].ankiSetUp){doneTasks++;byRes[r].done++;byWeek[wk].done++;}
       } else {
         totalMin+=m; if(ls[r].watch) doneMin+=m;
         TASKS.forEach(t=>{
@@ -1292,17 +1279,18 @@ function buildRow(r, l, ls, isIH, tpCount){
   const modLabel=isIH?l.title:(l.res[r]?.label||'');
   const timeStr=l.res[r]?.min?`${l.res[r].min} min`:isIH?`${l.ihMin} min`:'TBD';
 
-  // ── BC with subchapters: special layout ──
-  if(r==='BC'&&!isIH){
-    const bcSubs=l.res.BC?.subs||[];
-    const bcXref=l.res.BC?.xref||'';
+  // ── Resource with subchapters: special layout (BC/BB/PT/PH/SK) ──
+  if(!isIH && SUBS_RES.includes(r) && resHasSubs(l,r)){
+    const rSubs=l.res[r].subs||[];
+    const rXref=l.res[r].xref||'';
+    const rLower=r.toLowerCase();
     let subsHtml='';
     if(inc){
       // Anki set up at the top level
-      const ankiChecked=ls.BC.ankiSetUp;
+      const ankiChecked=ls[r].ankiSetUp;
       const ankiDoneCls=ankiChecked?' done':'';
       const ankiTask=`<label class="task-check${ankiDoneCls}">
-        <input type="checkbox" ${ankiChecked?'checked':''} onchange="setTask(${l.id},'BC','ankiSetUp',this.checked)">
+        <input type="checkbox" ${ankiChecked?'checked':''} onchange="setTask(${l.id},'${r}','ankiSetUp',this.checked)">
         Anki Set Up
       </label>`;
       if(cards>0){
@@ -1311,84 +1299,26 @@ function buildRow(r, l, ls, isIH, tpCount){
         subsHtml+=`<div class="res-tasks" style="padding-top:2px">${ankiTask}</div>`;
       }
       // Subchapter rows
-      if(bcSubs.length>0){
-        const subRows=bcSubs.map((subLabel,i)=>{
-          const watched=(ls.BC.subs||[])[i]||false;
-          const doneCls=watched?' done-sub':'';
-          return `<div class="bc-sub-row${doneCls}">
-            <label class="bc-sub-cb">
-              <input type="checkbox" ${watched?'checked':''} onchange="setBCSub(${l.id},${i},this.checked)">
-              Watch
-            </label>
-            <span class="bc-sub-label">${subLabel}</span>
-          </div>`;
-        }).join('');
-        subsHtml+=`<div class="bc-subs-wrap">${subRows}</div>`;
-      } else {
-        // No subs available (e.g. Poisoning lecture)
-        subsHtml+=`<div class="bc-no-subs">No specific subchapters mapped</div>`;
-      }
-      if(bcXref){
-        subsHtml+=`<div class="bc-xref">ℹ ${bcXref}</div>`;
+      const subRows=rSubs.map((subLabel,i)=>{
+        const watched=(ls[r].subs||[])[i]||false;
+        const doneCls=watched?' done-sub':'';
+        return `<div class="${rLower}-sub-row${doneCls}">
+          <label class="${rLower}-sub-cb">
+            <input type="checkbox" ${watched?'checked':''} onchange="setResSub(${l.id},'${r}',${i},this.checked)">
+            Watch
+          </label>
+          <span class="${rLower}-sub-label">${subLabel}</span>
+        </div>`;
+      }).join('');
+      subsHtml+=`<div class="${rLower}-subs-wrap">${subRows}</div>`;
+      if(rXref){
+        subsHtml+=`<div class="${rLower}-xref">ℹ ${rXref}</div>`;
       }
     } else {
       subsHtml=`<span style="font-size:.72rem;color:var(--ink-3)">Select to enable tasks</span>`;
     }
 
-    return `<div class="res-row ${rowCls}" id="row-${l.id}-BC" style="flex-wrap:wrap;gap:6px">
-      <div style="display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap">
-        ${incBtn}
-        <span class="res-label">${meta.emoji} ${meta.label}</span>
-        <span class="res-module">${modLabel}</span>
-        <span class="res-time">${timeStr}</span>
-      </div>
-      <div style="width:100%;padding-left:2px">${subsHtml}</div>
-    </div>`;
-  }
-
-  // ── BB with subchapters: special layout ──
-  if(r==='BB'&&!isIH){
-    const bbSubs=l.res.BB?.subs||[];
-    const bbXref=l.res.BB?.xref||'';
-    let subsHtml='';
-    if(inc){
-      // Anki set up at the top level
-      const ankiChecked=ls.BB.ankiSetUp;
-      const ankiDoneCls=ankiChecked?' done':'';
-      const ankiTask=`<label class="task-check${ankiDoneCls}">
-        <input type="checkbox" ${ankiChecked?'checked':''} onchange="setTask(${l.id},'BB','ankiSetUp',this.checked)">
-        Anki Set Up
-      </label>`;
-      if(cards>0){
-        subsHtml+=`<div class="res-tasks" style="padding-top:2px">${ankiTask}<span style="font-size:.68rem;color:var(--ink-3);margin-left:4px">📚 ${cards} cards</span></div>`;
-      } else {
-        subsHtml+=`<div class="res-tasks" style="padding-top:2px">${ankiTask}</div>`;
-      }
-      // Subchapter rows
-      if(bbSubs.length>0){
-        const subRows=bbSubs.map((subLabel,i)=>{
-          const watched=(ls.BB.subs||[])[i]||false;
-          const doneCls=watched?' done-sub':'';
-          return `<div class="bb-sub-row${doneCls}">
-            <label class="bb-sub-cb">
-              <input type="checkbox" ${watched?'checked':''} onchange="setBBSub(${l.id},${i},this.checked)">
-              Watch
-            </label>
-            <span class="bb-sub-label">${subLabel}</span>
-          </div>`;
-        }).join('');
-        subsHtml+=`<div class="bb-subs-wrap">${subRows}</div>`;
-      } else {
-        subsHtml+=`<div class="bb-no-subs">No specific subchapters mapped</div>`;
-      }
-      if(bbXref){
-        subsHtml+=`<div class="bb-xref">ℹ ${bbXref}</div>`;
-      }
-    } else {
-      subsHtml=`<span style="font-size:.72rem;color:var(--ink-3)">Select to enable tasks</span>`;
-    }
-
-    return `<div class="res-row ${rowCls}" id="row-${l.id}-BB" style="flex-wrap:wrap;gap:6px">
+    return `<div class="res-row ${rowCls}" id="row-${l.id}-${r}" style="flex-wrap:wrap;gap:6px">
       <div style="display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap">
         ${incBtn}
         <span class="res-label">${meta.emoji} ${meta.label}</span>
@@ -1455,33 +1385,25 @@ function setPracticeProb(id, key, val){
   renderDashboard();
 }
 
-function setBCSub(id, subIdx, val){
-  if(!Array.isArray(STATE[id].BC.subs)) STATE[id].BC.subs=[];
-  STATE[id].BC.subs[subIdx]=val;
+function setResSub(id, r, subIdx, val){
+  if(!STATE[id][r]) return;
+  if(!Array.isArray(STATE[id][r].subs)) STATE[id][r].subs=[];
+  STATE[id][r].subs[subIdx]=val;
   saveState();
   updateLecHeader(id);
   renderDashboard();
   // Update the sub row styling in-place
-  const bcWrap=document.querySelector(`#row-${id}-BC .bc-subs-wrap`);
-  if(bcWrap){
-    const rows=bcWrap.querySelectorAll('.bc-sub-row');
+  const rLower=r.toLowerCase();
+  const wrap=document.querySelector(`#row-${id}-${r} .${rLower}-subs-wrap`);
+  if(wrap){
+    const rows=wrap.querySelectorAll(`.${rLower}-sub-row`);
     if(rows[subIdx]) rows[subIdx].classList.toggle('done-sub',val);
   }
 }
 
-function setBBSub(id, subIdx, val){
-  if(!Array.isArray(STATE[id].BB.subs)) STATE[id].BB.subs=[];
-  STATE[id].BB.subs[subIdx]=val;
-  saveState();
-  updateLecHeader(id);
-  renderDashboard();
-  // Update the sub row styling in-place
-  const bbWrap=document.querySelector(`#row-${id}-BB .bb-subs-wrap`);
-  if(bbWrap){
-    const rows=bbWrap.querySelectorAll('.bb-sub-row');
-    if(rows[subIdx]) rows[subIdx].classList.toggle('done-sub',val);
-  }
-}
+// Back-compat aliases
+function setBCSub(id, subIdx, val){ setResSub(id,'BC',subIdx,val); }
+function setBBSub(id, subIdx, val){ setResSub(id,'BB',subIdx,val); }
 
 function toggleLecCard(id){
   const card=document.getElementById(`lec-card-${id}`);
