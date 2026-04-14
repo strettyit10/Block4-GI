@@ -597,8 +597,12 @@ async function pushToCloud() {
   render();
   try {
     const ref = window._fb.doc(fbDb, 'users', fbUser.uid);
+    // Grab the Study Planner's state from localStorage (it's written by the iframe)
+    let plannerState = null;
+    try { plannerState = localStorage.getItem('gi-planner-v2'); } catch(e) {}
     await window._fb.setDoc(ref, {
       state: JSON.stringify(state),
+      plannerState: plannerState || '',
       updatedAt: new Date().toISOString(),
       email: fbUser.email
     });
@@ -608,6 +612,21 @@ async function pushToCloud() {
     syncStatus = 'error';
   }
   render();
+}
+
+// Count "included" third-party resources in a planner state — used to decide
+// which side of a merge has more meaningful data.
+function countPlannerIncluded(plannerObj) {
+  if (!plannerObj || typeof plannerObj !== 'object') return 0;
+  let n = 0;
+  const TP = ['BC','BB','PT','FA','PH','SK'];
+  for (const lec of Object.values(plannerObj)) {
+    if (!lec || typeof lec !== 'object') continue;
+    for (const r of TP) {
+      if (lec[r] && lec[r].included) n++;
+    }
+  }
+  return n;
 }
 
 async function pullFromCloud() {
@@ -650,6 +669,32 @@ async function pullFromCloud() {
       state.backlogKeys = {};
       for (const item of merged) state.backlogKeys[item.key] = true;
       saveLocal();
+
+      // --- Restore Study Planner state ---
+      const cloudPlannerStr = snap.data().plannerState || '';
+      if (cloudPlannerStr) {
+        try {
+          let localPlannerStr = '';
+          try { localPlannerStr = localStorage.getItem('gi-planner-v2') || ''; } catch(e) {}
+          const cloudPlanner = JSON.parse(cloudPlannerStr);
+          let useCloud = true;
+          if (localPlannerStr) {
+            const localPlanner = JSON.parse(localPlannerStr);
+            // If local has more included resources, keep local (user worked offline)
+            if (countPlannerIncluded(localPlanner) > countPlannerIncluded(cloudPlanner)) {
+              useCloud = false;
+            }
+          }
+          if (useCloud) {
+            localStorage.setItem('gi-planner-v2', cloudPlannerStr);
+            // If the planner iframe is already loaded, tell it to reload its state.
+            const frame = document.getElementById('plannerFrame');
+            if (frame && frame.contentWindow) {
+              try { frame.contentWindow.postMessage({ type: 'hoyadocs-planner-reload' }, '*'); } catch(e) {}
+            }
+          }
+        } catch (e) { console.error('Planner state parse error:', e); }
+      }
     }
     syncStatus = 'synced';
   } catch (e) {
@@ -657,6 +702,15 @@ async function pullFromCloud() {
     syncStatus = 'error';
   }
 }
+
+// The planner iframe writes to localStorage 'gi-planner-v2'. Cross-document
+// localStorage writes fire a 'storage' event on OTHER documents of the same
+// origin — so the parent picks up planner saves and can sync them to cloud.
+window.addEventListener('storage', (ev) => {
+  if (ev.key === 'gi-planner-v2' && fbUser) {
+    debouncedSync();
+  }
+});
 
 function debouncedSync() {
   if (!fbUser) return;
