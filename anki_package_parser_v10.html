@@ -109,7 +109,10 @@
   <p class="hint">Anki package files (.apkg) only</p>
 </div>
 
-<div id="status"></div>
+<div style="display:flex; align-items:center; gap:10px;">
+  <div id="status" style="flex:1"></div>
+  <button id="reset-btn" style="display:none; color:#c0392b; border-color:#e0a8a8;" onclick="resetAll()">Reset</button>
+</div>
 <div id="summary" style="display:none"></div>
 
 <div id="results" style="display:none">
@@ -241,8 +244,26 @@ function reparse(filename) {
   setStatus(`Loaded ${filename || 'package'} — ${allRows.length} subchapters found.`);
   showSummary();
   document.getElementById('results').style.display = 'block';
+  document.getElementById('reset-btn').style.display = '';
   renderTable();
   renderTree();
+}
+
+function resetAll() {
+  allRows = [];
+  cachedNoteRows = null;
+  sortCol = 0;
+  sortDir = 1;
+  document.getElementById('status').textContent = '';
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('summary').innerHTML = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('table-wrap').innerHTML = '';
+  document.getElementById('tree-wrap').innerHTML = '';
+  document.getElementById('search').value = '';
+  document.getElementById('reset-btn').style.display = 'none';
+  const fileInput = document.querySelector('#drop-zone input');
+  if (fileInput) fileInput.value = '';
 }
 
 function extractRows(noteRows, prefix) {
