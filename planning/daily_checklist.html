@@ -150,7 +150,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   gap: 4px;
   padding: 12px 48px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 6px solid var(--sb);  /* thick dark-green divider to match sidebar */
   background: var(--bg);
   position: sticky;
   top: 0;
@@ -232,7 +232,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .tab-panel { display: none; flex: 1; min-height: 0; }
 .tab-panel.active { display: flex; flex-direction: column; }
-.planner-frame { width: 100%; height: calc(100vh - 52px); border: none; background: var(--bg); }
+.planner-frame { width: 100%; height: calc(100vh - 58px); border: none; background: var(--bg); }
 @media (max-width: 768px) {
   .tab-bar { padding: 8px 12px 0; }
   .tab-btn { padding: 10px 12px; font-size: 0.82rem; }
@@ -491,10 +491,53 @@ button { font-family: inherit; cursor: pointer; }
 .history-day:hover .history-tooltip { display: block; }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .main-inner { padding: 20px 16px 60px; }
+@media (max-width: 960px) {
+  /* Stack the shell and move the sidebar to the bottom of the flow */
+  .shell { flex-direction: column; }
+  .sidebar {
+    order: 2;                  /* push sidebar after main content */
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .sb-brand      { margin-bottom: 0; flex: 0 0 auto; }
+  .sb-block      { display: none; }
+  .sb-rule       { display: none; }
+  .sb-section-label { display: none; }
+  .sb-spacer     { display: none; }
+  .sb-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin-bottom: 0;
+    flex-wrap: nowrap;
+  }
+  .sb-link {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+  .sb-link-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.72rem;
+  }
+  /* Hide the version tag on small screens */
+  .sidebar > div[style*="v1.0"] { display: none !important; }
+  .main { order: 1; }
+  .main-inner { padding: 20px 16px 40px; }
+  .tab-bar { padding: 10px 16px 0; }
   .timer-card { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .sb-nav { gap: 2px; }
+  .sb-link span:not(.sb-link-icon) { display: none; }  /* icon-only on very small screens */
 }
 </style>
 </head>
@@ -504,7 +547,7 @@ button { font-family: inherit; cursor: pointer; }
   <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sb-brand">
-      <div class="sb-name">HoyaDocs</div>
+      <a class="sb-name" href="https://strettyit10.github.io/Block4-GI/" style="color:#fff;text-decoration:none;display:inline-block" title="Go to HoyaDocs Study Hub home">HoyaDocs</a>
       <button class="dark-toggle" onclick="toggleTheme()" title="Toggle dark mode">🌓</button>
     </div>
     <div class="sb-block">GI Block · Daily Checklist</div>
@@ -1494,6 +1537,8 @@ function renderBacklog() {
     h += '<div style="font-size:1.05rem;font-weight:700;color:var(--accent);margin-bottom:4px">Your backlog is empty!</div>';
     h += '<div style="font-size:0.85rem;color:var(--ink-3)">When you defer overdue tasks from the Daily Checklist, they\'ll show up here.</div>';
     h += '</div>';
+    // Also surface the lecture-level previous-week watch backlog pointer
+    h += renderLectureBacklogCard();
     host.innerHTML = h;
     return;
   }
@@ -1551,7 +1596,59 @@ function renderBacklog() {
     h += '</div>';
   }
 
+  // Lecture-level previous-week watch backlog pointer (links to ADHD Planner)
+  h += renderLectureBacklogCard();
+
   host.innerHTML = h;
+}
+
+// Renders a card pointing to the lecture-level Previous-Week Watch Backlog.
+// Reads the planner's localStorage state to get a rough count of unwatched
+// previous-week resources, then links into the ADHD Planner tab.
+function renderLectureBacklogCard() {
+  let count = 0, totalMin = 0;
+  try {
+    const raw = localStorage.getItem('gi-planner-v2');
+    if (raw) {
+      const data = JSON.parse(raw);
+      // Shape: { state: { <lectureId>: { IH:{included,watch}, BC:{included,subs:[]}, ... } }, ... }
+      const ST = data && (data.state || data);
+      if (ST && typeof ST === 'object') {
+        // Determine previous ISO-Monday
+        const now = new Date();
+        const day = now.getDay(); // 0=Sun
+        const diffToMon = (day === 0 ? -6 : 1 - day);
+        const mon = new Date(now); mon.setDate(now.getDate() + diffToMon);
+        const prev = new Date(mon); prev.setDate(mon.getDate() - 7);
+        const prevISO = prev.toISOString().slice(0,10);
+        const WEEK_MONS = { '2026-04-06':'Wk 1','2026-04-13':'Wk 2','2026-04-20':'Wk 3' };
+        const prevWk = WEEK_MONS[prevISO];
+        if (prevWk) {
+          // We don't have LECTURES here; count unwatched-looking entries loosely
+          Object.values(ST).forEach(ls => {
+            if (!ls || typeof ls !== 'object') return;
+            ['IH','BC','BB','PT','PH','SK','FA'].forEach(r => {
+              const v = ls[r]; if (!v || !v.included) return;
+              if (r === 'IH') { if (!v.watch) count++; return; }
+              if (Array.isArray(v.subs) && v.subs.some(x => !x)) count++;
+            });
+          });
+          // Rough heuristic: cap shown count — this is a pointer card, not a full list
+        }
+      }
+    }
+  } catch(e) { /* ignore */ }
+
+  let h = '';
+  h += '<div class="progress-card" style="padding:14px 18px;display:flex;align-items:center;gap:14px;border-left:4px solid #b45309;margin-top:18px;margin-bottom:4px">';
+  h += '<div style="font-size:1.5rem">🎬</div>';
+  h += '<div style="flex:1">';
+  h += '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3)">Previous Week — Watch Backlog</div>';
+  h += '<div style="font-size:0.9rem;color:var(--ink-2);margin-top:2px">Unwatched lectures from the prior week live in the <b>ADHD Planner</b>. Check resources off there as you watch.</div>';
+  h += '</div>';
+  h += '<button onclick="switchTab(\'planner\')" style="padding:8px 14px;font-size:0.78rem;background:var(--sb);color:#fff;border:0;border-radius:6px;font-weight:700;cursor:pointer;white-space:nowrap">Open ADHD Planner →</button>';
+  h += '</div>';
+  return h;
 }
 
 function renderHistory(streak) {
