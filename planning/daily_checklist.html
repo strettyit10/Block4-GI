@@ -477,13 +477,15 @@ button { font-family: inherit; cursor: pointer; }
   <!-- MAIN -->
   <div class="main">
     <div class="tab-bar">
+      <button class="tab-btn" data-tab="thisweek" onclick="switchTab('thisweek')">📅 This Week</button>
       <button class="tab-btn active" data-tab="checklist" onclick="switchTab('checklist')">✅ Daily Checklist</button>
-      <button class="tab-btn" data-tab="planner" onclick="switchTab('planner')">📅 Study Planner</button>
+      <button class="tab-btn" data-tab="planner" onclick="switchTab('planner')">📝 Lecture Planner</button>
+      <button class="tab-btn" data-tab="dashboard" onclick="switchTab('dashboard')">📊 Dashboard</button>
     </div>
     <div id="tab-checklist" class="tab-panel active">
       <div class="main-inner" id="app"></div>
     </div>
-    <div id="tab-planner" class="tab-panel">
+    <div id="tab-frame" class="tab-panel">
       <iframe id="plannerFrame" class="planner-frame" data-src="../study-planner.html?embed=1" title="Study Planner"></iframe>
     </div>
   </div>
@@ -493,23 +495,38 @@ button { font-family: inherit; cursor: pointer; }
 // ============================================================
 // THEME TOGGLE
 // ============================================================
+// Tabs that live inside the Study Planner iframe
+const FRAME_TABS = { thisweek: 'thisweek', planner: 'planner', dashboard: 'dashboard' };
+
 function switchTab(name) {
+  // Update button active state
   document.querySelectorAll('.tab-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === name);
   });
-  document.querySelectorAll('.tab-panel').forEach(p => {
-    p.classList.toggle('active', p.id === 'tab-' + name);
-  });
-  if (name === 'planner') {
+  // Pick which panel to show: 'checklist' panel, or the shared iframe panel
+  const showFrame = !!FRAME_TABS[name];
+  document.getElementById('tab-checklist').classList.toggle('active', name === 'checklist');
+  document.getElementById('tab-frame').classList.toggle('active', showFrame);
+  if (showFrame) {
     const f = document.getElementById('plannerFrame');
-    if (f && !f.src && f.dataset.src) f.src = f.dataset.src;
+    if (f) {
+      // Lazy-load iframe with the initial tab baked into the URL so the planner
+      // opens on the right view even before its JS is ready.
+      if (!f.src && f.dataset.src) {
+        f.src = f.dataset.src + '&tab=' + FRAME_TABS[name];
+      } else if (f.contentWindow) {
+        try {
+          f.contentWindow.postMessage({ type: 'hoyadocs-switch-tab', tab: FRAME_TABS[name] }, '*');
+        } catch(e) {}
+      }
+    }
   }
   try { localStorage.setItem('hoyadocs_checklist_tab', name); } catch(e) {}
 }
 function restoreTab() {
   try {
     const t = localStorage.getItem('hoyadocs_checklist_tab');
-    if (t === 'planner') switchTab('planner');
+    if (t && t !== 'checklist') switchTab(t);
   } catch(e) {}
 }
 
