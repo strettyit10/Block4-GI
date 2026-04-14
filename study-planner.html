@@ -22,6 +22,7 @@
   --c-pt-bg:#FFF1EE;--c-pt-br:#FFBDAD;--c-pt-tx:#C0380A;
   --c-ph-bg:#FAF0FF;--c-ph-br:#DFB4FE;--c-ph-tx:#6A0DAD;
   --c-sk-bg:#FFF7EE;--c-sk-br:#F5C88A;--c-sk-tx:#854D0E;
+  --c-fa-bg:#FFEDEE;--c-fa-br:#FCA5A5;--c-fa-tx:#991B1B;
 }
 [data-theme="dark"]{
   --bg:#0a1f10;--surface:#122b1a;--ink:#f1f5f9;--ink-2:#cbd5e1;--ink-3:#94a3b8;--rule:#1e4a2a;
@@ -33,6 +34,7 @@
   --c-pt-bg:#2a0f0a;--c-pt-br:#7f1d1d;--c-pt-tx:#FCA5A5;
   --c-ph-bg:#1a0a2a;--c-ph-br:#4c1d95;--c-ph-tx:#C4B5FD;
   --c-sk-bg:#2a1800;--c-sk-br:#78350f;--c-sk-tx:#FCD34D;
+  --c-fa-bg:#2a0a0a;--c-fa-br:#991B1B;--c-fa-tx:#FCA5A5;
 }
 html,body{height:100%}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
@@ -99,6 +101,7 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .res-pill.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br);color:var(--c-pt-tx)}
 .res-pill.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br);color:var(--c-ph-tx)}
 .res-pill.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br);color:var(--c-sk-tx)}
+.res-pill.FA{background:var(--c-fa-bg);border-color:var(--c-fa-br);color:var(--c-fa-tx)}
 
 /* ── LECTURE CARDS ── */
 .lec-grid{display:flex;flex-direction:column;gap:12px}
@@ -442,6 +445,7 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
           <div class="res-pill BC">🔵 Bootcamp</div>
           <div class="res-pill BB">🟢 Boards &amp; Beyond</div>
           <div class="res-pill PT">🔴 Pathoma</div>
+          <div class="res-pill FA">❤️ First Aid</div>
           <div class="res-pill PH">🟣 Physeo</div>
           <div class="res-pill SK">🟤 Sketchy</div>
         </div>
@@ -502,114 +506,141 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 //  DATA
 // ══════════════════════════════════════════════════════════════
 const LECTURES = [
-  {id:0, num:"1",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL GI Overview",
+  {id:0, num:"1", week:"Wk 1", date:"Mon Apr 6", subj:"Phys", title:"IL GI Overview",
    ihMin:60,
-   res:{BC:{label:"Ch. 2 · Oral Cavity",min:30,subs:["2.6 Salivary Glands (A–B)","2.2 Tongue & Gustation (B)"],xref:"Xref: 4.5–4.7 enteric hormones"},BB:{label:"Sec. 1 · Anatomy",min:94,subs:["1.4 GI Tract · 20 min"],xref:"Also: 1.6 Salivary Glands (14 min)"},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
-   anki:{BC:174,BB:94,PH:69}},
-  {id:1, num:"2",     week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"Introduction / Motility",
+   res:{BC:{label:"Bootcamp Ch. 2 + 1 more",min:27,subs:["2.02 Tongue and Gustation","2.06 Salivary Glands"],anki:41},BB:{label:"B&B Ch. 1 + 1 more",min:33,subs:["1.04 Gastrointestinal Tract","1.06 Salivary Glands"],anki:94},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:49,subs:["5.01 Gastrointestinal Overview","5.05 Hormones"],anki:111},SK:null,FA:{label:"FA Ch. 2 + 1 more",min:0,subs:["2.03 Digestive tract anatomy","3.01 Gastrointestinal regulatory substances"],anki:121}},
+   qids:[],
+   anki:{BC:41,BB:94,PH:111,FA:121}},
+  {id:1, num:"2", week:"Wk 1", date:"Mon Apr 6", subj:"Phys", title:"Introduction / Motility",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45,subs:["Ch. 8: 8.1 (A overview, E vasculature, F enteroendocrine)","Ch. 9: 9.1 (A–D) · 9.2 Pectinate Line"],xref:"Xref: 4.1D motility comparison"},BB:{label:"Sec. 2 · Physiology",min:102,subs:["2.4 GI Hormones · 25 min"],xref:"Also: 2.3 GI Secretions (13 min)"},PT:null,PH:{label:"Phys. 5.1 & 5.6",min:69},SK:null},
-   anki:{BC:342,BB:102,PH:69}},
-  {id:2, num:"3",     week:"Wk 1", date:"Mon Apr 6",  subj:"Anat",  title:"Anterior Abdominal Wall / Hernia",
+   res:{BC:{label:"Bootcamp Ch. 8 + 3 more",min:55,subs:["8.01 General Principles Duodenum","8.02 Jejunum and Ileum General Principles","9.01 General Overview","9.02 Pectinate Line"],anki:57},BB:{label:"B&B Ch. 2 + 1 more",min:38,subs:["2.03 Gastrointestinal Secretions","2.04 Gastrointestinal Hormones"],anki:146},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:49,subs:["5.01 Gastrointestinal Overview","5.05 Hormones"],anki:111},SK:null,FA:{label:"FA Ch. 2 + 2 more",min:0,subs:["2.03 Digestive tract anatomy","2.09 Pectinate line","3.01 Gastrointestinal regulatory substances"],anki:148}},
+   qids:[828,14890,6705,15652,1258,11860],
+   anki:{BC:57,BB:146,PH:111,FA:148}},
+  {id:2, num:"3", week:"Wk 1", date:"Mon Apr 6", subj:"Anat", title:"Anterior Abdominal Wall / Hernia",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Hernias",min:20,subs:["10.1 (A–B) · 10.2 Indirect/Direct Inguinal","10.3 Femoral · 10.4 Diaphragmatic (B–C)"]},BB:{label:"Sec. 1 · Anatomy",min:42,subs:["1.7 Hernias · 19 min","1.2 GI Anatomy · 11 min"]},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:42,BB:42,PH:129,SK:105}},
-  {id:3, num:"4",     week:"Wk 1", date:"Mon Apr 6",  subj:"Hist",  title:"Esoph / Stomach / Intestines (Histology)",
+   res:{BC:{label:"Bootcamp Ch. 10 + 4 more",min:33,subs:["10.01 General Principles of Hernias","10.02 Inguinal Hernias","10.03 Femoral Hernias","10.04 Diaphragmatic Hernias","10.05 Spigelian Hernias"],anki:46},BB:{label:"B&B Ch. 1 + 1 more",min:30,subs:["1.02 Gastrointestinal Anatomy","1.07 Hernias"],anki:70},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 2 + 3 more",min:0,subs:["2.01 Retroperitoneal structures","2.12 Femoral region","2.13 Inguinal canal","2.15 Hernias"],anki:55}},
+   qids:[11850,417,418,8669,14880,11817,11803],
+   anki:{BC:46,BB:70,FA:55}},
+  {id:3, num:"4", week:"Wk 1", date:"Mon Apr 6", subj:"Hist", title:"Esoph / Stomach / Intestines (Histology)",
    ihMin:60,
-   res:{BC:{label:"Ch. 3 & 4 · Histology",min:15,subs:["3.1B Esophageal Histology (layers, squamous epithelium)","4.1B Stomach Histology · 4.4 Gastric Cells","(parietal, chief, G, D, ECL)"]},BB:{label:"Sec. 1 · Anatomy",min:94,subs:["1.4 GI Tract · 20 min"]},PT:null,PH:null,SK:null},
-   anki:{BC:174,BB:94}},
-  {id:4, num:"5 & 6", week:"Wk 1", date:"Mon Apr 6",  subj:"Phys",  title:"IL Bile Workshop & Making a Micelle",
-   ihMin:120,
-   res:{BC:{label:"Ch. 5 & 6 · Liver/Biliary",min:90,subs:["Ch. 5: 5.1D Metabolism · 5.2 (B hepatocytes, C bile flow)","Ch. 6: 6.1D Bile Composition · 6.2 Bilirubin (A–C)","6.5 Bile Acids (A–C)"]},BB:{label:"Sec. 2 · Physiology",min:102,subs:["2.1 Bile · 19 min","2.2 Bilirubin · 30 min"]},PT:null,PH:{label:"Phys. 5.3 & 5.4",min:99},SK:null},
-   anki:{BC:536,BB:102,PH:99}},
-  {id:5, num:"7",     week:"Wk 1", date:"Mon Apr 6",  subj:"Embr",  title:"IL GI Primer",
+   res:{BC:{label:"Bootcamp Ch. 3 + 4 more",min:84,subs:["3.01 General Principles Esophagus","4.01 General Principles","4.04 Gastric Cells","8.01 General Principles Duodenum","8.02 Jejunum and Ileum General Principles"],anki:101},BB:{label:"B&B 1.04 Gastrointestinal Tract",min:19,subs:["1.04 Gastrointestinal Tract"],anki:59},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 2 + 1 more",min:0,subs:["2.03 Digestive tract anatomy","2.04 Digestive tract histology"],anki:89}},
+   qids:[278,1143,122,14878,14892,286,1546,331,128,1467,409,1662,306,129,284],
+   anki:{BC:101,BB:59,FA:89}},
+  {id:4, num:"5 & 6", week:"Wk 1", date:"Mon Apr 6", subj:"Phys", title:"IL Bile Workshop & Making a Micelle",
    ihMin:60,
-   res:{BC:{label:"Ch. 1 · Embryology",min:25,subs:["1.1 General Embryology (A–D: endoderm, gut rotation)","1.2 Ventral Wall Defects · 1.3 TE Defects","1.4 Atresia & Pyloric Stenosis · 1.5 Pancreatic Anomalies"]},BB:{label:"Sec. 1 · Anatomy",min:105,subs:["1.1 GI Embryology · 28 min"]},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:131,BB:105,PH:73,SK:105}},
-  {id:6, num:"8",     week:"Wk 1", date:"Tue Apr 7",  subj:"Anat",  title:"Abdominal Viscera I: GI Tract",
+   res:{BC:{label:"Bootcamp Ch. 6 + 4 more",min:61,subs:["6.01 General Principles Biliary System","6.03 General Principles of Hyperbilirubinemia","6.06 Bile Acids","6.07 Cholelithiasis","6.10 Acute Cholecystitis"],anki:78},BB:{label:"B&B Ch. 2 + 3 more",min:81,subs:["2.01 Bile","2.02 Bilirubin","3.06 Gallstones","3.07 Biliary Disorders"],anki:183},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:48,subs:["5.03 Liver & Bilirubin Metabolism","5.04 Gallbladder"],anki:99},SK:null,FA:{label:"FA Ch. 2 + 2 more",min:0,subs:["2.11 Biliary structures","3.08 Bile","3.09 Bilirubin"],anki:49}},
+   qids:[317,79,81,396,164,67,71,77,78,412,11739,363,165,87],
+   anki:{BC:78,BB:183,PH:99,FA:49}},
+  {id:5, num:"7", week:"Wk 1", date:"Mon Apr 6", subj:"Embr", title:"IL GI Primer",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 & 8 · Visceral Anat.",min:20,subs:["10.1A Peritoneal relationships","10.4A CDH (diaphragm anatomy)","8.1 Small Intestine Vasculature"],xref:"Xref: 4.2 Celiac Trunk · 4.3 GI Ligaments"},BB:{label:"Sec. 1 · Anatomy",min:90,subs:["1.2 GI Anatomy · 11 min","1.3 GI Blood Supply · 19 min"]},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:42,BB:90,PH:129,SK:105}},
-  {id:7, num:"9 & 10",week:"Wk 1", date:"Tue Apr 7",  subj:"Phys",  title:"Secretions I & II",
-   ihMin:120,
-   res:{BC:{label:"Ch. 2, 4 & 7 · Oral/Stom/Panc",min:95,subs:["Ch. 2: 2.6 Salivary Glands (A–B: amylase, lipase)","Ch. 4: 4.4 Gastric Cells · 4.5 Gastric Regulation (A–G)","4.6 Intestinal Reg. · 4.7 Parietal Cell · 4.8 Pernicious Anemia (A)","Ch. 7: 7.1D Exocrine · 7.2 (A, C, D pancreatic fluid)"]},BB:{label:"Sec. 1 & 2 · Anat/Physiol",min:231,subs:["1.6 Salivary Glands · 14 min","2.3 GI Secretions · 13 min","2.5 Exocrine Pancreas · 15 min"],xref:"Also: 2.4 GI Hormones (25 min)"},PT:null,PH:{label:"Phys. 5.2",min:45},SK:null},
-   anki:{BC:653,BB:231,PH:45}},
-  {id:8, num:"12",    week:"Wk 1", date:"Wed Apr 8",  subj:"Embr",  title:"GI Embryology",
+   res:{BC:{label:"Bootcamp Ch. 1 + 2 more",min:37,subs:["1.01 General Embyrology","1.02 Midgut Development","1.03 Foregut Development"],anki:46},BB:{label:"B&B 1.01 Gastrointestinal Embryology",min:28,subs:["1.01 Gastrointestinal Embryology"],anki:105},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 1 + 1 more",min:0,subs:["1.01 Normal gastrointestinal embryology","1.06 Pancreas and spleen embryology"],anki:15}},
+   qids:[12198],
+   anki:{BC:46,BB:105,FA:15}},
+  {id:6, num:"8", week:"Wk 1", date:"Tue Apr 7", subj:"Anat", title:"Abdominal Viscera I: GI Tract",
    ihMin:60,
-   res:{BC:{label:"Ch. 1 · Embryology",min:25,subs:["1.1 General Embryology (A–D)","1.2 Ventral Wall Defects","1.3 TE Defects · 1.4 Atresia & Pyloric Stenosis","1.5 Pancreatic Anomalies"]},BB:{label:"Sec. 1 · Anatomy",min:105,subs:["1.1 GI Embryology · 28 min"]},PT:null,PH:{label:"Embr. 5",min:73},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:131,BB:105,PH:73,SK:105}},
-  {id:9, num:"13",    week:"Wk 1", date:"Wed Apr 8",  subj:"Anat",  title:"Abdominal Viscera II: Liver & Pancreas",
+   res:{BC:{label:"Bootcamp Ch. 8 + 2 more",min:43,subs:["8.01 General Principles Duodenum","8.02 Jejunum and Ileum General Principles","9.01 General Overview"],anki:50},BB:{label:"B&B Ch. 1 + 2 more",min:48,subs:["1.02 Gastrointestinal Anatomy","1.03 Gastrointestinal Blood Supply","1.04 Gastrointestinal Tract"],anki:150},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 2 + 4 more",min:0,subs:["2.03 Digestive tract anatomy","2.05 Abdominal aorta and branches","2.06 Gastrointestinal blood supply and innervation","2.07 Celiac trunk","2.08 Portosystemic anastomoses"],anki:128}},
+   qids:[11775,1319,1525,1832,7584,319,8587,14837,2022,11753,8574,303],
+   anki:{BC:50,BB:150,FA:128}},
+  {id:7, num:"9 & 10", week:"Wk 1", date:"Tue Apr 7", subj:"Phys", title:"Secretions I & II",
    ihMin:60,
-   res:{BC:{label:"Ch. 5, 6 & 7 · Liver/Panc",min:55,subs:["Ch. 5: 5.1 Liver Anatomy (A–C) · 5.2 (A, C, D) · 5.3 Zones","Ch. 7: 7.1 (A–C: anatomy, vasculature) · 7.2B Exocrine Histology"],xref:"Xref: 6.1 Biliary Tree Anatomy"},BB:{label:"Sec. 1 · Anatomy",min:99,subs:["1.5 Liver, Gallbladder & Pancreas · 12 min","1.3 GI Blood Supply · 19 min"]},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:292,BB:99,PH:129,SK:105}},
-  {id:10,num:"14",    week:"Wk 1", date:"Wed Apr 8",  subj:"Phys",  title:"Overview of the Liver",
+   res:{BC:{label:"Bootcamp Ch. 4 + 9 more",min:129,subs:["4.01 General Principles","4.04 Gastric Cells","4.05 Gastric Acid And Gastrin","4.06 Pepsinogen Histamine Somatostatin","4.09 Parietal Cell Physiology","4.22 Antacids","7.01 General Principles","7.02 Exocrine Pancreas","2.06 Salivary Glands","2.08 Salivary Gland Tumors"],anki:169},BB:{label:"B&B Ch. 2 + 2 more",min:53,subs:["2.03 Gastrointestinal Secretions","2.04 Gastrointestinal Hormones","2.05 Exocrine Pancreas"],anki:193},PT:null,PH:{label:"Physeo Ch. 5 + 2 more",min:58,subs:["5.02 Exocrine Pancreas & Metabolism","5.05 Hormones","5.06 Satiety & Hunger"],anki:103},SK:null,FA:{label:"FA Ch. 3 + 2 more",min:0,subs:["3.01 Gastrointestinal regulatory substances","3.02 Gastrointestinal secretory products","3.04 Pancreatic secretions"],anki:150}},
+   qids:[1397,358,808,126,8425,1971,1603,15018,1938,12068,304],
+   anki:{BC:169,BB:193,PH:103,FA:150}},
+  {id:8, num:"12", week:"Wk 1", date:"Wed Apr 8", subj:"Embr", title:"GI Embryology",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 · Liver",min:55,subs:["5.1D Metabolism · 5.2 (B hepatocytes, E Kupffer cells)","5.3 Hepatic Zones · 5.10 Cirrhosis · 5.11 Portal HTN","5.12 Ascites (SAAG, SBP)"],xref:"Xref: 6.2 Bilirubin · 6.5 Bile Acids · 6.3"},BB:{label:"Sec. 2 · Physiology",min:118,subs:["2.2 Bilirubin · 30 min","3.2 Liver Disease · 23 min"],xref:"Also: 3.3 Cirrhosis (23 min) for portal HTN/ascites"},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
-   anki:{BC:292,BB:118,PH:62}},
-  {id:11,num:"15",    week:"Wk 1", date:"Thu Apr 9",  subj:"Path",  title:"Esophagus / Stomach Disease",
+   res:{BC:{label:"Bootcamp Ch. 1 + 7 more",min:95,subs:["1.01 General Embyrology","1.02 Midgut Development","1.03 Foregut Development","1.04 Ventral And Abdominal Wall Defects","1.05 Tracheoesophageal Defects","1.06 Hypertrophic Pyloric Stenosis","1.07 Intestinal And Biliary Atresia","1.08 Pancreatic Anomalies"],anki:144},BB:{label:"B&B 1.01 Gastrointestinal Embryology",min:28,subs:["1.01 Gastrointestinal Embryology"],anki:105},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 1 + 5 more",min:0,subs:["1.01 Normal gastrointestinal embryology","1.02 Ventral wall defects","1.03 Tracheoesophageal anomalies","1.04 Intestinal atresia","1.05 Hypertrophic pyloric stenosis","1.06 Pancreas and spleen embryology"],anki:69}},
+   qids:[321,1744,318,322,329,838,11962],
+   anki:{BC:144,BB:105,FA:69}},
+  {id:9, num:"13", week:"Wk 1", date:"Wed Apr 8", subj:"Anat", title:"Abdominal Viscera II: Liver & Pancreas",
    ihMin:60,
-   res:{BC:{label:"Ch. 3 & 4 · Esoph/Stomach",min:80,subs:["Ch. 3: 3.3 GERD/Barrett · 3.4 Esophagitis (F–I)","3.6 Barotrauma/Bleeding (A–C) · 3.7 Malignancy (A–C)","Ch. 4: 4.8 Pernicious Anemia (B–C) · 4.9 Gastritis (A–E)","4.10 PUD (A–E) · 4.11 Gastric Malignancy (A–E)"]},BB:{label:"Sec. 3 · Clinical",min:80,subs:["3.1 Esophageal Disorders · 24 min","3.8 Gastric Disorders · 32 min"]},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.1–6.4",min:222},SK:null},
-   anki:{BC:549,BB:80,PT:528,PH:222}},
-  {id:12,num:"16 & 17",week:"Wk 1",date:"Thu Apr 9", subj:"Phys",  title:"Digestion / Absorption I & II",
-   ihMin:120,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.1 (B duodenum, C jejunum, D ileum/terminal)","8.2 Histology (A–E: villi, brush border, goblet cells)","8.3 Nutrient Absorption (A–E: carbs/SGLT1, lipids/micelles)","8.9 Lactose Intolerance"],xref:"Xref: 4.6 CCK/secretin/GIP"},BB:{label:"Sec. 2 & 3 · Physiol/Clin.",min:115,subs:["2.5 Exocrine Pancreas · 15 min","3.9 Malabsorption · 28 min"]},PT:null,PH:{label:"Phys. 5.5",min:50},SK:null},
-   anki:{BC:279,BB:115,PH:50}},
-  {id:13,num:"19 & 20",week:"Wk 1",date:"Fri Apr 10",subj:"Path",  title:"Intestinal Pathology I & II",
-   ihMin:120,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:60,subs:["Ch. 8: 8.4 SBO · 8.8 Celiac (HLA-DQ2/8, Marsh) · 8.14 Mesenteric Ischemia","8.15 Meckel Diverticulum · 8.16 Intussusception","Ch. 9: 9.4 Crohn · 9.5 UC · 9.7 Appendicitis · 9.8 Diverticulitis","9.9 Hirschsprung · 9.13 Polyps · 9.15 CRC (APC/KRAS/p53, MSI)"]},BB:{label:"Sec. 3 · Clinical",min:317,subs:["3.12 Intestinal Disorders · 23 min","3.13 Inflammatory Bowel Disease · 20 min","3.14 Colon Cancer · 25 min"],xref:"Also: 3.15 Carcinoid Tumors (7 min)"},PT:{label:"Ch. 10 · GI Tract",min:156},PH:{label:"Path. 6.5–6.9",min:258},SK:null},
-   anki:{BC:342,BB:317,PT:528,PH:258}},
-  {id:14,num:"21",    week:"Wk 2", date:"Mon Apr 13", subj:"Pharm", title:"Poisoning Conference & Cases",
+   res:{BC:{label:"Bootcamp Ch. 5 + 3 more",min:55,subs:["5.01 Hepatic Anatomy And Metabolism","7.01 General Principles","6.01 General Principles Biliary System","6.03 General Principles of Hyperbilirubinemia"],anki:35},BB:{label:"B&B Ch. 1 + 1 more",min:30,subs:["1.03 Gastrointestinal Blood Supply","1.05 Liver Gallbladder and Pancreas"],anki:99},PT:null,PH:{label:"Physeo Ch. 5 + 2 more",min:75,subs:["5.02 Exocrine Pancreas & Metabolism","5.03 Liver & Bilirubin Metabolism","5.04 Gallbladder"],anki:144},SK:null,FA:{label:"FA Ch. 2 + 3 more",min:0,subs:["2.05 Abdominal aorta and branches","2.06 Gastrointestinal blood supply and innervation","2.10 Liver tissue architecture","2.11 Biliary structures"],anki:80}},
+   qids:[437,80,11760,1875,10583],
+   anki:{BC:35,BB:99,PH:144,FA:80}},
+  {id:10, num:"14", week:"Wk 1", date:"Wed Apr 8", subj:"Phys", title:"Overview of the Liver",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 & 10 · Tox Xrefs",min:20,subs:[],xref:"⚠ Minimal GI coverage → Xref: 5.9D Acetaminophen Tox · 5.9E Inhaled Anesthetic"},BB:{label:"Sec. 3 · Clinical",min:52,subs:["3.16 GI Pharmacology · 23 min"]},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1 Antiemetics",min:19}},
-   anki:{BC:42,BB:52,PH:120,SK:37}},
-  {id:15,num:"22",    week:"Wk 2", date:"Tue Apr 14", subj:"Path",  title:"GI Lab",
+   res:{BC:{label:"Bootcamp Ch. 5 + 11 more",min:175,subs:["5.01 Hepatic Anatomy And Metabolism","5.02 Hepatic Microarchitecture","5.03 Hepatic Zones","5.13 Cirrhosis Fundamental Pathophysiology","5.14 Cirrhosis Advanced Pathophysiology","5.15 Cirrhosis Clinical Diagnostics","5.17 Pathophysiology of Portal Hypertension","5.18 Portal HTN Presentation and SAAG","5.23 Additional Liver Masses","6.01 General Principles Biliary System","6.03 General Principles of Hyperbilirubinemia","6.06 Bile Acids"],anki:220},BB:{label:"B&B Ch. 2 + 3 more",min:93,subs:["2.01 Bile","2.02 Bilirubin","3.02 Liver Disease","3.03 Cirrhosis"],anki:219},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:48,subs:["5.03 Liver & Bilirubin Metabolism","5.04 Gallbladder"],anki:99},SK:null,FA:{label:"FA Ch. 2 + 2 more",min:0,subs:["2.10 Liver tissue architecture","3.08 Bile","3.09 Bilirubin"],anki:61}},
+   qids:[7215,70,101,1807],
+   anki:{BC:220,BB:219,PH:99,FA:61}},
+  {id:11, num:"15", week:"Wk 1", date:"Thu Apr 9", subj:"Path", title:"Esophagus / Stomach Disease",
    ihMin:60,
-   res:{BC:{label:"Ch. 9 · Large Intestine",min:15,subs:["9.4 Crohn (transmural, granulomas)","9.5 UC (mucosal, crypt abscesses)","9.7 Appendicitis · 9.13 Colonic Polyps","9.15 CRC (histology, molecular, staging)"],xref:"Xref: 8.8 Celiac · 8.2 Small Intestine Histology"},BB:null,PT:{label:"Ch. 10 & 11 · GI/Hepatobil.",min:156},PH:{label:"Path. 6.3–6.5 & 6.8",min:346},SK:null},
-   anki:{BC:63,PT:812,PH:346}},
-  {id:16,num:"23 & 24",week:"Wk 2",date:"Tue Apr 14",subj:"Pharm", title:"Treatment: PUD / GERD & Other GI Disorders",
-   ihMin:120,
-   res:{BC:{label:"Ch. 3 & 4 · Esoph/Gastric Pharm",min:80,subs:["Ch. 3: 3.2 Motility Disorders (drug targets)","3.3 GERD (LES pharmacology, PPI mechanism)","Ch. 4: 4.7 Parietal Cell (H⁺/K⁺-ATPase → PPI/H₂)","4.9D H. pylori (triple/quadruple therapy)","4.10 PUD · 4.12 Gastric Pharmacology (A–F)"],xref:"Xref: 9.17–9.19 Bowel/Antiemetic Medications"},BB:{label:"Sec. 3 · Clinical",min:80,subs:["3.1 Esophageal Disorders · 24 min","3.16 GI Pharmacology · 23 min"]},PT:null,PH:{label:"Pharm. 11",min:120},SK:{label:"5.1–5.4 & 5.FA",min:0}},
-   anki:{BC:549,BB:80,PH:120,SK:120}},
-  {id:17,num:"25",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"GI Infections",
+   res:{BC:{label:"Bootcamp Ch. 3 + 15 more",min:209,subs:["3.02 Esophageal Motility","3.03 Achalasia","3.04 Additional Disorders of Esophageal Motility","3.05 Gastroesophageal Reflux Disease","3.06 Barrett Esophagus","3.07 Esophagitis","3.08 Plummer Vinson Syndrome Zenker Diverticulum","3.09 Additional Causes Of Dysphagia","3.10 Esophageal Barotrauma and Bleeding","3.11 Esophageal Malignancy","4.12 Gastritis Overview","4.13 Acute Erosive Gastritis Stress Ulcers and Chronic Gastritis","4.14 Helicobacter Pylori Infection","4.16 Peptic Ulcer Disease","4.19 Gastric Malignancy Overview","4.20 Gastric adenocarcinoma GIST and MALT Lymphoma"],anki:352},BB:{label:"B&B Ch. 3 + 1 more",min:54,subs:["3.01 Esophageal Disorders","3.08 Gastric Disorders"],anki:209},PT:{label:"Pathoma Ch. 10 + 3 more",min:78,subs:["10.01 Oral Cavity","10.02 Salivary Gland","10.03 Esophagus","10.04 Stomach"],anki:225},PH:{label:"Physeo (4 items)",min:46,subs:["physeo-path 6.01 Oral Cavity","physeo-path 6.02 Salivary Glands","physeo-path 6.03 Esophagus","physeo-path 6.04 Stomach"],anki:222},SK:null,FA:{label:"FA Ch. 4 + 9 more",min:0,subs:["4.02 Achalasia","4.03 Other esophageal pathologies","4.04 Barrett esophagus","4.05 Esophageal cancer","4.06 Gastritis","4.07 Ménétrier disease","4.08 Gastric cancer","4.09 Peptic ulcer disease","4.10 Ulcer complications","4.18 Zenker diverticulum"],anki:263}},
+   qids:[282,7228,11548,14879,283,14891,307,130,291,292,1604,1918,7710,125,305,586],
+   anki:{BC:352,BB:209,PT:225,PH:222,FA:263}},
+  {id:12, num:"16 & 17", week:"Wk 1", date:"Thu Apr 9", subj:"Phys", title:"Digestion / Absorption I & II",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 & 9 · Sm/Lg Int.",min:45,subs:["Ch. 8: 8.10 Whipple · 8.11 SIBO (A–E) · 8.7 Upper GI Bleeding","Ch. 9: 9.3D Proctitis · 9.7 Appendicitis · 9.8 Diverticulitis"],xref:"⚠ Limited C. diff/cholera → Sketchy Micro · Xref: 8.13 IBS · 4.9D H. pylori"},BB:{label:"Sec. 3 · Clinical",min:144,subs:["3.12 Intestinal Disorders · 23 min"]},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
-   anki:{BC:342,BB:144,PH:95}},
-  {id:18,num:"26",    week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"Parasitology",
+   res:{BC:{label:"Bootcamp Ch. 8 + 1 more",min:26,subs:["8.04 Nutrient Absorption","8.14 Additional Malabsorption Disorders"],anki:52},BB:{label:"B&B Ch. 2 + 1 more",min:46,subs:["2.01 Bile","3.09 Malabsorption"],anki:95},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:51,subs:["5.01 Gastrointestinal Overview","5.02 Exocrine Pancreas & Metabolism"],anki:106},SK:null,FA:{label:"FA (5 items)",min:0,subs:["*Protein Absorption","3.05 Carbohydrate absorption","3.06 Vitamin and mineral absorption","3.07 Peyer patches","3.08 Bile"],anki:55}},
+   qids:[327,400,1068,1605,394,133,134,1072,323,1907,755,1709,1581,124,1806],
+   anki:{BC:52,BB:95,PH:106,FA:55}},
+  {id:13, num:"19 & 20", week:"Wk 1", date:"Fri Apr 10", subj:"Path", title:"Intestinal Pathology I & II",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.1 General Anatomy (site of parasite infection)","8.2 Histology (brush border disruption in Giardia)","8.3 Nutrient Absorption (malabsorption mechanism)"],xref:"⚠ No dedicated parasite subchapters → Sketchy Micro (Parasitology)"},BB:{label:"Sec. 3 · Clinical",min:144,subs:["3.12 Intestinal Disorders · 23 min"]},PT:null,PH:{label:"Path. 6.14",min:95},SK:null},
-   anki:{BC:279,BB:144,PH:95}},
-  {id:19,num:"28",    week:"Wk 2", date:"Thu Apr 16", subj:"Path",  title:"Intestinal Path. Case Review",
+   res:{BC:{label:"Bootcamp Ch. 8 + 15 more",min:194,subs:["8.09 Celiac Disease Pathophysiology","8.10 Celiac Disease Presentation and Diagnostics","8.14 Additional Malabsorption Disorders","8.15 Mesenteric Ischemia","8.16 Meckel Diverticulum","8.17 Intussusception","9.04 Crohn Disease","9.05 Ulcerative Colitis","9.08 Diverticulosis and Diverticulitis","9.09 Hirschsprung Disease","9.10 Volvulus","9.12 Colon Ischemia","9.13 Colonic Polyps","9.14 Colorectal Carcinogenesis Molecular Pathway","9.15 Colorectal Cancer","9.16 Polyposis Syndrome"],anki:301},BB:{label:"B&B Ch. 3 + 4 more",min:103,subs:["3.09 Malabsorption","3.12 Intestinal Disorders","3.13 Inflammatory Bowel Disease","3.14 Colon Cancer","3.15 Carcinoid Tumors"],anki:317},PT:{label:"Pathoma Ch. 10 + 4 more",min:82,subs:["10.05 Small Bowel","10.06 Appendix","10.07 Inflammatory Bowel Disease","10.08 Colon","10.09 Colorectal Carcinoma"],anki:303},PH:{label:"Physeo (5 items)",min:46,subs:["physeo-path 6.05 Small Bowel","physeo-path 6.06 Appendix","physeo-path 6.07 Inflammatory Bowel Disease","physeo-path 6.08 Diseases Of Colon","physeo-path 6.09 Colon Polyps Carcinoma"],anki:258},SK:null,FA:{label:"FA Ch. 4 + 16 more",min:0,subs:["4.12 Malabsorption syndromes","4.13 Inflammatory bowel diseases","4.15 Irritable bowel syndrome","4.16 Appendicitis","4.17 Diverticula of the GI tract","4.18 Zenker diverticulum","4.19 Meckel diverticulum","4.20 Hirschsprung disease","4.21 Malrotation","4.22 Intussusception","4.23 Volvulus","4.25 Other intestinal disorders","4.26 Colonic polyps","4.27 Polyposis syndromes","4.28 Lynch syndrome","4.29 Colorectal cancer","4.30 Molecular pathogenesis of colorectal cancer"],anki:465}},
+   qids:[15535,255,7229,11839,426,7573,11782,190,1475,1400,88,1926,309,424,324,326,364,1398,6510,413,427,430,253,257,411,420,421,428,431,432,790,15011,15012,15020,17004,17005,415,14900,14907,15021,16070,644,1074,54,11771,11840,57,330,1332,404,405,406,407,408,1597,1783,416,1479,1485,429,1251,12047,281,328,414,59,2028,9920,15603,1169,402,12062,410,131,132,279],
+   anki:{BC:301,BB:317,PT:303,PH:258,FA:465}},
+  {id:14, num:"21", week:"Wk 2", date:"Mon Apr 13", subj:"Pharm", title:"Poisoning Conference & Cases",
    ihMin:60,
-   res:{BC:{label:"Ch. 9 · Colorectal",min:15,subs:["9.4 Crohn (A–F) · 9.5 UC (A–F)","9.8 Diverticulitis · 9.13 Polyps","9.14 Carcinogenesis (chromosomal instability, MSI, Lynch)","9.15 CRC (A–F) · 9.16 Polyposis Syndromes (FAP, Peutz-Jeghers)"],xref:"Xref: 8.8 Celiac · 8.14 Mesenteric Ischemia · 8.15 Meckel"},BB:{label:"Sec. 3 · Clinical",min:150,subs:["3.12 Intestinal Disorders · 23 min","3.13 Inflammatory Bowel Disease · 20 min","3.14 Colon Cancer · 25 min"],xref:"Also: 3.15 Carcinoid Tumors (7 min)"},PT:null,PH:{label:"Path. 6.7–6.9",min:128},SK:null},
-   anki:{BC:63,BB:150,PH:128}},
-  {id:20,num:"29",    week:"Wk 2", date:"Thu Apr 16", subj:"Anat",  title:"Retroperitoneum",
+   res:{BC:null,BB:{label:"B&B 3.16 Gastrointestinal Pharmacology",min:23,subs:["3.16 Gastrointestinal Pharmacology"],anki:52},PT:null,PH:null,SK:{label:"Sketchy 1.01 Antiemetic Agents",min:20,subs:["1.01 Antiemetic Agents"],anki:37},FA:null},
+   qids:[],
+   anki:{BB:52,SK:37}},
+  {id:15, num:"22", week:"Wk 2", date:"Tue Apr 14", subj:"Path", title:"GI Lab",
    ihMin:60,
-   res:{BC:{label:"Ch. 10 · Retroperitoneum",min:20,subs:["10.1A Peritoneal relationships (retroperitoneal organs)","10.4A CDH (aorta T12, esophagus T10, IVC T8)","10.5 Spigelian Hernia"],xref:"Xref: 4.2 Celiac Trunk · 8.1A–E retroperitoneal duodenum"},BB:{label:"Sec. 1 · Anatomy",min:42,subs:["1.2 GI Anatomy · 11 min","1.3 GI Blood Supply · 19 min"]},PT:null,PH:{label:"Anat. 4",min:129},SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:42,BB:42,PH:129,SK:105}},
-  {id:21,num:"33",    week:"Wk 3", date:"Mon Apr 20", subj:"Hist",  title:"Liver & Biliary Tract (Histology)",
+   res:{BC:{label:"Bootcamp 4.01 General Principles",min:18,subs:["4.01 General Principles"],anki:23},BB:null,PT:{label:"Pathoma Ch. 10 + 8 more",min:160,subs:["10.01 Oral Cavity","10.02 Salivary Gland","10.03 Esophagus","10.04 Stomach","10.05 Small Bowel","10.06 Appendix","10.07 Inflammatory Bowel Disease","10.08 Colon","10.09 Colorectal Carcinoma"],anki:528},PH:{label:"Physeo (7 items)",min:79,subs:["physeo-path 6.03 Esophagus","physeo-path 6.04 Stomach","physeo-path 6.05 Small Bowel","physeo-path 6.06 Appendix","physeo-path 6.07 Inflammatory Bowel Disease","physeo-path 6.08 Diseases Of Colon","physeo-path 6.09 Colon Polyps Carcinoma"],anki:435},SK:null,FA:null},
+   qids:[287],
+   anki:{BC:23,PT:528,PH:435}},
+  {id:16, num:"23 & 24", week:"Wk 2", date:"Tue Apr 14", subj:"Pharm", title:"Treatment: PUD / GERD & Other GI Disorders",
    ihMin:60,
-   res:{BC:{label:"Ch. 6 & 7 · Biliary/Panc Hist",min:44,subs:["6.1 General (A–D: anatomy, biliary tree, bile composition)","6.2 Bilirubin Metabolism (A–C)","7.1A–B & 7.2B Pancreas Histology"],xref:"Xref: 5.2 Hepatic Microarchitecture · 5.3 Hepatic Zones"},BB:{label:"Sec. 1 · Anatomy",min:71,subs:["1.5 Liver, Gallbladder & Pancreas · 12 min"],xref:"Also: 2.1 Bile (19 min) · 2.2 Bilirubin (30 min)"},PT:null,PH:null,SK:{label:"Anat. 1.1",min:0}},
-   anki:{BC:244,BB:71,SK:105}},
-  {id:22,num:"34 & 35",week:"Wk 3",date:"Tue Apr 21",subj:"Path",  title:"Liver Disease I & II",
-   ihMin:120,
-   res:{BC:{label:"Ch. 5 · Liver Disease",min:55,subs:["5.4 Alcoholic Hepatitis (A–E, Mallory-Denk bodies)","5.5 MASLD/NAFLD · 5.6 Autoimmune Hepatitis","5.7 Wilson Disease · 5.8 Hereditary Hemochromatosis","5.9F Viral Hepatitis (HAV–HEV serology)","5.10 Cirrhosis · 5.13 HCC · 5.14 Liver Masses"]},BB:{label:"Sec. 3 · Clinical",min:201,subs:["3.2 Liver Disease · 23 min","3.3 Cirrhosis · 23 min","3.6 Gallstones · 21 min","3.7 Biliary Disorders · 14 min"],xref:"Also: 3.4 Liver Tumors (10 min) · 3.5 Wilson's & Hemochromatosis (15 min)"},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
-   anki:{BC:292,BB:201,PT:284,PH:160}},
-  {id:23,num:"36",    week:"Wk 3", date:"Tue Apr 21", subj:"DRT",   title:"Liver Enzymes",
+   res:{BC:{label:"Bootcamp Ch. 4 + 3 more",min:61,subs:["4.21 Proton Pump Inhibitors and H2 Antagonists","4.22 Antacids","4.23 Additional Gastric Pharmacology","3.05 Gastroesophageal Reflux Disease"],anki:66},BB:{label:"B&B Ch. 3 + 1 more",min:46,subs:["3.01 Esophageal Disorders","3.16 Gastrointestinal Pharmacology"],anki:132},PT:null,PH:{label:"Physeo (13 items)",min:92,subs:["physeo-pharm 11.01 Histamine-2 (H2) Blockers","physeo-pharm 11.02 Proton Pump Inhibitors","physeo-pharm 11.03 Antacids","physeo-pharm 11.04 Bismuth and Sucralfate","physeo-pharm 11.05 Misoprostol","physeo-pharm 11.06 Octreotide","physeo-pharm 11.07 Sulfasalazine","physeo-pharm 11.08 Loperamide and Diphenoxylate","physeo-pharm 11.09 Ondansetron","physeo-pharm 11.10 Metoclopramide","physeo-pharm 11.11 Orlistat","physeo-pharm 11.12 Laxatives","physeo-pharm 11.13 Aprepitant"],anki:126},SK:{label:"Sketchy Ch. 1 + 3 more",min:60,subs:["1.01 Antiemetic Agents","1.02 H2 Receptor Blockers & PPIs","1.03 Laxatives","1.04 Antidiarrheal Agents"],anki:92},FA:{label:"FA (13 items)",min:0,subs:["*Cholestatic Drugs","*Emesis Physiology","5.02 H2 Blockers","5.03 Proton pump inhibitors","5.04 Antacids","5.05 Bismuth sucralfate","5.06 Misoprostol","5.07 Octreotide","5.08 Sulfasalazine","5.09 Loperamide diphenoxylate","5.10 Antiemetics","5.11 Orlistat","5.12 Anticonstipation drugs"],anki:109}},
+   qids:[1358,10999,865,1706,11591,14872,14873,14877,1290,175,1817,1766,1778,881],
+   anki:{BC:66,BB:132,PH:126,SK:92,FA:109}},
+  {id:17, num:"25", week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"GI Infections",
    ihMin:60,
-   res:{BC:{label:"Ch. 5 · Liver Enzymes",min:55,subs:["5.1D Metabolism (AST, ALT, ALP, GGT functions)","5.9B Ischemic Hepatitis (shock liver, AST/ALT >1000)","5.9D Acetaminophen Toxicity (Zone 3, NAC antidote)","5.9E Inhaled Anesthetic Toxicity (halothane hepatitis)"],xref:"Xref: 6.2 Bilirubin · 6.3 Hereditary Hyperbilirubinemia · 6.4 Neonatal"},BB:{label:"Sec. 2 · Physiology",min:91,subs:["2.2 Bilirubin · 30 min","3.2 Liver Disease · 23 min"]},PT:null,PH:{label:"Phys. 5.3",min:62},SK:null},
-   anki:{BC:292,BB:91,PH:62}},
-  {id:24,num:"38",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Pancreas Disease",
+   res:{BC:{label:"Bootcamp 9.05 Ulcerative Colitis",min:15,subs:["9.05 Ulcerative Colitis"],anki:14},BB:{label:"B&B 3.12 Intestinal Disorders",min:23,subs:["3.12 Intestinal Disorders"],anki:75},PT:null,PH:null,SK:{label:"Sketchy Ch. 2 + 14 more",min:72,subs:["2.03 Clostridium botulinum","2.04 Clostridium perfringens","2.05 Clostridioides difficile","2.07 Listeria monocytogenes","5.02 Salmonella Part 1 Introduction to Salmonella & NTS 02 Salmonella Part 1 Introduction to Salmonella & NTS","5.03 Salmonella Part 2 Typhoidal Salmonella 03 Salmonella Part 2 Typhoidal Salmonella","5.04 Shigella spp.","5.05 Escherichia coli (ETEC, EHEC)","5.06 Yersinia enterocolitica & pestis","5.07 Campylobacter jejuni","5.08 Vibrio spp.","5.09 Helicobacter pylori","11.01 Clostridioides difficile [Old Version]","11.05 Vibrio spp. [Old Version]","11.06 Salmonella enteritidis & typhi [Retired Video]"],anki:262},FA:null},
+   qids:[1098,1100,1136,1422,6731,15244,1396,10401,15049],
+   anki:{BC:14,BB:75,SK:262}},
+  {id:18, num:"26", week:"Wk 2", date:"Wed Apr 15", subj:"Micro", title:"Parasitology",
    ihMin:60,
-   res:{BC:{label:"Ch. 7 · Pancreas",min:30,subs:["7.1 (A–C: anatomy, vasculature) · 7.2 Exocrine (A–B)","7.3 Acute Pancreatitis (A–D: gallstones/alcohol/Ranson)","7.4 Complications (necrotizing, pseudocyst, hemorrhagic)","7.5 Chronic Pancreatitis · 7.6 Adenocarcinoma (Courvoisier)","7.7 PNETs (insulinoma, Zollinger-Ellison, VIPoma, glucagonoma)"],xref:"Xref: 1.5 Annular Pancreas / Pancreas Divisum"},BB:{label:"Sec. 3 · Clinical",min:91,subs:["3.10 Acute Pancreatitis · 22 min","3.11 Chronic Pancreatitis & Pancreatic Cancer · 11 min"]},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.10",min:60},SK:null},
-   anki:{BC:130,BB:91,PT:284,PH:60}},
-  {id:25,num:"39",    week:"Wk 3", date:"Wed Apr 22", subj:"Path",  title:"Liver / Pancreas Lab",
+   res:{BC:null,BB:{label:"B&B 3.12 Intestinal Disorders",min:23,subs:["3.12 Intestinal Disorders"],anki:75},PT:null,PH:{label:"Physeo physeo-pharm 3.01 Malathion, Permethrin,",min:6,subs:["physeo-pharm 3.01 Malathion, Permethrin, & Lindane"],anki:12},SK:{label:"Sketchy 5.01 Klebsiella pneumoniae, Enterobacter",min:8,subs:["5.01 Klebsiella pneumoniae, Enterobacter spp., Serratia marcescens"],anki:26},FA:null},
+   qids:[7642,8873],
+   anki:{BB:75,PH:12,SK:26}},
+  {id:19, num:"28", week:"Wk 2", date:"Thu Apr 16", subj:"Path", title:"Intestinal Path. Case Review",
    ihMin:60,
-   res:{BC:{label:"Ch. 6 · Biliary System",min:44,subs:["6.2 Bilirubin Metabolism · 6.5 Bile Acids","6.6 Cholelithiasis · 6.7 Biliary Colic · 6.8 Acute Cholecystitis","6.9 Choledocholithiasis · 6.10 Acute Cholangitis","6.13 Biliary Malignancy (cholangiocarcinoma, GB adenocarcinoma)"],xref:"Xref: 5.13 HCC · 5.14 Liver Masses · 7.3–7.6 Pancreatitis"},BB:{label:"Sec. 3 · Clinical",min:92,subs:["3.2 Liver Disease · 23 min","3.3 Cirrhosis · 23 min","3.6 Gallstones · 21 min"],xref:"Also: 3.4 Liver Tumors (10 min)"},PT:{label:"Ch. 11 · Hepatobiliary",min:65},PH:{label:"Path. 6.11–6.13",min:160},SK:null},
-   anki:{BC:244,BB:92,PT:284,PH:160}},
-  {id:26,num:"40",    week:"Wk 3", date:"Fri Apr 24", subj:"Phys",  title:"PSW: Cholera / Lactose Intolerance",
+   res:{BC:{label:"Bootcamp Ch. 9 + 3 more",min:50,subs:["9.13 Colonic Polyps","9.14 Colorectal Carcinogenesis Molecular Pathway","9.15 Colorectal Cancer","9.16 Polyposis Syndrome"],anki:90},BB:{label:"B&B Ch. 3 + 2 more",min:67,subs:["3.12 Intestinal Disorders","3.13 Inflammatory Bowel Disease","3.14 Colon Cancer"],anki:225},PT:{label:"Pathoma Ch. 10 + 2 more",min:31,subs:["10.07 Inflammatory Bowel Disease","10.08 Colon","10.09 Colorectal Carcinoma"],anki:172},PH:{label:"Physeo (3 items)",min:28,subs:["physeo-path 6.07 Inflammatory Bowel Disease","physeo-path 6.08 Diseases Of Colon","physeo-path 6.09 Colon Polyps Carcinoma"],anki:128},SK:null,FA:{label:"FA Ch. 4 + 5 more",min:0,subs:["4.13 Inflammatory bowel diseases","4.26 Colonic polyps","4.27 Polyposis syndromes","4.28 Lynch syndrome","4.29 Colorectal cancer","4.30 Molecular pathogenesis of colorectal cancer"],anki:173}},
+   qids:[],
+   anki:{BC:90,BB:225,PT:172,PH:128,FA:173}},
+  {id:20, num:"29", week:"Wk 2", date:"Thu Apr 16", subj:"Anat", title:"Retroperitoneum",
    ihMin:60,
-   res:{BC:{label:"Ch. 8 · Small Intestine",min:50,subs:["8.3 Nutrient Absorption (B: SGLT1/Na⁺-glucose, ORT basis)","8.9 Lactose Intolerance (A–E: osmotic diarrhea)","8.11 SIBO (secretory vs osmotic diarrhea)","8.1 General Anatomy (cholera toxin site of action)"],xref:"Xref: 9.17–9.18 Anticonstipation/Antidiarrheal Meds"},BB:{label:"Sec. 2 · Physiology",min:102,subs:["2.5 Exocrine Pancreas · 15 min","3.9 Malabsorption · 28 min"]},PT:null,PH:{label:"Phys. 5.1",min:61},SK:null},
-   anki:{BC:279,BB:102,PH:61}},
+   res:{BC:{label:"Bootcamp 7.01 General Principles",min:11,subs:["7.01 General Principles"],anki:6},BB:{label:"B&B Ch. 1 + 1 more",min:29,subs:["1.02 Gastrointestinal Anatomy","1.03 Gastrointestinal Blood Supply"],anki:91},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 2 + 1 more",min:0,subs:["2.01 Retroperitoneal structures","2.05 Abdominal aorta and branches"],anki:36}},
+   qids:[],
+   anki:{BC:6,BB:91,FA:36}},
+  {id:21, num:"33", week:"Wk 3", date:"Mon Apr 20", subj:"Hist", title:"Liver & Biliary Tract (Histology)",
+   ihMin:60,
+   res:{BC:null,BB:{label:"B&B 1.05 Liver Gallbladder and Pancreas",min:12,subs:["1.05 Liver Gallbladder and Pancreas"],anki:36},PT:null,PH:null,SK:null,FA:{label:"FA Ch. 2 + 1 more",min:0,subs:["2.10 Liver tissue architecture","2.11 Biliary structures"],anki:32}},
+   qids:[],
+   anki:{BB:36,FA:32}},
+  {id:22, num:"34 & 35", week:"Wk 3", date:"Tue Apr 21", subj:"Path", title:"Liver Disease I & II",
+   ihMin:60,
+   res:{BC:{label:"Bootcamp Ch. 5 + 13 more",min:188,subs:["5.04 Alcohol Induced Hepatitis Pathophysiology and Presentation","5.05 Alcohol Induced Hepatitis Diagnostics and Histopathology","5.07 Autoimmune Hepatitis","5.08 Wilson Disease","5.09 Hemochromatosis","5.10 Alpha 1 Antitrypsin Deficiency and Ischemic Hepatitis 10 Alpha 1 Antitrypsin Deficiency and Ischemic Hepatitis","5.12 Inhaled Anesthetic Toxicity Acute Viral Hepatitis","5.13 Cirrhosis Fundamental Pathophysiology","5.14 Cirrhosis Advanced Pathophysiology","5.15 Cirrhosis Clinical Diagnostics","5.17 Pathophysiology of Portal Hypertension","5.18 Portal HTN Presentation and SAAG","5.21 Spontaneous Bacterial Peritonitis Peritoneal Carcinomatosis and SAAG","5.22 Hepatocellular Carcinoma"],anki:248},BB:{label:"B&B Ch. 3 + 3 more",min:71,subs:["3.02 Liver Disease","3.03 Cirrhosis","3.04 Liver Tumors","3.05 Wilson's Disease and Hemochromatosis"],anki:201},PT:{label:"Pathoma 11.03 Liver",min:42,subs:["11.03 Liver"],anki:169},PH:{label:"Physeo (3 items)",min:40,subs:["physeo-path 6.12 Jaundice","physeo-path 6.13 Cirrhosis Liver Cancer","physeo-path 6.14 Other Liver Conditions"],anki:201},SK:null,FA:{label:"FA Ch. 4 + 16 more",min:0,subs:["4.31 Cirrhosis and portal hypertension","4.32 Spontaneous bacterial peritonitis","4.33 Serum markers of liver pathology","4.34 Reye syndrome","4.35 Alcoholic liver disease","4.36 Nonalcoholic fatty liver disease","4.37 Autoimmune hepatitis","4.38 Hepatic encephalopathy","4.39 Liver tumors","4.40 Budd-Chiari syndrome","4.41 alpha1-antitrypsin deficiency","4.42 Jaundice","4.44 Benign neonatal hyperbilirubinemia","4.45 Biliary atresia","4.46 Hereditary hyperbilirubinemias","4.47 Wilson disease","4.48 Hemochromatosis"],anki:285}},
+   qids:[369,370,99,100,368,7214,8547,11661,1701,391,393,102,8578,366,372,1863,365,367,375,386,388,1927,15144,47,56,15024,1537,401,403],
+   anki:{BC:248,BB:201,PT:169,PH:201,FA:285}},
+  {id:23, num:"36", week:"Wk 3", date:"Tue Apr 21", subj:"DRT", title:"Liver Enzymes",
+   ihMin:60,
+   res:{BC:null,BB:{label:"B&B Ch. 2 + 1 more",min:53,subs:["2.02 Bilirubin","3.02 Liver Disease"],anki:148},PT:null,PH:{label:"Physeo 5.03 Liver & Bilirubin Metabolism",min:31,subs:["5.03 Liver & Bilirubin Metabolism"],anki:62},SK:null,FA:{label:"FA Ch. 4 + 1 more",min:0,subs:["4.33 Serum markers of liver pathology","4.42 Jaundice"],anki:32}},
+   qids:[1423,362],
+   anki:{BB:148,PH:62,FA:32}},
+  {id:24, num:"38", week:"Wk 3", date:"Wed Apr 22", subj:"Path", title:"Pancreas Disease",
+   ihMin:60,
+   res:{BC:{label:"Bootcamp Ch. 7 + 5 more",min:93,subs:["7.01 General Principles","7.04 Acute Pancreatitis","7.05 Complications of Pancreatitis","7.06 Chronic Pancreatitis","7.07 Pancreatic Adenocarcinoma","7.08 Pancreatic Neuroendocrine Tumors"],anki:120},BB:{label:"B&B Ch. 2 + 2 more",min:48,subs:["2.05 Exocrine Pancreas","3.10 Acute Pancreatitis","3.11 Chronic Pancreatitis & Pancreatic Cancer"],anki:138},PT:{label:"Pathoma 11.01 Exocrine Pancreas",min:14,subs:["11.01 Exocrine Pancreas"],anki:60},PH:{label:"Physeo physeo-path 6.10 Pancreas",min:8,subs:["physeo-path 6.10 Pancreas"],anki:60},SK:null,FA:{label:"FA (3 items)",min:0,subs:["*Pancreatic VIPoma","4.52 Pancreatitis","4.53 Pancreatic adenocarcinoma"],anki:64}},
+   qids:[433,434,435,438,439,440,441,1547,1738,11795,436],
+   anki:{BC:120,BB:138,PT:60,PH:60,FA:64}},
+  {id:25, num:"39", week:"Wk 3", date:"Wed Apr 22", subj:"Path", title:"Liver / Pancreas Lab",
+   ihMin:60,
+   res:{BC:{label:"Bootcamp Ch. 6 + 7 more",min:122,subs:["6.07 Cholelithiasis","6.10 Acute Cholangitis","6.10 Acute Cholecystitis","6.12 Acute Cholangitis","6.13 Primary Sclerosing Cholangitis","6.14 Primary Biliary Cholangitis","5.21 Spontaneous Bacterial Peritonitis Peritoneal Carcinomatosis and SAAG","5.22 Hepatocellular Carcinoma"],anki:125},BB:{label:"B&B Ch. 3 + 2 more",min:44,subs:["3.04 Liver Tumors","3.06 Gallstones","3.07 Biliary Disorders"],anki:116},PT:{label:"Pathoma Ch. 11 + 1 more",min:53,subs:["11.02 Gallbladder & Biliary Tract","11.03 Liver"],anki:224},PH:{label:"Physeo physeo-path 6.11 Gallbladder Biliary Tra",min:17,subs:["physeo-path 6.11 Gallbladder Biliary Tract"],anki:54},SK:null,FA:{label:"FA Ch. 4 + 3 more",min:0,subs:["4.39 Liver tumors","4.49 Biliary tract disease","4.50 Cholelithiasis and related pathologies","4.51 Cholangiocarcinoma"],anki:159}},
+   qids:[],
+   anki:{BC:125,BB:116,PT:224,PH:54,FA:159}},
+  {id:26, num:"40", week:"Wk 3", date:"Fri Apr 24", subj:"Phys", title:"PSW: Cholera / Lactose Intolerance",
+   ihMin:60,
+   res:{BC:{label:"Bootcamp Ch. 8 + 6 more",min:81,subs:["8.01 General Principles Duodenum","8.02 Jejunum and Ileum General Principles","8.04 Nutrient Absorption","8.09 Celiac Disease Pathophysiology","8.10 Celiac Disease Presentation and Diagnostics","8.11 Lactose Intolerance","8.14 Additional Malabsorption Disorders"],anki:119},BB:{label:"B&B Ch. 2 + 1 more",min:42,subs:["2.03 Gastrointestinal Secretions","3.09 Malabsorption"],anki:116},PT:null,PH:{label:"Physeo Ch. 5 + 1 more",min:51,subs:["5.01 Gastrointestinal Overview","5.02 Exocrine Pancreas & Metabolism"],anki:106},SK:null,FA:{label:"FA Ch. 3 + 2 more",min:0,subs:["3.05 Carbohydrate absorption","3.06 Vitamin and mineral absorption","4.12 Malabsorption syndromes"],anki:105}},
+   qids:[],
+   anki:{BC:119,BB:116,PH:106,FA:105}}
 ];
 
 const DAY_GROUPS = [
@@ -823,10 +854,11 @@ const RES_META = {
   BC:{label:"Bootcamp",  emoji:"🔵",cls:"BC"},
   BB:{label:"Boards & Beyond",emoji:"🟢",cls:"BB"},
   PT:{label:"Pathoma",   emoji:"🔴",cls:"PT"},
+  FA:{label:"First Aid", emoji:"❤️",cls:"FA"},
   PH:{label:"Physeo",    emoji:"🟣",cls:"PH"},
   SK:{label:"Sketchy",   emoji:"🟤",cls:"SK"},
 };
-const TP_RES = ['BC','BB','PT','PH','SK'];
+const TP_RES = ['BC','BB','PT','FA','PH','SK'];
 const TASKS  = ['watch','ankiSetUp'];
 const TASK_LABELS = {watch:'Watch',ankiSetUp:'Anki Set Up'};
 const STORAGE_KEY = 'gi-planner-v2';
@@ -1017,7 +1049,7 @@ function lecProgress(id){
 
 function globalStats(){
   let totalTasks=0,doneTasks=0,totalMin=0,doneMin=0,selectedLecs=0;
-  let byRes={IH:{tot:0,done:0},BC:{tot:0,done:0},BB:{tot:0,done:0},PT:{tot:0,done:0},PH:{tot:0,done:0},SK:{tot:0,done:0}};
+  let byRes={IH:{tot:0,done:0},BC:{tot:0,done:0},BB:{tot:0,done:0},PT:{tot:0,done:0},FA:{tot:0,done:0},PH:{tot:0,done:0},SK:{tot:0,done:0}};
   let byWeek={'Wk 1':{tot:0,done:0},'Wk 2':{tot:0,done:0},'Wk 3':{tot:0,done:0}};
   let ankiSelected=0;
 
