@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI23 Hub #3 · GI Pharmacology — USMLE Step 1 MCQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F4F3EF;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#2B2B2B;border-bottom:3px solid #D4A84C;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F2EDDF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#D4A84C;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #D4A84C;background:#D4A84C;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#BF9540;border-color:#BF9540}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D2CDC4;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2B2B2B 0%,#D4A84C 50%,#2B2B2B 100%)}
+.hub-tag{display:inline-block;background:#2B2B2B;color:#F2EDDF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#2B2B2B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F4F3EF;border:1px solid #D2CDC4;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#2B2B2B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D2CDC4;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#2B2B2B;border:1px solid #2B2B2B;color:#F2EDDF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#3A3A3A;border-color:#3A3A3A;color:#fff}
+.hub-step.current{background:#2B2B2B;color:#D4A84C;border:1px solid #D4A84C}
+.hub-step.next{background:#F4F3EF;border:1px solid #D2CDC4;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#D4A84C;color:#8B6914}
+.hub-arrow{color:#D4A84C;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D2CDC4;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#2B2B2B}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D2CDC4;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#2B2B2B}
+.tab-btn.active{color:#2B2B2B;border-bottom-color:#D4A84C}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#2B2B2B;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D2CDC4}
+
+/* ── EXAM HEADER ── */
+.exam-header{background:#2B2B2B;color:#F2EDDF;border-radius:6px;padding:16px 22px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.exam-header-left{display:flex;flex-direction:column;gap:2px}
+.exam-header-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15em;font-weight:700;color:#D4A84C}
+.exam-header-sub{font-size:.82em;color:rgba(255,255,255,0.7)}
+.exam-timer{display:flex;align-items:center;gap:8px;background:rgba(212,168,76,0.15);border:1px solid rgba(212,168,76,0.4);border-radius:5px;padding:8px 16px}
+.timer-icon{font-size:1.1em}
+.timer-display{font-family:'Source Sans 3',monospace;font-size:1.1em;font-weight:700;color:#D4A84C;letter-spacing:.05em}
+.timer-label{font-size:.72em;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.08em}
+.exam-controls{display:flex;gap:8px}
+.exam-ctrl-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#F2EDDF;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;transition:all .2s}
+.exam-ctrl-btn:hover{background:rgba(212,168,76,0.2);border-color:#D4A84C;color:#D4A84C}
+
+/* ── VIGNETTE MCQ (STEP 1 STYLE) ── */
+.vig-item{background:#FFFFFF;border:1px solid #D2CDC4;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#D4A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#EDEAE3;padding:14px;border-radius:6px;border-left:3px solid #D4A84C}
+.vig-stem strong{color:#2B2B2B}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F4F3EF;border:1px solid #D2CDC4;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#D4A84C;background:#EDEAE3}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .vig-opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .vig-opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-opt-letter{font-weight:700;color:#2B2B2B;flex-shrink:0;width:18px}
+.vig-exp{background:#EDEAE3;border-left:3px solid #D4A84C;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none;margin-top:12px}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#2B2B2B}
+.vig-buzzword{color:#8B6914;font-weight:600}
+
+/* ── INTRO BOXES ── */
+.exam-intro{background:#EDEAE3;border:1px solid #D2CDC4;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.exam-intro strong{color:#2B2B2B}
+
+/* ── SCORE DASHBOARD ── */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.score-card{background:#FFF;border:1px solid #D2CDC4;border-radius:6px;padding:20px;text-align:center}
+.score-card-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.6em;font-weight:700;color:#2B2B2B;line-height:1.1}
+.score-card-num .pct{font-size:.5em;color:#D4A84C;font-weight:600}
+.score-card-label{font-size:.82em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
+.score-bar-wrap{background:#EDEAE3;border-radius:20px;height:10px;margin-top:10px;overflow:hidden}
+.score-bar{background:linear-gradient(90deg,#D4A84C,#8B6914);height:100%;border-radius:20px;transition:width .6s ease}
+.score-breakdown{background:#FFF;border:1px solid #D2CDC4;border-radius:6px;padding:20px;margin-bottom:20px}
+.score-breakdown-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#2B2B2B;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #D4A84C}
+.score-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #EDEAE3;font-size:.88em}
+.score-row:last-child{border-bottom:none}
+.score-row-label{color:#5A5A5A}
+.score-row-val{font-weight:700;color:#2B2B2B}
+.score-row-val.correct{color:#2E7D32}
+.score-row-val.wrong{color:#C62828}
+.score-reset-btn{background:#2B2B2B;border:none;color:#D4A84C;padding:10px 20px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.88em;font-family:inherit;transition:all .2s;margin-top:10px}
+.score-reset-btn:hover{background:#3A3A3A}
+
+/* ── TABLES ── */
+table{border-collapse:collapse;width:100%}
+table th{background:#2B2B2B;color:#F2EDDF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D2CDC4;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF9F5}
+table tr:hover td{background:#EDEAE3}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D2CDC4;padding-top:16px;margin-top:32px}
+.footer a{color:#2B2B2B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#D4A84C;text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .exam-header{flex-direction:column;align-items:flex-start}
+  .score-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi23-gi-pharmacology.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #3 — USMLE Step 1 MCQ</div>
+  <h1>GI Pharmacology <span>Step 1 Practice Exam</span></h1>
+  <div class="subtitle">
+    Full-length USMLE Step 1-style vignettes · Timed exam blocks · Integrated score tracking<br>
+    GI23 · Lecture 23 · Block 4 — GI · High-Yield GI Drug Mechanisms
+  </div>
+  <div class="source-strip">
+    <span class="source-badge"><strong>UWorld</strong> High-Yield Integration</span>
+    <span class="source-badge"><strong>First Aid</strong> 2024 Coverage</span>
+    <span class="source-badge"><strong>NBME</strong>-Style Vignettes</span>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi23-hub1-gi-pharmacology.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi23-hub2-gi-pharmacology.html" class="hub-step done">Hub 2 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 3 — USMLE Step 1 MCQ</span>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Questions</div></div>
+  <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Exam Block</div></div>
+  <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">LOs Covered</div></div>
+  <div class="stat-card"><div class="stat-num" id="global-score">—</div><div class="stat-label">Your Score</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('block1',this)">Exam Block 1 · GI Pharmacology</button>
+  <button class="tab-btn" onclick="switchTab('score',this)">Score Report</button>
+</div>
+
+<!-- ══ EXAM BLOCK 1 ══════════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-block1">
+  <div class="exam-header">
+    <div class="exam-header-left">
+      <div class="exam-header-title">GI Pharmacology — Full-Length MCQ Block</div>
+      <div class="exam-header-sub">20 Questions · 30 Minutes Recommended Pacing (90 sec/Q)</div>
+    </div>
+    <div class="exam-timer">
+      <span class="timer-icon">⏱</span>
+      <div style="display:flex;flex-direction:column;gap:1px">
+        <div class="timer-display" id="timer-block1">30:00</div>
+        <div class="timer-label">Time Remaining</div>
+      </div>
+    </div>
+    <div class="exam-controls">
+      <button class="exam-ctrl-btn" onclick="toggleTimer('block1')">Start Timer</button>
+      <button class="exam-ctrl-btn" onclick="resetTimer('block1',1800)">Reset</button>
+    </div>
+  </div>
+
+  <div class="exam-intro">
+    <strong>Exam Strategy:</strong> Read each stem carefully. Watch for specific drug names, mechanisms, and side effect profiles. Common Step 1 themes: CYP interactions, teratogenicity, long-term adverse effects, and contraindications. You will have one attempt per question; your score updates in real time.
+  </div>
+
+  <!-- Q1 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 1 · LO1 — Gastric Acid Control & CYP Inhibition</div>
+    <div class="vig-stem">
+      A 62-year-old man with a 20-year history of peptic ulcer disease is started on <strong>cimetidine</strong> 800 mg daily. One month later, he develops gynecomastia and reports decreased libido. Which of the following best explains these side effects?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Direct antagonism of testosterone receptors in breast tissue</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Increased conversion of testosterone to estradiol via aromatase</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span> Inhibition of hepatic CYP450 enzymes, reducing testosterone metabolism</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Blockade of luteinizing hormone (LH) release from the pituitary</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Antiandrogenic effects at the level of the androgen receptor</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: C</strong><br><br>
+      <strong>Mechanism:</strong> Cimetidine is both an H₂ blocker and a potent <span class="vig-buzzword">CYP450 inhibitor</span>, particularly of CYP1A2, CYP2C9, and CYP3A4. This impairs the hepatic clearance of testosterone, leading to elevated levels and secondary effects. Additionally, cimetidine has weak antiandrogenic activity at the receptor level.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Direct testosterone receptor antagonism would be dose-dependent and immediate; cimetidine's effect is slower and metabolic.<br>
+      B: Cimetidine does not increase aromatase activity.<br>
+      D: LH regulation is intact; testosterone elevation is the problem, not suppression.<br>
+      E: While cimetidine has some weak antiandrogen effects, the primary mechanism is CYP inhibition and reduced testosterone clearance.
+    </div>
+  </div>
+
+  <!-- Q2 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 2 · LO1 — PPI Side Effects: Long-Term Sequelae</div>
+    <div class="vig-stem">
+      A 58-year-old woman has taken <strong>omeprazole</strong> daily for 10 years for GERD. Recent blood work shows B₁₂ 165 pg/mL (normal 200–900), magnesium 1.6 mEq/L (normal 1.7–2.2), and albumin 3.1 g/dL (normal 3.5–5.0). DEXA scan reveals T-score −2.8. Which of the following complications is LEAST likely to be directly attributable to chronic PPI use?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Vitamin B₁₂ deficiency</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Hypomagnesemia</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Osteoporosis and increased hip fracture risk</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">D</span> Hypoalbuminemia</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Increased risk of Clostridioides difficile infection</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: D</strong><br><br>
+      <strong>Mechanism:</strong> Chronic PPI use causes three major mineral/vitamin deficiencies: B₁₂ (reduced intrinsic factor synthesis), <span class="vig-buzzword">magnesium</span> (reduced intestinal absorption), and <span class="vig-buzzword">calcium</span> (decreased absorption → osteoporosis, hip fractures). PPIs also increase C. difficile risk by suppressing gastric acid barrier. Hypoalbuminemia is primarily due to liver disease, malnutrition, or nephrotic syndrome—not a direct PPI effect.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: B₁₂ requires acid for absorption and protein release; hypochlorhydria → deficiency.<br>
+      B: Mg²⁺ is absorbed in the duodenum and proximal jejunum; acid suppression impairs it.<br>
+      C: PPIs decrease Ca²⁺ absorption → hypoparathyroidism + osteoporosis → fractures (class effect).<br>
+      E: Loss of gastric acid barrier → overgrowth of anaerobes, especially C. difficile.
+    </div>
+  </div>
+
+  <!-- Q3 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 3 · LO1 — P-CAB Mechanism (Vonoprazan)</div>
+    <div class="vig-stem">
+      Vonoprazan is a newer potassium-competitive acid blocker (P-CAB) used in some countries for GERD and peptic ulcer disease. Unlike PPIs, it acts more rapidly and has a shorter half-life. Which of the following statements best describes the mechanism of action of vonoprazan?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Irreversible inhibition of the proton pump (H⁺-ATPase) after CYP-mediated activation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Reversible blockade of histamine-2 (H₂) receptors on parietal cells</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span> Potassium-competitive, reversible inhibition of the H⁺-ATPase pump</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Inhibition of acetylcholine (M3) receptors on parietal cells</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Direct neutralization of gastric acid via buffering mechanisms</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: C</strong><br><br>
+      <strong>Mechanism:</strong> P-CABs like vonoprazan competitively inhibit the H⁺-ATPase (proton pump) in a <span class="vig-buzzword">potassium-dependent and reversible</span> manner. This allows faster action than irreversible PPIs (which require CYP activation and accumulation) and faster recovery of acid secretion when discontinued. P-CABs work well for breakthrough acid secretion in patients on PPIs.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: PPIs are irreversible; P-CABs are reversible.<br>
+      B: That describes H₂ blockers (cimetidine, famotidine), not P-CABs.<br>
+      D: M3 antagonism is not a primary mode; that is more relevant for anticholinergics like dicyclomine.<br>
+      E: Antacids (Mg(OH)₂, Al(OH)₃, CaCO₃) neutralize acid; P-CABs inhibit secretion.
+    </div>
+  </div>
+
+  <!-- Q4 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 4 · LO2 — H. pylori Quadruple Therapy</div>
+    <div class="vig-stem">
+      A 45-year-old man with confirmed <strong>H. pylori</strong> infection and active duodenal ulcer is prescribed a 14-day eradication regimen. The regimen includes a PPI, bismuth subsalicylate, metronidazole 500 mg TID, and tetracycline 500 mg QID. The patient's wife is 8 weeks pregnant and concerned about fetal exposure if they share a household. Which of the following is the MOST significant teratogenic concern from this regimen?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> PPI-induced hypochlorhydria leading to fetal malabsorption</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Tetracycline causing permanent brown discoloration of fetal teeth</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Bismuth subsalicylate accumulation in the placenta</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Metronidazole mutagenesis of fetal lymphocytes</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Hypersensitivity reaction to multiple antimicrobials</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> Tetracyclines deposit in developing bone and teeth during pregnancy and childhood, causing <span class="vig-buzzword">permanent yellow-brown discoloration of deciduous and permanent teeth</span> and enamel hypoplasia. This is irreversible and cosmetically significant. Tetracyclines are contraindicated in pregnancy (FDA Cat. D) and in children <8 years old. The quadruple regimen is safe for the mother; exposure risk to the household wife is negligible (not ingesting her husband's pills).<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: PPIs do not significantly impair fetal nutrient absorption.<br>
+      C: Bismuth is poorly absorbed; topical use is safest in pregnancy (used in some antidiarrheal preparations).<br>
+      D: Metronidazole is FDA Cat. B in pregnancy (no teratogenicity in humans at standard doses).<br>
+      E: No documented IgE-mediated hypersensitivity from the combination.
+    </div>
+  </div>
+
+  <!-- Q5 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 5 · LO3 — Antacid Choice in Renal Failure</div>
+    <div class="vig-stem">
+      A 68-year-old man with stage 4 CKD (eGFR 22 mL/min) and GERD is being managed with antacids. He previously took <strong>magnesium hydroxide</strong> but developed symptoms of hypermagnesemia. Which of the following antacids would be the BEST choice for this patient?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span> Aluminum hydroxide</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Magnesium carbonate</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Magnesium trisilicate</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Sodium bicarbonate</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Calcium carbonate</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: A</strong><br><br>
+      <strong>Mechanism:</strong> In renal failure, magnesium cannot be renally cleared, so <span class="vig-buzzword">Mg(OH)₂ and all Mg-containing antacids are contraindicated</span>. Likewise, CaCO₃ poses risks of hypercalcemia and tertiary hyperparathyroidism. Sodium bicarbonate risks hypernatremia and volume overload. <span class="vig-buzzword">Al(OH)₃ is the safest choice</span>: it causes constipation (not hypermagnesemia) and minimal systemic absorption. However, chronic aluminum may accumulate in renal failure; dosing should be monitored and limited.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      B & C: Any Mg-based antacid will accumulate and cause hypermagnesemia in CKD.<br>
+      D: Sodium bicarbonate increases Na⁺ load and volume, worsening hyperkalemia risk and HTN in CKD.<br>
+      E: CaCO₃ risks hypercalcemia and abnormal Ca-PO₄ metabolism in advanced CKD.
+    </div>
+  </div>
+
+  <!-- Q6 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 6 · LO3 — Milk-Alkali Syndrome from CaCO₃</div>
+    <div class="vig-stem">
+      A 55-year-old woman self-treats GERD with excessive amounts of <strong>calcium carbonate</strong> (Tums) chewed regularly throughout the day for 6 weeks. She now presents with nausea, confusion, weakness, and polyuria. Labs show Ca²⁺ 12.8 mg/dL, pH 7.52, HCO₃⁻ 35 mEq/L, BUN 32 mg/dL, and normal creatinine. Which of the following best explains her metabolic derangement?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Respiratory alkalosis from hyperventilation due to anxiety</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Milk-alkali syndrome: hypercalcemia, metabolic alkalosis, and acute kidney injury from volume depletion</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Hyperparathyroidism from chronic calcium supplementation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Acute pancreatitis triggered by milk consumption</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Metabolic acidosis with secondary hyperalkalinemia</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Milk-alkali syndrome</span> results from excessive ingestion of absorbable alkali (CaCO₃ + milk/dairy). The triad is: (1) <span class="vig-buzzword">hypercalcemia</span> from absorption, (2) <span class="vig-buzzword">metabolic alkalosis</span> from the alkali, and (3) <span class="vig-buzzword">acute kidney injury</span> from hypercalcemia-induced nephrogenic diabetes insipidus and volume depletion. PTH is suppressed (not elevated), distinguishing this from hyperparathyroidism. BUN elevation with normal Cr indicates volume depletion and prerenal AKI.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: pH 7.52 is metabolic (high HCO₃⁻), not respiratory.<br>
+      C: Chronic calcium suppresses PTH; hyperparathyroidism raises PTH.<br>
+      D: No pancreatic enzyme elevation mentioned; milk itself is not pancreatitis-inducing in this context.<br>
+      E: pH is 7.52 (alkalemia), not acidemia.
+    </div>
+  </div>
+
+  <!-- Q7 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 7 · LO4 — Sucralfate & PPI Interaction</div>
+    <div class="vig-stem">
+      A 70-year-old man is prescribed <strong>sucralfate</strong> suspension 1 g QID for a duodenal ulcer. He is also on <strong>omeprazole</strong> 20 mg daily. When discussing the regimen, the pharmacist mentions an important drug interaction. What is the mechanism of this interaction?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Sucralfate inhibits CYP3A4, increasing omeprazole levels</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> PPI-induced hypochlorhydria reduces sucralfate polymer formation and cytoprotective effect</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Sucralfate binds omeprazole in the GI lumen, reducing absorption</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Both drugs inhibit gastric mucus production, leading to paradoxical ulcer worsening</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Omeprazole induces hepatic metabolism of sucralfate</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Sucralfate is acid-dependent</span>. It requires acidic pH to form a protective polymer that adheres to ulcer beds. When a PPI suppresses gastric acid, sucralfate cannot polymerize effectively and loses its cytoprotective effect. For this reason, sucralfate should be separated from PPIs by at least 30 minutes, or the PPI alone is preferred. While not a dangerous interaction, it reduces sucralfate efficacy.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Sucralfate is minimally absorbed; no significant CYP inhibition.<br>
+      C: Sucralfate does not bind omeprazole in the lumen (they don't interact pharmaceutically).<br>
+      D: PPIs do not inhibit mucus production; they reduce acid. Sucralfate protects the mucosa.<br>
+      E: Sucralfate is not a hepatic substrate; omeprazole does not induce sucralfate metabolism.
+    </div>
+  </div>
+
+  <!-- Q8 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 8 · LO4 — Misoprostol Teratogenicity & NSAID Prevention</div>
+    <div class="vig-stem">
+      A 52-year-old woman with osteoarthritis is taking <strong>ibuprofen</strong> 800 mg TID for pain management. She has a history of peptic ulcer disease. The physician recommends <strong>misoprostol</strong> for gastroprotection. The patient discloses she is sexually active without contraception. Which of the following is the MOST important consideration regarding misoprostol in this patient?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Misoprostol will reduce the analgesic efficacy of ibuprofen</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Misoprostol is a potent teratogen and contraindicated in women of reproductive age without reliable contraception</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Misoprostol should be taken on an empty stomach for maximum efficacy</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Misoprostol is contraindicated in patients with a history of ulcer disease</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Misoprostol reduces NSAIDs' anti-inflammatory effects</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Misoprostol is FDA Category X</span> (now labeled as contraindicated in pregnancy). It is a <span class="vig-buzzword">PGE₁ analog</span> that stimulates uterine contractions and is abortifacient. It causes uterine contractions, Müllerian duct abnormalities (if exposed in first trimester), and miscarriage. Any woman of reproductive potential taking misoprostol must use reliable contraception. While misoprostol is excellent for NSAID-induced ulcer prevention, the teratogenic risk is absolute.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Misoprostol does not interfere with NSAID analgesia.<br>
+      C: Misoprostol is taken WITH food to reduce GI side effects (diarrhea).<br>
+      D: Misoprostol is indicated for ulcer prevention in NSAID users with ulcer history.<br>
+      E: Misoprostol does not reduce NSAID anti-inflammatory effects.
+    </div>
+  </div>
+
+  <!-- Q9 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 9 · LO5 — Vomiting Reflex & Antiemetic Anatomy</div>
+    <div class="vig-stem">
+      The vomiting reflex involves the chemoreceptor trigger zone (CTZ) and nucleus tractus solitarius (NTS). Which of the following best describes the location and major receptor targets of the CTZ?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Located within the blood-brain barrier; primarily H1 and M1 receptors</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Located in the vestibular nuclei; responds to motion via 5-HT3 and D2 receptors</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span> Located in the area postrema (outside BBB); responds to blood-borne toxins via D2 and 5-HT3 receptors</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Located in the dorsal medulla; primarily acetylcholine-dependent</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Located in the brainstem reticular activating system; antagonized by antihistamines alone</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: C</strong><br><br>
+      <strong>Mechanism:</strong> The <span class="vig-buzzword">chemoreceptor trigger zone (CTZ)</span> is located in the <span class="vig-buzzword">area postrema</span>, which lies <span class="vig-buzzword">outside the blood-brain barrier</span>. This allows it to respond to blood-borne emetics (drugs, toxins, metabolites). It expresses <span class="vig-buzzword">D2 (dopamine) and 5-HT3 (serotonin)</span> receptors, making it sensitive to chemotherapy, opioids, and metabolic toxins. The <span class="vig-buzzword">vestibular system</span> (H1, M1 receptors) controls motion sickness. The <span class="vig-buzzword">NTS</span> integrates visceral afferents and coordinates the vomiting motor program.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: CTZ is outside BBB, not within it.<br>
+      B: That describes vestibular input; vestibular nuclei are not the CTZ.<br>
+      D: CTZ is area postrema, not dorsal medulla.<br>
+      E: Vestibular system uses H1/M1, not the CTZ's D2/5-HT3.
+    </div>
+  </div>
+
+  <!-- Q10 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 10 · LO6 — Ondansetron QT Prolongation</div>
+    <div class="vig-stem">
+      A 42-year-old woman is receiving <strong>ondansetron</strong> 8 mg IV for chemotherapy-induced nausea and vomiting (CINV). An ECG is obtained and shows a prolonged QT interval (QTc 480 ms, baseline 420 ms). Which of the following best explains this effect and guides management?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Ondansetron blocks cardiac Na⁺ channels, similar to procainamide</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Ondansetron blocks cardiac K⁺ channels (hERG), prolonging the action potential and QT interval</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Ondansetron increases sympathetic tone, causing QT shortening (not prolongation)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Ondansetron stimulates acetylcholinesterase, increasing vagal tone</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Ondansetron causes acute hypokalemia, which prolongs QT</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Ondansetron blocks hERG (human ether-à-go-go-related) potassium channels</span> in the heart, which are responsible for rapid potassium efflux during cardiac repolarization. Blocking these channels delays repolarization, prolonging the QT interval and increasing the risk of <span class="vig-buzzword">torsades de pointes</span>. This is a known dose-dependent and patient-risk-factor-dependent (hypokalemia, hypomagnesemia, female, older age, heart disease) adverse effect. Higher doses and IV administration carry greater risk.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Ondansetron's mechanism is K⁺ channel blockade, not Na⁺ channel blockade.<br>
+      C: Ondansetron does not increase sympathetic tone; it is a 5-HT3 antagonist.<br>
+      D: Ondansetron does not affect acetylcholinesterase.<br>
+      E: While hypokalemia can prolong QT, ondansetron's primary mechanism is K⁺ channel blockade, not inducing hypokalemia.
+    </div>
+  </div>
+
+  <!-- Q11 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 11 · LO6 — Metoclopramide Tardive Dyskinesia Risk</div>
+    <div class="vig-stem">
+      A 28-year-old woman has been taking <strong>metoclopramide</strong> 10 mg QID for 8 months for gastroparesis. She now presents with involuntary orofacial movements and finger tremor. An MRI of the brain is normal. Which of the following best explains her presentation and guides long-term management?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Acute dystonia from central dopamine blockade; treatable with benztropine</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Tardive dyskinesia from prolonged D2 receptor antagonism; may persist after drug discontinuation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Serotonin syndrome from excessive 5-HT4 agonism</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Neuroleptic malignant syndrome; requires ICU monitoring and dantrolene</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Essential tremor worsened by gastric dysmotility treatment</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Tardive dyskinesia (TD)</span> is a late-onset extrapyramidal syndrome caused by prolonged dopamine D2 receptor antagonism (typical antipsychotics, metoclopramide). Involuntary orofacial dyskinesias, tongue movements, and extremity movements develop after weeks to months. Unlike acute dystonia, TD is NOT reversible with anticholinergics and may persist months to years after drug discontinuation. The FDA warning for metoclopramide notes risk of TD increases with cumulative dose and duration; metoclopramide should not be used >12 weeks unless benefits outweigh risks. Alternative prokinetics (domperidone, prucalopride) should be considered.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Acute dystonia occurs hours to days, not months; it is benztropine-responsive. This is a late syndrome (TD).<br>
+      C: Serotonin syndrome involves fever, altered mental status, and rigidity—not orofacial dyskinesias.<br>
+      D: NMS presents with fever, rigidity, and altered mental status—not isolated dyskinesias.<br>
+      E: Essential tremor is a benign action tremor; this is an iatrogenic movement disorder.
+    </div>
+  </div>
+
+  <!-- Q12 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 12 · LO6 — Metoclopramide Contraindications</div>
+    <div class="vig-stem">
+      A 76-year-old man with Parkinson's disease (treated with levodopa) presents with severe nausea from chemotherapy. His oncologist prescribes <strong>metoclopramide</strong> for antiemetic effect. However, his neurologist strongly objects. Which of the following best explains the contraindication?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span> Metoclopramide is a D2 antagonist and will worsen Parkinsonian symptoms</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Metoclopramide increases the risk of sudden cardiac death in Parkinson's patients</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Metoclopramide inhibits levodopa absorption in the GI tract</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Metoclopramide causes dopamine depletion in the basal ganglia</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Levodopa interferes with metoclopramide's 5-HT4 agonism</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: A</strong><br><br>
+      <strong>Mechanism:</strong> Metoclopramide is a D2 receptor antagonist. In Parkinson's disease, dopamine deficiency in the substantia nigra is the pathophysiology. Blocking D2 receptors further impairs dopamine neurotransmission and worsens <span class="vig-buzzword">resting tremor, rigidity, and bradykinesia</span>. Metoclopramide is contraindicated in Parkinson's disease. Better alternatives for this patient include ondansetron (5-HT3 antagonist), scopolamine (M1 antagonist), or NK1 antagonists (aprepitant) which do not block dopamine.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      B: No specific sudden cardiac death risk from metoclopramide in Parkinson's patients.<br>
+      C: Metoclopramide actually enhances gastric motility and levodopa absorption (not inhibit).<br>
+      D: Metoclopramide blocks dopamine receptors; it does not deplete dopamine itself.<br>
+      E: Levodopa is a dopamine precursor, not an 5-HT4 modulator; no direct interaction.
+    </div>
+  </div>
+
+  <!-- Q13 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 13 · LO6 — Scopolamine vs Ondansetron for Motion Sickness</div>
+    <div class="vig-stem">
+      A 35-year-old man is taking a cruise and anticipates motion sickness. He has no other medical conditions and takes no medications. Between <strong>scopolamine</strong> (transdermal patch, M1 antagonist) and <strong>ondansetron</strong> (5-HT3 antagonist), which would be the BEST first-line choice for this indication and why?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span> Scopolamine, because motion sickness is mediated by vestibular H1 and M1 receptors</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Ondansetron, because it blocks CTZ D2 receptors more effectively than scopolamine</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Ondansetron, because it does not cross the blood-brain barrier and is safer</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Scopolamine, because it blocks dopamine and is superior for chemotherapy nausea</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Both drugs are equally effective; choice depends solely on cost</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: A</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Motion sickness is mediated by vestibular input via H1 and M1 receptors</span>, not D2 or 5-HT3. Scopolamine (M1 antagonist) and antihistamines (meclizine, dimenhydrinate) are first-line for motion sickness. Ondansetron is effective for chemotherapy-induced nausea (CTZ-mediated via D2/5-HT3), but is not ideal for motion sickness because it does not address the vestibular pathway. Scopolamine as a transdermal patch provides sustained anticholinergic effect for >72 hours and is convenient for travel. Side effects include dry mouth and blurred vision (anticholinergic).<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      B: Ondansetron targets CTZ (blood-borne emetics), not vestibular motion sickness.<br>
+      C: Ondansetron does cross the BBB to some extent; more importantly, it is not ideal for motion sickness pathophysiology.<br>
+      D: Scopolamine does not block dopamine; it blocks acetylcholine (M1). It is not used for chemotherapy nausea.<br>
+      E: Efficacy differs significantly based on the type of nausea and receptor profiles.
+    </div>
+  </div>
+
+  <!-- Q14 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 14 · LO7 — Loperamide & Blood-Brain Barrier</div>
+    <div class="vig-stem">
+      A 40-year-old man with chronic diarrhea is prescribed <strong>loperamide</strong> 2 mg QID. You counsel him on the mechanism of action. Which of the following best describes why loperamide is safe (no CNS opioid effects) despite being an opioid agonist?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Loperamide is not an opioid; it is a selective muscarinic antagonist</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Loperamide is a substrate for P-glycoprotein efflux transporters and is actively excluded from the CNS</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Loperamide is highly protein-bound and does not cross the blood-brain barrier</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Loperamide is rapidly metabolized by hepatic CYP3A4 before CNS penetration</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Loperamide is selective for peripheral opioid receptors and does not bind central receptors</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Loperamide is a substrate for P-glycoprotein (MDR1)</span>, an ATP-dependent efflux transporter on the blood-brain barrier. P-gp actively pumps loperamide out of the CNS, preventing accumulation and CNS opioid effects (euphoria, respiratory depression, addiction liability). This makes loperamide safe for use in the general population. Notably, if P-gp is inhibited (e.g., by ritonavir or quinidine), loperamide can accumulate in the CNS and cause opioid toxicity; such combinations are contraindicated.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Loperamide IS an opioid (mu-agonist); it activates opioid receptors in the bowel wall.<br>
+      C: While protein-bound, that alone does not prevent CNS penetration; the key is active efflux.<br>
+      D: Rapid CYP metabolism is not the primary mechanism for CNS exclusion.<br>
+      E: Loperamide binds both peripheral and central opioid receptors; it is excluded from the CNS by P-gp, not selectivity.
+    </div>
+  </div>
+
+  <!-- Q15 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 15 · LO7 — Diphenoxylate & Anticholinergic Effects</div>
+    <div class="vig-stem">
+      A 50-year-old woman with infectious diarrhea is prescribed <strong>diphenoxylate + atropine</strong> (Lomotil) for symptom relief. Unlike loperamide, diphenoxylate readily crosses the blood-brain barrier in overdose. Which of the following is a key reason why atropine is added to diphenoxylate formulations?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Atropine enhances the antidiarrheal effect of diphenoxylate</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Atropine deters abuse by causing unpleasant anticholinergic side effects (dry mouth, blurred vision) at high doses</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Atropine acts as an antidote to diphenoxylate opioid toxicity</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Atropine inhibits CYP3A4, increasing diphenoxylate levels</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Atropine prevents bacterial overgrowth in the colon</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> Diphenoxylate, like loperamide, is a mu-opioid agonist with antidiarrheal properties. However, diphenoxylate is <span class="vig-buzzword">not a P-gp substrate</span> and crosses the BBB more readily, creating abuse potential (euphoria, respiratory depression). To deter abuse, <span class="vig-buzzword">atropine (a muscarinic antagonist) is added at low doses</span>. At therapeutic doses of diphenoxylate/atropine, the atropine amount is too low to cause problematic anticholinergic effects. However, if a patient tries to abuse the medication (take multiple tablets), the atropine dose becomes high enough to cause unpleasant side effects (dry mouth, blurred vision, tachycardia, hallucinations), discouraging overuse.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Atropine does not enhance diphenoxylate's antidiarrheal effect directly.<br>
+      C: Atropine is not an opioid antagonist (naloxone is).<br>
+      D: Atropine does not significantly inhibit CYP3A4.<br>
+      E: Atropine's anticholinergic action may slow gut motility (not prevent bacterial overgrowth).
+    </div>
+  </div>
+
+  <!-- Q16 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 16 · LO8 — Lactulose in Hepatic Encephalopathy</div>
+    <div class="vig-stem">
+      A 55-year-old man with cirrhosis and elevated ammonia (180 micromol/L) presents with confusion and disorientation. He is started on <strong>lactulose</strong> orally. Which of the following best explains the mechanism by which lactulose reduces ammonia levels and improves encephalopathy?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Lactulose is a direct inhibitor of hepatic urea cycle enzymes</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> Lactulose reduces hepatic blood flow and ammonia production</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span> Lactulose acts as an osmotic laxative, promoting colonic transit and reducing ammonia-producing bacterial population; ammonia trapping by lower pH</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Lactulose directly conjugates ammonia in the colon, forming non-absorbable complexes</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Lactulose stimulates glomerular filtration of ammonia in the kidneys</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: C</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Lactulose</span> is a non-absorbable disaccharide that acts as an osmotic laxative. It works by: (1) <span class="vig-buzzword">promoting stool frequency</span> and reducing colonic transit time, limiting ammonia-producing bacteria dwell time; (2) <span class="vig-buzzword">lowering colonic pH</span> via lactate production from bacterial fermentation of lactulose, which converts ammonia (NH₃, absorbable) to ammonium ion (NH₄⁺, non-absorbable), reducing ammonia reabsorption; and (3) <span class="vig-buzzword">reducing colonic ammonia-producing bacterial population</span>. This combination reduces net ammonia absorption and encephalopathy.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Lactulose does not inhibit urea cycle enzymes.<br>
+      B: Lactulose does not reduce hepatic blood flow; portal hypertension persists.<br>
+      D: Lactulose does not chemically conjugate ammonia; it traps it as NH₄⁺ via pH reduction.<br>
+      E: Ammonia clearance is not a renal function; the kidneys do not filter ammonia significantly.
+    </div>
+  </div>
+
+  <!-- Q17 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 17 · LO8 — Methylnaltrexone for Opioid-Induced Constipation</div>
+    <div class="vig-stem">
+      A 68-year-old man with advanced cancer is on high-dose morphine for pain control. He has developed severe constipation unresponsive to stool softeners and osmotic laxatives. <strong>Methylnaltrexone</strong> is prescribed. How does methylnaltrexone differ pharmacologically from naltrexone in its ability to treat opioid-induced constipation without reversing analgesia?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Methylnaltrexone is a partial mu-opioid agonist, preserving analgesia</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Methylnaltrexone is a quaternary amine (charged) and does not cross the blood-brain barrier, blocking peripheral mu-receptors in the GI tract only</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Methylnaltrexone is selective for peripheral delta opioid receptors, not mu-receptors</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Methylnaltrexone has a much longer half-life than naltrexone, allowing once-daily dosing</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Methylnaltrexone is metabolized more slowly, reducing systemic opioid antagonism</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Methylnaltrexone is a quaternary amine (charged/polar)</span> and therefore <span class="vig-buzzword">hydrophilic</span>. Unlike naltrexone (tertiary amine, lipophilic), methylnaltrexone <span class="vig-buzzword">does not cross the blood-brain barrier</span>. It acts as a pure mu-opioid antagonist in the <span class="vig-buzzword">peripheral GI tract</span>, reversing opioid-induced bowel dysmotility without affecting CNS opioid receptors. This allows patients to maintain analgesia while reducing constipation. It is given SC; typical dosing is 8-12 mg SC once daily or every other day.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Methylnaltrexone is a full antagonist, not a partial agonist.<br>
+      C: Methylnaltrexone antagonizes mu-receptors (the primary site of opioid effects).<br>
+      D: Half-life is not the key difference; BBB penetration is.<br>
+      E: Methylnaltrexone is systemically active but excluded from the CNS; half-life is comparable to naltrexone.
+    </div>
+  </div>
+
+  <!-- Q18 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 18 · LO8 — Oral Rehydration Therapy & SGLT1 Mechanism</div>
+    <div class="vig-stem">
+      During a cholera outbreak in a developing country, oral rehydration solution (ORS) containing glucose, sodium chloride, and water is administered to patients with severe diarrhea. Which of the following best explains the physiologic principle underlying the effectiveness of glucose-based ORS?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Glucose is metabolized to lactic acid, which buffers excess acid from diarrhea</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Glucose and Na⁺ are cotransported via SGLT1, reducing osmotic diarrhea and promoting electrolyte absorption</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Glucose inhibits secretory pathways in the enterocyte, reducing stool volume</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Glucose provides rapid energy, stimulating immune response to cholera</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Glucose is an osmotic agent that increases stool water, facilitating bacterial washout</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">SGLT1 (sodium-glucose linked transporter 1)</span> is an apical transporter on enterocytes that <span class="vig-buzzword">cotransports glucose and Na⁺ in a 1:1 ratio</span>. This coupled transport is <span class="vig-buzzword">active and not dependent on water osmolarity</span>. In cholera (and other infectious diarrheas), glucose-Na⁺ absorption via SGLT1 remains intact even when the secretory (cAMP-mediated) pathways are overwhelmed. The glucose and Na⁺ absorbed via SGLT1 create an osmotic gradient that drives water reabsorption, reducing net stool water loss. WHO-recommended ORS contains 75 mmol/L Na⁺ and 75 mmol/L glucose (1:1 molar ratio) to maximize SGLT1 coupling.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Glucose is not primarily metabolized to buffer acid; ORS addresses fluid/electrolyte loss, not acidosis directly.<br>
+      C: Glucose does not inhibit secretory pathways; it enhances absorption via SGLT1.<br>
+      D: While energy is provided, the primary mechanism is electrolyte-water coupling, not immune stimulation.<br>
+      E: Glucose at therapeutic ORS concentrations is not osmotically active (it is absorbed); excess glucose would worsen osmotic diarrhea.
+    </div>
+  </div>
+
+  <!-- Q19 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 19 · LO9 — Budesonide for Crohn's Disease Induction</div>
+    <div class="vig-stem">
+      A 32-year-old woman with newly diagnosed Crohn's disease of the terminal ileum is started on <strong>budesonide</strong> 9 mg daily for 8 weeks. Her gastroenterologist specifically chose budesonide over systemic corticosteroids (prednisone). Which of the following best explains the advantage of budesonide in this clinical scenario?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> Budesonide is more potent than prednisone and requires lower doses</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span> Budesonide undergoes extensive first-pass hepatic metabolism, reducing systemic corticosteroid exposure and side effects</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span> Budesonide is a selective TNF-alpha inhibitor and provides long-term remission</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> Budesonide does not suppress the hypothalamic-pituitary-adrenal axis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> Budesonide is absorbed throughout the entire GI tract, providing broad coverage</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: B</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Budesonide is a corticosteroid with high first-pass hepatic metabolism</span>. Approximately 90% of absorbed budesonide is rapidly inactivated by hepatic CYP3A4 into inactive metabolites. This results in a <span class="vig-buzzword">much lower systemic corticosteroid exposure</span> compared to oral prednisone, reducing adverse effects (HPA suppression, hypertension, hyperglycemia, immunosuppression, osteoporosis). Budesonide is formulated as extended-release tablets/capsules for delivery to the terminal ileum and colon, providing topical anti-inflammatory action while minimizing systemic toxicity. It is ideal for induction therapy in mild-to-moderate Crohn's disease.<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Budesonide is not "more potent" systematically; its advantage is local delivery + first-pass metabolism.<br>
+      C: Budesonide is a corticosteroid, not a TNF inhibitor; it is not used for long-term maintenance.<br>
+      D: Budesonide does suppress the HPA axis, but to a lesser degree than systemic corticosteroids due to first-pass metabolism.<br>
+      E: Budesonide has targeted delivery to the ileum/colon; it is not absorbed throughout the GI tract uniformly.
+    </div>
+  </div>
+
+  <!-- Q20 ─────────────────────────────────────────────────────────────── -->
+  <div class="vig-item" data-block="block1">
+    <div class="vig-num">Question 20 · LO9 — Infliximab Pretreatment Screening</div>
+    <div class="vig-stem">
+      A 40-year-old man with moderate-to-severe ulcerative colitis is evaluated for <strong>infliximab</strong> therapy. Before starting, the physician orders TB testing (tuberculin skin test and/or IGRA) and hepatitis B surface antigen (HBsAg) and anti-HBc. Which of the following best explains the rationale for this screening?
+    </div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span> To identify patients who will develop allergic reactions to infliximab infusions</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span> To determine if the patient is immune to TB and hepatitis B vaccines</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span> To identify latent TB or hepatitis B infection, as TNF inhibition impairs cellular immunity and risks reactivation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span> To assess liver function and prevent hepatotoxicity from infliximab</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span> To identify prior exposure to infliximab and predict infusion reactions</div>
+    </div>
+    <div class="vig-exp">
+      <strong>Correct Answer: C</strong><br><br>
+      <strong>Mechanism:</strong> <span class="vig-buzzword">Infliximab is a chimeric (mouse-human) monoclonal antibody against TNF-alpha</span>. TNF is critical for <span class="vig-buzzword">granuloma formation and Th1-mediated immunity</span>. Anti-TNF therapy significantly increases the risk of <span class="vig-buzzword">TB reactivation</span> (latent TB → active disease) and <span class="vig-buzzword">hepatitis B reactivation</span> (HBsAg+, anti-HBc+). Screening allows for: (1) TB prophylaxis (isoniazid) if latent TB is detected, or deferral if active TB; and (2) hepatitis B antiviral prophylaxis (lamivudine, entecavir) if HBsAg/anti-HBc detected. This is a class effect of all TNF inhibitors (infliximab, adalimumab, etanercept, golimumab).<br><br>
+      <strong>Distractor Dismissal:</strong><br>
+      A: Infliximab is a chimeric antibody; allergic reactions are assessed via test-dosing or premedication, not TB/HBV screening.<br>
+      B: Screening is not about vaccine immunity; it is about infection status.<br>
+      D: Infliximab hepatotoxicity is not predicted by TB/HBV screening; LFTs are monitored during therapy.<br>
+      E: Prior infliximab exposure is not assessed via TB/HBV testing.
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ SCORE REPORT ══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-score">
+  <div class="sec">Performance Dashboard</div>
+
+  <div class="score-grid">
+    <div class="score-card">
+      <div class="score-card-num" id="sc-total">— <span class="pct"></span></div>
+      <div class="score-card-label">Total Score</div>
+      <div class="score-bar-wrap"><div class="score-bar" id="bar-total" style="width:0%"></div></div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-num" id="sc-block1">— <span class="pct"></span></div>
+      <div class="score-card-label">Block 1 Score</div>
+      <div class="score-bar-wrap"><div class="score-bar" id="bar-block1" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="score-breakdown">
+    <div class="score-breakdown-title">Question-by-Question Breakdown</div>
+    <div id="q-breakdown">
+      <div class="exam-intro" style="text-align:center">Answer questions in the Exam Blocks to see your breakdown here.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:16px">
+    <button class="score-reset-btn" onclick="resetAllScores()">Reset All Scores</button>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI23 Hub #3 — USMLE Step 1 Practice &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div>
+
+<script>
+// ── TAB SWITCHING ──
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='score') updateScoreReport();
+}
+
+// ── VIGNETTE MCQ ──
+var answers={};
+function answerVig(opt,correct){
+  var item=opt.closest('.vig-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.vig-opt').forEach(function(o){o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct){
+    item.querySelectorAll('.vig-opt').forEach(function(o){
+      var fn=o.getAttribute('onclick');
+      if(fn&&fn.includes('true'))o.classList.add('correct');
+    });
+  }
+  item.querySelector('.vig-exp').classList.add('show');
+  var allVigs=document.querySelectorAll('.vig-item');
+  allVigs.forEach(function(v,i){
+    if(v===item) answers[i]={correct:correct,block:item.getAttribute('data-block')};
+  });
+  updateGlobalScore();
+}
+
+function updateGlobalScore(){
+  var total=Object.keys(answers).length;
+  var right=0;
+  for(var k in answers) if(answers[k].correct) right++;
+  var el=document.getElementById('global-score');
+  if(total>0) el.textContent=right+'/'+total;
+}
+
+// ── SCORE REPORT ──
+function updateScoreReport(){
+  var blocks={'block1':{total:0,right:0}};
+  var totalRight=0,totalAnswered=0;
+  for(var k in answers){
+    var a=answers[k];
+    var b=a.block;
+    if(blocks[b]!==undefined){
+      blocks[b].total++;
+      if(a.correct){blocks[b].right++;totalRight++;}
+      totalAnswered++;
+    }
+  }
+  function setCard(id,barId,right,total,max){
+    var el=document.getElementById(id);
+    var bar=document.getElementById(barId);
+    if(total===0){el.innerHTML='— <span class="pct"></span>';bar.style.width='0%';return;}
+    var pct=Math.round((right/max)*100);
+    el.innerHTML=right+'/'+max+' <span class="pct">'+pct+'%</span>';
+    bar.style.width=pct+'%';
+  }
+  var totalMax=20;
+  var totalPct=totalAnswered>0?Math.round((totalRight/totalMax)*100):0;
+  var scTotal=document.getElementById('sc-total');
+  var barTotal=document.getElementById('bar-total');
+  if(totalAnswered===0){scTotal.innerHTML='— <span class="pct"></span>';barTotal.style.width='0%';}
+  else{scTotal.innerHTML=totalRight+'/'+totalMax+' <span class="pct">'+totalPct+'%</span>';barTotal.style.width=totalPct+'%';}
+  setCard('sc-block1','bar-block1',blocks.block1.right,blocks.block1.total,20);
+  var bd=document.getElementById('q-breakdown');
+  if(totalAnswered===0){bd.innerHTML='<div class="exam-intro" style="text-align:center">Answer questions in the Exam Blocks to see your breakdown here.</div>';return;}
+  var html='';
+  var allVigs=document.querySelectorAll('.vig-item');
+  allVigs.forEach(function(v,i){
+    var num=i+1;
+    var label=v.querySelector('.vig-num').textContent;
+    if(answers[i]!==undefined){
+      var cls=answers[i].correct?'correct':'wrong';
+      var icon=answers[i].correct?'✓':'✗';
+      html+='<div class="score-row"><span class="score-row-label">Q'+num+' — '+label.split('·').pop().trim()+'</span><span class="score-row-val '+cls+'">'+icon+'</span></div>';
+    } else {
+      html+='<div class="score-row"><span class="score-row-label">Q'+num+' — '+label.split('·').pop().trim()+'</span><span class="score-row-val" style="color:#7A7060">—</span></div>';
+    }
+  });
+  bd.innerHTML=html;
+}
+
+function resetAllScores(){location.reload();}
+
+// ── BLOCK TIMERS ──
+var timers={};
+function initTimer(id,seconds){
+  timers[id]={total:seconds,remaining:seconds,running:false,interval:null};
+  renderTimer(id);
+}
+function renderTimer(id){
+  var t=timers[id];
+  var m=Math.floor(t.remaining/60);
+  var s=t.remaining%60;
+  document.getElementById('timer-'+id).textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+function toggleTimer(id){
+  var t=timers[id];
+  if(t.running){clearInterval(t.interval);t.running=false;}
+  else{t.running=true;t.interval=setInterval(function(){
+    if(t.remaining>0){t.remaining--;renderTimer(id);}
+    else{clearInterval(t.interval);t.running=false;document.getElementById('timer-'+id).textContent='00:00';}
+  },1000);}
+}
+function resetTimer(id,seconds){
+  var t=timers[id];
+  if(t.interval) clearInterval(t.interval);
+  t.remaining=seconds;t.running=false;
+  renderTimer(id);
+}
+
+// ── INIT ──
+window.addEventListener('load',function(){
+  initTimer('block1',1800);
+});
+</script>
+</body>
+</html>

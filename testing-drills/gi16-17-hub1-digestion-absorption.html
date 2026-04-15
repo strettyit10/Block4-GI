@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI16-17 Digestion & Absorption — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi16-17-digestion-absorption.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>GI16-17 Digestion & Absorption <span>Active Drills</span></h1>
+  <div class="subtitle">Lecture 16 & 17 · GI Block · Carbohydrate, protein, lipid, water/mineral/vitamin absorption — LOs 1–21</div>
+  <div class="source-strip">
+    <span class="source-badge"><strong>Source:</strong> Lecture Guide GI16-17</span>
+    <span class="source-badge"><strong>Learning Objectives:</strong> 21</span>
+    <span class="source-badge"><strong>Flashcards:</strong> 23</span>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Your Progress:</span>
+  <span class="hub-step current">Hub 1 — Core</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi16-17-hub2-digestion-absorption.html" class="hub-step next">Hub 2 — Step 1</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi16-17-hub3-digestion-absorption.html" class="hub-step next">Hub 3 — Timed</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-num">23</div>
+    <div class="stat-label">Flashcards</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">10</div>
+    <div class="stat-label">Fill-in-Blank</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Orderings</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Matchings</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Test Traps</div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(event, 'tab-fc')">💳 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-fib')">✏️ Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-ordering')">⚙️ Ordering</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-matching')">🔗 Matching</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-traps')">⚠️ Test Traps</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-reference')">📊 Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-fc">
+<div class="fc-progress"><span>Flashcard Drill</span><span><span class="prog-num">23</span> cards</span></div>
+<div class="fc-grid" id="flashcard-grid">
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 1 — Small Intestine Anatomy</div>
+      <div class="fc-q">What three anatomical features of the small intestine dramatically increase absorptive surface area?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Plicae circulares</strong> (~3× increase), <strong>villi</strong> (~10× increase), <strong>microvilli/brush border</strong> (~20× increase). Combined: ~600-fold amplification vs. smooth tube.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Villi & Lacteals</div>
+      <div class="fc-q">What is the functional significance of lacteals in intestinal villi?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Lacteals are <strong>lymphatic capillaries</strong> that absorb <strong>chylomicrons</strong> (too large for blood capillaries). Chylomicrons bypass portal blood and enter lymph → thoracic duct → systemic circulation.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Unstirred Water Layer</div>
+      <div class="fc-q">How do bile salt micelles overcome the rate-limiting step of the unstirred water layer?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Micelles are <strong>amphipathic</strong> (hydrophobic core, hydrophilic exterior) → ferry lipid digestion products across the unstirred water layer. Without micelles, fat-soluble compounds cannot traverse the UWL efficiently → steatorrhea.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 3 — Principal Enzymes</div>
+      <div class="fc-q">Which enzyme is the "master activator" of the pancreatic protease cascade, and where is it produced?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Enterokinase (enteropeptidase)</strong> — produced by <strong>duodenal brush border</strong>. Cleaves trypsinogen → trypsin, which then activates all other zymogens (chymotrypsinogen, proelastase, procarboxypeptidases).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 4 — Transport Mechanisms</div>
+      <div class="fc-q">Name the four main mechanisms of nutrient absorption across the enterocyte membrane.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>1) Primary active transport</strong> (Na+/K+-ATPase, ATP-driven). <strong>2) Secondary active transport</strong> (co-transport via Na+ gradient: SGLT1, PepT1). <strong>3) Facilitated diffusion</strong> (GLUT5, GLUT2). <strong>4) Passive diffusion</strong> (lipids, water).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 5 — Fiber</div>
+      <div class="fc-q">Why is cellulose (dietary fiber) not digested by human enzymes?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Cellulose is a glucose polymer with <strong>β-1,4 glycosidic bonds</strong>. Human digestive enzymes (amylase, maltase) only cleave <strong>α-glycosidic bonds</strong>. No cellulase (β-glucosidase) is produced → cellulose passes through undigested.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 6 — Carbohydrate Digestion</div>
+      <div class="fc-q">What is the two-phase process of starch digestion, and which enzyme dominates in each phase?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Phase 1 (luminal):</strong> Salivary amylase (~5%, inactivated by gastric acid) + <strong>pancreatic amylase</strong> (dominant, cleaves α-1,4 bonds → maltose, maltotriose, α-limit dextrins). <strong>Phase 2 (brush border):</strong> Saccharidases (maltase, sucrase-isomaltase, lactase) complete digestion.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 7 — Monosaccharide Transporters</div>
+      <div class="fc-q">Which monosaccharide transporters are apical, and which are basolateral? What are their substrates?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Apical:</strong> SGLT1 (glucose + galactose, Na+-coupled), GLUT5 (fructose, facilitated). <strong>Basolateral:</strong> GLUT2 (all three monosaccharides exit into portal blood, facilitated). SGLT1 failure → glucose-galactose malabsorption; GLUT5 saturation (high fructose) → osmotic diarrhea.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 8 — Lactose Intolerance</div>
+      <div class="fc-q">Explain the two mechanisms by which undigested lactose causes symptoms in lactase-deficient individuals.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>1) Osmotic diarrhea:</strong> Undigested lactose draws water into lumen → watery stools. <strong>2) Gas + bloating:</strong> Colonic bacteria ferment lactose → H₂, CO₂, short-chain fatty acids → bloating, cramping, flatulence. Symptoms begin 30–60 min post-lactose ingestion.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 9 — Protein Digestion Cascade</div>
+      <div class="fc-q">Outline the three-stage protein digestion cascade: gastric, pancreatic, and brush border/cytoplasmic.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Stage 1 (Gastric):</strong> HCl denatures proteins; pepsin cleaves peptide bonds (~10% digestion). <strong>Stage 2 (Pancreatic):</strong> Enterokinase activates trypsinogen → trypsin → chymotrypsin, elastase, carboxypeptidases (70% digestion). <strong>Stage 3 (Brush border + cytoplasm):</strong> Aminopeptidases, dipeptidases → free amino acids + dipeptides/tripeptides.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 10 — Peptide Absorption</div>
+      <div class="fc-q">What is PepT1, and why is di/tripeptide absorption more efficient than free amino acid absorption?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>PepT1</strong> = H+-peptide cotransporter (secondary active, H+-gradient from Na+/H+ antiporter). Di/tripeptides are absorbed <strong>intact</strong> via PepT1, then hydrolyzed by cytoplasmic peptidases. PepT1 pathway is more efficient than multiple free amino acid transporters.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 11 — Lipid Digestion</div>
+      <div class="fc-q">Describe the role of pancreatic lipase and co-lipase in triglyceride digestion.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Pancreatic lipase cleaves <strong>sn-1 & sn-3 ester bonds</strong> → 2-monoglyceride + 2 free fatty acids. <strong>Co-lipase</strong> (activated by trypsin) anchors lipase at the lipid-water interface, preventing bile salt inhibition. Without co-lipase: bile salts displace lipase → steatorrhea.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 12 — Micelle Formation</div>
+      <div class="fc-q">What is a mixed micelle, and what role do bile salts play in its formation and function?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Mixed micelle:</strong> 4–8 nm cylindrical structure with hydrophobic core (2-MAG, FA, cholesterol, vitamins) + hydrophilic exterior. <strong>Bile salts</strong> (amphipathic) are essential: they emulsify large TG droplets → increase lipase substrate area AND form micelles to ferry lipids across the unstirred water layer.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 13 — Chylomicron Assembly</div>
+      <div class="fc-q">What happens to lipid digestion products inside the enterocyte, and how is chylomicron formed?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Lipids diffuse across enterocyte membrane → carried to SER by FABP → <strong>re-esterification</strong> (2-MAG + 2 FA → TG). Assembled with cholesterol esters, phospholipids, <strong>apoB-48</strong> (unique intestinal form) → <strong>chylomicrons</strong> → Golgi → basolateral exocytosis → lacteals (not portal blood, too large).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 14 — Abetalipoproteinemia</div>
+      <div class="fc-q">What is the genetic defect in abetalipoproteinemia, and why does it cause steatorrhea and fat-soluble vitamin deficiency?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Defect:</strong> Microsomal triglyceride transfer protein (MTP) mutation → cannot assemble apoB-48-containing chylomicrons. Fat accumulates in enterocytes (cannot be exported) → <strong>steatorrhea</strong>. Fat-soluble vitamins (A, D, E, K) malabsorbed → vitamin E deficiency causes spinocerebellar degeneration (ataxia).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 15 — Bile Acid Circulation</div>
+      <div class="fc-q">Where and how are conjugated bile acids reabsorbed, and what percentage are recycled daily?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Conjugated bile acids are actively reabsorbed in the <strong>terminal ileum</strong> via <strong>ASBT (apical sodium-dependent bile acid transporter)</strong> — Na+-bile acid co-transport. Recycled 6–10 times daily. ~95% of bile acids conserved; only ~5% lost daily (replenished by hepatic synthesis).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 16 — Ileal Resection</div>
+      <div class="fc-q">What are the three major consequences of terminal ileum resection exceeding 100 cm?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>1) Bile acid diarrhea:</strong> Loss of active reabsorption → ↑ colonic bile acids stimulate water secretion. <strong>2) Fat malabsorption:</strong> Depleted bile acid pool → ↓ micelle formation → steatorrhea. <strong>3) Vitamin B12 deficiency:</strong> Terminal ileum required for B12-IF absorption → megaloblastic anemia.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 17 — Water & Electrolyte Absorption</div>
+      <div class="fc-q">What is the net effect of Na+ absorption on water absorption in the small intestine?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Na+ absorption (via Na+/K+-ATPase, SGLT1, NaCl co-transporters) creates an osmotic gradient → water follows osmotically into portal blood. Most water absorption is <strong>secondary to electrolyte absorption</strong>. This is why cholera (CFTR overactivation) causes massive watery diarrhea despite normal Na+ gradient.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 18 — Iron Absorption</div>
+      <div class="fc-q">Trace the pathway of dietary iron from the intestinal lumen to incorporation into transferrin in portal blood.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Fe³⁺ → <strong>ferrireductase</strong> (apical) → Fe²⁺ → <strong>DMT1</strong> (divalent metal transporter, H+-coupled) → iron enters enterocyte. Stored as <strong>ferritin</strong>; basolateral exit via <strong>ferroportin</strong> → <strong>hephaestin</strong> oxidizes Fe²⁺ → Fe³⁺ → binds <strong>transferrin</strong> in portal blood.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 19 — Calcium Absorption</div>
+      <div class="fc-q">What is the role of vitamin D, PTH, and calbindin in active calcium absorption?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>PTH</strong> stimulates <strong>1,25-(OH)₂-vitamin D₃</strong> synthesis (renal). Vitamin D induces <strong>calbindin (CaBP)</strong> synthesis in enterocytes. Calbindin binds apical Ca²⁺ (via TRPV6) → intracellular buffering → basolateral Ca²⁺-ATPase extrudes Ca²⁺ into portal blood. Vitamin D also ↑ TRPV6 and Ca²⁺-ATPase expression.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 20 — Fat-Soluble Vitamins</div>
+      <div class="fc-q">What is the main prerequisite for absorption of fat-soluble vitamins (A, D, E, K)?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Micelle formation.</strong> Fat-soluble vitamins must be incorporated into mixed micelles (with bile salts) to cross the unstirred water layer. Any condition reducing bile salt delivery (cholestasis, ileal disease, CF) → fat-soluble vitamin malabsorption → deficiency diseases (night blindness, osteomalacia, bleeding tendency, neurologic symptoms).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 20 — Vitamin B12 Pathway</div>
+      <div class="fc-q">Describe the B12 absorption pathway from dietary source to terminal ileum.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">B12 released from food proteins by gastric acid/pepsin → bound by <strong>transcobalamin I (TC1)</strong> in saliva → <strong>intrinsic factor (IF)</strong> (gastric parietal cells) binds B12 → B12-IF complex → <strong>terminal ileum receptor</strong> (cubilin-amnionless) → absorbed → bound by <strong>transcobalamin II (TC2)</strong> in blood.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 21 — Osmotic vs. Secretory Diarrhea</div>
+      <div class="fc-q">Differentiate osmotic and secretory diarrhea by their response to fasting and stool osmolar gap.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Osmotic diarrhea:</strong> Stops with fasting; stool osmolar gap > 50 mOsm/kg (caused by unabsorbed solutes). Examples: lactose intolerance, magnesium supplement. <strong>Secretory diarrhea:</strong> Continues despite fasting; normal osmolar gap (active water secretion). Examples: cholera, VIPoma, celiac disease.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ══ FILL-IN-BLANK ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+<div class="fib-list">
+
+<div class="fib-card">
+  <div class="fib-num">Question 1</div>
+  <div class="fib-prompt">The small intestine achieves ~<span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>-fold increase in absorptive surface area compared to a smooth tube of the same length, through three levels of amplification: plicae circulares, villi, and microvilli.</div>
+  <div class="fib-hint">Hint: It's between 400–800.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="Answer" data-answers="600,600-fold" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="checkFIB(this.previousElementSibling)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 2</div>
+  <div class="fib-prompt">Salivary amylase is inactivated by <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> in the stomach and accounts for only ~<span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>% of total starch digestion.</div>
+  <div class="fib-hint">Hint: The first blank is a low pH environment; the second is a small percentage.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="gastric acid / HCl / acid" data-answers="gastric acid,HCl,acid,gastric,pH" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="percentage" data-answers="5,5%" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.previousElementSibling.previousElementSibling.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 3</div>
+  <div class="fib-prompt">SGLT1 transports <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> and <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> via secondary active co-transport with <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>. Mutations in SGLT1 cause glucose-galactose malabsorption and osmotic diarrhea.</div>
+  <div class="fib-hint">Hint: Two monosaccharides and one electrolyte.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="sugar 1" data-answers="glucose,glucose" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="sugar 2" data-answers="galactose,galactose" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="electrolyte" data-answers="Na+,sodium,Na" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 4</div>
+  <div class="fib-prompt">Pepsin is activated in the stomach at pH <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> and is inactivated in the duodenum when pH rises above <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>.</div>
+  <div class="fib-hint">Hint: The first is acidic; the second is when the lumen becomes less acidic.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="activation pH" data-answers="<5,below 5,less than 5,acidic,2-5,3-5" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="inactivation pH" data-answers=">5,above 5,greater than 5,5,5-6" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 5</div>
+  <div class="fib-prompt">Pancreatic lipase cleaves the <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> ester bonds of triglycerides, producing <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> and two free fatty acids.</div>
+  <div class="fib-hint">Hint: Think about the positions on the glycerol backbone (numbered 1, 2, 3).</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="position" data-answers="sn-1 and sn-3,1 and 3,sn-1,sn-3" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="product" data-answers="2-monoglyceride,2-MAG,monoglyceride" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 6</div>
+  <div class="fib-prompt"><span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> is the H+-peptide cotransporter that absorbs di- and tripeptides MORE efficiently than free amino acids because it uses the proton gradient generated by the <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>.</div>
+  <div class="fib-hint">Hint: One is a transporter acronym; the other involves a Na+ antiporter.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="transporter" data-answers="PepT1" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="gradient source" data-answers="Na+/H+ antiporter,Na+/H+ exchanger,Na+ gradient" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 7</div>
+  <div class="fib-prompt"><span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> is the protein that anchors pancreatic lipase at the lipid-water interface to prevent bile salt inhibition. Without it, bile salts competitively displace lipase and cause steatorrhea.</div>
+  <div class="fib-hint">Hint: It's a pancreatic protein co-secreted with lipase (abbreviated).</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="protein name" data-answers="co-lipase,colipase" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="checkFIB(this.previousElementSibling)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 8</div>
+  <div class="fib-prompt">In abetalipoproteinemia, the genetic defect is in <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>, which prevents assembly of <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>-containing lipoproteins. This causes fat to accumulate in enterocytes and results in steatorrhea.</div>
+  <div class="fib-hint">Hint: One is a lipid transfer protein; the other is an apolipoprotein.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="enzyme" data-answers="MTP,microsomal triglyceride transfer protein" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="apolipoprotein" data-answers="apoB-48,apoB-48,apoB,B-48" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 9</div>
+  <div class="fib-prompt">Bile acids are recycled <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> times per day. Conjugated bile acids are actively reabsorbed in the <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> via the transporter <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>.</div>
+  <div class="fib-hint">Hint: 6–10 cycles daily; the intestinal segment has a special name; the transporter is an acronym.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="recycles" data-answers="6-10,6 to 10,six to ten" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="location" data-answers="terminal ileum" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="transporter" data-answers="ASBT,apical sodium-dependent bile acid transporter" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">Question 10</div>
+  <div class="fib-prompt">Iron is transported across the apical membrane via <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span> (a divalent metal transporter), and is exported from the enterocyte basolaterally via <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>. Intracellular iron is stored as <span style="background:#F7F5F0;padding:2px 6px;border-radius:3px;">______</span>.</div>
+  <div class="fib-hint">Hint: Three proteins involved in iron handling.</div>
+  <div class="fib-row">
+    <input class="fib-input" type="text" placeholder="apical" data-answers="DMT1,divalent metal transporter 1" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="basolateral" data-answers="ferroportin,iron exporter" onblur="checkFIB(this)">
+    <input class="fib-input" type="text" placeholder="storage" data-answers="ferritin" onblur="checkFIB(this)">
+    <button class="fib-btn" onclick="this.parentElement.querySelectorAll('input').forEach(i=>checkFIB(i))">Check All</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+</div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+<div class="ordering-intro"><strong>Drag items</strong> to their correct sequential order, then click "Check Order" to verify. Click "Reveal Answer" to see the solution.</div>
+
+<div class="order-drill">
+  <div class="drill-title">Starch Digestion Sequence</div>
+  <div class="drill-hint">Order the steps of starch digestion from mouth to monosaccharide absorption.</div>
+  <div class="order-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="2"><span class="item-grip">⋮</span><span class="item-text">Pancreatic amylase cleaves α-1,4 bonds → maltose, maltotriose, α-limit dextrins</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="3"><span class="item-grip">⋮</span><span class="item-text">Brush border maltase, sucrase-isomaltase, lactase complete digestion → monosaccharides</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="1"><span class="item-grip">⋮</span><span class="item-text">Salivary amylase begins starch digestion in mouth, inactivated by gastric acid</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="4"><span class="item-grip">⋮</span><span class="item-text">SGLT1 and GLUT5 transporters absorb monosaccharides into enterocyte</span></div>
+  </div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Order</button>
+    <button class="order-ghost-btn" onclick="resetOrder(this)">Reset</button>
+    <button class="order-ghost-btn" onclick="revealOrder(this)">Reveal Answer</button>
+  </div>
+  <div class="order-feedback"></div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Salivary amylase</span> begins starch digestion in mouth, inactivated by gastric acid</li>
+      <li><span>Pancreatic amylase</span> cleaves α-1,4 bonds → maltose, maltotriose, α-limit dextrins</li>
+      <li><span>Brush border saccharidases</span> complete digestion → monosaccharides</li>
+      <li><span>SGLT1 & GLUT5</span> absorb monosaccharides into enterocyte</li>
+    </ol>
+  </div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Protein Digestion Cascade</div>
+  <div class="drill-hint">Order the stages of protein digestion: gastric, pancreatic, and brush border/cytoplasmic.</div>
+  <div class="order-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="2"><span class="item-grip">⋮</span><span class="item-text">Enterokinase activates trypsinogen → trypsin; trypsin activates chymotrypsin, elastase, carboxypeptidases</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="3"><span class="item-grip">⋮</span><span class="item-text">Brush border aminopeptidases and dipeptidases; cytoplasmic peptidases → free amino acids</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="1"><span class="item-grip">⋮</span><span class="item-text">HCl denatures proteins; pepsin cleaves peptide bonds (~10% digestion)</span></div>
+  </div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Order</button>
+    <button class="order-ghost-btn" onclick="resetOrder(this)">Reset</button>
+    <button class="order-ghost-btn" onclick="revealOrder(this)">Reveal Answer</button>
+  </div>
+  <div class="order-feedback"></div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Gastric stage:</span> HCl denatures proteins; pepsin cleaves peptide bonds (~10% digestion)</li>
+      <li><span>Pancreatic stage:</span> Enterokinase activates trypsinogen → trypsin cascade</li>
+      <li><span>Brush border + cytoplasmic stage:</span> Aminopeptidases, dipeptidases, peptidases → free amino acids</li>
+    </ol>
+  </div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Lipid Digestion & Absorption</div>
+  <div class="drill-hint">Order the steps from dietary triglyceride to chylomicron secretion.</div>
+  <div class="order-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="4"><span class="item-grip">⋮</span><span class="item-text">Intracellular re-esterification in SER: 2-MAG + 2 FA → triglyceride</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="5"><span class="item-grip">⋮</span><span class="item-text">Chylomicron assembly (apoB-48) and exocytosis at basolateral membrane → lacteals</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="2"><span class="item-grip">⋮</span><span class="item-text">Pancreatic lipase + co-lipase cleave sn-1 & sn-3 bonds → 2-monoglyceride + free fatty acids</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="1"><span class="item-grip">⋮</span><span class="item-text">Bile salts emulsify dietary triglycerides and form mixed micelles</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="3"><span class="item-grip">⋮</span><span class="item-text">Lipid digestion products diffuse across brush border (passive) into enterocyte</span></div>
+  </div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Order</button>
+    <button class="order-ghost-btn" onclick="resetOrder(this)">Reset</button>
+    <button class="order-ghost-btn" onclick="revealOrder(this)">Reveal Answer</button>
+  </div>
+  <div class="order-feedback"></div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Emulsification:</span> Bile salts emulsify dietary triglycerides and form mixed micelles</li>
+      <li><span>Enzyme action:</span> Pancreatic lipase + co-lipase cleave sn-1 & sn-3 bonds → 2-MAG + FA</li>
+      <li><span>Absorption:</span> Lipid digestion products diffuse across brush border into enterocyte</li>
+      <li><span>Processing:</span> Intracellular re-esterification in SER → triglyceride</li>
+      <li><span>Transport:</span> Chylomicron assembly (apoB-48) and exocytosis → lacteals</li>
+    </ol>
+  </div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Bile Acid Enterohepatic Circulation</div>
+  <div class="drill-hint">Order the steps of bile acid recycling from liver to terminal ileum and back.</div>
+  <div class="order-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="3"><span class="item-grip">⋮</span><span class="item-text">Terminal ileum: active reabsorption of conjugated bile acids via ASBT</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="4"><span class="item-grip">⋮</span><span class="item-text">Hepatic re-uptake of bile acids via portal blood; re-secretion into bile</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="1"><span class="item-grip">⋮</span><span class="item-text">Liver synthesizes primary bile acids, conjugates with glycine/taurine, secretes in bile</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="2"><span class="item-grip">⋮</span><span class="item-text">Meal stimulates CCK → gallbladder contraction → bile salts enter duodenum</span></div>
+    <div class="order-item" draggable="true" ondragstart="drag(event)" data-order="5"><span class="item-grip">⋮</span><span class="item-text">~5% bile acids lost in feces daily, replenished by hepatic de novo synthesis</span></div>
+  </div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Order</button>
+    <button class="order-ghost-btn" onclick="resetOrder(this)">Reset</button>
+    <button class="order-ghost-btn" onclick="revealOrder(this)">Reveal Answer</button>
+  </div>
+  <div class="order-feedback"></div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Synthesis:</span> Liver synthesizes primary bile acids, conjugates, secretes in bile</li>
+      <li><span>Release:</span> Meal stimulates CCK → gallbladder contraction → bile salts in duodenum</li>
+      <li><span>Reabsorption:</span> Terminal ileum actively reabsorbs conjugated bile acids via ASBT</li>
+      <li><span>Return:</span> Hepatic re-uptake via portal blood; re-secretion into bile</li>
+      <li><span>Loss:</span> ~5% lost daily, replenished by hepatic synthesis</li>
+    </ol>
+  </div>
+</div>
+
+</div>
+
+<!-- ══ MATCHING ═════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+<div class="match-intro"><strong>Click items</strong> to select a concept from the left and its matching definition from the right. When you match correctly, both items highlight green.</div>
+
+<div class="match-set">
+  <div class="match-set-title">Monosaccharide Transporters</div>
+  <div class="match-set-hint">Match each transporter to its correct location, substrates, and mechanism.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Transporter</div>
+      <div class="match-item" data-match="sglt1">SGLT1</div>
+      <div class="match-item" data-match="glut5">GLUT5</div>
+      <div class="match-item" data-match="glut2">GLUT2</div>
+    </div>
+    <div>
+      <div class="match-col-label">Substrate & Mechanism</div>
+      <div class="match-item" data-match="glut2">Glucose, galactose, fructose | Basolateral exit | Facilitated diffusion</div>
+      <div class="match-item" data-match="glut5">Fructose only | Apical | Facilitated diffusion</div>
+      <div class="match-item" data-match="sglt1">Glucose & galactose | Apical | Na+ co-transport (secondary active)</div>
+    </div>
+  </div>
+  <div class="match-score">Matched: <span class="correct-count">0</span>/3</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">Digestive Enzymes & Their Substrates</div>
+  <div class="match-set-hint">Match each enzyme to its substrate and primary product.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Enzyme</div>
+      <div class="match-item" data-match="pepsin">Pepsin</div>
+      <div class="match-item" data-match="pancreatic-lipase">Pancreatic lipase</div>
+      <div class="match-item" data-match="lactase">Lactase</div>
+      <div class="match-item" data-match="enterokinase">Enterokinase</div>
+    </div>
+    <div>
+      <div class="match-col-label">Substrate → Product</div>
+      <div class="match-item" data-match="pancreatic-lipase">Triglycerides (sn-1,3) → 2-monoglyceride + 2 free fatty acids</div>
+      <div class="match-item" data-match="pepsin">Proteins (Phe, Trp, Tyr bonds) → large peptide fragments</div>
+      <div class="match-item" data-match="enterokinase">Trypsinogen → trypsin (master activator)</div>
+      <div class="match-item" data-match="lactase">Lactose → glucose + galactose</div>
+    </div>
+  </div>
+  <div class="match-score">Matched: <span class="correct-count">0</span>/4</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">Lipid Absorption Concepts</div>
+  <div class="match-set-hint">Match each concept to its correct description.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Concept</div>
+      <div class="match-item" data-match="micelle">Micelle</div>
+      <div class="match-item" data-match="colipase">Co-lipase</div>
+      <div class="match-item" data-match="apoB48">ApoB-48</div>
+      <div class="match-item" data-match="mtp">MTP</div>
+    </div>
+    <div>
+      <div class="match-col-label">Description</div>
+      <div class="match-item" data-match="colipase">Anchors pancreatic lipase at lipid-water interface; prevents bile salt inhibition</div>
+      <div class="match-item" data-match="mtp">Microsomal triglyceride transfer protein; defective in abetalipoproteinemia</div>
+      <div class="match-item" data-match="micelle">4–8 nm amphipathic structure; ferries lipids across unstirred water layer</div>
+      <div class="match-item" data-match="apoB48">Intestine-specific apolipoprotein; required for chylomicron assembly</div>
+    </div>
+  </div>
+  <div class="match-score">Matched: <span class="correct-count">0</span>/4</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">Micronutrient Absorption Pathways</div>
+  <div class="match-set-hint">Match each nutrient to its absorption mechanism.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Nutrient / Pathway</div>
+      <div class="match-item" data-match="iron">Iron</div>
+      <div class="match-item" data-match="calcium">Calcium</div>
+      <div class="match-item" data-match="vitb12">Vitamin B12</div>
+      <div class="match-item" data-match="vitd">Fat-soluble vitamins</div>
+    </div>
+    <div>
+      <div class="match-col-label">Mechanism / Key Factor</div>
+      <div class="match-item" data-match="vitb12">Bound by intrinsic factor; absorbed in terminal ileum by cubilin-amnionless</div>
+      <div class="match-item" data-match="vitd">Must be incorporated into micelles; requires bile salts</div>
+      <div class="match-item" data-match="calcium">Absorbed via calbindin; induced by 1,25-(OH)₂-vitamin D₃</div>
+      <div class="match-item" data-match="iron">Ferrireductase → Fe²⁺ → DMT1 → ferritin → ferroportin → transferrin</div>
+    </div>
+  </div>
+  <div class="match-score">Matched: <span class="correct-count">0</span>/4</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+</div>
+
+<!-- ══ TEST TRAPS ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+<div class="trap-intro"><strong>Identify whether each statement is TRUE or FALSE</strong>, then click "True" or "False" to reveal the explanation and correct answer.</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 1</div>
+  <div class="trap-statement">Micelles are absorbed intact into enterocytes and contribute to chylomicron formation.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Micelles ferry lipid digestion products across the unstirred water layer, but the products (2-MAG, FA, cholesterol) diffuse OUT of the micelle at the brush border and passively enter the enterocyte. Bile salts remain in the lumen and are recycled in the terminal ileum. Only the absorbed lipids are re-esterified and packaged into chylomicrons.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 2</div>
+  <div class="trap-statement">Lactose intolerance is caused by bacterial overgrowth in the small intestine due to undigested lactose.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False (partially).</strong> Undigested lactose does reach the colon (not overgrowth in SI), where normal colonic bacteria ferment it → osmotic diarrhea (main mechanism) + gas production (bloating, flatulence). The osmotic effect is the primary cause of symptoms.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 3</div>
+  <div class="trap-statement">Pancreatic lipase requires no accessory factor to cleave triglycerides in the presence of bile salts.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Pancreatic lipase REQUIRES co-lipase because bile salts competitively inhibit lipase by displacing it from the lipid-water interface. Co-lipase (activated by trypsin) anchors lipase at the interface, restoring activity. Without co-lipase, steatorrhea ensues.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 4</div>
+  <div class="trap-statement">Free amino acids are absorbed more efficiently than dipeptides and tripeptides because of their higher concentration.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Di/tripeptides are absorbed MORE efficiently than free amino acids despite lower concentration, because PepT1 (H+-peptide cotransporter) is high-affinity and utilizes the proton gradient from the Na+/H+ antiporter. Free AAs use multiple lower-efficiency transporters.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 5</div>
+  <div class="trap-statement">Terminal ileum resection only affects fat absorption and has no impact on carbohydrate or protein absorption.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Terminal ileum resection has TWO major consequences: (1) Loss of bile acid reabsorption → cholerheic diarrhea + fat malabsorption. (2) Loss of B12-IF absorption site → vitamin B12 deficiency → megaloblastic anemia. The ileum is also the site of some mineral absorption.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 6</div>
+  <div class="trap-statement">Abetalipoproteinemia is caused by mutations in the APOB gene encoding apoB-100.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Abetalipoproteinemia is caused by mutations in the <strong>MTP gene</strong> (microsomal triglyceride transfer protein), not APOB. Familial hypobetalipoproteinemia (milder) is caused by APOB mutations. MTP mutations prevent assembly of ALL apoB-containing lipoproteins → severe fat malabsorption.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 7</div>
+  <div class="trap-statement">Osmotic diarrhea from lactose intolerance continues despite fasting, whereas secretory diarrhea stops with fasting.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False (reversed).</strong> <strong>Osmotic diarrhea STOPS with fasting</strong> (lactose removed from lumen). <strong>Secretory diarrhea CONTINUES despite fasting</strong> (active water secretion). Stool osmolar gap differentiates: osmotic &gt; 50 mOsm/kg; secretory normal.</div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">Trap 8</div>
+  <div class="trap-statement">Congenital enterokinase deficiency would present similarly to severe pancreatic exocrine insufficiency with low amylase and lipase levels.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="answerTrap(this, true)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="answerTrap(this, false)">False</button>
+  </div>
+  <div class="trap-exp"><strong>CORRECT ANSWER: False.</strong> Enterokinase deficiency presents with protein malabsorption (failure to thrive, hypoproteinemia) BUT amylase and lipase are <strong>NORMAL</strong> because they are produced by the pancreas—the problem is activation. Pancreatic insufficiency has ↓ amylase/lipase. This distinction is key on exams.</div>
+</div>
+
+</div>
+
+<!-- ══ REFERENCE ════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+<div class="ref-section">
+  <div class="ref-title">Principal Digestive Enzymes — Location, Substrate, Product</div>
+  <table class="ref-table">
+    <thead><tr><th>Enzyme</th><th>Source</th><th>Substrate</th><th>Product</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Salivary amylase</td><td>Parotid, submandibular glands</td><td>Starch (α-1,4 bonds)</td><td>Oligosaccharides, maltose</td></tr>
+      <tr><td class="key">Lingual lipase</td><td>Tongue (von Ebner's glands)</td><td>Triglycerides (short/medium-chain)</td><td>Diglycerides + fatty acids</td></tr>
+      <tr><td class="key">Gastric lipase</td><td>Gastric chief cells</td><td>Triglycerides (mainly short/medium-chain)</td><td>Diglycerides + fatty acids</td></tr>
+      <tr><td class="key">Pepsin</td><td>Gastric chief cells (as pepsinogen)</td><td>Proteins (Phe, Trp, Tyr bonds)</td><td>Large peptide fragments</td></tr>
+      <tr><td class="key">Pancreatic amylase</td><td>Exocrine pancreas</td><td>Starch, glycogen (α-1,4 bonds)</td><td>Maltose, maltotriose, α-limit dextrins</td></tr>
+      <tr><td class="key">Pancreatic lipase</td><td>Exocrine pancreas (+ co-lipase)</td><td>Triglycerides (sn-1,3 positions)</td><td>2-monoglyceride + 2 free fatty acids</td></tr>
+      <tr><td class="key">Enterokinase</td><td>Duodenal brush border</td><td>Trypsinogen</td><td>Trypsin (master activator)</td></tr>
+      <tr><td class="key">Trypsin</td><td>Pancreas (activated by enterokinase)</td><td>Proteins (Arg/Lys bonds)</td><td>Peptides + activates other zymogens</td></tr>
+      <tr><td class="key">Chymotrypsin</td><td>Pancreas (activated by trypsin)</td><td>Proteins (aromatic AA bonds)</td><td>Peptides</td></tr>
+      <tr><td class="key">Lactase</td><td>Brush border (jejunum)</td><td>Lactose</td><td>Glucose + galactose</td></tr>
+      <tr><td class="key">Maltase</td><td>Brush border</td><td>Maltose, maltotriose</td><td>Glucose</td></tr>
+      <tr><td class="key">Sucrase-isomaltase</td><td>Brush border (jejunum)</td><td>Sucrose, α-limit dextrins</td><td>Glucose + fructose; glucose</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Key:</strong> Memorize source, substrate, and product for each enzyme. Board exams frequently test knowledge of which enzyme acts where and what happens when deficient (e.g., lactase deficiency → lactose intolerance; enterokinase deficiency → protein malabsorption but normal amylase/lipase).</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Monosaccharide Absorption Pathways</div>
+  <table class="ref-table">
+    <thead><tr><th>Transporter</th><th>Location</th><th>Substrate(s)</th><th>Mechanism</th><th>Clinical Note</th></tr></thead>
+    <tbody>
+      <tr><td class="key">SGLT1</td><td>Apical brush border</td><td>Glucose, galactose</td><td>Secondary active (Na+ co-transport)</td><td>SGLT1 mutation → glucose-galactose malabsorption, osmotic diarrhea</td></tr>
+      <tr><td class="key">GLUT5</td><td>Apical brush border</td><td>Fructose only</td><td>Facilitated diffusion</td><td>Saturation → osmotic diarrhea (high fructose corn syrup)</td></tr>
+      <tr><td class="key">GLUT2</td><td>Basolateral membrane</td><td>Glucose, galactose, fructose</td><td>Facilitated diffusion</td><td>Final exit step before portal absorption</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Mnemonic:</strong> "SGLT1 = Sodium Goes with Glucose & gaLacTose 1" (Na+-coupled). "GLUT5 = FructoSe (5 letters)" (no Na+). "GLUT2 = TwO leave" (all three exit basolaterally).</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Intestinal Absorption Mechanisms</div>
+  <table class="ref-table">
+    <thead><tr><th>Mechanism</th><th>Energy Required?</th><th>Carrier Protein?</th><th>GI Examples</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Primary active transport</td><td>ATP (direct)</td><td>ATPase pump</td><td>Na+/K+-ATPase (basolateral) — drives all secondary active transport</td></tr>
+      <tr><td class="key">Secondary active transport</td><td>No (↓ gradient)</td><td>Cotransporter</td><td>SGLT1 (glucose+Na+), PepT1 (peptides+H+), ASBT (bile acids+Na+)</td></tr>
+      <tr><td class="key">Facilitated diffusion</td><td>No (↓ gradient)</td><td>Carrier protein</td><td>GLUT5 (fructose apical), GLUT2 (basolateral), CFTR (Cl− secretion)</td></tr>
+      <tr><td class="key">Passive diffusion</td><td>No (↓ gradient)</td><td>None (lipid bilayer)</td><td>Lipid products, water, unconjugated bile acids, long-chain FA</td></tr>
+      <tr><td class="key">Paracellular transport</td><td>Electrochemical gradient</td><td>Tight junctions</td><td>Water, Cl−, some ions (proximal SI)</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Critical concept:</strong> Na+/K+-ATPase maintains the Na+ gradient across the basolateral membrane. This gradient is the "engine" driving secondary active transport of glucose, amino acids, peptides, and even chloride in the small intestine.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Lipid Digestion Roadmap: From Dietary Fat to Chylomicron</div>
+  <table class="ref-table">
+    <thead><tr><th>Step</th><th>Location</th><th>Key Players</th><th>Product(s)</th></tr></thead>
+    <tbody>
+      <tr><td class="key">1. Emulsification</td><td>Stomach + duodenum</td><td>Gastric churning, bile salts</td><td>Small lipid droplets (~1–2 µm)</td></tr>
+      <tr><td class="key">2. Lingual & gastric lipase</td><td>Mouth, stomach</td><td>Lingual lipase, gastric lipase</td><td>~10–30% TG digestion (short/medium-chain)</td></tr>
+      <tr><td class="key">3. Pancreatic lipase + co-lipase</td><td>Duodenum</td><td>Pancreatic lipase, co-lipase, bile salts</td><td>2-monoglyceride + 2 free fatty acids (70–80% TG)</td></tr>
+      <tr><td class="key">4. Micelle formation</td><td>Lumen</td><td>Bile salts, lipase products</td><td>Mixed micelles (4–8 nm) — cross unstirred water layer</td></tr>
+      <tr><td class="key">5. Absorption</td><td>Brush border</td><td>Passive diffusion (lipophilic)</td><td>2-MAG, FA, cholesterol, vitamins enter enterocyte</td></tr>
+      <tr><td class="key">6. Re-esterification</td><td>Smooth endoplasmic reticulum</td><td>Fatty acid binding proteins, esterification enzymes</td><td>Triglycerides reformed</td></tr>
+      <tr><td class="key">7. Chylomicron assembly</td><td>Golgi apparatus</td><td>ApoB-48 (unique intestinal form), MTP</td><td>Chylomicrons (~75–1200 nm)</td></tr>
+      <tr><td class="key">8. Secretion</td><td>Basolateral membrane</td><td>Exocytosis</td><td>Lacteals (too large for capillaries) → lymph → thoracic duct</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Clinical pearl:</strong> Any disruption of this pathway causes steatorrhea (fatty stools). Abetalipoproteinemia (MTP defect) → can't assemble chylomicrons → fat traps in enterocytes. CF (cystic fibrosis) → impaired pancreatic enzyme secretion. Ileal resection → depleted bile acid pool → ↓ micelle formation.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Micronutrient Absorption Summary</div>
+  <table class="ref-table">
+    <thead><tr><th>Nutrient</th><th>Key Mechanism</th><th>Regulation</th><th>Deficiency Consequence</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Iron (Fe²⁺)</td><td>DMT1 apical; ferroportin basolateral; stored as ferritin</td><td>Hepcidin (↓ with iron deficiency, ↑ with inflammation)</td><td>Iron deficiency anemia</td></tr>
+      <tr><td class="key">Calcium</td><td>TRPV6 apical; calbindin buffering; Ca²⁺-ATPase basolateral</td><td>1,25-(OH)₂-vitamin D₃ (PTH-regulated); PTH ↑ absorption</td><td>Osteomalacia, rickets, hypocalcemia</td></tr>
+      <tr><td class="key">Vitamin A</td><td>Incorporated into micelles; passive absorption</td><td>Requires bile salts; stored in liver</td><td>Night blindness, xerophthalmia</td></tr>
+      <tr><td class="key">Vitamin D</td><td>Micelle-dependent absorption; activated in kidney (PTH-regulated)</td><td>PTH, FGF23, serum Ca²+/PO₄</td><td>Osteomalacia, rickets, hypocalcemia</td></tr>
+      <tr><td class="key">Vitamin E</td><td>Micelle-dependent; requires pancreatic lipase & bile salts</td><td>Limited storage; continuous dietary intake needed</td><td>Neurologic symptoms (spinocerebellar degeneration) if severe</td></tr>
+      <tr><td class="key">Vitamin K</td><td>Micelle-dependent; synthesized by colonic bacteria</td><td>Bile salts; antibiotic use ↓ synthesis</td><td>Bleeding, ↑ PT</td></tr>
+      <tr><td class="key">Vitamin B12</td><td>IF-B12 complex; absorbed in terminal ileum via cubilin-amnionless</td><td>Intrinsic factor (gastric parietal cells)</td><td>Megaloblastic anemia, neuropathy, glossitis</td></tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Pattern:</strong> Fat-soluble vitamins (A, D, E, K) require micelles (bile salts + pancreatic lipase). B12 requires intrinsic factor and terminal ileum. Any cholestasis, pancreatic insufficiency, or ileal disease → vitamin malabsorption.</div>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>GI16-17 Hub 1 — Core Concepts · Digestion & Absorption | Drill ID: gi16-17-hub1 | <a href="../lecture-guides/gi16-17-digestion-absorption.html">← Back to Lecture Guide</a></p>
+</div>
+
+</div>
+
+<script>
+let selectedLeft = null, selectedRight = null;
+
+function flipCard(el) {
+  el.classList.toggle('flipped');
+  setTimeout(() => fixCardHeights(), 250);
+}
+
+function fixCardHeights() {
+  document.querySelectorAll('.fc').forEach(card => {
+    const inner = card.querySelector('.fc-inner');
+    const front = card.querySelector('.fc-front');
+    const back = card.querySelector('.fc-back');
+    const maxHeight = Math.max(front.offsetHeight, back.offsetHeight);
+    inner.style.height = maxHeight + 'px';
+  });
+}
+
+function switchTab(e, tabId) {
+  e.preventDefault();
+  document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  e.target.classList.add('active');
+  if (tabId === 'tab-fc') fixCardHeights();
+}
+
+function checkFIB(el) {
+  const input = el.tagName === 'INPUT' ? el : el;
+  const card = input.closest('.fib-card');
+  const answers = (input.dataset.answers || '').split(',').map(a => a.trim().toLowerCase());
+  const userAnswer = input.value.trim().toLowerCase();
+  const feedback = card.querySelector('.fib-feedback');
+
+  if (answers.includes(userAnswer)) {
+    input.classList.remove('incorrect');
+    input.classList.add('correct');
+    feedback.classList.remove('incorrect');
+    feedback.classList.add('correct');
+    feedback.textContent = 'Correct!';
+  } else {
+    input.classList.remove('correct');
+    input.classList.add('incorrect');
+    feedback.classList.remove('correct');
+    feedback.classList.add('incorrect');
+    feedback.textContent = 'Incorrect. Try again or reveal the answer.';
+  }
+}
+
+function revealFIB(btn) {
+  const card = btn.closest('.fib-card');
+  const inputs = card.querySelectorAll('.fib-input');
+  const feedback = card.querySelector('.fib-feedback');
+  inputs.forEach(input => {
+    const answers = input.dataset.answers.split(',').map(a => a.trim());
+    input.value = answers[0];
+    input.classList.add('correct');
+  });
+  feedback.classList.add('correct');
+  feedback.textContent = 'Revealed!';
+}
+
+function allowDrop(e) { e.preventDefault(); }
+
+function drag(e) { e.dataTransfer.effectAllowed = 'move'; }
+
+function drop(e) {
+  e.preventDefault();
+  const source = document.querySelector('.order-item[draggable="true"][style*="opacity"]') || e.dataTransfer.getData('text/html');
+  if (source) {
+    const list = e.target.closest('.order-list');
+    if (list && e.target.classList.contains('order-item')) {
+      const allItems = [...list.querySelectorAll('.order-item')];
+      const targetIndex = allItems.indexOf(e.target);
+      if (targetIndex !== -1) {
+        allItems[targetIndex].parentNode.insertBefore(source, e.target);
+      }
+    }
+  }
+}
+
+function checkOrder(btn) {
+  const drill = btn.closest('.order-drill');
+  const list = drill.querySelector('.order-list');
+  const items = [...list.querySelectorAll('.order-item')];
+  const feedback = drill.querySelector('.order-feedback');
+
+  const correct = items.every((item, idx) => parseInt(item.dataset.order) === idx + 1);
+
+  if (correct) {
+    feedback.classList.remove('incorrect');
+    feedback.classList.add('correct');
+    feedback.textContent = 'Correct order!';
+    items.forEach(item => item.classList.add('correct-pos'));
+  } else {
+    feedback.classList.add('incorrect');
+    feedback.classList.remove('correct');
+    feedback.textContent = 'Not quite. Try again or reveal the answer.';
+    items.forEach(item => item.classList.add('wrong-pos'));
+  }
+}
+
+function resetOrder(btn) {
+  const drill = btn.closest('.order-drill');
+  const list = drill.querySelector('.order-list');
+  const items = [...list.querySelectorAll('.order-item')];
+  items.forEach(item => {
+    item.classList.remove('correct-pos', 'wrong-pos');
+  });
+  drill.querySelector('.order-feedback').textContent = '';
+  drill.querySelector('.order-answer').style.display = 'none';
+  const sorted = items.sort(() => Math.random() - 0.5);
+  sorted.forEach(item => list.appendChild(item));
+}
+
+function revealOrder(btn) {
+  const drill = btn.closest('.order-drill');
+  drill.querySelector('.order-answer').style.display = 'block';
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('match-item')) {
+    const set = e.target.closest('.match-set');
+    const isLeft = e.target.closest('.match-cols').children[0].contains(e.target);
+    if (isLeft) {
+      if (selectedLeft) selectedLeft.classList.remove('selected');
+      selectedLeft = e.target;
+      e.target.classList.add('selected');
+    } else {
+      if (selectedRight) selectedRight.classList.remove('selected');
+      selectedRight = e.target;
+      e.target.classList.add('selected');
+    }
+    if (selectedLeft && selectedRight) {
+      const leftMatch = selectedLeft.dataset.match;
+      const rightMatch = selectedRight.dataset.match;
+      if (leftMatch === rightMatch) {
+        selectedLeft.classList.add('matched-correct');
+        selectedRight.classList.add('matched-correct');
+        selectedLeft.classList.remove('selected');
+        selectedRight.classList.remove('selected');
+        selectedLeft = null;
+        selectedRight = null;
+        updateMatchScore(set);
+      } else {
+        selectedRight.classList.add('flash-wrong');
+        setTimeout(() => selectedRight.classList.remove('flash-wrong'), 500);
+      }
+    }
+  }
+});
+
+function updateMatchScore(set) {
+  const matched = set.querySelectorAll('.matched-correct').length / 2;
+  set.querySelector('.correct-count').textContent = matched;
+}
+
+function resetMatch(btn) {
+  const set = btn.closest('.match-set');
+  set.querySelectorAll('.match-item').forEach(item => {
+    item.classList.remove('selected', 'matched-correct', 'flash-wrong');
+  });
+  set.querySelector('.correct-count').textContent = '0';
+  selectedLeft = null;
+  selectedRight = null;
+}
+
+function answerTrap(btn, correct) {
+  const card = btn.closest('.trap-card');
+  const isCorrect = btn.classList.contains('trap-btn-true') ? true : false;
+  const exp = card.querySelector('.trap-exp');
+  const btns = card.querySelectorAll('.trap-btn');
+  if (isCorrect === correct) {
+    btn.classList.add('sel-correct');
+    exp.classList.add('show-c');
+  } else {
+    btn.classList.add('sel-wrong');
+    exp.classList.add('show-w');
+  }
+  btns.forEach(b => b.disabled = true);
+}
+
+window.addEventListener('load', () => {
+  fixCardHeights();
+  document.querySelectorAll('.fc').forEach((card, idx) => {
+    card.addEventListener('click', () => {
+      setTimeout(fixCardHeights, 250);
+    });
+  });
+});
+</script>
+</body>
+</html>

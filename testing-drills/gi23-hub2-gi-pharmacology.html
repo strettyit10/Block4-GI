@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI23 Hub #2 · GI Pharmacology — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.mcq-stem strong{color:#5D4037}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#5D4037}
+.vig-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.vig-stem{font-size:.88em;color:#2C2C2C;line-height:1.75;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.vig-stem strong{color:#5D4037}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#5D4037}
+.order-drill{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:8px}
+.drill-hint{font-size:.84em;color:#7A7060;background:#F3EFE9;padding:10px 14px;border-left:2px solid #C6875A;border-radius:4px;margin-bottom:14px}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding:14px;background:#F7F5F2;border-radius:6px;border:1px solid #D5CCC0;min-height:200px}
+.order-item{background:#FFF;border:2px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.88em;color:#2C2C2C;transition:all .15s}
+.order-item:hover{border-color:#C6875A;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-color:#C6875A}
+.order-item.drag-over{border:2px dashed #C6875A;background:#F3EFE9}
+.order-item.correct-pos{border-color:#2E7D32;background:#F1F8F2}
+.order-item.wrong-pos{border-color:#C62828;background:#FEF5F5}
+.order-actions{display:flex;gap:10px;margin-bottom:14px}
+.order-check-btn{background:#5D4037;color:#F0E8DF;border:none;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-check-btn:hover{background:#4E342E}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.order-feedback{font-size:.84em;color:#5A5A5A;padding:10px 14px;border-radius:5px;margin-bottom:14px;display:none}
+.order-feedback.correct{background:#F1F8F2;border-left:3px solid #2E7D32;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border-left:3px solid #C62828;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.order-answer.show{display:block}
+.order-answer ol{margin-left:24px}
+.trap-card{background:#FFFFFF;border:1px solid #D5CCC0;border-left:4px solid #C62828;border-radius:6px;padding:22px;margin-bottom:18px}
+.trap-header{font-size:.78em;font-weight:700;color:#C62828;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.trap-stmt{font-size:.95em;color:#2C2C2C;font-weight:600;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #D5CCC0}
+.trap-reveal{display:none}
+.trap-reveal.show{display:block}
+.trap-reveal strong{color:#5D4037}
+.trap-btn{background:#5D4037;color:#F0E8DF;border:none;padding:8px 14px;border-radius:4px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s;margin-right:8px}
+.trap-btn:hover:not(:disabled){background:#4E342E}
+.trap-btn:disabled{opacity:.5;cursor:default}
+.trap-btn.sel-correct{background:#2E7D32;color:#F1F8F2}
+.trap-btn.sel-wrong{background:#C62828;color:#FEF5F5}
+.trap-exp{font-size:.84em;color:#5A5A5A;line-height:1.7;padding-top:12px;margin-top:12px;border-top:1px solid #D5CCC0;display:none}
+.trap-exp.show-c,.trap-exp.show-w{display:block;background:#F3EFE9;padding:12px;border-radius:4px;border-left:3px solid #C6875A}
+table{border-collapse:collapse;width:100%;margin-bottom:20px}
+table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D5CCC0;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF8F5}
+table tr:hover td{background:#F3EFE9}
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15em;font-weight:700;color:#5D4037;margin-bottom:4px;padding-bottom:8px;border-bottom:2px solid #C6875A}
+.ref-note{background:#F3EFE9;border-left:2px solid #C6875A;padding:12px;border-radius:4px;font-size:.84em;color:#5A5A5A;line-height:1.7;margin-bottom:14px}
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .order-list{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi23-gi-pharmacology.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>GI Pharmacology <span>Step 1 Extensions</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Drugs:</strong> PPIs · H2 blockers · Antacids · Misoprostol · Sucralfate</div>
+    <div class="source-badge"><strong>Infections:</strong> H. pylori · Quadruple PBMT · Triple therapy</div>
+    <div class="source-badge"><strong>Antiemetics:</strong> Ondansetron · Metoclopramide · Scopolamine</div>
+    <div class="source-badge"><strong>GI Motility:</strong> Laxatives · ORS · Loperamide</div>
+    <div class="source-badge"><strong>IBD:</strong> 5-ASA · Anti-TNF · Biologics</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi23-hub1-gi-pharmacology.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi23-hub3-gi-pharmacology.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Ordering</div></div>
+  <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">MCQs</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Vignettes</div></div>
+  <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">Traps</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#7A7060">20 Step 1 concepts</em></span><span class="prog-num" id="fc-counter">0 / 20 seen</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 1 — Parietal Cell Targets</div><div class="fc-q">Three receptor types on parietal cells that increase acid?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>H⁺/K⁺-ATPase pump:</strong> Target of PPIs (irreversible)<br><strong>Histamine H₂:</strong> Target of H₂ blockers (reversible)<br><strong>Gastrin/CCK-B:</strong> Activated by gastrin<br><strong>M₃ muscarinic (ACh):</strong> Vagal stimulation</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 1 — Antacid Comparison</div><div class="fc-q">CaCO₃ vs. Mg(OH)₂ vs. Al(OH)₃ — onset and side effects?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>CaCO₃:</strong> Rapid, rebound acid, milk-alkali syndrome<br><strong>Mg(OH)₂:</strong> Fast, DIARRHEA, ↑Mg toxicity in renal failure<br><strong>Al(OH)₃:</strong> Slow, CONSTIPATION, hypophosphatemia</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 1 — PPIs vs. H₂ Blockers</div><div class="fc-q">Potency, onset, and cimetidine side effect?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>PPIs:</strong> Most potent, irreversible, slow onset (prodrug)<br><strong>H₂ blockers:</strong> Less potent, reversible, faster onset<br><strong>Cimetidine:</strong> CYP inhibitor + antiandrogen (gynecomastia)</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 1 — P-CABs</div><div class="fc-q">What are P-CABs? Example and advantage?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>P-CABs:</strong> K⁺-competitive antagonists (vonoprazan)<br><strong>Mechanism:</strong> Reversible, faster onset/offset than PPIs<br><strong>Advantage:</strong> More predictable pharmacokinetics</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 2 — H. pylori Therapy</div><div class="fc-q">Quadruple vs. Triple — when preferred?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Quadruple (PPI+Bi+Metro+Tet):</strong> Preferred in clarithromycin-resistant areas<br><strong>Triple (PPI+Clarith+Amox):</strong> Older, less effective now<br><strong>Confirm:</strong> Urea breath or stool antigen 4 weeks post-Rx</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 3 — GERD Triggers</div><div class="fc-q">Common triggers of transient LES relaxations?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Triggers:</strong> Fatty meals, chocolate, caffeine, nicotine, alcohol, pregnancy<br><strong>Mechanism:</strong> Transient LES relaxations allow reflux<br><strong>Stepwise Rx:</strong> Lifestyle → antacids → H₂ blockers → PPIs</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 4 — Sucralfate Mechanism</div><div class="fc-q">How does it work and why co-dosing timing matters?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> Polymerizes in acidic environment → sticky gel binds ulcer<br><strong>CRITICAL:</strong> Requires acidic pH — do NOT give with PPIs/H₂ blockers simultaneously<br><strong>Dosing:</strong> 1h before meals, separate timing</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 4 — Misoprostol</div><div class="fc-q">Class, mechanism, and major contraindication?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Class:</strong> Synthetic PGE₁ analog<br><strong>Effects:</strong> ↑mucus/HCO₃⁻, ↓acid, ↑blood flow<br><strong>⚠ TERATOGENIC/ABORTIFACIENT:</strong> Pregnancy contraindicated</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 5 — Vomiting Reflex: NTS vs. CTZ</div><div class="fc-q">Location and function of each center?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>NTS:</strong> Medulla, central coordinator<br><strong>CTZ:</strong> Floor of 4th ventricle, OUTSIDE BBB, senses blood-borne toxins (D₂, 5-HT₃, NK₁)<br><strong>Vestibular:</strong> H₁, M₁ — motion sickness</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 5 — Chemo Nausea Pathway</div><div class="fc-q">How does chemotherapy trigger nausea?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>GI damage:</strong> Enterochromaffin cells release 5-HT<br><strong>Vagal afferents:</strong> 5-HT₃ receptors → NTS<br><strong>Treatment:</strong> Ondansetron (5-HT₃ antagonist) very effective</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 6 — Ondansetron Pharmacology</div><div class="fc-q">Receptor, indications, side effects?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Target:</strong> 5-HT₃ antagonist<br><strong>Uses:</strong> Chemo-induced, post-op, hyperemesis gravidarum<br><strong>SE:</strong> QT prolongation, constipation, serotonin syndrome</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 6 — Metoclopramide</div><div class="fc-q">Mechanism and major CNS risk?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> D₂ antagonist + 5-HT₄ agonist → prokinetic<br><strong>Crosses BBB:</strong> Extrapyramidal side effects, tardive dyskinesia<br><strong>Contraindicated:</strong> Parkinson's, bowel obstruction</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 6 — Other Antiemetics</div><div class="fc-q">Scopolamine, dimenhydrinate, aprepitant — uses?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Scopolamine:</strong> M₁ antagonist, motion sickness, transdermal<br><strong>Dimenhydrinate/Meclizine:</strong> H₁ antihistamine, motion sickness<br><strong>Aprepitant:</strong> NK₁ antagonist, delayed chemo nausea</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 7 — ORS Mechanism</div><div class="fc-q">Why ORS works against cholera?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cholera:</strong> Toxin → ↑cAMP → Cl⁻ secretion<br><strong>ORS:</strong> 2% glucose + 90 mEq Na⁺<br><strong>Key:</strong> SGLT₁ still works (not cAMP-dependent) → drives Na⁺+glucose absorption</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 7 — Antidiarrheals</div><div class="fc-q">Diphenoxylate vs. Loperamide — BBB crossing?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Both:</strong> μ-opioid agonists<br><strong>Diphenoxylate:</strong> + atropine to deter abuse<br><strong>Loperamide:</strong> P-glycoprotein substrate — does NOT cross BBB, OTC safe<br><strong>Avoid:</strong> Bloody diarrhea (megacolon risk)</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 8 — Laxative Onset Times</div><div class="fc-q">Bulk, osmotic, stimulant, softener — speed ranking?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Bulk:</strong> 1-3 days (safest)<br><strong>Osmotic:</strong> Hours<br><strong>Stimulant:</strong> 6-12 hrs<br><strong>Softener:</strong> Days</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 8 — Lactulose in Hepatic Encephalopathy</div><div class="fc-q">Mechanism of NH₄⁺ trapping?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> Bacteria ferment → lactic acid → ↓pH → traps NH₄⁺<br><strong>Result:</strong> ↓systemic ammonia → improved mental status<br><strong>Also:</strong> Osmotic diarrhea helps washout</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 9 — 5-ASA vs. Sulfasalazine</div><div class="fc-q">Indications and sulfasalazine side effects?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>5-ASA (mesalamine):</strong> First-line UC<br><strong>Sulfasalazine:</strong> 5-ASA + sulfapyridine moiety → oligospermia, hemolysis (G6PD), rash<br><strong>Budesonide:</strong> Corticosteroid, ileal-release, induction only</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 9 — Anti-TNF Biologics</div><div class="fc-q">Infliximab vs. adalimumab — structure and route?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Infliximab:</strong> Chimeric IgG → IV<br><strong>Adalimumab:</strong> Fully human → SC injection<br><strong>Both:</strong> TB/fungal risk, lymphoma, worsen CHF, demyelination</div></div></div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner"><div class="fc-front"><div class="fc-label">LO 9 — Newer IBD Biologics</div><div class="fc-q">Vedolizumab, ustekinumab, risankizumab — targets?</div></div><div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Vedolizumab:</strong> Anti-α₄β₇, gut-selective<br><strong>Ustekinumab:</strong> Anti-IL-12/23 (p40 subunit)<br><strong>Risankizumab:</strong> Anti-IL-23 p19 (newer, selective)<br><strong>Note:</strong> Crohn's anti-TNF preferred; UC 5-ASA first</div></div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING DRILLS ══════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ordering">
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 1: Laxative Onset Times (Fastest to Slowest)</div>
+    <div class="drill-hint">Drag to arrange laxatives by speed of action</div>
+    <div class="order-list" id="drill1-list">
+      <div class="order-item" data-correct="2">Osmotic (lactulose, PEG) — hours</div>
+      <div class="order-item" data-correct="3">Stimulant (senna, bisacodyl) — 6-12 hrs</div>
+      <div class="order-item" data-correct="1">Bulk (psyllium) — 1-3 days</div>
+      <div class="order-item" data-correct="4">Stool softener (docusate) — days</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill1-list')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill1-list')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('ans-drill1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill1-list"></div>
+    <div class="order-answer" id="ans-drill1"><ol><li>Osmotic (hours)</li><li>Stimulant (6-12 hrs)</li><li>Bulk (1-3 days)</li><li>Stool softener (days)</li></ol></div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 2: H. pylori Eradication Steps</div>
+    <div class="drill-hint">Order quadruple therapy components in typical regimen sequence</div>
+    <div class="order-list" id="drill2-list">
+      <div class="order-item" data-correct="1">PPI (omeprazole) + Bismuth subsalicylate daily</div>
+      <div class="order-item" data-correct="2">Add metronidazole (first-line for resistance)</div>
+      <div class="order-item" data-correct="3">Add tetracycline (covers resistant strains)</div>
+      <div class="order-item" data-correct="4">Confirm eradication 4+ weeks post-treatment</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill2-list')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill2-list')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('ans-drill2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill2-list"></div>
+    <div class="order-answer" id="ans-drill2"><ol><li>PPI + Bismuth daily</li><li>Add metronidazole</li><li>Add tetracycline</li><li>Confirm eradication 4+ weeks later</li></ol></div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 3: Vomiting Reflex Pathway (Stimulus to Response)</div>
+    <div class="drill-hint">Order components of the vomiting reflex arc for chemotherapy</div>
+    <div class="order-list" id="drill3-list">
+      <div class="order-item" data-correct="1">GI damage from chemotherapy</div>
+      <div class="order-item" data-correct="2">Enterochromaffin cells release 5-HT</div>
+      <div class="order-item" data-correct="3">Vagal afferents (5-HT₃ receptors) → NTS</div>
+      <div class="order-item" data-correct="4">NTS coordinates vomiting reflex</div>
+      <div class="order-item" data-correct="5">Emesis (vomiting)</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill3-list')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill3-list')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('ans-drill3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill3-list"></div>
+    <div class="order-answer" id="ans-drill3"><ol><li>GI damage from chemo</li><li>5-HT release</li><li>Vagal afferents → NTS</li><li>NTS coordinates</li><li>Emesis</li></ol></div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 4: IBD Therapy Escalation (Mild to Severe)</div>
+    <div class="drill-hint">Arrange IBD treatments from first-line to last resort</div>
+    <div class="order-list" id="drill4-list">
+      <div class="order-item" data-correct="1">5-ASA (mesalamine) — first-line UC</div>
+      <div class="order-item" data-correct="2">Corticosteroids (budesonide) — induction</div>
+      <div class="order-item" data-correct="3">Immunomodulators (azathioprine)</div>
+      <div class="order-item" data-correct="4">Anti-TNF (infliximab/adalimumab)</div>
+      <div class="order-item" data-correct="5">Newer biologics (vedolizumab/risankizumab)</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill4-list')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill4-list')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('ans-drill4')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill4-list"></div>
+    <div class="order-answer" id="ans-drill4"><ol><li>5-ASA first-line</li><li>Corticosteroids</li><li>Immunomodulators</li><li>Anti-TNF</li><li>Newer biologics</li></ol></div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 5: PPI/H₂ Blocker Mechanism Hierarchy</div>
+    <div class="drill-hint">Rank acid suppression targets from "most upstream" to "most downstream" in parietal cell</div>
+    <div class="order-list" id="drill5-list">
+      <div class="order-item" data-correct="1">M₃ muscarinic (ACh) — vagal input</div>
+      <div class="order-item" data-correct="2">Gastrin/CCK-B receptors</div>
+      <div class="order-item" data-correct="3">H₂ receptors (histamine)</div>
+      <div class="order-item" data-correct="4">H⁺/K⁺-ATPase pump — final step</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill5-list')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill5-list')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('ans-drill5')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill5-list"></div>
+    <div class="order-answer" id="ans-drill5"><ol><li>M₃ muscarinic</li><li>Gastrin/CCK-B</li><li>H₂ receptors</li><li>H⁺/K⁺-ATPase (final)</li></ol></div>
+  </div>
+
+</div>
+
+<!-- ══ MCQ ══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-mcq">
+  <div style="background:#F3EFE9;padding:14px;border-radius:6px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6"><strong>Step 1-Style MCQs:</strong> Select the best answer. Correct = <span style="color:#2E7D32">green</span>, incorrect = <span style="color:#C62828">red</span>.</div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 1 — Acid Suppression Potency</div>
+    <div class="mcq-stem">A patient with GERD is started on omeprazole. Compared to ranitidine (H₂ blocker), how does omeprazole differ mechanistically?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Blocks histamine H₂ receptors reversibly</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Irreversibly inhibits H⁺/K⁺-ATPase pump</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Blocks M₃ muscarinic receptors</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Neutralizes gastric acid directly</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Enhances mucus production</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> PPIs irreversibly block the final step (H⁺/K⁺-ATPase), making them more potent than H₂ blockers (reversible, upstream block). Ranitidine blocks H₂ (A), not the pump. Pirenzepine blocks M₃ (C). Antacids neutralize directly (D). Misoprostol enhances mucus (E).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 2 — Cimetidine Side Effect</div>
+    <div class="mcq-stem">A 55-year-old man on cimetidine for peptic ulcer disease develops gynecomastia and erectile dysfunction. What is the mechanism?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">A</span>CYP450 inhibition + androgen receptor blockade</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Direct testosterone suppression</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Estrogen receptor upregulation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Prolactin elevation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Reduced hepatic testosterone metabolism</div>
+    </div>
+    <div class="mcq-exp"><strong>A.</strong> Cimetidine is a potent CYP inhibitor (↓drug metabolism) AND blocks androgen receptors (antiandrogen). Both effects → gynecomastia, impotence, erectile dysfunction. Ranitidine/famotidine don't have these side effects. Metoclopramide causes hyperprolactinemia (D), not cimetidine.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 3 — Sucralfate Timing</div>
+    <div class="mcq-stem">A patient on sucralfate for ulcer protection is also prescribed omeprazole. What is the key consideration?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Give both drugs together for maximum effect</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Separate dosing — sucralfate requires acidic pH to work</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Sucralfate reduces PPI absorption by 50%</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>PPIs are contraindicated with sucralfate</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>No interaction — both can be dosed simultaneously</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> Sucralfate polymerizes ONLY in acidic environment. If PPIs suppress acid, sucralfate cannot activate → ineffective. Give sucralfate 1 hour before meals (separate timing from PPI). Same issue with H₂ blockers.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 4 — Misoprostol in Pregnancy</div>
+    <div class="mcq-stem">A 32-year-old woman with NSAIDinduced ulcers is prescribed misoprostol for cytoprotection. What is the critical contraindication?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Increases gastric acid secretion</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Teratogenic and abortifacient — pregnancy contraindicated</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Causes severe diarrhea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Interacts with NSAIDs</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Reduces NSAID efficacy</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> Misoprostol is a PGE₁ analog that stimulates uterine contractions → abortifacient. Absolutely contraindicated in pregnancy. Also used therapeutically for medical abortion. Diarrhea (C) is a common SE but not the critical issue. Women of childbearing age must use contraception.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 5 — Ondansetron vs. Metoclopramide</div>
+    <div class="mcq-stem">A 45-year-old receives chemotherapy. Which antiemetic blocks 5-HT₃ and is ideal for acute chemo-induced nausea?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">A</span>Ondansetron</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Metoclopramide</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Scopolamine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Prochlorperazine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Domperidone</div>
+    </div>
+    <div class="mcq-exp"><strong>A.</strong> Ondansetron (5-HT₃ antagonist) is the gold standard for chemo-induced nausea — blocks serotonin-mediated emesis from GI damage. Metoclopramide is a D₂ antagonist (different mechanism, CNS EPS risk). Scopolamine = motion sickness. Prochlorperazine = older antipsychotic antiemetic.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 6 — Loperamide BBB Crossing</div>
+    <div class="fcsteadystate">Why is loperamide safe OTC while diphenoxylate is prescription-only?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">A</span>Loperamide is a P-glycoprotein substrate — does NOT cross BBB at therapeutic doses</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Loperamide has no CNS effects</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Diphenoxylate is more lipophilic</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Loperamide is not an opioid</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Diphenoxylate crosses the BBB</div>
+    </div>
+    <div class="mcq-exp"><strong>A.</strong> Loperamide is a μ-opioid but substrate of P-glycoprotein (efflux transporter) — does NOT cross BBB at therapeutic doses → minimal CNS effects, safe OTC. Diphenoxylate + atropine is prescription to deter abuse (atropine deters overdose). Both are μ-agonists, but loperamide has the BBB protection.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 7 — ORS Mechanism in Cholera</div>
+    <div class="mcq-stem">Why does oral rehydration solution (ORS) work despite cholera toxin causing massive secretory diarrhea?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>ORS neutralizes cholera toxin</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>ORS blocks cAMP production</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>SGLT₁ co-transporter still works — drives Na⁺+glucose absorption independent of cAMP</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>ORS contains antimicrobial agents</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>ORS increases intestinal peristalsis</div>
+    </div>
+    <div class="mcq-exp"><strong>C.</strong> Cholera toxin → ↑cAMP → Cl⁻ secretion + water loss. But SGLT₁ (Na⁺-glucose cotransporter) is NOT cAMP-regulated → still absorbs Na⁺ + glucose → water follows osmotically. ORS (2% glucose + 90 mEq Na⁺) exploits this pathway → life-saving. Does NOT neutralize toxin or block cAMP.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 8 — Quadruple vs. Triple H. pylori</div>
+    <div class="mcq-stem">In regions with high clarithromycin resistance, what is the preferred first-line H. pylori regimen?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>PPI + Clarithromycin + Amoxicillin</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>PPI + Bismuth + Metronidazole + Tetracycline</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>PPI + Metronidazole + Clarithromycin</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Bismuth + Tetracycline monotherapy</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>PPI monotherapy</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> Quadruple PBMT (PPI + Bismuth + Metronidazole + Tetracycline) is now preferred empirically due to rising clarithromycin resistance. Triple therapy (PPI + Clarithromycin + Amoxicillin) was standard but is outdated in many regions. Confirm eradication 4+ weeks post-treatment.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 9 — Metoclopramide EPS</div>
+    <div class="mcq-stem">A 62-year-old on metoclopramide for gastroparesis develops tremor, rigidity, and bradykinesia. What is the mechanism?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>5-HT₄ agonism in basal ganglia</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>D₂ antagonism in CNS (crosses BBB) → Parkinsonian symptoms</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Anticholinergic effects</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>GABA antagonism</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Serotonin syndrome</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> Metoclopramide crosses BBB → D₂ antagonism in basal ganglia → extrapyramidal side effects, Parkinsonian features, tardive dyskinesia with chronic use. Contraindicated in Parkinson's disease. Ondansetron does NOT cross BBB significantly, so fewer CNS effects.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 10 — Infliximab Pre-screening</div>
+    <div class="mcq-stem">Before starting infliximab for Crohn's disease, what mandatory screening is required?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>HLA-B allele testing</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Tuberculosis screening + hepatitis B screening</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>HIV testing</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Cardiac ejection fraction</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Complete metabolic panel</div>
+    </div>
+    <div class="mcq-exp"><strong>B.</strong> Anti-TNF agents (infliximab, adalimumab) carry risk of TB reactivation and HBV reactivation → mandatory TB screen (PPD/IGRA) and HBsAg/anti-HBc before start. Must also warn of lymphoma, fungal infections, CHF exacerbation, demyelination. HLA-B testing is for abacavir (HIV drug), not TNF inhibitors.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 11 — PPI Long-term Complications</div>
+    <div class="mcq-stem">A 70-year-old on chronic PPI therapy presents with a hip fracture from minor trauma. What is the mechanism of increased fracture risk?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">A</span>↓calcium and ↓magnesium absorption → osteomalacia/osteoporosis</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Direct inhibition of osteoblasts</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Vitamin K deficiency</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Increased parathyroid hormone</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Direct calcitriol antagonism</div>
+    </div>
+    <div class="mcq-exp"><strong>A.</strong> Long-term PPIs → ↓gastric acid → ↓Ca²⁺/Mg²⁺ absorption (need acid for ionization) → osteomalacia/osteoporosis → fractures. Also ↓B₁₂, ↓K⁺. Monitor elderly on chronic PPIs; consider calcium/Mg supplementation. Secondary hyperparathyroidism (↑PTH) may occur.</div>
+  </div>
+
+</div>
+
+<!-- ══ VIGNETTES MCQ ══════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-vignettes">
+  <div style="background:#F3EFE9;padding:14px;border-radius:6px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6"><strong>Full Clinical Vignettes:</strong> 8–10 patient presentations with comprehensive clinical context.</div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 1 — NSAID Gastritis + Prophylaxis</div>
+    <div class="vig-stem"><strong>Hx:</strong> 68-year-old with osteoarthritis on high-dose indomethacin develops epigastric pain. Endoscopy shows acute gastric erosion. <strong>Q:</strong> Which drug would be most appropriate for NSAID-induced ulcer prophylaxis?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Cimetidine (less expensive)</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Misoprostol (PGE₁ analog — ↑mucus, ↑HCO₃⁻)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Sucralfate (but NSAID inhibits prostaglandins anyway)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Antacid monotherapy</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Famotidine (insufficient for high-risk NSAID)</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Misoprostol is indicated specifically for NSAID-induced ulcer prevention in high-risk patients (elderly, prior ulcer history). It directly stimulates protective mechanisms (mucus, HCO₃⁻, blood flow) that NSAIDs inhibit. PPIs also effective but misoprostol is most directly indicated. Contraception required (teratogenic).</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 2 — H. pylori Eradication Failure</div>
+    <div class="vig-stem"><strong>Hx:</strong> 52-year-old from Southeast Asia with confirmed H. pylori PUD. Tried triple therapy (PPI + clarithromycin + amoxicillin) 2 months ago; urea breath test now positive (NOT eradicated). <strong>Q:</strong> What is the next regimen?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Repeat same triple therapy</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Quadruple PBMT (assumes clarithromycin-resistant strain)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Continue observation without antibiotics</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Bismuth monotherapy</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Metronidazole monotherapy</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Failure after triple therapy → likely clarithromycin resistance. Quadruple PBMT (PPI + Bismuth + Metronidazole + Tetracycline) is the empiric next step, covering resistant strains. Repeat eradication test 4+ weeks post-treatment. Bismuth/tetracycline avoid clarithromycin reliance.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 3 — Hepatic Encephalopathy + Lactulose</div>
+    <div class="vig-stem"><strong>Hx:</strong> 61-year-old with cirrhosis + ascites develops confusion and asterixis. Serum ammonia 180 µmol/L (high). <strong>Q:</strong> Which medication would both treat acute encephalopathy AND reduce ammonia?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>PPI (reduces ammonia-producing bacteria)</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Lactulose (colonic bacteria → lactic acid → NH₄⁺ trapping)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Albumin IV</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Rifaxomicin (antibiotic, less effective solo)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>L-ornithine L-aspartate (LOLA) only</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Lactulose is first-line: nonabsorbable disaccharide → bacterial fermentation → lactic acid ↓pH → protonates NH₃ to NH₄⁺ (trapped, not absorbed) → osmotic diarrhea helps washout. Both reduces ammonia + causes "therapeutic" diarrhea. Effective prophylaxis + acute therapy. PPIs have minor role; rifaxomicin is adjunct.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 4 — Cimetidine Gynecomastia</div>
+    <div class="vig-stem"><strong>Hx:</strong> 51-year-old on cimetidine for peptic ulcer develops tender bilateral breast enlargement + erectile dysfunction over 6 weeks. Testosterone and LH normal. <strong>Q:</strong> What mechanism explains both symptoms?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Primary hypogonadism (↓testosterone production)</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>CYP inhibition (↓hormone clearance) + androgen receptor blockade</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Prolactin elevation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Direct estrogen synthesis stimulation</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Gonadotropin-releasing hormone (GnRH) suppression</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Cimetidine is dual-action: (1) CYP450 inhibitor → ↓clearance of endogenous hormones, (2) antiandrogen (blocks androgen receptors). Combined effect → relative estrogen dominance → gynecomastia + impotence. Normal testosterone because the problem is androgen receptor blockade, not hormone production. Switch to famotidine (no antiandrogen effect).</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 5 — Chemo-Induced Nausea Management</div>
+    <div class="vig-stem"><strong>Hx:</strong> 47-year-old receiving cisplatin chemotherapy suffers severe nausea/vomiting on day 2–3 post-infusion. Standard ondansetron pre-med (5-HT₃) + dexamethasone given but delayed nausea persists. <strong>Q:</strong> Which additional antiemetic targets delayed emesis?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>More ondansetron</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Aprepitant (NK₁ antagonist — standard for delayed)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Metoclopramide monotherapy</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Scopolamine patch</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Diphenhydramine alone</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Aprepitant (NK₁ antagonist) is gold standard for delayed chemo-induced nausea (days 2–3, not acute). Ondansetron + dexamethasone cover acute phase; aprepitant covers delayed. Different pathophysiology: delayed involves substance P + NK₁ pathway, not pure 5-HT₃. Often given 3 days post-chemo as part of triple-agent regimen.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 6 — Motion Sickness Prophylaxis</div>
+    <div class="vig-stem"><strong>Hx:</strong> 34-year-old preparing for a long ocean cruise knows from experience he develops severe motion sickness. <strong>Q:</strong> Which agent targets the vestibular pathway most effectively?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Ondansetron (more for chemo/post-op)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">B</span>Metoclopramide (prokinetic, not vestibular)</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">C</span>Scopolamine patch (M₁ antagonist in vestibular nucleus)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Aprepitant (NK₁, for delayed chemo)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Bismuth subsalicylate</div>
+    </div>
+    <div class="vig-exp"><strong>C.</strong> Motion sickness involves vestibular apparatus (H₁, M₁ receptors) → NTS. Scopolamine (transdermal M₁ antagonist) is ideal for motion sickness prevention (can apply patch before travel). Also dimenhydrinate/meclizine (H₁ antihistamine) work well. Ondansetron is for chemo/blood-borne toxins (CTZ pathway), not vestibular.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 7 — Crohn's Flare + Biologics</div>
+    <div class="vig-stem"><strong>Hx:</strong> 28-year-old with Crohn's disease refractory to 5-ASA + corticosteroids develops fever, RLQ pain, diarrhea. CT shows transmural inflammation with fistulas. <strong>Q:</strong> Which biologic is indicated for this Crohn's flare?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Vedolizumab (first-line for all IBD)</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Infliximab (anti-TNF — transmural/fistulizing Crohn's)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Ustekinumab (anti-IL-12/23)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Risankizumab (anti-IL-23)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>More corticosteroids</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Crohn's = transmural + skip lesions + fistulizing → anti-TNF (infliximab/adalimumab) is preferred first-line biologic. UC = mucosal + continuous → 5-ASA first-line biologic (vedolizumab, ustekinumab are newer options for both, but anti-TNF best for Crohn's phenotype). Must screen TB/HBV before starting.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 8 — Loperamide vs. Flagyl in C. difficile</div>
+    <div class="vig-stem"><strong>Hx:</strong> 71-year-old hospitalized with diarrhea; C. difficile toxin positive. Resident orders loperamide for symptom control. <strong>Q:</strong> Why is loperamide contraindicated here?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">A</span>Loperamide is ineffective against C. difficile</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="opt-letter">B</span>Risk of toxic megacolon (↓peristalsis traps toxins)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">C</span>Loperamide causes diarrhea (paradoxical)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">D</span>Interaction with metronidazole</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="opt-letter">E</span>Allergic cross-reactivity</div>
+    </div>
+    <div class="vig-exp"><strong>B.</strong> Antiperistaltic agents (loperamide, diphenoxylate) are contraindicated in C. difficile-associated diarrhea → ↓motility traps toxins in colon → toxic megacolon, perforation, mortality ↑. Use metronidazole or vancomycin, NOT antidiarrheals. Same caution in bloody diarrhea (shigella, salmonella, etc.).</div>
+  </div>
+
+</div>
+
+<!-- ══ STEP 1 TRAPS ══════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-traps">
+  <div style="background:#F3EFE9;padding:14px;border-radius:6px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6"><strong>Step 1 Traps:</strong> Classic confusions and second-order thinking mistakes.</div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 1</div>
+    <div class="trap-stmt">"Cimetidine and ranitidine are interchangeable H₂ blockers."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> While both are H₂ blockers, cimetidine has serious side effects: CYP450 inhibition (↑drug interactions) + antiandrogen (gynecomastia, impotence). Ranitidine, famotidine, nizatidine do NOT. Cimetidine is largely obsolete for this reason.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 2</div>
+    <div class="trap-stmt">"You can give PPIs and sucralfate at the same time for maximum ulcer protection."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Sucralfate requires ACIDIC pH to polymerize and form protective gel. PPIs suppress acid → sucralfate cannot activate. Must separate dosing (sucralfate ≥1 hour before PPI). Same issue with H₂ blockers.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 3</div>
+    <div class="trap-stmt">"Misoprostol is safe in pregnancy to prevent NSAID-induced ulcers."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Misoprostol is TERATOGENIC and ABORTIFACIENT — pregnancy is absolute contraindication. Women of childbearing age on misoprostol must use reliable contraception. Actually used for medical abortion. Use alternative (PPI instead).</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 4</div>
+    <div class="trap-stmt">"Metoclopramide is an antiemetic with no CNS side effects."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Metoclopramide is D₂ antagonist that CROSSES BBB → extrapyramidal effects (tremor, rigidity, dystonia), tardive dyskinesia, parkinsonism. Contraindicated in Parkinson's disease. Ondansetron does NOT cross BBB significantly (safer CNS profile).</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 5</div>
+    <div class="trap-stmt">"Ondansetron is the best antiemetic for all causes of nausea."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Ondansetron blocks 5-HT₃ (effective for chemo, post-op, vagal GI input). DOES NOT work for motion sickness (vestibular pathway = H₁/M₁). Use scopolamine or antihistamine for motion sickness. Aprepitant (NK₁) for delayed chemo nausea.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 6</div>
+    <div class="trap-stmt">"Loperamide carries high abuse potential because it crosses the BBB like other opioids."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Loperamide is a μ-opioid but P-glycoprotein substrate → does NOT cross BBB at therapeutic doses → minimal CNS effects → safe OTC. Diphenoxylate DOES cross BBB better (hence combined with atropine to deter abuse). This difference is KEY to their regulatory status.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 7</div>
+    <div class="trap-stmt">"Antidiarrheals like loperamide are beneficial in C. difficile-associated diarrhea."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Antiperistaltic agents are CONTRAINDICATED in C. difficile (and bloody diarrhea) → ↓motility traps toxins → toxic megacolon, perforation, mortality ↑. Use antibiotics (metronidazole, vancomycin), NOT motility slowers. Same caution applies to invasive bacterial diarrhea.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 8</div>
+    <div class="trap-stmt">"5-ASA is the first-line biologic for both Crohn's and UC."</div>
+    <div class="trap-reveal"><strong>MISLEADING.</strong> 5-ASA is first-line medical therapy for UC (mucosal disease). Crohn's (transmural) often needs anti-TNF biologic earlier. Also: 5-ASA is not technically a "biologic" — biologics = antibodies/cytokine antagonists. Terminology matters on Step 1.</div></div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-header">Trap 9</div>
+    <div class="trap-stmt">"Infliximab (chimeric) and adalimumab (fully human) have identical immunogenicity."</div>
+    <div class="trap-reveal"><strong>FALSE.</strong> Adalimumab (fully human) is LESS immunogenic than infliximab (chimeric = mouse/human hybrid). Less immunogenicity = less anti-drug antibodies = more durable effect. Both still risk TB reactivation, fungal infections, lymphoma, CHF. Pre-treatment TB/HBV screening mandatory for both.</div></div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE TABLES ══════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ref">
+
+  <div class="ref-section">
+    <div class="ref-title">Antacid Comparison</div>
+    <table>
+      <thead><tr><th>Drug</th><th>Onset</th><th>Mechanism</th><th>Main SE</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CaCO₃</strong></td><td>Rapid (5 min)</td><td>Neutralizes HCl</td><td>Rebound acid, milk-alkali syndrome</td><td>Avoid chronic use</td></tr>
+        <tr><td><strong>Mg(OH)₂</strong></td><td>Fast</td><td>Osmotic laxative</td><td>Diarrhea; Mg toxicity in renal failure</td><td>Monitor Mg²⁺ levels</td></tr>
+        <tr><td><strong>Al(OH)₃</strong></td><td>Slow</td><td>Binds phosphate</td><td>Constipation, hypophosphatemia, osteomalacia</td><td>Avoid in renal failure</td></tr>
+        <tr><td><strong>NaHCO₃</strong></td><td>Rapid</td><td>Neutralizes HCl</td><td>Systemic alkalosis, Na⁺ overload</td><td>Avoid in CHF, HTN</td></tr>
+      </tbody>
+    </table>
+    <div class="ref-note"><strong>Key:</strong> Antacids are fast but have significant SEs. PPIs/H₂ blockers preferred for PUD/GERD. Combine antacids cautiously (e.g., Mg + Al in ratio to avoid laxation/constipation).</div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">H₂ Blockers vs. PPIs</div>
+    <table>
+      <thead><tr><th>Property</th><th>H₂ Blockers</th><th>PPIs</th><th>P-CABs</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Target</strong></td><td>H₂ receptor (reversible)</td><td>H⁺/K⁺-ATPase (irreversible)</td><td>H⁺/K⁺-ATPase (reversible, K⁺-competitive)</td></tr>
+        <tr><td><strong>Potency</strong></td><td>Moderate</td><td>High (most potent)</td><td>Very high, faster onset</td></tr>
+        <tr><td><strong>Onset</strong></td><td>Fast</td><td>Slow (prodrug, needs activation)</td><td>Faster than PPIs</td></tr>
+        <tr><td><strong>Duration</strong></td><td>Short (4–6 hrs)</td><td>Long (3–5 days after stop)</td><td>Intermediate</td></tr>
+        <tr><td><strong>Cimetidine</strong></td><td>CYP inhibitor, antiandrogen</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>Common SEs</strong></td><td>Gynecomastia (cimetidine only)</td><td>↓B₁₂/Ca/Mg, C. diff, hip fracture</td><td>Fewer long-term SEs</td></tr>
+      </tbody>
+    </table>
+    <div class="ref-note"><strong>Clinical pearl:</strong> PPIs preferred for ZES, severe GERD. H₂ blockers less potent but fewer interactions (except cimetidine). P-CABs (vonoprazan) emerging alternative in Japan/EU.</div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Antiemetic Receptor Targets & Pathways</div>
+    <table>
+      <thead><tr><th>Drug Class</th><th>Receptor Target</th><th>Best For</th><th>Key SE</th></tr></thead>
+      <tbody>
+        <tr><td><strong>5-HT₃ antagonists (Ondansetron)</strong></td><td>5-HT₃</td><td>Chemo, post-op, hyperemesis</td><td>QT prolongation, constipation</td></tr>
+        <tr><td><strong>D₂ antagonists (Metoclopramide)</strong></td><td>D₂ (+ 5-HT₄ agonist)</td><td>Gastroparesis, GERD nausea</td><td>EPS, tardive dyskinesia, hyperprolactinemia</td></tr>
+        <tr><td><strong>M₁ antagonists (Scopolamine)</strong></td><td>M₁</td><td>Motion sickness</td><td>Sedation, dry mouth</td></tr>
+        <tr><td><strong>H₁ antagonists (Dimenhydrinate)</strong></td><td>H₁</td><td>Motion sickness</td><td>Sedation</td></tr>
+        <tr><td><strong>NK₁ antagonists (Aprepitant)</strong></td><td>NK₁</td><td>Delayed chemo nausea</td><td>Minimal</td></tr>
+        <tr><td><strong>Corticosteroids (Dexamethasone)</strong></td><td>Multiple pathways</td><td>Adjunct to chemo nausea</td><td>Hyperglycemia, insomnia</td></tr>
+      </tbody>
+    </table>
+    <div class="ref-note"><strong>Pathway selection:</strong> CTZ (blood-borne) = 5-HT₃, D₂; Vestibular = H₁, M₁; GI vagal (chemo/radiation) = 5-HT₃; Delayed = NK₁.</div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Laxative Onset & Mechanism</div>
+    <table>
+      <thead><tr><th>Type</th><th>Examples</th><th>Onset</th><th>Mechanism</th><th>SE/Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bulk</strong></td><td>Psyllium, methylcellulose</td><td>1–3 days</td><td>↑stool bulk, stimulates peristalsis</td><td>Safest, most physiologic</td></tr>
+        <tr><td><strong>Osmotic</strong></td><td>Lactulose, MgCl₂, PEG</td><td>Hours</td><td>Osmotic water retention</td><td>Lactulose treats hepatic encephalopathy</td></tr>
+        <tr><td><strong>Stimulant</strong></td><td>Senna, bisacodyl</td><td>6–12 hrs</td><td>ENS stimulation, mucosal irritation</td><td>Melanosis coli with chronic use</td></tr>
+        <tr><td><strong>Stool softener</strong></td><td>Docusate</td><td>1–3 days</td><td>↑water in stool</td><td>Safe in hemorrhoids, post-MI</td></tr>
+        <tr><td><strong>Chloride channel activator</strong></td><td>Lubiprostone</td><td>Hours</td><td>↑Cl⁻ secretion → water</td><td>IBS-C, CIC</td></tr>
+        <tr><td><strong>Guanylate cyclase agonist</strong></td><td>Linaclotide, plecanatide</td><td>Hours</td><td>↑GC-C → cGMP → Cl⁻ secretion</td><td>IBS-C, CIC</td></tr>
+      </tbody>
+    </table>
+    <div class="ref-note"><strong>Opioid-induced constipation:</strong> Methylnaltrexone (SC), alvimopan (PO) = peripheral μ-antagonists (do NOT cross BBB, preserve analgesia).</div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">IBD Biologics & Mechanisms</div>
+    <table>
+      <thead><tr><th>Drug</th><th>Target</th><th>Route</th><th>Best For</th><th>Key Cautions</th></tr></thead>
+      <tbody>
+        <tr><td><strong>5-ASA (mesalamine)</strong></td><td>Local anti-inflammatory</td><td>PO/PR/IV</td><td>UC first-line, mild-mod Crohn's</td><td>Avoid in sulfonamide allergy</td></tr>
+        <tr><td><strong>Infliximab</strong></td><td>Anti-TNF-α (chimeric IgG)</td><td>IV infusion</td><td>Crohn's (transmural), severe UC</td><td>TB/HBV screen, immunosuppression</td></tr>
+        <tr><td><strong>Adalimumab</strong></td><td>Anti-TNF-α (fully human)</td><td>SC injection</td><td>Crohn's, UC (less immunogenic)</td><td>TB/HBV screen, immunosuppression</td></tr>
+        <tr><td><strong>Vedolizumab</strong></td><td>Anti-α₄β₇ integrin (gut-selective)</td><td>IV</td><td>UC, Crohn's (less systemic IS)</td><td>Progressive multifocal leukoencephalopathy (rare)</td></tr>
+        <tr><td><strong>Ustekinumab</strong></td><td>Anti-IL-12/23 (p40 subunit)</td><td>IV/SC</td><td>UC, Crohn's, plaque psoriasis</td><td>Monitor for infections</td></tr>
+        <tr><td><strong>Risankizumab</strong></td><td>Anti-IL-23 (p19 specific)</td><td>IV/SC</td><td>UC, Crohn's (newer, more selective)</td><td>Early safety data favorable</td></tr>
+      </tbody>
+    </table>
+    <div class="ref-note"><strong>Crohn's phenotype (transmural + skip) → anti-TNF preferred. UC phenotype (mucosal + continuous) → 5-ASA first-line. Anti-TNF risks: TB reactivation (mandatory PPD), fungal infections, lymphoma, CHF exacerbation, demyelination.</strong></div>
+  </div>
+
+</div>
+
+<div class="footer">GI23 Hub #2 — Step 1 Extensions</div>
+
+</div>
+</body>
+<script>
+function flipCard(elem){
+  elem.classList.toggle('flipped');
+  const seenCards = JSON.parse(localStorage.getItem('seenCards') || '[]');
+  const cardIdx = Array.from(elem.parentNode.children).indexOf(elem);
+  if(!seenCards.includes(cardIdx)) seenCards.push(cardIdx);
+  localStorage.setItem('seenCards', JSON.stringify(seenCards));
+  const count = seenCards.length;
+  document.getElementById('fc-counter').textContent = count + ' / 20 seen';
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(id==='ordering') setTimeout(initDrills,100);
+}
+function answerMCQ(opt,correct){
+  const item=opt.closest('.mcq-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.mcq-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.mcq-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  item.querySelector('.mcq-exp').classList.add('show');
+}
+function answerVig(opt,correct){
+  const item=opt.closest('.vig-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.vig-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.vig-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  item.querySelector('.vig-exp').classList.add('show');
+}
+function answerTrap(btn,card,correct){
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  card.querySelector('.trap-reveal').classList.add('show');
+  card.querySelector('.trap-exp').classList.add(correct?'show-c':'show-w');
+}
+function initDrills(){
+  document.querySelectorAll('.order-drill').forEach(function(drill){
+    const list=drill.querySelector('.order-list');
+    const items=Array.from(list.children);
+    for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const tmp=items[i];items[i]=items[j];items[j]=tmp;list.appendChild(items[i]);}
+    Array.from(list.children).forEach(function(item){
+      item.setAttribute('draggable','true');
+      item.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');item.classList.add('dragging');});
+      item.addEventListener('dragend',function(){item.classList.remove('dragging');});
+      item.addEventListener('dragover',function(e){e.preventDefault();item.classList.add('drag-over');});
+      item.addEventListener('dragleave',function(){item.classList.remove('drag-over');});
+      item.addEventListener('drop',function(e){e.preventDefault();item.classList.remove('drag-over');const dragging=list.querySelector('.dragging');if(dragging&&dragging!==item){const allItems=Array.from(list.children);const dragIdx=allItems.indexOf(dragging);const dropIdx=allItems.indexOf(item);if(dragIdx<dropIdx)list.insertBefore(dragging,item.nextSibling);else list.insertBefore(dragging,item);}});
+    });
+  });
+}
+function checkOrder(drillId){
+  const drill=document.getElementById(drillId);
+  const items=drill.querySelectorAll('.order-item');
+  let allCorrect=true;
+  items.forEach(function(item,i){
+    const correct=parseInt(item.getAttribute('data-correct'));
+    if(correct===i+1){item.classList.add('correct-pos');item.classList.remove('wrong-pos');}
+    else{item.classList.add('wrong-pos');item.classList.remove('correct-pos');allCorrect=false;}
+  });
+  const fb=document.getElementById('fb-'+drillId);
+  fb.textContent=allCorrect?'All correct!':'Some items are out of order. Try again or click Show Answer.';
+  fb.className='order-feedback '+(allCorrect?'correct':'incorrect');
+}
+function shuffleDrill(drillId){
+  const drill=document.getElementById(drillId);
+  const list=drill.querySelector('.order-list');
+  const items=Array.from(list.children);
+  items.forEach(function(item){item.classList.remove('correct-pos','wrong-pos');});
+  for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const tmp=items[i];items[i]=items[j];items[j]=tmp;list.appendChild(items[i]);}
+  const fb=document.getElementById('fb-'+drillId);fb.textContent='';fb.className='order-feedback';
+}
+function showAnswer(drillId){
+  const ans=document.getElementById('ans-'+drillId);
+  ans.classList.toggle('show');
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    if(front) inner.style.height=front.scrollHeight+'px';
+  });
+  initDrills();
+});
+</script>
+</body>
+</html>

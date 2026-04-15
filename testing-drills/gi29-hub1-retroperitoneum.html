@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI29 Retroperitoneum — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi29-retroperitoneum.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>Retroperitoneum &amp; Posterior Abdominal Wall <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 29 · GI Block · Retroperitoneum &amp; Posterior Abdominal Wall — LOs 1–5
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI29 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> GI29 LOs 1–5</div>
+    <div class="source-badge"><strong>Review:</strong> Gray's Anatomy: Abdomen</div>
+    <div class="source-badge"><strong>Step 1:</strong> First Aid Anatomy & Vessels</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi29-hub2-retroperitoneum.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi29-hub3-retroperitoneum.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">22</span> cards total</span><span>LOs 1–5</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — SAD PUCKER</div><div class="fc-q">Recite the SAD PUCKER mnemonic for primary retroperitoneal organs.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>S</strong>uprarenal (adrenal) · <strong>A</strong>orta · <strong>D</strong>uodenum (2nd-4th parts)<br><strong>P</strong>ancreas (head & body) · <strong>U</strong>reters · <strong>C</strong>olon (ascending & descending) · <strong>K</strong>idneys · <strong>E</strong>sophagus · <strong>R</strong>ectum</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Primary vs Secondary</div><div class="fc-q">What is the difference between primary and secondary retroperitoneal organs?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Primary:</strong> developed retroperitoneally from the start; always retroperitoneal (kidneys, adrenals, aorta, IVC, pancreas head/body, duodenum 2-4, ascending/descending colon)<br><br><strong>Secondary:</strong> developed intraperitoneal, then fused to posterior wall during development (pancreas tail, duodenum 1st part, colon transverse/sigmoid)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Peritoneal Reflections</div><div class="fc-q">What are peritoneal reflections? Name two examples and their clinical relevance.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Folds of peritoneum anchoring organs to abdominal wall. <strong>Examples:</strong> mesentery of SI, mesocolon (transverse, sigmoid).<br><br><strong>Clinical:</strong> Determine spread of infection/abscess. Intraperitoneal bleeding follows peritoneal planes. Mesenteric blood vessels run in peritoneal folds (vulnerable during surgery).</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Abdominal Aorta</div><div class="fc-q">At what spinal levels do celiac trunk, SMA, and IMA originate from the aorta?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Celiac trunk:</strong> T12<br><strong>SMA (Superior Mesenteric A):</strong> L1<br><strong>IMA (Inferior Mesenteric A):</strong> L3<br><br>Mnemonic: "Celiac at T12, SMA at L1, IMA at L3" (think descending levels)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Renal Vessels</div><div class="fc-q">At what level do renal arteries originate? Why are left and right renal veins asymmetric?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> L1-L2 level (just below SMA)<br><br><strong>Asymmetry:</strong> Left renal vein is LONGER; passes anterior to aorta (between SMA & aorta); receives L gonadal + L adrenal veins.<br><br><strong>Right renal vein:</strong> short; enters IVC directly; does NOT receive gonadal/adrenal veins.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Nutcracker Syndrome</div><div class="fc-q">What is Nutcracker Syndrome and why does it occur?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Compression of left renal vein between SMA & aorta → hematuria, flank pain, potential thrombosis.<br><br><strong>Why:</strong> Left renal vein's anomalous anterior course passes through SMA-aorta angle. Narrowing of this space (abdominal mass, SMA kinking) pinches the vein.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Portal Venous System</div><div class="fc-q">Name three venous anastomoses between portal and systemic (caval) circulation.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">1. <strong>Esophagus:</strong> esophageal veins (portal) ↔ azygos (caval)<br>2. <strong>Rectum:</strong> superior rectal (portal) ↔ middle/inferior rectal (caval)<br>3. <strong>Paraumblical:</strong> paraumblical (portal) ↔ superficial epigastric (caval)<br><br>→ Enlarge with portal HTN (esophageal varices, hemorrhoids, caput medusa)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Diaphragm: T8 Caval Hiatus</div><div class="fc-q">What passes through the caval hiatus at T8? Includes venous, arterial, and nerve structures.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>T8 Caval Hiatus:</strong> IVC + Right phrenic nerve<br><br>NOTE: Left phrenic nerve passes through esophageal hiatus (T10), not caval hiatus. Right phrenic only.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Diaphragm: T10 Esophageal Hiatus</div><div class="fc-q">What passes through the esophageal hiatus at T10?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>T10 Esophageal Hiatus:</strong> Esophagus + Left vagal trunk + Right vagal trunk<br><br>(Both left & right vagal trunks pass through T10, not T8)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Diaphragm: T12 Aortic Hiatus</div><div class="fc-q">What passes through the aortic hiatus at T12?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>T12 Aortic Hiatus:</strong> Thoracic aorta + Thoracic duct + Azygos vein<br><br>Mnemonic: "I 8 10 eggs at the table" (IVC-T8, Esophagus-T10, Aorta-T12)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Phrenic Nerve</div><div class="fc-q">What spinal nerve roots form the phrenic nerve? Where does it originate embryologically?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Spinal roots:</strong> C3, C4, C5<br><br><strong>Mnemonic:</strong> "C3, 4, 5 keeps the diaphragm alive"<br><br><strong>Embryo:</strong> Originates from cervical plexus (C3-5), descends through neck & thorax. Explains referred shoulder pain (C4 dermatome) in diaphragmatic pathology.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Ureter: 3 Constrictions</div><div class="fc-q">Name the three anatomic sites where ureters narrow, where kidney stones commonly lodge.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">1. <strong>Ureteropelvic junction (UPJ):</strong> where ureter leaves renal pelvis<br>2. <strong>Pelvic brim:</strong> where ureter crosses iliac vessels (iliopectineal ligament)<br>3. <strong>Ureterovesical junction (UVJ):</strong> where ureter enters bladder<br><br>Stones lodge at these sites due to narrowing.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Urolithiasis Referred Pain</div><div class="fc-q">What is the dermatome distribution for referred kidney stone pain? Why "loin to groin"?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Dermatomes:</strong> T11-L2 (flank pain → groin/labia/scrotum)<br><br><strong>"Loin to groin":</strong> Flank (loin) pain radiates toward inguinal region/genitalia following T11-L2 nerve distribution<br><br>Kidney @ T12 level; ureter @ T11-L2 innervation</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — "Water Under the Bridge"</div><div class="fc-q">In females and males, what passes ABOVE (and BELOW) the ureter at the pelvis?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Females:</strong> Uterine artery passes ABOVE ureter ("water under the bridge" = ureter under artery)<br><br><strong>Males:</strong> Vas deferens passes ABOVE ureter (similarly, ureter under the vas)<br><br>Clinical: Avoid ureteric injury during hysterectomy or vasectomy — recognize ureter's inferior position.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Adrenal Cortex Innervation</div><div class="fc-q">Does the adrenal cortex have direct nerve innervation? What is the primary control mechanism?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>NO direct innervation.</strong> Cortex is controlled entirely by endocrine signals:<br>• Zona glomerulosa: RAAS (angiotensin II)<br>• Zona fasciculata: ACTH (from anterior pituitary)<br>• Zona reticularis: ACTH + androgens<br><br>Unique: Only endocrine organ without direct autonomic control.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Adrenal Medulla Innervation</div><div class="fc-q">What is the embryologic origin of adrenal medulla cells? What nerves innervate them?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> Neuroectoderm (neural crest) → chromaffin cells = modified postganglionic neurons<br><br><strong>Innervation:</strong> Direct preganglionic sympathetic fibers (T5-T11) synapse on chromaffin cells<br><br><strong>Function:</strong> Release epinephrine/norepinephrine upon sympathetic stimulation (unique: somatic motor control of endocrine gland)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Adrenal Arteries</div><div class="fc-q">Name the three sources of arterial supply to the adrenal glands (superior, middle, inferior).</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Superior suprarenal artery:</strong> from inferior phrenic artery<br><strong>Middle suprarenal artery:</strong> from abdominal aorta<br><strong>Inferior suprarenal artery:</strong> from renal artery<br><br>All three = rich vascular supply to small glands</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Adrenal Veins</div><div class="fc-q">What is the asymmetry between left and right adrenal venous drainage? Why is this surgically important?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Left adrenal vein:</strong> Long vein → drains into LEFT renal vein<br><strong>Right adrenal vein:</strong> Short vein → drains directly into IVC<br><br><strong>Surgical concern:</strong> L adrenal vein vulnerable during left nephrectomy/renal vessel surgery. R adrenal vein can be difficult to access due to IVC proximity.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — End-Arterial Renal Segments</div><div class="fc-q">What are renal end-arteries and why do they matter clinically?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Renal artery branches that do NOT anastomose with adjacent branches. Segments:<br>• Superior<br>• Anterosuperior<br>• Anteroinferior<br>• Inferior<br>• Posterior<br><br><strong>Clinical:</strong> Occlusion → segmental infarction with no collateral flow. Important during renal surgery/partial nephrectomy planning.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 6 — Blood Supply</div><div class="fc-q">Which artery supplies each GI division: foregut, midgut, hindgut? Give a structure served by each.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Celiac trunk:</strong> foregut (stomach, duodenum 1st/2nd, liver, spleen, pancreas)<br><strong>SMA:</strong> midgut (duodenum 3rd/4th → proximal 2/3 transverse colon)<br><strong>IMA:</strong> hindgut (distal 1/3 transverse colon → upper rectum)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 7 — Autonomics</div><div class="fc-q">Compare parasympathetic vs. sympathetic effects on GI motility, secretion, and sphincter tone.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Parasympathetic (vagus/pelvic nerve):</strong> ↑motility, ↑secretion, ↓sphincter tone ("rest and digest")<br><br><strong>Sympathetic (splanchnic nerves):</strong> ↓motility, ↓secretion, ↑sphincter tone, vasoconstriction ("fight or flight")</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 7 — Cephalic Phase</div><div class="fc-q">What is the cephalic phase of digestion, what nerve mediates it, and what does it prepare the stomach to do?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cephalic phase:</strong> sight, smell, taste, or thought of food triggers anticipatory GI activation BEFORE food arrives<br><br><strong>Mediated by:</strong> vagus nerve (CN X) → ACh → stimulates parietal cells (HCl), chief cells (pepsinogen), gastric motility<br><br>Prepares the stomach to receive and begin digesting food</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL IN THE BLANK ══════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 01 — LO 1</div>
+      <div class="fib-prompt">Primary retroperitoneal organs developed retroperitoneally from the start. The mnemonic SAD PUCKER helps recall them. <strong>S</strong>uprarenal · <strong>A</strong>orta · <strong>D</strong>uodenum (parts ___-___) · <strong>P</strong>ancreas (head &amp; ___) · <strong>U</strong>reters · <strong>C</strong>olon (_ &amp; ___) · <strong>K</strong>idneys · <strong>E</strong>sophagus · <strong>R</strong>ectum</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="duodenum parts..." data-answers="2-4,2,3,4">
+        <input class="fib-input" type="text" placeholder="pancreas..." data-answers="body">
+        <input class="fib-input" type="text" placeholder="colon..." data-answers="ascending,descending">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 02 — LO 2</div>
+      <div class="fib-prompt">The abdominal aorta branches into three unpaired arteries: Celiac at ___, SMA at ___, and IMA at ___.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="celiac level..." data-answers="t12,T12">
+        <input class="fib-input" type="text" placeholder="SMA level..." data-answers="l1,L1">
+        <input class="fib-input" type="text" placeholder="IMA level..." data-answers="l3,L3">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 03 — LO 2</div>
+      <div class="fib-prompt">The left renal vein is longer than the right and passes anterior to the ___________, receiving the left ___________ vein and left ___________ vein.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="vessel..." data-answers="aorta">
+        <input class="fib-input" type="text" placeholder="first tributary..." data-answers="gonadal">
+        <input class="fib-input" type="text" placeholder="second tributary..." data-answers="adrenal">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 04 — LO 3</div>
+      <div class="fib-prompt">At T8, the ___________ passes through the caval hiatus. At T10, the ___________ passes through the esophageal hiatus along with the left and right ___________ trunks. At T12, the ___________ passes through the aortic hiatus.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="T8..." data-answers="ivc">
+        <input class="fib-input" type="text" placeholder="T10..." data-answers="esophagus">
+        <input class="fib-input" type="text" placeholder="nerve..." data-answers="vagal">
+        <input class="fib-input" type="text" placeholder="T12..." data-answers="aorta">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 05 — LO 3</div>
+      <div class="fib-prompt">The phrenic nerve originates from spinal cord levels ___, ___, and ___, which is remembered by the phrase "_______________".</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="levels..." data-answers="c3,c4,c5,C3,C4,C5">
+        <input class="fib-input" type="text" placeholder="mnemonic..." data-answers="c3,4,5 keeps the diaphragm alive">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 06 — LO 4</div>
+      <div class="fib-prompt">The three anatomic sites where ureters constrict and kidney stones lodge are: (1) ___________ where the ureter leaves the renal pelvis, (2) the ___________ where the ureter crosses iliac vessels, and (3) ___________ where it enters the bladder.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="first site..." data-answers="upj,ureteropelvic junction">
+        <input class="fib-input" type="text" placeholder="second site..." data-answers="pelvic brim">
+        <input class="fib-input" type="text" placeholder="third site..." data-answers="uvj,ureterovesical junction">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 07 — LO 4</div>
+      <div class="fib-prompt">Kidney stone referred pain follows dermatomes ___________ ("loin to groin"), reflecting the embryologic origin of the ureter at the ___________ spinal level.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="dermatomes..." data-answers="t11-l2,T11-L2">
+        <input class="fib-input" type="text" placeholder="spinal level..." data-answers="t12,T12">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 08 — LO 4</div>
+      <div class="fib-prompt">"Water under the bridge" means the ___________ in females (or ___________ in males) passes ABOVE the ureter at the pelvic brim, so the ureter is positioned UNDER the vessel.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="female vessel..." data-answers="uterine artery">
+        <input class="fib-input" type="text" placeholder="male vessel..." data-answers="vas deferens">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 09 — LO 5</div>
+      <div class="fib-prompt">The adrenal cortex has ___________ direct innervation and is controlled solely by endocrine signals: ___________ (zona glomerulosa), ___________ (zona fasciculata & reticularis).</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="direct/no..." data-answers="no">
+        <input class="fib-input" type="text" placeholder="hormone..." data-answers="raas,angiotensin,angiotensin ii">
+        <input class="fib-input" type="text" placeholder="hormone..." data-answers="acth">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 10 — LO 5</div>
+      <div class="fib-prompt">The adrenal medulla is innervated by ___________ preganglionic sympathetic fibers (spinal levels ___-___) that synapse directly on ___________ cells, which release ___________ and ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="fiber type..." data-answers="direct">
+        <input class="fib-input" type="text" placeholder="levels..." data-answers="t5-t11,T5-T11">
+        <input class="fib-input" type="text" placeholder="cell type..." data-answers="chromaffin">
+        <input class="fib-input" type="text" placeholder="hormone..." data-answers="epinephrine,adrenaline">
+        <input class="fib-input" type="text" placeholder="hormone..." data-answers="norepinephrine">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Instructions:</strong> Drag and drop the items into the correct order, then click "Check Order." Use "Show Answer" if you get stuck.
+  </div>
+
+  <!-- Drill 1: Diaphragm Openings by Spinal Level -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 1 — Diaphragm Openings: T8 → T12</div>
+    <div class="drill-hint">Arrange these three major diaphragm openings in order from T8 to T12 (superior to inferior).</div>
+    <div class="order-list" id="order-list-1" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-1')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">T12 Aortic Hiatus: aorta, thoracic duct, azygos vein</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">T8 Caval Hiatus: IVC + right phrenic nerve</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">T10 Esophageal Hiatus: esophagus + left &amp; right vagal trunks</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','order-fb-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-1"></div>
+    <div class="order-answer" id="order-ans-1">
+      <ol><li><span>T8: IVC + R phrenic nerve</span> — caval hiatus</li><li><span>T10: esophagus + vagal trunks</span> — esophageal hiatus</li><li><span>T12: aorta + thoracic duct + azygos</span> — aortic hiatus</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 2: Ureter Constriction Sites -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 2 — Ureter Constriction Sites: Proximal → Distal</div>
+    <div class="drill-hint">Arrange the three anatomic narrowings where kidney stones lodge, from renal pelvis to bladder.</div>
+    <div class="order-list" id="order-list-2" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-2')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Ureterovesical junction (UVJ) — where ureter enters bladder</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Pelvic brim — where ureter crosses iliac vessels</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Ureteropelvic junction (UPJ) — where ureter leaves renal pelvis</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','order-fb-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-2"></div>
+    <div class="order-answer" id="order-ans-2">
+      <ol><li><span>UPJ (Ureteropelvic junction)</span> — most common site for stone lodgment</li><li><span>Pelvic brim</span> — iliac vessel crossing (iliopectineal ligament)</li><li><span>UVJ (Ureterovesical junction)</span> — intramural portion of ureter</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 3: Abdominal Aorta Branches by Level -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 3 — Major Aortic Branches: T12 → L3</div>
+    <div class="drill-hint">Arrange the major unpaired aortic branches in order from superior (T12) to inferior (L3).</div>
+    <div class="order-list" id="order-list-3" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-3')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">IMA (Inferior Mesenteric A) — L3 level</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">SMA (Superior Mesenteric A) — L1 level</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Celiac trunk — T12 level</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','order-fb-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-3"></div>
+    <div class="order-answer" id="order-ans-3">
+      <ol><li><span>Celiac trunk at T12</span> — foregut (stomach, duodenum 1st part, liver, spleen, pancreas head)</li><li><span>SMA at L1</span> — midgut (small intestine + colon ascending/transverse)</li><li><span>IMA at L3</span> — hindgut (colon descending/sigmoid + upper rectum)</li></ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATCHING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Instructions:</strong> Click an item on the left, then click its match on the right. Correct pairs turn green; wrong pairs flash red.
+  </div>
+
+  <!-- Set 1: Retroperitoneal Organ → Status -->
+  <div class="match-set">
+    <div class="match-set-title">Set 1 — Retroperitoneal Organ → Status (Primary vs Secondary)</div>
+    <div class="match-set-hint">Match each structure to whether it is primary (always retroperitoneal) or secondary (fused to posterior wall).</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Organ</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Kidney</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Pancreas tail</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Duodenum (2nd-4th parts)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Sigmoid colon</div>
+      </div>
+      <div>
+        <div class="match-col-label">Classification</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Secondary retroperitoneal (fused)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Primary retroperitoneal (always)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Secondary retroperitoneal (fused)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Primary retroperitoneal (always)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms1-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms1')">Reset</button>
+  </div>
+
+  <!-- Set 2: Diaphragm Opening → Contents -->
+  <div class="match-set">
+    <div class="match-set-title">Set 2 — Diaphragm Opening → Structures Passing Through</div>
+    <div class="match-set-hint">Match each diaphragm opening to the structures that pass through it.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Opening (Level)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">T8 Caval hiatus</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">T10 Esophageal hiatus</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">T12 Aortic hiatus</div>
+      </div>
+      <div>
+        <div class="match-col-label">Primary Structures</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Aorta + thoracic duct + azygos vein</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">IVC + right phrenic nerve</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">Esophagus + left &amp; right vagal trunks</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms2-score">0</span>/3 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms2')">Reset</button>
+  </div>
+
+  <!-- Set 3: Adrenal Structure → Innervation/Supply -->
+  <div class="match-set">
+    <div class="match-set-title">Set 3 — Adrenal Structure → Innervation Type</div>
+    <div class="match-set-hint">Match each adrenal region to its innervation pattern.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Adrenal Region</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Cortex</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Medulla</div>
+      </div>
+      <div>
+        <div class="match-col-label">Innervation Pattern</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Direct preganglionic sympathetic (T5-T11) → chromaffin cells</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">No direct innervation; hormonal control only (ACTH, RAAS)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms3-score">0</span>/2 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms3')">Reset</button>
+  </div>
+</div>
+
+<!-- ══ TEST TRAPS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    <strong>Test Trap Mode:</strong> Each statement is either TRUE or FALSE as written. Many are designed to catch common exam errors. Click T or F — then read the explanation carefully.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 01 — LO 1</div>
+    <div class="trap-statement">"The pancreas and duodenum are both secondary retroperitoneal organs because they fused to the posterior abdominal wall during development."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE — PARTIALLY.</strong> The pancreas HEAD &amp; BODY are PRIMARY retroperitoneal (never moved). The pancreas TAIL is secondary (fused). The duodenum PARTS 2-4 are PRIMARY; only the 1st part is secondary.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 02 — LO 2</div>
+    <div class="trap-statement">"The left renal vein is shorter than the right renal vein because the left kidney is positioned higher in the retroperitoneum."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The left renal vein is LONGER because it passes anterior to the aorta (between SMA &amp; aorta) to reach the IVC. The right renal vein is short — it goes directly into the IVC. Kidney position is similar; the difference is the left vein's anterior course. Nutcracker syndrome occurs when the left renal vein is compressed in the SMA-aorta angle.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 03 — LO 3</div>
+    <div class="trap-statement">"The phrenic nerve originates from the thoracic spine (T3-T5) and thus is called an 'abdominal' nerve."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The phrenic nerve originates from CERVICAL spinal levels <strong>C3, C4, C5</strong> (not thoracic). This is why the mnemonic is "C3, 4, 5 keeps the diaphragm alive." The phrenic nerve descends through the neck and chest to innervate the diaphragm — explaining referred pain to the shoulder (C4 dermatome) in diaphragmatic pathology.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 04 — LO 4</div>
+    <div class="trap-statement">"A patient with a kidney stone at the UPJ will experience referred pain in the lower back, but NOT in the groin because the pain only follows the dermatome of the kidney (T12)."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Ureteric pain follows the ENTIRE path of ureter innervation (T11-L2), so it radiates from the LOIN (flank, T11-12) to the GROIN (L1-2 dermatomes). This "loin to groin" radiation is classic for urolithiasis at any level, not just the UPJ.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 05 — LO 4</div>
+    <div class="trap-statement">"Because the ureter passes above the uterine artery in females, surgeons can safely ligate the uterine artery during hysterectomy without risking ureteric injury."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> This is a classic surgical trap! The uterine artery passes ABOVE the ureter ("water under the bridge") — meaning the ureter is BELOW. During hysterectomy, if the surgeon doesn't carefully identify the ureter, they risk injuring it while ligating the uterine artery. "Water under the bridge" = ureter passes UNDER (inferior to) the artery.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 06 — LO 5</div>
+    <div class="trap-statement">"The adrenal cortex is highly innervated by sympathetic nerve fibers, allowing rapid hormonal responses during the 'fight or flight' response."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The adrenal CORTEX has NO direct nerve innervation. It is controlled solely by endocrine signals (ACTH from the pituitary, angiotensin II from RAAS). The MEDULLA is directly innervated by preganglionic sympathetic fibers. This is a common point of confusion between cortex and medulla.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 07 — LO 5</div>
+    <div class="trap-statement">"The adrenal medulla is a true endocrine gland like the adrenal cortex, producing hormones that are regulated by the anterior pituitary."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The medulla is embryologically a modified POSTGANGLIONIC NEURON (neuroendocrine), not a true endocrine gland. It receives direct preganglionic sympathetic innervation (T5-T11) and releases catecholamines (epinephrine/norepinephrine) upon nerve stimulation — it's basically a neuron that secretes hormones. The anterior pituitary does NOT regulate the medulla.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 08 — LO 2</div>
+    <div class="trap-statement">"Because the celiac trunk, SMA, and IMA all branch from the abdominal aorta, they have extensive collateral circulation with each other, so occlusion of one rarely causes intestinal ischemia."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> While some marginal collateral vessels exist (e.g., arc of Riolan between SMA &amp; IMA), these are often inadequate. Occlusion of the SMA (acute mesenteric ischemia) causes severe malperfusion despite collaterals. The renal arteries are END-ARTERIES with no collaterals — occlusion = segmental infarction. Always suspect ischemia when major vessels are occluded.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">SAD PUCKER — Primary Retroperitoneal Organs</div>
+    <table class="ref-table">
+      <thead><tr><th>Letter</th><th>Organ</th><th>Status</th><th>Clinical Note</th></tr></thead>
+      <tbody>
+        <tr><td class="key">S</td><td>Suprarenal (adrenal)</td><td>Primary</td><td>No direct nerve innervation (cortex); sympathetic fibers (medulla T5-T11)</td></tr>
+        <tr><td class="key">A</td><td>Aorta</td><td>Primary</td><td>Major source of abdominal blood supply; ends at L4 (bifurcation)</td></tr>
+        <tr><td class="key">D</td><td>Duodenum (2nd–4th parts)</td><td>Primary</td><td>1st part = secondary; C-shaped loop around pancreas head</td></tr>
+        <tr><td class="key">P</td><td>Pancreas (head &amp; body)</td><td>Primary</td><td>Tail = secondary (fused); end-arterial segments (cannot collateralize)</td></tr>
+        <tr><td class="key">U</td><td>Ureters</td><td>Primary</td><td>3 constrictions: UPJ, pelvic brim, UVJ; stones lodge here</td></tr>
+        <tr><td class="key">C</td><td>Colon (ascending &amp; descending)</td><td>Primary</td><td>Transverse &amp; sigmoid = secondary; IMA supply</td></tr>
+        <tr><td class="key">K</td><td>Kidneys</td><td>Primary</td><td>At L1-L2 level; renal arteries are end-arteries</td></tr>
+        <tr><td class="key">E</td><td>Esophagus</td><td>Primary</td><td>T12 portion passes through aortic hiatus</td></tr>
+        <tr><td class="key">R</td><td>Rectum</td><td>Primary</td><td>Upper 2/3 supplied by IMA (hindgut)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Abdominal Aorta & Branches — "Celiac T12, SMA L1, IMA L3"</div>
+    <table class="ref-table">
+      <thead><tr><th>Vessel</th><th>Level</th><th>Primary Territory</th><th>Clinical Pearl</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Celiac trunk</td><td>T12</td><td>Foregut (stomach, liver, spleen, pancreas head, duod 1st part)</td><td>Short trunk; divides into left gastric, left hepatic (splenic emerges), common hepatic</td></tr>
+        <tr><td class="key">SMA</td><td>L1</td><td>Midgut (SI, cecum, ascending colon, proximal 2/3 transverse colon)</td><td>More vulnerable to thrombosis than IMA (acute mesenteric ischemia)</td></tr>
+        <tr><td class="key">IMA</td><td>L3</td><td>Hindgut (distal 1/3 transverse colon, descending/sigmoid colon, upper rectum)</td><td>Smallest of three; often has good collaterals via left colic artery</td></tr>
+        <tr><td class="key">Renal arteries</td><td>L1-L2</td><td>Kidneys (left more anterior than right due to diaphragm)</td><td>END-ARTERIES = no collaterals; occlusion → segmental infarction</td></tr>
+        <tr><td class="key">IVC</td><td>Formed at L5</td><td>Drains abdomen, pelvis, lower limbs</td><td>Passes through T8 caval hiatus; can be compressed by aortic aneurysm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Diaphragm Openings — "I 8 10 Eggs at the Table" (IVC-T8, Esophagus-T10, Aorta-T12)</div>
+    <table class="ref-table">
+      <thead><tr><th>Level</th><th>Opening</th><th>Structures</th><th>Mnemonic</th></tr></thead>
+      <tbody>
+        <tr><td class="key">T8</td><td>Caval hiatus</td><td>IVC, right phrenic nerve (L phrenic = T10)</td><td><strong>I</strong>VC at T8</td></tr>
+        <tr><td class="key">T10</td><td>Esophageal hiatus</td><td>Esophagus, left &amp; right vagal trunks</td><td><strong>E</strong>sophagus at T10</td></tr>
+        <tr><td class="key">T12</td><td>Aortic hiatus</td><td>Thoracic aorta, thoracic duct, azygos vein</td><td><strong>A</strong>orta at T12</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Phrenic Nerve — "C3, 4, 5 Keeps the Diaphragm Alive"</div>
+    <table class="ref-table">
+      <thead><tr><th>Feature</th><th>Detail</th><th>Clinical Impact</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Spinal roots</td><td>C3, C4, C5 (CERVICAL, not thoracic!)</td><td>Common exam trap; not T5-T7</td></tr>
+        <tr><td class="key">Course</td><td>Descends through neck &amp; mediastinum; crosses pericardium; pierces diaphragm at T8</td><td>Vulnerable during cardiac surgery; pericarditis → referred shoulder pain</td></tr>
+        <tr><td class="key">Sensory (C4)</td><td>Shoulder &amp; lateral neck (C4 dermatome)</td><td>Diaphragmatic pathology → referred pain to shoulder (Kehr sign in splenic rupture)</td></tr>
+        <tr><td class="key">Motor</td><td>Innervates entire diaphragm</td><td>Bilateral phrenic injury → paralysis → orthopnea; paradoxical breathing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Ureter — 3 Constrictions & "Water Under the Bridge"</div>
+    <table class="ref-table">
+      <thead><tr><th>Constriction Site</th><th>Anatomy</th><th>Kidney Stone Risk</th></tr></thead>
+      <tbody>
+        <tr><td class="key">UPJ (Ureteropelvic junction)</td><td>Where ureter leaves renal pelvis</td><td>Most common stone-lodging site (~50%)</td></tr>
+        <tr><td class="key">Pelvic brim</td><td>Ureter crosses iliac vessels (iliopectineal ligament)</td><td>2nd most common site</td></tr>
+        <tr><td class="key">UVJ (Ureterovesical junction)</td><td>Intramural portion entering bladder</td><td>3rd most common site</td></tr>
+      </tbody>
+    </table>
+    <strong>Water Under the Bridge (Anatomic Relationship):</strong>
+    <ul style="margin-top:8px; margin-bottom:8px; margin-left:20px;">
+      <li><strong>Females:</strong> Uterine artery passes ABOVE ureter → ureter is BELOW ("under the bridge")</li>
+      <li><strong>Males:</strong> Vas deferens passes ABOVE ureter → same relationship</li>
+      <li><strong>Clinical:</strong> Crucial during hysterectomy or urologic surgery to avoid ureteric injury</li>
+    </ul>
+    <strong>Referred Pain — "Loin to Groin" (T11-L2 dermatomes):</strong>
+    <ul style="margin-top:8px; margin-left:20px;">
+      <li>Kidney stone pain radiates from flank (loin, T11-T12) to groin/genitalia (L1-L2)</li>
+      <li>Reflects embryologic innervation of ureter during development</li>
+    </ul>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Adrenal Gland Innervation & Vasculature</div>
+    <table class="ref-table">
+      <thead><tr><th>Structure</th><th>Innervation</th><th>Arterial Supply</th><th>Venous Drainage</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Cortex</td><td>NONE (endocrine only)</td><td>Superior suprarenal (inferior phrenic), middle suprarenal (aorta), inferior suprarenal (renal artery)</td><td>Adrenal cortex vein → regional vein</td></tr>
+        <tr><td class="key">Medulla</td><td>Direct preganglionic sympathetic (T5-T11) → chromaffin cells</td><td>Same as cortex (triple supply)</td><td>Adrenal medullary vein → regional vein</td></tr>
+        <tr><td class="key">LEFT adrenal</td><td>Same as above</td><td>Same as above</td><td>LONG vein → LEFT renal vein (vulnerable during left nephrectomy)</td></tr>
+        <tr><td class="key">RIGHT adrenal</td><td>Same as above</td><td>Same as above</td><td>SHORT vein → IVC directly (harder to access surgically)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-note">
+    <strong>Adrenal Cortex Control — NO DIRECT NERVE INNERVATION:</strong> Zona glomerulosa = RAAS (angiotensin II); Zona fasciculata = ACTH (anterior pituitary); Zona reticularis = ACTH + androgen-regulating hormones. This is unique among endocrine organs — purely hormonal control.
+  </div>
+
+  <div class="ref-note">
+    <strong>Adrenal Medulla:</strong> Embryologically modified postganglionic sympathetic neurons. Upon stimulation by preganglionic sympathetic fibers (T5-T11), releases epinephrine (~80%) &amp; norepinephrine (~20%). This is the ONLY endocrine tissue with direct somatic motor control.
+  </div>
+</div>
+
+<div class="footer">
+  <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp; GI29 Hub 1 — Core Concepts &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div><!-- /container -->
+
+<script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    inner.style.height=front.scrollHeight+'px';
+  });
+});
+// Tab switching
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+// FIB check
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+
+// Drag-and-Drop Ordering
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// Matching
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+
+// Test Traps
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+
+/* ── THEME TOGGLE ── */
+
+
+</script>
+</body>
+</html>

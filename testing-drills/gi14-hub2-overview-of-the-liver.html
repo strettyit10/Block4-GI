@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI14 Hub #2 · Overview of the Liver — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
+.topnav{background:#78350f;border-bottom:3px solid #fef3c7;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#fef3c7;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #fef3c7;background:#fef3c7;color:#78350f;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#f3d8a0;border-color:#f3d8a0}
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#78350f 0%,#fef3c7 50%,#78350f 100%)}
+.hub-tag{display:inline-block;background:#78350f;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#78350f;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#92400e;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#78350f}
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#fef3c7;color:#92400e}
+.hub-step.current{background:#78350f;color:#F0E8DF}
+.hub-arrow{color:#fef3c7;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#78350f}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#78350f}
+.tab-btn.active{color:#78350f;border-bottom-color:#fef3c7}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#78350f;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s;height:0}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #78350f;width:100%}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #fef3c7;width:100%}
+.fc-label{font-size:.66em;font-weight:700;color:#fef3c7;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#78350f}
+.fc-a em{color:#92400e;font-style:normal}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#78350f;font-weight:700}
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#fef3c7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #fef3c7}
+.mcq-stem strong{color:#78350f}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#fef3c7;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#78350f;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #fef3c7;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#78350f}
+.mcq-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong{color:#78350f}
+table{border-collapse:collapse;width:100%}
+table th{background:#78350f;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D5CCC0;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF8F5}
+table tr:hover td{background:#F3EFE9}
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#78350f;text-decoration:none;font-weight:600}
+.footer a:hover{color:#fef3c7;text-decoration:underline}
+.order-drill{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#78350f;margin-bottom:8px}
+.drill-hint{font-size:.84em;color:#7A7060;background:#F3EFE9;padding:10px 14px;border-left:2px solid #fef3c7;border-radius:4px;margin-bottom:14px}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding:14px;background:#F7F5F2;border-radius:6px;border:1px solid #D5CCC0;min-height:200px}
+.order-item{background:#FFF;border:2px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.88em;color:#2C2C2C;transition:all .15s}
+.order-item:hover{border-color:#fef3c7;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-color:#fef3c7}
+.order-item.drag-over{border:2px dashed #fef3c7;background:#F3EFE9}
+.order-item.correct-pos{border-color:#2E7D32;background:#F1F8F2}
+.order-item.wrong-pos{border-color:#C62828;background:#FEF5F5}
+.order-actions{display:flex;gap:10px;margin-bottom:14px}
+.order-check-btn{background:#78350f;color:#F0E8DF;border:none;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-check-btn:hover{background:#5f2b0f}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#fef3c7;color:#92400e;background:#F3EFE9}
+.order-feedback{font-size:.84em;color:#5A5A5A;padding:10px 14px;border-radius:5px;margin-bottom:14px;display:none}
+.order-feedback.correct{background:#F1F8F2;border-left:3px solid #2E7D32;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border-left:3px solid #C62828;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.order-answer.show{display:block}
+.order-answer ol{margin-left:24px}
+.order-answer li{margin-bottom:10px}
+.order-answer strong{color:#78350f}
+.vig-item{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#fef3c7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #fef3c7}
+.vig-stem strong{color:#78350f}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#fef3c7;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .vig-opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .vig-opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-opt-letter{font-weight:700;color:#78350f;flex-shrink:0;width:18px}
+.vig-exp{background:#F3EFE9;border-left:3px solid #fef3c7;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none;margin-top:12px}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#78350f}
+.vig-buzzword{color:#92400e;font-weight:600}
+.trap-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #fef3c7}
+.trap-num{font-size:.68em;font-weight:700;color:#fef3c7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.trap-statement{font-size:.92em;color:#2C2C2C;line-height:1.6;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #fef3c7;font-weight:500}
+.trap-btns{display:flex;gap:10px;margin-bottom:14px}
+.trap-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.trap-btn:hover:not(:disabled){border-color:#fef3c7;color:#92400e;background:#F3EFE9}
+.trap-btn:disabled{opacity:.5;cursor:default}
+.trap-btn.sel-correct{border-color:#2E7D32;background:#F1F8F2;color:#1B5E20}
+.trap-btn.sel-wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp{background:#F3EFE9;border-left:3px solid #fef3c7;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.trap-exp.show-c,.trap-exp.show-w{display:block}
+.trap-exp.show-w{border-left-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp strong{color:#78350f}
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#78350f;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #fef3c7}
+.ref-table{overflow-x:auto}
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .order-list{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi14-overview-of-the-liver.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+<div class="header">
+  <span class="hub-tag">Step 1 Extensions</span>
+  <h1>GI14 Hub #2 <span>Overview of the Liver</span></h1>
+  <p class="subtitle">Clinical depth + mechanisms for USMLE Step 1 · 10 Learning Objectives · 60 drills</p>
+  <div class="source-strip">
+    <span class="source-badge"><strong>Source:</strong> GI14 Lecture Guide</span>
+    <span class="source-badge"><strong>LOs:</strong> 1–10 (dual supply → EHC consequences)</span>
+  </div>
+</div>
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi14-hub1-overview-of-the-liver.html" class="hub-step next">Hub 1 — Core</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi14-hub3-overview-of-the-liver.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-num">20</div>
+    <div class="stat-label">Flashcards</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Ordering Drills</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">10</div>
+    <div class="stat-label">MCQ Items</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Vignettes</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Step 1 Traps</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Reference Tables</div>
+  </div>
+</div>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(event, 'tab-flashcards')">📇 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-ordering')">🔢 Ordering</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-mcq')">❓ MCQ</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-vignettes')">🩺 Vignettes</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-traps')">⚠️ Traps</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-ref')">📚 Reference</button>
+</div>
+<div id="tab-flashcards" class="tab-content active">
+  <div class="fc-progress">
+    <span>Flashcard Progress</span>
+    <span class="prog-num"><span id="seenCount">0</span> / 20 seen</span>
+  </div>
+  <div class="fc-grid" id="flashcard-grid">
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 1 — Dual Blood Supply</div>
+          <div class="fc-q">What % of liver's oxygen does the hepatic artery vs portal vein contribute?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Hepatic artery:</strong> 50% of oxygen (high O2, low volume). <strong>Portal vein:</strong> 50% of oxygen (low O2, high nutrient-rich blood). Dual supply = explains why liver tolerates ischemia poorly if artery alone is compromised.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 1 — Acinus Zones</div>
+          <div class="fc-q">Zone 3 hepatocytes are most vulnerable to damage. Why?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Zone 3</strong> = perivenous (around central vein); lowest O2 & nutrient levels. <strong>Zone 1</strong> = periportal (highest O2). Zone 3 is first to fail in ischemia, acetaminophen toxicity, and cirrhosis.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 2 — Cirrhosis Definition</div>
+          <div class="fc-q">What pathologic change defines cirrhosis and why does portal hypertension develop?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Cirrhosis</strong> = diffuse hepatic necrosis → fibrosis → loss of normal architecture. <em>Portal HTN</em> results from: fibrous bands compress intrahepatic vessels → increased resistance → blood backs up in portal system → varices, ascites, splenomegaly.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 3 — Carbohydrate Metabolism</div>
+          <div class="fc-q">Liver controls blood glucose via which 2 pathways? What happens when both fail?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Glycogenolysis</strong> (breakdown) + <strong>gluconeogenesis</strong> (synthesis). Liver failure → hypoglycemia (can't make/break down glucose) + hyperammonemia (urea cycle fails) + hepatic encephalopathy.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 3 — Lipid Metabolism</div>
+          <div class="fc-q">Liver synthesizes which lipoproteins? What does low production signal?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a">Liver makes <strong>VLDL, HDL, albumin</strong>. Low albumin + ↓HDL + ↑VLDL = <strong>liver failure sign</strong>. <em>Albumin particularly</em> = synthetic function marker (half-life 20 days, so detects recent decline).</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 4 — HMG-CoA Reductase</div>
+          <div class="fc-q">What is the rate-limiting enzyme in cholesterol synthesis? Where do statins work?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>HMG-CoA reductase</strong> catalyzes: acetyl-CoA → HMG-CoA → <strong>mevalonate</strong> (rate-limiting step). <em>Statins</em> competitively inhibit this enzyme → ↓LDL production → ↓cardiovascular risk.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 4 — Statin Side Effect</div>
+          <div class="fc-q">Why do statins cause rhabdomyolysis? What's the mechanism?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a">Statins inhibit HMG-CoA reductase → ↓mevalonate → depletes <strong>CoQ10</strong> (ubiquinone). CoQ10 needed for mitochondrial ATP production in muscle. Muscle can't generate ATP → myolysis. Risk ↑↑ with high-dose statins + fibrates + renal failure.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 5 — Bilirubin Pathway</div>
+          <div class="fc-q">Heme → Bilirubin. What's the sequence: free → liver → bile?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Heme</strong> (from RBC lysis) → <strong>unconjugated bilirubin (UCB)</strong> in blood (not water-soluble) → <strong>liver uptake</strong> → <strong>conjugation with glucuronic acid</strong> → <strong>conjugated bilirubin (CB)</strong> (water-soluble) → <strong>bile</strong> → excreted into intestine.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 5 — Jaundice Types Overview</div>
+          <div class="fc-q">4 types of jaundice. Which raises UCB vs CB?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Prehepatic:</strong> ↑↑UCB, ↓CB (hemolysis). <strong>Hepatic:</strong> ↑↑UCB + ↑↑CB (liver can't conjugate or excrete). <strong>Posthepatic:</strong> ↓UCB, ↑↑CB (bile duct obstruction). <strong>Gilbert/Crigler-Najjar/Dubin-Johnson/Rotor:</strong> congenital conjugation/excretion defects.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 5 — Gilbert Syndrome</div>
+          <div class="fc-q">How does Gilbert syndrome differ from Crigler-Najjar Type I? Why is one benign?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Gilbert:</strong> 30% bilirubin UDP-glucuronosyltransferase activity → mild ↑UCB (jaundice with stress/illness). <strong>Crigler-Najjar Type I:</strong> 0% activity → severe ↑↑UCB → kernicterus if untreated. Gilbert benign because residual enzyme suffices at baseline.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 6 — Bile Constituents</div>
+          <div class="fc-q">What are the 3 main components of bile and their functions?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Bile acids:</strong> emulsify fats (primary = cholic, chenodeoxycholic; secondary = deoxycholic, lithocholic). <strong>Cholesterol:</strong> structural component. <strong>Phospholipids + bilirubin:</strong> cholesterol solubilization, waste elimination.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 7 — Enterohepatic Circulation</div>
+          <div class="fc-q">Order the EHC steps: ileum reabsorption, portal return, liver excretion.</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>1) Liver</strong> synthesizes/excretes bile acids into bile. <strong>2) Bile</strong> enters intestine, emulsifies fats. <strong>3) Terminal ileum</strong> reabsorbs 95% of bile acids. <strong>4) Portal vein</strong> returns them to liver. <strong>Cycle repeats</strong> 6–8×/day. Loss = ↑new synthesis.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 7 — Bile Acid Regulation</div>
+          <div class="fc-q">How does the liver sense bile acid shortage and respond?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>FXR</strong> (farnesoid X receptor) on hepatocytes senses bile acid levels. ↓bile acids → ↑FGF19 (ileal signal) → ↓CYP7A1 (cholesterol → bile acid synthesis). <strong>Negative feedback loop</strong> maintains bile acid pool homeostasis (~600 mg).</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 8 — Cholecystectomy Consequences</div>
+          <div class="fc-q">Post-cholecystectomy: why do patients have loose stools but bile still works?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a">Gallbladder = <strong>storage/concentration</strong> organ. Without it, bile drips continuously (not bolus) → inadequate fat emulsification with meals → steatorrhea (fatty stools), mild malabsorption. EHC still functions; just less efficient meal-time delivery. 90% adapt over months.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 10 — Ileal Resection</div>
+          <div class="fc-q">Ileal resection removes the main reabsorption site. What's the consequence?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Loss of ileal reabsorption</strong> → bile acids enter colon (↑colonic fluid) → diarrhea. Liver ↑synthesis BUT <strong>can't replace lost bile acids fast enough</strong> (limited cholesterol → bile acid conversion). <strong>Bile acid pool shrinks</strong> → ↓fat emulsification → steatorrhea + fat-soluble vitamin deficiency (A,D,E,K).</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 1 — Hepatic Acinus Zones</div>
+          <div class="fc-q">Zone 1, 2, 3: which does what metabolically?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Zone 1 (periportal):</strong> oxidative metabolism, gluconeogenesis. <strong>Zone 2:</strong> transitional. <strong>Zone 3 (perivenous):</strong> glycolysis, detoxification (CYP450, acetaminophen metabolism). Zone 3 is metabolically distinct → most drug toxicity occurs here.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 2 — Ascites vs Edema</div>
+          <div class="fc-q">Portal hypertension → ascites. Peripheral edema from what?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Ascites:</strong> portal HTN → splanchnic capillary leakage + lymphatic overload. <strong>Peripheral edema:</strong> hypoalbuminemia (liver failure) → ↓plasma oncotic pressure → fluid shifts into interstitium. <strong>Combined:</strong> both mechanisms in advanced cirrhosis.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 5 — Dubin-Johnson vs Rotor</div>
+          <div class="fc-q">Both have conjugated hyperbilirubinemia. What's the key difference?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Dubin-Johnson:</strong> defect in bile acid excretion (MRP2 mutation) → dark urine (conjugated bilirubi excreted kidneys) + dark liver on biopsy. <strong>Rotor:</strong> organic anion uptake defect → conjugated bilirubin backs up but no dark liver. Both benign.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 6 — Bile Acid Functions</div>
+          <div class="fc-q">What's the main function of bile acids and where are primary vs secondary ones produced?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>Main function:</strong> emulsify dietary fats (micellar formation → ↑absorption). <strong>Primary bile acids</strong> synthesized in liver from cholesterol (cholic, chenodeoxycholic). <strong>Secondary bile acids</strong> formed by bacterial metabolism in colon (deoxycholic, lithocholic). ~95% reabsorbed in terminal ileum.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front">
+          <div class="fc-label">LO 9 — CCK vs Secretin</div>
+          <div class="fc-q">Which hormone triggers gallbladder contraction and which stimulates pancreatic/biliary secretion?</div>
+          <div class="fc-flip-hint">tap to flip</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-a"><strong>CCK:</strong> triggers gallbladder contraction (releases concentrated bile into duodenum) + pancreatic enzyme secretion. <strong>Secretin:</strong> stimulates pancreatic bicarbonate secretion (neutralizes acid) + hepatic bile secretion (watery, bicarbonate-rich). Both released by duodenal I-cells in response to fats and acid.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="tab-ordering" class="tab-content">
+  <p class="sec">Ordering Drills — Sequence each process in correct order.</p>
+  <div class="order-drill">
+    <div class="drill-title">Bilirubin Metabolism Pathway</div>
+    <div class="drill-hint">Order the steps from hemolysis to bile excretion.</div>
+    <div class="order-list" id="order1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="1">Heme degradation in macrophages</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="2">Unconjugated bilirubin binds albumin</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="3">Hepatic uptake via carrier-mediated transport</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="4">Conjugation with glucuronic acid (UDP-GT)</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="5">Excretion into bile canaliculi</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="6">Transport to gallbladder for storage</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order1',[1,2,3,4,5,6])">Check Order</button>
+      <button class="order-ghost-btn" onclick="resetOrder('order1')">Reset</button>
+    </div>
+    <div class="order-feedback" id="order1-fb"></div>
+    <div class="order-answer" id="order1-ans">
+      <strong>Correct sequence:</strong>
+      <ol>
+        <li>Heme degraded to unconjugated bilirubin (spleen/macrophages)</li>
+        <li>UCB binds albumin for transport (not water-soluble)</li>
+        <li>Liver takes up UCB via carrier</li>
+        <li>Conjugation with glucuronic acid via UDP-glucuronosyltransferase</li>
+        <li>CB excreted into bile canaliculi (active transport)</li>
+        <li>Stored in gallbladder; released with meal (CCK stimulus)</li>
+      </ol>
+    </div>
+  </div>
+  <div class="order-drill">
+    <div class="drill-title">Enterohepatic Circulation Steps</div>
+    <div class="drill-hint">Order the cycle of bile acid movement.</div>
+    <div class="order-list" id="order2" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="1">Liver synthesizes primary bile acids from cholesterol</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="2">Bile acids stored in gallbladder between meals</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="3">CCK released → gallbladder contracts → bile into duodenum</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="4">Bile acids emulsify dietary fats in small intestine</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="5">Terminal ileum reabsorbs 95% of bile acids</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="6">Portal vein returns bile acids to liver; cycle repeats</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order2',[1,2,3,4,5,6])">Check Order</button>
+      <button class="order-ghost-btn" onclick="resetOrder('order2')">Reset</button>
+    </div>
+    <div class="order-feedback" id="order2-fb"></div>
+    <div class="order-answer" id="order2-ans">
+      <strong>Correct sequence:</strong>
+      <ol>
+        <li>Liver makes primary bile acids (cholesterol → 7α-hydroxylase pathway)</li>
+        <li>Stored in gallbladder (concentrated 10–20×)</li>
+        <li>Meal → CCK → GB contracts; bile flows into duodenum</li>
+        <li>Bile acids emulsify fat droplets (micellar formation)</li>
+        <li>Terminal ileum absorbs ~95%; lost 5% excreted in stool</li>
+        <li>Reabsorbed bile acids return via portal vein; cycle 6–8×/day</li>
+      </ol>
+    </div>
+  </div>
+  <div class="order-drill">
+    <div class="drill-title">HMG-CoA Reductase Pathway (Statin MOA)</div>
+    <div class="drill-hint">Order the steps of cholesterol synthesis and statin inhibition.</div>
+    <div class="order-list" id="order3" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="1">Acetyl-CoA enters cholesterol synthesis pathway</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="2">HMG-CoA reductase catalyzes rate-limiting conversion</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="3">Statin competitively inhibits HMG-CoA reductase</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="4">↓ Mevalonate production blocks downstream synthesis</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="5">Liver upregulates LDL receptors (compensatory)</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="6">↑ LDL clearance from blood; ↓ plasma cholesterol</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order3',[1,2,3,4,5,6])">Check Order</button>
+      <button class="order-ghost-btn" onclick="resetOrder('order3')">Reset</button>
+    </div>
+    <div class="order-feedback" id="order3-fb"></div>
+    <div class="order-answer" id="order3-ans">
+      <strong>Correct sequence:</strong>
+      <ol>
+        <li>Acetyl-CoA substrate fed into mevalonate pathway</li>
+        <li>HMG-CoA reductase = rate-limiting enzyme (committed step)</li>
+        <li>Statin (lovastatin, atorvastatin, etc.) competitively binds active site</li>
+        <li>Mevalonate production ↓ → downstream products (cholesterol, CoQ10, sterols) ↓</li>
+        <li>Liver senses low cholesterol → ↑LDL receptor expression (SREBP activation)</li>
+        <li>↑ Receptor-mediated endocytosis of LDL; plasma LDL ↓ ~30–50%</li>
+      </ol>
+    </div>
+  </div>
+  <div class="order-drill">
+    <div class="drill-title">Portal Hypertension Cascade</div>
+    <div class="drill-hint">Order the progression from cirrhosis to decompensation.</div>
+    <div class="order-list" id="order4" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="1">Chronic liver injury (viral hepatitis, alcohol, autoimmune)</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="2">Hepatic necrosis → fibrosis → cirrhosis (collagen deposition)</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="3">Intrahepatic vascular compression → portal resistance ↑</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="4">Portal pressure >12 mmHg → portal hypertension defined</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="5">Splanchnic vasodilation + collateral vessel formation (esophageal varices)</div>
+      <div class="order-item" draggable="true" ondragstart="drag(event)" data-correct="6">Ascites, hepatic encephalopathy, spontaneous bacterial peritonitis develop</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order4',[1,2,3,4,5,6])">Check Order</button>
+      <button class="order-ghost-btn" onclick="resetOrder('order4')">Reset</button>
+    </div>
+    <div class="order-feedback" id="order4-fb"></div>
+    <div class="order-answer" id="order4-ans">
+      <strong>Correct sequence:</strong>
+      <ol>
+        <li>Chronic liver injury from multiple etiologies</li>
+        <li>Parenchymal necrosis → fibrotic replacement → cirrhosis</li>
+        <li>Nodules + fibrous septa compress sinusoidal vessels mechanically</li>
+        <li>Portal pressure rises above normal ~12 mmHg threshold</li>
+        <li>Splanchnic circulation dilates (vasodilators: NO, prostaglandins); varices form as portal shunts</li>
+        <li>Complications: ascites (splanchnic leak), encephalopathy (NH3 shunts systemic), SBP, variceal bleeding</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div id="tab-mcq" class="tab-content">
+  <p class="sec">Single Best Answer — Pick ONE correct answer per question.</p>
+  <div class="mcq-item">
+    <div class="mcq-num">Q1</div>
+    <div class="mcq-stem">A 45-year-old man with alcoholic cirrhosis is found to have a plasma albumin of 2.8 g/dL (normal ~3.5–5.0). Which of the following mechanisms best explains his hypoalbuminemia?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q1', 'A')"><span class="opt-letter">A</span> Increased albumin catabolism by splenic macrophages</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q1', 'B')"><span class="opt-letter">B</span> Decreased hepatic synthetic function due to cirrhosis</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q1', 'C')"><span class="opt-letter">C</span> Enhanced renal filtration of serum albumin</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q1', 'D')"><span class="opt-letter">D</span> Increased plasma volume from portal hypertension dilution</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q1', 'E')"><span class="opt-letter">E</span> Sequestration of albumin in ascitic fluid</div>
+    </div>
+    <div class="mcq-exp" id="Q1-exp">
+      <strong>Correct answer: B</strong> Cirrhosis destroys hepatic parenchyma → hepatocytes cannot synthesize albumin. Albumin has a 20-day half-life, so low levels reflect recent synthetic failure. A, C, D, E don't explain isolated hypoalbuminemia in liver disease. This is a hallmark of <em>decompensated</em> cirrhosis.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q2</div>
+    <div class="mcq-stem">A 3-month-old infant presents with severe hyperbilirubinemia (total ~20 mg/dL, predominantly unconjugated). Phototherapy has been ineffective. The infant's urine is normal color. Which inherited condition is most likely?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q2', 'A')"><span class="opt-letter">A</span> Dubin-Johnson syndrome</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q2', 'B')"><span class="opt-letter">B</span> Crigler-Najjar syndrome type I</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q2', 'C')"><span class="opt-letter">C</span> Rotor syndrome</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q2', 'D')"><span class="opt-letter">D</span> Gilbert syndrome</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q2', 'E')"><span class="opt-letter">E</span> Biliary atresia</div>
+    </div>
+    <div class="mcq-exp" id="Q2-exp">
+      <strong>Correct answer: B</strong> Crigler-Najjar I = absent UDP-glucuronosyltransferase activity → severe UCB accumulation (kernicterus risk). Phototherapy often fails; needs plasma exchange or gene therapy. Gilbert is mild (30% enzyme activity). Dubin-Johnson/Rotor = conjugated hyperbilirubinemia. Biliary atresia = posthepatic (high CB).
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q3</div>
+    <div class="mcq-stem">A 52-year-old woman on atorvastatin 80 mg daily presents with severe myalgias and dark urine. CK = 4500 U/L (normal less than 200). Which metabolite depletion is responsible for her muscle toxicity?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q3', 'A')"><span class="opt-letter">A</span> Reduced acetyl-CoA availability</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q3', 'B')"><span class="opt-letter">B</span> Depletion of ubiquinone (CoQ10)</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q3', 'C')"><span class="opt-letter">C</span> Inhibition of muscle carnitine synthesis</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q3', 'D')"><span class="opt-letter">D</span> Direct statin-induced mitochondrial apoptosis</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q3', 'E')"><span class="opt-letter">E</span> Cholesterol depletion in myocyte membranes</div>
+    </div>
+    <div class="mcq-exp" id="Q3-exp">
+      <strong>Correct answer: B</strong> Statins inhibit HMG-CoA reductase → block mevalonate pathway → ↓CoQ10 (ubiquinone) synthesis. CoQ10 = essential cofactor in mitochondrial electron transport chain. Muscle (high ATP demand) can't generate ATP → myolysis, myoglobinuria (dark urine). CoQ10 supplementation may help.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q4</div>
+    <div class="mcq-stem">Which laboratory finding would best differentiate prehepatic jaundice from posthepatic jaundice?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q4', 'A')"><span class="opt-letter">A</span> Elevated conjugated bilirubin</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q4', 'B')"><span class="opt-letter">B</span> Unconjugated bilirubin greater than conjugated bilirubin</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q4', 'C')"><span class="opt-letter">C</span> Elevated alkaline phosphatase with normal transaminases</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q4', 'D')"><span class="opt-letter">D</span> Direct hyperbilirubinemia with acholic (pale) stool</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q4', 'E')"><span class="opt-letter">E</span> Reticulocytosis on CBC</div>
+    </div>
+    <div class="mcq-exp" id="Q4-exp">
+      <strong>Correct answer: B</strong> <strong>Prehepatic:</strong> ↑↑UCB, ↓CB (can conjugate). <strong>Posthepatic:</strong> ↓UCB, ↑↑CB (obstruction prevents excretion). Unconjugated predominance = prehepatic. Conjugated predominance = hepatic or posthepatic (use imaging to differentiate). Reticulocytosis indicates hemolysis (prehepatic) but isn't lab-based differentiation of bilirubin type.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q5</div>
+    <div class="mcq-stem">A patient with cystic fibrosis undergoes ileal resection for Crohn's disease. Which consequence is MOST likely?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q5', 'A')"><span class="opt-letter">A</span> Increased bile acid reabsorption and conjugation</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q5', 'B')"><span class="opt-letter">B</span> Accelerated gastric emptying and diarrhea</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q5', 'C')"><span class="opt-letter">C</span> Loss of terminal ileum bile acid absorption leading to bile acid pool shrinkage and steatorrhea plus fat-soluble vitamin deficiency</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q5', 'D')"><span class="opt-letter">D</span> Gallstone formation from cholestasis</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q5', 'E')"><span class="opt-letter">E</span> Hepatic cirrhosis within 2 years</div>
+    </div>
+    <div class="mcq-exp" id="Q5-exp">
+      <strong>Correct answer: C</strong> Terminal ileum = reabsorption site for 95% of bile acids. Resection → loss of reabsorption → bile acids enter colon (osmotic diarrhea) + lost to stool. Liver can't synthesize replacements fast enough → bile acid pool shrinks → inadequate fat emulsification → steatorrhea, fat-soluble vitamin malabsorption (A, D, E, K).
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q6</div>
+    <div class="mcq-stem">During hepatic ischemia, which hepatic acinus zone is most vulnerable to necrosis and why?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q6', 'A')"><span class="opt-letter">A</span> Zone 1 (periportal) — highest oxygen demand</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q6', 'B')"><span class="opt-letter">B</span> Zone 2 (transitional) — metabolically intermediate</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q6', 'C')"><span class="opt-letter">C</span> Zone 3 (perivenous) — lowest oxygen and nutrient perfusion</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q6', 'D')"><span class="opt-letter">D</span> All zones equally vulnerable to ischemia</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q6', 'E')"><span class="opt-letter">E</span> Zone 1 due to detoxification enzyme concentration</div>
+    </div>
+    <div class="mcq-exp" id="Q6-exp">
+      <strong>Correct answer: C</strong> Zone 3 = perivenous = "last to be perfused, first to die." Lowest O2 tension; farthest from portal blood supply. Zone 1 has rich blood supply (periportal) → withstands ischemia better. Acetaminophen toxicity, cirrhosis, and shock predominantly affect Zone 3.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q7</div>
+    <div class="mcq-stem">A 60-year-old man with primary biliary cholangitis has persistent cholestasis. Which bile acid derivative is most effective at enhancing hepatic excretion?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q7', 'A')"><span class="opt-letter">A</span> Ursodeoxycholic acid (UDCA)</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q7', 'B')"><span class="opt-letter">B</span> Chenodeoxycholic acid</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q7', 'C')"><span class="opt-letter">C</span> Lithocholic acid</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q7', 'D')"><span class="opt-letter">D</span> Taurocholic acid</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q7', 'E')"><span class="opt-letter">E</span> Deoxycholic acid</div>
+    </div>
+    <div class="mcq-exp" id="Q7-exp">
+      <strong>Correct answer: A</strong> UDCA = ursodeoxycholic acid. Less hydrophobic than primary bile acids → less hepatotoxic. Substitutes for endogenous bile acids, enhances hepatic excretion (FXR/TGR5 agonist), and improves cholestasis in PBC. First-line therapy for cholestatic liver disease.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q8</div>
+    <div class="mcq-stem">A 28-year-old woman notes jaundice and acholic (pale) stools after a meal. Imaging reveals a 1.5 cm stone in the common bile duct. What type of jaundice is present?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q8', 'A')"><span class="opt-letter">A</span> Prehepatic jaundice</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q8', 'B')"><span class="opt-letter">B</span> Hepatic jaundice</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q8', 'C')"><span class="opt-letter">C</span> Posthepatic (obstructive) jaundice</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q8', 'D')"><span class="opt-letter">D</span> Gilbert syndrome</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q8', 'E')"><span class="opt-letter">E</span> Hemolytic anemia</div>
+    </div>
+    <div class="mcq-exp" id="Q8-exp">
+      <strong>Correct answer: C</strong> Posthepatic (obstructive) jaundice = bile duct obstruction (stone). Prevents CB excretion into bile → ↑↑CB, ↓UCB. Acholic stool = no bile pigments reaching intestine. ↑ALP/GGT is characteristic of biliary obstruction. Prehepatic would show hemolysis markers + ↑↑UCB.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q9</div>
+    <div class="mcq-stem">Which hepatic metabolic dysfunction is most characteristic of decompensated cirrhosis and best explains asterixis (flapping tremor)?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q9', 'A')"><span class="opt-letter">A</span> Failure of glycogenolysis → hypoglycemia</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q9', 'B')"><span class="opt-letter">B</span> Inability to metabolize ammonia (urea cycle) → hyperammonemia</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q9', 'C')"><span class="opt-letter">C</span> Loss of bile acid synthesis → malabsorption</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q9', 'D')"><span class="opt-letter">D</span> Decreased albumin synthesis → hypoproteinemia</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q9', 'E')"><span class="opt-letter">E</span> Portal hypertension → splenic infarction</div>
+    </div>
+    <div class="mcq-exp" id="Q9-exp">
+      <strong>Correct answer: B</strong> <strong>Hepatic encephalopathy</strong> = hyperammonemia (urea cycle impaired) + elevated false neurotransmitters. Asterixis (flapping tremor) = signature neurologic sign of hepatic encephalopathy. Ammonia is CNS toxin. A is relevant to hypoglycemia but doesn't cause asterixis specifically.
+    </div>
+  </div>
+  <div class="mcq-item">
+    <div class="mcq-num">Q10</div>
+    <div class="mcq-stem">A 35-year-old with recently diagnosed Gilbert syndrome reports jaundice during a viral illness. Why does his hyperbilirubinemia worsen with stress/illness?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q10', 'A')"><span class="opt-letter">A</span> Increased hemolysis from immune activation</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q10', 'B')"><span class="opt-letter">B</span> UDP-glucuronosyltransferase activity is reduced (30% normal) and stress/illness further decreases enzyme function</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q10', 'C')"><span class="opt-letter">C</span> Viral inhibition of hepatic uptake of unconjugated bilirubin</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q10', 'D')"><span class="opt-letter">D</span> Acute cholestasis from viral hepatitis</div>
+      <div class="mcq-opt" onclick="selectMCQ(this, 'Q10', 'E')"><span class="opt-letter">E</span> Splenic sequestration of RBCs → reduced liver bilirubin clearance</div>
+    </div>
+    <div class="mcq-exp" id="Q10-exp">
+      <strong>Correct answer: B</strong> Gilbert = mildly reduced UDP-GT activity (30% normal). At baseline, residual enzyme is sufficient. Stress/illness/fasting → further ↓enzyme activity + ↑bilirubin production (hemolysis) = clinical jaundice becomes visible. Benign; no treatment needed. Crigler-Najjar I would have 0% activity (severe jaundice always).
+    </div>
+  </div>
+</div>
+<div id="tab-vignettes" class="tab-content">
+  <p class="sec">Clinical Vignettes — Read the case, select answer, learn the mechanism.</p>
+  <div class="vig-item">
+    <div class="vig-num">Vignette 1</div>
+    <div class="vig-stem"><strong>23-year-old college student</strong> presents with jaundice during final exams. Labs: total bilirubin 3.2 mg/dL (mostly unconjugated), normal ALT/AST, normal ALP. Hemoglobin 14.5 g/dL, reticulocyte count 2% (normal). Viral serologies negative. The patient notes jaundice episodes during previous illnesses. What's the diagnosis?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="selectVig(this, 'V1', 'A')"><span class="vig-opt-letter">A</span> Acute viral hepatitis</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V1', 'B')"><span class="vig-opt-letter">B</span> Gilbert syndrome</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V1', 'C')"><span class="vig-opt-letter">C</span> Crigler-Najjar type II</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V1', 'D')"><span class="vig-opt-letter">D</span> Hemolytic anemia</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V1', 'E')"><span class="vig-opt-letter">E</span> Dubin-Johnson syndrome</div>
+    </div>
+    <div class="vig-exp" id="V1-exp">
+      <strong>Correct answer: B — Gilbert Syndrome</strong><br>
+      <strong>Key findings:</strong> ↑UCB, normal transaminases/ALP (no hepatocellular damage), normal hemoglobin/retics (no hemolysis), <span class="vig-buzzword">recurrent jaundice with stress/illness</span>. <strong>Mechanism:</strong> 30% UDP-GT activity. Normally sufficient at baseline. Stress/fasting/illness → ↓enzyme + ↑bilirubin → clinical jaundice. <strong>Benign; no treatment needed.</strong> Crigler-Najjar would have much higher bilirubin (greater than 10 mg/dL) and lifelong jaundice. Dubin-Johnson has conjugated hyperbilirubinemia + dark liver.
+    </div>
+  </div>
+  <div class="vig-item">
+    <div class="vig-num">Vignette 2</div>
+    <div class="vig-stem"><strong>8-day-old newborn</strong> presents with severe jaundice (total bilirubin 18 mg/dL, mostly unconjugated), lethargy, high-pitched cry, and poor feeding. Mothers are O+ and baby is O+. Direct antiglobulin test (Coombs) is negative. The baby was previously jaundiced at day 2 of life but phototherapy was stopped. What's the underlying enzyme defect?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="selectVig(this, 'V2', 'A')"><span class="vig-opt-letter">A</span> Hemoglobin S (sickle cell disease)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V2', 'B')"><span class="vig-opt-letter">B</span> Bilirubin UDP-glucuronosyltransferase (absent)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V2', 'C')"><span class="vig-opt-letter">C</span> Glucose-6-phosphatase (glycogenolysis defect)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V2', 'D')"><span class="vig-opt-letter">D</span> Heme oxygenase (overproduction of bilirubin)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V2', 'E')"><span class="vig-opt-letter">E</span> Glucokinase (hyperglycemia)</div>
+    </div>
+    <div class="vig-exp" id="V2-exp">
+      <strong>Correct answer: B — Crigler-Najjar Type I</strong><br>
+      <strong>Red flags:</strong> Severe unconjugated hyperbilirubinemia, neurologic signs (lethargy, cry, feeding difficulty = early kernicterus), <span class="vig-buzzword">phototherapy failed/inadequate</span>. Negative Coombs = no hemolysis. <strong>Mechanism:</strong> Complete absence of bilirubin UDP-glucuronosyltransferase → cannot conjugate bilirubin → severe ↑UCB → bilirubin crosses BBB (lipid-soluble) → deposits in basal ganglia/hippocampus → kernicterus (irreversible brain damage). Requires plasma exchange ± gene therapy. Phototherapy alone is insufficient. Gilbert would never be this severe.
+    </div>
+  </div>
+  <div class="vig-item">
+    <div class="vig-num">Vignette 3</div>
+    <div class="vig-stem"><strong>52-year-old woman with HCV cirrhosis</strong> presents with abdominal distension and weight gain despite poor appetite. Exam: distended abdomen, fluid wave, hyperactive bowel sounds, but legs are non-edematous. Labs: albumin 2.1 g/dL (low), total bilirubin 4.8 mg/dL (mostly conjugated), INR 2.3 (prolonged). What's the PRIMARY mechanism of ascites in cirrhosis?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="selectVig(this, 'V3', 'A')"><span class="vig-opt-letter">A</span> Nephrotic syndrome (urinary protein loss)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V3', 'B')"><span class="vig-opt-letter">B</span> Cardiac heart failure (backward flow)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V3', 'C')"><span class="vig-opt-letter">C</span> Portal hypertension (splanchnic capillary leakage) + hypoalbuminemia (decreased oncotic pressure)</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V3', 'D')"><span class="vig-opt-letter">D</span> Lymphatic obstruction from tumor</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V3', 'E')"><span class="vig-opt-letter">E</span> Bacterial peritonitis (increased peritoneal inflammation)</div>
+    </div>
+    <div class="vig-exp" id="V3-exp">
+      <strong>Correct answer: C — Portal Hypertension + Hypoalbuminemia</strong><br>
+      <strong>Clinical clue:</strong> Ascites WITHOUT peripheral edema (classic cirrhosis pattern). <strong>Mechanisms:</strong> (1) <span class="vig-buzzword">Portal HTN</span> (cirrhotic nodules compress vessels) → splanchnic capillary hydrostatic pressure ↑ → fluid transudation into peritoneal cavity. (2) <span class="vig-buzzword">Low albumin</span> (2.1 = severe, from failed synthetic function) → ↓plasma oncotic pressure → more fluid leakage. (3) Splanchnic vasodilation (NO production) → renal hypoperfusion → secondary hyperaldosteronism → sodium/fluid retention. Non-edematous legs = albumin low but not low ENOUGH for peripheral edema yet (ascites forms first because peritoneum has lower hydrostatic threshold).
+    </div>
+  </div>
+  <div class="vig-item">
+    <div class="vig-num">Vignette 4</div>
+    <div class="vig-stem"><strong>34-year-old man on simvastatin</strong> for familial hypercholesterolemia takes azithromycin for a respiratory infection. Within 1 week, he develops severe myalgias, dark urine, and is found to have CK 8000 U/L. What's the mechanism of this interaction?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="selectVig(this, 'V4', 'A')"><span class="vig-opt-letter">A</span> Azithromycin induces statin metabolism → higher statin levels</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V4', 'B')"><span class="vig-opt-letter">B</span> Azithromycin inhibits CYP3A4, prolonging statin half-life leading to increased statin concentration and increased CoQ10 depletion</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V4', 'C')"><span class="vig-opt-letter">C</span> Synergistic activation of myofibril apoptosis</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V4', 'D')"><span class="vig-opt-letter">D</span> Azithromycin causes direct myositis</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V4', 'E')"><span class="vig-opt-letter">E</span> Rhabdomyolysis from hyperkalemia</div>
+    </div>
+    <div class="vig-exp" id="V4-exp">
+      <strong>Correct answer: B — CYP3A4 Inhibition + Statin Accumulation</strong><br>
+      <strong>Key interaction:</strong> Simvastatin is metabolized by <span class="vig-buzzword">CYP3A4</span> (hepatic). Azithromycin (a macrolide) INHIBITS CYP3A4 → simvastatin clearance ↓ → plasma concentration ↑ → excessive HMG-CoA reductase inhibition → massive CoQ10 depletion → mitochondrial ATP crisis in muscle → rhabdomyolysis (dark urine = myoglobinuria). Other CYP3A4 inhibitors: grapefruit juice, ketoconazole, diltiazem. Avoid statin + strong CYP3A4 inhibitor combinations or reduce statin dose.
+    </div>
+  </div>
+  <div class="vig-item">
+    <div class="vig-num">Vignette 5</div>
+    <div class="vig-stem"><strong>40-year-old woman</strong> with a history of recurrent jaundice since childhood now presents for evaluation. Labs show conjugated hyperbilirubinemia (1.8 mg/dL direct) with normal transaminases. Abdominal imaging is normal; ultrasound shows no biliary dilation or stones. Patient reports dark urine. Liver biopsy shows <span class="vig-buzzword">dark/black liver</span> on gross inspection. What's the diagnosis?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="selectVig(this, 'V5', 'A')"><span class="vig-opt-letter">A</span> Primary sclerosing cholangitis</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V5', 'B')"><span class="vig-opt-letter">B</span> Dubin-Johnson syndrome</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V5', 'C')"><span class="vig-opt-letter">C</span> Rotor syndrome</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V5', 'D')"><span class="vig-opt-letter">D</span> Primary biliary cholangitis</div>
+      <div class="vig-opt" onclick="selectVig(this, 'V5', 'E')"><span class="vig-opt-letter">E</span> Hemolytic anemia (chronic)</div>
+    </div>
+    <div class="vig-exp" id="V5-exp">
+      <strong>Correct answer: B — Dubin-Johnson Syndrome</strong><br>
+      <strong>Pathognomonic finding:</strong> <span class="vig-buzzword">Dark/black liver on biopsy</span> = golden-brown melanin-like pigment (not actual melanin) deposits in hepatocytes. <strong>Mechanism:</strong> Defective MRP2 transporter → impaired conjugated bilirubin excretion into bile canaliculi → CB backs up → some enters blood (conjugated hyperbilirubinemia) + some is re-excreted into urine (dark urine). Benign. Rotor = conjugated hyperbilirubinemia BUT no dark liver pigment. Both are autosomal recessive. Prognosis excellent for both.
+    </div>
+  </div>
+</div>
+<div id="tab-traps" class="tab-content">
+  <p class="sec">Step 1 Traps — Avoid these classic confusions.</p>
+  <div class="trap-card">
+    <div class="trap-num">Trap 1</div>
+    <div class="trap-statement">Unconjugated bilirubin is water-soluble and is excreted by the kidneys, causing dark urine in prehepatic jaundice.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T1', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T1', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T1-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <span class="vig-buzzword">Unconjugated bilirubin is NOT water-soluble</span>. It binds to albumin for blood transport and is not filtered by kidneys → urine stays normal color even in prehepatic jaundice. Only <strong>conjugated bilirubin is water-soluble</strong> → filtered by kidneys → dark urine in hepatic/posthepatic jaundice. <strong>Dark urine = conjugated hyperbilirubinemia.</strong>
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 2</div>
+    <div class="trap-statement">Zone 1 hepatocytes are most vulnerable to ischemic injury because they perform the most metabolic work.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T2', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T2', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T2-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <span class="vig-buzzword">Zone 3 (perivenous) is most vulnerable to ischemia</span>, NOT Zone 1. Zone 3 is farthest from the portal blood supply → lowest O2 tension. Zone 1 (periportal) has the HIGHEST oxygen because it's first to receive portal and arterial blood. Zone 1 is most resistant to ischemia; Zone 3 is the "last to be perfused, first to die." Acetaminophen toxicity, cirrhosis, and ischemic hepatitis all preferentially affect Zone 3.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 3</div>
+    <div class="trap-statement">Gilbert syndrome and Crigler-Najjar type I are indistinguishable and both require treatment to prevent kernicterus.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T3', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T3', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T3-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <strong>Gilbert:</strong> 30% bilirubin UDP-GT activity → mild ↑UCB (~2–3 mg/dL) → jaundice only with stress/illness. <strong>Benign; no treatment.</strong><br>
+      <strong>Crigler-Najjar I:</strong> 0% bilirubin UDP-GT activity → severe ↑↑UCB (~20+ mg/dL) → lifelong jaundice → kernicterus risk → requires treatment (plasma exchange, gene therapy). <strong>Severity is dramatically different.</strong> Gilbert is often diagnosed incidentally and is NOT a contraindication to normal living.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 4</div>
+    <div class="trap-statement">The hepatic artery contributes most of the blood volume to the liver, so hepatic artery occlusion is less tolerated than portal vein occlusion.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T4', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T4', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T4-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <strong>Portal vein:</strong> 75% of blood volume (rich in nutrients), 50% of oxygen. <strong>Hepatic artery:</strong> 25% of blood volume, 50% of oxygen. <strong>Hepatic artery occlusion is WORSE tolerated</strong> because losing the high-O2 blood → ischemia. Portal vein occlusion spares the arterial blood supply (partially compensates). <em>Classic exam scenario:</em> Accidentally clip hepatic artery during surgery → hepatic necrosis. Clip portal vein → liver may survive.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 5</div>
+    <div class="trap-statement">Statins cause rhabdomyolysis by directly activating muscle apoptosis via a caspase-independent pathway.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T5', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T5', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T5-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <span class="vig-buzzword">Statins cause rhabdo by depleting CoQ10</span>, NOT by caspase activation. Mechanism: HMG-CoA reductase inhibition → ↓mevalonate → ↓CoQ10 (ubiquinone) → mitochondrial ATP production fails → muscle can't maintain ATP-dependent Na-K pump → myolysis. Treatment: stop statin, consider CoQ10 supplementation. Direct apoptosis is not the mechanism.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 6</div>
+    <div class="trap-statement">Ileal resection causes diarrhea solely because of bile acids remaining in the intestine, unrelated to fat absorption.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T6', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T6', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T6-exp">
+      <strong>PARTIALLY WRONG — This is the trap!</strong><br>
+      Bile acids in the colon DO cause diarrhea (osmotic), <strong>BUT the main problem is bile acid pool depletion</strong>. Lost bile acids enter stool; liver can't replace them fast enough → bile acid pool shrinks → inadequate fat emulsification → steatorrhea. <strong>BOTH mechanisms matter:</strong> diarrhea from excess colonic bile acids + fat malabsorption from depleted bile acid pool. Fat-soluble vitamin deficiency (A, D, E, K) is a major consequence.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 7</div>
+    <div class="trap-statement">Cholecystectomy results in permanent fat malabsorption and steatorrhea because the liver can no longer concentrate bile.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T7', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T7', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T7-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      Cholecystectomy removes the <strong>storage/concentration</strong> function, but the liver still secretes bile (just continuously, not as a bolus). <strong>~90% of patients adapt over months</strong> → steatorrhea resolves. Fat emulsification is less efficient immediately post-op but usually adequate. <strong>Not permanent.</strong> Contrast this to ileal resection, where bile acid pool is permanently lost.
+    </div>
+  </div>
+  <div class="trap-card">
+    <div class="trap-num">Trap 8</div>
+    <div class="trap-statement">In posthepatic jaundice, unconjugated bilirubin is elevated while conjugated bilirubin remains normal.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="selectTrap(this, 'T8', 'C')">Correct</button>
+      <button class="trap-btn" onclick="selectTrap(this, 'T8', 'W')">Incorrect</button>
+    </div>
+    <div class="trap-exp" id="T8-exp">
+      <strong>INCORRECT — This is the trap!</strong><br>
+      <strong>Posthepatic jaundice:</strong> ↓↓UCB, ↑↑CB (mostly conjugated). Bile duct obstruction prevents CB excretion → backs up into liver → leaks into blood. <strong>Prehepatic jaundice:</strong> ↑↑UCB, ↓CB. The conjugated/unconjugated ratio is the KEY differentiator: UCB predominance = prehepatic; CB predominance = hepatic or posthepatic (use imaging to distinguish).
+    </div>
+  </div>
+</div>
+<div id="tab-ref" class="tab-content">
+  <p class="sec">Reference Tables — Consolidated HY facts for rapid review.</p>
+  <div class="ref-section">
+    <div class="ref-title">Hepatic Acinus Zones: Functions & Vulnerability</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Location</th>
+            <th>Primary Functions</th>
+            <th>O2/Nutrient Level</th>
+            <th>Vulnerability to Injury</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zone 1 (Periportal)</strong></td>
+            <td>Near portal triad</td>
+            <td>Oxidative metabolism, gluconeogenesis, amino acid uptake</td>
+            <td>Highest</td>
+            <td>Most resistant; ischemia rarely affects</td>
+          </tr>
+          <tr>
+            <td><strong>Zone 2 (Transitional)</strong></td>
+            <td>Mid-acinus</td>
+            <td>Mixed metabolism</td>
+            <td>Intermediate</td>
+            <td>Intermediate resistance</td>
+          </tr>
+          <tr>
+            <td><strong>Zone 3 (Perivenous)</strong></td>
+            <td>Around central vein</td>
+            <td>Glycolysis, CYP450 detoxification, lipogenesis</td>
+            <td>Lowest</td>
+            <td><strong>MOST vulnerable</strong> to ischemia, drugs (acetaminophen), cirrhosis</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">4 Types of Jaundice: Lab Differentiation</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Cause</th>
+            <th>UCB</th>
+            <th>CB (Conj.)</th>
+            <th>ALP/GGT</th>
+            <th>ALT/AST</th>
+            <th>Urine Color</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Prehepatic</strong></td>
+            <td>Hemolysis (overproduction)</td>
+            <td>↑↑↑</td>
+            <td>Normal/Low</td>
+            <td>Normal</td>
+            <td>Normal</td>
+            <td>Normal (UCB not filtered)</td>
+          </tr>
+          <tr>
+            <td><strong>Hepatic</strong></td>
+            <td>Liver dysfunction (inflammation, cirrhosis)</td>
+            <td>↑↑</td>
+            <td>↑↑</td>
+            <td>Mildly ↑</td>
+            <td>↑↑↑ (very high)</td>
+            <td>Dark (CB filtered)</td>
+          </tr>
+          <tr>
+            <td><strong>Posthepatic</strong></td>
+            <td>Bile duct obstruction (stone, tumor)</td>
+            <td>Normal/Low</td>
+            <td>↑↑↑</td>
+            <td>↑↑↑ (very high)</td>
+            <td>Mildly ↑</td>
+            <td>Dark (CB filtered)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">Bilirubin Pathway: Heme → Bile</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Location</th>
+            <th>Process</th>
+            <th>Key Enzyme/Transporter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Heme degradation</strong></td>
+            <td>Spleen/macrophages</td>
+            <td>RBC lysis → heme → CO + biliverdin → UCB</td>
+            <td>Heme oxygenase, biliverdin reductase</td>
+          </tr>
+          <tr>
+            <td><strong>2. Transport</strong></td>
+            <td>Blood</td>
+            <td>UCB binds albumin (not water-soluble)</td>
+            <td>Albumin carrier</td>
+          </tr>
+          <tr>
+            <td><strong>3. Hepatic uptake</strong></td>
+            <td>Liver sinusoid</td>
+            <td>Carrier-mediated transport into hepatocyte</td>
+            <td>OATP1B1, OATP1B3 (organic anion transporters)</td>
+          </tr>
+          <tr>
+            <td><strong>4. Conjugation</strong></td>
+            <td>Hepatocyte ER</td>
+            <td>UCB + glucuronic acid → CB (water-soluble)</td>
+            <td>UDP-glucuronosyltransferase (UDPGT)</td>
+          </tr>
+          <tr>
+            <td><strong>5. Excretion</strong></td>
+            <td>Canaliculus</td>
+            <td>Active transport of CB into bile</td>
+            <td>MRP2 transporter</td>
+          </tr>
+          <tr>
+            <td><strong>6. Storage</strong></td>
+            <td>Gallbladder</td>
+            <td>Concentrated 10–20×; released with meal (CCK)</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">Congenital Hyperbilirubinemias: Quick Comparison</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Syndrome</th>
+            <th>Enzyme/Defect</th>
+            <th>Predominant Bilirubin</th>
+            <th>Severity</th>
+            <th>Clinical Feature</th>
+            <th>Prognosis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gilbert</strong></td>
+            <td>Decreased UDPGT (30% activity)</td>
+            <td>UCB</td>
+            <td>Mild (~2–3 mg/dL)</td>
+            <td>Jaundice with stress/illness; benign</td>
+            <td>Excellent (benign)</td>
+          </tr>
+          <tr>
+            <td><strong>Crigler-Najjar I</strong></td>
+            <td>Absent UDPGT (0% activity)</td>
+            <td>UCB</td>
+            <td>Severe (~20+ mg/dL)</td>
+            <td>Lifelong jaundice, kernicterus risk</td>
+            <td>Poor without treatment (plasma exchange, gene therapy)</td>
+          </tr>
+          <tr>
+            <td><strong>Crigler-Najjar II</strong></td>
+            <td>Decreased UDPGT (10% activity)</td>
+            <td>UCB</td>
+            <td>Moderate (~6–20 mg/dL)</td>
+            <td>Jaundice, no kernicterus typically</td>
+            <td>Good (phenobarbital can help)</td>
+          </tr>
+          <tr>
+            <td><strong>Dubin-Johnson</strong></td>
+            <td>MRP2 mutation (excretion defect)</td>
+            <td>CB (conjugated)</td>
+            <td>Mild–moderate</td>
+            <td>Dark urine, dark liver biopsy</td>
+            <td>Excellent (benign)</td>
+          </tr>
+          <tr>
+            <td><strong>Rotor</strong></td>
+            <td>Organic anion uptake defect</td>
+            <td>CB (conjugated)</td>
+            <td>Mild–moderate</td>
+            <td>Dark urine, normal liver color</td>
+            <td>Excellent (benign)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">Statin Mechanism of Action (HMG-CoA Reductase)</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Pathway</th>
+            <th>Effect of Statin</th>
+            <th>Clinical Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>Acetyl-CoA → HMG-CoA (via HMG-CoA synthase)</td>
+            <td>No direct effect</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>HMG-CoA → Mevalonate (HMG-CoA reductase = RATE-LIMITING)</td>
+            <td><strong>Competitive inhibition</strong> (statins bind active site)</td>
+            <td>↓ Mevalonate production</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>Mevalonate → Cholesterol + CoQ10 + other isoprenoids</td>
+            <td>↓ All downstream products</td>
+            <td>↓ LDL synthesis, ↓ CoQ10 (myopathy risk)</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>Hepatocyte senses ↓ intracellular cholesterol</td>
+            <td>SREBP-2 activation</td>
+            <td>↑ LDL receptor expression on hepatocyte surface</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>↑ LDL receptor-mediated endocytosis</td>
+            <td>More LDL cleared from blood</td>
+            <td>↓ Plasma LDL ~30–50%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ref-section">
+    <div class="ref-title">Bile Acid Pool: Synthesis, Circulation & Loss</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Process</th>
+            <th>Location</th>
+            <th>Key Regulators</th>
+            <th>Effect on Bile Acid Pool</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Synthesis</strong></td>
+            <td>Liver</td>
+            <td>CYP7A1 (7α-hydroxylase; rate-limiting), cholesterol substrate</td>
+            <td>↑ New bile acid production when pool depleted</td>
+          </tr>
+          <tr>
+            <td><strong>Enterohepatic Circulation</strong></td>
+            <td>Liver → GI tract → terminal ileum (reabsorption) → portal vein → liver</td>
+            <td>Bile acid synthesis, FXR/TGR5 (farnesoid X receptor)</td>
+            <td>Cycle 6–8×/day; ~95% reabsorbed</td>
+          </tr>
+          <tr>
+            <td><strong>Loss</strong></td>
+            <td>Stool (5% of pool daily normally)</td>
+            <td>—</td>
+            <td>Lost bile acids must be replaced by new synthesis; normal rate ~0.5 g/day</td>
+          </tr>
+          <tr>
+            <td><strong>Feedback inhibition</strong></td>
+            <td>Ileal epithelium (FXR activation by reabsorbed bile acids)</td>
+            <td>FXR → FGF19 → hepatic CYP7A1 inhibition</td>
+            <td>↓ Synthesis when pool is adequate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  GI14 Hub #2 — Step 1 Extensions | Updated 2026 | <a href="https://strettyit10.github.io/Block4-GI/">HoyaDocs GI Block</a>
+</div>
+</div>
+<script>
+function switchTab(e,t){e.preventDefault();document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));e.target.classList.add('active');document.getElementById(t).classList.add('active');if(t==='tab-flashcards')fixCardHeights()}
+function flipCard(c){c.classList.toggle('flipped');const seen=new Set(JSON.parse(localStorage.getItem('seenCards')||'[]'));const idx=Array.from(c.parentElement.children).indexOf(c);seen.add(idx);localStorage.setItem('seenCards',JSON.stringify([...seen]));document.getElementById('seenCount').textContent=seen.size}
+function fixCardHeights(){document.querySelectorAll('.fc').forEach(fc=>{const inner=fc.querySelector('.fc-inner');const front=fc.querySelector('.fc-front');const back=fc.querySelector('.fc-back');if(inner&&front&&back){const h=Math.max(front.scrollHeight,back.scrollHeight);inner.style.height=h+'px'}})}
+function selectMCQ(opt,qid,letter){const item=opt.closest('.mcq-item');const opts=item.querySelectorAll('.mcq-opt');opts.forEach(o=>{o.classList.remove('correct','wrong','locked');o.classList.add('locked')});const ans=item.querySelector('.mcq-exp');if((qid==='Q1'&&letter==='B')||(qid==='Q2'&&letter==='B')||(qid==='Q3'&&letter==='B')||(qid==='Q4'&&letter==='B')||(qid==='Q5'&&letter==='C')||(qid==='Q6'&&letter==='C')||(qid==='Q7'&&letter==='A')||(qid==='Q8'&&letter==='C')||(qid==='Q9'&&letter==='B')||(qid==='Q10'&&letter==='B')){opt.classList.add('correct');ans.classList.add('show')}else{opt.classList.add('wrong');ans.classList.add('show')}}
+function selectVig(opt,vid,letter){const item=opt.closest('.vig-item');const correct=(vid==='V1'&&letter==='B')||(vid==='V2'&&letter==='B')||(vid==='V3'&&letter==='C')||(vid==='V4'&&letter==='B')||(vid==='V5'&&letter==='B');const opts=item.querySelectorAll('.vig-opt');opts.forEach(o=>{o.classList.remove('correct','wrong','locked');o.classList.add('locked')});const ans=item.querySelector('.vig-exp');if(correct){opt.classList.add('correct');ans.classList.add('show')}else{opt.classList.add('wrong');ans.classList.add('show')}}
+function selectTrap(btn,tid,type){btn.parentElement.querySelectorAll('.trap-btn').forEach(b=>b.disabled=true);const exp=document.getElementById(tid+'-exp');if(type==='C'){btn.classList.add('sel-correct');exp.classList.add('show-c')}else{btn.classList.add('sel-wrong');exp.classList.add('show-w')}}
+function allowDrop(e){e.preventDefault()}
+function drag(e){e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text',e.target.dataset.correct)}
+function drop(e){e.preventDefault();const list=e.target.closest('.order-list');if(!list)return;const after=getDragAfterElement(list,e.clientY);const dragging=document.querySelector('.order-item.dragging');if(after==null){list.appendChild(dragging)}else{list.insertBefore(dragging,after)}}
+function getDragAfterElement(c,y){const els=[...c.querySelectorAll('.order-item:not(.dragging)')];return els.reduce((c,e)=>{const box=e.getBoundingClientRect();const offset=y-box.top-box.height/2;return offset<0&&offset>c.offset?{element:e,offset:offset}:c},{offset:Number.NEGATIVE_INFINITY}).element}
+function checkOrder(id,correct){const list=document.getElementById(id);const items=[...list.querySelectorAll('.order-item')];const actual=items.map(i=>parseInt(i.dataset.correct));const isCorrect=JSON.stringify(actual)===JSON.stringify(correct);const fb=document.getElementById(id+'-fb');const ans=document.getElementById(id+'-ans');fb.classList.add(isCorrect?'correct':'incorrect');fb.textContent=isCorrect?'Correct sequence!':'Not quite. Check the answer below.';ans.classList.add('show')}
+function resetOrder(id){const list=document.getElementById(id);[...list.querySelectorAll('.order-item')].forEach(i=>i.classList.remove('dragging','correct-pos','wrong-pos'));document.getElementById(id+'-fb').className='order-feedback';document.getElementById(id+'-ans').classList.remove('show')}
+window.addEventListener('load',function(){fixCardHeights()})
+</script>
+</body>
+</html>
