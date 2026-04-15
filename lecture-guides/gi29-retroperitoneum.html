@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 29: Retroperitoneum & Posterior Abdominal Wall — HoyaDocs GI Block</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 220px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0 140px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { padding: 0 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.8; margin: 0; }
+        .sidebar-nav { padding: 0 15px; }
+        .sidebar-link {
+            display: block; padding: 10px 12px;
+            background: #1e293b; color: #cbd5e1;
+            border-left: 3px solid transparent; border-radius: 4px;
+            cursor: pointer; font-size: 13px;
+            transition: all 0.2s ease; text-decoration: none; margin-bottom: 6px;
+        }
+        .sidebar-link:hover { background: #334155; border-left-color: #2563eb; color: #f1f5f9; }
+        .sidebar-link.active { background: #1e293b; border-left-color: #2563eb; color: #2563eb; font-weight: 600; }
+        .sidebar-divider { height: 1px; background: #334155; margin: 12px 0; }
+
+        .sidebar-footer {
+            position: fixed; bottom: 0; left: 0; width: 220px;
+            padding: 10px 15px 12px;
+            background: linear-gradient(to top, #0f172a 60%, transparent);
+            z-index: 102;
+        }
+        .export-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+        .export-btn {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; gap: 3px; padding: 7px 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 6px; color: #cbd5e1; font-size: 10.5px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit; line-height: 1.2;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #f1f5f9; }
+        .export-btn .btn-icon { font-size: 16px; line-height: 1; }
+        .hub-return-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; padding: 9px 12px;
+            background: rgba(37,99,235,0.18); border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 6px; color: #93c5fd; font-size: 12px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s ease; cursor: pointer;
+        }
+        .hub-return-btn:hover { background: rgba(37,99,235,0.32); border-color: rgba(96,165,250,0.7); color: #dbeafe; }
+        .hub-return-btn .btn-arrow { font-size: 14px; line-height: 1; }
+
+        @media print {
+            .sidebar, .sidebar-footer { display: none !important; }
+            body { display: block !important; overflow: visible !important; height: auto !important; background: white !important; }
+            .main { margin-left: 0 !important; height: auto !important; overflow: visible !important; max-width: 100% !important; padding: 20px !important; }
+            .lo-section { display: block !important; box-shadow: none !important; border: 1px solid #e2e8f0; margin-bottom: 30px; page-break-before: always; }
+            .lo-section:first-child { page-break-before: auto; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display: block !important; }
+            .section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron { display: none !important; }
+            .header { page-break-after: avoid; }
+            a { color: inherit; text-decoration: none; }
+        }
+
+        .main { margin-left: 220px; flex: 1; padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .header p { font-size: 16px; color: #475569; margin: 0; }
+
+        .lo-section { display: none; background: white; border-radius: 8px; padding: 28px 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+        .lo-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .lo-title { font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
+        .lo-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 500; }
+
+        .lo-content h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; background: transparent; }
+        .lo-content h4 { font-size: 14.5px; font-weight: 700; color: #1e3a5f; background: #dbeafe; border-radius: 4px; padding: 6px 12px; margin: 18px 0 8px; }
+        .lo-content h5 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+        .lo-content p { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 10px; }
+        .lo-content ul { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content ol { margin-left: 22px; margin-bottom: 12px; }
+        .lo-content li { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 6px; }
+
+        .lo-content table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+        .lo-content table thead tr { background: #1e3a5f; color: white; }
+        .lo-content table th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; color: white; }
+        .lo-content table td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+        .lo-content table tbody tr:nth-child(even) { background: #eff6ff; }
+        .lo-content table tbody tr:hover { background: #dbeafe; }
+
+        .section-rule { border: none; border-top: 1px solid #e2e8f0; margin: 22px 0; }
+
+        .buzzwords { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+        .buzzword { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 600; color: #334155; }
+
+        .exam-trap { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .exam-trap .trap-header { font-weight: 700; color: #b91c1c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .exam-trap ul { margin-left: 18px; margin-top: 6px; }
+        .exam-trap li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+        .exam-trap p { font-size: 13px; color: #1f2937; line-height: 1.6; margin-top: 6px; }
+        .exam-trap strong { color: #991b1b; }
+
+        .hy-box { background-color: #fefce8; border-left: 4px solid #ca8a04; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .hy-box strong { color: #a16207; font-weight: 700; font-size: 13px; }
+        .hy-box ul { margin-left: 18px; margin-top: 6px; }
+        .hy-box li { font-size: 13px; margin-bottom: 6px; color: #1f2937; line-height: 1.6; }
+
+        .mnemonic { background-color: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 16px; margin: 16px 0; border-radius: 4px; }
+        .mnemonic .mnemonic-header { font-weight: 700; color: #c2410c; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mnemonic strong { color: #c2410c; font-size: 13px; }
+        .mnemonic ul { margin-left: 18px; margin-top: 6px; }
+        .mnemonic li { font-size: 13px; margin-bottom: 5px; color: #431407; line-height: 1.5; }
+
+        .collapsible-h3 { cursor: pointer; user-select: none; }
+        .collapsible-h3:hover { color: #1e3a8a; }
+        h3.collapsible-h3 { font-size: 15px; font-weight: 700; color: #1e3a5f; margin: 24px 0 10px; padding: 6px 10px; border-left: 3px solid #2563eb; cursor: pointer; user-select: none; }
+        .section-chevron { display: inline-block; font-size: 12px; color: #2563eb; transition: transform 0.2s ease; margin-right: 6px; }
+        .collapsible-h3.collapsed .section-chevron { transform: rotate(-90deg); }
+        .section-body { padding-left: 16px; margin-left: 4px; }
+        .section-body.collapsed { display: none; }
+
+        .h4-body { padding-left: 14px; margin-left: 4px; margin-bottom: 6px; }
+
+        .trap-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .trap-chevron { font-size: 11px; font-weight: 400; color: #b91c1c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .trap-header.collapsed .trap-chevron { transform: rotate(-90deg); }
+        .trap-body.collapsed { display: none; }
+
+        .h5-subheading { font-size: 13px; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-left: 2px solid #93c5fd; border-radius: 3px; padding: 4px 10px; margin: 14px 0 6px; cursor: pointer; user-select: none; }
+        .h5-subheading:hover { background: #dbeafe; }
+        .h5-subheading .h5-chevron { display: inline-block; font-size: 10px; color: #2563eb; transition: transform 0.2s ease; margin-right: 5px; }
+        .h5-subheading.collapsed .h5-chevron { transform: rotate(-90deg); }
+        .h5-body { padding-left: 18px; margin-left: 4px; margin-bottom: 8px; }
+        .h5-body.collapsed { display: none; }
+
+        .mnemonic-toggle-header { cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+        .mnemonic-toggle-header .mnemonic-chevron { font-size: 11px; color: #c2410c; transition: transform 0.2s ease; margin-left: 8px; flex-shrink: 0; }
+        .mnemonic-toggle-header.collapsed .mnemonic-chevron { transform: rotate(-90deg); }
+        .mnemonic-body.collapsed { display: none; }
+
+        .lo-controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        .lo-controls button { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #2563eb; cursor: pointer; background: white; color: #2563eb; transition: all 0.15s ease; }
+        .lo-controls button:hover { background: #2563eb; color: white; }
+
+        .lo-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; }
+        .lo-toc-title { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 8px; }
+        .lo-toc ol { margin: 0; padding-left: 20px; }
+        .lo-toc li { margin-bottom: 5px; }
+        .lo-toc a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .lo-toc a:hover { text-decoration: underline; color: #1e40af; }
+
+        .lo-covered { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+        .lo-covered-title { font-weight: 700; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .lo-covered ul { margin: 0; padding-left: 18px; }
+        .lo-covered li { margin-bottom: 3px; color: #1e293b; line-height: 1.5; }
+        .lo-covered li strong { color: #1e3a5f; }
+
+        .practice-question { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #2563eb; padding: 16px; margin: 14px 0; border-radius: 6px; }
+        .practice-question h4 { background: none !important; padding: 0 !important; border-radius: 0 !important; margin: 4px 0 8px !important; color: #1d4ed8; font-size: 14.5px; font-weight: 700; }
+        .practice-question p { font-size: 13px; }
+        .practice-question .option { color: #475569; font-style: italic; margin-bottom: 4px; font-size: 13px; }
+        .reveal-btn { background: #2563eb; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .answer { display: none; margin-top: 12px; background: #f0fdf4; border-left: 3px solid #16a34a; padding: 12px; border-radius: 4px; font-size: 13px; line-height: 1.7; color: #1f2937; }
+        .answer.show { display: block; }
+        .answer strong { color: #166534; }
+
+        .tyu-section { margin: 24px 0; border-top: 1px solid #e2e8f0; padding-top: 18px; }
+        .tyu-section > h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 14px; background: none !important; padding: 0 !important; }
+        .tyu-section .practice-question h4 { background: none !important; padding: 0 !important; }
+
+        /* ══ Mobile Responsive ════════════════════════════════════════════════ */
+        .sidebar { transition: transform 0.25s ease; }
+        .hamburger-btn {
+            display: none;
+            position: fixed; top: 12px; left: 12px; z-index: 200;
+            background: #1e293b; border: none; border-radius: 6px;
+            padding: 8px 11px; cursor: pointer; color: white; font-size: 20px;
+            line-height: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .hamburger-btn:hover { background: #334155; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 99;
+        }
+        .sidebar-overlay.open { display: block; }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: block; }
+            .sidebar { transform: translateX(-240px); z-index: 150; }
+            .sidebar.mob-open { transform: translateX(0); }
+            .main { margin-left: 0 !important; padding: 60px 16px 30px 16px !important; max-width: 100% !important; }
+            .header h1 { font-size: 22px !important; }
+            .header p { font-size: 14px !important; }
+            .lo-section { padding: 20px 16px !important; }
+            .lo-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px !important; }
+            .lo-toc ol { padding-left: 14px; }
+            .export-actions { flex-direction: column; }
+            .buzzwords { gap: 4px; }
+            .buzzword { font-size: 11px; padding: 2px 8px; }
+        }
+        @media (max-width: 480px) {
+            div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+            div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+            .main { padding: 55px 12px 24px 12px !important; }
+            .lo-acc-header { flex-wrap: wrap; gap: 6px !important; }
+        }
+    </style>
+</head>
+<body>
+<button class="hamburger-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <a href="https://strettyit10.github.io/Block4-GI/"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-block; margin-bottom:8px; font-size:17px; font-weight:700;
+                  color:#60a5fa; text-decoration:none; letter-spacing:0.5px;
+                  border-bottom:1px solid rgba(96,165,250,0.35); padding-bottom:1px;"
+           onmouseover="this.style.color='#93c5fd'"
+           onmouseout="this.style.color='#60a5fa'">HoyaDocs &#8599;</a>
+        <h2>Lecture 29</h2>
+        <p>Retroperitoneum &amp; Posterior Abdominal Wall</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-link active" onclick="switchLO(event,'overview')">&#128203; Lecture Overview</a>
+        <div class="sidebar-divider"></div>
+        <a href="#lo1" class="sidebar-link" onclick="switchLO(event,'lo1')">&#128302; LO 1 &middot; Intra- vs Retroperitoneal Organs</a>
+        <a href="#lo2" class="sidebar-link" onclick="switchLO(event,'lo2')">&#129656; LO 2 &middot; Major Abdominal Vessels</a>
+        <a href="#lo3" class="sidebar-link" onclick="switchLO(event,'lo3')">&#129729; LO 3 &middot; Diaphragm Penetrations</a>
+        <a href="#lo4" class="sidebar-link" onclick="switchLO(event,'lo4')">&#128293; LO 4 &middot; Urolithiasis &amp; Ureters</a>
+        <a href="#lo5" class="sidebar-link" onclick="switchLO(event,'lo5')">&#129504; LO 5 &middot; Adrenal Innervation</a>
+        <div class="sidebar-divider"></div>
+        <a href="#practice" class="sidebar-link" onclick="switchLO(event,'practice')">&#9999;&#65039; Practice Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="export-actions">
+            <button class="export-btn" onclick="printAll(this)" title="Save as PDF">
+                <span class="btn-icon">&#128424;&#65039;</span>Print PDF
+            </button>
+            <button class="export-btn" onclick="downloadWord(this)" title="Download as Word document">
+                <span class="btn-icon">&#128196;</span>Word Doc
+            </button>
+        </div>
+        <a href="https://strettyit10.github.io/Block4-GI/resource-mapping/gi_resource_hub.html"
+           class="hub-return-btn" target="_blank" rel="noopener noreferrer">
+            <span class="btn-arrow">&#8592;</span> Study Hub Resources
+        </a>
+    </div>
+</aside>
+
+<main class="main">
+    <div class="header">
+        <h1>Lecture 29: Retroperitoneum &amp; Posterior Abdominal Wall</h1>
+        <p>HoyaDocs &mdash; GI Block | USMLE Step 1 Preparation</p>
+    </div>
+
+    <!-- ══ OVERVIEW TAB (built last) ══ -->
+    <section class="lo-section active" id="overview">
+        <h2 class="lo-title" style="color:#1e3a5f; font-size:22px; margin-bottom:6px;">Lecture 29 &mdash; Overview</h2>
+        <p class="lo-subtitle">Retroperitoneum &amp; Posterior Abdominal Wall &middot; HoyaDocs GI Block</p>
+        <div class="lo-content" id="overview-body">
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:0 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Page Summaries</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+                <div style="background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#1e3a5f; margin-bottom:6px; font-size:14px;">&#128302; LO 1 &middot; Intra- vs Retroperitoneal</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        SAD PUCKER mnemonic &middot; primary vs secondary retroperitoneal &middot; peritoneal reflections &middot; clinical relevance (trauma, abscess drainage)<br>
+                        <em style="color:#475569;">Practice Qs: 1&ndash;2, 11</em>
+                    </div>
+                </div>
+                <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#7f1d1d; margin-bottom:6px; font-size:14px;">&#129656; LO 2 &middot; Major Abdominal Vessels</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        Aorta &amp; branches &middot; IVC &amp; tributaries &middot; asymmetric renal veins &middot; <strong>nutcracker syndrome</strong> &middot; 3 venous networks (portal / caval / azygos) &middot; end-arterial renal segments<br>
+                        <em style="color:#475569;">Practice Qs: 3&ndash;5, 12&ndash;13</em>
+                    </div>
+                </div>
+                <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#14532d; margin-bottom:6px; font-size:14px;">&#129729; LO 3 &middot; Diaphragm Penetrations</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>T8</strong> caval hiatus (IVC, R phrenic) &middot; <strong>T10</strong> esophageal hiatus (esophagus, vagi) &middot; <strong>T12</strong> aortic hiatus (aorta, thoracic duct, azygos) &middot; &ldquo;C3,4,5 keeps the diaphragm alive&rdquo; &middot; referred pain to shoulder<br>
+                        <em style="color:#475569;">Practice Qs: 6&ndash;7, 14</em>
+                    </div>
+                </div>
+                <div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:16px;">
+                    <div style="font-weight:700; color:#78350f; margin-bottom:6px; font-size:14px;">&#128293; LO 4 &middot; Urolithiasis &amp; Ureters</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>3 anatomic constrictions</strong>: UPJ &middot; pelvic brim (iliac vessels) &middot; UVJ &middot; referred pain T11&ndash;L2 (&ldquo;loin to groin&rdquo;) &middot; ureter crosses under uterine artery / vas deferens (&ldquo;water under the bridge&rdquo;)<br>
+                        <em style="color:#475569;">Practice Qs: 8&ndash;9, 15&ndash;16</em>
+                    </div>
+                </div>
+                <div style="background:#ede9fe; border:1px solid #c4b5fd; border-radius:8px; padding:16px; grid-column: 1 / span 2;">
+                    <div style="font-weight:700; color:#4c1d95; margin-bottom:6px; font-size:14px;">&#129504; LO 5 &middot; Adrenal Gland Innervation</div>
+                    <div style="font-size:12.5px; color:#1e293b; line-height:1.7;">
+                        <strong>Cortex</strong>: no direct innervation &rarr; hormonal control (ACTH, RAAS) &middot; <strong>Medulla</strong>: direct <strong>preganglionic sympathetic</strong> fibers (T5&ndash;T11) &rarr; chromaffin cells = modified postganglionic neurons &rarr; catecholamines &middot; vascular supply from 3 arteries; single L adrenal vein &rarr; L renal vein (surgically vulnerable)<br>
+                        <em style="color:#475569;">Practice Qs: 10, 17&ndash;18</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-controls" style="margin-top:24px;">
+                <button onclick="expandAll()">Expand All</button>
+                <button onclick="collapseAll()">Collapse All</button>
+            </div>
+
+            <h3 style="font-size:16px; font-weight:700; color:#1e3a5f; margin:24px 0 12px; padding:6px 10px; border-left:3px solid #2563eb;">Official Learning Objectives Map</h3>
+
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Distinguish the intraperitoneal and retroperitoneal organs of the GI tract</span>
+                    <span style="background:#dbeafe; color:#1e40af; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">IP vs RP</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 1</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Peritoneal anatomy</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">SAD PUCKER mnemonic</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Primary vs secondary retroperitoneal</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo1');return false;" style="color:#1e3a5f;text-decoration:none;">Clinical implications</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q1, Q2, Q11</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">2</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Understand the locations of major blood vessels in reference to each other and abdominal viscera</span>
+                    <span style="background:#fee2e2; color:#7f1d1d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Vessels</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 2</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Abdominal aorta branches</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">IVC tributaries</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Renal vessels &amp; nutcracker</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo2');return false;" style="color:#1e3a5f;text-decoration:none;">Portal / caval / azygos networks</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q3&ndash;Q5, Q12, Q13</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">3</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Define the structures that penetrate the diaphragm</span>
+                    <span style="background:#dcfce7; color:#14532d; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Diaphragm</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 3</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">T8 caval hiatus</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">T10 esophageal hiatus</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">T12 aortic hiatus</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo3');return false;" style="color:#1e3a5f;text-decoration:none;">Phrenic nerve (C3&ndash;5)</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q6, Q7, Q14</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">4</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Identify the potential locations of urolithiasis of the kidneys and ureters in the retroperitoneal space</span>
+                    <span style="background:#fef3c7; color:#78350f; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Stones</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 4</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Ureter anatomy &amp; course</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">3 anatomic constrictions</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Renal / ureteric colic &mdash; referred pain</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo4');return false;" style="color:#1e3a5f;text-decoration:none;">Surgical hazards (&ldquo;water under the bridge&rdquo;)</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q8, Q9, Q15, Q16</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lo-accordion-item" style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; overflow:hidden;">
+                <div class="lo-acc-header" onclick="this.classList.toggle('open');var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';"
+                     style="display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; background:#f8fafc; user-select:none;">
+                    <span style="min-width:28px; height:28px; background:#1e3a5f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">5</span>
+                    <span style="flex:1; font-size:13.5px; font-weight:600; color:#1e293b; line-height:1.4;">Distinguish the innervation of the different parts of the adrenal gland</span>
+                    <span style="background:#ede9fe; color:#4c1d95; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:10px; white-space:nowrap; flex-shrink:0;">Adrenals</span>
+                    <span class="acc-chevron" style="color:#64748b; font-size:11px; flex-shrink:0;">&#9660;</span>
+                </div>
+                <div style="display:none; padding:14px 16px 14px 54px; background:white; border-top:1px solid #e2e8f0;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Covered in LO 5</div>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; line-height:1.8;">
+                                <li><a href="#" onclick="switchLO(event,'lo5');return false;" style="color:#1e3a5f;text-decoration:none;">Cortex: hormonal control</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');return false;" style="color:#1e3a5f;text-decoration:none;">Medulla: preganglionic sympathetic</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');return false;" style="color:#1e3a5f;text-decoration:none;">Arterial &amp; venous supply</a></li>
+                                <li><a href="#" onclick="switchLO(event,'lo5');return false;" style="color:#1e3a5f;text-decoration:none;">Clinical correlates</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Practice Questions</div>
+                            <div style="font-size:13px;"><a href="#" onclick="switchLO(event,'practice');return false;" style="color:#7c3aed;font-weight:700;text-decoration:none;">Q10, Q17, Q18</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ LO 1 — IP vs RP Organs ══ -->
+    <section class="lo-section" id="lo1">
+        <h2 class="lo-title">LO 1 &middot; Intraperitoneal vs Retroperitoneal Organs</h2>
+        <p class="lo-text">Distinguish the intraperitoneal and retroperitoneal organs of the GI tract, understand how a developmental rotation creates "secondary" retroperitoneal organs, and appreciate the clinical relevance of the distinction.</p>
+        <div class="lo-content" id="lo1-body">
+            <div class="lo-covered">
+                <strong>Covers LO:</strong> 1 (distinguish intraperitoneal vs retroperitoneal organs of the GI tract)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo1-peritoneum">1. The peritoneum &mdash; key anatomic definitions</a></li>
+                    <li><a href="#lo1-retrospace">2. Layers of the retroperitoneal space</a></li>
+                    <li><a href="#lo1-mnemonic">3. SAD PUCKER &mdash; retroperitoneal organs mnemonic</a></li>
+                    <li><a href="#lo1-primarysecondary">4. Primary vs secondary retroperitoneal</a></li>
+                    <li><a href="#lo1-clinical">5. Clinical relevance (trauma, infection, surgery)</a></li>
+                    <li><a href="#lo1-tyu">6. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo1-body')">Expand all</button>
+                <button onclick="collapseAll('lo1-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-peritoneum" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. The Peritoneum &mdash; Key Definitions</h3>
+            <div class="section-body">
+                <h4>Parietal vs visceral peritoneum</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Parietal peritoneum</strong> &mdash; lines the abdominal wall (&ldquo;outer&rdquo; layer). Somatic innervation &rarr; pain is <em>sharp and localized</em>.</li>
+                        <li><strong>Visceral peritoneum</strong> &mdash; covers the organs (&ldquo;inner&rdquo; layer). Autonomic innervation &rarr; pain is <em>dull, poorly localized</em>, referred to midline dermatomes.</li>
+                        <li><strong>Peritoneal cavity</strong> &mdash; potential space between them. Normally holds only a small amount of serous fluid.</li>
+                    </ul>
+                </div>
+
+                <h4>Intraperitoneal vs retroperitoneal</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><span class="buzzword">Intraperitoneal (IP)</span> &mdash; organ is <strong>suspended within the peritoneal cavity by a mesentery</strong>; almost completely covered by visceral peritoneum.</li>
+                        <li><span class="buzzword">Retroperitoneal (RP)</span> &mdash; organ lies <strong>posterior to the parietal peritoneum</strong> against the posterior abdominal wall; only its anterior surface is covered.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield:</strong> IP organs have a mesentery = a mobility lifeline carrying their neurovascular supply. RP organs are <em>fixed</em> to the posterior body wall. This anatomy drives everything that follows &mdash; where pathology spreads, where bleeds collect, and what the surgeon sees.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-retrospace" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Layers of the Retroperitoneal Space</h3>
+            <div class="section-body">
+                <h4>Compartments around the kidney</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Perinephric (perirenal) space</strong> &mdash; between the renal capsule and Gerota&rsquo;s (renal) fascia. Contains the kidney, adrenal, renal vessels, and perinephric fat.</li>
+                        <li><strong>Gerota&rsquo;s fascia (renal fascia)</strong> &mdash; the tough connective-tissue envelope; fused superiorly with the diaphragmatic fascia, open inferiorly (why perinephric collections can track down).</li>
+                        <li><strong>Paranephric space</strong> &mdash; external to Gerota&rsquo;s fascia, contains paranephric fat; bounded anteriorly by the transversalis fascia.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: Why retroperitoneal bleeds are silent</div>
+                    <div class="trap-body">
+                        Retroperitoneal structures lack a peritoneal cavity to distend; <strong>large-volume bleeds from the aorta, IVC, or kidney can hide</strong> for a long time before peritoneal signs develop. Classic example: ruptured AAA with flank bruising (<strong>Grey-Turner sign</strong>) and hypotension without frank peritoneal irritation.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-mnemonic" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. SAD PUCKER &mdash; Retroperitoneal Organs</h3>
+            <div class="section-body">
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: SAD PUCKER</div>
+                    <div class="mnemonic-body">
+                        <strong>S</strong>uprarenal (adrenal) glands &middot; <strong>A</strong>orta &amp; IVC &middot; <strong>D</strong>uodenum (2nd &amp; 3rd parts) &middot; <strong>P</strong>ancreas (except tail) &middot; <strong>U</strong>reters &middot; <strong>C</strong>olon (ascending &amp; descending) &middot; <strong>K</strong>idneys &middot; <strong>E</strong>sophagus (lower thoracic) &middot; <strong>R</strong>ectum (middle &amp; lower thirds).
+                    </div>
+                </div>
+
+                <h4>Retroperitoneal GI organs (LO focus)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Duodenum</strong> &mdash; all but the 1st part; the duodenal bulb is IP.</li>
+                        <li><strong>Pancreas</strong> &mdash; head, neck, body are RP; the <strong>tail is IP</strong> (it lies in the splenorenal ligament).</li>
+                        <li><strong>Ascending &amp; descending colon</strong> (the transverse and sigmoid colon are IP on their own mesenteries).</li>
+                        <li><strong>Rectum</strong> &mdash; middle &amp; inferior thirds are RP/subperitoneal (the upper third is IP).</li>
+                    </ul>
+                </div>
+
+                <h4>Intraperitoneal GI organs (for contrast)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Stomach, 1st part of duodenum, jejunum, ileum</li>
+                        <li>Transverse colon, sigmoid colon</li>
+                        <li>Cecum (variable &mdash; usually IP but can be RP)</li>
+                        <li>Appendix, liver, gallbladder, spleen, tail of pancreas</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield twist:</strong> USMLE loves the <strong>tail of pancreas</strong> (IP in splenorenal ligament), <strong>1st part of duodenum</strong> (IP), and <strong>cecum</strong> (variable) as exceptions. Everything else follows SAD PUCKER.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-primarysecondary" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Primary vs Secondary Retroperitoneal</h3>
+            <div class="section-body">
+                <h4>Primary retroperitoneal</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Never had a mesentery during development.</li>
+                        <li>Examples: kidneys, adrenals, ureters, aorta, IVC, lower esophagus, rectum.</li>
+                    </ul>
+                </div>
+
+                <h4>Secondary retroperitoneal</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Began development <em>intraperitoneally</em> with a mesentery, then rotated and fused with the posterior body wall; mesentery regressed.</li>
+                        <li>Examples: most of the <strong>duodenum</strong>, <strong>pancreas</strong> (head, neck, body), <strong>ascending</strong> &amp; <strong>descending colon</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: &ldquo;Secondary retroperitoneal&rdquo; tests embryology</div>
+                    <div class="trap-body">
+                        If a stem asks which structures are <em>secondary</em> RP, you want the ones that <strong>rotated to get there</strong>: duodenum, pancreas, ascending colon, descending colon. The kidneys, ureters, adrenals, aorta, IVC, and rectum are primary RP and will be wrong answers for &ldquo;secondary.&rdquo;
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo1-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Clinical Relevance</h3>
+            <div class="section-body">
+                <h4>Trauma</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>RP bleeds (AAA rupture, pelvic fracture, kidney laceration) can cause <strong>life-threatening hemorrhage with minimal peritoneal signs</strong>.</li>
+                        <li>Buzzword bruising: <strong>Grey-Turner sign</strong> (flank), <strong>Cullen sign</strong> (periumbilical) &mdash; indicate RP hemorrhage tracking along fascial planes.</li>
+                    </ul>
+                </div>
+
+                <h4>Infection / abscess</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Psoas abscess</strong> &mdash; from vertebral osteomyelitis or Crohn&rsquo;s tracking into psoas sheath; presents with back pain, hip flexion position, positive psoas sign.</li>
+                        <li><strong>Appendicitis in a retrocecal appendix</strong> can present atypically with flank pain and less peritoneal signs.</li>
+                    </ul>
+                </div>
+
+                <h4>Surgery</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Pancreatitis behind the stomach is classic &ldquo;pain radiating to the back&rdquo; because the pancreas is RP.</li>
+                        <li>Duodenal perforation of the posterior wall (2nd part) may wall off retroperitoneally rather than spill freely.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>Clinical pearl:</strong> Any <em>dull, deep, poorly-localized pain that radiates to the back</em> should raise suspicion for a <strong>retroperitoneal structure</strong> &mdash; pancreatitis, AAA expansion, renal pathology, psoas process.
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo1-tyu">
+                <h3>Testing Your Understanding</h3>
+
+                <h4>TYU 1</h4>
+                <p>A 60-year-old man presents with sudden severe epigastric pain radiating to the back and hypotension. His CT scan shows blood tracking posteriorly along fascial planes with flank ecchymoses. Why does his physical exam lack frank peritoneal signs?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>He likely has a <strong>ruptured abdominal aortic aneurysm</strong>. The aorta is <strong>retroperitoneal</strong>, so bleeding initially stays posterior to the parietal peritoneum and does not irritate the anterior peritoneum &mdash; hence no early rigidity or rebound. Grey-Turner sign (flank bruising) reflects blood tracking through fascial planes. This &ldquo;silent&rdquo; bleed is why RP pathology must be recognized clinically before peritoneal signs emerge.</p>
+                </div>
+
+                <h4>TYU 2</h4>
+                <p>Why is the tail of the pancreas considered intraperitoneal while the rest of the pancreas is retroperitoneal, and what surgical implication does this have?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>The <strong>tail of the pancreas lies within the splenorenal (lienorenal) ligament</strong>, a double-layered peritoneal fold; it is therefore IP. The head, neck, and body fused with the posterior wall during rotation and are secondary RP. Clinically, <strong>splenectomy risks injury to the pancreatic tail</strong>, causing pancreatic fistula or pseudocyst &mdash; surgeons must ligate the splenorenal ligament carefully.</p>
+                </div>
+
+                <h4>TYU 3</h4>
+                <p>A young woman has back pain and hip-flexion posture after her Crohn disease flare. CT shows a collection abutting the psoas muscle. Where in the retroperitoneal space is this collection, and why does she hold her hip flexed?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Psoas abscess</strong> &mdash; a collection in the psoas sheath within the retroperitoneum, often from Crohn disease perforating through the bowel wall or vertebral osteomyelitis. The psoas is a hip <em>flexor</em>, so reflex spasm pulls the hip into flexion to reduce muscle stretch and pain; extension of the hip produces the <strong>positive psoas sign</strong>. Treatment is drainage plus antibiotics targeting enteric organisms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 2 — Major Abdominal Vessels ══ -->
+    <section class="lo-section" id="lo2">
+        <h2 class="lo-title">LO 2 &middot; Major Abdominal Vessels</h2>
+        <p class="lo-text">Understand the locations of the abdominal aorta, IVC, and their branches in reference to each other and to abdominal viscera, and recognize clinically important variants such as the nutcracker angle.</p>
+        <div class="lo-content" id="lo2-body">
+            <div class="lo-covered">
+                <strong>Covers LO:</strong> 2 (locations of major blood vessels in reference to each other and to abdominal viscera)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo2-aorta">1. Abdominal aorta &mdash; branches &amp; levels</a></li>
+                    <li><a href="#lo2-ivc">2. Inferior vena cava &amp; tributaries</a></li>
+                    <li><a href="#lo2-renal">3. Renal vessels &amp; nutcracker syndrome</a></li>
+                    <li><a href="#lo2-adrenal">4. Adrenal blood supply</a></li>
+                    <li><a href="#lo2-networks">5. Three venous networks: portal, caval, azygos</a></li>
+                    <li><a href="#lo2-tyu">6. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo2-body')">Expand all</button>
+                <button onclick="collapseAll('lo2-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-aorta" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Abdominal Aorta &mdash; Branches &amp; Vertebral Levels</h3>
+            <div class="section-body">
+                <h4>Entry and termination</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Enters the abdomen through the <span class="buzzword">aortic hiatus at T12</span>.</li>
+                        <li>Bifurcates into common iliac arteries at <span class="buzzword">L4</span> (roughly at the umbilicus in thin patients).</li>
+                        <li>Lies <strong>just to the left of midline</strong>, anterior to the vertebral bodies.</li>
+                    </ul>
+                </div>
+
+                <h4>Anterior (unpaired) branches &mdash; feed the GI tract</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Celiac trunk</strong> &mdash; T12 &mdash; foregut (stomach, liver, spleen, upper duodenum, pancreas head).</li>
+                        <li><strong>Superior mesenteric artery (SMA)</strong> &mdash; L1 &mdash; midgut (distal duodenum through proximal 2/3 transverse colon).</li>
+                        <li><strong>Inferior mesenteric artery (IMA)</strong> &mdash; L3 &mdash; hindgut (distal 1/3 transverse colon through superior rectum).</li>
+                    </ul>
+                </div>
+
+                <h4>Lateral (paired) branches</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Middle suprarenal arteries</strong> &mdash; L1</li>
+                        <li><strong>Renal arteries</strong> &mdash; L1/L2 (right is longer, passes behind IVC)</li>
+                        <li><strong>Gonadal arteries</strong> &mdash; L2 (testicular / ovarian)</li>
+                    </ul>
+                </div>
+
+                <h4>Posterior (paired) branches</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Inferior phrenic</strong> and <strong>lumbar arteries</strong> &mdash; body wall.</li>
+                        <li>Inferior phrenic gives off the <strong>superior suprarenal artery</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: Aortic branch levels</div>
+                    <div class="mnemonic-body">
+                        <strong>T12</strong>: aorta enters &amp; celiac trunk &middot; <strong>L1</strong>: SMA, suprarenal, renal &middot; <strong>L2</strong>: gonadals &middot; <strong>L3</strong>: IMA &middot; <strong>L4</strong>: bifurcation into common iliacs.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-ivc" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Inferior Vena Cava &amp; Tributaries</h3>
+            <div class="section-body">
+                <h4>Course</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Formed at <strong>L5</strong> by junction of common iliac veins, runs <strong>to the right of midline</strong>.</li>
+                        <li>Passes through the <span class="buzzword">caval hiatus at T8</span> and drains into the right atrium.</li>
+                        <li>Anterior: crosses posterior to the epiploic foramen of Winslow (entrance to lesser sac), head of pancreas, 3rd part of duodenum, root of mesentery, and right liver.</li>
+                    </ul>
+                </div>
+
+                <h4>Major tributaries (inferior to superior)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Common iliac veins</li>
+                        <li>Lumbar veins</li>
+                        <li>Right gonadal vein (the <strong>left</strong> gonadal drains into the <strong>left renal</strong>, not the IVC)</li>
+                        <li>Renal veins</li>
+                        <li>Right suprarenal (<strong>left</strong> suprarenal drains into left renal)</li>
+                        <li>Inferior phrenic veins</li>
+                        <li>Hepatic veins</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-yield asymmetry:</strong> The <strong>left gonadal and left suprarenal veins drain into the left renal vein</strong>, while the right equivalents drain directly into the IVC. This creates a long left gonadal drainage path &rarr; higher venous pressure &rarr; <strong>left-sided varicocele</strong> is much more common than right.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-renal" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Renal Vessels &amp; Nutcracker Syndrome</h3>
+            <div class="section-body">
+                <h4>Renal arteries</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Paired, arise at <strong>L1&ndash;L2</strong>. Each divides into <strong>5 segmental arteries &mdash; anatomic end arteries</strong>: no meaningful collaterals, so segmental occlusion causes <strong>infarction</strong>.</li>
+                        <li>The <strong>right renal artery</strong> is longer and passes <em>posterior to the IVC</em>.</li>
+                        <li>Kidneys receive ~<strong>25% of cardiac output</strong> despite being ~0.5% of body mass.</li>
+                    </ul>
+                </div>
+
+                <h4>Renal veins</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Left renal vein is longer</strong>; crosses anterior to the aorta and <strong>posterior to the SMA</strong> &mdash; this is the &ldquo;nutcracker angle.&rdquo;</li>
+                        <li>Receives: left gonadal, left suprarenal, and left 2nd lumbar veins.</li>
+                        <li>Right renal vein is short, drains directly into IVC.</li>
+                    </ul>
+                </div>
+
+                <h4>Nutcracker syndrome</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Compression of the <span class="buzzword">left renal vein between the aorta and SMA</span>.</li>
+                        <li>Produces <strong>left-sided flank pain, hematuria, and left-sided varicocele</strong> (in males) or pelvic congestion (in females) from elevated left renal venous pressure.</li>
+                        <li>Diagnosis: Doppler US, CT angiography demonstrating narrowing.</li>
+                    </ul>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span class="trap-chevron">&#9660;</span>Exam Trap: SMA syndrome vs nutcracker syndrome</div>
+                    <div class="trap-body">
+                        Both involve compression between the aorta and SMA but different structures:
+                        <ul>
+                            <li><strong>Nutcracker syndrome</strong> compresses the <strong>left renal vein</strong> &rarr; hematuria, flank pain, varicocele.</li>
+                            <li><strong>SMA syndrome</strong> compresses the <strong>3rd part of the duodenum</strong> &rarr; postprandial nausea, vomiting, weight loss; classically after rapid weight loss (loss of the retroperitoneal fat pad) or body cast.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-adrenal" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Adrenal (Suprarenal) Blood Supply</h3>
+            <div class="section-body">
+                <h4>Three arterial sources (bilateral)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Superior suprarenal</strong> from the <em>inferior phrenic</em> artery</li>
+                        <li><strong>Middle suprarenal</strong> from the <em>aorta</em> directly (L1)</li>
+                        <li><strong>Inferior suprarenal</strong> from the <em>renal</em> artery</li>
+                    </ul>
+                </div>
+
+                <h4>Single venous drainage (asymmetric)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Each adrenal has <strong>one vein</strong>.</li>
+                        <li><strong>Right adrenal vein</strong> &rarr; directly into <strong>IVC</strong> (short, surgically delicate).</li>
+                        <li><strong>Left adrenal vein</strong> &rarr; <strong>left renal vein</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="hy-box">
+                    <strong>Surgical pearl:</strong> Right adrenalectomy is technically harder because the short right adrenal vein tears off the IVC easily, threatening major hemorrhage.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo2-networks" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Three Venous Networks of the Abdomen</h3>
+            <div class="section-body">
+                <h4>Portal system</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Drains abdominal GI tract (distal esophagus through upper rectum), spleen, pancreas, gallbladder &rarr; liver.</li>
+                        <li>Formed by splenic vein + superior mesenteric vein; IMV joins splenic.</li>
+                    </ul>
+                </div>
+
+                <h4>Caval system</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>IVC drains abdominal wall, kidneys, adrenals, gonads, liver via hepatic veins.</li>
+                    </ul>
+                </div>
+
+                <h4>Azygos system</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li>Posterior body wall veins (lumbar, ascending lumbar) that communicate with the azygos/hemiazygos system in the thorax via the <span class="buzzword">aortic hiatus (T12)</span>.</li>
+                        <li>Critical <strong>collateral pathway</strong> if IVC is obstructed.</li>
+                    </ul>
+                </div>
+
+                <h4>Portosystemic anastomoses (where the 3 systems meet)</h4>
+                <div class="h4-body">
+                    <ul>
+                        <li><strong>Distal esophagus</strong>: left gastric &harr; esophageal (azygos) &rarr; <em>esophageal varices</em></li>
+                        <li><strong>Umbilicus</strong>: paraumbilical &harr; superficial epigastric &rarr; <em>caput medusae</em></li>
+                        <li><strong>Rectum</strong>: superior rectal (portal) &harr; middle/inferior rectal (caval) &rarr; <em>internal hemorrhoids</em></li>
+                        <li>Retroperitoneal bare areas of liver and colon &rarr; silent but important in portal hypertension.</li>
+                    </ul>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span class="mnemonic-chevron">&#9660;</span>Mnemonic: Varices of portal hypertension</div>
+                    <div class="mnemonic-body">
+                        <strong>E</strong>sophageal varices, <strong>C</strong>aput medusae, <strong>H</strong>emorrhoids &mdash; &ldquo;portal hypertension = vARICES + varies everywhere.&rdquo;
+                    </div>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo2-tyu">
+                <h3>Testing Your Understanding</h3>
+
+                <h4>TYU 1</h4>
+                <p>A 28-year-old tall, thin man presents with recurrent left-sided flank pain and hematuria. Imaging shows the left renal vein compressed between the aorta and superior mesenteric artery. What vessels are involved, and why is this condition named after a kitchen tool?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Nutcracker syndrome.</strong> The left renal vein must cross anterior to the <strong>aorta</strong> and posterior to the <strong>SMA</strong> to reach the IVC. A narrow aortomesenteric angle (typical in thin/tall patients with little mesenteric fat) &ldquo;pinches&rdquo; the vein like a nutcracker &rarr; venous hypertension, hematuria, varicocele, or pelvic congestion. Management ranges from observation to stenting or venous transposition.</p>
+                </div>
+
+                <h4>TYU 2</h4>
+                <p>A 17-year-old boy has recurrent painless left scrotal swelling that worsens with Valsalva. Physical exam describes a &ldquo;bag of worms&rdquo; above the left testicle. Why is this condition far more common on the left than the right?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p><strong>Varicocele.</strong> The <strong>left testicular (gonadal) vein drains into the left renal vein at a right angle</strong>, a longer and higher-pressure path than the right gonadal vein, which drains directly into the IVC. That hydrostatic disadvantage (plus possible valvular incompetence) predisposes to varicosity of the pampiniform plexus on the left. New-onset left varicocele in an older adult should raise concern for a <strong>left renal cell carcinoma</strong> obstructing the left renal vein.</p>
+                </div>
+
+                <h4>TYU 3</h4>
+                <p>Which single artery, if occluded, most directly causes infarction of the midgut (distal duodenum to proximal 2/3 of the transverse colon), and at what vertebral level does it branch off the aorta?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Show answer</button>
+                <div class="answer">
+                    <p>The <strong>superior mesenteric artery (SMA)</strong> arises from the aorta at <strong>L1</strong>. It supplies the midgut &mdash; distal duodenum, jejunum, ileum, cecum, appendix, ascending colon, and proximal 2/3 of the transverse colon. Acute SMA embolus classically causes &ldquo;pain out of proportion to exam&rdquo; with normal initial labs, then bowel infarction. Remember: <strong>watershed areas</strong> (splenic flexure = SMA/IMA boundary; rectosigmoid = IMA/rectal) are most vulnerable to hypoperfusion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 3 — Diaphragm Penetrations ══ -->
+    <section class="lo-section" id="lo3">
+        <h2 class="lo-title">LO 3 &middot; Structures That Penetrate the Diaphragm</h2>
+        <p class="lo-text">Define the three major diaphragmatic hiatuses, the vertebral level and contents of each, and the clinical consequences of phrenic nerve involvement.</p>
+        <div class="lo-content" id="lo3-body">
+            <div class="lo-covered">
+                <strong>Covers LO:</strong> 3 (define the structures that penetrate the diaphragm)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo3-overview">1. Diaphragm overview &mdash; embryology &amp; innervation</a></li>
+                    <li><a href="#lo3-caval">2. Caval hiatus (T8)</a></li>
+                    <li><a href="#lo3-esoph">3. Esophageal hiatus (T10)</a></li>
+                    <li><a href="#lo3-aortic">4. Aortic hiatus (T12)</a></li>
+                    <li><a href="#lo3-phrenic">5. Phrenic nerve &amp; referred pain</a></li>
+                    <li><a href="#lo3-clinical">6. Clinical correlates (hiatal hernia, rupture)</a></li>
+                    <li><a href="#lo3-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo3-body')">Expand all</button>
+                <button onclick="collapseAll('lo3-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-overview" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. The Diaphragm &mdash; Overview</h3>
+            <div class="section-body">
+                <h4>Structure &amp; embryology</h4>
+                <div class="h4-body">
+                    <p>The diaphragm is a dome-shaped musculotendinous sheet separating the thoracic and abdominal cavities. It develops from <strong>four</strong> components: the <em>septum transversum</em> (central tendon), <em>pleuroperitoneal membranes</em>, dorsal mesentery of the esophagus (crura), and <em>body wall</em> (muscular periphery).</p>
+                    <p>Failure of pleuroperitoneal membrane fusion &rarr; <strong>congenital diaphragmatic hernia</strong> (most often left-sided <em>Bochdalek</em>), with abdominal viscera herniating into the thorax and pulmonary hypoplasia.</p>
+                </div>
+
+                <h4>Motor innervation &mdash; phrenic nerves</h4>
+                <div class="h4-body">
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#128161; Mnemonic &mdash; Phrenic roots</span><span class="mnemonic-chevron">&#9660;</span></div>
+                        <div class="mnemonic-body">
+                            <p><strong>"C3, 4, 5 keep the diaphragm alive."</strong></p>
+                            <p>Each <strong>phrenic nerve</strong> (one per hemidiaphragm) carries motor fibers from ventral rami of C3&ndash;C5, descends through the thorax on the pericardium, and supplies its own dome of the diaphragm. High cervical cord injury (above C3) abolishes diaphragmatic breathing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Sensory innervation</h4>
+                <div class="h4-body">
+                    <p>The phrenic nerve is also sensory to the <strong>central</strong> portion of the diaphragm (both pleural and peritoneal surfaces). The <strong>peripheral</strong> diaphragm is supplied by the lower intercostal nerves (T5&ndash;T11) and the subcostal nerve (T12).</p>
+                    <div class="hy-box">
+                        <strong>High-Yield:</strong> Central diaphragm irritation (e.g. subphrenic abscess, blood under diaphragm from splenic rupture) &rarr; <strong>referred shoulder pain</strong> via C3&ndash;C5 dermatomes (Kehr sign).
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-caval" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Caval Hiatus &mdash; T8</h3>
+            <div class="section-body">
+                <h4>Location &amp; contents</h4>
+                <div class="h4-body">
+                    <p>The <strong>caval hiatus</strong> lies in the <em>central tendon</em> at the level of the <strong>T8</strong> vertebra. Because it pierces the tendon (not muscle), the opening is held open during inspiration &mdash; actually <em>aiding</em> venous return as the diaphragm contracts.</p>
+                    <p><strong>Contents:</strong></p>
+                    <div class="buzzwords">
+                        <span class="buzzword">IVC</span>
+                        <span class="buzzword">Right phrenic nerve (terminal branches)</span>
+                    </div>
+                </div>
+
+                <h4>Why the right phrenic and not the left?</h4>
+                <div class="h4-body">
+                    <p>The <strong>left phrenic nerve</strong> pierces the muscular dome of the diaphragm separately (to the left of the pericardium). Only the <strong>right phrenic nerve</strong> accompanies the IVC through the caval hiatus before innervating its dome from below.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-esoph" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Esophageal Hiatus &mdash; T10</h3>
+            <div class="section-body">
+                <h4>Location &amp; contents</h4>
+                <div class="h4-body">
+                    <p>The <strong>esophageal hiatus</strong> is a sling in the <strong>right crus</strong> of the diaphragm at the level of <strong>T10</strong>. Unlike the caval hiatus, it is <em>muscular</em>, so crural contraction compresses the distal esophagus &mdash; contributing to the anti-reflux barrier at the gastro-esophageal junction.</p>
+                    <p><strong>Contents:</strong></p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Esophagus</span>
+                        <span class="buzzword">Anterior &amp; posterior vagal trunks (CN X)</span>
+                        <span class="buzzword">Esophageal branches of the left gastric artery &amp; vein</span>
+                    </div>
+                </div>
+
+                <h4>Clinical &mdash; hiatal hernia</h4>
+                <div class="h4-body">
+                    <p>Widening of the esophageal hiatus &rarr; <strong>hiatal hernia</strong>:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Sliding (95%): GE junction slides up &rarr; "hourglass stomach", worsens GERD</span>
+                        <span class="buzzword">Paraesophageal (5%): fundus herniates alongside a fixed GE junction &rarr; risk of strangulation</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-aortic" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Aortic Hiatus &mdash; T12</h3>
+            <div class="section-body">
+                <h4>Location &amp; contents</h4>
+                <div class="h4-body">
+                    <p>The <strong>aortic hiatus</strong> is a posterior opening at <strong>T12</strong>, bounded by the <em>median arcuate ligament</em> (a fibrous arch connecting the right and left crura) anteriorly and the vertebral body posteriorly. Because the aorta lies <em>behind</em> the diaphragm rather than piercing muscle, it is <strong>not compressed</strong> during inspiration.</p>
+                    <p><strong>Contents:</strong></p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Abdominal aorta</span>
+                        <span class="buzzword">Thoracic duct</span>
+                        <span class="buzzword">Azygos vein</span>
+                    </div>
+                </div>
+
+                <h4>Median arcuate ligament syndrome</h4>
+                <div class="h4-body">
+                    <p>Abnormally low or tight median arcuate ligament compresses the <strong>celiac trunk</strong> just below the aortic hiatus &rarr; post-prandial epigastric pain, weight loss, epigastric bruit. Treated surgically by ligament release.</p>
+                </div>
+            </div>
+
+            <div class="exam-trap">
+                <div class="trap-header" onclick="toggleTrap(this)"><span>&#9888;&#65039; Exam Trap &mdash; Vertebral levels of the hiatuses</span><span class="trap-chevron">&#9660;</span></div>
+                <div class="trap-body">
+                    <p><strong>Mnemonic:</strong> <em>"I 8 10 EGGs AT 12"</em></p>
+                    <div class="buzzwords">
+                        <span class="buzzword">I (IVC) &mdash; 8 (T8) &mdash; + R phrenic n.</span>
+                        <span class="buzzword">10 (T10) &mdash; EGGs = Esophagus, vaGus (x2), Gastric branches</span>
+                        <span class="buzzword">AT (Aorta, Thoracic duct) &mdash; 12 (T12) &mdash; + Azygos</span>
+                    </div>
+                    <p>Classic wrong answer: putting the thoracic duct in the caval hiatus. It travels with the <strong>aorta</strong> at T12.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-phrenic" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Phrenic Nerve &amp; Referred Pain</h3>
+            <div class="section-body">
+                <h4>Dermatomal referral</h4>
+                <div class="h4-body">
+                    <p>The phrenic nerve (C3&ndash;C5) shares spinal cord levels with the <strong>supraclavicular nerves</strong> (C3&ndash;C4), which innervate the <em>shoulder and neck</em> skin. Central diaphragm irritation is therefore referred to the ipsilateral shoulder tip.</p>
+                </div>
+
+                <h4>Classic clinical scenarios</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Subphrenic abscess &rarr; ipsilateral shoulder pain</span>
+                        <span class="buzzword">Splenic rupture (blood under L diaphragm) &rarr; L shoulder pain (<strong>Kehr sign</strong>)</span>
+                        <span class="buzzword">Ruptured ectopic pregnancy with hemoperitoneum &rarr; shoulder pain when supine</span>
+                        <span class="buzzword">Diaphragmatic pleurisy &rarr; shoulder + neck pain</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo3-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Other Clinical Correlates</h3>
+            <div class="section-body">
+                <h4>Phrenic nerve injury</h4>
+                <div class="h4-body">
+                    <p>Injury (surgical, malignant invasion, viral neuritis) &rarr; <strong>hemidiaphragm paralysis</strong>, visible on chest X-ray as an elevated hemidiaphragm with paradoxical movement on sniff test.</p>
+                </div>
+
+                <h4>Traumatic diaphragmatic rupture</h4>
+                <div class="h4-body">
+                    <p>Blunt abdominal trauma most commonly ruptures the <strong>left</strong> hemidiaphragm (the liver shields the right). Herniation of the stomach/colon into the left chest causes respiratory distress and a "bowel in chest" sign on imaging.</p>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo3-tyu">
+                <h3>Testing Your Understanding (TYU)</h3>
+
+                <p><strong>TYU 1:</strong> Which vertebral level is the aortic hiatus, and what else passes through it besides the aorta?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>T12.</strong> The aortic hiatus also transmits the <strong>thoracic duct</strong> and the <strong>azygos vein</strong>. Unlike the caval and esophageal openings, the aorta passes <em>behind</em> the diaphragm (under the median arcuate ligament), not through muscle.</p>
+                </div>
+
+                <p><strong>TYU 2:</strong> A patient with a subphrenic abscess complains of right shoulder pain. What is the anatomic basis of this referred pain?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>right phrenic nerve</strong> provides sensory innervation to the central diaphragm (both pleural and peritoneal surfaces) and arises from <strong>C3&ndash;C5</strong>. These same cord segments supply the <em>supraclavicular nerves</em> to the shoulder skin, so central diaphragm irritation is referred to the ipsilateral shoulder tip (<strong>Kehr sign</strong> when blood is the irritant).</p>
+                </div>
+
+                <p><strong>TYU 3:</strong> A patient has a large sliding hiatal hernia. Which diaphragmatic opening has widened, and which nerves that normally pass through it could be stretched or compressed?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>esophageal hiatus (T10)</strong>, which sits in the right crus. Besides the esophagus, it transmits the <strong>anterior and posterior vagal trunks</strong> and <em>esophageal branches of the left gastric vessels</em>. Vagal involvement can produce gastroparesis-like symptoms in some patients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 4 — Urolithiasis & Ureters ══ -->
+    <section class="lo-section" id="lo4">
+        <h2 class="lo-title">LO 4 &middot; Urolithiasis &mdash; Kidneys &amp; Ureters</h2>
+        <p class="lo-text">Identify the potential sites of urolithiasis (kidney stones) along the urinary tract in the retroperitoneal space, relate them to the three anatomic ureteric constrictions, and explain the pattern of referred pain.</p>
+        <div class="lo-content" id="lo4-body">
+            <div class="lo-covered">
+                <strong>Covers LO:</strong> 4 (identify potential locations of urolithiasis of kidneys and ureters in retroperitoneal space)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo4-kidney">1. Kidneys &mdash; location, calyces &amp; stone formation</a></li>
+                    <li><a href="#lo4-ureter">2. Ureters &mdash; course through retroperitoneum</a></li>
+                    <li><a href="#lo4-constrict">3. Three anatomic ureteric constrictions</a></li>
+                    <li><a href="#lo4-pain">4. Referred pain &mdash; "loin to groin" (T11&ndash;L2)</a></li>
+                    <li><a href="#lo4-surgery">5. "Water under the bridge" &mdash; surgical pitfall</a></li>
+                    <li><a href="#lo4-clinical">6. Clinical approach to urolithiasis</a></li>
+                    <li><a href="#lo4-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo4-body')">Expand all</button>
+                <button onclick="collapseAll('lo4-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-kidney" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. The Kidneys &mdash; Location &amp; Urine Formation</h3>
+            <div class="section-body">
+                <h4>Retroperitoneal position</h4>
+                <div class="h4-body">
+                    <p>The kidneys lie in the <strong>perinephric space</strong> between T12 and L3 vertebral levels, enclosed by <em>Gerota's (renal) fascia</em> and surrounded by perinephric fat. The <strong>right kidney</strong> sits ~1&ndash;2&nbsp;cm lower than the left (displaced inferiorly by the liver).</p>
+                    <p>The posterior relationships differ for the superior and inferior poles:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Superior pole: diaphragm &amp; pleural reflection (risk of pneumothorax during renal surgery)</span>
+                        <span class="buzzword">Inferior pole: psoas, quadratus lumborum &amp; transversus abdominis</span>
+                    </div>
+                </div>
+
+                <h4>Renal pelvis, calyces &amp; stone seeding</h4>
+                <div class="h4-body">
+                    <p>Urine flows from the collecting ducts into the <strong>minor calyces</strong> &rarr; <strong>major calyces</strong> &rarr; <strong>renal pelvis</strong> &rarr; <strong>ureter</strong>. Special smooth-muscle pacemaker cells in the <em>minor calyces</em> generate ~4 peristaltic waves/min that propel urine.</p>
+                    <p>Stones most often form at the <strong>renal papilla</strong> (site of supersaturation and Randall's plaques) and may lodge anywhere along the urinary tract.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-ureter" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. The Ureters &mdash; Course Through the Retroperitoneum</h3>
+            <div class="section-body">
+                <h4>Retroperitoneal path</h4>
+                <div class="h4-body">
+                    <p>Each ureter is ~25&nbsp;cm long. It descends <strong>anterior to the psoas major</strong> and is crossed anteriorly by the <em>gonadal vessels</em> ("water &mdash; ureter &mdash; under the bridge &mdash; gonadal vessels"). The ureters travel at roughly the level of the <strong>tips of the lumbar transverse processes</strong>.</p>
+                    <p>At the pelvic brim, the ureter crosses over the <strong>bifurcation of the common iliac artery</strong>, then courses posteriorly along the lateral pelvic wall to the bladder.</p>
+                </div>
+
+                <h4>Blood supply</h4>
+                <div class="h4-body">
+                    <p>The ureter receives multiple small arterial branches that approach from the <strong>medial side in the abdomen</strong> and from the <strong>lateral side in the pelvis</strong> &mdash; a key surgical principle for preserving ureteric viability.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-constrict" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Three Anatomic Ureteric Constrictions</h3>
+            <div class="section-body">
+                <h4>Where stones get stuck</h4>
+                <div class="h4-body">
+                    <p>Stones characteristically impact at three physiologic narrowings:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">1. Uretero-pelvic junction (UPJ) &mdash; at the renal pelvis</span>
+                        <span class="buzzword">2. Pelvic brim &mdash; where the ureter crosses the common iliac bifurcation</span>
+                        <span class="buzzword">3. Uretero-vesical junction (UVJ) &mdash; as the ureter enters the bladder wall</span>
+                    </div>
+                    <div class="hy-box">
+                        <strong>High-Yield:</strong> The <strong>UVJ is the narrowest</strong> point and the <strong>most common site of stone impaction</strong>. The oblique intramural course through the detrusor also prevents vesicoureteric reflux.
+                    </div>
+                </div>
+
+                <div class="mnemonic">
+                    <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#128161; Mnemonic &mdash; Three constrictions</span><span class="mnemonic-chevron">&#9660;</span></div>
+                    <div class="mnemonic-body">
+                        <p><strong>"UPJ, Pelvic brim, UVJ"</strong> &mdash; top, middle, bottom. Another way: <em>"Stones stop where the pipe kinks."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-pain" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Referred Pain &mdash; "Loin to Groin"</h3>
+            <div class="section-body">
+                <h4>Visceral innervation</h4>
+                <div class="h4-body">
+                    <p>The ureter is innervated by sympathetic fibers traveling with segments <strong>T11&ndash;L2</strong>. Because these cord levels also receive somatic afferents from the flank, scrotum/labium, and medial thigh, ureteric colic is felt as a classic <em>loin-to-groin</em> pain pattern.</p>
+                </div>
+
+                <h4>Pain by stone location</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Upper ureter stone &rarr; flank / CVA pain (T11&ndash;T12)</span>
+                        <span class="buzzword">Mid-ureter stone &rarr; iliac fossa / lower abdominal pain (L1)</span>
+                        <span class="buzzword">Lower ureter / UVJ stone &rarr; groin, scrotum/labium, inner thigh (L1&ndash;L2, genitofemoral n.); urinary urgency &amp; dysuria</span>
+                    </div>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-Yield:</strong> Ureteric colic patients are <em>restless</em> (writhe, cannot lie still) &mdash; unlike peritonitis patients who lie motionless. Hematuria (micro or gross) + colicky flank pain radiating to groin is the classic triad.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-surgery" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. "Water Under the Bridge" &mdash; Surgical Pitfall</h3>
+            <div class="section-body">
+                <h4>Ureter vs artery &mdash; pelvic crossings</h4>
+                <div class="h4-body">
+                    <p>Classic rule: <strong>"water under the bridge"</strong> &mdash; the ureter ("water") passes <em>under</em> the overlying artery ("bridge"):</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Females: ureter passes under the <strong>uterine artery</strong> (at the level of the ischial spine, ~2&nbsp;cm lateral to the cervix)</span>
+                        <span class="buzzword">Males: ureter passes under the <strong>vas deferens</strong></span>
+                    </div>
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span>&#9888;&#65039; Exam Trap &mdash; Iatrogenic ureter injury</span><span class="trap-chevron">&#9660;</span></div>
+                    <div class="trap-body">
+                        <p>During <strong>hysterectomy</strong>, the most common site of ureteric injury is where the ureter passes <em>under</em> the uterine artery near the cervix. Post-operative flank pain + urinoma or fistula should prompt CT urogram.</p>
+                        <p>During <strong>left hemicolectomy</strong>, the left ureter is at risk where it crosses the pelvic brim near the IMA &mdash; identify and protect it before ligating vessels.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo4-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Clinical Approach to Urolithiasis</h3>
+            <div class="section-body">
+                <h4>Imaging &amp; diagnosis</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Non-contrast helical CT &mdash; gold standard, sensitivity &gt;95%</span>
+                        <span class="buzzword">Ultrasound &mdash; first-line in pregnancy / children</span>
+                        <span class="buzzword">KUB plain film &mdash; calcium stones only (radiopaque); uric acid stones are radiolucent</span>
+                    </div>
+                </div>
+
+                <h4>Stone types &amp; conditions</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Calcium oxalate / phosphate (~80%) &mdash; envelope or dumbbell crystals</span>
+                        <span class="buzzword">Struvite (Mg-NH4-PO4) &mdash; <em>coffin-lid</em>, urease-producing bugs (<em>Proteus</em>, Klebsiella), forms staghorn calculi</span>
+                        <span class="buzzword">Uric acid &mdash; radiolucent, acidic urine (gout, tumor lysis)</span>
+                        <span class="buzzword">Cystine &mdash; hexagonal crystals, cystinuria (AR)</span>
+                    </div>
+                </div>
+
+                <h4>Management principles</h4>
+                <div class="h4-body">
+                    <p>Stones &lt;5&nbsp;mm usually pass spontaneously with hydration, analgesia, and tamsulosin (medical expulsive therapy). Stones &gt;10&nbsp;mm or with obstruction/infection require <strong>ureteroscopy</strong>, <strong>shock wave lithotripsy</strong>, or <strong>percutaneous nephrolithotomy</strong> (staghorn stones).</p>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo4-tyu">
+                <h3>Testing Your Understanding (TYU)</h3>
+
+                <p><strong>TYU 1:</strong> Name the three anatomic constrictions of the ureter where stones typically impact, and identify the narrowest of the three.</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>From proximal to distal: (1) <strong>uretero-pelvic junction (UPJ)</strong>, (2) <strong>pelvic brim</strong> where the ureter crosses the common iliac artery bifurcation, and (3) <strong>uretero-vesical junction (UVJ)</strong>. The <strong>UVJ is the narrowest</strong> and most common site of stone impaction.</p>
+                </div>
+
+                <p><strong>TYU 2:</strong> A 45-year-old man presents with sudden-onset right flank pain radiating to the scrotum and microscopic hematuria. What is the anatomic explanation for the radiation pattern?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>Visceral afferents from the ureter enter the spinal cord at <strong>T11&ndash;L2</strong>. These same segments supply the flank, scrotum/labium, and medial thigh (via ilioinguinal and genitofemoral nerves), producing the classic <strong>"loin-to-groin"</strong> referred pain of ureteric colic. Radiation to the scrotum suggests a <em>lower</em> ureteric stone.</p>
+                </div>
+
+                <p><strong>TYU 3:</strong> During a hysterectomy, the surgeon is concerned about protecting the ureter. At what anatomic landmark is the ureter most vulnerable to iatrogenic injury, and what is the classic rule describing its relationship to nearby structures?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The ureter passes <strong>posterior (under) to the uterine artery</strong> near the cervix, approximately 2&nbsp;cm lateral to it at the level of the ischial spine. The mnemonic <strong>"water under the bridge"</strong> &mdash; water = ureter, bridge = uterine artery. This is the most common site of iatrogenic ureter injury during hysterectomy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ LO 5 — Adrenal Gland Innervation ══ -->
+    <section class="lo-section" id="lo5">
+        <h2 class="lo-title">LO 5 &middot; Innervation of the Adrenal Gland</h2>
+        <p class="lo-text">Distinguish the innervation of different parts of the adrenal gland &mdash; appreciating why the cortex is hormonally regulated while the medulla receives direct sympathetic input.</p>
+        <div class="lo-content" id="lo5-body">
+            <div class="lo-covered">
+                <strong>Covers LO:</strong> 5 (distinguish the innervation of different parts of the adrenal gland)
+            </div>
+
+            <div class="lo-toc">
+                <strong>In this tab:</strong>
+                <ul>
+                    <li><a href="#lo5-anatomy">1. Adrenal gland &mdash; gross anatomy &amp; layers</a></li>
+                    <li><a href="#lo5-cortex">2. Adrenal cortex &mdash; hormonal (not neural) control</a></li>
+                    <li><a href="#lo5-medulla">3. Adrenal medulla &mdash; direct sympathetic innervation</a></li>
+                    <li><a href="#lo5-embryo">4. Embryologic basis of the split</a></li>
+                    <li><a href="#lo5-vascular">5. Vascular reminder &mdash; 3 arteries, 1 vein (asymmetric)</a></li>
+                    <li><a href="#lo5-clinical">6. Clinical correlates (pheochromocytoma, Addisonian crisis)</a></li>
+                    <li><a href="#lo5-tyu">7. Testing Your Understanding (TYU)</a></li>
+                </ul>
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('lo5-body')">Expand all</button>
+                <button onclick="collapseAll('lo5-body')">Collapse all</button>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-anatomy" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>1. Adrenal Gland &mdash; Gross Anatomy</h3>
+            <div class="section-body">
+                <h4>Shape, location &amp; layers</h4>
+                <div class="h4-body">
+                    <p>The paired suprarenal (adrenal) glands cap the superior poles of the kidneys within Gerota's fascia, but in their own fascial compartment (separate from the kidney &mdash; so they don't descend with ptotic kidneys).</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Right adrenal &mdash; triangular (pyramidal)</span>
+                        <span class="buzzword">Left adrenal &mdash; semilunar (crescent)</span>
+                    </div>
+                    <p>Each gland has two functionally and embryologically distinct parts:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Cortex (outer) &mdash; steroid hormones</span>
+                        <span class="buzzword">Medulla (inner) &mdash; catecholamines</span>
+                    </div>
+                </div>
+
+                <h4>Cortical zones (outer &rarr; inner)</h4>
+                <div class="h4-body">
+                    <div class="mnemonic">
+                        <div class="mnemonic-toggle-header" onclick="toggleMnemonic(this)"><span>&#128161; Mnemonic &mdash; "GFR makes Salt, Sugar, Sex; deeper you go, sweeter it gets"</span><span class="mnemonic-chevron">&#9660;</span></div>
+                        <div class="mnemonic-body">
+                            <div class="buzzwords">
+                                <span class="buzzword">Zona Glomerulosa &rarr; Salt (aldosterone, mineralocorticoid)</span>
+                                <span class="buzzword">Zona Fasciculata &rarr; Sugar (cortisol, glucocorticoid)</span>
+                                <span class="buzzword">Zona Reticularis &rarr; Sex (androgens: DHEA)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-cortex" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>2. Adrenal Cortex &mdash; Hormonal Control</h3>
+            <div class="section-body">
+                <h4>No direct neural drive</h4>
+                <div class="h4-body">
+                    <p>The cortex has <strong>no direct autonomic innervation</strong> controlling its secretion. Steroid production is instead regulated by circulating hormones and local factors:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Zona glomerulosa &mdash; renin-angiotensin-aldosterone system (angiotensin II); K<sup>+</sup>; ACTH (minor)</span>
+                        <span class="buzzword">Zona fasciculata &mdash; ACTH from the anterior pituitary (HPA axis)</span>
+                        <span class="buzzword">Zona reticularis &mdash; ACTH (and local factors)</span>
+                    </div>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-Yield:</strong> Because the cortex is <em>hormone-driven</em>, loss of the pituitary (secondary adrenal insufficiency) spares the zona glomerulosa &mdash; aldosterone is preserved because it's driven by <strong>renin-angiotensin</strong>, not ACTH. This is why <em>hyponatremia</em> (from cortisol deficiency) occurs but <em>hyperkalemia</em> does not in secondary adrenal insufficiency.
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-medulla" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>3. Adrenal Medulla &mdash; Direct Sympathetic Innervation</h3>
+            <div class="section-body">
+                <h4>Pre-ganglionic sympathetic fibers</h4>
+                <div class="h4-body">
+                    <p>The medulla is unique: it is innervated directly by <strong>pre-ganglionic sympathetic fibers</strong> (thoracic splanchnic nerves, T5&ndash;T11, primarily via the greater splanchnic nerve) that synapse on <strong>chromaffin cells</strong>. These cells function as <em>modified post-ganglionic sympathetic neurons</em> without axons &mdash; they release <strong>catecholamines</strong> (~80% epinephrine, ~20% norepinephrine) directly into the bloodstream.</p>
+                </div>
+
+                <div class="hy-box">
+                    <strong>High-Yield:</strong> Chromaffin cells use <strong>ACh at nicotinic receptors</strong> (the same neurotransmitter pre-ganglionic sympathetic neurons use at all autonomic ganglia). No second synapse exists &mdash; this is why the response is so rapid and the hormones act systemically.
+                </div>
+
+                <div class="exam-trap">
+                    <div class="trap-header" onclick="toggleTrap(this)"><span>&#9888;&#65039; Exam Trap &mdash; Cortex vs medulla innervation</span><span class="trap-chevron">&#9660;</span></div>
+                    <div class="trap-body">
+                        <p>Do <strong>not</strong> confuse the two:</p>
+                        <div class="buzzwords">
+                            <span class="buzzword">Cortex &rarr; hormonal (ACTH, angiotensin II); no direct innervation</span>
+                            <span class="buzzword">Medulla &rarr; direct pre-ganglionic sympathetic (T5&ndash;T11 splanchnics)</span>
+                        </div>
+                        <p>USMLE will ask what happens in a patient whose splanchnic nerves are transected &mdash; answer: catecholamine release is impaired, but cortisol/aldosterone are preserved.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-embryo" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>4. Embryologic Basis of the Split</h3>
+            <div class="section-body">
+                <h4>Two different origins</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Cortex &mdash; mesoderm (coelomic mesothelium); behaves like an endocrine organ</span>
+                        <span class="buzzword">Medulla &mdash; neural crest (chromaffin cells); behaves like post-ganglionic sympathetic neurons</span>
+                    </div>
+                    <p>The dual origin explains the dual control system: the mesodermal cortex responds to circulating hormones, while the neural-crest medulla responds to direct neural input &mdash; the same logic that governs all sympathetic ganglia.</p>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-vascular" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>5. Vascular Reminder &mdash; 3 Arteries, 1 Vein</h3>
+            <div class="section-body">
+                <h4>Arterial supply</h4>
+                <div class="h4-body">
+                    <p>Each adrenal receives blood from <strong>three</strong> arteries:</p>
+                    <div class="buzzwords">
+                        <span class="buzzword">Superior suprarenal a. &larr; inferior phrenic a.</span>
+                        <span class="buzzword">Middle suprarenal a. &larr; abdominal aorta directly</span>
+                        <span class="buzzword">Inferior suprarenal a. &larr; renal a.</span>
+                    </div>
+                </div>
+
+                <h4>Venous drainage &mdash; asymmetric</h4>
+                <div class="h4-body">
+                    <div class="buzzwords">
+                        <span class="buzzword">Right suprarenal vein &rarr; directly into IVC (short)</span>
+                        <span class="buzzword">Left suprarenal vein &rarr; left renal vein (long; same asymmetry as gonadal v.)</span>
+                    </div>
+                    <div class="hy-box">
+                        <strong>High-Yield:</strong> This asymmetry matters for <strong>adrenal venous sampling</strong> in primary hyperaldosteronism &mdash; the right adrenal vein is short and notoriously hard to cannulate.
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="collapsible-h3" id="lo5-clinical" onclick="toggleSection(this)"><span class="section-chevron">&#9660;</span>6. Clinical Correlates</h3>
+            <div class="section-body">
+                <h4>Pheochromocytoma</h4>
+                <div class="h4-body">
+                    <p>Catecholamine-secreting tumor of chromaffin cells. Classic episodic triad: <strong>headache, palpitations, sweating</strong>, plus hypertension. Lab: elevated urinary/plasma <em>metanephrines</em>. Tx: &alpha;-blockade <strong>before</strong> &beta;-blockade to avoid hypertensive crisis.</p>
+                </div>
+
+                <h4>Addisonian crisis (primary adrenal insufficiency)</h4>
+                <div class="h4-body">
+                    <p>Loss of <strong>both</strong> cortex layers &rarr; hypotension, hyponatremia, hyperkalemia, hypoglycemia, hyperpigmentation (from &uarr; ACTH/MSH). Because the defect is cortical, catecholamine release is preserved.</p>
+                </div>
+
+                <h4>Waterhouse-Friderichsen syndrome</h4>
+                <div class="h4-body">
+                    <p>Hemorrhagic adrenal infarction (classically with <em>Neisseria meningitidis</em> septicemia) &rarr; acute adrenal failure &rarr; shock.</p>
+                </div>
+            </div>
+
+            <div class="tyu-section" id="lo5-tyu">
+                <h3>Testing Your Understanding (TYU)</h3>
+
+                <p><strong>TYU 1:</strong> Which part of the adrenal gland receives <em>direct</em> autonomic innervation, and from which nerve fibers?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>Only the <strong>adrenal medulla</strong> receives direct innervation &mdash; from <strong>pre-ganglionic sympathetic</strong> fibers (thoracic splanchnic nerves, T5&ndash;T11). Chromaffin cells act as modified post-ganglionic sympathetic neurons and release epinephrine/norepinephrine into the systemic circulation. The <em>cortex</em> has no direct neural control and is regulated hormonally (ACTH, angiotensin II).</p>
+                </div>
+
+                <p><strong>TYU 2:</strong> How does the embryologic origin of the adrenal cortex vs medulla explain their different control mechanisms?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>cortex</strong> derives from <em>mesoderm</em> (coelomic epithelium) and behaves like a true endocrine organ regulated by circulating hormones (ACTH, angiotensin II). The <strong>medulla</strong> derives from <em>neural crest</em> and behaves like post-ganglionic sympathetic neurons &mdash; explaining its direct pre-ganglionic sympathetic innervation and catecholamine output.</p>
+                </div>
+
+                <p><strong>TYU 3:</strong> A patient with a pituitary infarct develops cortisol deficiency. Why is aldosterone largely preserved?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>Aldosterone release from the <strong>zona glomerulosa</strong> is primarily driven by the <strong>renin-angiotensin system</strong> and plasma K<sup>+</sup>, not ACTH. Loss of pituitary ACTH therefore causes cortisol (and androgen) deficiency while sparing aldosterone &mdash; so hyperkalemia is characteristically <em>absent</em> in secondary (central) adrenal insufficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ PRACTICE QUESTIONS ══ -->
+    <section class="lo-section" id="practice">
+        <h2 class="lo-title">Practice Questions &mdash; USMLE Step 1 Style</h2>
+        <p class="lo-text">Clinical vignettes covering all 5 LOs of the Retroperitoneum &amp; Posterior Abdominal Wall lecture. Attempt each question before revealing the answer.</p>
+        <div class="lo-content" id="practice-body">
+            <div class="lo-covered">
+                <strong>Covers LOs:</strong> 1 (IP vs RP), 2 (vessels), 3 (diaphragm), 4 (urolithiasis), 5 (adrenal innervation)
+            </div>
+
+            <div class="lo-controls">
+                <button onclick="expandAll('practice-body')">Expand all</button>
+                <button onclick="collapseAll('practice-body')">Collapse all</button>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q1.</strong> A 68-year-old man with a history of hypertension presents to the ED with sudden-onset severe tearing back pain and hypotension. FAST exam is negative for free intraperitoneal fluid, but CT shows a large retroperitoneal hematoma tracking down the psoas fascia. Which vessel is the most likely source?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Ruptured infrarenal abdominal aortic aneurysm.</strong> The aorta is a primary retroperitoneal structure, so rupture typically produces a retroperitoneal hematoma (not free intraperitoneal blood &mdash; FAST will be negative). Blood tracks along the psoas fascia and Gerota's fascia, and can present as flank ecchymosis (Grey-Turner sign). Infrarenal AAAs (below the renal arteries) account for the majority.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q2.</strong> A 32-year-old woman presents with left flank pain and intermittent hematuria. Imaging shows compression of the left renal vein between the aorta and a second vessel. Which vessel is compressing the renal vein, and what is this syndrome called?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Nutcracker syndrome.</strong> The left renal vein travels anterior to the aorta and posterior to the <strong>superior mesenteric artery (SMA)</strong>. Narrowing of the aorta-SMA angle compresses the vein, causing left flank pain, hematuria (from venous hypertension rupturing renal fornices) and, in males, a <em>left-sided varicocele</em> (the left gonadal vein drains into the left renal vein).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q3.</strong> A 45-year-old man presents with severe colicky right flank pain radiating to the groin and microscopic hematuria. Non-contrast CT shows a 6-mm stone at the level of the pelvic brim on the right. Which anatomic landmark corresponds to the second constriction of the ureter?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The ureter crosses <strong>over the bifurcation of the common iliac artery</strong> at the pelvic brim &mdash; the <strong>second</strong> anatomic constriction (the first is the UPJ; the third and narrowest is the UVJ). Stones are most likely to impact at the UVJ, but the pelvic brim is the classic mid-ureter impaction site.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q4.</strong> During a routine left hemicolectomy, the surgeon identifies and preserves the left ureter before ligating the IMA. What anatomic landmark is most useful for locating the left ureter in the retroperitoneum?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The ureter descends <strong>on the anterior surface of the psoas major muscle</strong> and is crossed anteriorly by the gonadal vessels. Near the IMA, it crosses the common iliac vessels at the pelvic brim. Identifying the ureter on psoas and tracing it down is the standard surgical maneuver &mdash; ligating the IMA without first identifying the ureter risks ligating it along with the vessels.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q5.</strong> A trauma patient presents after blunt abdominal injury. Chest X-ray shows the stomach bubble in the left hemithorax, and a nasogastric tube curls up into the chest. Which injury is most likely, and why is it more common on this side?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Traumatic rupture of the left hemidiaphragm</strong> with gastric herniation into the thorax. Left-sided rupture is more common because the liver acts as a shield protecting the right hemidiaphragm from blunt force. Right-sided ruptures tend to be larger and herniate the liver.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q6.</strong> A 28-year-old woman presents with sudden-onset LLQ pain and hemodynamic instability. FAST exam shows free fluid in the pelvis. She reports "pain in my left shoulder" when lying flat. What is the anatomic explanation for the shoulder pain?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Kehr sign.</strong> Blood (from a ruptured ectopic pregnancy or splenic injury) pooling under the <strong>left hemidiaphragm</strong> irritates the <em>central</em> diaphragm. The <strong>phrenic nerve (C3&ndash;C5)</strong> provides sensory innervation to the central diaphragm and shares spinal segments with the supraclavicular nerves, so pain is referred to the ipsilateral shoulder tip.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q7.</strong> A 55-year-old man with a long history of GERD is found to have a large sliding hiatal hernia. Which diaphragmatic opening is affected, and at what vertebral level does it lie?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>esophageal hiatus at T10</strong>, located within the right crus of the diaphragm. It transmits the esophagus, the anterior and posterior <strong>vagal trunks</strong>, and esophageal branches of the left gastric vessels. Widening of this hiatus allows the GE junction to slide into the thorax.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q8.</strong> During a gynecologic procedure, a surgeon encounters the ureter in the pelvis. Which mnemonic describes its relationship to the uterine artery?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>"Water under the bridge."</strong> The ureter (water) passes <strong>posterior (under)</strong> to the uterine artery (bridge) approximately 2&nbsp;cm lateral to the cervix at the level of the ischial spine. This is the most common site of iatrogenic ureter injury during hysterectomy. In males, the analogous crossing is under the vas deferens.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q9.</strong> A 40-year-old woman with resistant hypertension is found to have a right adrenal mass. Laboratory work-up reveals episodic hypertension, tachycardia, sweating, and elevated urinary metanephrines. Which embryologic tissue gives rise to the cells of this tumor?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Neural crest.</strong> The diagnosis is <em>pheochromocytoma</em> &mdash; a tumor of chromaffin cells in the adrenal <strong>medulla</strong>. Chromaffin cells derive from neural crest and function as modified post-ganglionic sympathetic neurons. They are innervated directly by <strong>pre-ganglionic sympathetic fibers</strong> (T5&ndash;T11 splanchnics).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q10.</strong> A patient with a pituitary infarct develops secondary adrenal insufficiency. Which of the following hormones is <em>preserved</em>, and what is the anatomic/physiologic explanation?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Aldosterone</strong> is preserved. Aldosterone release from the <strong>zona glomerulosa</strong> is regulated primarily by the <strong>renin-angiotensin-aldosterone system</strong> (not ACTH). Loss of pituitary ACTH causes cortisol and adrenal androgen deficiency, but aldosterone (and therefore Na<sup>+</sup>/K<sup>+</sup> handling) is largely intact &mdash; distinguishing secondary from primary (Addisonian) adrenal insufficiency, which has hyperkalemia.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q11.</strong> Which of the following abdominal organs is primarily intraperitoneal, not retroperitoneal?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Jejunum / ileum / transverse colon / sigmoid colon / stomach / liver / spleen / tail of pancreas</strong> are all <em>intra</em>peritoneal. Retroperitoneal (SAD PUCKER): Suprarenal, Aorta/IVC, Duodenum (2&ndash;4), Pancreas (head/neck/body), Ureters, Colon (ascending &amp; descending), Kidneys, Esophagus (thoracic), Rectum. Tail of pancreas is <em>intra</em>peritoneal (in splenorenal ligament) &mdash; classic trap.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q12.</strong> During which procedure is the azygos vein most likely to be encountered passing through the diaphragm alongside the aorta?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>aortic hiatus at T12</strong> transmits the aorta, <strong>thoracic duct</strong>, and <strong>azygos vein</strong>. A classic exam distractor places the azygos with the IVC in the caval hiatus &mdash; remember azygos travels with the <em>aorta</em>, not the IVC.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q13.</strong> A 60-year-old man is evaluated for cirrhosis. On exam he has distended, serpentine veins radiating from the umbilicus. Which portosystemic anastomosis is responsible for this finding?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Caput medusae</strong>: paraumbilical veins (portal) &harr; superficial epigastric veins (systemic caval) draining into the inferior epigastric, lateral thoracic, and superficial circumflex iliac veins. Other classic portosystemic anastomoses: esophageal varices (left gastric &harr; esophageal) and internal hemorrhoids (superior rectal &harr; middle/inferior rectal).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q14.</strong> A 30-year-old thin woman develops post-prandial epigastric pain, early satiety, and bilious vomiting after significant weight loss. Imaging shows compression of the third part of the duodenum. What anatomic syndrome is this, and how does it relate to nutcracker syndrome?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>SMA (Wilkie) syndrome.</strong> The third part of the duodenum is compressed between the aorta and the <strong>superior mesenteric artery (SMA)</strong> when the aorto-SMA angle narrows (normally &gt;25&deg;). This is the <em>duodenum</em> version of the same anatomic squeeze that compresses the left renal vein in <strong>nutcracker syndrome</strong>. Both worsen with weight loss (loss of mesenteric fat cushion).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q15.</strong> A 48-year-old man presents with right flank ecchymosis and hemodynamic instability 2 days after severe blunt trauma. What is the name of this physical exam finding and what does it indicate?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Grey-Turner sign</strong> &mdash; flank ecchymosis indicating <strong>retroperitoneal hemorrhage</strong>. Blood tracking along the psoas fascia or renal fascia reaches the flank subcutaneous tissue. Cullen sign (periumbilical ecchymosis) has similar significance. Classic causes: severe hemorrhagic pancreatitis, ruptured AAA, ectopic pregnancy (peritoneal route).</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q16.</strong> Which of the following best explains why a left-sided varicocele is much more common than a right-sided varicocele in a young, otherwise healthy man?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>The <strong>left gonadal (testicular) vein</strong> drains into the <strong>left renal vein</strong> at a right angle (longer path), while the <strong>right gonadal vein</strong> drains directly into the IVC obliquely (better flow). Left-sided venous pressure is higher, and any compression of the left renal vein (nutcracker) or renal vein pathology (e.g., renal cell carcinoma tumor thrombus) can produce or worsen a left varicocele. <em>A new-onset left varicocele in an adult &rarr; rule out renal cell carcinoma.</em></p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q17.</strong> A 22-year-old man undergoing unilateral nephrectomy for a congenital anomaly has an uncomplicated recovery. Why are renal segmental arteries clinically important to identify before partial nephrectomy?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p>Renal segmental arteries are <strong>end arteries</strong> &mdash; they do not anastomose with adjacent segments. Ligation of a segmental branch causes <strong>infarction of that entire renal segment</strong>. The kidney receives ~25% of cardiac output and typically has 5 segmental arteries per side. Accessory / polar renal arteries (present in ~25%) can easily be missed and must be identified to avoid parenchymal loss.</p>
+                </div>
+            </div>
+
+            <div class="practice-question">
+                <p><strong>Q18.</strong> During spinal cord transection at T4, which of the following autonomic responses is most severely impaired?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+                <div class="answer">
+                    <p><strong>Adrenal medullary catecholamine release.</strong> The medulla is innervated by pre-ganglionic sympathetic fibers originating from <strong>T5&ndash;T11</strong> (greater splanchnic nerve). A cord transection above T5 disconnects all sympathetic outflow to the adrenal medulla, markedly blunting the epinephrine/norepinephrine stress response. The cortex (ACTH-driven, systemic) is preserved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+<script>
+    function switchLO(event, loId) {
+        event.preventDefault();
+        document.querySelectorAll('.lo-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        const section = document.getElementById(loId);
+        if (section) section.classList.add('active');
+        let link = event.target;
+        while (link && !link.classList.contains('sidebar-link')) link = link.parentElement;
+        if (link) link.classList.add('active');
+        const mainEl = document.querySelector('.main');
+        if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    function toggleAnswer(btn) {
+        const answer = btn.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+        answer.classList.toggle('show');
+        btn.textContent = isShowing ? 'Reveal Answer' : 'Hide Answer';
+    }
+
+    function toggleSection(h3El) {
+        h3El.classList.toggle('collapsed');
+        const body = h3El.nextElementSibling;
+        if (body && body.classList.contains('section-body')) body.classList.toggle('collapsed');
+    }
+    function toggleTrap(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('trap-body')) body.classList.toggle('collapsed');
+    }
+    function toggleH5(h5El) {
+        h5El.classList.toggle('collapsed');
+        const body = h5El.nextElementSibling;
+        if (body && body.classList.contains('h5-body')) body.classList.toggle('collapsed');
+    }
+    function toggleMnemonic(headerEl) {
+        headerEl.classList.toggle('collapsed');
+        const body = headerEl.nextElementSibling;
+        if (body && body.classList.contains('mnemonic-body')) body.classList.toggle('collapsed');
+    }
+
+    function expandAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.remove('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.remove('collapsed'));
+    }
+    function collapseAll() {
+        document.querySelectorAll('.lo-section.active .section-body').forEach(el => el.classList.add('collapsed'));
+        document.querySelectorAll('.lo-section.active .collapsible-h3').forEach(el => el.classList.add('collapsed'));
+    }
+
+    function buildExportDoc(forPrint) {
+        const collapsedEls = Array.from(document.querySelectorAll('.collapsed'));
+        const hiddenSections = Array.from(document.querySelectorAll('.lo-section:not(.active)'));
+        hiddenSections.forEach(s => s.style.display = 'block');
+        collapsedEls.forEach(el => el.classList.remove('collapsed'));
+
+        const clone = document.querySelector('.main').cloneNode(true);
+
+        hiddenSections.forEach(s => s.style.display = '');
+        collapsedEls.forEach(el => el.classList.add('collapsed'));
+
+        clone.querySelectorAll(
+            '.section-chevron, .h5-chevron, .mnemonic-chevron, .trap-chevron, ' +
+            '.export-actions, .sidebar-footer, .hub-return-btn, button'
+        ).forEach(el => el.remove());
+
+        const pageCSS = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+
+        const overrideCSS = `
+            * { box-sizing: border-box; }
+            body { display:block !important; overflow:visible !important; height:auto !important; background:white !important; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Calibri,sans-serif; }
+            .main { margin-left:0 !important; height:auto !important; overflow:visible !important; max-width:100% !important; padding:24px 32px !important; }
+            .lo-section { display:block !important; box-shadow:none !important; animation:none !important; ${forPrint ? 'page-break-before:always;' : ''} }
+            .lo-section:first-child { page-break-before:auto !important; }
+            .section-body, .h4-body, .h5-body, .mnemonic-body, .trap-body { display:block !important; }
+            .answer { display:block !important; }
+            .collapsible-h3.collapsed .section-chevron,
+            .h5-subheading.collapsed .h5-chevron,
+            .mnemonic-toggle-header.collapsed .mnemonic-chevron,
+            .trap-header.collapsed .trap-chevron { transform:none !important; }
+            ${forPrint ? '@media print { .main { padding:0 !important; } }' : ''}
+        `;
+
+        const ns = forPrint ? '' :
+            `xmlns:o='urn:schemas-microsoft-com:office:office'
+             xmlns:w='urn:schemas-microsoft-com:office:word'
+             xmlns='http://www.w3.org/TR/REC-html40'`;
+
+        return `<!DOCTYPE html>
+<html ${ns}>
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture 29: Retroperitoneum & Posterior Abdominal Wall — HoyaDocs GI Block</title>
+    <style>${pageCSS}</style>
+    <style>${overrideCSS}</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`;
+    }
+
+    function printAll(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Opening…';
+        btn.disabled = true;
+        const html = buildExportDoc(true);
+        const win = window.open('', '_blank', 'width=960,height=750,scrollbars=yes');
+        if (!win) {
+            alert('Pop-ups are blocked. Please allow pop-ups for this page, then try again.');
+            btn.innerHTML = origHTML; btn.disabled = false; return;
+        }
+        win.document.open(); win.document.write(html); win.document.close();
+        win.onload = function() { setTimeout(() => { win.focus(); win.print(); }, 1800); };
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function downloadWord(btn) {
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="btn-icon">&#8987;</span>Building…';
+        btn.disabled = true;
+        const html = buildExportDoc(false);
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gi29-retroperitoneum.doc';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = origHTML; btn.disabled = false;
+    }
+
+    function toggleMobileSidebar() {
+        document.querySelector('.sidebar').classList.toggle('mob-open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('mob-open');
+                document.querySelector('.sidebar-overlay').classList.remove('open');
+            }
+        });
+    });
+</script>
+</body>
+</html>
