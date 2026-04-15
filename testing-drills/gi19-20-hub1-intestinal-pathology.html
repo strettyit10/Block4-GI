@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI19-20 Intestinal Pathology — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi19-20-intestinal-pathology.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>GI19-20 Intestinal Pathology <span>Active Drills</span></h1>
+  <div class="subtitle">Lectures 19 & 20 · GI Block · Congenital anomalies, obstruction, ischemia, celiac, IBD, diverticular disease, polyps, CRC — LOs 1–8</div>
+  <div class="source-strip">
+    <span class="source-badge"><strong>Source:</strong> Lecture Guide GI19-20</span>
+    <span class="source-badge"><strong>Learning Objectives:</strong> 8</span>
+    <span class="source-badge"><strong>Flashcards:</strong> 19</span>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Your Progress:</span>
+  <span class="hub-step current">Hub 1 — Core</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi19-20-hub2-intestinal-pathology.html" class="hub-step next">Hub 2 — Step 1</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi19-20-hub3-intestinal-pathology.html" class="hub-step next">Hub 3 — Timed</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-num">19</div>
+    <div class="stat-label">Flashcards</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">10</div>
+    <div class="stat-label">Fill-in-Blank</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Orderings</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Matchings</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Test Traps</div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(event, 'tab-fc')">💳 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-fib')">✏️ Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-ordering')">⚙️ Ordering</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-matching')">🔗 Matching</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-traps')">⚠️ Test Traps</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-reference')">📊 Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-fc">
+<div class="fc-progress"><span>Flashcard Drill</span><span><span class="prog-num">19</span> cards</span></div>
+<div class="fc-grid" id="flashcard-grid">
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 1 — Meckel Diverticulum</div>
+      <div class="fc-q">State the "rule of 2s" for Meckel diverticulum. What is the most common ectopic tissue?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Rule of 2s: <strong>2% of population, 2 feet long, 2 inches from ileocecal valve, 2 types of ectopic tissue (gastric mucosa most common), 2× more common in males</strong>. Ectopic gastric mucosa → gastric acid secretion → ileal ulceration → bleeding (most common complication).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 1 — Hirschsprung Disease</div>
+      <div class="fc-q">What is the embryologic defect in Hirschsprung disease, and which segment is most commonly involved?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Failure of neural crest cell migration</strong> → aganglionic segment. Most common: <strong>rectosigmoid (80%)</strong>. Presents with failure to pass meconium, abdominal distention in infants. Diagnosis: contrast enema (transition zone), rectal biopsy (absence of ganglion cells).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Intestinal Obstruction Overview</div>
+      <div class="fc-q">List the four cardinal mechanisms of intestinal obstruction and identify the most common cause overall.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Four mechanisms:</strong> 1) Hernia, 2) Adhesions (most common — ~75% of SBO), 3) Intussusception, 4) Volvulus. Small bowel obstruction (SBO) vs. large bowel obstruction (LBO) differ in presentation and urgency; SBO causes abdominal cramping, vomiting earlier. LBO slower onset.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Volvulus</div>
+      <div class="fc-q">Which type of volvulus is more common in elderly patients, and which in younger patients?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Sigmoid volvulus</strong> → elderly (most common volvulus in older age). <strong>Cecal volvulus</strong> → younger patients, longer mesentery. Both cause "bird's beak" on contrast imaging (twisted mesentery). High mortality if ischemia/necrosis develops.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 3 — Ischemic Bowel</div>
+      <div class="fc-q">Name the two major types of ischemic bowel disease and explain the difference between thrombotic and embolic causes.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Acute mesenteric ischemia:</strong> Embolic (50%, sudden, cardiac source) vs. Thrombotic (25%, gradual, atherosclerosis). <strong>Watershed zones vulnerable:</strong> splenic flexure (between SMA & IMA) and rectosigmoid junction (between IMA & hypogastric). Presents with severe pain out of proportion to exam.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 4 — Celiac Disease</div>
+      <div class="fc-q">What HLA alleles are associated with celiac disease, and what is the primary antigen targeted?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>HLA-DQ2 (95%) or HLA-DQ8 (5%)</strong> required for celiac. Target antigen: <strong>tissue transglutaminase (tTG)</strong> — cross-reacts with gliadin. Pathology: <strong>villous atrophy + crypt hyperplasia</strong>. Complications: dermatitis herpetiformis, iron-deficiency anemia, osteoporosis.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 5 — Crohn's Disease</div>
+      <div class="fc-q">What are the pathologic hallmarks of Crohn disease, and which portion of the GI tract is classically involved?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Terminal ileum (90% involvement)</strong>. Pathologic hallmarks: <strong>skip lesions, transmural inflammation, cobblestone appearance, fissuring ulcers, fistulas, granulomas (non-caseating)</strong>. Complications: strictures, fistulas, abscesses. Perianal disease common (skin tags, fistulas).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 5 — Ulcerative Colitis</div>
+      <div class="fc-q">How does ulcerative colitis differ from Crohn disease in terms of extent, depth, and pathologic features?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>UC: continuous inflammation (no skip lesions), mucosal/submucosal only (not transmural), crypt abscesses, pseudopolyps</strong>. Always involves rectum, extends proximally in continuous pattern. NO granulomas, NO fistulas. Higher colorectal cancer risk (~1% per year after 10 years).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 6 — Diverticular Disease</div>
+      <div class="fc-q">Why does diverticular disease preferentially affect the sigmoid colon, and what is the anatomic vulnerability?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Sigmoid colon:</strong> smallest lumen (Laplace's law) → highest intramural pressure. <strong>Vasa recta penetrate muscular wall</strong> at sites of increased pressure. Low-fiber diet → increased pressures. Diverticulitis (inflammation) → fever, LLQ pain, elevated WBC. Complications: perforation, abscess, fistula.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 7 — Colonic Polyp Classification</div>
+      <div class="fc-q">Name the three main categories of colonic polyps and give an example of each.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>1) Non-neoplastic:</strong> hyperplastic (most common, no cancer risk). <strong>2) Hamartomatous:</strong> Peutz-Jeghers (hereditary, increased cancer risk), juvenile polyps. <strong>3) Neoplastic (adenomatous):</strong> tubular (75%, low villous), villous (highest cancer risk), tubulovillous. Serrated polyps (alternative pathway to cancer).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 8 — Adenoma-Carcinoma Sequence</div>
+      <div class="fc-q">Outline the adenoma-carcinoma sequence for colorectal cancer, naming the key genetic mutations.</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Normal epithelium → APC loss → adenoma → KRAS mutation → advanced adenoma → TP53 mutation → carcinoma</strong>. Takes ~10–15 years. APC inactivation (adenomatous polyposis coli) is early/initiating event. TP53 (p53 tumor suppressor) critical for malignant progression.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 8 — Familial Adenomatous Polyposis (FAP)</div>
+      <div class="fc-q">What is the genetic basis of FAP, what is its penetrance, and what is the standard screening/treatment approach?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Germline APC mutation.</strong> 100% penetrance, develops hundreds to thousands of adenomas. Nearly 100% cancer risk by age 50 if untreated. Treatment: prophylactic total colectomy. Screening: colonoscopy starting age 10–12 years. Extraintestinal manifestations: osteomas, desmoid tumors, congenital hypertrophy of retinal pigment epithelium (CHRPE).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 8 — Lynch Syndrome (HNPCC)</div>
+      <div class="fc-q">What genetic abnormality defines Lynch syndrome, and how does it predispose to cancer?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Mismatch repair (MMR) gene mutations</strong> (MLH1, MSH2, MSH6, PMS2). Defective DNA repair → microsatellite instability (MSI-high). ~70% lifetime risk of CRC (often right-sided, earlier onset). Screening: colonoscopy every 1–2 years starting age 25. Increased risk of endometrial, ovarian, gastric cancers.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 8 — Anal Canal Squamous Cell Carcinoma</div>
+      <div class="fc-q">What is the primary risk factor for anal canal SCC, and how does HPV infection contribute?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>HPV infection (mostly HPV-16)</strong> → >80% of cases. Additional risk factors: smoking, immunosuppression, anal receptive intercourse. Presents with anal pain, bleeding, mass. Treatment: Nigro regimen (chemotherapy + radiation) preferred over surgery to preserve continence. Better prognosis than rectal SCC.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Intussusception</div>
+      <div class="fc-q">What is intussusception, what is the most common age of presentation, and what is the typical radiologic finding?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Invagination of intestine into adjacent bowel.</strong> Most common in children ages 6 months–3 years. Most cases idiopathic (hypertrophied Peyer's patches); can follow viral infection. Classic presentation: intermittent abdominal pain, "currant jelly" stools. Imaging: "target sign" (ultrasound/CT). Treatment: hydrostatic or pneumatic reduction; surgery if ischemia.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 2 — Gallstone Ileus</div>
+      <div class="fc-q">How does a gallstone cause intestinal obstruction, and what is the classic imaging triad?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Cholecystoenteric fistula (from large stone eroding gallbladder wall)</strong> → gallstone impacted in terminal ileum (narrowest part of small bowel). Classic imaging triad: <strong>pneumobilia, intestinal obstruction, ectopic gallstone</strong> (Rigler's triad). More common in elderly. Treatment: enterotomy + stone extraction; manage gallbladder/fistula if feasible.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 4 — Dermatitis Herpetiformis</div>
+      <div class="fc-q">What is the relationship between dermatitis herpetiformis and celiac disease?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a">Dermatitis herpetiformis is a <strong>cutaneous manifestation of celiac disease</strong> (same pathogenic HLA-DQ2/DQ8 and tTG antibodies). Presents with intensely pruritic papulovesicular rash, typically on extensor surfaces. ~15–25% of celiac patients develop DH. Responds to gluten-free diet; also responds to dapsone (faster symptom relief).</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 5 — IBD Cancer Risk</div>
+      <div class="fc-q">Compare colorectal cancer risk in Crohn disease vs. ulcerative colitis. How does duration and extent affect risk?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Both have increased cancer risk, higher in UC (~1% per year after 10 years disease duration).</strong> Crohn cancer risk lower but increased. Risk factors: disease duration >8–10 years, extent of colonic involvement, primary sclerosing cholangitis (PSC), family history. Screening colonoscopy/surveillance biopsies recommended.</div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" onclick="flipCard(this)">
+  <div class="fc-inner">
+    <div class="fc-front">
+      <div class="fc-label">LO 3 — Chronic Mesenteric Ischemia</div>
+      <div class="fc-q">How does chronic mesenteric ischemia present clinically, and what diagnostic approach is recommended?</div>
+      <div class="fc-flip-hint">tap to flip</div>
+    </div>
+    <div class="fc-back">
+      <div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Postprandial abdominal pain ("intestinal angina"), food fear → weight loss.</strong> Caused by progressive atherosclerosis of mesenteric vessels (SMA most common). Diagnosis: CT/MR angiography or doppler ultrasound. Treatment: revascularization (endovascular or surgical) to prevent acute-on-chronic crisis.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ══ FILL-IN-BLANK ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+<div class="fib-list">
+
+<div class="fib-card">
+  <div class="fib-num">1</div>
+  <div class="fib-prompt">In Meckel diverticulum, the ectopic tissue most commonly found is <strong>___________</strong>, which secretes acid and can lead to ulceration.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="gastric mucosa,gastric tissue" placeholder="Type answer...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">2</div>
+  <div class="fib-prompt">Hirschsprung disease is caused by failure of <strong>___________</strong> migration during embryologic development, resulting in an aganglionic segment.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="neural crest cell,neural crest cells,neural crest" placeholder="Type answer...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">3</div>
+  <div class="fib-prompt">The most common cause of small bowel obstruction is <strong>___________</strong>, accounting for approximately 75% of cases.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="adhesions,post-surgical adhesions" placeholder="Type answer...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">4</div>
+  <div class="fib-prompt">In celiac disease, the primary antigen target is <strong>___________</strong>, which is an enzyme that cross-reacts with gliadin peptides.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="tissue transglutaminase,tTG,transglutaminase" placeholder="Type answer...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">5</div>
+  <div class="fib-prompt">Crohn disease classically involves the <strong>___________</strong>, and the hallmark pathologic finding is <strong>___________</strong> (skip lesions with transmural inflammation).</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="terminal ileum,terminal ileum segment" placeholder="Location...">
+    <input type="text" class="fib-input" data-answers="granulomas,non-caseating granulomas" placeholder="Pathology...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">6</div>
+  <div class="fib-prompt">In ulcerative colitis, the inflammation is limited to the <strong>___________</strong> layers and always involves the <strong>___________</strong>, extending proximally in a continuous pattern.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="mucosal,submucosal,mucosa,mucosal and submucosal" placeholder="Layer...">
+    <input type="text" class="fib-input" data-answers="rectum" placeholder="Involved segment...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">7</div>
+  <div class="fib-prompt">Diverticular disease preferentially affects the <strong>___________</strong> colon because <strong>___________</strong> penetrate the muscular wall at sites of pressure.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="sigmoid" placeholder="Colon segment...">
+    <input type="text" class="fib-input" data-answers="vasa recta" placeholder="Vessels...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">8</div>
+  <div class="fib-prompt">The adenoma-carcinoma sequence begins with loss of <strong>___________</strong>, followed by <strong>___________</strong> mutation, and culminates in <strong>___________</strong> mutation leading to malignant transformation.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="APC,adenomatous polyposis coli" placeholder="First mutation...">
+    <input type="text" class="fib-input" data-answers="KRAS,K-RAS" placeholder="Second mutation...">
+    <input type="text" class="fib-input" data-answers="TP53,p53" placeholder="Third mutation...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">9</div>
+  <div class="fib-prompt"><strong>___________</strong> syndrome is characterized by germline mutations in mismatch repair genes (MLH1, MSH2, MSH6, PMS2), leading to microsatellite instability and high colorectal cancer risk.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="Lynch,HNPCC,hereditary nonpolyposis colorectal cancer" placeholder="Syndrome name...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+<div class="fib-card">
+  <div class="fib-num">10</div>
+  <div class="fib-prompt">Anal canal squamous cell carcinoma is primarily caused by infection with <strong>___________</strong>, particularly type <strong>___________</strong>.</div>
+  <div class="fib-row">
+    <input type="text" class="fib-input" data-answers="HPV,human papillomavirus,papillomavirus" placeholder="Virus...">
+    <input type="text" class="fib-input" data-answers="16,HPV-16" placeholder="Type...">
+    <button class="fib-btn" onclick="checkFIB(this)">Check</button>
+    <button class="fib-reveal-btn" onclick="revealFIB(this)">Reveal</button>
+  </div>
+  <div class="fib-feedback"></div>
+</div>
+
+</div>
+</div>
+
+<!-- ══ ORDERING ═════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+<div class="ordering-intro">
+  <strong>Ordering Drills:</strong> Arrange items in the correct sequence. Click "Check" to verify or "Show Answer" to see the correct order. You can drag items or use the reveal feature.
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Adenoma-Carcinoma Sequence</div>
+  <div class="drill-hint">Arrange the genetic events in colorectal cancer progression from first to last.</div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Answer</button>
+    <button class="order-ghost-btn" onclick="toggleOrderAnswer(this)">Show Answer</button>
+  </div>
+  <div class="order-list" ondrop="dropOrder(event)" ondragover="dragoverOrder(event)" ondragend="dragendOrder(event)">
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="3">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">KRAS mutation → advanced adenoma</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="1">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Normal epithelium → APC loss</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="4">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">TP53 mutation → carcinoma</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="2">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Formation of adenoma</span>
+    </div>
+  </div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Normal epithelium → APC loss</span></li>
+      <li><span>Formation of adenoma</span></li>
+      <li><span>KRAS mutation → advanced adenoma</span></li>
+      <li><span>TP53 mutation → carcinoma</span></li>
+    </ol>
+  </div>
+  <div class="order-feedback"></div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Pathologic Features: Crohn vs. UC</div>
+  <div class="drill-hint">Arrange findings from most characteristic of Crohn (left) to most characteristic of UC (right).</div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Answer</button>
+    <button class="order-ghost-btn" onclick="toggleOrderAnswer(this)">Show Answer</button>
+  </div>
+  <div class="order-list" ondrop="dropOrder(event)" ondragover="dragoverOrder(event)" ondragend="dragendOrder(event)">
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="3">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Continuous inflammation, no skip lesions</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="1">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Transmural inflammation with fistulas & granulomas</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="4">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Crypt abscesses & pseudopolyps</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="2">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Skip lesions with cobblestone mucosa</span>
+    </div>
+  </div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Transmural inflammation with fistulas & granulomas</span></li>
+      <li><span>Skip lesions with cobblestone mucosa</span></li>
+      <li><span>Continuous inflammation, no skip lesions</span></li>
+      <li><span>Crypt abscesses & pseudopolyps</span></li>
+    </ol>
+  </div>
+  <div class="order-feedback"></div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Intestinal Obstruction Causes by Frequency</div>
+  <div class="drill-hint">Arrange causes from most to least common in small bowel obstruction.</div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Answer</button>
+    <button class="order-ghost-btn" onclick="toggleOrderAnswer(this)">Show Answer</button>
+  </div>
+  <div class="order-list" ondrop="dropOrder(event)" ondragover="dragoverOrder(event)" ondragend="dragendOrder(event)">
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="2">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Hernia</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="1">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Adhesions</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="4">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Volvulus</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="3">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Intussusception</span>
+    </div>
+  </div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Adhesions</span></li>
+      <li><span>Hernia</span></li>
+      <li><span>Intussusception</span></li>
+      <li><span>Volvulus</span></li>
+    </ol>
+  </div>
+  <div class="order-feedback"></div>
+</div>
+
+<div class="order-drill">
+  <div class="drill-title">Ischemic Bowel Pathophysiology</div>
+  <div class="drill-hint">Arrange the sequence of events in acute mesenteric ischemia.</div>
+  <div class="order-actions">
+    <button class="order-check-btn" onclick="checkOrder(this)">Check Answer</button>
+    <button class="order-ghost-btn" onclick="toggleOrderAnswer(this)">Show Answer</button>
+  </div>
+  <div class="order-list" ondrop="dropOrder(event)" ondragover="dragoverOrder(event)" ondragend="dragendOrder(event)">
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="3">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Transmural necrosis & perforation</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="1">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Thrombus/embolism occludes mesenteric vessel</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="2">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Mucosal ischemia → hemorrhage & edema</span>
+    </div>
+    <div class="order-item" draggable="true" ondragstart="dragstartOrder(event)" data-pos="4">
+      <span class="item-grip">⋮⋮</span>
+      <span class="item-text">Sepsis & shock</span>
+    </div>
+  </div>
+  <div class="order-answer">
+    <ol>
+      <li><span>Thrombus/embolism occludes mesenteric vessel</span></li>
+      <li><span>Mucosal ischemia → hemorrhage & edema</span></li>
+      <li><span>Transmural necrosis & perforation</span></li>
+      <li><span>Sepsis & shock</span></li>
+    </ol>
+  </div>
+  <div class="order-feedback"></div>
+</div>
+
+</div>
+
+<!-- ══ MATCHING ══════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+<div class="match-intro">
+  <strong>Matching Drills:</strong> Click items to match left column with right column. Once matched, pairs are locked. Click "Reset" to start over.
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">Congenital Anomalies & Diverticula</div>
+  <div class="match-set-hint">Match each condition with its key feature or mechanism.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Condition</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-1">Meckel Diverticulum</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-2">Hirschsprung Disease</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-3">Intussusception</div>
+    </div>
+    <div>
+      <div class="match-col-label">Key Feature</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-1">Ectopic gastric mucosa → bleeding (most common complication)</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-2">Failure of neural crest migration → aganglionic segment</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc1-3">Bowel invagination into adjacent segment; "target sign" on ultrasound</div>
+    </div>
+  </div>
+  <div class="match-score"><span class="correct-count">0</span>/3 correct</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">IBD Types & Features</div>
+  <div class="match-set-hint">Match disease characteristics with Crohn disease or ulcerative colitis.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Feature</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-1">Transmural inflammation + granulomas</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-2">Always involves rectum, continuous spread</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-3">Skip lesions + fistulas + cobblestone</div>
+    </div>
+    <div>
+      <div class="match-col-label">Disease</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-1">Crohn Disease</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-2">Ulcerative Colitis</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc2-3">Crohn Disease</div>
+    </div>
+  </div>
+  <div class="match-score"><span class="correct-count">0</span>/3 correct</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+<div class="match-set">
+  <div class="match-set-title">Colorectal Cancer Syndromes</div>
+  <div class="match-set-hint">Match each hereditary syndrome with its genetic basis.</div>
+  <div class="match-cols">
+    <div>
+      <div class="match-col-label">Syndrome</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-1">Familial Adenomatous Polyposis (FAP)</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-2">Lynch Syndrome (HNPCC)</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-3">Peutz-Jeghers Syndrome</div>
+    </div>
+    <div>
+      <div class="match-col-label">Genetic Basis</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-1">Germline APC mutation; 100% penetrance</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-2">Mismatch repair gene mutations; microsatellite instability</div>
+      <div class="match-item" onclick="selectMatch(this)" data-match-id="mc3-3">STK11/LKB1 mutation; hamartomatous polyps</div>
+    </div>
+  </div>
+  <div class="match-score"><span class="correct-count">0</span>/3 correct</div>
+  <button class="match-reset-btn" onclick="resetMatch(this)">Reset</button>
+</div>
+
+</div>
+
+<!-- ══ TEST TRAPS ════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+<div class="trap-intro">
+  <strong>Test Traps:</strong> Read each statement and decide if it's <strong>True</strong> or <strong>False</strong>. Click to reveal the explanation.
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">1</div>
+  <div class="trap-statement">Ulcerative colitis involves transmural inflammation and commonly presents with fistulas and cobblestone lesions.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> This describes <strong>Crohn disease.</strong> Ulcerative colitis is limited to the mucosa/submucosa, involves the rectum and spreads proximally in a continuous pattern, and does NOT cause fistulas or granulomas. UC features crypt abscesses and pseudopolyps instead.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">2</div>
+  <div class="trap-statement">Meckel diverticulum is located in the proximal small bowel (duodenum/jejunum) and rarely causes symptoms.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> Meckel diverticulum is located in the <strong>ileum</strong> (2 feet from ileocecal valve). It commonly contains ectopic gastric mucosa which secretes acid → ileal ulceration → GI bleeding. This is the most common complication.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">3</div>
+  <div class="trap-statement">Intussusception is a common cause of small bowel obstruction in adults and typically presents with sudden onset of abdominal pain.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> Intussusception is most common in <strong>children ages 6 months–3 years</strong>, not adults. Presents with intermittent crampy pain and "currant jelly" stools. In adults, intussusception usually indicates an underlying pathology (mass, diverticulum) and is less common than adhesions or hernias.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">4</div>
+  <div class="trap-statement">Celiac disease requires lifelong gluten avoidance and is caused by IgE-mediated allergy to gliadin.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>PARTIALLY FALSE.</strong> Lifelong gluten avoidance is correct, but celiac is NOT an IgE-mediated allergy—it's an <strong>autoimmune condition.</strong> Pathophysiology: HLA-DQ2/DQ8 molecules present gliadin peptides → T-cell activation → production of anti-tTG antibodies → intestinal inflammation.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">5</div>
+  <div class="trap-statement">FAP (familial adenomatous polyposis) has low penetrance and patients require surveillance colonoscopy only after age 40.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> FAP has <strong>100% penetrance</strong> (not low). Patients develop hundreds to thousands of adenomas and nearly 100% cancer risk by age 50 if untreated. Screening colonoscopy should start at ages <strong>10–12 years</strong> (not 40), and prophylactic total colectomy is standard treatment.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">6</div>
+  <div class="trap-statement">Lynch syndrome is caused by mutations in adenomatous polyposis coli (APC) and presents with thousands of polyps.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> That describes <strong>FAP, not Lynch syndrome.</strong> Lynch syndrome is caused by <strong>mismatch repair (MMR) gene mutations</strong> (MLH1, MSH2, MSH6, PMS2) → microsatellite instability → high CRC risk (~70% lifetime). Lynch patients typically have fewer polyps than FAP patients and often develop right-sided cancers.
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">7</div>
+  <div class="trap-statement">Acute mesenteric ischemia from arterial emboli typically develops gradually and presents with chronic postprandial abdominal pain.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> <strong>Acute embolic mesenteric ischemia develops SUDDENLY</strong> (not gradually) and presents with severe pain out of proportion to exam. Gradual onset with postprandial pain describes <strong>CHRONIC mesenteric ischemia</strong> from atherosclerotic disease ("intestinal angina").
+  </div>
+</div>
+
+<div class="trap-card">
+  <div class="trap-num">8</div>
+  <div class="trap-statement">Anal canal squamous cell carcinoma is primarily caused by smoking and is more common in heterosexual men than in men who have sex with men.</div>
+  <div class="trap-btns">
+    <button class="trap-btn trap-btn-true" onclick="checkTrap(this, false)">True</button>
+    <button class="trap-btn trap-btn-false" onclick="checkTrap(this, true)">False</button>
+  </div>
+  <div class="trap-exp">
+    <strong>FALSE.</strong> The primary cause is <strong>HPV infection (>80% of cases)</strong>, not smoking. While smoking is a risk factor, <strong>anal receptive intercourse</strong> is a major risk factor (high HPV transmission), making the condition more common in men who have sex with men. Immunosuppression also increases risk.
+  </div>
+</div>
+
+</div>
+
+<!-- ══ REFERENCE ═════════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+<div class="ref-section">
+  <div class="ref-title">Meckel Diverticulum — Rule of 2s</div>
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="key">Prevalence</td>
+        <td>2% of population</td>
+      </tr>
+      <tr>
+        <td class="key">Length</td>
+        <td>2 inches (technically feet, but commonly cited as 2 feet)</td>
+      </tr>
+      <tr>
+        <td class="key">Location</td>
+        <td>2 feet proximal to ileocecal valve</td>
+      </tr>
+      <tr>
+        <td class="key">Gender ratio</td>
+        <td>2× more common in males</td>
+      </tr>
+      <tr>
+        <td class="key">Ectopic tissues</td>
+        <td>2 types: gastric mucosa (most common) & pancreatic tissue</td>
+      </tr>
+      <tr>
+        <td class="key">Most common complication</td>
+        <td>GI bleeding (from gastric acid-induced ulcer)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Clinical Pearl:</strong> Rule of 2s helps clinicians remember Meckel diverticulum criteria. Ectopic gastric mucosa secretes acid → ileal ulceration → bleeding is the most common presentation. Diagnosis: Technetium-99m scan (picks up ectopic gastric mucosa).</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Causes of Small Bowel Obstruction (SBO)</div>
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Cause</th>
+        <th>Frequency (%)</th>
+        <th>Key Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="key">Adhesions</td>
+        <td>~75%</td>
+        <td>Post-surgical most common; can occur after abdominal trauma or surgery</td>
+      </tr>
+      <tr>
+        <td class="key">Hernia</td>
+        <td>~15%</td>
+        <td>Inguinal, ventral, incisional, or internal hernia</td>
+      </tr>
+      <tr>
+        <td class="key">Intussusception</td>
+        <td>~5%</td>
+        <td>Most common in children 6 months–3 years; "target sign" on imaging</td>
+      </tr>
+      <tr>
+        <td class="key">Volvulus</td>
+        <td>~3%</td>
+        <td>Sigmoid (elderly), cecal (younger); "bird's beak" sign</td>
+      </tr>
+      <tr>
+        <td class="key">Gallstone ileus</td>
+        <td>&lt;1%</td>
+        <td>Cholecystoenteric fistula; Rigler's triad (pneumobilia, obstruction, stone)</td>
+      </tr>
+      <tr>
+        <td class="key">Malignancy</td>
+        <td>&lt;1%</td>
+        <td>Less common in SBO; more common in LBO</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>SBO vs. LBO:</strong> SBO presents earlier with frequent vomiting and crampy pain. LBO slower onset with progressive constipation; more likely to perforate. Adhesions account for majority of SBO; obstruction requires imaging (CT) and sometimes surgical evaluation.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Celiac Disease — Pathophysiology & Manifestations</div>
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="key">HLA associations</td>
+        <td>HLA-DQ2 (~95% of patients), HLA-DQ8 (~5%)</td>
+      </tr>
+      <tr>
+        <td class="key">Antigen targeted</td>
+        <td>Tissue transglutaminase (tTG); cross-reactive with gliadin</td>
+      </tr>
+      <tr>
+        <td class="key">Pathology</td>
+        <td>Villous atrophy + crypt hyperplasia</td>
+      </tr>
+      <tr>
+        <td class="key">Dermatitis herpetiformis</td>
+        <td>Cutaneous manifestation; intensely pruritic papulovesicles on extensor surfaces; same pathogenic mechanism as CD</td>
+      </tr>
+      <tr>
+        <td class="key">Complications</td>
+        <td>Iron-deficiency anemia (most common), osteoporosis, increased malignancy risk (lymphoma), infertility</td>
+      </tr>
+      <tr>
+        <td class="key">Treatment</td>
+        <td>Lifelong gluten-free diet; supplementation for iron, B12, calcium</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Screening:</strong> Anti-tTG IgA antibodies (high sensitivity/specificity). Confirm with small bowel biopsy showing villous atrophy. Celiac affects ~1% of population; underdiagnosed due to variable presentations.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">IBD Comparison: Crohn vs. Ulcerative Colitis</div>
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Crohn Disease</th>
+        <th>Ulcerative Colitis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="key">Distribution</td>
+        <td>Skip lesions; any GI location (terminal ileum ~90%)</td>
+        <td>Continuous; rectum always involved, extends proximally</td>
+      </tr>
+      <tr>
+        <td class="key">Depth</td>
+        <td>Transmural (full thickness)</td>
+        <td>Mucosal & submucosal only</td>
+      </tr>
+      <tr>
+        <td class="key">Pathology</td>
+        <td>Granulomas (non-caseating), cobblestone lesions, fissuring ulcers</td>
+        <td>Crypt abscesses, pseudopolyps, continuous ulceration</td>
+      </tr>
+      <tr>
+        <td class="key">Complications</td>
+        <td>Fistulas, strictures, abscesses; perianal disease common</td>
+        <td>Toxic megacolon (rare); massive hemorrhage (rare)</td>
+      </tr>
+      <tr>
+        <td class="key">Cancer risk</td>
+        <td>Increased (~2–8% risk); lower than UC</td>
+        <td>Higher (~1% per year after 10 years disease)</td>
+      </tr>
+      <tr>
+        <td class="key">Extraintestinal manifestations</td>
+        <td>Erythema nodosum, pyoderma gangrenosum, arthropathy, uveitis</td>
+        <td>Same, but less perianal disease</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Diagnosis:</strong> Colonoscopy with biopsy is gold standard for both. CD biopsy shows granulomas & transmural inflammation; UC shows crypt abscesses in mucosal biopsies. Both increase CRC risk; surveillance colonoscopy recommended.</div>
+</div>
+
+<div class="ref-section">
+  <div class="ref-title">Colorectal Cancer Syndromes at a Glance</div>
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Syndrome</th>
+        <th>Genetic Basis</th>
+        <th>Key Features</th>
+        <th>CRC Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="key">FAP</td>
+        <td>Germline APC mutation</td>
+        <td>100s–1000s adenomas; polyps start ~age 15; extracolonic features (CHRPE, osteomas, desmoids)</td>
+        <td>~100% by age 50 (untreated)</td>
+      </tr>
+      <tr>
+        <td class="key">Lynch (HNPCC)</td>
+        <td>MMR gene mutations (MLH1, MSH2, MSH6, PMS2)</td>
+        <td>Fewer polyps; right-sided tumors common; early onset; MSI-high; increased endometrial/ovarian cancer</td>
+        <td>~70% lifetime</td>
+      </tr>
+      <tr>
+        <td class="key">Peutz-Jeghers</td>
+        <td>STK11/LKB1 mutation</td>
+        <td>Hamartomatous polyps throughout GI tract; mucocutaneous pigmentation; increased GI & non-GI cancers</td>
+        <td>~39% by age 70</td>
+      </tr>
+      <tr>
+        <td class="key">Sporadic (no syndrome)</td>
+        <td>Somatic APC → KRAS → TP53 mutations</td>
+        <td>Adenoma-carcinoma sequence; ~10–15 years from adenoma to carcinoma</td>
+        <td>Increases with age & polyp features</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ref-note"><strong>Screening:</strong> FAP—colonoscopy age 10–12, prophylactic colectomy. Lynch—colonoscopy every 1–2 years age 25+. Sporadic—colonoscopy age 45–50 (or 40 if family history), then every 10 years if normal.</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+GI19-20 Hub 1 — Core Concepts | <a href="../lecture-guides/gi19-20-intestinal-pathology.html">Lecture Guide</a> | <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html">Active Drill Hub</a>
+</div>
+
+<script>
+function switchTab(event,tabId){
+  event.preventDefault();
+  const panes=document.querySelectorAll('.tab-pane');
+  const btns=document.querySelectorAll('.tab-btn');
+  panes.forEach(p=>{p.classList.remove('active')});
+  btns.forEach(b=>{b.classList.remove('active')});
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+  if(tabId==='tab-fc'){fixCardHeights();}
+}
+
+function flipCard(el){
+  el.classList.toggle('flipped');
+}
+
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(fc=>{
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    const back=fc.querySelector('.fc-back');
+    if(inner&&front&&back){
+      const h=Math.max(front.scrollHeight,back.scrollHeight);
+      inner.style.height=h+'px';
+    }
+  });
+}
+
+function checkFIB(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const feedback=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const answers=inp.getAttribute('data-answers').split(',').map(a=>a.trim().toLowerCase());
+    const isCorrect=answers.includes(val);
+    if(isCorrect){
+      inp.classList.remove('incorrect');
+      inp.classList.add('correct');
+    }else if(val){
+      inp.classList.remove('correct');
+      inp.classList.add('incorrect');
+      allCorrect=false;
+    }else{
+      inp.classList.remove('correct','incorrect');
+    }
+  });
+  if(allCorrect&&Array.from(inputs).some(i=>i.value.trim())){
+    feedback.className='fib-feedback correct';
+    feedback.textContent='✓ Correct!';
+  }else if(!allCorrect&&Array.from(inputs).some(i=>i.classList.contains('incorrect'))){
+    feedback.className='fib-feedback incorrect';
+    feedback.textContent='✗ Try again. Check your answers.';
+  }
+}
+
+function revealFIB(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const answers=inp.getAttribute('data-answers').split(',');
+    inp.value=answers[0];
+    inp.classList.add('correct');
+  });
+  const feedback=card.querySelector('.fib-feedback');
+  feedback.className='fib-feedback correct';
+  feedback.textContent='✓ Revealed!';
+}
+
+let draggedOrder=null;
+function dragstartOrder(e){
+  draggedOrder=e.currentTarget;
+  e.currentTarget.classList.add('dragging');
+}
+function dragoverOrder(e){
+  e.preventDefault();
+  const list=e.currentTarget;
+  const items=Array.from(list.querySelectorAll('.order-item:not(.dragging)'));
+  const rect=e.currentTarget.getBoundingClientRect();
+  let beforeItem=null;
+  items.forEach(item=>{
+    const itemRect=item.getBoundingClientRect();
+    if(e.clientY<itemRect.top+itemRect.height/2){
+      beforeItem=item;
+    }
+  });
+  if(beforeItem){
+    list.insertBefore(draggedOrder,beforeItem);
+  }else{
+    list.appendChild(draggedOrder);
+  }
+}
+function dragendOrder(e){
+  draggedOrder.classList.remove('dragging');
+  draggedOrder=null;
+}
+
+function checkOrder(btn){
+  const drill=btn.closest('.order-drill');
+  const items=Array.from(drill.querySelectorAll('.order-item'));
+  let correct=true;
+  items.forEach((item,idx)=>{
+    const pos=parseInt(item.getAttribute('data-pos'));
+    if(pos===idx+1){
+      item.classList.remove('wrong-pos');
+      item.classList.add('correct-pos');
+    }else{
+      item.classList.remove('correct-pos');
+      item.classList.add('wrong-pos');
+      correct=false;
+    }
+  });
+  const feedback=drill.querySelector('.order-feedback');
+  if(correct){
+    feedback.className='order-feedback correct';
+    feedback.textContent='✓ Perfect! Sequence is correct.';
+  }else{
+    feedback.className='order-feedback incorrect';
+    feedback.textContent='✗ Incorrect order. Try again or show the answer.';
+  }
+}
+
+function toggleOrderAnswer(btn){
+  const drill=btn.closest('.order-drill');
+  const answer=drill.querySelector('.order-answer');
+  answer.style.display=answer.style.display==='none'?'block':'none';
+}
+
+function selectMatch(el){
+  const set=el.closest('.match-set');
+  const selected=set.querySelector('.match-item.selected');
+  if(selected===el){
+    el.classList.remove('selected');
+    return;
+  }
+  if(selected){
+    const matchId=selected.getAttribute('data-match-id');
+    const otherCol=set.querySelectorAll('[data-match-id="'+matchId+'"]');
+    if(otherCol.length===2){
+      const other=Array.from(otherCol).find(x=>x!==selected);
+      if(other&&!other.classList.contains('matched-correct')){
+        other.classList.add('flash-wrong');
+        setTimeout(()=>other.classList.remove('flash-wrong'),500);
+      }
+    }
+    selected.classList.remove('selected');
+  }
+  el.classList.add('selected');
+  checkMatches(set);
+}
+
+function checkMatches(set){
+  const items=Array.from(set.querySelectorAll('.match-item'));
+  let matched=0;
+  items.forEach(item=>{
+    if(item.classList.contains('matched-correct')){
+      matched++;
+    }
+  });
+  const cols=set.querySelectorAll('.match-cols>div');
+  if(cols.length===2){
+    const col1Items=Array.from(cols[0].querySelectorAll('.match-item'));
+    const col2Items=Array.from(cols[1].querySelectorAll('.match-item'));
+    col1Items.forEach(item1=>{
+      const id=item1.getAttribute('data-match-id');
+      const match=col2Items.find(item2=>item2.getAttribute('data-match-id')===id);
+      if(item1.classList.contains('selected')&&match&&match.classList.contains('selected')){
+        item1.classList.add('matched-correct');
+        item1.classList.remove('selected');
+        match.classList.add('matched-correct');
+        match.classList.remove('selected');
+      }
+    });
+  }
+  const score=set.querySelector('.match-score .correct-count');
+  const correct=set.querySelectorAll('.match-item.matched-correct').length/2;
+  if(score){score.textContent=correct;}
+}
+
+function resetMatch(btn){
+  const set=btn.closest('.match-set');
+  set.querySelectorAll('.match-item').forEach(item=>{
+    item.classList.remove('selected','matched-correct','flash-wrong');
+  });
+  const score=set.querySelector('.match-score .correct-count');
+  if(score){score.textContent='0';}
+}
+
+function checkTrap(btn,isCorrectAnswer){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  const exp=card.querySelector('.trap-exp');
+  btns.forEach(b=>b.disabled=true);
+  if(isCorrectAnswer){
+    btn.classList.add('sel-correct');
+    exp.className='trap-exp show-c';
+  }else{
+    btn.classList.add('sel-wrong');
+    exp.className='trap-exp show-w';
+  }
+}
+
+window.addEventListener('load',function(){
+  fixCardHeights();
+  document.querySelectorAll('.fc').forEach(fc=>{
+    fc.addEventListener('click',function(){
+      setTimeout(fixCardHeights,100);
+    });
+  });
+});
+</script>
+
+</body>
+</html>
