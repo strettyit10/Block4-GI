@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI12 Hub #2 · GI Embryology — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
+
+/* ── MCQ DRILL ── */
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.mcq-stem strong{color:#5D4037}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#5D4037}
+
+/* ── CLINICAL CORRELATES ── */
+.cc-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.cc-tag{display:inline-block;background:#F3EFE9;border:1px solid #D5CCC0;border-radius:4px;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5D4037;padding:2px 8px;margin-bottom:10px}
+.cc-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px}
+.cc-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.cc-body strong{color:#2C2C2C}
+.cc-body em{color:#9A6535;font-style:normal}
+.cc-reveal{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:12px;transition:all .2s}
+.cc-reveal:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.cc-detail{display:none;margin-top:12px;padding:14px;background:#F3EFE9;border-radius:5px;border:1px solid #D5CCC0;font-size:.85em;color:#2C2C2C;line-height:1.7}
+.cc-detail.open{display:block}
+.cc-detail strong{color:#5D4037}
+
+/* ── INTRO BOXES ── */
+.mcq-intro,.cc-intro,.vig-intro,.hy-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong{color:#5D4037}
+
+/* ── TABLES ── */
+table{border-collapse:collapse;width:100%}
+table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D5CCC0;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF8F5}
+table tr:hover td{background:#F3EFE9}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
+
+/* ── ORDERING DRILLS ── */
+.order-drill{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:8px}
+.drill-hint{font-size:.84em;color:#7A7060;background:#F3EFE9;padding:10px 14px;border-left:2px solid #C6875A;border-radius:4px;margin-bottom:14px}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding:14px;background:#F7F5F2;border-radius:6px;border:1px solid #D5CCC0;min-height:200px}
+.order-item{background:#FFF;border:2px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.88em;color:#2C2C2C;transition:all .15s}
+.order-item:hover{border-color:#C6875A;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-color:#C6875A}
+.order-item.drag-over{border:2px dashed #C6875A;background:#F3EFE9}
+.order-item.correct-pos{border-color:#2E7D32;background:#F1F8F2}
+.order-item.wrong-pos{border-color:#C62828;background:#FEF5F5}
+.order-actions{display:flex;gap:10px;margin-bottom:14px}
+.order-check-btn{background:#5D4037;color:#F0E8DF;border:none;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-check-btn:hover{background:#4E342E}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.order-feedback{font-size:.84em;color:#5A5A5A;padding:10px 14px;border-radius:5px;margin-bottom:14px;display:none}
+.order-feedback.correct{background:#F1F8F2;border-left:3px solid #2E7D32;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border-left:3px solid #C62828;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.order-answer.show{display:block}
+.order-answer ol{margin-left:24px}
+.order-answer li{margin-bottom:10px}
+.order-answer strong{color:#5D4037}
+
+/* ── VIGNETTE MCQ ── */
+.vig-item{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.vig-stem strong{color:#5D4037}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .vig-opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .vig-opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.vig-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none;margin-top:12px}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#5D4037}
+.vig-buzzword{color:#9A6535;font-weight:600}
+
+/* ── STEP 1 TRAPS ── */
+.trap-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.trap-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.trap-statement{font-size:.92em;color:#2C2C2C;line-height:1.6;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A;font-weight:500}
+.trap-btns{display:flex;gap:10px;margin-bottom:14px}
+.trap-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.trap-btn:hover:not(:disabled){border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.trap-btn:disabled{opacity:.5;cursor:default}
+.trap-btn.sel-correct{border-color:#2E7D32;background:#F1F8F2;color:#1B5E20}
+.trap-btn.sel-wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.trap-exp.show-c,.trap-exp.show-w{display:block}
+.trap-exp.show-w{border-left-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp strong{color:#5D4037}
+
+/* ── REFERENCE TABLES ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #C6875A}
+.ref-table{overflow-x:auto}
+
+/* ── HY TESTING NOTES ── */
+.hy-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.hy-card-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.hy-card-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.hy-card-body strong{color:#2C2C2C}
+.hy-badge{display:inline-block;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:3px;background:#F3EFE9;color:#5D4037}
+.hy-badge.trap{background:#FEF5F5;color:#C62828;border:1px solid #C62828}
+.hy-badge.buzzword{background:#FFF8E1;color:#F57F17;border:1px solid #F57F17}
+.hy-badge.testing{background:#E8F5E9;color:#2E7D32;border:1px solid #2E7D32}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .order-list{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi12-gi-embryology.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>GI Embryology <span>Step 1 Extensions</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Embryology:</strong> Folding · Mesentery · Foregut/Midgut/Hindgut · ENS · NCC · RET Signaling</div>
+    <div class="source-badge"><strong>Congenital Anomalies:</strong> Pyloric Stenosis · Duodenal Atresia · Hirschsprung · Malrotation · Meckel · Biliary Atresia · CDH · TEF</div>
+    <div class="source-badge"><strong>Pharm:</strong> Atropine · Neostigmine · Botox (LES)</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi12-hub1-gi-embryology.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi12-hub3-gi-embryology.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ordering</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCQs</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Vignettes</div></div>
+  <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Traps</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
+  <button class="tab-btn" onclick="switchTab('hynotes',this)">HY Testing Notes</button>
+  <button class="tab-btn" onclick="switchTab('clinical',this)">Clinical Correlates</button>
+</div>
+
+<!-- ══ STEP 1 FLASHCARDS ══════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#7A7060">18 Step 1 high-yield concepts</em></span><span class="prog-num" id="fc-counter">0 / 18 seen</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Embryonic Folding</div><div class="fc-q">How do cranial-caudal and lateral folding create the tube-within-a-tube body plan? What are the three germ layers involved?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Folding:</strong> Cranial-caudal folds bring head/tail ends toward midline; lateral folds bring side edges together → wraps visceral peritoneum around developing GI tract<br><strong>Germ layers:</strong> <strong>Endoderm</strong> → epithelium of entire GI tract; <strong>Splanchnic mesoderm</strong> (visceral) → smooth muscle + mesentery; <strong>Somatic mesoderm</strong> → parietal peritoneum<br><strong>Result:</strong> Peritoneal cavity (potential space), intraperitoneal organs, retroperitoneal structures</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Mesentery Basics</div><div class="fc-q">What is the fundamental difference between ventral and dorsal mesentery? Which parts of the GI tract have each?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ventral mesentery:</strong> Connects viscera to ANTERIOR abdominal wall; exists ONLY in <strong>foregut</strong> (esophagus to duodenum)<br><strong>Dorsal mesentery:</strong> Connects viscera to POSTERIOR abdominal wall; spans <strong>ALL gut</strong> (esophagus to anal canal)<br><strong>Key derivatives:</strong> Ventral → liver divides it into falciform ligament (between liver + anterior wall) + hepatoduodenal ligament (contains portal triad)<br><strong>Dorsal:</strong> Becomes root of mesentery (small bowel), transverse mesocolon, sigmoid mesocolon, mesorectum</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — SAD PUCKER</div><div class="fc-q">What does SAD PUCKER stand for, and why is this clinically important?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>SAD PUCKER:</strong> Structures that are Retroperitoneal<br><strong>S</strong>uprarenals · <strong>A</strong>orta · <strong>D</strong>uodenum (2nd–4th parts) · <strong>P</strong>ancreas · <strong>U</strong>rethra (proximal) · <strong>C</strong>olon (ascending + descending) · <strong>K</strong>idneys · <strong>E</strong>sophagus · <strong>R</strong>ectum<br><strong>Clinical:</strong> Retroperitoneal structures can bleed into the retroperitoneal space without immediate peritoneal signs (Cullen/Grey Turner signs in acute pancreatitis)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Foregut / Midgut / Hindgut Arteries</div><div class="fc-q">Which artery supplies each gut segment, and what does each develop into?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Foregut (celiac artery):</strong> Pharynx → duodenum (1st–2nd parts) · Also: liver, gallbladder, pancreas (dorsal bud)<br><strong>Midgut (superior mesenteric artery):</strong> Duodenum (3rd–4th parts) → proximal 2/3 colon · Also: cecum, appendix, small bowel<br><strong>Hindgut (inferior mesenteric artery):</strong> Distal 1/3 colon → anal canal above pectinate line · Also: rectum, sigmoid<br><strong>Key:</strong> Pectinate line = ectoderm/endoderm boundary + vascular boundary (SMA/IMA watershed)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Stomach 90° CW Rotation</div><div class="fc-q">How does the stomach rotate, and what does this create? Why is this important?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Rotation:</strong> Stomach rotates 90° clockwise around its long axis → original anterior wall (left vagus) becomes LESSER curvature; posterior wall (right vagus) becomes GREATER curvature<br><strong>Creates:</strong> Lesser sac (omental bursa) — potential space behind stomach<br><strong>Clinical:</strong> Left vagus = anterior trunk (ALWAYS); right vagus = posterior trunk (ALWAYS); explains vagotomy effects; gastric ulcers on lesser curvature often bleed from left gastric artery</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Pancreatic Buds (Dorsal vs. Ventral)</div><div class="fc-q">Where do each pancreatic bud originate, and what does each bud become? When do they fuse?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Dorsal bud:</strong> From dorsal aspect of duodenum (foregut) → becomes body, tail, and superior/anterior head<br><strong>Ventral bud:</strong> From hepatic diverticulum (with bile duct) → becomes uncinate process + inferior/posterior head<br><strong>Fusion:</strong> Wk 7 — ducts fuse (dorsal → main duct of Wirsung; ventral → accessory duct of Santorini)<br><strong>Clinical:</strong> Annular pancreas (ventral bud encircles duodenum) → duodenal obstruction; tail of pancreas is always intraperitoneal (derived from dorsal bud in greater omentum)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Duodenal Atresia (Double Bubble)</div><div class="fc-q">What causes duodenal atresia, what is the classic imaging finding, and what genetic syndrome is associated?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> Failure of duodenal recanalization (duodenum is initially solid, then hollow out in wks 8–12)<br><strong>Imaging:</strong> "Double bubble" sign on X-ray (gas in proximal duodenum + pyloric stomach; NO distal gas)<br><strong>Presentation:</strong> Neonate with bilious vomiting, no meconium passage within 24 hrs<br><strong>Association:</strong> Down syndrome (trisomy 21) — strongest association<br><strong>Management:</strong> Duodenoduodenostomy bypass</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Midgut Rotation (270° CCW)</div><div class="fc-q">Describe the midgut rotation in three phases. What is the classic complication of failed rotation?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Phase 1 (wk 6):</strong> Midgut herniates out of abdomen, rotates 90° CCW around SMA<br><strong>Phase 2 (wks 10–12):</strong> Herniated midgut returns to abdomen, continues rotating another 180° CCW (total 270°)<br><strong>Phase 3:</strong> Cecum descends from right upper abdomen to right lower abdomen<br><strong>Failed rotation:</strong> Malrotation + midgut volvulus → cecum midline, SMA may twist → neonate with acute bilious emesis, "whirlpool" sign on ultrasound, surgical emergency (Ladd procedure)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Pectinate Line (5-Column Comparison)</div><div class="fc-q">What are the five critical differences above vs. below the pectinate line?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>ABOVE pectinate line:</strong> SMA/IMA · Superior rectal vein (portal circulation) · Internal iliac nodes · Visceral innervation (no pain from hemorrhoids/fissures) · Columnar epithelium<br><strong>BELOW pectinate line:</strong> Inferior rectal artery · Inferior rectal vein (caval circulation) · Inguinal nodes · Somatic innervation (painful external hemorrhoids, fissures) · Stratified squamous epithelium<br><strong>Clinical:</strong> Pectinate line is embryologic/vascular/innervation boundary; NOT the colonic watershed (that's at splenic flexure)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — NCC Migration + MOANS C</div><div class="fc-q">Where do enteric neural crest cells originate, how do they migrate, and what can go wrong (MOANS C)?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> Vagal neural crest cells (occipital somites 1–7) + sacral NCC (contributes to hindgut)<br><strong>Migration:</strong> Vagal NCC migrate craniocaudally along entire GI tract (cranial→caudal), guided by GDNF (glial-derived neurotrophic factor) → RET receptor signaling<br><strong>MOANS C (RET loss-of-function):</strong> Multiple endocrine neoplasia 2 · Oral mucosa · Axonal hypergangliosis · Nodules + Neurofibromas · Somatic mutations → Medullary thyroid carcinoma<br><strong>Hirschsprung:</strong> RET LOF (loss-of-function) → NCC fail to migrate → absent ganglia in distal segment</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Hirschsprung Disease Pathogenesis</div><div class="fc-q">What is the molecular defect, where does the aganglionic segment occur, and why does this cause obstruction?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Defect:</strong> RET LOF (loss-of-function mutation) → NCC migration failure in distal gut<br><strong>Aganglionic segment:</strong> DISTAL colon (usually rectosigmoid; can extend higher)<br><strong>Pathophysiology:</strong> Aganglionic segment cannot relax (no ganglia → no parasympathetic inhibitory neurons) → tonic contraction → obstruction<br><strong>Proximal segment:</strong> Dilates (normal ganglia, but obstructed) → "transition zone"<br><strong>Diagnosis:</strong> Biopsy of NARROW (aganglionic) segment shows absent ganglia; not the dilated proximal segment</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Pyloric Stenosis</div><div class="fc-q">Presentation, age of onset, key laboratory findings, and pathophysiology?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Presentation:</strong> Infant 2–8 weeks old with <strong>nonbilious, projectile vomiting</strong> after feeding; "olive" mass palpable in epigastrium<br><strong>Pathophysiology:</strong> Hypertrophy + hyperplasia of pyloric smooth muscle → gastric outlet obstruction<br><strong>Labs:</strong> <strong>Hypokalemic, hypochloremic, metabolic alkalosis</strong> (loss of HCl in vomitus)<br><strong>Imaging:</strong> Ultrasound shows thickened pyloric muscle (wall >3 mm)<br><strong>Treatment:</strong> Fluid/electrolyte repletion FIRST, then pyloromyotomy (Ramstedt procedure)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Omphalocele vs. Gastroschisis</div><div class="fc-q">How do these two defects differ in location, coverage, and associated anomalies?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Omphalocele:</strong> Midline defect · Covered by peritoneum + amnion (sac) · Associated with Beckwith-Wiedemann, trisomy 13/18 · Gradual repair (silo, then closure)<br><strong>Gastroschisis:</strong> Right of midline umbilicus · NO sac (exposed bowel) · NOT genetic · Acute surgical closure required<br><strong>Key:</strong> Sac = omphalocele; no sac = gastroschisis · Location helps distinguish (midline vs. right)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Meckel Diverticulum (Rule of 2s)</div><div class="fc-q">What is Meckel diverticulum, the classic presentation, and how is it diagnosed?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Rule of 2s:</strong> 2% of population · 2 feet from ileocecal valve · 2 inches long · 2 types of ectopic tissue (gastric + pancreatic) · 2:1 male:female · 2% have complications<br><strong>Presentation:</strong> <strong>Painless rectal bleeding</strong> (ectopic gastric mucosa secretes HCl → ileal ulceration)<br><strong>Diagnosis:</strong> <strong>Tc-99m pertechnetate scan</strong> (technetium concentrates in ectopic gastric mucosa) — "Meckel's scan"<br><strong>Treatment:</strong> Surgical diverticulectomy if bleeding</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Biliary Atresia</div><div class="fc-q">Presentation, diagnostic workup, and what is the Kasai procedure?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Presentation:</strong> Neonate with prolonged jaundice >2 weeks · <strong>Direct hyperbilirubinemia</strong> · <strong>Acholic stools</strong> (pale/clay-colored, no bile) · Dark urine<br><strong>Workup:</strong> Elevated direct bili + gamma-GT; HIDA scan shows uptake by liver but NO excretion into duodenum<br><strong>Pathophysiology:</strong> Fibro-obliteration of extrahepatic bile ducts (etiology unknown)<br><strong>Kasai procedure:</strong> Hepatoportoenterostomy — connects hepatic porta directly to small bowel (bypasses atretic ducts) · Success rates vary; may delay transplant or allow long-term function</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Jejunal Atresia (Apple-Peel)</div><div class="fc-q">What causes jejunal atresia, and why is "apple-peel" volvulus more common in proximal jejunum?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> SMA compromise in utero (vascular accident) → segment dies, leaving two blind pouches<br><strong>Apple-peel volvulus:</strong> Proximal jejunum rotates around a small mesentery attachment (looks like apple peel when unrolled)<br><strong>Presentation:</strong> Neonate with bilious vomiting, absent/delayed meconium<br><strong>Imaging:</strong> Multiple dilated small bowel loops; "apple-peel" appearance on surgery<br><strong>Treatment:</strong> Surgical anastomosis of blind pouches; intestinal length often reduced → short bowel risk</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Congenital Diaphragmatic Hernia (CDH)</div><div class="fc-q">Most common location, presentation, and why does CDH cause pulmonary problems?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Location:</strong> Left > right (Bochdalek foramen on posterolateral diaphragm)<br><strong>Presentation:</strong> Newborn with respiratory distress, cyanosis, scaphoid (hollowed) abdomen, bowel sounds in chest<br><strong>Imaging:</strong> Bowel loops visible in thorax on CXR; confirm with antenatal ultrasound<br><strong>Pathophysiology:</strong> Herniated abdominal organs compress lung during development → pulmonary hypoplasia (underdev of alveoli, airways) + pulmonary hypertension<br><strong>Treatment:</strong> Gentle ventilation + surgical repair; high mortality if severe pulmonary hypoplasia present at birth</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Tracheoesophageal Fistula (TEF) Types</div><div class="fc-q">What are the five types of TEF/EA, and which is most common?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Type A (85% — most common):</strong> Esophageal atresia + DISTAL TEF (proximal blind pouch; lower esophagus connects to trachea)<br><strong>Type B:</strong> Isolated esophageal atresia (no fistula)<br><strong>Type C:</strong> H-type TEF (no atresia, just fistula) — recurrent aspiration pneumonia, choking with feeds<br><strong>Type D:</strong> Proximal TEF + atresia (rare)<br><strong>Type E (rare):</strong> Double fistula (proximal + distal)<br><strong>Presentation Type A:</strong> Excessive drooling, choking/cyanosis with first feed, "unable to pass NG tube"</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 5 — Imperforate Anus + VACTERL</div><div class="fc-q">What is VACTERL, and how does imperforate anus fit? What is an H-type anorectal fistula?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>VACTERL association:</strong> <strong>V</strong>ertebral · <strong>A</strong>nal · <strong>C</strong>ardiac · <strong>T</strong>racheoesophageal · <strong>R</strong>enal · <strong>L</strong>imb anomalies (≥3 = VACTERL)<br><strong>Imperforate anus:</strong> Failure of urorectal septum to divide cloaca → anal canal not patent<br><strong>Types:</strong> High (above levator ani) vs. low (below levator)<br><strong>H-type anorectal fistula:</strong> Fistula between rectum + urethra/vagina (shaped like H on cross-section); infant passes meconium through urine or fistula opening; requires surgical correction<br><strong>Management:</strong> Screen all VACTERL patients for associated anomalies</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MCQ DRILL ══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-mcq">
+  <div class="mcq-intro"><strong>Step 1-Style MCQs:</strong> Select the best answer for each question. Your choice locks in immediately and the explanation reveals automatically. <span style="color:#2E7D32">Green</span> = correct, <span style="color:#C62828">Red</span> = incorrect.</div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 1 of 10 — Mesentery / Anatomy</div>
+    <div class="mcq-stem">A surgical resident is reviewing an anatomy case about peritoneal attachments. Which of the following is a derivative of the VENTRAL mesentery?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Root of mesentery for small intestine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Hepatoduodenal ligament (contains portal triad)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Transverse mesocolon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Mesorectum</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Sigmoid mesocolon</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Hepatoduodenal ligament.</strong> The ventral mesentery exists ONLY in the foregut and is divided by the expanding liver into: (1) falciform ligament (between liver and anterior abdominal wall); (2) hepatogastric ligament (lesser omentum between liver and stomach); (3) hepatoduodenal ligament (between liver and duodenum, containing portal triad: portal vein, hepatic artery, common bile duct). All other options (A, C, D, E) are dorsal mesentery derivatives that span the entire GI tract or retroperitoneal folds.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 2 of 10 — Embryology / GI Arteries</div>
+    <div class="mcq-stem">A 7-week-old embryo undergoes normal GI development. Which of the following structures is supplied by the SUPERIOR MESENTERIC ARTERY?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Stomach and first two portions of duodenum</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Distal colon and rectum</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Cecum, appendix, small intestine, and proximal two-thirds of colon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Everything distal to the pylorus</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Pancreas (dorsal and ventral buds only)</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Midgut (SMA territory).</strong> The embryo is divided into three vascular domains: (1) Foregut (celiac) → pharynx through duodenum (D1–D2) + liver, pancreatic dorsal bud; (2) Midgut (SMA) → D3–D4 through proximal 2/3 colon; (3) Hindgut (IMA) → distal 1/3 colon through anal canal above pectinate line. Choice C captures the entire midgut domain.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 3 of 10 — Pancreatic Development</div>
+    <div class="mcq-stem">During week 7 of gestation, the dorsal and ventral pancreatic buds fuse. Which structures are derived from the VENTRAL pancreatic bud?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Body, tail, and all of the head</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Uncinate process and inferior/posterior head</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Entire pancreas (dorsal bud regresses)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Only the main pancreatic duct</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>The pancreatic islets (alpha + beta cells)</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Uncinate + inferior/posterior head.</strong> The ventral bud originates from the hepatic diverticulum and contributes the uncinate process and the inferior/posterior portion of the pancreatic head. The dorsal bud (from dorsal duodenum) becomes the body, tail, and superior/anterior head. The two buds fuse in week 7, and their ducts also fuse: dorsal → main duct (Wirsung); ventral → accessory duct (Santorini). Clinically, if the ventral bud encircles the duodenum, annular pancreas results → duodenal obstruction.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 4 of 10 — Midgut Rotation</div>
+    <div class="mcq-stem">An embryo at week 10 of development is undergoing the physiologic midgut herniation and rotation. The midgut is rotating around which fixed point?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>The pylorus</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>The superior mesenteric artery (SMA)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>The ligament of Treitz</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>The ileocecal valve</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>The root of the dorsal mesentery</div>
+    </div>
+    <div class="mcq-exp"><strong>B — The SMA.</strong> During weeks 6–12, the midgut herniates out of the abdomen and rotates 270° counterclockwise around the superior mesenteric artery (the vascular axis and anatomic pivot). Phase 1 (wk 6): herniation + 90° rotation. Phase 2 (wks 10–12): return to abdomen + additional 180° rotation. The cecum, which starts at the midline, descends to the right lower abdomen as the rotation completes. Failure of this rotation leads to malrotation and potential midgut volvulus.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 5 of 10 — Pectinate Line / Posterior Boundary</div>
+    <div class="mcq-stem">Which anatomic and physiologic structures are found ABOVE the pectinate line of the anal canal?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Inferior rectal artery, inferior rectal vein, internal pudendal nodes, somatic innervation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Superior rectal artery, portal venous drainage, internal iliac lymph nodes, visceral innervation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Mixed vasculature (SMA + IMA), variable innervation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Transitional epithelium (like bladder)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Stratified squamous epithelium with somatic sensation</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Above pectinate line.</strong> The pectinate line marks three embryologic/vascular/innervation boundaries: (1) Above = SMA/superior rectal; (2) Below = inferior rectal; (3) Above = portal circulation; (4) Below = caval circulation; (5) Above = visceral (no pain sensation); (6) Below = somatic (painful hemorrhoids/fissures). This is a high-yield comparison — the pectinate line is NOT the colonic watershed (that's at the splenic flexure, SMA/IMA junction).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 6 of 10 — Enteric Neural Crest (ENS) / RET Signaling</div>
+    <div class="mcq-stem">Neural crest cells colonize the entire GI tract during embryonic development via guidance by GDNF (glial-derived neurotrophic factor) signaling through the RET receptor. Which pathologic finding would result from RET LOSS-OF-FUNCTION?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Excessive ganglion cell proliferation in the distal bowel</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Failure of neural crest cell migration → absent ganglia in distal segments</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Medullary thyroid carcinoma and pheochromocytoma (MEN2)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Increased GDNF expression throughout the gut</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Mucosal hypertrophy and increased acid secretion</div>
+    </div>
+    <div class="mcq-exp"><strong>B — RET LOF → NCC migration failure → Hirschsprung disease.</strong> RET is a receptor tyrosine kinase essential for GDNF-mediated neural crest cell migration. Loss-of-function mutations prevent NCC migration, leaving distal gut aganglionic. RET gain-of-function mutations (choice C) cause MEN2 with medullary thyroid cancer, pheochromocytoma, and primary hyperparathyroidism — but NOT Hirschsprung (which is LOF). The balance is critical: LOF → agangliosis; GOF → excessive innervation risks.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 7 of 10 — Gastroschisis vs. Omphalocele</div>
+    <div class="mcq-stem">A prenatal ultrasound identifies an abdominal wall defect in a 20-week fetus. The defect is located directly to the RIGHT of the umbilicus, and there is NO covering membrane. Which diagnosis and associated findings are most consistent?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Omphalocele; genetic syndrome; covered by peritoneum and amnion</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Gastroschisis; NOT genetic; no sac; exposed bowel; acute closure required</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Trisomy 21 association; defect at midline</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Beckwith-Wiedemann syndrome with covered defect</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Congenital diaphragmatic hernia with bowel in chest</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Gastroschisis.</strong> The key differences: (1) Gastroschisis = lateral (right of umbilicus), NO sac, NOT genetic; (2) Omphalocele = midline, covered by peritoneum + amnion, associated with Beckwith-Wiedemann, trisomy 13/18. The "no covering membrane" is the diagnostic clue for gastroschisis. Both require surgical repair, but omphalocele may be staged (silo first), while gastroschisis often requires acute closure.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 8 of 10 — Meckel Diverticulum</div>
+    <div class="mcq-stem">A 3-year-old boy presents with painless rectal bleeding. Imaging with technetium-99m pertechnetate (Meckel's scan) shows focal uptake in the lower abdomen. At surgery, a diverticulum is found 18 inches from the ileocecal valve. Which component of Meckel diverticulum is responsible for the bleeding?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Meckel diverticulum is always symptomatic and requires resection</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Ectopic gastric mucosa secretes HCl → ulcerates adjacent ileum → painless bleeding</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Ectopic pancreatic tissue causes inflammation and bleeding</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>The diverticulum itself is inflamed like appendicitis</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Portal hypertension from abnormal mesentery</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Ectopic gastric mucosa.</strong> Meckel diverticulum follows the "rule of 2s": 2% population, 2 feet from ileocecal, 2 inches long, 2 types of ectopic tissue (gastric + pancreatic). The ectopic gastric mucosa is responsible for bleeding: it secretes HCl → ulcerates the adjacent ileal mucosa → painless rectal bleeding (cardinal feature). Technetium-99m pertechnetate concentrates in gastric mucosa (whether ectopic or normal), making the Meckel's scan the diagnostic test of choice.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 9 of 10 — Duodenal Atresia / Down Syndrome</div>
+    <div class="mcq-stem">A newborn with Down syndrome (trisomy 21) presents on day 1 of life with projectile vomiting and abdominal distension. Abdominal X-ray shows a "double bubble" sign with no distal air. Which embryologic process is disrupted to cause this finding?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Midgut rotation (malrotation + volvulus)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Failure of the pyloric sphincter to develop</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Failure of duodenal recanalization (solid → hollow transformation)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Excessive villus development causing intussusception</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Annular pancreas constriction of the duodenum</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Failed recanalization.</strong> The duodenum is initially a solid cord (wks 4–8), then must hollow out (recanalize) during wks 8–12. Failure → duodenal atresia. The "double bubble" sign = gas in dilated proximal duodenum + gastric bubble; NO distal air (obstruction). Duodenal atresia is strongly associated with Down syndrome (trisomy 21). Management: fluid/electrolyte correction, then duodenoduodenostomy bypass. (Note: Annular pancreas is similar but allows some flow; atresia is complete blockage.)</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 10 of 10 — Congenital Diaphragmatic Hernia / Pulmonary Hypoplasia</div>
+    <div class="mcq-stem">A newborn has a left-sided congenital diaphragmatic hernia (CDH) with herniation of abdominal organs into the chest. Which pathologic consequence of CDH leads to the primary cause of mortality in severely affected infants?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Bowel obstruction from compression by lung tissue</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Pulmonary hypoplasia (underdevelopment of alveoli + airways) → respiratory insufficiency + pulmonary hypertension</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Gastroesophageal reflux from displaced stomach</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Sepsis from intestinal perforation</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Cardiac compression and arrhythmia</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Pulmonary hypoplasia.</strong> The herniated viscera compress developing lung tissue in utero → underdeveloped alveoli, airways, and pulmonary vasculature. This leads to respiratory insufficiency and pulmonary hypertension (the primary cause of mortality). CDH is left > right (Bochdalek foramen is posterolateral). Prenatal diagnosis allows delivery at a hospital with extracorporeal membrane oxygenation (ECMO) capability. Early gentle ventilation (avoid barotrauma) and surgical repair are key; prognosis depends on the degree of pulmonary hypoplasia.</div>
+  </div>
+
+</div>
+
+<!-- ══ ORDERING DRILLS ═══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ordering">
+  <div class="mcq-intro"><strong>Ordering Drills:</strong> Arrange each sequence of steps in the correct physiologic or pathologic order. Drag items to reorder. Click "Check Order" to verify, or "Show Answer" to reveal the correct sequence.</div>
+
+  <div class="order-drill" id="drill-1">
+    <div class="drill-title">Embryonic Folding — From Flat Disc to Tube-Within-a-Tube</div>
+    <div class="drill-hint">Trace how cranial-caudal and lateral folding creates the peritoneal cavity.</div>
+    <div class="order-list" id="list-1">
+      <div class="order-item" data-correct="3">Lateral folds bring viscera toward midline, wrapping visceral peritoneum around them</div>
+      <div class="order-item" data-correct="1">Trilaminar disc (ectoderm, mesoderm, endoderm) forms during week 2</div>
+      <div class="order-item" data-correct="5">Peritoneal cavity (potential space) develops between visceral and parietal layers</div>
+      <div class="order-item" data-correct="2">Cranial-caudal folds bring head and tail ends toward midline</div>
+      <div class="order-item" data-correct="4">Splanchnic mesoderm surrounds GI tract → smooth muscle + mesentery</div>
+      <div class="order-item" data-correct="6">Tube-within-a-tube body plan with dorsal mesentery spanning entire gut</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-1')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-1"></div>
+    <div class="order-answer" id="ans-drill-1">
+      <ol>
+        <li><span>Trilaminar disc (ectoderm, mesoderm, endoderm) forms during week 2</span></li>
+        <li><span>Cranial-caudal folds bring head and tail ends toward midline</span></li>
+        <li><span>Lateral folds bring viscera toward midline, wrapping visceral peritoneum around them</span></li>
+        <li><span>Splanchnic mesoderm surrounds GI tract → smooth muscle + mesentery</span></li>
+        <li><span>Peritoneal cavity (potential space) develops between visceral and parietal layers</span></li>
+        <li><span>Tube-within-a-tube body plan with dorsal mesentery spanning entire gut</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-2">
+    <div class="drill-title">Midgut 270° Counterclockwise Rotation</div>
+    <div class="drill-hint">From herniation in week 6 through return and final positioning in week 12.</div>
+    <div class="order-list" id="list-2">
+      <div class="order-item" data-correct="4">Midgut rotates additional 180° as it returns to abdomen (wks 10–12)</div>
+      <div class="order-item" data-correct="2">Intestinal loops herniate out of umbilicus during week 6</div>
+      <div class="order-item" data-correct="6">Cecum descends from right upper quadrant to right lower quadrant</div>
+      <div class="order-item" data-correct="1">Midgut begins with duodenum at pylorus, small bowel, and cecum in embryonic position</div>
+      <div class="order-item" data-correct="3">Herniated midgut rotates 90° CCW around SMA as pivot (week 6)</div>
+      <div class="order-item" data-correct="5">Total 270° CCW rotation completed; duodenojejunal flexure behind peritoneum; cecum in RLQ</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-2')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-2"></div>
+    <div class="order-answer" id="ans-drill-2">
+      <ol>
+        <li><span>Midgut begins with duodenum at pylorus, small bowel, and cecum in embryonic position</span></li>
+        <li><span>Intestinal loops herniate out of umbilicus during week 6</span></li>
+        <li><span>Herniated midgut rotates 90° CCW around SMA as pivot (week 6)</span></li>
+        <li><span>Midgut rotates additional 180° as it returns to abdomen (wks 10–12)</span></li>
+        <li><span>Total 270° CCW rotation completed; duodenojejunal flexure behind peritoneum; cecum in RLQ</span></li>
+        <li><span>Cecum descends from right upper quadrant to right lower quadrant</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-3">
+    <div class="drill-title">Pancreatic Bud Fusion and Duct Development (Week 7)</div>
+    <div class="drill-hint">How dorsal and ventral buds fuse and their ducts combine.</div>
+    <div class="order-list" id="list-3">
+      <div class="order-item" data-correct="2">Dorsal bud appears from dorsal duodenum; ventral bud from hepatic diverticulum (wk 4)</div>
+      <div class="order-item" data-correct="5">Ventral duct → accessory duct of Santorini (minor papilla)</div>
+      <div class="order-item" data-correct="1">Pancreatic development begins during week 4 of gestation</div>
+      <div class="order-item" data-correct="4">Ducts fuse during week 7 as buds come together</div>
+      <div class="order-item" data-correct="3">Dorsal bud → body, tail, superior/anterior head; ventral bud → uncinate + inferior/posterior head</div>
+      <div class="order-item" data-correct="6">Dorsal duct → main duct of Wirsung (major papilla of Vater)</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-3')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-3"></div>
+    <div class="order-answer" id="ans-drill-3">
+      <ol>
+        <li><span>Pancreatic development begins during week 4 of gestation</span></li>
+        <li><span>Dorsal bud appears from dorsal duodenum; ventral bud from hepatic diverticulum (wk 4)</span></li>
+        <li><span>Dorsal bud → body, tail, superior/anterior head; ventral bud → uncinate + inferior/posterior head</span></li>
+        <li><span>Ducts fuse during week 7 as buds come together</span></li>
+        <li><span>Dorsal duct → main duct of Wirsung (major papilla of Vater)</span></li>
+        <li><span>Ventral duct → accessory duct of Santorini (minor papilla)</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-4">
+    <div class="drill-title">Hirschsprung Disease — RET Mutation to Functional Obstruction</div>
+    <div class="drill-hint">From molecular defect through NCC failure to surgical diagnosis.</div>
+    <div class="order-list" id="list-4">
+      <div class="order-item" data-correct="4">Aganglionic segment unable to relax → tonic contraction → functional obstruction</div>
+      <div class="order-item" data-correct="2">NCC fail to migrate craniocaudally along GI tract (GDNF-RET signaling blocked)</div>
+      <div class="order-item" data-correct="6">Surgical biopsy of NARROW (aganglionic) segment shows absent ganglia in both plexuses</div>
+      <div class="order-item" data-correct="1">RET loss-of-function mutation inherited or de novo</div>
+      <div class="order-item" data-correct="5">Proximal normal segment dilates from stool accumulation (forms "transition zone")</div>
+      <div class="order-item" data-correct="3">Distal (usually rectosigmoid) colon remains aganglionic</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-4')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-4')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-4')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-4"></div>
+    <div class="order-answer" id="ans-drill-4">
+      <ol>
+        <li><span>RET loss-of-function mutation inherited or de novo</span></li>
+        <li><span>NCC fail to migrate craniocaudally along GI tract (GDNF-RET signaling blocked)</span></li>
+        <li><span>Distal (usually rectosigmoid) colon remains aganglionic</span></li>
+        <li><span>Aganglionic segment unable to relax → tonic contraction → functional obstruction</span></li>
+        <li><span>Proximal normal segment dilates from stool accumulation (forms "transition zone")</span></li>
+        <li><span>Surgical biopsy of NARROW (aganglionic) segment shows absent ganglia in both plexuses</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-5">
+    <div class="drill-title">Biliary Atresia Workup and Management</div>
+    <div class="drill-hint">From clinical presentation through diagnosis to Kasai procedure.</div>
+    <div class="order-list" id="list-5">
+      <div class="order-item" data-correct="4">HIDA scan shows hepatic uptake but NO excretion into duodenum</div>
+      <div class="order-item" data-correct="2">Direct (conjugated) hyperbilirubinemia noted; gamma-GT elevated</div>
+      <div class="order-item" data-correct="1">Neonate with jaundice persisting beyond 2 weeks; acholic (pale) stools; dark urine</div>
+      <div class="order-item" data-correct="3">Ultrasound rules out choledochal cyst; excludes other causes of biliary obstruction</div>
+      <div class="order-item" data-correct="5">Fibro-obliteration of extrahepatic bile ducts diagnosed</div>
+      <div class="order-item" data-correct="6">Kasai hepatoportoenterostomy performed (connects porta to bowel, bypassing atretic ducts)</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-5')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-5')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-5')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-5"></div>
+    <div class="order-answer" id="ans-drill-5">
+      <ol>
+        <li><span>Neonate with jaundice persisting beyond 2 weeks; acholic (pale) stools; dark urine</span></li>
+        <li><span>Direct (conjugated) hyperbilirubinemia noted; gamma-GT elevated</span></li>
+        <li><span>Ultrasound rules out choledochal cyst; excludes other causes of biliary obstruction</span></li>
+        <li><span>HIDA scan shows hepatic uptake but NO excretion into duodenum</span></li>
+        <li><span>Fibro-obliteration of extrahepatic bile ducts diagnosed</span></li>
+        <li><span>Kasai hepatoportoenterostomy performed (connects porta to bowel, bypassing atretic ducts)</span></li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ VIGNETTES MCQ ═════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-vignettes">
+  <div class="vig-intro"><strong>Vignette MCQs:</strong> Clinical scenarios testing disease recognition and mechanisms. Select your best answer and the explanation appears automatically.</div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 1 of 10 — Duodenal Atresia / Down Syndrome</div>
+    <div class="vig-stem">A newborn with Down syndrome (trisomy 21) presents on day 1 of life with <strong>bilious projectile vomiting</strong> and abdominal distension. Abdominal X-ray shows a classic <strong>"double bubble" sign</strong> with gas in the proximal duodenum and stomach, but NO distal air. The infant has not passed meconium.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span>Malrotation with midgut volvulus</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span>Duodenal atresia from failed recanalization</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Annular pancreas</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Pyloric stenosis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Meconium ileus</div>
+    </div>
+    <div class="vig-exp"><strong>B — Duodenal atresia.</strong> Buzzwords: <span class="vig-buzzword">Down syndrome (strongest association)</span>, <span class="vig-buzzword">day 1 bilious vomiting</span>, <span class="vig-buzzword">double bubble sign</span>, <span class="vig-buzzword">no distal gas</span>. Duodenal atresia results from FAILED RECANALIZATION (duodenum is initially solid, then hollows out in wks 8–12). Complete obstruction → no gas past duodenum. Treatment: fluid/electrolyte correction, then duodenoduodenostomy bypass. (Annular pancreas would allow some distal gas; malrotation presents with bilious vomiting later, not immediately.)</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 2 of 10 — Pyloric Stenosis</div>
+    <div class="vig-stem">A 4-week-old male infant presents with <strong>projectile vomiting</strong> after feeding. The vomit is <strong>nonbilious</strong> (doesn't contain green material). On examination, a small <strong>"olive" mass</strong> is palpable in the epigastrium. Labs show K⁺ 3.0, Cl⁻ 95, HCO₃⁻ 32 (metabolic alkalosis). Ultrasound shows pyloric muscle wall thickness 4 mm.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Pyloric stenosis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Duodenal atresia</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Gastroesophageal reflux (GERD)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Antral web</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Malrotation</div>
+    </div>
+    <div class="vig-exp"><strong>A — Pyloric stenosis.</strong> Buzzwords: <span class="vig-buzzword">2–8 weeks old (peak 3–5 wks)</span>, <span class="vig-buzzword">nonbilious projectile vomiting</span>, <span class="vig-buzzword">olive mass</span>, <span class="vig-buzzword">hypokalemic hypochloremic metabolic alkalosis</span> (from HCl loss in vomitus). Hypertrophy of pyloric smooth muscle causes outlet obstruction. Ultrasound: pyloric wall >3 mm is diagnostic. Treatment: ALWAYS rehydrate + correct electrolytes FIRST (critical!), then Ramstedt pyloromyotomy.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 3 of 10 — Hirschsprung Disease</div>
+    <div class="vig-stem">A 3-day-old male fails to pass meconium. Abdominal exam shows distension and visible peristaltic waves. Rectal examination reveals <strong>explosive release of stool and gas when the examining finger is withdrawn</strong> ("squirt sign"). Abdominal X-ray shows dilated loops. Rectal biopsy from the narrow distal segment shows absent ganglion cells in both myenteric and submucosal plexuses.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Hirschsprung disease (aganglionic distal segment)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Meconium ileus (from cystic fibrosis)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Malrotation with volvulus</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Small left colon syndrome</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Neonatal bowel perforation</div>
+    </div>
+    <div class="vig-exp"><strong>A — Hirschsprung disease.</strong> Buzzwords: <span class="vig-buzzword">failure to pass meconium in neonate</span>, <span class="vig-buzzword">abdominal distension</span>, <span class="vig-buzzword">squirt sign (explosive stool when finger removed)</span>, <span class="vig-buzzword">biopsy = absent ganglia</span>. Neural crest cells failed to migrate → distal segment aganglionic → cannot relax → functional obstruction. CRITICAL: biopsy from NARROW segment (the aganglionic part), NOT the dilated proximal segment (which has normal ganglia). RET gene (LOF) involved. Treatment: Levshuntzer recto-sigmoid resection + anastomosis or colostomy.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 4 of 10 — Malrotation + Midgut Volvulus</div>
+    <div class="vig-stem">A 2-week-old infant presents with acute-onset <strong>bilious emesis</strong> and inconsolable crying (severe pain). Abdominal exam shows guarding. Abdominal ultrasound shows the superior mesenteric vessels arranged in an abnormal <strong>"whirlpool sign"</strong> with <strong>SMA positioned to the RIGHT of SMV</strong>. No duodenal gas is seen.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Malrotation with midgut volvulus — surgical emergency</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Duodenal atresia</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Pyloric stenosis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Necrotizing enterocolitis (NEC)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Jejunal atresia</div>
+    </div>
+    <div class="vig-exp"><strong>A — Malrotation + midgut volvulus.</strong> Buzzwords: <span class="vig-buzzword">neonate with bilious emesis</span>, <span class="vig-buzzword">acute pain</span>, <span class="vig-buzzword">whirlpool sign (midgut twisted around SMA)</span>, <span class="vig-buzzword">SMA right of SMV (reversed)</span>. Failed midgut rotation (normal: 270° CCW around SMA) → ligament of Treitz not fixed → SMA/SMV can twist → arterial/venous compromise → necrosis. SURGICAL EMERGENCY (Ladd procedure: detorsion, division of Ladd bands, appendectomy). If bilious emesis in neonate: think malrotation until proven otherwise.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 5 of 10 — Meckel Diverticulum</div>
+    <div class="vig-stem">A 5-year-old boy presents with <strong>painless rectal bleeding</strong> (bright red blood per rectum). Hemoglobin dropped from 13 to 9 g/dL. CT shows no masses. <strong>Technetium-99m pertechnetate scan (Meckel's scan) shows focal uptake</strong> in the lower abdomen distant from the stomach. At surgery, a diverticulum is found 15 inches from the ileocecal valve.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Meckel diverticulum with ectopic gastric mucosa bleeding</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Inflammatory bowel disease (Crohn or ulcerative colitis)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Juvenile polyp</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Intussusception</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Intestinal tuberculosis</div>
+    </div>
+    <div class="vig-exp"><strong>A — Meckel diverticulum.</strong> Buzzwords: <span class="vig-buzzword">painless rectal bleeding (cardinal feature)</span>, <span class="vig-buzzword">Tc-99m pertechnetate scan POSITIVE</span>, <span class="vig-buzzword">2 feet from ileocecal valve</span>. Rule of 2s: 2% population, 2 types of tissue (gastric + pancreatic ectopia), 2 feet location, 2 inches long, 2:1 M:F, 2% symptomatic. Ectopic gastric mucosa secretes HCl → ulcerates adjacent ileal mucosa → painless bleeding (NOT painful like IBD). Technetium concentrates in gastric mucosa (ectopic or normal).</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 6 of 10 — Gastroschisis vs. Omphalocele</div>
+    <div class="vig-stem">Prenatal ultrasound at 19 weeks gestation identifies an abdominal wall defect. The defect is located <strong>to the RIGHT of the umbilicus</strong>, and there is <strong>NO covering membrane</strong>. Bowel loops are directly exposed to amniotic fluid. Chromosomal testing is normal. The pregnancy is otherwise uncomplicated.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Gastroschisis (right, no sac, not genetic)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Omphalocele (midline, covered, genetic)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Beckwith-Wiedemann syndrome</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Trisomy 13 or 18</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Congenital diaphragmatic hernia</div>
+    </div>
+    <div class="vig-exp"><strong>A — Gastroschisis.</strong> Key distinction: <span class="vig-buzzword">location right of umbilicus</span>, <span class="vig-buzzword">NO sac (exposed bowel)</span>, <span class="vig-buzzword">NOT genetic</span> (normal karyotype likely). Omphalocele = midline, covered by peritoneum + amnion, associated with Beckwith-Wiedemann, Down, trisomy 13/18. Gastroschisis = lateral, bare bowel, no association. Both need surgical repair; gastroschisis requires acute closure; omphalocele may be staged with a silo first.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 7 of 10 — Biliary Atresia</div>
+    <div class="vig-stem">A 3-week-old infant has <strong>persistent jaundice</strong> (total bili 8, direct bili 5 mg/dL), <strong>pale/acholic stools</strong> (no bile pigment), <strong>dark urine</strong>, and hepatomegaly. Ultrasound shows a normal gallbladder and patent biliary ducts. <strong>HIDA scan shows hepatic uptake but NO excretion into duodenum</strong>. Biopsy is pending.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Biliary atresia (fibro-obliteration of extrahepatic ducts)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Neonatal hepatitis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Choledochal cyst</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Alpha-1 antitrypsin deficiency</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Hemolytic disease of the newborn (Rh incompatibility)</div>
+    </div>
+    <div class="vig-exp"><strong>A — Biliary atresia.</strong> Buzzwords: <span class="vig-buzzword">jaundice >2 weeks</span>, <span class="vig-buzzword">direct hyperbilirubinemia</span>, <span class="vig-buzzword">acholic stools</span>, <span class="vig-buzzword">HIDA uptake but NO excretion</span>. Etiology unknown; fibro-obliteration of extrahepatic bile ducts → no bile flow. Management: Kasai hepatoportoenterostomy (connects porta hepatis to jejunum, bypassing atretic ducts) — delays or prevents transplant need. Success rates ~50% for long-term function without transplant.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 8 of 10 — Congenital Diaphragmatic Hernia (CDH)</div>
+    <div class="vig-stem">A newborn is delivered at term and immediately shows <strong>respiratory distress</strong>, <strong>cyanosis</strong>, and a <strong>scaphoid (sunken) abdomen</strong>. <strong>Bowel sounds are heard in the chest</strong>. Chest X-ray shows <strong>bowel loops in the left hemithorax</strong> and mediastinal shift. Prenatal ultrasound had shown this defect at 28 weeks.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>Congenital diaphragmatic hernia (left > right)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Esophageal atresia with distal TEF</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Tension pneumothorax</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Meconium aspiration syndrome</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Gastroschisis</div>
+    </div>
+    <div class="vig-exp"><strong>A — Congenital diaphragmatic hernia.</strong> Buzzwords: <span class="vig-buzzword">respiratory distress at birth</span>, <span class="vig-buzzword">scaphoid abdomen (no abdominal organs)</span>, <span class="vig-buzzword">bowel sounds in chest</span>, <span class="vig-buzzword">left side (Bochdalek foramen)</span>. Herniated abdominal organs compress developing lung → pulmonary hypoplasia (underdev alveoli + airways) + pulmonary hypertension. Mortality depends on degree of lung hypoplasia. Management: gentle ventilation (avoid barotrauma), ECMO if available, surgical repair (NOT emergency). Prenatal diagnosis allows tertiary care delivery.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 9 of 10 — Tracheoesophageal Fistula (TEF) / Esophageal Atresia (EA)</div>
+    <div class="vig-stem">A newborn at 2 hours of life begins <strong>excessive drooling</strong>, <strong>choking with the first feeding attempt</strong>, and becomes <strong>cyanotic</strong>. An <strong>attempt to pass a nasogastric tube fails</strong> — the tube cannot advance past 10 cm into the esophagus. Chest X-ray shows the NG tube in a blind pouch and air in the stomach/bowel (distal gas present).</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>EA + distal TEF (Type A, 85% of cases)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Isolated esophageal atresia (no fistula)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>H-type TEF (fistula only, no atresia)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Pyloric stenosis</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Tracheomalacia</div>
+    </div>
+    <div class="vig-exp"><strong>A — EA + distal TEF.</strong> Buzzwords: <span class="vig-buzzword">excessive drooling</span>, <span class="vig-buzzword">choking with feeds</span>, <span class="vig-buzzword">cyanosis</span>, <span class="vig-buzzword">unable to pass NG tube</span>, <span class="vig-buzzword">air in stomach (distal gas)</span>. This is the most common type (Type A, 85%): proximal esophagus is blind, lower esophagus connects to trachea. The distal TEF allows air into stomach → distal gas seen on X-ray. H-type (C) would have no blind pouch and would present later with aspiration pneumonia. Type B (isolated EA) has no distal gas.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 10 of 10 — Imperforate Anus + VACTERL Association</div>
+    <div class="vig-stem">A newborn with imperforate anus undergoes physical exam. Congenital anomalies are identified: <strong>vertebral abnormality, cardiac murmur, TEF, renal hypoplasia</strong>, and <strong>limb malformation</strong>. The infant has a <strong>fistula between rectum and urethra</strong>.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A</span>VACTERL association (≥3 anomalies, including H-type anorectal fistula)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Down syndrome (trisomy 21)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Edwards syndrome (trisomy 18)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Patau syndrome (trisomy 13)</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Single gene mutation (autosomal recessive)</div>
+    </div>
+    <div class="vig-exp"><strong>A — VACTERL association.</strong> <strong>VACTERL:</strong> <strong>V</strong>ertebral, <strong>A</strong>nal, <strong>C</strong>ardiac, <strong>T</strong>racheoesophageal, <strong>R</strong>enal, <strong>L</strong>imb (≥3 = VACTERL diagnosis). The patient has 5 of 6 components. Imperforate anus = urorectal septum failed to divide cloaca. <strong>H-type anorectal fistula</strong> = fistula between rectum and urethra/vagina (shaped like H in cross-section); infant may pass meconium through urine or fistula opening. Requires surgical correction + screening for other VACTERL components.</div>
+  </div>
+
+</div>
+
+<!-- ══ STEP 1 TRAPS ═════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-traps">
+  <div class="vig-intro"><strong>Step 1 Traps:</strong> Common false statements that appear plausible but are incorrect. Choose the correct answer to reveal the trap explanation.</div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 1 of 10</div>
+    <div class="trap-statement">Gastroschisis has a protective sac covering the exposed viscera, just like omphalocele.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-1">FALSE — this is a critical distinction. Gastroschisis = NO sac (bare, exposed bowel). Omphalocele = covered by peritoneum + amnion (has a sac). Gastroschisis is right of umbilicus, NOT genetic; omphalocele is midline, associated with genetic syndromes (Beckwith-Wiedemann, trisomy 13/18). The lack of sac in gastroschisis is the KEY distinguishing feature on ultrasound and at birth.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 2 of 10</div>
+    <div class="trap-statement">In Hirschsprung disease, the DILATED segment of colon is the aganglionic abnormal portion.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-2">FALSE — this is a classic exam trap. The NARROW segment is aganglionic (abnormal). The DILATED segment proximal is actually NORMAL (has intact ganglia) — it is simply dilated from stool accumulation above the obstruction. When obtaining a rectal biopsy, ALWAYS biopsy the NARROW (aganglionic) segment, NOT the dilated one. This distinction appears on every Step 1 exam.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 3 of 10</div>
+    <div class="trap-statement">The ventral mesentery extends throughout the entire GI tract from esophagus to anal canal.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-3">FALSE — ventral mesentery exists ONLY in the foregut (esophagus through duodenum). The dorsal mesentery spans the ENTIRE gut (esophagus through anal canal). Students often confuse the two. Remember: the liver expands into the ventral mesentery in the foregut, dividing it into falciform ligament and hepatic ligaments. Midgut and hindgut have ONLY dorsal mesentery.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 4 of 10</div>
+    <div class="trap-statement">Meckel diverticulum causes PAINFUL rectal bleeding, similar to inflammatory bowel disease.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-4">FALSE — Meckel bleeding is PAINLESS (cardinal feature). Ectopic gastric mucosa in the diverticulum secretes HCl → ulcerates adjacent ileum → painless bleeding. This painless presentation helps distinguish it from IBD (Crohn) which presents with painful diarrhea. Key: painless rectal bleeding + Tc-99m pertechnetate uptake = Meckel.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 5 of 10</div>
+    <div class="trap-statement">RET gain-of-function mutations cause Hirschsprung disease.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-5">FALSE — RET loss-of-function (LOF) causes Hirschsprung. RET gain-of-function (GOF) causes MEN2 (medullary thyroid cancer, pheochromocytoma, primary hyperparathyroidism). This is a commonly tested distinction: LOF = NCC migration failure = agangliosis = Hirschsprung; GOF = increased neuron proliferation + medullary thyroid risk = MEN2.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 6 of 10</div>
+    <div class="trap-statement">The pectinate line marks the colonic watershed area between SMA and IMA blood supply.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-6">FALSE — the pectinate line marks the embryologic/vascular/innervation boundary (superior rectal above, inferior rectal below) but is NOT the watershed. The actual colonic WATERSHED is at the SPLENIC FLEXURE (junction of SMA and IMA territories). Ischemic colitis commonly affects the splenic flexure, not the pectinate line. Know the difference: pectinate = anorectal boundary; watershed = splenic flexure.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 7 of 10</div>
+    <div class="trap-statement">The pancreatic tail is retroperitoneal and never moves with the stomach during rotation.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-7">FALSE — the pancreatic tail (derived from dorsal bud) is INTRAPERITONEAL and sits in the greater omentum, where it CAN move. Only the head, body (except tip), and uncinate process are retroperitoneal. The tail extends into the hilum of the spleen. This distinction is tested because students often assume "pancreas = retroperitoneal" — but the tail breaks that rule.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 8 of 10</div>
+    <div class="trap-statement">Double Bubble sign on X-ray indicates malrotation with midgut volvulus, not duodenal atresia.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-8">FALSE — Double Bubble specifically indicates DUODENAL ATRESIA (complete obstruction = two bubbles of gas, no distal air). Malrotation/volvulus would have different findings (whirlpool on ultrasound, SMA right of SMV). Both present with bilious emesis in a neonate, but the imaging and embryologic defect differ. Students confuse these presentations because both are neonatal emergencies with bilious vomiting.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 9 of 10</div>
+    <div class="trap-statement">Recanalization failure causes malrotation; failure of rotation causes atresia.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-9">FALSE — these are OPPOSITE. Recanalization failure (duodenum remains solid instead of hollowing out) → ATRESIA. Failure of midgut rotation (abnormal fixation of mesentery, abnormal vascular relationships) → MALROTATION. Both are embryologic failures but at different stages and with different mechanisms. Duodenal atresia = weeks 8–12 (recanalization). Midgut rotation = weeks 6–12 (herniation + rotation).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 10 of 10</div>
+    <div class="trap-statement">Annular pancreas is a congenital anomaly where the ventral bud completely encircles the duodenum with no gap.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-10">FALSE — the clinical trap is that in annular pancreas, there IS often a small gap that permits some passage of chyme. This allows distal gas (unlike duodenal atresia). Annular pancreas can present with duodenal obstruction, but management is critical: NEVER simply divide the ring (divides pancreatic tissue → fistula risk). Always perform duodenoduodenostomy to bypass the constriction.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE TABLES ══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ref">
+  <div class="vig-intro"><strong>Reference Tables:</strong> Quick-lookup tables for embryology, anatomy, and congenital anomalies. Print-friendly format.</div>
+
+  <div class="ref-section">
+    <div class="ref-title">Mesentery Derivatives — Ventral vs. Dorsal</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Mesentery</th>
+            <th>Region</th>
+            <th>Divisions</th>
+            <th>Contents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>VENTRAL</strong><br>(Foregut ONLY)</td>
+            <td>Esophagus → Duodenum (D1–D2)</td>
+            <td>Falciform ligament (anterior) · Hepatogastric ligament (lesser omentum) · Hepatoduodenal ligament</td>
+            <td>Portal triad (artery, portal vein, common bile duct) in hepatoduodenal</td>
+          </tr>
+          <tr>
+            <td><strong>DORSAL</strong><br>(Entire GI tract)</td>
+            <td>Esophagus → Anal canal</td>
+            <td>Root of mesentery (SB) · Transverse mesocolon · Sigmoid mesocolon · Mesorectum</td>
+            <td>Vessels, lymphatics, nerves to supplied organs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Gut Region → Artery → Derivatives</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Artery</th>
+            <th>Foregut / Midgut / Hindgut Derivatives</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FOREGUT</strong><br>(Celiac A.)</td>
+            <td>Celiac artery</td>
+            <td>Pharynx, esophagus, stomach, duodenum (D1–D2), liver, gallbladder, pancreatic dorsal bud</td>
+          </tr>
+          <tr>
+            <td><strong>MIDGUT</strong><br>(Superior Mesenteric A.)</td>
+            <td>SMA</td>
+            <td>Duodenum (D3–D4), jejunum, ileum, cecum, appendix, ascending colon, proximal 2/3 transverse colon</td>
+          </tr>
+          <tr>
+            <td><strong>HINDGUT</strong><br>(Inferior Mesenteric A.)</td>
+            <td>IMA</td>
+            <td>Distal 1/3 transverse, descending colon, sigmoid colon, rectum, anal canal (above pectinate line)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Pectinate Line — 5-Column Comparison (ABOVE vs. BELOW)</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>ABOVE Pectinate</th>
+            <th>BELOW Pectinate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Artery</strong></td>
+            <td>Superior rectal (SMA/IMA)</td>
+            <td>Inferior rectal (internal iliac)</td>
+          </tr>
+          <tr>
+            <td><strong>Vein</strong></td>
+            <td>Superior rectal → portal circulation</td>
+            <td>Inferior rectal → systemic (caval)</td>
+          </tr>
+          <tr>
+            <td><strong>Lymph Drainage</strong></td>
+            <td>Internal iliac nodes</td>
+            <td>Inguinal nodes</td>
+          </tr>
+          <tr>
+            <td><strong>Innervation</strong></td>
+            <td>Visceral (no pain sensation)</td>
+            <td>Somatic (painful hemorrhoids, fissures)</td>
+          </tr>
+          <tr>
+            <td><strong>Epithelium</strong></td>
+            <td>Columnar endoderm</td>
+            <td>Stratified squamous ectoderm</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Pancreatic Bud Development — Dorsal vs. Ventral Derivatives</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Bud</th>
+            <th>Origin</th>
+            <th>Derivatives</th>
+            <th>Duct Fate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Dorsal</strong></td>
+            <td>Dorsal surface of duodenum</td>
+            <td>Body, tail, superior/anterior head</td>
+            <td>Main duct of Wirsung (joins ventral at ampulla of Vater)</td>
+          </tr>
+          <tr>
+            <td><strong>Ventral</strong></td>
+            <td>Hepatic diverticulum (with bile duct)</td>
+            <td>Uncinate process, inferior/posterior head</td>
+            <td>Accessory duct of Santorini (minor papilla)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Congenital Anomalies — Summary Table</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Anomaly</th>
+            <th>Embryologic Defect</th>
+            <th>Classic Presentation</th>
+            <th>Key Diagnostic Finding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pyloric Stenosis</strong></td>
+            <td>Smooth muscle hypertrophy (etiology unclear)</td>
+            <td>2–8 wks: nonbilious projectile vomiting, olive mass, metabolic alkalosis</td>
+            <td>Ultrasound: pyloric muscle wall &gt;3 mm</td>
+          </tr>
+          <tr>
+            <td><strong>Duodenal Atresia</strong></td>
+            <td>Failed recanalization (wks 8–12)</td>
+            <td>Neonate: bilious vomiting, no meconium</td>
+            <td>Double Bubble sign; strong association Down syndrome</td>
+          </tr>
+          <tr>
+            <td><strong>Hirschsprung</strong></td>
+            <td>RET LOF → NCC migration failure</td>
+            <td>Neonate: failure to pass meconium, abdominal distension</td>
+            <td>Rectal biopsy of narrow segment: absent ganglia</td>
+          </tr>
+          <tr>
+            <td><strong>Malrotation + Volvulus</strong></td>
+            <td>Failed midgut 270° CCW rotation</td>
+            <td>2–6 wks: acute bilious vomiting, severe pain</td>
+            <td>Whirlpool sign (ultrasound); SMA right of SMV</td>
+          </tr>
+          <tr>
+            <td><strong>Meckel Diverticulum</strong></td>
+            <td>Incomplete obliteration vitelline duct</td>
+            <td>Painless rectal bleeding (rule of 2s)</td>
+            <td>Tc-99m pertechnetate scan (uptake in ectopic gastric mucosa)</td>
+          </tr>
+          <tr>
+            <td><strong>Biliary Atresia</strong></td>
+            <td>Fibro-obliteration extrahepatic ducts (unknown cause)</td>
+            <td>Jaundice &gt;2 wks, acholic stools, dark urine</td>
+            <td>HIDA scan: hepatic uptake, NO excretion into duodenum</td>
+          </tr>
+          <tr>
+            <td><strong>Gastroschisis vs. Omphalocele</strong></td>
+            <td>Failure of lateral folds vs. ventral mesentery disruption</td>
+            <td>Newborn abdominal wall defect</td>
+            <td>Gastroschisis: right lateral, NO sac · Omphalocele: midline, covered sac</td>
+          </tr>
+          <tr>
+            <td><strong>TEF/EA (Type A)</strong></td>
+            <td>Improper division of foregut into trachea + esophagus</td>
+            <td>Newborn: excessive drooling, choking with feeds, cyanosis</td>
+            <td>NG tube stops at proximal pouch; distal air visible (TEF to stomach)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ HY TESTING NOTES ═══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-hynotes">
+  <div class="vig-intro"><strong>High-Yield Testing Notes (Optional):</strong> Key embryology patterns tested on Step 1, organized by concept and buzzword cluster.</div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">KEY CONCEPT</span> Embryologic Timeline → Clinical Presentation</div>
+    <div class="hy-card-body">GI12 requires understanding WHEN embryologic defects occur so you can predict clinical timing:<br><br>
+    <strong>Wk 4–8 (foregut/hindgut start):</strong> Pyloric stenosis presents 2–8 wks old (smooth muscle hypertrophy).<br>
+    <strong>Wk 6–12 (midgut rotation/duc recanalization):</strong> Malrotation 2–6 wks old; duodenal atresia day 1 neonate.<br>
+    <strong>Wk 4–12 (NCC migration):</strong> Hirschsprung neonate failure to pass meconium (RET LOF blocks migration).<br><br>
+    This timing pattern is tested with "which presentation matches this embryologic defect?" vignettes.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge trap">CLASSIC TRAP</span> The Hirschsprung Narrow vs. Dilated Trap</div>
+    <div class="hy-card-body">Step 1's #1 Hirschsprung trap: students wrongly think the DILATED segment is abnormal. WRONG — the NARROW segment is aganglionic (absent ganglia on biopsy). The dilated segment is actually NORMAL gut distended by stool backup. Always biopsy the NARROW segment. This distinction appears in every board review and exam.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">TESTING</span> RET Mutations — LOF vs. GOF Changes Phenotype</div>
+    <div class="hy-card-body"><strong>RET Loss-of-Function:</strong> NCC migration fails → Hirschsprung (aganglionic colon).<br>
+    <strong>RET Gain-of-Function:</strong> Excess neurons + MEN2 (thyroid cancer, pheochromocytoma).<br><br>
+    The same gene gives opposite outcomes depending on mutation type. This is a high-yield testing concept because it shows how molecular biology determines clinical phenotype.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">BUZZWORD CLUSTER</span> Congenital Abdominal Wall Defects</div>
+    <div class="hy-card-body"><strong>Gastroschisis:</strong> Right lateral, NO sac, not genetic. Acute closure needed.<br>
+    <strong>Omphalocele:</strong> Midline, covered by peritoneum/amnion, genetic (Beckwith-Wiedemann, trisomy).<br><br>
+    Exam pattern: shows an ultrasound of an abdominal wall defect → asks to differentiate by location + sac presence. Know the differences cold.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">KEY FACTS</span> The "Rule of 2s" and Diagnostic Tests</div>
+    <div class="hy-card-body"><strong>Meckel Rule of 2s:</strong> 2% population, 2 feet from ileocecal, 2 inches long, 2 types tissue, 2:1 M:F.<br>
+    <strong>Diagnostic Gold Standards:</strong><br>
+    • Hirschsprung → rectal biopsy (absent ganglia in narrow segment)<br>
+    • Duodenal atresia → double bubble X-ray<br>
+    • Meckel → Tc-99m pertechnetate scan<br>
+    • Biliary atresia → HIDA scan (no excretion)<br>
+    • Malrotation → whirlpool ultrasound sign<br><br>
+    These diagnostic tests appear as "what's the next step?" board questions.</div>
+  </div>
+
+</div>
+
+<!-- ══ CLINICAL CORRELATES ════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-clinical">
+  <div class="cc-intro"><strong>Clinical Correlates (Optional):</strong> Embryology-to-clinical connections and high-yield correlations for Step 1 embryologic defects.</div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Embryology → Pathology</div>
+    <div class="cc-title">From Embryonic Defect to Newborn Presentation</div>
+    <div class="cc-body">Understanding embryologic timing helps predict presentation:<br><br>
+    <strong>Weeks 4–8 (early foregut):</strong> Pyloric stenosis (smooth muscle dysfunction) → 2–8 weeks old with projectile vomiting.<br><br>
+    <strong>Weeks 6–12 (midgut rotation/recanalization):</strong> Malrotation (failed rotation) presents 2–6 weeks old; duodenal atresia (failed recanalization) presents day 1 neonate.<br><br>
+    <strong>Weeks 4–12 (NCC migration):</strong> Hirschsprung (RET LOF) → NCC migration failure → neonate cannot pass meconium.<br><br>
+    <strong>Week 7 (pancreatic fusion):</strong> Annular pancreas (ventral encircles duodenum) → varies in severity; biliary atresia (fibro-obliteration) → jaundice >2 weeks.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">RET Signaling</div>
+    <div class="cc-title">RET Mutations Determine Phenotype — LOF vs. GOF</div>
+    <div class="cc-body"><strong>RET Loss-of-Function (LOF):</strong> NCC migration failure → absent ganglia in distal gut → Hirschsprung disease (aganglionic megacolon). Biopsy of narrow (aganglionic) segment shows no ganglia in myenteric or submucosal plexuses.<br><br>
+    <strong>RET Gain-of-Function (GOF):</strong> Excessive neuron proliferation → MEN2 syndrome (medullary thyroid carcinoma, pheochromocytoma, primary hyperparathyroidism). NOT associated with Hirschsprung (which is LOF).<br><br>
+    This LOF vs. GOF distinction is high-yield on Step 1 exams because both involve RET but produce opposite GI phenotypes.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Diagnosis</div>
+    <div class="cc-title">Key Diagnostic Findings by Anomaly</div>
+    <div class="cc-body">Each embryologic anomaly has a "gold standard" diagnostic test:<br><br>
+    <strong>Hirschsprung:</strong> Rectal biopsy of NARROW (aganglionic) segment → absent ganglion cells (both myenteric + submucosal plexuses).<br><br>
+    <strong>Duodenal Atresia:</strong> Double Bubble sign on plain X-ray (stomach + proximal duodenum); strong association with Down syndrome.<br><br>
+    <strong>Meckel:</strong> Tc-99m pertechnetate scan (uptake in ectopic gastric mucosa = "Meckel's scan").<br><br>
+    <strong>Biliary Atresia:</strong> HIDA scan shows hepatic uptake but NO excretion into duodenum; biopsy shows fibro-obliteration of extrahepatic ducts.<br><br>
+    <strong>Malrotation + Volvulus:</strong> Ultrasound shows "whirlpool sign" (SMA/SMV twisted); emergency Ladd procedure required.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI12 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div>
+
+<script>
+var seenCards=new Set();
+var allFCs;
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+  if(!allFCs) allFCs=document.querySelectorAll('.fc');
+  allFCs.forEach(function(c,i){if(c===fc)seenCards.add(i);});
+  document.getElementById('fc-counter').textContent=seenCards.size+' / 14 seen';
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function answerMCQ(opt,correct){
+  const item=opt.closest('.mcq-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.mcq-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.mcq-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  const exp=item.querySelector('.mcq-exp');exp.classList.add('show');
+}
+function toggleCC(btn){
+  const d=btn.nextElementSibling;d.classList.toggle('open');
+  btn.textContent=d.classList.contains('open')?'Hide':'Show Key Comparison Table';
+}
+
+// ── ORDERING DRILLS ──
+function initDrills(){
+  document.querySelectorAll('.order-drill').forEach(function(drill){
+    var list=drill.querySelector('.order-list');
+    var items=Array.from(list.children);
+    for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);items.splice(i,0,list.children[i]);}
+    items=Array.from(list.children);
+    items.forEach(function(item){
+      item.setAttribute('draggable','true');
+      item.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');item.classList.add('dragging');});
+      item.addEventListener('dragend',function(){item.classList.remove('dragging');});
+      item.addEventListener('dragover',function(e){e.preventDefault();item.classList.add('drag-over');});
+      item.addEventListener('dragleave',function(){item.classList.remove('drag-over');});
+      item.addEventListener('drop',function(e){
+        e.preventDefault();item.classList.remove('drag-over');
+        var dragging=list.querySelector('.dragging');
+        if(dragging&&dragging!==item){
+          var allItems=Array.from(list.children);
+          var dragIdx=allItems.indexOf(dragging);
+          var dropIdx=allItems.indexOf(item);
+          if(dragIdx<dropIdx)list.insertBefore(dragging,item.nextSibling);
+          else list.insertBefore(dragging,item);
+        }
+      });
+    });
+  });
+}
+function checkOrder(drillId){
+  var drill=document.getElementById(drillId);
+  var items=drill.querySelectorAll('.order-item');
+  var allCorrect=true;
+  items.forEach(function(item,i){
+    var correct=parseInt(item.getAttribute('data-correct'));
+    if(correct===i+1){item.classList.add('correct-pos');item.classList.remove('wrong-pos');}
+    else{item.classList.add('wrong-pos');item.classList.remove('correct-pos');allCorrect=false;}
+  });
+  var fb=document.getElementById('fb-'+drillId);
+  fb.textContent=allCorrect?'All correct!':'Some items are out of order. Try again or click Show Answer.';
+  fb.className='order-feedback '+(allCorrect?'correct':'incorrect');
+}
+function shuffleDrill(drillId){
+  var drill=document.getElementById(drillId);
+  var list=drill.querySelector('.order-list');
+  var items=Array.from(list.children);
+  items.forEach(function(item){item.classList.remove('correct-pos','wrong-pos');});
+  for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);}
+  var fb=document.getElementById('fb-'+drillId);fb.textContent='';fb.className='order-feedback';
+}
+function showAnswer(drillId){
+  var ans=document.getElementById('ans-'+drillId);
+  ans.classList.toggle('show');
+}
+
+// ── VIGNETTE MCQ ──
+function answerVig(opt,correct){
+  var item=opt.closest('.vig-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.vig-opt').forEach(function(o){o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.vig-opt').forEach(function(o){var fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  item.querySelector('.vig-exp').classList.add('show');
+}
+
+// ── STEP 1 TRAPS ──
+function answerTrap(btn,card,correct){
+  var btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(function(b){b.disabled=true;});
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  var exp=card.querySelector('.trap-exp');
+  exp.classList.add(correct?'show-c':'show-w');
+}
+
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    if(front) inner.style.height=front.scrollHeight+'px';
+  });
+  initDrills();
+});
+</script>
+</body>
+</html>
