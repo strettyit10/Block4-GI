@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI21 Hub #2 · Poisoning — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;align-items:start}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.mcq-stem strong{color:#5D4037}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#5D4037}
+.cc-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.cc-tag{display:inline-block;background:#F3EFE9;border:1px solid #D5CCC0;border-radius:4px;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5D4037;padding:2px 8px;margin-bottom:10px}
+.cc-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px}
+.cc-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.cc-body strong{color:#2C2C2C}
+.cc-body em{color:#9A6535;font-style:normal}
+.mcq-intro,.cc-intro,.vig-intro,.hy-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong{color:#5D4037}
+table{border-collapse:collapse;width:100%}
+table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D5CCC0;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF8F5}
+table tr:hover td{background:#F3EFE9}
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
+.order-drill{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:8px}
+.drill-hint{font-size:.84em;color:#7A7060;background:#F3EFE9;padding:10px 14px;border-left:2px solid #C6875A;border-radius:4px;margin-bottom:14px}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding:14px;background:#F7F5F2;border-radius:6px;border:1px solid #D5CCC0;min-height:200px}
+.order-item{background:#FFF;border:2px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.88em;color:#2C2C2C;transition:all .15s}
+.order-item:hover{border-color:#C6875A;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-color:#C6875A}
+.order-item.drag-over{border:2px dashed #C6875A;background:#F3EFE9}
+.order-item.correct-pos{border-color:#2E7D32;background:#F1F8F2}
+.order-item.wrong-pos{border-color:#C62828;background:#FEF5F5}
+.order-actions{display:flex;gap:10px;margin-bottom:14px}
+.order-check-btn{background:#5D4037;color:#F0E8DF;border:none;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-check-btn:hover{background:#4E342E}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.order-feedback{font-size:.84em;color:#5A5A5A;padding:10px 14px;border-radius:5px;margin-bottom:14px;display:none}
+.order-feedback.correct{background:#F1F8F2;border-left:3px solid #2E7D32;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border-left:3px solid #C62828;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.order-answer.show{display:block}
+.order-answer ol{margin-left:24px}
+.order-answer li{margin-bottom:10px}
+.order-answer strong{color:#5D4037}
+.vig-item{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.vig-stem strong{color:#5D4037}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .vig-opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .vig-opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.vig-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none;margin-top:12px}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#5D4037}
+.vig-buzzword{color:#9A6535;font-weight:600}
+.trap-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.trap-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.trap-statement{font-size:.92em;color:#2C2C2C;line-height:1.6;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A;font-weight:500}
+.trap-btns{display:flex;gap:10px;margin-bottom:14px}
+.trap-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.trap-btn:hover:not(:disabled){border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.trap-btn:disabled{opacity:.5;cursor:default}
+.trap-btn.sel-correct{border-color:#2E7D32;background:#F1F8F2;color:#1B5E20}
+.trap-btn.sel-wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.trap-exp.show-c,.trap-exp.show-w{display:block}
+.trap-exp.show-w{border-left-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp strong{color:#5D4037}
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #C6875A}
+.ref-table{overflow-x:auto}
+.hy-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.hy-card-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.hy-card-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.hy-card-body strong{color:#2C2C2C}
+.hy-badge{display:inline-block;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:3px;background:#F3EFE9;color:#5D4037}
+.hy-badge.trap{background:#FEF5F5;color:#C62828;border:1px solid #C62828}
+.hy-badge.buzzword{background:#FFF8E1;color:#F57F17;border:1px solid #F57F17}
+.hy-badge.testing{background:#E8F5E9;color:#2E7D32;border:1px solid #2E7D32}
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .order-list{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi21-poisoning-conference.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>Poisoning &amp; Toxicology <span>Step 1 Extensions</span></h1>
+  <div class="subtitle">Toxidrome recognition · Acetaminophen · Salicylates · Toxic alcohols · Iron · Lead · CO / CN · TCAs · Digoxin · Organophosphates · Opioids · Sympathomimetics · Antidotes mastery — with Step 1 molecular and pharmacologic depth.</div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Toxidromes:</strong> Anti-chol · Cholinergic · Sympathomimetic · Opioid · Sedative</div>
+    <div class="source-badge"><strong>Key antidotes:</strong> NAC · Naloxone · Fomepizole · Dig-Fab · B6 · 2-PAM · NaHCO₃</div>
+    <div class="source-badge"><strong>Mnemonics:</strong> SOAP · WARS · LAME Ca · CPSA · SLIME · DUMBELS · SLUDGE</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi21-hub1-poisoning.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi21-hub3-poisoning.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCQs</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Vignettes</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Traps</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
+  <button class="tab-btn" onclick="switchTab('hynotes',this)">HY Testing Notes</button>
+  <button class="tab-btn" onclick="switchTab('clinical',this)">Clinical Correlates</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="tab-content active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#7A7060">16 Step 1 high-yield toxicology concepts</em></span><span class="prog-num" id="fc-counter">0 / 16 seen</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — APAP Mechanism</div><div class="fc-q">At therapeutic doses, ~90% of APAP is cleared as glucuronide/sulfate conjugates. What happens in overdose and what does NAC do?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">In overdose, glucuronidation/sulfation are saturated → shunt to <strong>CYP2E1</strong> → toxic metabolite <strong>NAPQI</strong> depletes hepatic <strong>glutathione</strong>, binds hepatocyte proteins → centrilobular necrosis. <strong>NAC</strong> replenishes glutathione and directly conjugates NAPQI. CYP2E1 inducers: <em>chronic alcohol, INH, phenobarb, rifampin</em>.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Rumack-Matthew Nomogram</div><div class="fc-q">When is the APAP level drawn, and what is the treatment threshold?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Level at <strong>4 h</strong> post-ingestion (or later if initially later) and plot on <strong>Rumack-Matthew nomogram</strong>. "Treatment line" = <strong>150 µg/mL at 4 h</strong>. Treat above line with <strong>NAC</strong>. <em>Nomogram doesn't apply</em> to: (1) staggered ingestions, (2) extended-release APAP, (3) unknown ingestion time — in these cases empirically treat.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Salicylate Acid-Base</div><div class="fc-q">Describe the classic biphasic acid-base pattern of acute salicylate toxicity.</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Early: <strong>respiratory alkalosis</strong> (direct stimulation of medullary respiratory center → hyperventilation). Later: <strong>anion-gap metabolic acidosis</strong> (uncouples oxidative phosphorylation, lactate). Adults → <em>mixed</em> alkalosis + acidosis (normal pH possible); children → pure acidosis. Treat: <strong>urine alkalinization</strong> with NaHCO₃ (keep urine pH &gt; 7.5); <strong>HD</strong> for level &gt; 100, AMS, pulm edema.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Toxic Alcohols</div><div class="fc-q">Methanol vs ethylene glycol: what metabolites and what organ targets?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Both metabolized by <strong>alcohol dehydrogenase</strong>. <strong>Methanol → formaldehyde → formic acid</strong> (retinal toxicity, "snowstorm" vision, optic disc hyperemia). <strong>EG → glycolaldehyde → glycolic &amp; oxalic acid</strong> (<em>calcium oxalate crystals</em> in urine/kidneys, AKI, hypocalcemia). Both: <strong>anion-gap + osmolar-gap acidosis</strong>. Treat: fomepizole (or ethanol), HD; add <em>folate</em> (methanol), <em>pyridoxine + thiamine</em> (EG).</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Osmolar &amp; Anion Gap</div><div class="fc-q">What is the formula for the osmolar gap, and which toxins classically raise it?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Osmolar gap</strong> = Measured osm − calculated osm (2·Na + Glu/18 + BUN/2.8 + EtOH/4.6). Normal &lt; 10. Elevated osm-gap → unmeasured solutes: <strong>MUD PILES-style mnemonic</strong> for alcohols — <strong>Methanol, Ethanol, Ethylene glycol, Isopropanol</strong>. Classic test: ↑ osm gap + ↑ anion gap + acidosis → <em>methanol/EG</em>. <strong>Isopropanol</strong> = osm gap + ketosis <em>without</em> acidosis.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Iron Toxicity</div><div class="fc-q">What is the mechanism of cellular injury in iron overdose, and what's the antidote?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Free iron → generates <strong>ROS via Fenton reaction</strong> → mitochondrial injury, uncouples oxidative phosphorylation → lactic acidosis + hepatic necrosis. Five-phase course: GI (corrosive) → latent → shock/acidosis → hepatic failure → gastric scarring. Iron pills are <strong>radiopaque</strong> on AXR. Antidote: <strong>deferoxamine</strong> (chelates free iron → ferrioxamine; urine turns "vin rosé").</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Lead Poisoning</div><div class="fc-q">How does lead cause microcytic anemia with basophilic stippling, and what are other classic manifestations?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Lead inhibits <strong>δ-ALA dehydratase</strong> (ALAD) and <strong>ferrochelatase</strong> → ↑ δ-ALA, ↑ protoporphyrin IX → sideroblastic anemia + <em>basophilic stippling</em>. Also: cognitive deficits, <strong>Burton's lines</strong> (gingival), wrist/foot drop, colicky abdominal pain, interstitial nephritis, <em>"lead lines"</em> on long bones. Chelation: <strong>succimer</strong> (PO, mild-mod) or <strong>Ca-EDTA + BAL</strong> (severe, encephalopathy).</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Carbon Monoxide</div><div class="fc-q">Mechanism, classic pulse ox finding, and indications for hyperbaric oxygen.</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">CO binds Hb with <strong>200–250× affinity</strong> of O₂ → forms COHb → ↓ O₂ delivery + leftward shift of O₂-Hb curve. <strong>Pulse ox is normal</strong> (reads COHb ~= oxyHb); <strong>co-oximetry</strong> is required. All patients → <strong>100% O₂</strong>. <strong>HBO</strong> indications: COHb &gt; 25% (or &gt; 15% if pregnant), LOC/syncope, neuro deficits, ECG ischemia, persistent symptoms. Delayed neuropsychiatric syndrome can occur weeks later.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Cyanide</div><div class="fc-q">What does cyanide target at the molecular level, and what are the two antidote approaches?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">CN⁻ binds <strong>Fe³⁺ in cytochrome c oxidase</strong> (complex IV) → halts ETC → cellular asphyxiation, lactic acidosis. Classic: <em>"bitter almond" breath</em>, cherry-red skin, seizures, narrowed arterial-venous O₂ gap. (1) <strong>Hydroxocobalamin</strong> (binds CN → cyanocobalamin/B12; urine turns red) — preferred, especially in fire smoke-inhalation. (2) <strong>Sodium nitrite</strong> (induces methemoglobinemia → metHb binds CN) <strong>+ sodium thiosulfate</strong> (sulfur donor for rhodanese).</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 2 — Methemoglobinemia</div><div class="fc-q">Classic causes, pulse-ox pattern, and treatment (including the G6PD caveat).</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Fe²⁺ → Fe³⁺ can't bind O₂. Causes: <strong>dapsone, benzocaine, nitrites (poppers), sulfonamides, local anesthetics</strong>. Pulse ox reads ~<strong>85%</strong> regardless of true saturation; blood is <em>"chocolate brown"</em>. ABG shows normal PaO₂ with low SaO₂ = "<strong>saturation gap</strong>." Treat: <strong>methylene blue</strong> (converts metHb → Hb via NADPH-dependent reductase). <strong>Contraindicated in G6PD deficiency</strong> (can precipitate hemolysis) — use ascorbic acid or HBO instead.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 8 — TCA Toxicity</div><div class="fc-q">Name the classic "3 C's" of TCA overdose and the antidote for the cardiotoxicity.</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>3 C's: Coma · Convulsions · Cardiotoxicity</strong>. Mechanism: Na-channel blockade (wide QRS, R wave in aVR) + anticholinergic (mydriasis, dry skin, retention) + α-blockade (hypotension) + seizure. Treat: <strong>IV sodium bicarbonate</strong> for QRS &gt; 100 ms — alkalosis + Na⁺ load displaces TCA from Na channel. <em>Avoid flumazenil, physostigmine, class Ia/Ic antiarrhythmics</em>.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 8 — Digoxin Toxicity</div><div class="fc-q">What ECG/electrolyte findings are classic for digoxin overdose, and why is HD useless?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">ECG: <em>"scooped" ST depression, any arrhythmia</em>; classic = <strong>bidirectional VT, atrial tach with AV block</strong>. Electrolytes: <strong>hyperkalemia</strong> in acute OD (Na/K ATPase blockade); chronic → hypokalemia/hypomagnesemia worsen toxicity. <strong>Vd ≈ 7 L/kg</strong> (almost entirely tissue-bound) → <strong>not dialyzable</strong>. Treat with <strong>digoxin-specific Fab (DigiFab)</strong>; treat life-threatening hyperkalemia medically but <em>avoid calcium</em> (classic "stone heart" fear — controversial now).</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 8 — Organophosphate</div><div class="fc-q">Why must pralidoxime (2-PAM) be given early, and what does "aging" mean?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">OPs phosphorylate <strong>acetylcholinesterase</strong> irreversibly. Over hours, a methoxy group is lost — the enzyme-OP complex <strong>"ages"</strong> to a permanently inhibited state. 2-PAM reactivates AChE <strong>only before aging</strong>. Give with atropine: <em>atropine treats muscarinic</em> (secretions, bradycardia — titrate to dry lungs); <em>2-PAM treats nicotinic</em> (weakness, paralysis → respiratory failure is the killer).</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 10 — β-Blocker vs CCB</div><div class="fc-q">How do β-blocker and CCB overdoses differ clinically, and why does insulin help CCB toxicity?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a">Both cause <strong>bradycardia + hypotension</strong>. Distinguishing features: <strong>β-blocker</strong> often hypoglycemic, normal mental status; <strong>CCB</strong> often hyperglycemic (pancreatic β-cell Ca²⁺ channel blockade → ↓ insulin) with AMS. <strong>HIET</strong> (hyperinsulinemic-euglycemic therapy) — high-dose insulin improves myocardial glucose utilization and inotropy. β-blocker antidote: <strong>glucagon</strong> (cAMP bypass). Refractory: <strong>IV lipid emulsion</strong> (lipid "sink").</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 10 — Isoniazid</div><div class="fc-q">What three features characterize INH overdose, and what dose of pyridoxine is used?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>3 C's: Coma · Convulsions (refractory) · high-anion-gap metabolic acidosis (Catacidosis)</strong>. INH + pyridoxine → inactive hydrazone; depletes B6 → ↓ GABA synthesis → seizures. Also inhibits lactate dehydrogenase. Treat: <strong>pyridoxine gram-for-gram</strong> of INH (or 5 g empiric IV) — corrects BOTH seizures and acidosis. Benzodiazepines alone are inadequate.</div></div>
+    </div></div>
+
+    <div class="fc" onclick="flipCard(this)"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-label">LO 12 — Serotonin vs NMS</div><div class="fc-q">How do you distinguish serotonin syndrome from neuroleptic malignant syndrome at the bedside?</div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div>
+      <div class="fc-a"><strong>Serotonin syndrome</strong>: <em>hours</em> of SSRI/MAOI/tramadol exposure · <strong>hyper-reflexia + clonus (lower &gt; upper)</strong> · mydriasis · diarrhea · diaphoresis · agitation. Treat: stop drug, <strong>cyproheptadine</strong>, supportive. <strong>NMS</strong>: <em>days–weeks</em> of antipsychotic · <strong>lead-pipe rigidity + hypo-reflexia</strong> · hyperthermia · autonomic instability · ↑ CK. Treat: stop drug, <strong>dantrolene</strong>, bromocriptine, cooling. Mnemonic: "<em>SS = clonus, NMS = rigidity</em>."</div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<!-- ORDERING -->
+<div class="tab-content" id="tab-ordering">
+  <div class="cc-intro"><strong>Drag to reorder each sequence.</strong> Shuffle to retry; click Show Answer for the key.</div>
+
+  <div class="order-drill" id="drill-1">
+    <div class="drill-title">Drill 1 — APAP Toxicity: Metabolism → Injury Pathway</div>
+    <div class="drill-hint">Arrange the molecular cascade from ingestion to hepatocyte death.</div>
+    <div class="order-list">
+      <div class="order-item" data-correct="1">APAP absorbed; ~90% normally cleared via glucuronidation &amp; sulfation</div>
+      <div class="order-item" data-correct="2">Overdose saturates glucuronidation &amp; sulfation → increased flux through CYP2E1</div>
+      <div class="order-item" data-correct="3">CYP2E1 generates the reactive metabolite NAPQI</div>
+      <div class="order-item" data-correct="4">NAPQI depletes hepatic glutathione stores</div>
+      <div class="order-item" data-correct="5">Unconjugated NAPQI covalently binds hepatocyte proteins → centrilobular necrosis</div>
+      <div class="order-item" data-correct="6">NAC replenishes glutathione and directly detoxifies NAPQI — most effective &lt; 8 h</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-1')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-1"></div>
+    <div class="order-answer" id="ans-drill-1"><ol><li><strong>Absorption:</strong> 90% glucuronidation/sulfation at therapeutic doses</li><li><strong>Saturation:</strong> overdose overloads Phase II conjugation</li><li><strong>CYP2E1 shunt:</strong> generates toxic NAPQI</li><li><strong>Glutathione depletion:</strong> NAPQI scavenges GSH</li><li><strong>Hepatocyte injury:</strong> NAPQI binds proteins → centrilobular necrosis</li><li><strong>NAC rescue:</strong> provides cysteine for GSH synthesis; works best &lt; 8 h</li></ol></div>
+  </div>
+
+  <div class="order-drill" id="drill-2">
+    <div class="drill-title">Drill 2 — Organophosphate Poisoning: Pathophysiology to Treatment</div>
+    <div class="drill-hint">Order the steps from exposure to antidote sequence.</div>
+    <div class="order-list">
+      <div class="order-item" data-correct="1">OP absorbed (skin, GI, respiratory) → phosphorylates acetylcholinesterase</div>
+      <div class="order-item" data-correct="2">ACh accumulates at muscarinic, nicotinic, and CNS synapses</div>
+      <div class="order-item" data-correct="3">Muscarinic features (SLUDGE/DUMBELS): salivation, lacrimation, diarrhea, bronchorrhea, miosis, bradycardia</div>
+      <div class="order-item" data-correct="4">Nicotinic features: fasciculations → weakness → respiratory muscle paralysis (the killer)</div>
+      <div class="order-item" data-correct="5">Give atropine (muscarinic blockade — titrate to dry secretions/bronchi)</div>
+      <div class="order-item" data-correct="6">Give pralidoxime (2-PAM) to reactivate AChE BEFORE aging occurs</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-2')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-2"></div>
+    <div class="order-answer" id="ans-drill-2"><ol><li><strong>Phosphorylation of AChE</strong> by OP</li><li><strong>ACh accumulation</strong> at all cholinergic synapses</li><li><strong>Muscarinic excess</strong> — SLUDGE/DUMBELS</li><li><strong>Nicotinic crisis</strong> — muscle fasciculations → paralysis → respiratory failure</li><li><strong>Atropine</strong> — muscarinic reversal, titrate to secretion control</li><li><strong>2-PAM</strong> — reactivates AChE before "aging"</li></ol></div>
+  </div>
+
+  <div class="order-drill" id="drill-3">
+    <div class="drill-title">Drill 3 — Iron Toxicity: Five Clinical Phases</div>
+    <div class="drill-hint">Put the phases in order from ingestion to late sequelae.</div>
+    <div class="order-list">
+      <div class="order-item" data-correct="1">Phase 1 (0.5–6 h): GI corrosive phase — vomiting, hematemesis, diarrhea, abdominal pain</div>
+      <div class="order-item" data-correct="2">Phase 2 (6–24 h): "Deceptive recovery" — GI symptoms improve; free iron continues toxicity</div>
+      <div class="order-item" data-correct="3">Phase 3 (6–72 h): Shock and high-anion-gap metabolic acidosis; mitochondrial dysfunction</div>
+      <div class="order-item" data-correct="4">Phase 4 (2–5 d): Hepatotoxicity — ↑ AST/ALT, coagulopathy, fulminant failure</div>
+      <div class="order-item" data-correct="5">Phase 5 (2–6 wk): Gastric outlet / pyloric strictures from corrosive injury</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-3')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-3"></div>
+    <div class="order-answer" id="ans-drill-3"><ol><li><strong>Phase 1:</strong> GI corrosive injury</li><li><strong>Phase 2:</strong> Latent "deceptive recovery"</li><li><strong>Phase 3:</strong> Shock + anion-gap acidosis (Fenton-driven mitochondrial injury)</li><li><strong>Phase 4:</strong> Hepatotoxicity</li><li><strong>Phase 5:</strong> Gastric outlet scarring / strictures</li></ol><strong>Treatment:</strong> WBI for radiopaque pills; <strong>deferoxamine</strong> for serum Fe &gt; 500 µg/dL or systemic toxicity (urine turns "vin rosé").</div>
+  </div>
+</div>
+
+<!-- MCQ -->
+<div class="tab-content" id="tab-mcq">
+  <div class="mcq-intro"><strong>Six conceptual Step-1 style multiple-choice questions.</strong> Select your answer — feedback appears immediately with explanation.</div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 1 · LO 2 · APAP</div>
+    <div class="mcq-stem">A 19-year-old is brought to the ED 14 hours after ingesting "about 30 extra-strength Tylenol." He feels well and his AST is 32 U/L. Which of the following best explains why he is still at high risk for fulminant hepatic failure?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>Activated charcoal is now contraindicated</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B.</span><span>NAPQI-induced centrilobular necrosis peaks 72–96 h post-ingestion; early LFTs are nonpredictive</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C.</span><span>He is already past the effective window for any treatment</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>CYP2E1 is upregulated in young adults</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Glutathione is never depleted in the first 24 h</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer B.</strong> APAP toxicity has a <strong>deceptive Phase 1</strong> (0–24 h: nausea only, normal LFTs) before peak hepatotoxicity in Phase 3 (72–96 h). Rumack-Matthew at 4 h (or NAC empirically if &gt; 8 h / unknown time) is mandatory regardless of symptoms. NAC is beneficial even late, especially for fulminant failure.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 2 · LO 2 · Salicylate</div>
+    <div class="mcq-stem">An agitated, hyperventilating 23-year-old has pH 7.48, PaCO₂ 18, HCO₃ 13, anion gap 22, glucose 78. Which of the following best describes the acid-base disturbance?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>Simple respiratory alkalosis from anxiety</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B.</span><span>Simple anion-gap metabolic acidosis</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C.</span><span>Mixed primary respiratory alkalosis + anion-gap metabolic acidosis</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>Metabolic alkalosis with compensation</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Respiratory acidosis</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer C.</strong> Classic <strong>salicylate</strong> pattern: respiratory center stimulation (alkalosis) superimposed on uncoupling of oxidative phosphorylation (anion-gap acidosis). pH is slightly alkalemic but both processes coexist. Treat: <strong>NaHCO₃</strong> to alkalinize urine (pH &gt; 7.5) for ion trapping; <strong>HD</strong> if level &gt; 100 mg/dL, AMS, pulmonary edema, renal failure.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 3 · LO 2 · Toxic Alcohols</div>
+    <div class="mcq-stem">A 55-year-old presents with blurred vision and severe metabolic acidosis (pH 7.08, AG 24, osmolar gap 32). Funduscopy shows optic disc hyperemia. The best initial drug therapy is:</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>N-acetylcysteine</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B.</span><span>Fomepizole + folate + hemodialysis</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C.</span><span>Pyridoxine 5 g IV</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>Sodium bicarbonate drip alone</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Deferoxamine</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer B.</strong> Anion + osmolar gap acidosis with <strong>visual changes and optic disc hyperemia</strong> = <strong>methanol</strong>. Fomepizole (preferred over ethanol) blocks alcohol dehydrogenase → prevents formic acid. Add <strong>folate</strong> (methanol) → accelerates formate clearance. Add <strong>HD</strong> for severe acidosis, visual symptoms, or methanol &gt; 50 mg/dL. If EG: add <strong>pyridoxine + thiamine</strong> instead of folate.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 4 · LO 6 · Decontamination</div>
+    <div class="mcq-stem">Which of the following scenarios is the best indication for whole-bowel irrigation rather than activated charcoal?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>Large benzodiazepine ingestion 45 minutes ago</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B.</span><span>Acetaminophen overdose 30 minutes ago</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C.</span><span>Sustained-release verapamil overdose in a patient who is awake and tolerating fluids</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>Caustic (lye) ingestion</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Digoxin overdose</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer C.</strong> <strong>WBI</strong> with polyethylene glycol is ideal for <strong>sustained-release / enteric-coated</strong> products, <strong>metals (iron, lead, lithium)</strong>, and <strong>body packers</strong>. Charcoal is preferred for standard pills within 1 h; CCBs are charcoal-bindable but SR formulations escape single-dose charcoal into the distal GI tract. Caustics are an absolute contraindication to both lavage and charcoal.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 5 · LO 10 · TCA</div>
+    <div class="mcq-stem">A 28-year-old is found unresponsive after an amitriptyline overdose. ECG shows QRS 140 ms, R wave in aVR of 4 mm, and hypotension. Which intervention is most appropriate?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>Flumazenil to reverse presumed benzodiazepine co-ingestion</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B.</span><span>Physostigmine to reverse anticholinergic features</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C.</span><span>IV sodium bicarbonate bolus</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>IV amiodarone for QRS prolongation</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Hemodialysis</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer C.</strong> TCA cardiotoxicity = Na-channel blockade → wide QRS, R wave in aVR. <strong>IV sodium bicarbonate</strong> (1–2 mEq/kg) alkalinizes and provides Na⁺ load to overcome blockade. Targets: QRS &lt; 100, pH 7.50–7.55. <strong>Avoid flumazenil</strong> (seizures), <strong>physostigmine</strong> (asystole), <strong>class Ia/Ic antiarrhythmics</strong>. HD ineffective (highly protein bound, large Vd).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">MCQ 6 · LO 10 · CO</div>
+    <div class="mcq-stem">A pregnant woman at 22 weeks is found confused in her home after a furnace malfunction. SpO₂ on room air is 99%, but COHb on co-oximetry is 18%. Which of the following is the strongest indication for hyperbaric oxygen in this patient?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A.</span><span>COHb &gt; 10% alone</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B.</span><span>Pregnancy combined with any neuro symptoms or COHb &gt; 15%</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C.</span><span>Normal SpO₂ on room air</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D.</span><span>Cherry-red skin color</span></div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E.</span><span>Serum lactate &lt; 2</span></div>
+    </div>
+    <div class="mcq-exp"><strong>Answer B.</strong> Fetal Hb binds CO even more avidly than maternal Hb and is eliminated more slowly. HBO indications: <strong>COHb &gt; 25% (or &gt; 15% if pregnant)</strong>, LOC/syncope, neurologic deficits, ECG ischemia, persistent symptoms despite normobaric O₂. SpO₂ is always <em>falsely normal</em> in CO poisoning — don't be reassured.</div>
+  </div>
+</div>
+
+<!-- VIGNETTES -->
+<div class="tab-content" id="tab-vignettes">
+  <div class="vig-intro"><strong>Five Step 1–style clinical vignettes.</strong> Read the full stem, select your answer, and review the explanation.</div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 1 · Organophosphate</div>
+    <div class="vig-stem">A 42-year-old farm worker is brought in after spraying his orchard. He has <span class="vig-buzzword">copious oral secretions, bronchospasm, diarrhea, pinpoint pupils, fasciculations in his tongue and thighs</span>, and rising respiratory distress. HR 42, BP 88/54. The <em>most critical</em> first pharmacologic step is:</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A.</span><span>Naloxone 2 mg IV</span></div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B.</span><span>Atropine 2 mg IV, doubled every few minutes until secretions dry</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C.</span><span>IV hydroxocobalamin</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D.</span><span>Activated charcoal via NG tube</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E.</span><span>Pralidoxime as a single agent</span></div>
+    </div>
+    <div class="vig-exp"><strong>Answer B.</strong> Classic cholinergic toxidrome (<em>SLUDGE/DUMBELS</em>). <strong>Atropine</strong> is dosed <em>titrating to dry bronchial secretions</em> (not to HR) — airway patency is the priority. Add <strong>2-PAM</strong> to treat the nicotinic paralysis and reverse AChE inhibition <em>before aging</em>. Respiratory failure is the killer.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 2 · Iron Overdose</div>
+    <div class="vig-stem">A 3-year-old ingested an unknown amount of her mother's prenatal iron tablets 4 hours ago. She has had <span class="vig-buzzword">hematemesis and bloody diarrhea</span>, pH 7.25, anion gap 20, AST 110, serum iron 680 µg/dL. Abdominal radiograph shows <span class="vig-buzzword">multiple radiopaque pills in the stomach</span>. Most appropriate next step?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A.</span><span>Administer activated charcoal 1 g/kg</span></div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B.</span><span>Whole-bowel irrigation with PEG and IV deferoxamine</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C.</span><span>Induce emesis with ipecac</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D.</span><span>Initiate hemodialysis</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E.</span><span>Succimer PO</span></div>
+    </div>
+    <div class="vig-exp"><strong>Answer B.</strong> Iron is <strong>not adsorbed by charcoal</strong> (metal) — WBI is the decontamination of choice for radiopaque pills in the stomach. Serum Fe &gt; 500 µg/dL or systemic toxicity → <strong>IV deferoxamine</strong>. Ipecac is obsolete. HD is ineffective for iron. Succimer is a <em>lead</em> chelator.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 3 · Methemoglobinemia</div>
+    <div class="vig-stem">A 35-year-old man presents with cyanosis and dyspnea after oral/pharyngeal topical anesthesia with <span class="vig-buzzword">benzocaine spray</span>. SpO₂ reads 84% on 100% NRB; blood is <span class="vig-buzzword">chocolate brown</span>. PaO₂ on ABG is 420 mm Hg. He has no known medical history. The best treatment is:</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">A.</span><span>IV methylene blue 1–2 mg/kg</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B.</span><span>IV hydroxocobalamin</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C.</span><span>IV sodium thiosulfate</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D.</span><span>IV N-acetylcysteine</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E.</span><span>Fresh frozen plasma</span></div>
+    </div>
+    <div class="vig-exp"><strong>Answer A.</strong> Classic <strong>methemoglobinemia</strong> (benzocaine, dapsone, nitrites). Pulse ox pegged ~85%; <em>"saturation gap"</em> (normal PaO₂, low SaO₂). Methylene blue provides an electron acceptor for NADPH-MetHb reductase. <strong>Contraindicated in G6PD deficiency</strong> (hemolysis) — use ascorbic acid or HBO instead. Hydroxocobalamin = cyanide.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 4 · Digoxin Toxicity</div>
+    <div class="vig-stem">A 78-year-old with CKD on digoxin for AFib presents with <span class="vig-buzzword">yellow-green halos in her vision, nausea, and fatigue</span>. ECG shows <span class="vig-buzzword">scooped ST depression, atrial tachycardia with 2:1 AV block</span>. K⁺ 6.2, Mg 1.3, serum digoxin 4.2 ng/mL. Which intervention is most appropriate?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A.</span><span>IV calcium gluconate for hyperkalemia</span></div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B.</span><span>Digoxin-specific Fab fragments + Mg repletion</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C.</span><span>Emergent hemodialysis</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D.</span><span>IV amiodarone</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E.</span><span>Activated charcoal 50 g PO</span></div>
+    </div>
+    <div class="vig-exp"><strong>Answer B.</strong> Digoxin toxicity: <em>yellow halos</em>, any rhythm, hyperkalemia (Na/K ATPase blockade). <strong>DigiFab</strong> is the antidote; repletes Mg as well. HD ineffective (Vd ~7 L/kg). Historically calcium was avoided in hyperK for fear of "stone heart," but DigiFab is the definitive therapy. MDAC is adjunctive for acute ingestion.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 5 · Sympathomimetic vs Anticholinergic</div>
+    <div class="vig-stem">A 24-year-old is agitated and hyperthermic (40.1°C), HR 138, BP 180/100, pupils 7 mm. His <span class="vig-buzzword">skin is diaphoretic and bowel sounds are hyperactive</span>. Which toxidrome and agent is most likely?</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A.</span><span>Anticholinergic — diphenhydramine</span></div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B.</span><span>Sympathomimetic — cocaine or methamphetamine</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C.</span><span>Serotonin syndrome — SSRI + tramadol</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D.</span><span>Cholinergic — organophosphate</span></div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E.</span><span>Opioid withdrawal</span></div>
+    </div>
+    <div class="vig-exp"><strong>Answer B.</strong> Both anticholinergic and sympathomimetic cause mydriasis, tachycardia, HTN, agitation, and hyperthermia. <strong>Discriminator:</strong> anticholinergic = <em>dry skin, absent bowel sounds, urinary retention</em>; sympathomimetic = <em>diaphoresis, hyperactive bowel sounds, normal bladder</em>. Serotonin syndrome would feature clonus/hyper-reflexia (lower &gt; upper).</div>
+  </div>
+</div>
+
+<!-- TRAPS -->
+<div class="tab-content" id="tab-traps">
+  <div class="cc-intro"><strong>Step-1 classic trap statements.</strong> Click True or False for each — explanation appears with the correct answer.</div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 1 · LO 2 · APAP</div>
+    <div class="trap-statement">Normal LFTs at 12 hours after an acute APAP ingestion safely rule out hepatotoxicity and allow for immediate discharge.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Phase 1 (0–24 h) of APAP toxicity has <em>normal LFTs</em>. Hepatotoxicity peaks in Phase 3 (72–96 h). Always obtain a <strong>4-hour post-ingestion APAP level</strong> and plot on the Rumack-Matthew nomogram; treat above the 150 µg/mL line with NAC.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 2 · LO 2 · Salicylate</div>
+    <div class="trap-statement">A salicylate-poisoned adult with pH of 7.42 can be safely monitored without further intervention.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Adult salicylate toxicity produces a <em>mixed</em> respiratory alkalosis + anion-gap acidosis; pH may be normal despite severe illness. Use <strong>salicylate level, clinical findings, and anion gap</strong> — not pH — to guide therapy. Indications for HD: level &gt; 100 (acute) / &gt; 60 (chronic), AMS, pulmonary edema, renal failure, refractory acidosis.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 3 · LO 2 · CO</div>
+    <div class="trap-statement">A normal SpO₂ of 98% excludes significant carbon-monoxide poisoning.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Standard pulse oximetry <em>cannot distinguish</em> COHb from oxyHb — SpO₂ is always normal in CO poisoning. Diagnosis requires <strong>co-oximetry</strong>. Treat with 100% O₂; HBO for severe/pregnant/neuro cases.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 4 · LO 10 · Digoxin</div>
+    <div class="trap-statement">A patient with acute digoxin overdose and K⁺ of 7.0 mEq/L should receive IV calcium gluconate as the first intervention.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Classic teaching avoids calcium in digoxin toxicity (theoretical "stone heart"). The definitive treatment is <strong>digoxin-specific Fab fragments</strong>, which <em>also</em> reverses the hyperkalemia by restoring Na/K ATPase. Recent evidence shows calcium may be safe, but Fab is always the answer on the test.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 5 · LO 10 · Benzos + TCA</div>
+    <div class="trap-statement">Flumazenil is appropriate for any patient with unexplained AMS from a presumed benzodiazepine overdose.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Flumazenil can precipitate <strong>withdrawal seizures</strong> in chronic benzo users and <strong>unmask TCA seizures</strong> in co-ingestion. Reserve for <em>isolated</em> iatrogenic benzo overdose in non-chronic users. For undifferentiated poisoning, support airway and breathing.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 6 · LO 2 · Methanol</div>
+    <div class="trap-statement">Folate is the correct adjunct for ethylene glycol poisoning, while thiamine and pyridoxine are given in methanol poisoning.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE — reversed.</strong> <strong>Methanol</strong> gets <em>folate</em> (accelerates formate → CO₂ + H₂O via 10-formyl-THF). <strong>Ethylene glycol</strong> gets <em>thiamine + pyridoxine</em> (shunt glyoxylate to nontoxic α-hydroxy-β-ketoadipate and glycine, not oxalate). Mnemonic: <em>methanol - folate; glycol - thiamine/B6</em>.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 7 · LO 10 · Methylene Blue</div>
+    <div class="trap-statement">Methylene blue is the treatment of choice for methemoglobinemia in all patients regardless of G6PD status.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Methylene blue's reductive action requires <strong>NADPH</strong> — patients with <strong>G6PD deficiency</strong> cannot regenerate NADPH and may develop hemolysis or paradoxical worsening. Alternatives: ascorbic acid, exchange transfusion, HBO.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 8 · LO 12 · SS vs NMS</div>
+    <div class="trap-statement">Lead-pipe rigidity and hyporeflexia favor serotonin syndrome over neuroleptic malignant syndrome.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">True</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">False</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE — reversed.</strong> <strong>NMS</strong> = <em>lead-pipe rigidity, hyporeflexia</em>, days-weeks onset, antipsychotic (dantrolene/bromocriptine). <strong>Serotonin syndrome</strong> = <em>clonus (lower &gt; upper), hyper-reflexia, mydriasis, diarrhea, diaphoresis</em>, hours onset, SSRI/MAOI/tramadol (cyproheptadine).</div>
+  </div>
+</div>
+
+<!-- REFERENCE -->
+<div class="tab-content" id="tab-ref">
+  <div class="ref-section">
+    <div class="ref-title">Antidote Master Table (LO 10)</div>
+    <div class="ref-table"><table>
+      <thead><tr><th>Toxin</th><th>Antidote</th><th>Mechanism</th><th>Key caveat</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Acetaminophen</strong></td><td>N-acetylcysteine</td><td>Replenishes glutathione, binds NAPQI</td><td>Best &lt; 8 h; effective even late for fulminant failure</td></tr>
+        <tr><td><strong>Salicylate</strong></td><td>NaHCO₃ + HD</td><td>Urine alkalinization (ion trapping); HD for severe</td><td>HD for level &gt; 100, AMS, pulm edema, renal failure</td></tr>
+        <tr><td><strong>Methanol / EG</strong></td><td>Fomepizole (or ethanol) + HD</td><td>Competitive inhibition of alcohol dehydrogenase</td><td>+ folate (methanol); + B6 / thiamine (EG)</td></tr>
+        <tr><td><strong>Iron</strong></td><td>Deferoxamine</td><td>Chelates free Fe³⁺ → ferrioxamine (renal clearance)</td><td>"Vin rosé" urine; Fe is radiopaque</td></tr>
+        <tr><td><strong>Lead</strong></td><td>Succimer (PO); CaNa₂EDTA + BAL (IV)</td><td>Heavy-metal chelation</td><td>Never EDTA before BAL in encephalopathy</td></tr>
+        <tr><td><strong>Arsenic, mercury</strong></td><td>Dimercaprol (BAL) or succimer</td><td>Thiol chelation</td><td>BAL is oil-based IM; do not give in peanut allergy</td></tr>
+        <tr><td><strong>Carbon monoxide</strong></td><td>100% O₂ ± HBO</td><td>Displaces CO from Hb</td><td>SpO₂ falsely normal — use co-oximetry</td></tr>
+        <tr><td><strong>Cyanide</strong></td><td>Hydroxocobalamin; Na-nitrite + Na-thiosulfate</td><td>Binds CN → B12; MetHb induction + S donor</td><td>Hydroxo preferred (esp. smoke inhalation); turns urine red</td></tr>
+        <tr><td><strong>Methemoglobinemia</strong></td><td>Methylene blue</td><td>NADPH-MetHb reductase cofactor</td><td>Avoid in G6PD → use ascorbate / HBO</td></tr>
+        <tr><td><strong>Organophosphate</strong></td><td>Atropine + pralidoxime</td><td>Muscarinic blockade + AChE reactivation</td><td>2-PAM before "aging"; titrate atropine to secretions</td></tr>
+        <tr><td><strong>Opioids</strong></td><td>Naloxone</td><td>µ-opioid antagonist</td><td>May need drip; withdrawal in chronic users</td></tr>
+        <tr><td><strong>Benzodiazepines</strong></td><td>Flumazenil</td><td>GABA_A BZD-site antagonist</td><td>Avoid in chronic use + TCA co-ingest</td></tr>
+        <tr><td><strong>Tricyclic antidepressant</strong></td><td>Sodium bicarbonate</td><td>Overcomes Na-channel blockade</td><td>Target QRS &lt; 100 ms; pH 7.50–7.55</td></tr>
+        <tr><td><strong>Digoxin</strong></td><td>Digoxin-specific Fab</td><td>Neutralizes free digoxin</td><td>Not dialyzable (Vd ~7 L/kg)</td></tr>
+        <tr><td><strong>β-Blocker</strong></td><td>Glucagon ± HIET + lipid emulsion</td><td>cAMP bypass → inotropy</td><td>Refractory: high-dose insulin + lipid</td></tr>
+        <tr><td><strong>Ca-channel blocker</strong></td><td>Ca + HIET + lipid emulsion</td><td>Overcome blockade; metabolic support</td><td>CCB-induced hyperglycemia; lipid for lipophilic CCBs</td></tr>
+        <tr><td><strong>Isoniazid</strong></td><td>Pyridoxine (B6)</td><td>Restores GABA synthesis</td><td>Gram-for-gram; 5 g empiric</td></tr>
+        <tr><td><strong>Warfarin</strong></td><td>Vitamin K ± 4F-PCC / FFP</td><td>Restores functional clotting factors</td><td>4F-PCC for life-threatening bleed</td></tr>
+        <tr><td><strong>Heparin</strong></td><td>Protamine sulfate</td><td>Neutralizes heparin</td><td>Partial for LMWH</td></tr>
+      </tbody></table></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Anion Gap + Osmolar Gap Interpretation</div>
+    <div class="ref-table"><table>
+      <thead><tr><th>Pattern</th><th>Likely toxin</th><th>Key clue</th></tr></thead>
+      <tbody>
+        <tr><td>↑ AG + ↑ OG + acidosis</td><td>Methanol, Ethylene glycol</td><td>Visual (methanol); Ca-oxalate crystals (EG)</td></tr>
+        <tr><td>↑ OG only, ketosis without acidosis</td><td>Isopropanol</td><td>Fruity breath; "drunk but not acidotic"</td></tr>
+        <tr><td>↑ AG, mixed resp alk + acidosis</td><td>Salicylate</td><td>Tinnitus, hyperpnea, hyperthermia</td></tr>
+        <tr><td>↑ AG, high lactate, refractory seizure</td><td>Isoniazid, cyanide, metformin</td><td>TB meds; fire; diabetic</td></tr>
+        <tr><td>MUDPILES</td><td>Methanol, Uremia, DKA, Propylene glycol/Paraldehyde, Isoniazid/Iron, Lactic acid, Ethylene glycol, Salicylates</td><td>Standard differential of AG acidosis</td></tr>
+      </tbody></table></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Toxidrome Recognition (LO 12)</div>
+    <div class="ref-table"><table>
+      <thead><tr><th>Feature</th><th>Anticholinergic</th><th>Cholinergic</th><th>Sympathomimetic</th><th>Opioid</th><th>Sedative</th><th>Sero.Syn.</th></tr></thead>
+      <tbody>
+        <tr><td>Pupils</td><td>Mydriasis</td><td>Miosis</td><td>Mydriasis</td><td>Pinpoint</td><td>Normal</td><td>Mydriasis</td></tr>
+        <tr><td>Skin</td><td>Dry, hot, flushed</td><td>Wet (SLUDGE)</td><td>Diaphoretic</td><td>Normal/cool</td><td>Normal</td><td>Diaphoretic</td></tr>
+        <tr><td>Bowel sounds</td><td>↓</td><td>↑ (diarrhea)</td><td>↑</td><td>↓</td><td>Normal</td><td>↑</td></tr>
+        <tr><td>Reflexes</td><td>Normal</td><td>Fasciculations</td><td>Normal</td><td>Normal</td><td>↓</td><td>↑ + clonus</td></tr>
+        <tr><td>HR / BP</td><td>↑ / ↑</td><td>↓ / ↓</td><td>↑ / ↑</td><td>↓ / ↓</td><td>Normal / ↓</td><td>↑ / ↑</td></tr>
+        <tr><td>Temp</td><td>↑↑</td><td>Normal</td><td>↑↑</td><td>Normal/↓</td><td>Normal/↓</td><td>↑</td></tr>
+      </tbody></table></div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Decontamination &amp; Enhanced Elimination</div>
+    <div class="ref-table"><table>
+      <thead><tr><th>Method</th><th>Best for</th><th>Avoid / contraindicated</th></tr></thead>
+      <tbody>
+        <tr><td>Single-dose charcoal (1 g/kg, &lt; 1 h)</td><td>Most oral ingestions with airway protection</td><td>LAME Ca (Lithium, Alcohols, Metals, Electrolytes, Caustics); hydrocarbons</td></tr>
+        <tr><td>Multi-dose charcoal (MDAC)</td><td>CPSA: Carbamazepine, Phenobarb, Salicylates, Antidepressants (+ theophylline, dapsone, quinine)</td><td>Ileus, unprotected airway</td></tr>
+        <tr><td>Whole-bowel irrigation (PEG)</td><td>Iron, lithium, lead, sustained-release, body packers</td><td>Ileus, obstruction, perforation, unstable</td></tr>
+        <tr><td>Urine alkalinization (NaHCO₃)</td><td>Salicylates, phenobarbital</td><td>Target urine pH &gt; 7.5; watch for hypokalemia</td></tr>
+        <tr><td>Hemodialysis (SLIME)</td><td>Salicylates, Lithium, Isopropanol/toxic alcohols, Metformin, Ethylene glycol; add valproate, toxic theophylline</td><td>Digoxin (Vd too large); TCAs (protein bound)</td></tr>
+        <tr><td>Ipecac / lavage</td><td>Essentially never</td><td>Aspiration, caustics, hydrocarbons</td></tr>
+      </tbody></table></div>
+  </div>
+</div>
+
+<!-- HY NOTES -->
+<div class="tab-content" id="tab-hynotes">
+  <div class="hy-intro"><strong>High-yield Step 1 pearls to drill the night before.</strong> Each card highlights a single exam trigger.</div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">Buzzword</span>Vin Rosé Urine</div>
+    <div class="hy-card-body"><strong>Iron overdose treated with deferoxamine</strong>. Urine turns pink-red as ferrioxamine is excreted. Classic test-picture pairing with <em>radiopaque pills on AXR</em> and a pediatric ingestion history.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">Buzzword</span>Snowstorm Vision / Blind After Moonshine</div>
+    <div class="hy-card-body"><strong>Methanol</strong> poisoning. Formic acid → retinal toxicity, optic disc hyperemia, permanent blindness if untreated. Pair with ↑ anion gap + ↑ osmolar gap. Treat: <em>fomepizole + folate + HD</em>.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">Buzzword</span>Calcium Oxalate Crystals</div>
+    <div class="hy-card-body"><strong>Ethylene glycol</strong>. Envelope-shaped / monohydrate "needle" crystals in urine, AKI, hypocalcemia, tetany. Treat: <em>fomepizole + thiamine + pyridoxine + HD</em>.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge trap">Trap</span>Saturation Gap</div>
+    <div class="hy-card-body">Normal PaO₂ with low SpO₂ reading (pulse ox stuck near 85%) + <strong>chocolate-brown blood</strong> = <strong>methemoglobinemia</strong>. Causes: benzocaine, dapsone, nitrites, primaquine. Treat: methylene blue (check G6PD first).</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">Buzzword</span>Bitter Almond Breath + Narrow A-V O₂ Gap</div>
+    <div class="hy-card-body"><strong>Cyanide</strong> poisoning — usually after fire smoke inhalation. Cellular asphyxiation with lactic acidosis. Treat: <strong>hydroxocobalamin</strong> (preferred) or Na-nitrite + Na-thiosulfate. Smoke-inhalation pitfall: co-existing CO poisoning needs 100% O₂.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">Testing Note</span>R wave in aVR</div>
+    <div class="hy-card-body">R wave &gt; 3 mm in aVR with QRS &gt; 100 ms = <strong>TCA cardiotoxicity</strong>. Predictive of seizures &amp; arrhythmia. Give <strong>IV NaHCO₃</strong>; avoid flumazenil, physostigmine, Ia/Ic antiarrhythmics.</div>
+  </div>
+</div>
+
+<!-- CLINICAL CORRELATES -->
+<div class="tab-content" id="tab-clinical">
+  <div class="cc-intro"><strong>Integrating toxicology into clinical scenarios.</strong> Use these to connect isolated facts into full patient stories.</div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Acute Presentation</div>
+    <div class="cc-title">Bilious vomiting + AMS + AG acidosis in a young adult</div>
+    <div class="cc-body">Think <strong>toxic alcohols, salicylate, APAP, INH</strong>. Order the universal tox quartet (APAP, salicylate, ECG, glucose) plus anion gap, osmolar gap, lactate, VBG. "Unknown poisoning" answers nearly always include empiric NAC (if APAP possible), NaHCO₃ (for TCA/salicylate/wide QRS), and aggressive airway support.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Occupational Emergency</div>
+    <div class="cc-title">Farm worker with copious secretions + bradycardia</div>
+    <div class="cc-body">Classic <strong>organophosphate</strong> exposure. Bystander and provider PPE matter — skin absorption is a route. <em>Atropine</em> to dry secretions (not titrated to HR), <em>2-PAM</em> within hours (before aging). Expect respiratory failure; have airway ready. Confirm with decreased <em>RBC (or plasma) cholinesterase</em>.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Pediatric Ingestion</div>
+    <div class="cc-title">Toddler with radiopaque pills + hematemesis</div>
+    <div class="cc-body">Classic <strong>iron</strong> pathway. Charcoal useless (metal). <strong>WBI</strong> until pills clear; <strong>IV deferoxamine</strong> for serum Fe &gt; 500 or systemic toxicity; intensive support in Phase 3 shock. Monitor for delayed pyloric strictures in Phase 5.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI21 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div>
+
+<script>
+var seenCards=new Set();
+var allFCs;
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')&&back?back:front).scrollHeight+'px';
+  if(!allFCs) allFCs=document.querySelectorAll('.fc');
+  allFCs.forEach(function(c,i){if(c===fc)seenCards.add(i);});
+  document.getElementById('fc-counter').textContent=seenCards.size+' / 16 seen';
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function answerMCQ(opt,correct){
+  const item=opt.closest('.mcq-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.mcq-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.mcq-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  const exp=item.querySelector('.mcq-exp');exp.classList.add('show');
+}
+function initDrills(){
+  document.querySelectorAll('.order-drill').forEach(function(drill){
+    var list=drill.querySelector('.order-list');
+    var items=Array.from(list.children);
+    for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);items.splice(i,0,list.children[i]);}
+    items=Array.from(list.children);
+    items.forEach(function(item){
+      item.setAttribute('draggable','true');
+      item.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');item.classList.add('dragging');});
+      item.addEventListener('dragend',function(){item.classList.remove('dragging');});
+      item.addEventListener('dragover',function(e){e.preventDefault();item.classList.add('drag-over');});
+      item.addEventListener('dragleave',function(){item.classList.remove('drag-over');});
+      item.addEventListener('drop',function(e){
+        e.preventDefault();item.classList.remove('drag-over');
+        var dragging=list.querySelector('.dragging');
+        if(dragging&&dragging!==item){
+          var allItems=Array.from(list.children);
+          var dragIdx=allItems.indexOf(dragging);
+          var dropIdx=allItems.indexOf(item);
+          if(dragIdx<dropIdx)list.insertBefore(dragging,item.nextSibling);
+          else list.insertBefore(dragging,item);
+        }
+      });
+    });
+  });
+}
+function checkOrder(drillId){
+  var drill=document.getElementById(drillId);
+  var items=drill.querySelectorAll('.order-item');
+  var allCorrect=true;
+  items.forEach(function(item,i){
+    var correct=parseInt(item.getAttribute('data-correct'));
+    if(correct===i+1){item.classList.add('correct-pos');item.classList.remove('wrong-pos');}
+    else{item.classList.add('wrong-pos');item.classList.remove('correct-pos');allCorrect=false;}
+  });
+  var fb=document.getElementById('fb-'+drillId);
+  fb.textContent=allCorrect?'All correct!':'Some items are out of order. Try again or click Show Answer.';
+  fb.className='order-feedback '+(allCorrect?'correct':'incorrect');
+}
+function shuffleDrill(drillId){
+  var drill=document.getElementById(drillId);
+  var list=drill.querySelector('.order-list');
+  var items=Array.from(list.children);
+  items.forEach(function(item){item.classList.remove('correct-pos','wrong-pos');});
+  for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);}
+  var fb=document.getElementById('fb-'+drillId);fb.textContent='';fb.className='order-feedback';
+}
+function showAnswer(drillId){
+  var ans=document.getElementById('ans-'+drillId);
+  ans.classList.toggle('show');
+}
+function answerVig(opt,correct){
+  var item=opt.closest('.vig-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.vig-opt').forEach(function(o){o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.vig-opt').forEach(function(o){var fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  item.querySelector('.vig-exp').classList.add('show');
+}
+function answerTrap(btn,card,correct){
+  var btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(function(b){b.disabled=true;});
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  var exp=card.querySelector('.trap-exp');
+  exp.classList.add(correct?'show-c':'show-w');
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    if(front) inner.style.height=front.scrollHeight+'px';
+  });
+  initDrills();
+});
+</script>
+</body></html>
