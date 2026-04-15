@@ -58,7 +58,7 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
 .tab-pane.active{display:block}
 
 /* ── FLASHCARDS ── */
-.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;align-items:start}
 .fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
 .fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
 .fc.flipped{z-index:10}
@@ -976,31 +976,10 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
 </div>
 
 <script>
-function fixCardHeights(){
-  document.querySelectorAll('.fc').forEach(fc=>{
-    const inner=fc.querySelector('.fc-inner');
-    const front=fc.querySelector('.fc-front');
-    const back=fc.querySelector('.fc-back');
-    if(inner&&front&&back){
-      const h=Math.max(front.scrollHeight,back.scrollHeight);
-      inner.style.height=h+'px';
-    }
-  });
-}
-function flipCard(el){
-  const inner=el.querySelector('.fc-inner');
-  const front=el.querySelector('.fc-front');
-  const back=el.querySelector('.fc-back');
-  el.classList.toggle('flipped');
-  inner.style.height=(el.classList.contains('flipped')?back:front).scrollHeight+'px';
-}
-window.addEventListener('load',function(){
-  document.querySelectorAll('.fc').forEach(function(fc){
-    const inner=fc.querySelector('.fc-inner');
-    const front=fc.querySelector('.fc-front');
-    inner.style.height=front.scrollHeight+'px';
-  });
-});
+function fixCardHeights(){document.querySelectorAll('.fc').forEach(function(fc){const inner=fc.querySelector('.fc-inner');const front=fc.querySelector('.fc-front');const back=fc.querySelector('.fc-back');if(inner&&front){const h=(fc.classList.contains('flipped')&&back?back:front).scrollHeight;inner.style.height=h+'px';}});}
+function flipCard(el){el.classList.toggle('flipped');fixCardHeights();}
+window.addEventListener('load',function(){fixCardHeights();});
+window.addEventListener('resize',function(){fixCardHeights();});
 function switchTab(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));

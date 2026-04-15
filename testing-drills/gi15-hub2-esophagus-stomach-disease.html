@@ -62,7 +62,7 @@ body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;backgrou
 .sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
 
 /* ── FLASHCARDS ── */
-.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px;align-items:start}
 .fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
 .fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
 .fc.flipped{z-index:10}
@@ -962,11 +962,11 @@ const seenCards=new Set();const MAX_CARDS=20;
 
 function switchTab(tabName,elem){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+tabName).classList.add('active');document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));elem.classList.add('active');if(tabName==='flashcards'){fixCardHeights();}}
 
-function flipCard(card){card.classList.toggle('flipped');const cardId=Array.from(card.parentNode.children).indexOf(card);seenCards.add(cardId);updateCounter();}
+function flipCard(card){card.classList.toggle('flipped');fixCardHeights();const cardId=Array.from(card.parentNode.children).indexOf(card);seenCards.add(cardId);updateCounter();}
 
 function updateCounter(){document.getElementById('fc-counter').textContent=seenCards.size+' / 20 seen';}
 
-function fixCardHeights(){document.querySelectorAll('.fc').forEach(fc=>{const inner=fc.querySelector('.fc-inner');const front=fc.querySelector('.fc-front');const back=fc.querySelector('.fc-back');if(inner&&front&&back){const h=Math.max(front.scrollHeight,back.scrollHeight);inner.style.height=h+'px';}});}
+function fixCardHeights(){document.querySelectorAll('.fc').forEach(function(fc){const inner=fc.querySelector('.fc-inner');const front=fc.querySelector('.fc-front');const back=fc.querySelector('.fc-back');if(inner&&front){const h=(fc.classList.contains('flipped')&&back?back:front).scrollHeight;inner.style.height=h+'px';}});}
 
 function answerMCQ(elem,isCorrect){if(elem.classList.contains('locked'))return;document.querySelectorAll('.mcq-opt').forEach(opt=>{opt.classList.add('locked');});if(isCorrect){elem.classList.add('correct');}else{elem.classList.add('wrong');}elem.parentNode.parentNode.querySelector('.mcq-exp').classList.add('show');}
 
@@ -981,6 +981,8 @@ function showAnswer(drillId){document.getElementById('ans-'+drillId).classList.a
 function shuffleDrill(drillId){const list=document.getElementById('list-'+drillId);const items=Array.from(list.querySelectorAll('.order-item'));for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}items.forEach(item=>list.appendChild(item));document.getElementById('fb-'+drillId).innerHTML='';document.getElementById('ans-'+drillId).classList.remove('show');}
 
 window.addEventListener('load',()=>{fixCardHeights();});
+
+window.addEventListener('resize',function(){fixCardHeights();});
 </script>
 </body>
 </html>
