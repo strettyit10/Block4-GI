@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI13 Abdominal Viscera II — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi13-abdominal-viscera-ii.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>Abdominal Viscera II <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 13 · GI Block · Abdominal Viscera II — Core Concepts — LOs 1–4
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI13 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> GI Block LOs (Hepatobiliary, Splenic, Pancreas, Physiology)</div>
+    <div class="source-badge"><strong>Review:</strong> First Aid GI — Hepatic, Biliary, Pancreatic</div>
+    <div class="source-badge"><strong>Step 1:</strong> USMLE Step 1 Abdominal Viscera</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi13-hub2-abdominal-viscera-ii.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi13-hub3-abdominal-viscera-ii.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">20</span> cards total</span><span>LOs 1–4</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Liver Anatomy</div><div class="fc-q">Name the four hepatic divisions based on <strong>functional blood flow</strong> and the Couinaud classification basis.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Right hemiliver, left hemiliver</strong> (by midline hepatic vein). Further divided into <strong>8 functional segments (Couinaud)</strong> based on blood supply and venous drainage. Surgeons use this — allows precise resection while preserving blood/bile flow to remnant.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Porta Hepatis</div><div class="fc-q">What three structures enter the porta hepatis, and what is the mnemonic?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Bile duct, Hepatic artery, Portal vein</strong> (BHP, or <strong>"BAD"</strong> anterior to posterior: Bile duct, Artery, Duct)<br><br>Portal vein is the largest, hepatic artery is smallest. All three travel in the hepatoduodenal ligament.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Biliary Tree</div><div class="fc-q">Trace the biliary tree: <strong>right/left hepatic ducts</strong> → ? → ? → enters duodenum at?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Right + left hepatic ducts → <strong>Common hepatic duct (CHD)</strong> → joins <strong>cystic duct</strong> (from gallbladder) → <strong>Common bile duct (CBD)</strong> → <strong>ampulla of Vater</strong> in duodenum (2nd part)<br><br>Sphincter of Oddi controls flow into duodenum. Mirizzi syndrome = stone in cystic duct → obstructs CHD.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Gallbladder</div><div class="fc-q">Name the three parts of the gallbladder, identify Hartmann's pouch and Calot's triangle, and state what Mirizzi sign indicates.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Fundus (tip), body, neck (tapers).</strong> <strong>Hartmann's pouch</strong> = pouch at junction of neck/body where stones lodge. <strong>Calot's triangle</strong> = bounded by cystic artery, CHD, liver edge — where cystic artery is identified during cholecystectomy. <strong>Mirizzi syndrome</strong> = impacted stone in cystic/CHD obstructs CHD → jaundice.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Murphy's Sign</div><div class="fc-q">Define Murphy's sign and Murphy's point. Clinical context?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Murphy's sign:</strong> inspiratory arrest during palpation of RUQ (tenderness over gallbladder).<br><strong>Murphy's point:</strong> location on liver edge where gallbladder touches. Positive Murphy's = classic sign of <strong>acute cholecystitis</strong>. Pain occurs as GB contracts against inflamed wall during inspiration.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Splenic Artery</div><div class="fc-q">Trace the splenic artery. Name its two major branches and what each supplies.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Splenic artery</strong> (from celiac) → <strong>short gastric arteries</strong> (to greater curvature stomach, via gastrosplenic ligament) + <strong>left gastroepiploic artery</strong> (to greater curvature, via gastrosplenic ligament) → tail ends in splenic hilum.<br><br>Gastrosplenic ligament contains splenic vessels + left gastric vessels.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Splenorenal Ligament</div><div class="fc-q">What structures run in the splenorenal ligament? Clinical significance?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Splenic artery + splenic vein + pancreatic tail</strong> run in splenorenal ligament (posterior peritoneum, between spleen + left kidney).<br><br>Splenic vein joins SMV → portal vein. During splenectomy, must ligate splenic vessels in this ligament. Splenic trauma (most common blunt visceral injury) → blood loss into this space.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Sinistral Portal HTN</div><div class="fc-q">What is sinistral portal hypertension? Common cause?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Sinistral portal HTN:</strong> elevated pressure in splenic vein ONLY (not portal vein). <strong>Common cause:</strong> pancreatic pathology (cancer, chronic pancreatitis) compresses/thromboses splenic vein.<br><br>Result: isolated gastric varices (short gastrics, left gastroepiploic), splenomegaly. Portal HTN alone → esophageal varices primarily.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Splenic Trauma</div><div class="fc-q">Why is the spleen the most injured organ in blunt abdominal trauma? Name two key clinical signs.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Friable (vascular), fixed in place</strong> → easily disrupted by impact. <strong>Kehr's sign:</strong> left shoulder pain from diaphragmatic irritation by splenic blood. <strong>Cullen's sign:</strong> periumbilical bruising from retroperitoneal bleeding. Splenic infarct risk post-trauma from vascular injury.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Splenectomy Sequelae</div><div class="fc-q">What infection risk follows splenectomy (OPSI)? Which organisms? Lasting sign?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>OPSI (overwhelming post-splenectomy infection):</strong> risk of fulminant sepsis from encapsulated organisms. <strong>SHiN organisms:</strong> <strong>S</strong>treptococcus pneumoniae, <strong>H</strong>aemophilus influenzae, <strong>N</strong>eisseria meningitidis.<br><br><strong>Howell-Jolly bodies:</strong> nuclear remnants visible on blood smear post-splenectomy (normally removed by spleen). Lifelong vaccination + prophylactic antibiotics advised.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Pancreas Position</div><div class="fc-q">Where is the pancreas located? Which structures surround it and why is it vulnerable?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Retroperitoneal, L1–L2</strong> (spine posterior). Head sits in C of duodenum, tail touches spleen. Anterior: SMA/SMV, portal vein, duodenum. <strong>Vulnerable:</strong> retroperitoneal + surrounded by major vessels → trauma/inflammation → rapid compromise.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Pancreas Parts</div><div class="fc-q">Name the five parts of the pancreas from right to left.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Head → uncinate process (extends left behind SMA/SMV) → neck → body → tail</strong> (touches spleen).<br><br>Uncinate process is a key landmark — CBD grooves its posterior surface. Neck is narrowest part (vulnerable to compression in annular pancreas).</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Pancreatic Ducts</div><div class="fc-q">Name the two pancreatic ducts, their embryologic origin, and how they empty.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Duct of Wirsung (main):</strong> from ventral pancreatic bud → joins CBD at ampulla of Vater (duodenum 2nd part). <strong>Duct of Santorini (accessory):</strong> from dorsal bud → minor duodenal papilla (3rd part, proximal to ampulla).<br><br><strong>Pancreas divisum:</strong> Wirsung duct drains only the uncinate/ventral pancreas. Accessory duct drains dorsal pancreas → vulnerable to obstruction (pancreatitis risk).</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Courvoisier Law</div><div class="fc-q">State Courvoisier law and its clinical implication for pancreatic cancer diagnosis.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Courvoisier law:</strong> <strong>Painless jaundice + palpable gallbladder = pancreatic head cancer</strong> until proven otherwise. (Stone-induced jaundice usually causes pain + rigid GB.)<br><br>Why: tumor obstructs CBD → jaundice + dilates GB. Late presentation = poor prognosis.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Annular Pancreas</div><div class="fc-q">What is annular pancreas? Clinical presentation?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Annular pancreas:</strong> pancreatic tissue rings the second portion of duodenum (embryologic malrotation). May cause duodenal obstruction = epigastric pain, postprandial vomiting, chronic dyspepsia.<br><br>Can present in infants (projectile vomiting) or adults (chronic). Diagnosis: upper endoscopy shows duodenal obstruction; CT/MRI shows ring.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Acute Pancreatitis</div><div class="fc-q">List the major causes of acute pancreatitis using the "GET SMASHED" mnemonic.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>GET SMASHED:</strong><br><strong>G</strong>allstones, <strong>E</strong>thanol, <strong>T</strong>rauma<br><strong>S</strong>teroid, <strong>M</strong>umps, <strong>A</strong>utoimmune, <strong>S</strong>corpion sting, <strong>H</strong>ypercalcemia, <strong>E</strong>RCHP (endoscopic), <strong>D</strong>rugs (azathioprine, L-asparaginase, thiazides)<br><br>Serum amylase peaks at 24–48 h. Lipase more specific and stays elevated longer.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Bile Composition</div><div class="fc-q">What are the major constituents of bile and their functions?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Bile salts:</strong> emulsify fats → micelles → absorption of fat-soluble vitamins (ADEK).<br><strong>Cholesterol, phospholipid, bilirubin</strong> — cholesterol can crystallize → gallstones if ratio imbalanced.<br><br>Released via CCK in response to fat/protein. Enterohepatic circulation: ~95% bile salts reabsorbed in terminal ileum → recycled 8–10 times daily.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — First-Pass Metabolism</div><div class="fc-q">Why is the portal vein route "first-pass" and what are the clinical implications?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a">Portal vein blood from intestines → <strong>liver FIRST</strong> → hepatic vein → systemic circulation. Absorbed nutrients/drugs undergo hepatic metabolism BEFORE entering systemic circulation.<br><br><strong>Clinical implication:</strong> oral drugs are subject to first-pass metabolism (may be largely inactivated by liver). Sublingual/transdermal routes bypass liver initially.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — CCK & Secretin</div><div class="fc-q">What stimulates CCK and secretin release? What are their effects?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>CCK:</strong> fat + protein in duodenum (I-cells) → GB contraction + pancreatic enzyme secretion + sphincter of Oddi relaxation.<br><strong>Secretin:</strong> acid (pH &lt;4) in duodenum (S-cells) → pancreatic HCO₃⁻ secretion (neutralizes acid) + ↓gastric acid.<br><br>Both are hormones, released into blood, NOT the lumen.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Pancreatic Acinar vs. Ductal</div><div class="fc-q">Distinguish pancreatic acinar cells from ductal epithelium in terms of secretory products.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Acinar cells:</strong> produce digestive zymogens (trypsinogen, chymotrypsinogen, lipase, amylase). Released into duct system.<br><strong>Ductal epithelium:</strong> produces bicarbonate (HCO₃⁻) rich fluid that buffers stomach acid + creates neutral pH for enzyme activity.<br><br>Inactive until enterokinase (from duodenal mucosa) converts trypsinogen → trypsin → activates other enzymes.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL IN THE BLANK ══════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 01 — LO 1</div>
+      <div class="fib-prompt">The common hepatic duct joins the ___________ duct to form the common bile duct, which enters the duodenum at the ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="duct..." data-answers="cystic">
+        <input class="fib-input" type="text" placeholder="location..." data-answers="ampulla of vater,ampulla,vater">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: The gallbladder drains via one specific duct.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 02 — LO 1</div>
+      <div class="fib-prompt">The ___________ sign is a clinical finding where inspiratory arrest occurs during RUQ palpation, indicating acute cholecystitis.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="sign..." data-answers="murphy's,murphys">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Named after a surgical examination technique.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 03 — LO 1</div>
+      <div class="fib-prompt">The ___________ triangle is bounded by the cystic artery, common hepatic duct, and liver edge — surgeons use this landmark during cholecystectomy.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="triangle..." data-answers="calot's,calots">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Begins with "C".</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 04 — LO 2</div>
+      <div class="fib-prompt">The splenic artery branches into ___________ arteries (to stomach) and ___________ artery (to greater omentum), both traveling in the gastrosplenic ligament.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="arteries..." data-answers="short gastric">
+        <input class="fib-input" type="text" placeholder="artery..." data-answers="left gastroepiploic,gastroepiploic">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Both are part of the omental blood supply.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 05 — LO 2</div>
+      <div class="fib-prompt">The ___________ ligament contains the splenic artery, splenic vein, and pancreatic tail, running between the spleen and left kidney.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="ligament..." data-answers="splenorenal">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Connects spleen to kidney.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 06 — LO 2</div>
+      <div class="fib-prompt">___________ portal hypertension occurs when pancreatic pathology obstructs the splenic vein, resulting in elevated pressure in the splenic vein only, causing isolated ___________ varices.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="type..." data-answers="sinistral,left-sided">
+        <input class="fib-input" type="text" placeholder="varices..." data-answers="gastric">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Sinistral = left side.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 07 — LO 3</div>
+      <div class="fib-prompt">The pancreas is located ___________ (positioning) at level ___________. The pancreatic head sits in the "C" of the ___________.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="position..." data-answers="retroperitoneal">
+        <input class="fib-input" type="text" placeholder="level..." data-answers="l1-l2,l1,l2">
+        <input class="fib-input" type="text" placeholder="intestine..." data-answers="duodenum">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 08 — LO 3</div>
+      <div class="fib-prompt">The ___________ duct (main pancreatic duct) joins the CBD at the ampulla of Vater. The ___________ duct (accessory) drains separately into the 3rd part of duodenum.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="main..." data-answers="wirsung">
+        <input class="fib-input" type="text" placeholder="accessory..." data-answers="santorini">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: German anatomist names.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 09 — LO 3</div>
+      <div class="fib-prompt">In acute pancreatitis, serum ___________ peaks at 24–48 hours and is the gold-standard marker, while ___________ is more specific and stays elevated longer.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="enzyme 1..." data-answers="amylase">
+        <input class="fib-input" type="text" placeholder="enzyme 2..." data-answers="lipase">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+      <div class="fib-hint">Hint: Lipase is pancreas-specific.</div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">FIB 10 — LO 4</div>
+      <div class="fib-prompt">Bile salts emulsify ___________ and form ___________, which allows absorption of fat-soluble vitamins (ADEK). Approximately ___________% of bile salts are reabsorbed in the terminal ileum via enterohepatic circulation.</div>
+      <div class="fib-row">
+        <input class="fib-input" type="text" placeholder="what..." data-answers="fats,fat,lipids">
+        <input class="fib-input" type="text" placeholder="structure..." data-answers="micelles">
+        <input class="fib-input" type="text" placeholder="percentage..." data-answers="95">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Instructions:</strong> Drag and drop the items into the correct order, then click "Check Order." Use "Show Answer" if you get stuck.
+  </div>
+
+  <!-- Drill 1: Pancreatic Embryology -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 1 — Pancreatic Buds Embryology: Ventral → Union</div>
+    <div class="drill-hint">Arrange the steps of pancreatic bud development and fusion in the correct chronological order.</div>
+    <div class="order-list" id="order-list-1" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-1')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Ventral bud rotates with duodenum during rotation, ending dorsal to dorsal bud</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Dorsal and ventral pancreatic buds form from endoderm (week 4-5)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Ducts fuse, forming main pancreatic duct (Wirsung) + accessory duct (Santorini)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Dorsal pancreatic bud grows from duodenum (week 4-5)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-1')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Dorsal and ventral parenchyma fuse, but ductal system may remain separate (pancreas divisum)</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','order-fb-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-1"></div>
+    <div class="order-answer" id="order-ans-1">
+      <ol><li><span>Dorsal and ventral buds form</span> — week 4-5 from foregut endoderm</li><li><span>Dorsal bud grows from duodenum</span> — becomes body/tail + dorsal pancreatic tissue</li><li><span>Ventral bud rotates with duodenum</span> — clockwise rotation during weeks 5-7</li><li><span>Ducts and parenchyma fuse</span> — may remain separate (pancreas divisum)</li><li><span>Adult configuration established</span> — Wirsung + Santorini ducts, head/uncinate/body/tail divisions</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 2: ERCP Workflow -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 2 — ERCP Workflow: Cannulation to Intervention</div>
+    <div class="drill-hint">Arrange these procedural steps in the correct sequence for an ERCP procedure.</div>
+    <div class="order-list" id="order-list-2" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-2')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Perform intervention (sphincterotomy, stone extraction, stent placement)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Insert duodenoscope, identify ampulla of Vater</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="6"><span class="item-grip">⠿</span><span class="item-text">Withdraw instruments, monitor for bleeding/perforation</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Sedate patient, obtain consent</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Inject contrast into biliary/pancreatic duct system and obtain images</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-2')" data-pos="3"><span class="item-grip">⠿</span><span class="item-text">Cannulate ampulla with sphincterotome or standard cannula</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','order-fb-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-2"></div>
+    <div class="order-answer" id="order-ans-2">
+      <ol><li><span>Sedate and consent</span> — prepare patient</li><li><span>Insert duodenoscope</span> — identify ampulla of Vater in second part of duodenum</li><li><span>Cannulate ampulla</span> — careful positioning to avoid perforation</li><li><span>Inject contrast</span> — visualize biliary and/or pancreatic ductal tree</li><li><span>Perform intervention</span> — sphincterotomy (cutting, measuring 10-15mm), stone extraction, stent, biopsy</li><li><span>Withdraw and monitor</span> — watch for bleeding or perforation</li></ol>
+    </div>
+  </div>
+
+  <!-- Drill 3: Acute Pancreatitis Pathogenesis -->
+  <div class="order-drill">
+    <div class="drill-title">Drill 3 — Acute Pancreatitis Pathogenesis: Trigger to Inflammation</div>
+    <div class="drill-hint">Arrange the pathophysiologic sequence from initial injury to systemic inflammation.</div>
+    <div class="order-list" id="order-list-3" ondragover="event.preventDefault()" ondrop="dropItem(event,'order-list-3')">
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="4"><span class="item-grip">⠿</span><span class="item-text">Acinar cell injury → release of pancreatic enzymes into interstitium</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="2"><span class="item-grip">⠿</span><span class="item-text">Ductal obstruction (stone) or direct injury (trauma, alcohol, drugs)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="5"><span class="item-grip">⠿</span><span class="item-text">Trypsinogen activated to trypsin in pancreas (not duodenum)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="1"><span class="item-grip">⠿</span><span class="item-text">Initial trigger (gallstone, alcohol, hypercalcemia, etc.)</span></div>
+      <div class="order-item" draggable="true" ondragstart="dragStart(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropOnItem(event,'order-list-3')" data-pos="6"><span class="item-grip">⠿</span><span class="item-text">Pancreatic and systemic inflammation (cytokine release) → SIRS, ARDS, sepsis</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','order-fb-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('order-ans-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="order-fb-3"></div>
+    <div class="order-answer" id="order-ans-3">
+      <ol><li><span>Initial trigger</span> — stone, alcohol, trauma, drugs, hypercalcemia</li><li><span>Ductal obstruction or direct injury</span> — disrupts pancreatic architecture</li><li><span>Acinar cell injury</span> — enzymes leak into surrounding tissue</li><li><span>Trypsinogen activated to trypsin</span> — locally in pancreas (not duodenum where it normally activates)</li><li><span>Pancreatic + systemic inflammation</span> — amylase/lipase rise, pain, swelling, SIRS</li><li><span>Potential complications</span> — necrosis, abscess formation, sepsis, organ failure</li></ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATCHING ════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Instructions:</strong> Click an item on the left, then click its match on the right. Correct pairs turn green; wrong pairs flash red.
+  </div>
+
+  <!-- Set 1: Liver/Biliary Structure → Anatomic Relationship -->
+  <div class="match-set">
+    <div class="match-set-title">Set 1 — Hepatobiliary Structure → Anatomic Relationship/Content</div>
+    <div class="match-set-hint">Match each biliary structure to its anatomic location or contents.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Structure</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Porta hepatis</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Hartmann's pouch</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Ampulla of Vater</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Calot's triangle</div>
+      </div>
+      <div>
+        <div class="match-col-label">Anatomic Relationship</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="3">Where CBD and pancreatic duct enter duodenum (2nd part)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="1">Entry portal for BD, HA, PV into liver</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="4">Bounded by cystic artery, CHD, and liver edge</div>
+        <div class="match-item" onclick="selectMatch(this,'ms1')" data-pair="2">Pouch at junction of gallbladder neck and body; common stone site</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms1-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms1')">Reset</button>
+  </div>
+
+  <!-- Set 2: Ligament/Peritoneal Fold → Contents -->
+  <div class="match-set">
+    <div class="match-set-title">Set 2 — Peritoneal Ligament → Important Contents/Structures</div>
+    <div class="match-set-hint">Match each ligament to the vessels or structures it contains.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Ligament</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Hepatoduodenal ligament</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">Gastrosplenic ligament</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Splenorenal ligament</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Pancreaticoduodenal ligament</div>
+      </div>
+      <div>
+        <div class="match-col-label">Contents</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="2">Splenic artery, short gastric arteries, left gastroepiploic artery</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="3">Splenic artery/vein + pancreatic tail</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="1">Bile duct, hepatic artery, portal vein (part of porta hepatis)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms2')" data-pair="4">Pancreaticoduodenal arteries and veins (from SMA/SMV)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms2-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms2')">Reset</button>
+  </div>
+
+  <!-- Set 3: Clinical Buzzword → Associated Disease/Finding -->
+  <div class="match-set">
+    <div class="match-set-title">Set 3 — Clinical Buzzword/Sign → Associated Condition</div>
+    <div class="match-set-hint">Match clinical findings to the conditions they suggest.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Clinical Finding/Buzzword</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Courvoisier law</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Kehr's sign</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Howell-Jolly bodies</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Mirizzi syndrome</div>
+      </div>
+      <div>
+        <div class="match-col-label">Associated Condition</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="4">Cystic duct stone obstructing common hepatic duct → jaundice</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="1">Painless jaundice + palpable gallbladder = pancreatic cancer</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="2">Left shoulder pain from splenic trauma (diaphragmatic irritation)</div>
+        <div class="match-item" onclick="selectMatch(this,'ms3')" data-pair="3">Nuclear remnants on blood smear post-splenectomy</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms3-score">0</span>/4 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms3')">Reset</button>
+  </div>
+
+  <!-- Set 4: Pancreatic Ductal Abnormality → Clinical Implication -->
+  <div class="match-set">
+    <div class="match-set-title">Set 4 — Pancreatic Ductal Anomaly → Clinical Consequence</div>
+    <div class="match-set-hint">Match congenital pancreatic variations to their clinical significance.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Anomaly</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="1">Annular pancreas</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="2">Pancreas divisum</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="3">Whipple procedure</div>
+      </div>
+      <div>
+        <div class="match-col-label">Clinical Consequence</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="2">Dorsal/ventral ducts remain separate → increased obstruction risk, pancreatitis</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="1">Tissue rings 2nd duodenum → obstruction, postprandial pain/vomiting</div>
+        <div class="match-item" onclick="selectMatch(this,'ms4')" data-pair="3">Surgical treatment for pancreatic head cancer (pancreaticoduodenectomy)</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="ms4-score">0</span>/3 correct</div>
+    <button class="match-reset-btn" onclick="resetMatch('ms4')">Reset</button>
+  </div>
+</div>
+
+<!-- ══ TEST TRAPS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    <strong>Test Trap Mode:</strong> Each statement is either TRUE or FALSE as written. Many are designed to catch common exam errors. Click T or F — then read the explanation carefully.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 01 — LO 1</div>
+    <div class="trap-statement">"The common bile duct runs anterior to the portal vein in the hepatoduodenal ligament."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>TRUE.</strong> Classic anatomy: In the hepatoduodenal ligament, the mnemonic <strong>"BAD"</strong> describes anterior-to-posterior arrangement: <strong>B</strong>ile duct (anterior), <strong>A</strong>rtery (hepatic), <strong>D</strong>uct (portal vein). Portal vein is largest and most posterior.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 02 — LO 1</div>
+    <div class="trap-statement">"Mirizzi syndrome is caused by a stone in the gallbladder body obstructing the cystic duct."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Mirizzi syndrome occurs when a stone in the <strong>cystic duct</strong> (not GB body) directly obstructs the <strong>common hepatic duct</strong> — not the cystic duct. The impacted stone → external compression of CHD → jaundice. Classic "trap" because students confuse the location.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 03 — LO 2</div>
+    <div class="trap-statement">"The splenic vein joins the superior mesenteric vein to form the portal vein."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>TRUE.</strong> Splenic vein + SMV = portal vein (behind pancreatic neck). The splenic vein travels through the splenorenal ligament, containing the pancreatic tail. High-yield board fact.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 04 — LO 2</div>
+    <div class="trap-statement">"Portal hypertension always presents with esophageal varices due to backup into the portal vein."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Sinistral portal hypertension (splenic vein obstruction only) causes isolated <strong>gastric varices</strong> (short gastrics), NOT esophageal varices. True portal HTN (whole system) → esophageal varices. Knowing the difference is critical for board exams.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 05 — LO 3</div>
+    <div class="trap-statement">"The duct of Santorini (accessory pancreatic duct) is the main drainage pathway for the entire pancreas in most people."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> The duct of <strong>Wirsung</strong> (main pancreatic duct) is the primary drainage pathway → ampulla of Vater. Santorini is the <strong>accessory</strong> duct (from dorsal bud) → minor duodenal papilla. <strong>Pancreas divisum</strong> = abnormal persistence of separate ducts, NOT the normal state.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 06 — LO 3</div>
+    <div class="trap-statement">"Courvoisier sign refers to a positive Murphy's sign in acute cholecystitis."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> <strong>Courvoisier law</strong> (not sign) states: <strong>painless jaundice + palpable GB = pancreatic head cancer</strong> (until proven otherwise). Murphy's sign = RUQ tenderness in cholecystitis. Different findings, different causes!</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 07 — LO 4</div>
+    <div class="trap-statement">"Bile salts are absorbed throughout the small intestine and recycled 8-10 times daily."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> Bile salts are absorbed <strong>specifically in the terminal ileum</strong> (not throughout SI). ~95% are reabsorbed via enterohepatic circulation, recycled 8-10 times daily. This is why ileal disease/resection causes diarrhea and fat malabsorption.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 08 — LO 4</div>
+    <div class="trap-statement">"CCK is released in response to gastric acid and triggers pancreatic bicarbonate secretion."</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp"><strong>FALSE.</strong> <strong>Secretin</strong> (not CCK) is released by acid → triggers pancreatic HCO₃⁻. <strong>CCK</strong> is released by fat + protein → gallbladder contraction + pancreatic <strong>enzyme</strong> secretion. Easy to mix up — memorize: acid=secretin+HCO3; fat/protein=CCK+enzymes.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">Pancreatic Anatomy at a Glance</div>
+    <table class="ref-table">
+      <thead><tr><th>Part</th><th>Location/Boundaries</th><th>Key Features</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Head</td><td>Within C-curve of duodenum</td><td>Largest segment; contains common bile duct groove on posterior</td></tr>
+        <tr><td class="key">Uncinate process</td><td>Extension from head, behind SMA/SMV</td><td>Extends leftward; compressed in annular pancreas</td></tr>
+        <tr><td class="key">Neck</td><td>Narrowest part; anterior to portal vein union</td><td>Ventral pancreatic bud origin; vulnerable in trauma</td></tr>
+        <tr><td class="key">Body</td><td>Extends from neck toward spleen</td><td>Sits anterior to splenic vessels, IVC, aorta</td></tr>
+        <tr><td class="key">Tail</td><td>Extends into splenorenal ligament</td><td>Touches splenic hilum; contains splenic vessels, splenic vein</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Biliary Tree Flowchart</div>
+    <table class="ref-table">
+      <thead><tr><th>Structure</th><th>Contents/Function</th><th>Anatomy</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Left hepatic duct</td><td>Drains left lobe of liver</td><td>Joins right hepatic duct</td></tr>
+        <tr><td class="key">Right hepatic duct</td><td>Drains right lobe of liver</td><td>Joins left hepatic duct</td></tr>
+        <tr><td class="key">Common hepatic duct</td><td>Combines right + left</td><td>Part of porta hepatis; 3-4 cm long</td></tr>
+        <tr><td class="key">Cystic duct</td><td>Drains gallbladder</td><td>Joins CHD at angle; Hartmann's pouch at junction</td></tr>
+        <tr><td class="key">Common bile duct</td><td>CHD + cystic duct</td><td>Runs in hepatoduodenal lig (BAD order); ~8 cm; grooves pancreatic head</td></tr>
+        <tr><td class="key">Ampulla of Vater</td><td>Entry into duodenum</td><td>2nd part of duodenum; CBD joins pancreatic duct (Wirsung)</td></tr>
+        <tr><td class="key">Sphincter of Oddi</td><td>Controls flow into duodenum</td><td>Surrounds ampulla; CCK + secretin relax it</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Bile vs. Pancreatic Enzymes</div>
+    <table class="ref-table">
+      <thead><tr><th>Substance</th><th>Source</th><th>Function</th><th>Regulation</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Bile salts</td><td>Liver</td><td>Emulsify fats → micelles → fat-soluble vitamin absorption (ADEK)</td><td>Released by CCK (fed state)</td></tr>
+        <tr><td class="key">Bilirubin</td><td>Liver (from Hgb breakdown)</td><td>Excreted in bile; conjugated bilirubin in stool/urine</td><td>Continuous (not regulated)</td></tr>
+        <tr><td class="key">Cholesterol/phospholipid</td><td>Liver</td><td>Bile constituent; risk of crystallization → stones if ratio imbalanced</td><td>Cholesterol-rich bile risk in obesity, female, 40s</td></tr>
+        <tr><td class="key">Pancreatic zymogens</td><td>Pancreatic acinar cells</td><td>Digestive enzymes: trypsinogen, lipase, amylase (activated in duodenum)</td><td>Released by CCK (fed state)</td></tr>
+        <tr><td class="key">Pancreatic HCO₃⁻</td><td>Pancreatic ductal cells</td><td>Neutralize gastric acid → pH for enzyme function</td><td>Released by secretin (acid stimulus)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Courvoisier vs. Gallstone Obstruction</div>
+    <table class="ref-table">
+      <thead><tr><th>Feature</th><th>Pancreatic Cancer (Courvoisier)</th><th>Gallstone Jaundice</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Jaundice</td><td>Painless (insidious onset)</td><td>Often preceded by colicky pain</td></tr>
+        <tr><td class="key">Gallbladder</td><td>DILATED, palpable (tumor obstructs CBD)</td><td>Usually contracted/fibrotic (due to chronic stones)</td></tr>
+        <tr><td class="key">Presentation</td><td>Late stage (poor prognosis)</td><td>May resolve if stone passes</td></tr>
+        <tr><td class="key">Prognosis</td><td>High mortality; 5-year survival &lt;10%</td><td>Better with intervention (ERCP/surgery)</td></tr>
+        <tr><td class="key">Board Pearl</td><td><strong>Courvoisier law:</strong> painless jaundice + palpable GB = cancer</td><td>Rule out cancer first; confirm stones with imaging</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ref-note">
+    <strong>Key Memory Aids:</strong> Pancreas retroperitoneal at L1-L2 | Wirsung = main duct (ventral), Santorini = accessory (dorsal) | Bile pathway: L/R hepatic → CHD → CBD (joins cystic) → ampulla of Vater | Splenic vein behind pancreatic neck = portal vein origin.
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp; GI13 Hub 1 — Core Concepts &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div><!-- /container -->
+
+<script>
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+}
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    inner.style.height=front.scrollHeight+'px';
+  });
+});
+// Tab switching
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+
+// FIB check
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+
+// Drag-and-Drop Ordering
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// Matching
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+
+// Test Traps
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+
+// Fix card heights after tab switch
+function fixCardHeights(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    const back=fc.querySelector('.fc-back');
+    const isFlipped=fc.classList.contains('flipped');
+    inner.style.height=(isFlipped?back:front).scrollHeight+'px';
+  });
+}
+
+/* ── THEME TOGGLE ── */
+
+
+</script>
+</body>
+</html>

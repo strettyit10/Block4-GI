@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI13 Hub #2 · Abdominal Viscera II — Step 1 Extensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F2;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#5D4037;border-bottom:3px solid #C6875A;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;flex-direction:column;justify-content:center;gap:1px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.55em;font-weight:700;color:#F0E8DF;letter-spacing:.02em;line-height:1.2}
+.nav-brand-sub{font-size:.85em;color:#C6875A;font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:#fff;font-weight:600;padding:6px 14px;border-radius:5px;border:1px solid #C6875A;background:#C6875A;text-decoration:none;transition:all .2s}
+.nav-back:hover{background:#B57A4F;border-color:#B57A4F}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#5D4037 0%,#C6875A 50%,#5D4037 100%)}
+.hub-tag{display:inline-block;background:#5D4037;color:#F0E8DF;font-family:'Source Sans 3',sans-serif;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 14px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2.3em;color:#5D4037;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#9A6535;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:4px;padding:5px 12px;font-size:.88em;color:#5A5A5A}
+.source-badge strong{color:#5D4037}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:8px 18px;border-radius:4px;font-size:.92em;font-weight:600}
+.hub-step.done{background:#5D4037;border:1px solid #5D4037;color:#F0E8DF;text-decoration:none;transition:all .2s;font-weight:600}
+.hub-step.done:hover{background:#4E342E;border-color:#4E342E;color:#fff}
+.hub-step.current{background:#5D4037;color:#F0E8DF}
+.hub-step.next{background:#F7F5F2;border:1px solid #D5CCC0;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C6875A;color:#9A6535}
+.hub-arrow{color:#C6875A;font-size:1.1em;font-weight:700}
+.hub-prog-label{font-size:.88em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:2.1em;font-weight:700;color:#5D4037}
+.stat-label{font-size:.8em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D5CCC0;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.96em;font-weight:600;padding:12px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#5D4037}
+.tab-btn.active{color:#5D4037;border-bottom-color:#C6875A}
+.tab-content{display:none;animation:fi .25s ease}
+.tab-content.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec{font-size:.78em;font-weight:700;color:#5D4037;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #D5CCC0}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D5CCC0;border-top:3px solid #5D4037}
+.fc-back{transform:rotateY(180deg);background:#F3EFE9;border:1px solid #C6875A}
+.fc-label{font-size:.66em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-a strong{color:#5D4037}
+.fc-a em{color:#9A6535;font-style:normal}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#5D4037;font-weight:700}
+
+/* ── MCQ DRILL ── */
+.mcq-item{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.mcq-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.mcq-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.mcq-stem strong{color:#5D4037}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.mcq-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.mcq-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.mcq-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.mcq-opt.correct .opt-letter{color:#2E7D32}
+.mcq-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.mcq-opt.wrong .opt-letter{color:#C62828}
+.mcq-opt.locked{cursor:default}
+.opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.mcq-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.mcq-exp.show{display:block}
+.mcq-exp strong{color:#5D4037}
+
+/* ── CLINICAL CORRELATES ── */
+.cc-card{background:#FFFFFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.cc-tag{display:inline-block;background:#F3EFE9;border:1px solid #D5CCC0;border-radius:4px;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5D4037;padding:2px 8px;margin-bottom:10px}
+.cc-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px}
+.cc-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.cc-body strong{color:#2C2C2C}
+.cc-body em{color:#9A6535;font-style:normal}
+.cc-reveal{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:12px;transition:all .2s}
+.cc-reveal:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.cc-detail{display:none;margin-top:12px;padding:14px;background:#F3EFE9;border-radius:5px;border:1px solid #D5CCC0;font-size:.85em;color:#2C2C2C;line-height:1.7}
+.cc-detail.open{display:block}
+.cc-detail strong{color:#5D4037}
+
+/* ── INTRO BOXES ── */
+.mcq-intro,.cc-intro,.vig-intro,.hy-intro{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.mcq-intro strong,.cc-intro strong,.vig-intro strong,.hy-intro strong{color:#5D4037}
+
+/* ── TABLES ── */
+table{border-collapse:collapse;width:100%}
+table th{background:#5D4037;color:#F0E8DF;font-weight:600;text-align:left;padding:10px 14px;font-size:.84em;letter-spacing:.03em}
+table td{padding:10px 14px;border-bottom:1px solid #D5CCC0;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+table tr:nth-child(even) td{background:#FAF8F5}
+table tr:hover td{background:#F3EFE9}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D5CCC0;padding-top:16px;margin-top:32px}
+.footer a{color:#5D4037;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C6875A;text-decoration:underline}
+
+/* ── ORDERING DRILLS ── */
+.order-drill{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:8px}
+.drill-hint{font-size:.84em;color:#7A7060;background:#F3EFE9;padding:10px 14px;border-left:2px solid #C6875A;border-radius:4px;margin-bottom:14px}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding:14px;background:#F7F5F2;border-radius:6px;border:1px solid #D5CCC0;min-height:200px}
+.order-item{background:#FFF;border:2px solid #D5CCC0;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.88em;color:#2C2C2C;transition:all .15s}
+.order-item:hover{border-color:#C6875A;background:#F3EFE9}
+.order-item.dragging{opacity:.6;border-color:#C6875A}
+.order-item.drag-over{border:2px dashed #C6875A;background:#F3EFE9}
+.order-item.correct-pos{border-color:#2E7D32;background:#F1F8F2}
+.order-item.wrong-pos{border-color:#C62828;background:#FEF5F5}
+.order-actions{display:flex;gap:10px;margin-bottom:14px}
+.order-check-btn{background:#5D4037;color:#F0E8DF;border:none;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-check-btn:hover{background:#4E342E}
+.order-ghost-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.order-feedback{font-size:.84em;color:#5A5A5A;padding:10px 14px;border-radius:5px;margin-bottom:14px;display:none}
+.order-feedback.correct{background:#F1F8F2;border-left:3px solid #2E7D32;color:#1B5E20;display:block}
+.order-feedback.incorrect{background:#FEF5F5;border-left:3px solid #C62828;color:#B71C1C;display:block}
+.order-answer{background:#F3EFE9;border:1px solid #D5CCC0;border-radius:6px;padding:14px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.order-answer.show{display:block}
+.order-answer ol{margin-left:24px}
+.order-answer li{margin-bottom:10px}
+.order-answer strong{color:#5D4037}
+
+/* ── VIGNETTE MCQ ── */
+.vig-item{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px}
+.vig-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.vig-stem{font-size:.93em;color:#2C2C2C;line-height:1.7;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A}
+.vig-stem strong{color:#5D4037}
+.vig-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.vig-opt{background:#F7F5F2;border:1px solid #D5CCC0;border-radius:5px;padding:10px 14px;cursor:pointer;font-size:.88em;color:#2C2C2C;transition:all .18s;display:flex;align-items:flex-start;gap:10px}
+.vig-opt:hover:not(.locked){border-color:#C6875A;background:#F3EFE9}
+.vig-opt.correct{background:#F1F8F2;border-color:#2E7D32;color:#1B5E20}
+.vig-opt.correct .vig-opt-letter{color:#2E7D32}
+.vig-opt.wrong{background:#FEF5F5;border-color:#C62828;color:#B71C1C}
+.vig-opt.wrong .vig-opt-letter{color:#C62828}
+.vig-opt.locked{cursor:default}
+.vig-opt-letter{font-weight:700;color:#5D4037;flex-shrink:0;width:18px}
+.vig-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none;margin-top:12px}
+.vig-exp.show{display:block}
+.vig-exp strong{color:#5D4037}
+.vig-buzzword{color:#9A6535;font-weight:600}
+
+/* ── STEP 1 TRAPS ── */
+.trap-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.trap-num{font-size:.68em;font-weight:700;color:#C6875A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.trap-statement{font-size:.92em;color:#2C2C2C;line-height:1.6;margin-bottom:14px;background:#F3EFE9;padding:14px;border-radius:6px;border-left:3px solid #C6875A;font-weight:500}
+.trap-btns{display:flex;gap:10px;margin-bottom:14px}
+.trap-btn{background:none;border:1px solid #D5CCC0;color:#7A7060;padding:10px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:.84em;font-family:inherit;transition:all .2s}
+.trap-btn:hover:not(:disabled){border-color:#C6875A;color:#9A6535;background:#F3EFE9}
+.trap-btn:disabled{opacity:.5;cursor:default}
+.trap-btn.sel-correct{border-color:#2E7D32;background:#F1F8F2;color:#1B5E20}
+.trap-btn.sel-wrong{border-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp{background:#F3EFE9;border-left:3px solid #C6875A;border-radius:6px;padding:12px 16px;font-size:.84em;color:#5A5A5A;line-height:1.7;display:none}
+.trap-exp.show-c,.trap-exp.show-w{display:block}
+.trap-exp.show-w{border-left-color:#C62828;background:#FEF5F5;color:#B71C1C}
+.trap-exp strong{color:#5D4037}
+
+/* ── REFERENCE TABLES ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#5D4037;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #C6875A}
+.ref-table{overflow-x:auto}
+
+/* ── HY TESTING NOTES ── */
+.hy-card{background:#FFF;border:1px solid #D5CCC0;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C6875A}
+.hy-card-title{font-family:'Crimson Pro',Georgia,serif;font-size:1em;font-weight:700;color:#5D4037;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.hy-card-body{font-size:.88em;color:#5A5A5A;line-height:1.7}
+.hy-card-body strong{color:#2C2C2C}
+.hy-badge{display:inline-block;font-size:.68em;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:3px;background:#F3EFE9;color:#5D4037}
+.hy-badge.trap{background:#FEF5F5;color:#C62828;border:1px solid #C62828}
+.hy-badge.buzzword{background:#FFF8E1;color:#F57F17;border:1px solid #F57F17}
+.hy-badge.testing{background:#E8F5E9;color:#2E7D32;border:1px solid #2E7D32}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .container{padding:14px}
+  .header{padding:18px 16px}
+  .header h1{font-size:1.5em}
+  .fc-grid{grid-template-columns:1fr}
+  .hub-prog{flex-direction:column;gap:6px;align-items:flex-start}
+  .hub-arrow{display:none}
+  .tab-btn{font-size:.78em;padding:8px 12px}
+  .order-list{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi13-abdominal-viscera-ii.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub #2 — Step 1 Extensions</div>
+  <h1>Abdominal Viscera II <span>Step 1 Extensions</span></h1>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Diseases:</strong> Hirschsprung · Achalasia · Zollinger-Ellison · Carcinoid · VIPoma · Dumping Syndrome</div>
+    <div class="source-badge"><strong>Drugs:</strong> PPIs · H2 blockers · Ondansetron · Metoclopramide · Methylnaltrexone</div>
+    <div class="source-badge"><strong>Pharm:</strong> Atropine · Neostigmine · Botox (LES)</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <a href="gi13-hub1-abdominal-viscera-ii.html" class="hub-step done">Hub 1 ✓</a>
+  <span class="hub-arrow">→</span>
+  <span class="hub-step current">Hub 2 — Step 1 Extensions</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi13-hub3-abdominal-viscera-ii.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">18</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Ordering</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">MCQs</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Vignettes</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Traps</div></div>
+  <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Ref Tables</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering Drills</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">MCQ</button>
+  <button class="tab-btn" onclick="switchTab('vignettes',this)">Vignettes MCQ</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Step 1 Traps</button>
+  <button class="tab-btn" onclick="switchTab('ref',this)">Reference</button>
+  <button class="tab-btn" onclick="switchTab('hynotes',this)">HY Testing Notes</button>
+  <button class="tab-btn" onclick="switchTab('clinical',this)">Clinical Correlates</button>
+</div>
+
+<!-- ══ STEP 1 FLASHCARDS ══════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click any card to flip · <em style="color:#7A7060">18 Step 1 high-yield concepts on Hepatobiliary & Pancreas</em></span><span class="prog-num" id="fc-counter">0 / 18 seen</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Couinaud Segments</div><div class="fc-q">What are the 8 Couinaud segments? Numbered I–VIII. Surgical relevance for hemihepatic resection?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>8 functional segments:</strong> I (caudate, posterior) through VIII (anterior-superior). Segments I-IV above main hepatic vein, V-VIII below. Divided by hepatic veins + portal vein branches<br><strong>Surgical:</strong> Right hemihepatic resection = segments V-VIII. Left = I-IV. Preserves contralateral blood supply while resecting tumor-bearing segments</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Achalasia</div><div class="fc-q">Pathophysiology, characteristic symptoms, imaging finding, and treatment options?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Path:</strong> Loss of inhibitory neurons (VIP/NO) at LES → LES fails to relax<br><strong>Sx:</strong> Progressive dysphagia (solids AND liquids), regurgitation, weight loss<br><strong>Imaging:</strong> "Bird-beak" on barium swallow; manometry shows absent LES relaxation<br><strong>Tx:</strong> Pneumatic dilation, Heller myotomy, or botulinum toxin (blocks ACh at LES)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Zollinger-Ellison Syndrome</div><div class="fc-q">Tumor type, mechanism, key lab finding, clinical triad?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Gastrinoma (usually in "gastrinoma triangle" — duodenum/pancreas)<br><strong>Mechanism:</strong> ↑↑Gastrin → ↑↑HCl → peptic ulcers + diarrhea (fat malabsorption from acid inactivating lipase)<br><strong>Lab:</strong> Elevated fasting serum gastrin (&gt;1000 pg/mL diagnostic)<br><strong>Triad:</strong> Peptic ulcers (multiple, atypical) + diarrhea + elevated gastrin</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">VIPoma (Verner-Morrison)</div><div class="fc-q">Tumor origin, WDHA syndrome components, mechanism of diarrhea?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tumor:</strong> Pancreatic islet cell tumor secreting VIP<br><strong>WDHA:</strong> Watery Diarrhea, Hypokalemia, Achlorhydria (no acid)<br><strong>Mechanism:</strong> VIP → ↑cAMP in intestinal epithelium → massive Cl⁻ secretion → osmotic water loss → "pancreatic cholera"<br><strong>Dx:</strong> Elevated serum VIP + CT/MRI for tumor</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Carcinoid Tumor</div><div class="fc-q">Cell of origin, secretory product, carcinoid syndrome features, and when syndrome occurs?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Origin:</strong> Enterochromaffin cells (90% of body's 5-HT)<br><strong>Product:</strong> Serotonin (5-HT) + other amines<br><strong>Syndrome:</strong> Flushing, diarrhea, bronchospasm, right-sided heart disease (tricuspid regurgitation)<br><strong>Key:</strong> Syndrome only occurs with LIVER METS (local serotonin is first-pass metabolized; liver mets secrete directly into systemic circulation)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Dumping Syndrome</div><div class="fc-q">Cause, pathophysiology (early vs. late), and clinical features?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> Post-gastrectomy (loss of pyloric regulation)<br><strong>Early dumping (30 min):</strong> Hyperosmolar chyme → fluid shifts into gut lumen → hypovolemia → tachycardia, nausea, diarrhea<br><strong>Late dumping (2–3 hrs):</strong> Rapid glucose absorption → insulin spike → reactive hypoglycemia<br><strong>Tx:</strong> Small, frequent low-carb meals; octreotide for refractory cases</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Opioid-Induced Constipation</div><div class="fc-q">Receptor mechanism, why analgesic effect is preserved with targeted treatment?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> μ-opioid receptors on ENS neurons → inhibit ACh/SP release → ↓peristalsis + ↑sphincter tone<br><strong>Treatment:</strong> Methylnaltrexone (peripherally-acting μ-antagonist, does NOT cross BBB) → blocks GI opioid effects without reversing CNS analgesia<br><strong>Also:</strong> Naloxegol (similar mechanism, oral)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">PPI vs. H2 Blocker</div><div class="fc-q">Mechanism of each drug class, target cell, and main clinical use?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>PPIs (omeprazole, lansoprazole):</strong> Irreversibly inhibit H⁺/K⁺ ATPase on PARIETAL cells → block final step of HCl secretion → most potent<br><strong>H2 blockers (famotidine, ranitidine):</strong> Block histamine H2 receptors on parietal cells → ↓cAMP → ↓HCl<br><strong>Use:</strong> GERD, PUD, ZES (PPIs preferred for ZES)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">5-HT Pharmacology</div><div class="fc-q">What receptor does ondansetron block? What does metoclopramide do? Clinical uses of each?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Ondansetron:</strong> 5-HT3 ANTAGONIST → blocks serotonin-mediated emesis → antiemetic (chemo-induced, post-op nausea)<br><strong>Metoclopramide:</strong> D2 antagonist + 5-HT4 AGONIST → ↑ACh release → prokinetic (↑gastric emptying)<br><strong>Note:</strong> Metoclopramide crosses BBB → risk of tardive dyskinesia (EPS)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Portal Hypertension</div><div class="fc-q">What causes portal hypertension, and what are the three major clinical consequences of portosystemic shunting?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Cause:</strong> ↑portal vein pressure (usually from cirrhosis → fibrosis → ↑resistance)<br><strong>Consequences of portosystemic shunts:</strong><br>1. <strong>Esophageal varices</strong> (left gastric → azygos) → life-threatening GI bleed<br>2. <strong>Caput medusae</strong> (paraumbilical veins dilate)<br>3. <strong>Hemorrhoids</strong> (inferior mesenteric → inferior rectal)<br>Also: Ascites, splenomegaly, hepatic encephalopathy</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">First-Pass Metabolism</div><div class="fc-q">What is first-pass metabolism, what types of drugs are most affected, and how can it be bypassed?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Definition:</strong> Drug absorbed from GI tract → portal vein → liver → hepatic metabolism BEFORE reaching systemic circulation → ↓bioavailability<br><strong>Most affected:</strong> Lipophilic drugs (morphine, nitroglycerin, propranolol, lidocaine)<br><strong>Bypass routes:</strong> Sublingual (nitroglycerin), IV, transdermal, rectal (partial bypass), inhalation</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Myasthenia Gravis + GI</div><div class="fc-q">Why does myasthenia gravis cause dysphagia of the UPPER esophagus specifically?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> MG destroys nicotinic ACh receptors at the NMJ → skeletal muscle weakness<br><strong>GI relevance:</strong> Only the upper esophagus and pharynx use <em>skeletal muscle</em> (voluntary swallowing initiation)<br><strong>Spared:</strong> Lower esophagus, stomach, intestines use smooth muscle (muscarinic signaling) → NOT affected by MG<br><strong>Contrast:</strong> Achalasia affects lower esophagus (smooth muscle/inhibitory neuron loss)</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Cholera &amp; GI Fluid Physiology</div><div class="fc-q">How does cholera cause such massive diarrhea, and why does ORS (oral rehydration solution) work?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Mechanism:</strong> Vibrio cholerae toxin → permanently activates adenylyl cyclase → ↑↑cAMP → massive Cl⁻ secretion → water follows osmotically → "rice-water" stools up to 20 L/day<br><strong>ORS works because:</strong> SGLT1 (Na⁺-glucose cotransporter) is NOT affected by cAMP → co-transporting Na⁺ + glucose still drives water absorption → bypasses the toxin's mechanism</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">Watershed Areas</div><div class="fc-q">What are the two GI watershed areas, why are they vulnerable, and what condition results from ischemia there?</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Two watershed areas:</strong><br>1. <strong>Splenic flexure</strong> (SMA/IMA border) — most vulnerable<br>2. <strong>Rectosigmoid junction</strong> (IMA/internal iliac border)<br><strong>Why vulnerable:</strong> End-arterial zones with minimal collateral flow<br><strong>Result of ischemia:</strong> Ischemic colitis — especially in elderly, post-aortic surgery, hypotension; presents as bloody diarrhea + left-lower quadrant pain</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MCQ DRILL ══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-mcq">
+  <div class="mcq-intro"><strong>Step 1-Style MCQs:</strong> Select the best answer for each question. Your choice locks in immediately and the explanation reveals automatically. <span style="color:#2E7D32">Green</span> = correct, <span style="color:#C62828">Red</span> = incorrect.</div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 1 of 6 — Neurotransmitters / Achalasia</div>
+    <div class="mcq-stem">A 42-year-old woman presents with a 2-year history of progressive difficulty swallowing both solids and liquids, regurgitation of undigested food, and a 6 kg weight loss. Barium swallow shows <strong>smooth, tapered narrowing at the gastroesophageal junction</strong> with proximal esophageal dilation. Esophageal manometry demonstrates absent peristalsis and failure of the lower esophageal sphincter to relax after swallowing. Which neurotransmitter is most deficient at the LES in this condition?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Acetylcholine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Substance P</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Nitric oxide (NO)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Serotonin (5-HT)</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Neuropeptide Y</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Nitric oxide.</strong> Achalasia results from loss of inhibitory neurons (VIP + NO) at the LES. NO is the primary neurotransmitter responsible for LES relaxation during swallowing. Without NO, the LES remains tonically contracted. ACh/Substance P (choice A/B) are excitatory — their relative excess contributes to the failure to relax. Botulinum toxin (blocks ACh) is used therapeutically to partially restore balance.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 2 of 6 — Hirschsprung / Embryology</div>
+    <div class="mcq-stem">A 3-day-old male neonate has not passed meconium since birth. His abdomen is progressively distended and tympanitic. Rectal examination reveals explosive release of stool and gas when the finger is withdrawn. Rectal biopsy is obtained. Which of the following histologic findings is most expected in the <strong>affected aganglionic segment</strong>?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Normal ganglion cells in the myenteric plexus with hypertrophied circular muscle</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Absence of ganglion cells in both the myenteric and submucosal plexuses</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Absence of ganglion cells only in the submucosal plexus with normal myenteric plexus</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Increased numbers of ganglion cells due to neural hypertrophy proximal to the obstruction</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Dilated, thin-walled bowel with normal ganglionic architecture</div>
+    </div>
+    <div class="mcq-exp"><strong>B — Absence of ganglion cells in BOTH plexuses.</strong> Hirschsprung disease is caused by failure of neural crest cells to migrate to the distal colon. Both the myenteric AND submucosal ganglia are absent in the affected segment. This results in tonic, unopposed smooth muscle contraction → functional obstruction. The biopsy is taken from the narrow, aganglionic segment (not the dilated proximal segment, which has normal ganglia and is dilated from stool accumulation above the obstruction).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 3 of 6 — Fluid Balance / Acid-Base</div>
+    <div class="mcq-stem">A 28-year-old woman with severe persistent vomiting (hyperemesis gravidarum) presents to the ED. ABG shows pH 7.55, pCO₂ 48 mmHg, HCO₃⁻ 40 mEq/L. Serum K⁺ is 2.8 mEq/L. Which of the following best explains the acid-base and electrolyte abnormalities?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Loss of HCO₃⁻-rich fluid from the upper GI tract</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">B</span>Loss of HCl from the stomach → relative increase in serum HCO₃⁻ + renal K⁺ wasting</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">C</span>Respiratory alkalosis from hyperventilation due to nausea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Loss of pancreatic bicarbonate causing metabolic acidosis</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Aldosterone excess from volume depletion causing metabolic acidosis</div>
+    </div>
+    <div class="mcq-exp"><strong>B — HCl loss → metabolic alkalosis + hypokalemia.</strong> Vomiting causes loss of H⁺ and Cl⁻ from gastric secretions → serum HCO₃⁻ rises (metabolic alkalosis). Volume depletion → ↑aldosterone → Na⁺ reabsorption in exchange for K⁺ secretion → hypokalemia. To maintain electroneutrality, the kidney also excretes K⁺ and H⁺ ("paradoxical aciduria"). Key: pH 7.55 = alkalosis; pCO₂ 48 = compensatory retention of CO₂; elevated HCO₃⁻ confirms primary metabolic alkalosis.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 4 of 6 — Pharmacology / GI Hormones</div>
+    <div class="mcq-stem">A 55-year-old man presents with severe peptic ulcers in the duodenum and jejunum, watery diarrhea, and epigastric pain unresponsive to standard PPI therapy. Serum gastrin level is 1,800 pg/mL (normal &lt;100). A secretin stimulation test causes a paradoxical RISE in gastrin. CT scan shows a 2 cm mass in the pancreatic head. Which of the following best describes the mechanism by which this patient's tumor causes diarrhea?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>VIP secretion → massive Cl⁻ secretion into the lumen</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Direct invasion of the intestinal mucosa by the tumor</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Excess gastrin → excess HCl → acid inactivates pancreatic lipase + bile salts → fat malabsorption + osmotic diarrhea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Excess serotonin from enterochromaffin cells stimulates secretory diarrhea</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Hypersecretion of secretin → excessive pancreatic fluid output</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Excess HCl → inactivates lipase + bile salts → steatorrhea.</strong> This is Zollinger-Ellison syndrome (gastrinoma). The elevated gastrin drives massive HCl secretion. The excess acid in the duodenum: (1) directly damages the mucosa → multiple ulcers; (2) inactivates pancreatic lipase (which needs pH 7–8) and precipitates bile salts → fat malabsorption → steatorrhea. The secretin stimulation test is diagnostic: normal physiology → secretin suppresses gastrin; ZES → paradoxical rise (gastrinoma cells lack normal feedback inhibition).</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 5 of 6 — ENS / Opioids</div>
+    <div class="mcq-stem">A 68-year-old man with metastatic prostate cancer is started on IV morphine for pain control. Three days later he develops abdominal distension, absence of bowel sounds, and no bowel movements. Abdominal X-ray shows diffuse gaseous distension of the bowel without a transition point. His pain is currently well-controlled. Which drug would best treat his GI complication <em>without</em> affecting his analgesia?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Naloxone IV</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Atropine</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Methylnaltrexone</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Metoclopramide</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Ondansetron</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Methylnaltrexone.</strong> This patient has opioid-induced paralytic ileus (μ-receptor activation on ENS neurons → ↓ACh release → ↓peristalsis). Methylnaltrexone is a peripherally-acting μ-opioid antagonist that does NOT cross the blood-brain barrier → reverses GI opioid effects without affecting CNS analgesia. Naloxone (A) would cross the BBB and reverse analgesia. Atropine (B) blocks muscarinic receptors → would worsen ileus. Metoclopramide (D) is a prokinetic but doesn't address the receptor mechanism directly. Ondansetron (E) is an antiemetic.</div>
+  </div>
+
+  <div class="mcq-item">
+    <div class="mcq-num">Question 6 of 6 — Blood Supply / Ischemia</div>
+    <div class="mcq-stem">A 72-year-old woman with a history of peripheral vascular disease undergoes elective repair of an infrarenal abdominal aortic aneurysm. On postoperative day 2 she develops crampy left-sided abdominal pain and bloody diarrhea. CT angiography shows patent aortic graft but no flow in the inferior mesenteric artery, which was sacrificed during the repair. Which segment of colon is MOST at risk for ischemia in this setting?</div>
+    <div class="mcq-opts">
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">A</span>Cecum and ascending colon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">B</span>Transverse colon at its midpoint</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,true)"><span class="opt-letter">C</span>Splenic flexure and descending colon</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">D</span>Terminal ileum</div>
+      <div class="mcq-opt" onclick="answerMCQ(this,false)"><span class="opt-letter">E</span>Rectum</div>
+    </div>
+    <div class="mcq-exp"><strong>C — Splenic flexure and descending colon.</strong> The splenic flexure is the watershed area between SMA and IMA territories — it has the most tenuous blood supply. When the IMA is sacrificed (common in aortic surgery), the descending colon and splenic flexure lose their primary supply. If collateral flow from SMA is inadequate (as in atherosclerotic disease), ischemic colitis develops at this watershed zone. The rectum (E) is protected by dual supply from IMA (superior rectal) + internal iliac (middle/inferior rectal arteries).</div>
+  </div>
+
+</div>
+
+<!-- ══ ORDERING DRILLS ═══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ordering">
+  <div class="mcq-intro"><strong>Ordering Drills:</strong> Arrange each sequence of steps in the correct physiologic or pathologic order. Drag items to reorder. Click "Check Order" to verify, or "Show Answer" to reveal the correct sequence.</div>
+
+  <div class="order-drill" id="drill-1">
+    <div class="drill-title">Achalasia — From Neural Loss to Dysphagia</div>
+    <div class="drill-hint">Trace the mechanism from loss of inhibitory neurons to the classic symptom of dysphagia.</div>
+    <div class="order-list" id="list-1">
+      <div class="order-item" data-correct="2">Food bolus cannot pass into stomach</div>
+      <div class="order-item" data-correct="5">Proximal esophageal dilation develops</div>
+      <div class="order-item" data-correct="1">Loss of inhibitory neurons (VIP + NO) at LES</div>
+      <div class="order-item" data-correct="4">Progressive dysphagia to solids AND liquids</div>
+      <div class="order-item" data-correct="3">Tonic contraction of LES persists</div>
+      <div class="order-item" data-correct="6">LES fails to relax during swallowing</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-1')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-1"></div>
+    <div class="order-answer" id="ans-drill-1">
+      <ol>
+        <li><span>Loss of inhibitory neurons (VIP + NO) at LES</span></li>
+        <li><span>LES fails to relax during swallowing</span></li>
+        <li><span>Tonic contraction of LES persists</span></li>
+        <li><span>Food bolus cannot pass into stomach</span></li>
+        <li><span>Progressive dysphagia to solids AND liquids</span></li>
+        <li><span>Proximal esophageal dilation develops</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-2">
+    <div class="drill-title">Hirschsprung Disease — Pathogenesis Sequence</div>
+    <div class="drill-hint">From embryologic failure to neonatal presentation.</div>
+    <div class="order-list" id="list-2">
+      <div class="order-item" data-correct="4">Functional bowel obstruction develops</div>
+      <div class="order-item" data-correct="2">Absent ganglia in both myenteric and submucosal plexuses</div>
+      <div class="order-item" data-correct="5">Proximal segment dilates from stool accumulation</div>
+      <div class="order-item" data-correct="1">Neural crest cells fail to migrate to distal colon during embryogenesis</div>
+      <div class="order-item" data-correct="3">Aganglionic segment remains tonically contracted</div>
+      <div class="order-item" data-correct="6">Neonate fails to pass meconium within 48 hours</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-2')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-2"></div>
+    <div class="order-answer" id="ans-drill-2">
+      <ol>
+        <li><span>Neural crest cells fail to migrate to distal colon during embryogenesis</span></li>
+        <li><span>Absent ganglia in both myenteric and submucosal plexuses</span></li>
+        <li><span>Aganglionic segment remains tonically contracted</span></li>
+        <li><span>Functional bowel obstruction develops</span></li>
+        <li><span>Proximal segment dilates from stool accumulation</span></li>
+        <li><span>Neonate fails to pass meconium within 48 hours</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-3">
+    <div class="drill-title">Cholera Toxin — Mechanism of Secretory Diarrhea</div>
+    <div class="drill-hint">How the toxin hijacks cAMP signaling to cause massive fluid secretion.</div>
+    <div class="order-list" id="list-3">
+      <div class="order-item" data-correct="4">Massive increase in intracellular cAMP</div>
+      <div class="order-item" data-correct="2">B subunit binds GM1 ganglioside on intestinal epithelium</div>
+      <div class="order-item" data-correct="6">Water follows osmotically → rice-water stools</div>
+      <div class="order-item" data-correct="1">Vibrio cholerae produces AB toxin</div>
+      <div class="order-item" data-correct="5">CFTR channel opens → Cl⁻ secretion into lumen</div>
+      <div class="order-item" data-correct="3">A subunit ADP-ribosylates Gs alpha subunit</div>
+      <div class="order-item" data-correct="7">Permanent activation of adenylyl cyclase</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-3')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-3"></div>
+    <div class="order-answer" id="ans-drill-3">
+      <ol>
+        <li><span>Vibrio cholerae produces AB toxin</span></li>
+        <li><span>B subunit binds GM1 ganglioside on intestinal epithelium</span></li>
+        <li><span>A subunit ADP-ribosylates Gs alpha subunit</span></li>
+        <li><span>Permanent activation of adenylyl cyclase</span></li>
+        <li><span>Massive increase in intracellular cAMP</span></li>
+        <li><span>CFTR channel opens → Cl⁻ secretion into lumen</span></li>
+        <li><span>Water follows osmotically → rice-water stools</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="order-drill" id="drill-4">
+    <div class="drill-title">Parietal Cell Acid Secretion — Three Activation Pathways to H⁺/K⁺ ATPase</div>
+    <div class="drill-hint">Order the steps from luminal stimulus to final acid output. Source: Bootcamp GI · Stomach</div>
+    <div class="order-list" id="list-4">
+      <div class="order-item" data-correct="4">All three pathways converge on H⁺/K⁺ ATPase (proton pump) at apical membrane</div>
+      <div class="order-item" data-correct="1">Vagal stimulation releases ACh → binds M3 receptors on parietal cells (direct pathway)</div>
+      <div class="order-item" data-correct="5">H⁺ secreted into gastric lumen in exchange for K⁺</div>
+      <div class="order-item" data-correct="3">ECL cells release histamine → binds H2 receptors → Gs → ↑cAMP (paracrine pathway)</div>
+      <div class="order-item" data-correct="2">G cells release gastrin into blood → binds CCK-B receptors on parietal cells (endocrine pathway)</div>
+      <div class="order-item" data-correct="6">PPIs irreversibly block this final common step; H2 blockers only block the histamine arm</div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('drill-4')">Check Order</button>
+      <button class="order-ghost-btn" onclick="shuffleDrill('drill-4')">Shuffle</button>
+      <button class="order-ghost-btn" onclick="showAnswer('drill-4')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-drill-4"></div>
+    <div class="order-answer" id="ans-drill-4">
+      <ol>
+        <li><span>Vagal stimulation releases ACh → binds M3 receptors on parietal cells (direct pathway)</span></li>
+        <li><span>G cells release gastrin into blood → binds CCK-B receptors on parietal cells (endocrine pathway)</span></li>
+        <li><span>ECL cells release histamine → binds H2 receptors → Gs → ↑cAMP (paracrine pathway)</span></li>
+        <li><span>All three pathways converge on H⁺/K⁺ ATPase (proton pump) at apical membrane</span></li>
+        <li><span>H⁺ secreted into gastric lumen in exchange for K⁺</span></li>
+        <li><span>PPIs irreversibly block this final common step; H2 blockers only block the histamine arm</span></li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ VIGNETTES MCQ ═════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-vignettes">
+  <div class="vig-intro"><strong>Vignette MCQs:</strong> Clinical scenarios testing disease recognition and mechanisms. Select your best answer and the explanation appears automatically.</div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 1 of 3 — Carcinoid Syndrome</div>
+    <div class="vig-stem">A 58-year-old man presents with episodic facial <strong>flushing</strong>, watery diarrhea, and audible wheezing. Physical exam reveals a holosystolic murmur at the left lower sternal border that increases with inspiration. CT shows multiple hepatic lesions and a 3-cm mass in the terminal ileum. Urine 5-HIAA is markedly elevated.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span>Gastrinoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>VIPoma</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span>Carcinoid tumor with liver metastases</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Pheochromocytoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Medullary thyroid carcinoma</div>
+    </div>
+    <div class="vig-exp"><strong>C — Carcinoid tumor with liver metastases.</strong> Buzzwords: <span class="vig-buzzword">flushing</span>, <span class="vig-buzzword">diarrhea</span>, <span class="vig-buzzword">wheezing</span>, <span class="vig-buzzword">right-sided heart murmur</span>, <span class="vig-buzzword">hepatic lesions</span>, <span class="vig-buzzword">urine 5-HIAA elevated</span>. Carcinoid syndrome only manifests with liver mets because hepatic first-pass metabolism normally degrades serotonin. Right-sided heart disease (tricuspid regurgitation) is pathognomonic. The terminal ileum mass location is classic for midgut carcinoids.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 2 of 3 — ZES / Gastrinoma</div>
+    <div class="vig-stem">A 50-year-old man has <strong>recurrent duodenal ulcers despite maximal PPI therapy</strong>. He also reports chronic watery diarrhea and 5 kg weight loss. Fasting serum gastrin is 1,500 pg/mL. A secretin stimulation test shows a paradoxical rise in gastrin levels. CT reveals a 2-cm pancreatic head mass.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span>H. pylori infection</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span>Gastrinoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>VIPoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Somatostatinoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>NSAID-induced gastropathy</div>
+    </div>
+    <div class="vig-exp"><strong>B — Gastrinoma.</strong> Buzzwords: <span class="vig-buzzword">recurrent ulcers refractory to PPIs</span>, <span class="vig-buzzword">fasting gastrin &gt;1000</span>, <span class="vig-buzzword">paradoxical rise with secretin</span>, <span class="vig-buzzword">pancreatic mass</span>. Gastrinoma triangle = duodenum + pancreatic head + cystic/common bile duct junction. The paradoxical secretin response is diagnostic: normal inhibition of gastrin does not occur in gastrinoma.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 3 of 3 — Opioid-Induced Ileus</div>
+    <div class="vig-stem">A 65-year-old woman receiving IV morphine for post-surgical pain control develops progressive abdominal distension and absence of bowel sounds on day 3. Abdominal X-ray shows dilated loops of small and large bowel without a transition point. Her pain is well-controlled.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span>Mechanical small bowel obstruction</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">B</span>Opioid-induced ileus</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">C</span>Ogilvie syndrome</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Toxic megacolon</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Volvulus</div>
+    </div>
+    <div class="vig-exp"><strong>B — Opioid-induced ileus.</strong> Buzzwords: <span class="vig-buzzword">morphine</span>, <span class="vig-buzzword">no bowel sounds</span>, <span class="vig-buzzword">no transition point</span>, <span class="vig-buzzword">pain well-controlled</span>. μ-opioid receptors on ENS neurons → ↓ACh release → ↓peristalsis. Treat with methylnaltrexone (peripheral μ-antagonist, does NOT cross BBB) to preserve analgesia while restoring GI motility.</div>
+  </div>
+
+  <div class="vig-item">
+    <div class="vig-num">Vignette 4 of 4 — VIPoma / WDHA Syndrome</div>
+    <div class="vig-stem">A 45-year-old woman presents with 3 weeks of profuse, <strong>watery diarrhea</strong> (up to 3 liters/day) unresponsive to fasting. Labs reveal K⁺ 2.4 mEq/L and <strong>achlorhydria</strong> on gastric pH testing. She has lost 8 kg. CT abdomen shows a 4-cm mass in the pancreatic tail. Serum VIP levels are markedly elevated.</div>
+    <div class="vig-opts">
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">A</span>Gastrinoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">B</span>Carcinoid tumor</div>
+      <div class="vig-opt" onclick="answerVig(this,true)"><span class="vig-opt-letter">C</span>VIPoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">D</span>Glucagonoma</div>
+      <div class="vig-opt" onclick="answerVig(this,false)"><span class="vig-opt-letter">E</span>Somatostatinoma</div>
+    </div>
+    <div class="vig-exp"><strong>C — VIPoma.</strong> Buzzwords: <span class="vig-buzzword">watery diarrhea</span>, <span class="vig-buzzword">hypokalemia</span>, <span class="vig-buzzword">achlorhydria</span>, <span class="vig-buzzword">pancreatic mass</span>, <span class="vig-buzzword">unresponsive to fasting</span>. This is the WDHA syndrome (Verner-Morrison). VIP → ↑cAMP in intestinal epithelium → massive Cl⁻/H₂O secretion ("pancreatic cholera"). Key distinguisher: the diarrhea is SECRETORY (persists with fasting, unlike osmotic). Non-α, non-β, non-δ islet cell tumor. Treatment: octreotide (somatostatin analog) + surgical resection.</div>
+  </div>
+
+</div>
+
+<!-- ══ STEP 1 TRAPS ═════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-traps">
+  <div class="vig-intro"><strong>Step 1 Traps:</strong> Common false statements that appear plausible but are incorrect. Choose the correct answer to reveal the trap explanation.</div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 1 of 5</div>
+    <div class="trap-statement">In Hirschsprung disease, the DILATED segment of colon is the abnormal aganglionic portion.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-1">This is a classic exam trap. The NARROW segment is aganglionic (abnormal) — it is tonically contracted because there are no inhibitory ganglia. The DILATED segment proximal to it is actually NORMAL — it has intact ganglia and is simply distended from stool accumulation above the obstruction. Biopsy must be taken from the narrow segment to confirm diagnosis.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 2 of 5</div>
+    <div class="trap-statement">Carcinoid syndrome can occur with a small intestinal carcinoid tumor even without liver metastases.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-2">Serotonin produced by intestinal carcinoid tumors drains via portal circulation into the liver, where it is degraded by first-pass metabolism. Carcinoid syndrome (flushing, diarrhea, bronchospasm, right heart disease) only occurs when liver metastases secrete serotonin directly into the systemic circulation, bypassing hepatic degradation. Exception: bronchial carcinoids can cause syndrome without liver mets (drain directly into systemic veins).</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 3 of 5</div>
+    <div class="trap-statement">Naloxone is the preferred treatment for opioid-induced constipation because it directly reverses μ-receptor activation in the GI tract.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-3">Naloxone crosses the BBB and reverses BOTH peripheral (GI) and central (analgesia) effects — it would reverse pain control. Methylnaltrexone is preferred because it blocks μ-receptors peripherally but does NOT cross the BBB, preserving CNS analgesia while treating GI symptoms.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 4 of 5</div>
+    <div class="trap-statement">PPIs are more potent than H2 blockers because they block the histamine receptor more effectively.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-4">PPIs and H2 blockers target completely different molecules. H2 blockers block the histamine H2 receptor (one of three stimulatory pathways to parietal cells). PPIs irreversibly inhibit the H⁺/K⁺ ATPase proton pump — the FINAL COMMON PATHWAY of all acid secretion, regardless of stimulus (histamine, ACh, gastrin). This is why PPIs are more potent: they block the downstream pump, not an upstream receptor.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 5 of 5</div>
+    <div class="trap-statement">In achalasia, the lower esophageal sphincter is structurally damaged and cannot contract.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-5">In achalasia, the LES can contract perfectly well — the problem is it cannot RELAX. Loss of inhibitory neurons (VIP/NO) removes the relaxation signal. The excitatory neurons (ACh/Substance P) are still intact, so the LES remains tonically contracted. That is why botulinum toxin (which blocks ACh release) is a treatment — it reduces the excitatory tone to partially compensate for the missing inhibitory signal.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 6 of 7</div>
+    <div class="trap-statement">Atropine can block vagal stimulation of gastrin secretion from G cells because the vagus nerve uses acetylcholine.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-6">Vagal stimulation of G cells does NOT use ACh directly — it uses gastrin-releasing peptide (GRP/bombesin) as the neurotransmitter. Therefore atropine (muscarinic antagonist) does NOT inhibit gastrin release. This is a tested distinction from Bootcamp: vagal stimulation of parietal cells uses ACh (blocked by atropine), but vagal stimulation of G cells uses GRP (NOT blocked by atropine). Students who assume "vagus = ACh everywhere" get trapped.</div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 7 of 7</div>
+    <div class="trap-statement">H2 blockers suppress both meal-stimulated and nocturnal gastric acid secretion equally well.</div>
+    <div class="trap-btns">
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),false)">TRUE</button>
+      <button class="trap-btn" onclick="answerTrap(this,this.closest('.trap-card'),true)">FALSE</button>
+    </div>
+    <div class="trap-exp" id="trap-exp-7">H2 blockers are effective for NOCTURNAL acid suppression but have only a modest effect on MEAL-STIMULATED acid secretion. During meals, parietal cells receive stimulation via three pathways (ACh-M3, gastrin-CCK-B, histamine-H2). Blocking only the histamine arm still allows acid secretion via the ACh and gastrin pathways. PPIs are more potent because they block the H⁺/K⁺ ATPase — the FINAL COMMON PATHWAY downstream of all three stimuli. This is why PPIs suppress both nocturnal AND meal-stimulated acid.</div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE TABLES ══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-ref">
+  <div class="vig-intro"><strong>Reference Tables:</strong> Quick-lookup tables for GI secretory tumors and pharmacology. Print-friendly format.</div>
+
+  <div class="ref-section">
+    <div class="ref-title">GI Secretory Tumors — Quick Comparison</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Tumor</th>
+            <th>Hormone</th>
+            <th>Key Lab</th>
+            <th>Classic Presentation</th>
+            <th>Diarrhea Mechanism</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gastrinoma</strong></td>
+            <td>Gastrin</td>
+            <td>Fasting gastrin &gt;1000, secretin stim test</td>
+            <td>Multiple refractory ulcers</td>
+            <td>Acid inactivates lipase/bile salts → steatorrhea</td>
+          </tr>
+          <tr>
+            <td><strong>VIPoma</strong></td>
+            <td>VIP</td>
+            <td>Elevated serum VIP</td>
+            <td>WDHA syndrome</td>
+            <td>↑cAMP → Cl⁻ secretion → watery</td>
+          </tr>
+          <tr>
+            <td><strong>Carcinoid</strong></td>
+            <td>Serotonin (5-HT)</td>
+            <td>Urine 5-HIAA elevated</td>
+            <td>Flushing, wheezing, right heart disease</td>
+            <td>5-HT stimulates secretion + motility</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">GI Pharmacology — Drug Targets and Mechanisms</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Drug Class</th>
+            <th>Target</th>
+            <th>Mechanism</th>
+            <th>Clinical Use</th>
+            <th>Key Side Effect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PPIs</strong></td>
+            <td>H⁺/K⁺ ATPase</td>
+            <td>Irreversible pump inhibition</td>
+            <td>GERD, PUD, ZES</td>
+            <td>Long-term: ↓Mg²⁺, C. diff risk, bone fractures</td>
+          </tr>
+          <tr>
+            <td><strong>H2 Blockers</strong></td>
+            <td>Histamine H2 receptor</td>
+            <td>↓cAMP in parietal cells</td>
+            <td>GERD, PUD (less severe)</td>
+            <td>Cimetidine: anti-androgen effects, CYP inhibition</td>
+          </tr>
+          <tr>
+            <td><strong>Ondansetron</strong></td>
+            <td>5-HT3 receptor</td>
+            <td>Blocks serotonin-mediated emesis</td>
+            <td>Chemo/post-op nausea</td>
+            <td>QT prolongation</td>
+          </tr>
+          <tr>
+            <td><strong>Metoclopramide</strong></td>
+            <td>D2 + 5-HT4</td>
+            <td>D2 antagonist + 5-HT4 agonist → prokinetic</td>
+            <td>Gastroparesis, GERD</td>
+            <td>Tardive dyskinesia (crosses BBB)</td>
+          </tr>
+          <tr>
+            <td><strong>Methylnaltrexone</strong></td>
+            <td>Peripheral μ-opioid</td>
+            <td>Blocks GI μ-receptors, NOT CNS</td>
+            <td>Opioid-induced constipation</td>
+            <td>Does NOT reverse analgesia</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Parietal Cell Acid Secretion — Three Stimulatory Pathways</div>
+    <div class="ref-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Pathway</th>
+            <th>Stimulus</th>
+            <th>Receptor</th>
+            <th>Second Messenger</th>
+            <th>Drug That Blocks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Histamine</strong> (ECL cells)</td>
+            <td>Gastrin → ECL → histamine release</td>
+            <td>H2</td>
+            <td>cAMP ↑</td>
+            <td>H2 blockers (ranitidine, famotidine)</td>
+          </tr>
+          <tr>
+            <td><strong>ACh</strong> (vagus nerve)</td>
+            <td>Vagal stimulation</td>
+            <td>M3</td>
+            <td>IP3/Ca²⁺ ↑</td>
+            <td>Atropine (muscarinic antagonist)</td>
+          </tr>
+          <tr>
+            <td><strong>Gastrin</strong> (G cells)</td>
+            <td>Amino acids, distension, vagal GRP</td>
+            <td>CCK-B</td>
+            <td>IP3/Ca²⁺ ↑</td>
+            <td>No specific blocker (somatostatin inhibits release)</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="font-style:italic;color:#7A7060;padding-top:10px"><strong>Final common pathway:</strong> All three converge on H⁺/K⁺ ATPase → PPIs block this step regardless of stimulus</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ HY TESTING NOTES ═══════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-hynotes">
+  <div class="vig-intro"><strong>High-Yield Testing Notes:</strong> Key patterns to recognize on exams. Badges indicate trap concepts, buzzword clusters, and testing-focused insights.</div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">TESTING</span> Hirschsprung vs. Achalasia — The Neural Crest Distinction</div>
+    <div class="hy-card-body">Both test ENS dysfunction but from different angles. Hirschsprung = failure of neural crest MIGRATION (embryology focus). Achalasia = loss of inhibitory NEURONS at LES (neurotransmitter focus). Step 1 loves pairing these because the underlying pathology (absent inhibitory innervation) is conceptually similar, but the location, age of onset, and management differ completely.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge trap">TRAP</span> The Dilated vs. Narrow Segment Trap</div>
+    <div class="hy-card-body">The #1 exam trap for Hirschsprung: students assume the dilated segment is abnormal. Wrong — the NARROW segment lacks ganglia (aganglionic, abnormal). The dilated segment is NORMAL bowel that has expanded from backed-up stool. Biopsy of the narrow segment shows absent ganglion cells. This is tested repeatedly in different formats.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">BUZZWORD</span> Carcinoid Syndrome Buzzword Cluster</div>
+    <div class="hy-card-body">When a vignette includes ANY combination of: flushing + diarrhea + wheezing + right-sided heart murmur + hepatic masses → carcinoid with liver mets. Confirmatory test = elevated urine 5-HIAA. The liver mets detail is key — without it, serotonin is degraded by first-pass hepatic metabolism and the syndrome does not manifest.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">TESTING</span> Secretory Tumor Differentiation</div>
+    <div class="hy-card-body">Step 1 differentiates gastrinoma, VIPoma, and carcinoid by their clinical fingerprint. Gastrinoma: refractory ulcers + paradoxical secretin test. VIPoma: WDHA (watery diarrhea, hypokalemia, achlorhydria). Carcinoid: flushing + right-sided heart disease + liver mets. Each has a unique lab marker (gastrin, VIP, 5-HIAA). They often appear as "which tumor" questions with a clinical vignette.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge trap">TRAP</span> Naloxone vs. Methylnaltrexone — BBB Trap</div>
+    <div class="hy-card-body">Exam trap: a patient on morphine with constipation — which drug treats it without reversing analgesia? Naloxone crosses the BBB → reverses everything (pain control lost). Methylnaltrexone does NOT cross the BBB → blocks peripheral μ-receptors only → restores GI motility while preserving CNS analgesia. This is tested as a pharmacology application question, not pure recall.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge buzzword">BUZZWORD</span> Pellagra from Carcinoid — Tryptophan Diversion</div>
+    <div class="hy-card-body">Carcinoid tumors divert tryptophan toward serotonin synthesis, depleting the pool available for niacin (vitamin B3) production. Result: pellagra (the 3 Ds — diarrhea, dermatitis, dementia). Buzzword cluster on Step 1: carcinoid + pellagra-like skin changes + diarrhea + psychiatric symptoms. The connection is that serotonin overproduction starves the niacin pathway. Serum marker: chromogranin A (neuroendocrine tumors, APUD cells). Right-sided heart valvular disease occurs because lungs contain MAO that metabolizes serotonin before it reaches the left heart.</div>
+  </div>
+
+  <div class="hy-card">
+    <div class="hy-card-title"><span class="hy-badge testing">TESTING</span> Parietal Cell Three Pathways — Why PPIs Beat H2 Blockers</div>
+    <div class="hy-card-body">Three independent pathways stimulate acid secretion: histamine (H2 → cAMP), ACh (M3 → IP3/Ca²⁺), and gastrin (CCK-B → IP3/Ca²⁺). H2 blockers only block one arm, which is why they mainly suppress nocturnal acid (histamine-dominant). PPIs block the H⁺/K⁺ ATPase — the final common pathway where all three signals converge — making them effective regardless of the stimulus. Step 1 tests this as: "Why is a PPI more effective than an H2 blocker?" or presents a patient failing H2 blocker therapy and asks for the next pharmacologic step.</div>
+  </div>
+
+</div>
+
+<!-- ══ CLINICAL CORRELATES ════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-clinical">
+  <div class="cc-intro"><strong>Clinical Correlates:</strong> Review key disease profiles and clinical connections. Click "Show" to reveal comparison details.</div>
+
+  <div class="cc-card">
+    <div class="cc-tag">ENS Pathology</div>
+    <div class="cc-title">Achalasia vs. Hirschsprung — Key Distinguishing Features</div>
+    <div class="cc-body">Both involve loss of <strong>inhibitory ENS neurons</strong>, but the affected location differs completely.<br><br>
+    <em>Achalasia:</em> Loss of VIP/NO neurons at the LES → LES fails to relax → progressive dysphagia solids AND liquids, regurgitation, bird-beak on barium swallow. Adults. Possible autoimmune etiology or Chagas disease (Trypanosoma cruzi).<br><br>
+    <em>Hirschsprung:</em> Absent ganglia (both plexuses) in distal colon → tonic contraction → functional obstruction. Neonates. Failure of neural crest migration. Presents as failure to pass meconium.</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Key Comparison Table</button>
+    <div class="cc-detail">
+      <table style="width:100%;font-size:.85em;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #D5CCC0;"><td style="padding:6px 10px;color:#5D4037;font-weight:700;">Feature</td><td style="padding:6px 10px;color:#5D4037;">Achalasia</td><td style="padding:6px 10px;color:#5D4037;">Hirschsprung</td></tr>
+        <tr style="border-bottom:1px solid #D5CCC0;"><td style="padding:6px 10px;">Location</td><td style="padding:6px 10px;">LES / esophagus</td><td style="padding:6px 10px;">Distal colon (always to anus)</td></tr>
+        <tr style="border-bottom:1px solid #D5CCC0;"><td style="padding:6px 10px;">NT lost</td><td style="padding:6px 10px;">VIP + NO</td><td style="padding:6px 10px;">Both plexuses absent</td></tr>
+        <tr style="border-bottom:1px solid #D5CCC0;"><td style="padding:6px 10px;">Presentation</td><td style="padding:6px 10px;">Dysphagia, regurgitation</td><td style="padding:6px 10px;">No meconium, abdominal distension</td></tr>
+        <tr><td style="padding:6px 10px;">Treatment</td><td style="padding:6px 10px;">Pneumatic dilation / Heller myotomy / Botox</td><td style="padding:6px 10px;">Surgical resection of aganglionic segment</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">GI Hormone Tumors</div>
+    <div class="cc-title">Gastrinoma vs. VIPoma vs. Carcinoid — The "Secretory Tumor" Triad</div>
+    <div class="cc-body">Three Step 1 tumors defined by their hormone product and GI consequences:<br><br>
+    <em>Gastrinoma (ZES):</em> ↑Gastrin → ↑↑HCl → multiple ulcers (D2, jejunum), diarrhea/steatorrhea, elevated fasting serum gastrin &gt;1000 pg/mL. Secretin stimulation → paradoxical gastrin rise.<br><br>
+    <em>VIPoma (Verner-Morrison):</em> ↑VIP → massive watery diarrhea (WDHA: Watery Diarrhea, Hypokalemia, Achlorhydria). "Pancreatic cholera."<br><br>
+    <em>Carcinoid:</em> ↑5-HT → flushing, diarrhea, bronchospasm, right-sided heart disease. Syndrome only with liver mets (bypasses first-pass metabolism).</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Distinguishing Clues</button>
+    <div class="cc-detail">
+      <strong style="color:#5D4037;">USMLE Clue Words:</strong><br>
+      • <strong>Multiple ulcers refractory to PPIs</strong> → think Gastrinoma (ZES)<br>
+      • <strong>"Watery diarrhea" + hypokalemia + achlorhydria</strong> → think VIPoma<br>
+      • <strong>Flushing + diarrhea + wheezing + right heart murmur</strong> → think Carcinoid with liver mets<br>
+      • <strong>Elevated urine 5-HIAA</strong> → confirms carcinoid (5-hydroxyindoleacetic acid = 5-HT metabolite)
+    </div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">Pharmacology</div>
+    <div class="cc-title">GI Drug Targets — Step 1 Pharmacology Summary</div>
+    <div class="cc-body">The GI pharmacology tested on Step 1 maps directly to receptor physiology:<br><br>
+    <em>Proton pump inhibitors (PPIs):</em> Block H⁺/K⁺ ATPase on parietal cells. Require activation at low pH. Used for GERD, PUD, ZES, H. pylori eradication.<br><br>
+    <em>H2 blockers:</em> Block histamine H2 receptors on parietal cells → ↓cAMP → ↓HCl. Less potent than PPIs.<br><br>
+    <em>Ondansetron:</em> 5-HT3 antagonist → blocks serotonin-mediated vagal afferents → antiemetic. No GI motility effect.<br><br>
+    <em>Metoclopramide:</em> D2 + 5-HT4 receptor modulator → prokinetic + antiemetic. Crosses BBB → risk of tardive dyskinesia with prolonged use.<br><br>
+    <em>Atropine:</em> Muscarinic (M3) antagonist → ↓GI motility, ↓secretion. Used in organophosphate poisoning and bradycardia.<br><br>
+    <em>Methylnaltrexone:</em> Peripheral μ-opioid antagonist → reverses opioid-induced constipation/ileus without reversing analgesia.</div>
+  </div>
+
+  <div class="cc-card">
+    <div class="cc-tag">GI Physiology + Boards</div>
+    <div class="cc-title">Fluid Balance — Clinical Consequences</div>
+    <div class="cc-body">The scale of GI fluid handling creates predictable clinical scenarios:<br><br>
+    <em>Vomiting → Metabolic alkalosis + hypokalemia:</em> Loss of HCl; volume depletion → aldosterone → K⁺ wasting + "paradoxical aciduria" (kidneys retain Na⁺ + HCO₃⁻, excrete K⁺ + H⁺).<br><br>
+    <em>Diarrhea → Metabolic acidosis + hypokalemia:</em> Loss of HCO₃⁻-rich intestinal/pancreatic fluid; colon secretes K⁺ normally → hypokalemia amplified with high stool output.<br><br>
+    <em>Cholera → Isotonic volume depletion:</em> Vibrio cholerae toxin → ↑cAMP → massive Cl⁻/water secretion. ORS works via SGLT1 (Na⁺-glucose cotransport is cAMP-independent). Rice-water stools, up to 20 L/day.</div>
+    <button class="cc-reveal" onclick="toggleCC(this)">Show Quick Reference</button>
+    <div class="cc-detail">
+      <strong style="color:#5D4037;">Acid-Base from GI losses:</strong><br>
+      • <strong>Vomiting</strong> → lose HCl → metabolic <strong>alkalosis</strong> + hypokalemia<br>
+      • <strong>Diarrhea</strong> → lose HCO₃⁻ → metabolic <strong>acidosis</strong> + hypokalemia<br>
+      • <strong>Fistula (high-output, pancreatic/SI)</strong> → lose HCO₃⁻ → metabolic acidosis<br>
+      • <strong>Both</strong> cause hypokalemia (different mechanisms)
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <a href="../active-recall-hub.html">← Active Recall Hub</a> &nbsp;·&nbsp;
+  GI13 Hub #2 — Step 1 Extensions &nbsp;·&nbsp; HoyaDocs GI Block
+</div>
+
+</div>
+
+<script>
+var seenCards=new Set();
+var allFCs;
+function flipCard(fc){
+  const inner=fc.querySelector('.fc-inner');
+  const front=fc.querySelector('.fc-front');
+  const back=fc.querySelector('.fc-back');
+  fc.classList.toggle('flipped');
+  inner.style.height=(fc.classList.contains('flipped')?back:front).scrollHeight+'px';
+  if(!allFCs) allFCs=document.querySelectorAll('.fc');
+  allFCs.forEach(function(c,i){if(c===fc)seenCards.add(i);});
+  document.getElementById('fc-counter').textContent=seenCards.size+' / 14 seen';
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function answerMCQ(opt,correct){
+  const item=opt.closest('.mcq-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.mcq-opt').forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.mcq-opt').forEach(o=>{const fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  const exp=item.querySelector('.mcq-exp');exp.classList.add('show');
+}
+function toggleCC(btn){
+  const d=btn.nextElementSibling;d.classList.toggle('open');
+  btn.textContent=d.classList.contains('open')?'Hide':'Show Key Comparison Table';
+}
+
+// ── ORDERING DRILLS ──
+function initDrills(){
+  document.querySelectorAll('.order-drill').forEach(function(drill){
+    var list=drill.querySelector('.order-list');
+    var items=Array.from(list.children);
+    for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);items.splice(i,0,list.children[i]);}
+    items=Array.from(list.children);
+    items.forEach(function(item){
+      item.setAttribute('draggable','true');
+      item.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');item.classList.add('dragging');});
+      item.addEventListener('dragend',function(){item.classList.remove('dragging');});
+      item.addEventListener('dragover',function(e){e.preventDefault();item.classList.add('drag-over');});
+      item.addEventListener('dragleave',function(){item.classList.remove('drag-over');});
+      item.addEventListener('drop',function(e){
+        e.preventDefault();item.classList.remove('drag-over');
+        var dragging=list.querySelector('.dragging');
+        if(dragging&&dragging!==item){
+          var allItems=Array.from(list.children);
+          var dragIdx=allItems.indexOf(dragging);
+          var dropIdx=allItems.indexOf(item);
+          if(dragIdx<dropIdx)list.insertBefore(dragging,item.nextSibling);
+          else list.insertBefore(dragging,item);
+        }
+      });
+    });
+  });
+}
+function checkOrder(drillId){
+  var drill=document.getElementById(drillId);
+  var items=drill.querySelectorAll('.order-item');
+  var allCorrect=true;
+  items.forEach(function(item,i){
+    var correct=parseInt(item.getAttribute('data-correct'));
+    if(correct===i+1){item.classList.add('correct-pos');item.classList.remove('wrong-pos');}
+    else{item.classList.add('wrong-pos');item.classList.remove('correct-pos');allCorrect=false;}
+  });
+  var fb=document.getElementById('fb-'+drillId);
+  fb.textContent=allCorrect?'All correct!':'Some items are out of order. Try again or click Show Answer.';
+  fb.className='order-feedback '+(allCorrect?'correct':'incorrect');
+}
+function shuffleDrill(drillId){
+  var drill=document.getElementById(drillId);
+  var list=drill.querySelector('.order-list');
+  var items=Array.from(list.children);
+  items.forEach(function(item){item.classList.remove('correct-pos','wrong-pos');});
+  for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);items.splice(j,1);}
+  var fb=document.getElementById('fb-'+drillId);fb.textContent='';fb.className='order-feedback';
+}
+function showAnswer(drillId){
+  var ans=document.getElementById('ans-'+drillId);
+  ans.classList.toggle('show');
+}
+
+// ── VIGNETTE MCQ ──
+function answerVig(opt,correct){
+  var item=opt.closest('.vig-item');
+  if(item.querySelector('.locked'))return;
+  item.querySelectorAll('.vig-opt').forEach(function(o){o.classList.add('locked');o.onclick=null;});
+  opt.classList.add(correct?'correct':'wrong');
+  if(!correct)item.querySelectorAll('.vig-opt').forEach(function(o){var fn=o.getAttribute('onclick');if(fn&&fn.includes('true'))o.classList.add('correct');});
+  item.querySelector('.vig-exp').classList.add('show');
+}
+
+// ── STEP 1 TRAPS ──
+function answerTrap(btn,card,correct){
+  var btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(function(b){b.disabled=true;});
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  var exp=card.querySelector('.trap-exp');
+  exp.classList.add(correct?'show-c':'show-w');
+}
+
+window.addEventListener('load',function(){
+  document.querySelectorAll('.fc').forEach(function(fc){
+    const inner=fc.querySelector('.fc-inner');
+    const front=fc.querySelector('.fc-front');
+    if(front) inner.style.height=front.scrollHeight+'px';
+  });
+  initDrills();
+});
+</script>
+</body>
+</html>
