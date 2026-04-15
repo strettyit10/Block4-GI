@@ -1,0 +1,840 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#fff;color:#111;padding:16px;font-size:13px}
+h2{font-size:16px;font-weight:600;margin-bottom:4px}
+.sub{color:#666;font-size:12px;margin-bottom:14px}
+.resource-banner{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#1E40AF}
+.resource-banner strong{display:block;margin-bottom:2px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:20px;border:1.5px solid #CBD5E1;font-size:12px;cursor:pointer;background:#fff;color:#475569;font-weight:500}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#F1F5F9;text-align:left;padding:7px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#475569;border:1px solid #E2E8F0;font-weight:600}
+td{padding:6px 8px;border:1px solid #E2E8F0;vertical-align:top}
+td input{width:100%;border:none;border-bottom:1.5px solid #e2e8f0;font-size:11px;background:transparent;outline:none;padding:1px 0;color:#1e293b}
+td input:focus{border-bottom-color:#1D4ED8}
+tr:nth-child(even) td{background:#FAFAFA}
+.rl{font-weight:600;font-size:11px;color:#1e293b;background:#F8FAFC!important;white-space:nowrap}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{margin-bottom:6px}
+.f label{font-size:10px;color:#94a3b8;display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+.f input{width:100%;border:none;border-bottom:1.5px solid #CBD5E1;font-size:12px;background:transparent;outline:none;padding:2px 0;color:#1e293b}
+.f input:focus{border-bottom-color:#1D4ED8}
+.f textarea{width:100%;border:1px solid #CBD5E1;border-radius:6px;font-size:12px;background:transparent;outline:none;padding:4px 6px;color:#1e293b;resize:vertical;min-height:52px}
+.f textarea:focus{border-color:#1D4ED8}
+.btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500;margin-top:8px}
+.btn:hover{background:#1e40af}
+.fb{margin-top:14px;display:none;border-radius:10px;overflow:hidden;border:1.5px solid #BFDBFE}.fb-header{background:#1D4ED8;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;letter-spacing:.04em;text-transform:uppercase}.fb-row{display:grid;grid-template-columns:230px 1fr;border-bottom:1px solid #DBEAFE}.fb-row:last-child{border-bottom:none}.fb-row:nth-child(even){background:#F0F7FF}.fb-row:nth-child(odd){background:#fff}.fb-q{font-size:11px;font-weight:700;color:#1E40AF;padding:7px 10px;border-right:1px solid #DBEAFE;line-height:1.5}.fb-a{font-size:11px;color:#1E293B;padding:7px 10px;line-height:1.6}
+.warn{background:#FFFBEB;border-left:3px solid #F59E0B;padding:7px 10px;border-radius:0 6px 6px 0;font-size:11px;color:#92400E;margin:8px 0}
+.on-exam{background:#FEE2E2;border:1px solid #FDA4AF;border-radius:6px;padding:4px 10px;font-size:11px;color:#991B1B;font-weight:700;display:inline-block;margin-bottom:8px}
+.lo-tag{background:#EDE9FE;border:1px solid #C4B5FD;border-radius:5px;padding:2px 8px;font-size:10px;color:#5B21B6;font-weight:600;margin-bottom:6px;display:inline-block}
+.pq-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px}
+.pq-q{font-weight:600;margin-bottom:6px;color:#92400E}
+.pq-choices{margin-left:12px;margin-bottom:6px;color:#78350F;line-height:1.8}
+.pq-ans{display:none;background:#EFF6FF;border:1px solid #93C5FD;border-radius:6px;padding:6px 10px;font-size:11px;color:#1E40AF;margin-top:4px}
+.pq-btn{font-size:11px;padding:3px 10px;border-radius:5px;border:1px solid #2563EB;background:#DBEAFE;color:#1E40AF;cursor:pointer}
+.pq-btn:hover{background:#BFDBFE}
+
+@media(max-width:640px){
+  body{padding:10px;font-size:12px}
+  h2{font-size:14px}
+  .tabs{gap:4px}
+  .tab{padding:6px 10px;font-size:11px}
+  .fg,.fg3{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fb-row{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .fb-q{border-right:none;border-bottom:1px solid #DBEAFE}
+  .pq-choices{margin-left:4px}
+  .btn{width:100%;text-align:center}
+}
+</style></head><body>
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+  <h2 style="margin-bottom:0">Poisoning Conference — Active Recall</h2>
+  <a href="gi21_key.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;white-space:nowrap">✅ View Answer Key</a>
+</div>
+<p class="sub">Built from GI Lecture 21 (LOs 1–12). Close notes. Fill from memory. Reveal only after a genuine attempt.</p>
+
+<div class="resource-banner">
+  <strong>📖 Use alongside: GI Lecture 21 — Poisoning Conference</strong>
+  Focus on: NPDS epidemiology, poisoned-patient approach (history/exam/labs), toxidromes, specific agents (APAP, salicylates, iron, TCA, opioids, CO, toxic alcohols), decontamination, enhanced elimination, and antidotes.
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">Epi &amp; Approach</div>
+  <div class="tab" onclick="sw(1)">Labs &amp; Toxidromes</div>
+  <div class="tab" onclick="sw(2)">Decon &amp; Elimination</div>
+  <div class="tab" onclick="sw(3)">APAP / Salicylates / Iron</div>
+  <div class="tab" onclick="sw(4)">TCA / Opioid / CO / Alcohols</div>
+  <div class="tab" onclick="sw(5)">Antidotes &amp; Pearls</div>
+  <div class="tab" onclick="sw(6)">Practice Qs</div>
+</div>
+
+<!-- ═══ TAB 0: EPI & APPROACH ═══ -->
+<div class="panel active" id="p0">
+<div class="lo-tag">LO 1 · LO 2 · LO 3</div>
+<div class="on-exam">ON EXAM — NPDS top killers (SOAP), history framework (WARS), vital sign extremes, alert presentations that demand immediate intervention (AMS with focal findings, seizures, dysrhythmia, cyanosis, hyperthermia)</div>
+
+<div class="sec">NPDS (National Poison Data System) — top causes of poisoning deaths</div>
+<div class="warn">Mnemonic: SOAP — the 4 classes most responsible for fatal exposures in the US.</div>
+<div class="fg">
+  <div class="f"><label>S — what class of medication?</label><input></div>
+  <div class="f"><label>O — what class of medication?</label><input></div>
+  <div class="f"><label>A — what single drug?</label><input></div>
+  <div class="f"><label>P — general category (illicit/agricultural/industrial)?</label><input></div>
+</div>
+
+<div class="sec">Epidemiology — age + intent patterns</div>
+<div class="fg">
+  <div class="f"><label>Peak age of unintentional pediatric exposure?</label><input></div>
+  <div class="f"><label>Most common intent in adolescents/adults presenting to ED?</label><input></div>
+  <div class="f"><label>Most common route of exposure overall?</label><input></div>
+</div>
+
+<div class="sec">History framework — WARS (poisoned patient)</div>
+<table>
+  <tr><th>Letter</th><th>What It Stands For</th><th>Example Question</th></tr>
+  <tr><td class="rl">W</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">A</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">R</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">S</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Vital-sign clues — each extreme suggests a different class</div>
+<table>
+  <tr><th>Vital Finding</th><th>Classic Toxin Category</th></tr>
+  <tr><td class="rl">Hypotension + bradycardia</td><td><input></td></tr>
+  <tr><td class="rl">Hypertension + tachycardia</td><td><input></td></tr>
+  <tr><td class="rl">Hyperthermia</td><td><input></td></tr>
+  <tr><td class="rl">Hypothermia</td><td><input></td></tr>
+  <tr><td class="rl">Bradypnea + miosis + coma</td><td><input></td></tr>
+</table>
+
+<div class="sec">"Red-flag" alert presentations — demand immediate intervention</div>
+<div class="fg">
+  <div class="f"><label>Altered mental status + focal neuro findings → think what?</label><input></div>
+  <div class="f"><label>Seizures in an undifferentiated poisoning → top 2 toxins?</label><input></div>
+  <div class="f"><label>Wide-complex tachycardia in overdose → top toxin?</label><input></div>
+  <div class="f"><label>Cyanosis that does NOT respond to O₂ → top 2 causes?</label><input></div>
+  <div class="f"><label>Cherry-red skin with normal SpO₂ → classic poisoning?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb0',a0)">Reveal answers</button>
+<div id="fb0" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 1: LABS & TOXIDROMES ═══ -->
+<div class="panel" id="p1">
+<div class="lo-tag">LO 4 · LO 5 · LO 12</div>
+<div class="on-exam">ON EXAM — anion gap MUDPILES, osmolar gap toxins, UDS false pos/neg, co-oximetry, 4 classic toxidromes (anticholinergic/cholinergic/sympathomimetic/opioid)</div>
+
+<div class="sec">Anion-gap metabolic acidosis — MUDPILES</div>
+<table>
+  <tr><th>Letter</th><th>Toxin</th></tr>
+  <tr><td class="rl">M</td><td><input></td></tr>
+  <tr><td class="rl">U</td><td><input></td></tr>
+  <tr><td class="rl">D</td><td><input></td></tr>
+  <tr><td class="rl">P</td><td><input></td></tr>
+  <tr><td class="rl">I</td><td><input></td></tr>
+  <tr><td class="rl">L</td><td><input></td></tr>
+  <tr><td class="rl">E</td><td><input></td></tr>
+  <tr><td class="rl">S</td><td><input></td></tr>
+</table>
+
+<div class="sec">Osmolar gap — what drives it, what toxins raise it</div>
+<div class="fg">
+  <div class="f"><label>Formula: measured osmolality − calculated osmolality; normal gap is < _______?</label><input></div>
+  <div class="f"><label>Gap > _______ is highly suspicious for toxic alcohol?</label><input></div>
+  <div class="f"><label>Name 3 toxic alcohols that raise the osmolar gap</label><input></div>
+  <div class="f"><label>Which toxic alcohol causes a LARGE osmolar gap but NO anion gap?</label><input></div>
+</div>
+
+<div class="sec">Urine drug screen (UDS) — limitations</div>
+<div class="warn">Never trust a negative UDS to "rule out" poisoning. Know the false negatives + false positives.</div>
+<div class="fg">
+  <div class="f"><label>False NEG — which opioids are typically missed by standard UDS?</label><input></div>
+  <div class="f"><label>False POS — what causes a benzo-positive UDS in non-benzo user?</label><input></div>
+  <div class="f"><label>False POS — what OTC nasal decongestant causes amphetamine positive?</label><input></div>
+  <div class="f"><label>UDS detects metabolites, not parent drug — does positive = active intoxication?</label><input></div>
+</div>
+
+<div class="sec">Toxidromes — side-by-side recognition (fill all cells)</div>
+<table>
+  <tr><th>Feature</th><th>Anticholinergic</th><th>Cholinergic</th><th>Sympathomimetic</th><th>Opioid</th></tr>
+  <tr><td class="rl">Mental status</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Pupils</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Skin</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Bowel sounds</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Temperature</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Classic antidote</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Anticholinergic mnemonic — fill all 4</div>
+<div class="fg">
+  <div class="f"><label>"Hot as a ______" → what finding?</label><input></div>
+  <div class="f"><label>"Dry as a ______" → what finding?</label><input></div>
+  <div class="f"><label>"Red as a ______" → what finding?</label><input></div>
+  <div class="f"><label>"Mad as a ______" → what finding?</label><input></div>
+</div>
+
+<div class="sec">Cholinergic mnemonic — SLUDGE + DUMBELS (muscarinic)</div>
+<div class="fg">
+  <div class="f"><label>S-L-U-D-G-E stands for?</label><input></div>
+  <div class="f"><label>D-U-M-B-E-L-S stands for?</label><input></div>
+  <div class="f"><label>Nicotinic findings (3 categories)?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb1',a1)">Reveal answers</button>
+<div id="fb1" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 2: DECON & ENHANCED ELIMINATION ═══ -->
+<div class="panel" id="p2">
+<div class="lo-tag">LO 6 · LO 7</div>
+<div class="on-exam">ON EXAM — activated charcoal (dose/window/misses = LAME Ca), MDAC indications (CPSA), urinary alkalinization targets (pH & toxins), hemodialysis criteria (SLIME), WBI indications</div>
+
+<div class="sec">Activated charcoal — basics</div>
+<div class="fg">
+  <div class="f"><label>Standard adult dose?</label><input></div>
+  <div class="f"><label>Ideal timing (window from ingestion)?</label><input></div>
+  <div class="f"><label>Main contraindication — related to airway?</label><input></div>
+  <div class="f"><label>Main contraindication — related to GI?</label><input></div>
+</div>
+
+<div class="sec">LAME Ca — what charcoal does NOT adsorb</div>
+<table>
+  <tr><th>Letter</th><th>Category/Substance</th></tr>
+  <tr><td class="rl">L</td><td><input></td></tr>
+  <tr><td class="rl">A</td><td><input></td></tr>
+  <tr><td class="rl">M</td><td><input></td></tr>
+  <tr><td class="rl">E</td><td><input></td></tr>
+  <tr><td class="rl">Ca</td><td><input></td></tr>
+</table>
+
+<div class="sec">Multi-dose activated charcoal (MDAC) — CPSA indications</div>
+<table>
+  <tr><th>Letter</th><th>Drug</th><th>Reason MDAC Works</th></tr>
+  <tr><td class="rl">C</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">P</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">S</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">A</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Urinary alkalinization — mechanism + targets</div>
+<div class="fg">
+  <div class="f"><label>Agent used to alkalinize urine?</label><input></div>
+  <div class="f"><label>Target urine pH?</label><input></div>
+  <div class="f"><label>Principle (one phrase) — why does it enhance elimination?</label><input></div>
+  <div class="f"><label>Classic toxin #1 (carboxylic acid analgesic)?</label><input></div>
+  <div class="f"><label>Classic toxin #2 (long-acting barbiturate)?</label><input></div>
+  <div class="f"><label>Electrolyte to monitor/replace (low = treatment failure)?</label><input></div>
+</div>
+
+<div class="sec">Hemodialysis — SLIME mnemonic</div>
+<table>
+  <tr><th>Letter</th><th>Toxin</th></tr>
+  <tr><td class="rl">S</td><td><input></td></tr>
+  <tr><td class="rl">L</td><td><input></td></tr>
+  <tr><td class="rl">I</td><td><input></td></tr>
+  <tr><td class="rl">M</td><td><input></td></tr>
+  <tr><td class="rl">E</td><td><input></td></tr>
+</table>
+
+<div class="sec">Properties that make a toxin DIALYZABLE (4 criteria)</div>
+<div class="fg">
+  <div class="f"><label>Molecular weight?</label><input></div>
+  <div class="f"><label>Protein binding?</label><input></div>
+  <div class="f"><label>Volume of distribution?</label><input></div>
+  <div class="f"><label>Water solubility?</label><input></div>
+</div>
+
+<div class="sec">Whole-bowel irrigation (WBI)</div>
+<div class="fg">
+  <div class="f"><label>Agent used?</label><input></div>
+  <div class="f"><label>Indication #1 — which toxic metal?</label><input></div>
+  <div class="f"><label>Indication #2 — which drug formulation type?</label><input></div>
+  <div class="f"><label>Indication #3 — body packer with what type of material?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb2',a2)">Reveal answers</button>
+<div id="fb2" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 3: APAP / SALICYLATES / IRON ═══ -->
+<div class="panel" id="p3">
+<div class="lo-tag">LO 8 · LO 9</div>
+<div class="on-exam">ON EXAM — APAP 4 clinical phases + NAPQI, Rumack-Matthew nomogram use, NAC mechanism + window; salicylate mixed acid-base + tinnitus; iron 5 phases + "quiet phase" trap</div>
+
+<div class="sec">Acetaminophen (APAP) — 4 clinical phases</div>
+<table>
+  <tr><th>Phase</th><th>Time</th><th>Key Features</th></tr>
+  <tr><td class="rl">Phase 1</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 2</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 3</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 4</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">APAP toxicity mechanism</div>
+<div class="fg">
+  <div class="f"><label>In overdose, APAP is metabolized to what toxic intermediate?</label><input></div>
+  <div class="f"><label>What enzyme generates this intermediate?</label><input></div>
+  <div class="f"><label>What endogenous molecule neutralizes it (depleted in overdose)?</label><input></div>
+  <div class="f"><label>What tissue is preferentially injured?</label><input></div>
+</div>
+
+<div class="sec">APAP — labs, nomogram, antidote</div>
+<div class="fg">
+  <div class="f"><label>Draw APAP level at what time post-ingestion?</label><input></div>
+  <div class="f"><label>Nomogram plots level vs _______ to determine need for NAC?</label><input></div>
+  <div class="f"><label>Antidote + mechanism?</label><input></div>
+  <div class="f"><label>NAC is most effective if given within _______ hours of ingestion?</label><input></div>
+</div>
+
+<div class="sec">Salicylates — clinical + lab picture</div>
+<div class="fg">
+  <div class="f"><label>Classic early symptom (ear)?</label><input></div>
+  <div class="f"><label>Respiratory pattern early on (direct medullary stimulation)?</label><input></div>
+  <div class="f"><label>Classic acid-base disturbance (mixed)?</label><input></div>
+  <div class="f"><label>Temperature finding — because salicylates uncouple _______?</label><input></div>
+  <div class="f"><label>Fatal finding indicating severity (brain edema / pulmonary)?</label><input></div>
+</div>
+
+<div class="sec">Salicylate treatment</div>
+<div class="fg">
+  <div class="f"><label>Urine alkalinization rationale (in 1 phrase)?</label><input></div>
+  <div class="f"><label>Target serum pH for treatment?</label><input></div>
+  <div class="f"><label>Dialysis indications — salicylate level cutoff (mg/dL)?</label><input></div>
+  <div class="f"><label>Why AVOID intubation if possible?</label><input></div>
+</div>
+
+<div class="sec">Iron toxicity — 5 phases</div>
+<table>
+  <tr><th>Phase</th><th>Time</th><th>Hallmark</th></tr>
+  <tr><td class="rl">Phase 1 — GI</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 2 — Latent ("quiet")</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 3 — Shock/metabolic</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 4 — Hepatotoxicity</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Phase 5 — Delayed</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Iron — antidote + diagnostics</div>
+<div class="fg">
+  <div class="f"><label>Antidote + MOA?</label><input></div>
+  <div class="f"><label>Distinctive urine color with treatment?</label><input></div>
+  <div class="f"><label>Imaging test that may show iron tablets?</label><input></div>
+  <div class="f"><label>When do you use WBI for iron? (formulation type)</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb3',a3)">Reveal answers</button>
+<div id="fb3" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 4: TCA / OPIOID / CO / ALCOHOLS ═══ -->
+<div class="panel" id="p4">
+<div class="lo-tag">LO 8 · LO 9</div>
+<div class="on-exam">ON EXAM — TCA 3 receptor effects + wide QRS + NaHCO₃; naloxone reversal; CO cherry red + co-oximetry; methanol (blindness) vs ethylene glycol (renal/oxalate); fomepizole MOA</div>
+
+<div class="sec">Tricyclic antidepressant (TCA) toxicity — 3 receptor effects</div>
+<table>
+  <tr><th>Receptor Blocked</th><th>Clinical Effect</th></tr>
+  <tr><td class="rl">Fast Na⁺ channels (cardiac)</td><td><input></td></tr>
+  <tr><td class="rl">Muscarinic (M1)</td><td><input></td></tr>
+  <tr><td class="rl">α₁-adrenergic</td><td><input></td></tr>
+</table>
+
+<div class="sec">TCA EKG + treatment</div>
+<div class="fg">
+  <div class="f"><label>EKG finding most associated with cardiac toxicity?</label><input></div>
+  <div class="f"><label>QRS width threshold (ms) predicting seizures/arrhythmia?</label><input></div>
+  <div class="f"><label>Antidote + mechanism (2 effects)?</label><input></div>
+  <div class="f"><label>Why AVOID flumazenil if coingested with a benzo?</label><input></div>
+</div>
+
+<div class="sec">Opioid toxicity</div>
+<div class="fg">
+  <div class="f"><label>Classic triad?</label><input></div>
+  <div class="f"><label>Antidote + route?</label><input></div>
+  <div class="f"><label>Naloxone duration vs typical opioid duration — why does this matter?</label><input></div>
+  <div class="f"><label>Opioid that causes QT prolongation / torsades?</label><input></div>
+  <div class="f"><label>Opioid that causes seizures (via normeperidine metabolite)?</label><input></div>
+  <div class="f"><label>Withdrawal risk with naloxone in chronic user?</label><input></div>
+</div>
+
+<div class="sec">Carbon monoxide (CO)</div>
+<div class="fg">
+  <div class="f"><label>Mechanism #1 — binds to Hb with _______× affinity vs O₂?</label><input></div>
+  <div class="f"><label>Mechanism #2 — inhibits mitochondrial enzyme _______?</label><input></div>
+  <div class="f"><label>Why does standard SpO₂ pulse oximetry FAIL in CO?</label><input></div>
+  <div class="f"><label>Diagnostic test of choice?</label><input></div>
+  <div class="f"><label>Treatment — first-line?</label><input></div>
+  <div class="f"><label>Treatment — severe/neurologic cases (hyperbaric) — 3 indications?</label><input></div>
+  <div class="f"><label>Pregnancy consideration — CO-Hb level threshold?</label><input></div>
+</div>
+
+<div class="sec">Methanol vs Ethylene Glycol — comparison</div>
+<table>
+  <tr><th>Feature</th><th>Methanol</th><th>Ethylene Glycol</th></tr>
+  <tr><td class="rl">Source</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Toxic metabolite</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Organ damaged</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Distinctive finding</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Urinalysis clue</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Toxic alcohol treatment</div>
+<div class="fg">
+  <div class="f"><label>First-line antidote (binds enzyme)?</label><input></div>
+  <div class="f"><label>Enzyme it blocks?</label><input></div>
+  <div class="f"><label>Backup antidote if fomepizole unavailable?</label><input></div>
+  <div class="f"><label>Role of hemodialysis?</label><input></div>
+  <div class="f"><label>Cofactor for methanol → folate or pyridoxine?</label><input></div>
+  <div class="f"><label>Cofactor for ethylene glycol → thiamine + _______?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb4',a4)">Reveal answers</button>
+<div id="fb4" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 5: ANTIDOTES & PEARLS ═══ -->
+<div class="panel" id="p5">
+<div class="lo-tag">LO 10 · LO 11</div>
+<div class="on-exam">ON EXAM — full antidote master table, delayed-toxicity agents, supportive care priorities (ABCs + glucose/thiamine + intubation thresholds)</div>
+
+<div class="sec">Antidote master table — fill all rows</div>
+<table>
+  <tr><th>Toxin</th><th>Antidote</th></tr>
+  <tr><td class="rl">Acetaminophen</td><td><input></td></tr>
+  <tr><td class="rl">Opioids</td><td><input></td></tr>
+  <tr><td class="rl">Benzodiazepines</td><td><input></td></tr>
+  <tr><td class="rl">Iron</td><td><input></td></tr>
+  <tr><td class="rl">TCA (cardiac)</td><td><input></td></tr>
+  <tr><td class="rl">Salicylates</td><td><input></td></tr>
+  <tr><td class="rl">Methanol / ethylene glycol</td><td><input></td></tr>
+  <tr><td class="rl">Carbon monoxide</td><td><input></td></tr>
+  <tr><td class="rl">Cyanide</td><td><input></td></tr>
+  <tr><td class="rl">Methemoglobinemia</td><td><input></td></tr>
+  <tr><td class="rl">Organophosphates (cholinergic)</td><td><input></td></tr>
+  <tr><td class="rl">Anticholinergic (severe)</td><td><input></td></tr>
+  <tr><td class="rl">Beta-blocker</td><td><input></td></tr>
+  <tr><td class="rl">Calcium channel blocker</td><td><input></td></tr>
+  <tr><td class="rl">Digoxin</td><td><input></td></tr>
+  <tr><td class="rl">Heparin</td><td><input></td></tr>
+  <tr><td class="rl">Warfarin</td><td><input></td></tr>
+  <tr><td class="rl">Lead (severe)</td><td><input></td></tr>
+  <tr><td class="rl">Isoniazid overdose (seizures)</td><td><input></td></tr>
+</table>
+
+<div class="sec">Delayed-toxicity trap — agents where symptoms lag behind ingestion</div>
+<table>
+  <tr><th>Agent</th><th>Delay Before Symptoms</th><th>Why Delayed?</th></tr>
+  <tr><td class="rl">Acetaminophen</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Iron (phase 2)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Sustained-release opioid</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Methanol / ethylene glycol</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Warfarin</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Rapid-onset toxicity — these kill fast</div>
+<table>
+  <tr><th>Agent</th><th>Time-to-lethality</th><th>Key Intervention</th></tr>
+  <tr><td class="rl">Cyanide</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Organophosphate (large exposure)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">TCA (massive OD)</td><td><input></td><td><input></td></tr>
+  <tr><td class="rl">Calcium channel blocker</td><td><input></td><td><input></td></tr>
+</table>
+
+<div class="sec">Supportive care priorities — the core of every tox case</div>
+<div class="fg">
+  <div class="f"><label>First priority always?</label><input></div>
+  <div class="f"><label>In AMS of unknown cause — give what 3 empiric agents?</label><input></div>
+  <div class="f"><label>Thiamine before dextrose — why?</label><input></div>
+  <div class="f"><label>GCS threshold for intubation consideration?</label><input></div>
+</div>
+
+<div class="sec">Supportive care — seizures + hyperthermia</div>
+<div class="fg">
+  <div class="f"><label>First-line seizure control in poisoning?</label><input></div>
+  <div class="f"><label>AVOID which anticonvulsant in TCA/INH/theophylline toxicity?</label><input></div>
+  <div class="f"><label>Hyperthermia from sympathomimetic/serotonergic — treatment?</label><input></div>
+  <div class="f"><label>AVOID which agent for tox hyperthermia (ineffective)?</label><input></div>
+</div>
+
+<button class="btn" onclick="rev('fb5',a5)">Reveal answers</button>
+<div id="fb5" class="fb"></div>
+</div>
+
+<!-- ═══ TAB 6: PRACTICE QS ═══ -->
+<div class="panel" id="p6">
+<div class="lo-tag">Practice Questions</div>
+
+<div class="pq-box">
+<div class="pq-q">Q1: APAP overdose timing</div>
+<div class="pq-choices">A 22-year-old woman arrives 6 hours after ingesting ~30 extra-strength acetaminophen tablets. She is currently asymptomatic. What is the BEST next step?
+<br><br>A) Observe and discharge — she is asymptomatic
+<br>B) Draw a 4-hour level and plot on the Rumack-Matthew nomogram; start NAC if above treatment line
+<br>C) Begin NAC empirically now without labs
+<br>D) Give activated charcoal and discharge
+<br>E) Order LFTs only; if normal, no treatment needed</div>
+<button class="pq-btn" onclick="rq(this,0)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>A 4-hour post-ingestion APAP level plotted on the Rumack-Matthew nomogram is the standard. Phase 1 patients are classically asymptomatic — a normal exam does NOT rule out toxicity. NAC is most effective within 8 hours, so draw the level NOW (she's at 6h) and decide. If the level is above treatment line or timing uncertain (e.g., >8–10h), start NAC empirically without waiting. LFTs are normal in Phase 1.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q2: Mixed acid-base in overdose</div>
+<div class="pq-choices">A 45-year-old man presents tachypneic with tinnitus, confusion, and vomiting. ABG shows pH 7.48, pCO₂ 22, HCO₃ 16. Anion gap is 22. What is the most likely intoxication?
+<br><br>A) Acetaminophen
+<br>B) Ethylene glycol
+<br>C) Salicylates (aspirin)
+<br>D) Tricyclic antidepressant
+<br>E) Opioid</div>
+<button class="pq-btn" onclick="rq(this,1)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Classic salicylate presentation: mixed primary respiratory alkalosis (direct medullary stimulation → tachypnea) + anion gap metabolic acidosis (uncoupling of oxidative phosphorylation → lactate, ketones). Tinnitus is the pathognomonic early symptom. Treatment: urine alkalinization (NaHCO₃) → target serum pH ~7.5, urine pH >7.5. Dialyze if level >100 mg/dL, AMS, renal failure, or pulmonary edema. Ethylene glycol is anion gap only, no respiratory alkalosis.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q3: Wide-complex tachycardia</div>
+<div class="pq-choices">A 30-year-old woman is brought in after a suicide attempt. She is somnolent, tachycardic (HR 130), hypotensive, with dry warm skin and mydriasis. ECG shows QRS 130 ms with a terminal R wave in aVR. What is the best immediate treatment?
+<br><br>A) Amiodarone IV
+<br>B) Sodium bicarbonate IV bolus
+<br>C) Cardioversion
+<br>D) Flumazenil IV
+<br>E) Lidocaine infusion</div>
+<button class="pq-btn" onclick="rq(this,2)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>TCA toxicity: anticholinergic features (mydriasis, dry skin, tachycardia) + Na-channel blockade (wide QRS, terminal R wave in aVR, right axis deviation). NaHCO₃ IV provides two benefits: (1) alkalinization reduces drug binding to Na channel, (2) sodium load overcomes the block. A/E worsen conduction. Flumazenil is contraindicated (seizure risk + could unmask TCA if coingested). QRS >100 ms = seizure risk; >160 ms = arrhythmia risk.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q4: Hemodialysis indications</div>
+<div class="pq-choices">Which of the following toxins is MOST effectively removed by hemodialysis?
+<br><br>A) Digoxin
+<br>B) Tricyclic antidepressant
+<br>C) Lithium
+<br>D) Iron
+<br>E) Calcium channel blocker</div>
+<button class="pq-btn" onclick="rq(this,3)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>SLIME — Salicylates, Lithium, Isopropanol, Methanol/Metformin, Ethylene glycol. Dialyzable toxins: low MW, low protein binding, low Vd, water soluble. Lithium meets all criteria perfectly. Digoxin has huge Vd (bound to tissue), TCAs are highly protein bound + high Vd, iron is too large/complexed, CCBs have high Vd.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q5: Cherry-red skin</div>
+<div class="pq-choices">A family of 4 is found obtunded in their home one morning in winter. The furnace has been malfunctioning. SpO₂ on pulse oximetry reads 99% but all members have cherry-red mucosa and lactic acidosis. What test confirms the diagnosis?
+<br><br>A) Arterial blood gas PaO₂
+<br>B) Standard pulse oximetry
+<br>C) Co-oximetry (carboxyhemoglobin level)
+<br>D) Methemoglobin level
+<br>E) Cyanide level</div>
+<button class="pq-btn" onclick="rq(this,4)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>C</strong><br><br>Co-oximetry directly measures carboxyhemoglobin (CO-Hb), distinguishing it from O₂-Hb — which standard pulse oximetry CANNOT do (CO-Hb and O₂-Hb absorb light similarly at 660/940 nm). PaO₂ is normal in CO poisoning because dissolved O₂ is unchanged; the problem is Hb can't carry it. Treatment: 100% O₂; HBO for severe CNS symptoms, LOC, pregnancy, or CO-Hb >25% (>15% if pregnant since fetal Hb has even higher CO affinity).</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q6: Toxic alcohol</div>
+<div class="pq-choices">A 52-year-old man presents intoxicated but the ED smells no alcohol on his breath. He is acidotic with a HIGH anion gap (AG 28) and HIGH osmolar gap (25 mOsm/kg). Urinalysis shows calcium oxalate crystals. What is the best immediate treatment?
+<br><br>A) Ethanol infusion
+<br>B) Fomepizole IV
+<br>C) Naloxone IV
+<br>D) Activated charcoal
+<br>E) Pyridoxine IV</div>
+<button class="pq-btn" onclick="rq(this,5)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>B</strong><br><br>Ethylene glycol poisoning: AG metabolic acidosis + elevated osmolar gap + calcium oxalate crystals on UA. Fomepizole is first-line (competitive alcohol dehydrogenase inhibitor) — prevents conversion to toxic glycolate/oxalate. Ethanol (A) is backup if fomepizole unavailable. Adjuncts: thiamine + pyridoxine (shunts to non-toxic metabolites). Hemodialysis if severe acidosis, renal failure, or high level. Methanol would give visual symptoms (blindness) + no oxalate crystals.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q7: Charcoal contraindication</div>
+<div class="pq-choices">Activated charcoal is LEAST effective for which of the following ingestions?
+<br><br>A) Acetaminophen 1 hour ago
+<br>B) Aspirin 30 minutes ago
+<br>C) Tricyclic antidepressant 45 minutes ago
+<br>D) Lithium carbonate 1 hour ago
+<br>E) Phenytoin 30 minutes ago</div>
+<button class="pq-btn" onclick="rq(this,6)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>D</strong><br><br>LAME Ca — Lithium, Alcohols, Metals (iron), Electrolytes, Caustics — are NOT effectively adsorbed by activated charcoal. Lithium is an ion (not organic) and doesn't bind well. Whole-bowel irrigation with PEG is preferred for lithium (especially sustained-release). Charcoal works best for organic, low-polarity compounds and is ideally given within 1 hour.</div>
+</div>
+
+<div class="pq-box">
+<div class="pq-q">Q8: Cholinergic toxidrome</div>
+<div class="pq-choices">A 40-year-old farmworker is brought in after being sprayed with an unknown pesticide. He has copious oral secretions, miosis, bradycardia, bronchoconstriction, and fasciculations. What is the FIRST-line treatment?
+<br><br>A) Atropine IV titrated to dry secretions
+<br>B) Pralidoxime (2-PAM) IM only
+<br>C) Naloxone IV
+<br>D) Physostigmine
+<br>E) Activated charcoal</div>
+<button class="pq-btn" onclick="rq(this,7)">Reveal</button>
+<div class="pq-ans">Correct Answer: <strong>A</strong><br><br>Organophosphate poisoning (AChE inhibition) = cholinergic crisis (DUMBELS + SLUDGE). Atropine IV is first-line, titrated aggressively to DRY PULMONARY SECRETIONS (not HR/pupils). Pralidoxime (2-PAM) regenerates AChE and should be given WITH atropine, especially for nicotinic effects (muscle weakness/fasciculations) — but NOT as sole therapy. Give pralidoxime within 24–48h before "aging" of enzyme occurs. Physostigmine (D) is the WRONG direction — would worsen cholinergic excess; it's the antidote for ANTIcholinergic toxicity.</div>
+</div>
+
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+
+function sw(n){
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  tabs[n].classList.add('active');
+  panels[n].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const a0={
+  'S (SOAP top killer)':'Sedatives/hypnotics (benzos, sleep aids)',
+  'O (SOAP)':'Opioids (prescription + illicit, fentanyl-driven surge)',
+  'A (SOAP)':'Acetaminophen (APAP — leading cause of acute liver failure)',
+  'P (SOAP)':'Poisons (illicit drugs, pesticides, industrial chemicals, alcohols)',
+  'Peak pediatric unintentional age':'1–3 years (exploratory, "exploratory ingestion")',
+  'Most common adolescent/adult intent':'Intentional (self-harm/suicide attempt)',
+  'Most common overall route':'Oral ingestion',
+  'W (WARS history)':'WHAT was taken? (substance/pill identification, bottle inventory)',
+  'W example':'What drug? Name, strength, count remaining?',
+  'A (WARS)':'AMOUNT — how much? (max possible pills/volume)',
+  'A example':'Count empty bottles/missing pills; estimate max dose',
+  'R (WARS)':'ROUTE + timing (when + how)',
+  'R example':'Oral, IV, inhalation; time since ingestion (for window)',
+  'S (WARS)':'SYMPTOMS + SIGNS — what have they developed?',
+  'S example':'AMS, vomiting, seizures, abnormal vitals, skin changes',
+  'Hypotension + bradycardia toxin category':'β-blockers, CCBs, digoxin, clonidine, opioids',
+  'Hypertension + tachycardia':'Sympathomimetics (cocaine, amphetamines, PCP), anticholinergics',
+  'Hyperthermia':'Sympathomimetics, serotonin syndrome, NMS, salicylates, anticholinergics',
+  'Hypothermia':'Sedatives (benzos, barbs, opioids), ethanol',
+  'Bradypnea + miosis + coma':'Opioid toxidrome',
+  'AMS + focal neuro → think':'Structural cause (stroke, bleed, mass) — NOT pure tox; image the head',
+  'Seizures in overdose — top 2':'TCAs, isoniazid (INH); also cocaine, tramadol, bupropion',
+  'Wide-complex tachycardia — top toxin':'TCA (sodium channel blocker) — think terminal R in aVR',
+  'Cyanosis unresponsive to O₂':'Methemoglobinemia, sulfhemoglobinemia (abnormal Hb)',
+  'Cherry-red skin + normal SpO₂':'Carbon monoxide (CO) poisoning — classic board answer'
+};
+
+const a1={
+  'M (MUDPILES)':'Methanol, Metformin',
+  'U (MUDPILES)':'Uremia',
+  'D (MUDPILES)':'DKA / Alcoholic/Starvation ketoacidosis',
+  'P (MUDPILES)':'Propylene glycol / Paraldehyde',
+  'I (MUDPILES)':'Iron, Isoniazid (INH), Ibuprofen',
+  'L (MUDPILES)':'Lactic acidosis (any cause — shock, CO, CN, metformin)',
+  'E (MUDPILES)':'Ethylene glycol',
+  'S (MUDPILES)':'Salicylates',
+  'Normal osmolar gap':'<10 mOsm/kg',
+  'Gap highly suspicious cutoff':'>25 mOsm/kg (especially >50)',
+  '3 toxic alcohols raising osmolar gap':'Methanol, Ethylene glycol, Isopropanol (+ propylene glycol)',
+  'Large osmol gap + NO anion gap':'Isopropanol (metabolized to acetone — ketosis without acidosis)',
+  'UDS false neg opioids':'Fentanyl, methadone, oxycodone, tramadol, buprenorphine (synthetic/semi-synthetic)',
+  'UDS false pos benzo':'Sertraline (SSRI), oxaprozin (NSAID); rifampin may cause false pos',
+  'UDS false pos amphetamine':'Pseudoephedrine / phenylephrine (also bupropion, selegiline, labetalol)',
+  'UDS positive = active intox?':'No — detects metabolites (can be days to weeks; cannot time the exposure)',
+  'Anticholinergic — mental status':'Agitated delirium, "mumbling"',
+  'Cholinergic — mental status':'Confusion, coma, seizures',
+  'Sympathomimetic — mental status':'Agitation, psychosis, anxiety',
+  'Opioid — mental status':'CNS depression, coma',
+  'Anticholinergic — pupils':'Mydriasis (dilated)',
+  'Cholinergic — pupils':'Miosis (pinpoint)',
+  'Sympathomimetic — pupils':'Mydriasis',
+  'Opioid — pupils':'Miosis (pinpoint)',
+  'Anticholinergic — skin':'Hot, DRY, flushed',
+  'Cholinergic — skin':'WET (diaphoresis, salivation, lacrimation)',
+  'Sympathomimetic — skin':'Hot, DIAPHORETIC',
+  'Opioid — skin':'Cool, normal to pale',
+  'Anticholinergic — bowel sounds':'Absent (ileus, urinary retention)',
+  'Cholinergic — bowel sounds':'Hyperactive (vomiting, diarrhea)',
+  'Sympathomimetic — bowel sounds':'Normal to increased',
+  'Opioid — bowel sounds':'Decreased (constipation classic)',
+  'Anticholinergic — temp':'Hyperthermia',
+  'Cholinergic — temp':'Normal to slightly elevated',
+  'Sympathomimetic — temp':'Hyperthermia (severe)',
+  'Opioid — temp':'Normal to hypothermic',
+  'Anticholinergic — antidote':'Physostigmine (severe CNS/cardiac only)',
+  'Cholinergic — antidote':'Atropine + Pralidoxime (2-PAM)',
+  'Sympathomimetic — antidote':'Benzodiazepines (supportive — no direct antidote)',
+  'Opioid — antidote':'Naloxone',
+  '"Hot as a hare"':'Hyperthermia (anhydrosis)',
+  '"Dry as a bone"':'Dry skin and mucous membranes (anhidrosis)',
+  '"Red as a beet"':'Cutaneous vasodilation (flushing)',
+  '"Mad as a hatter"':'Agitated delirium (AMS/psychosis)',
+  'SLUDGE':'Salivation, Lacrimation, Urination, Defecation, GI distress, Emesis',
+  'DUMBELS':'Defecation, Urination, Miosis, Bronchorrhea/Bronchospasm/Bradycardia, Emesis, Lacrimation, Salivation',
+  'Nicotinic findings':'Muscle fasciculations/weakness/paralysis; tachycardia + hypertension (paradoxical); mydriasis'
+};
+
+const a2={
+  'Charcoal dose':'1 g/kg PO (or 25–100 g adult)',
+  'Charcoal window':'Within 1 hour of ingestion (best)',
+  'Charcoal airway CI':'Unprotected airway / depressed LOC without intubation (aspiration risk)',
+  'Charcoal GI CI':'Ileus, obstruction, caustic ingestion, GI perforation',
+  'L (LAME Ca)':'Lithium',
+  'A (LAME Ca)':'Alcohols (ethanol, methanol, ethylene glycol, isopropanol)',
+  'M (LAME Ca)':'Metals (iron, lead, mercury, arsenic)',
+  'E (LAME Ca)':'Electrolytes (Na, K, Mg)',
+  'Ca (LAME Ca)':'Caustics (acids/alkalis) — charcoal can worsen injury; no benefit',
+  'C (CPSA MDAC)':'Carbamazepine',
+  'C reason':'Enterohepatic recirculation; interrupts resorption',
+  'P (CPSA)':'Phenobarbital',
+  'P reason':'Enterohepatic recirculation + slow clearance',
+  'S (CPSA)':'Salicylates (severe / ER formulations)',
+  'S reason':'Prevents ongoing absorption from concretions/bezoars',
+  'A (CPSA)':'Aminophylline / Theophylline',
+  'A reason':'Enterohepatic recirculation + narrow therapeutic window',
+  'Alkalinization agent':'Sodium bicarbonate infusion',
+  'Target urine pH':'>7.5 (ideally 7.5–8)',
+  'Alkalinization principle':'Ion trapping — ionizes weak acids in alkaline urine, preventing reabsorption',
+  'Classic toxin #1':'Salicylates',
+  'Classic toxin #2':'Phenobarbital',
+  'Electrolyte to monitor':'Potassium (hypokalemia blocks alkalinization — aldosterone exchanges K for H)',
+  'S (SLIME — dialysis)':'Salicylates',
+  'L (SLIME)':'Lithium',
+  'I (SLIME)':'Isopropanol',
+  'M (SLIME)':'Methanol + Metformin (lactic acidosis)',
+  'E (SLIME)':'Ethylene glycol',
+  'Dialyzable — MW':'Low (<500 Da)',
+  'Dialyzable — protein binding':'Low (<50%)',
+  'Dialyzable — Vd':'Low (<1 L/kg)',
+  'Dialyzable — water solubility':'High',
+  'WBI agent':'Polyethylene glycol (PEG) solution — 1.5–2 L/hr until effluent clear',
+  'WBI indication #1':'Iron (radiopaque tablets not bound by charcoal)',
+  'WBI indication #2':'Sustained-release / enteric-coated formulations (verapamil SR, lithium SR)',
+  'WBI indication #3':'Body packers with illicit drug packets (cocaine, heroin)'
+};
+
+const a3={
+  'APAP Phase 1 time':'0–24 hours',
+  'APAP Phase 1 features':'Asymptomatic OR nonspecific (nausea/vomiting, malaise); NO lab abnormalities yet',
+  'APAP Phase 2 time':'24–72 hours',
+  'APAP Phase 2 features':'RUQ pain, ↑AST/ALT begin to rise; INR climbs; "feels improving" but labs worsening',
+  'APAP Phase 3 time':'72–96 hours',
+  'APAP Phase 3 features':'Peak hepatotoxicity — fulminant hepatic failure, encephalopathy, coagulopathy, hypoglycemia, acidosis',
+  'APAP Phase 4 time':'4 days – 2 weeks',
+  'APAP Phase 4 features':'Recovery OR death from liver failure',
+  'Toxic intermediate':'NAPQI (N-acetyl-p-benzoquinone imine)',
+  'NAPQI-generating enzyme':'CYP2E1 (hepatic P450)',
+  'Neutralizing molecule':'Glutathione (GSH) — depleted in overdose',
+  'Tissue injured':'Liver (centrilobular necrosis, zone 3)',
+  'APAP level timing':'4 hours post-ingestion (plot on nomogram)',
+  'Nomogram axes':'APAP level vs time since ingestion',
+  'Antidote + MOA':'N-acetylcysteine (NAC) — glutathione precursor + direct NAPQI binding',
+  'NAC window':'Within 8–10 hours (most effective); still give if late or uncertain timing',
+  'Salicylate ear symptom':'Tinnitus (classic early sign)',
+  'Salicylate respiratory pattern':'Tachypnea + hyperpnea (direct medullary stimulation → respiratory alkalosis)',
+  'Salicylate acid-base':'Primary respiratory alkalosis + primary anion-gap metabolic acidosis (mixed)',
+  'Salicylate temp':'Hyperthermia — uncouples oxidative phosphorylation → heat (not ATP)',
+  'Salicylate severe finding':'Cerebral edema, non-cardiogenic pulmonary edema (ARDS), seizures, coma',
+  'Alkalinization rationale':'Ion trapping — keeps salicylate ionized in urine + shifts out of CNS',
+  'Serum pH target':'~7.5 (alkalemia helps drive drug out of brain)',
+  'Dialysis level cutoff':'>100 mg/dL acute (or >60 mg/dL chronic); any severe acidosis, AMS, renal failure, pulmonary edema',
+  'Avoid intubation why':'Sedation/paralysis abolishes the compensatory hyperventilation → sudden severe acidemia → death',
+  'Iron Phase 1':'30 min – 6 hr: GI — vomiting, diarrhea, hematemesis, abdominal pain',
+  'Iron Phase 2':'6–24 hr: "Quiet/latent" — symptoms improve but cellular injury ongoing (TRAP!)',
+  'Iron Phase 3':'6–48 hr: Shock, metabolic (anion gap) acidosis, coagulopathy, multi-organ dysfunction',
+  'Iron Phase 4':'12–96 hr: Hepatotoxicity — elevated LFTs, coagulopathy',
+  'Iron Phase 5':'2–8 weeks: Delayed GI strictures/obstruction from mucosal scarring',
+  'Iron antidote + MOA':'Deferoxamine — chelates free iron, excreted renally',
+  'Urine color with deferoxamine':'"Vin rosé" (pinkish/red) — indicates chelated iron being excreted',
+  'Iron imaging':'Abdominal X-ray — iron tablets are radiopaque (confirms ingestion, tracks GI decon)',
+  'WBI use iron':'Large ingestion (especially radiopaque tablets visible on X-ray; charcoal does NOT bind iron)'
+};
+
+const a4={
+  'TCA Na⁺ block effect':'Slowed cardiac conduction → wide QRS, R wave in aVR, arrhythmia (VT/VF)',
+  'TCA M1 block effect':'Anticholinergic toxidrome — mydriasis, dry skin, tachycardia, urinary retention, delirium',
+  'TCA α1 block effect':'Hypotension (peripheral vasodilation), reflex tachycardia',
+  'TCA EKG finding':'Terminal R wave in aVR >3 mm (Na channel block signature); QRS widening',
+  'QRS threshold':'>100 ms → seizure risk; >160 ms → arrhythmia risk',
+  'TCA antidote MOA':'Sodium bicarbonate IV — (1) alkalemia decreases drug binding to Na channel; (2) Na load overwhelms block',
+  'Avoid flumazenil why':'Can precipitate seizures AND unmask TCA cardiotoxicity if coingested — benzos are PROTECTIVE vs TCA seizures',
+  'Opioid triad':'CNS depression + respiratory depression (bradypnea) + miosis (pinpoint pupils)',
+  'Opioid antidote + route':'Naloxone IV/IM/intranasal (also SC)',
+  'Naloxone duration':'30–90 min — MUCH shorter than most opioids → redosing/infusion needed to prevent re-sedation',
+  'Opioid with QT prolongation':'Methadone (also loperamide in massive OD) → torsades',
+  'Opioid causing seizures':'Meperidine (Demerol) — normeperidine metabolite, also tramadol',
+  'Naloxone withdrawal risk':'Can precipitate acute withdrawal in chronic users — use lowest dose to restore respiration (e.g., 0.04–0.4 mg)',
+  'CO Hb affinity':'~200–240× greater affinity than O₂ → functional anemia',
+  'CO mitochondrial target':'Cytochrome c oxidase (complex IV) — blocks electron transport → lactic acidosis',
+  'Why SpO₂ fails':'Standard pulse oximeter cannot distinguish CO-Hb from O₂-Hb (both absorb similarly at 660/940 nm) → falsely normal',
+  'CO test':'Co-oximetry (arterial or venous carboxyhemoglobin level)',
+  'CO first-line Rx':'100% O₂ via non-rebreather (shortens CO-Hb half-life from 4–5h to ~80 min)',
+  'HBO indications':'LOC/syncope, neurologic symptoms, pregnancy, CO-Hb >25%, cardiac ischemia, severe acidosis',
+  'CO pregnancy level':'CO-Hb >15% (fetal Hb binds CO even more tightly; fetal CO-Hb lags maternal)',
+  'Methanol source':'Wood alcohol, antifreeze, windshield washer fluid, moonshine',
+  'EG source':'Antifreeze (sweet taste), coolants, deicers',
+  'Methanol metabolite':'Formaldehyde → formic acid (formate)',
+  'EG metabolite':'Glycolate → oxalate',
+  'Methanol organ':'Retina/optic nerve — "snowstorm" blindness',
+  'EG organ':'Kidneys (acute tubular necrosis from Ca-oxalate crystals)',
+  'Methanol finding':'Visual changes/blindness, putaminal lesions on MRI',
+  'EG finding':'Ca-oxalate crystalluria, acute renal failure, hypocalcemia (Ca binds oxalate)',
+  'Methanol UA clue':'Usually unremarkable',
+  'EG UA clue':'Calcium oxalate crystals + fluoresces under Wood lamp (if antifreeze has additive)',
+  'First-line toxic alcohol antidote':'Fomepizole (4-methylpyrazole, 4-MP)',
+  'Fomepizole enzyme target':'Alcohol dehydrogenase (ADH) — prevents conversion to toxic metabolites',
+  'Backup antidote':'Ethanol infusion (competes with ADH; harder to dose, more side effects)',
+  'HD role':'Removes parent alcohol AND toxic metabolites — use for severe acidosis, high levels, end-organ damage',
+  'Methanol cofactor':'Folate (folinic acid) — accelerates formate breakdown',
+  'EG cofactor':'Pyridoxine (B6) — shunts glyoxylate to glycine (also thiamine → α-hydroxy-β-ketoadipate)'
+};
+
+const a5={
+  'APAP antidote':'N-acetylcysteine (NAC)',
+  'Opioid antidote':'Naloxone',
+  'Benzo antidote':'Flumazenil (rarely used — seizure risk)',
+  'Iron antidote':'Deferoxamine',
+  'TCA antidote':'Sodium bicarbonate',
+  'Salicylate antidote':'Sodium bicarbonate (urinary alkalinization) + HD',
+  'Methanol/EG antidote':'Fomepizole (or ethanol) + folate (methanol) or pyridoxine/thiamine (EG)',
+  'CO antidote':'100% O₂ / hyperbaric O₂',
+  'Cyanide antidote':'Hydroxocobalamin (preferred) or Na thiosulfate + Na nitrite',
+  'Methemoglobin antidote':'Methylene blue',
+  'OP antidote':'Atropine + Pralidoxime (2-PAM)',
+  'Anticholinergic antidote':'Physostigmine (severe CNS/cardiac — careful in TCA coingestion)',
+  'β-blocker antidote':'Glucagon (also high-dose insulin, Ca, lipid)',
+  'CCB antidote':'Calcium gluconate/chloride + high-dose insulin + glucagon + vasopressors',
+  'Digoxin antidote':'Digoxin-specific Fab (DigiFab)',
+  'Heparin antidote':'Protamine sulfate',
+  'Warfarin antidote':'Vitamin K + FFP/PCC (acute)',
+  'Lead antidote':'Succimer (DMSA) oral; CaNa₂-EDTA + dimercaprol (BAL) for encephalopathy',
+  'INH antidote':'Pyridoxine (B6) — high-dose for seizures',
+  'APAP delay':'~24 hr — phase 1 asymptomatic',
+  'APAP why delayed':'Glutathione depletion and NAPQI-mediated hepatocyte damage accumulates slowly',
+  'Iron delay':'6–24 hr (Phase 2 "quiet period")',
+  'Iron why':'Initial GI symptoms improve; ongoing cellular mitochondrial injury → shock hours later',
+  'SR opioid delay':'Hours — depot/ER release',
+  'SR why delayed':'Extended-release matrix slowly releases drug; sedation may worsen long after observation period',
+  'MeOH/EG delay':'8–24 hr — need ADH to metabolize to toxic form',
+  'MeOH/EG why':'Parent alcohol is nontoxic; metabolites (formate, oxalate) cause injury',
+  'Warfarin delay':'48–72 hr — existing clotting factors must be depleted before INR rises',
+  'Warfarin why':'Factors II, VII, IX, X have half-lives (Factor II ~60 hr longest)',
+  'Cyanide time':'Minutes to death',
+  'Cyanide Rx':'Hydroxocobalamin IV immediately (or nitrite + thiosulfate)',
+  'OP time':'Minutes to hours',
+  'OP Rx':'Atropine titrated to dry secretions + pralidoxime + supportive airway',
+  'TCA time':'Hours (rapid deterioration with seizures/arrhythmia)',
+  'TCA Rx':'NaHCO₃ + airway + benzodiazepines for seizures',
+  'CCB time':'Hours (refractory shock)',
+  'CCB Rx':'Ca + high-dose insulin + glucagon + vasopressors (ICU)',
+  'First priority':'ABCs — airway, breathing, circulation (plus decontamination of skin/eyes if topical)',
+  '3 empiric agents AMS':'Dextrose, thiamine, naloxone ("coma cocktail"; O₂ before all)',
+  'Thiamine before dextrose why':'Prevents precipitating Wernicke encephalopathy in alcohol-dependent/malnourished patients',
+  'Intubation GCS':'GCS ≤8 (or failure to protect airway, vomiting + AMS, refractory hypoxia)',
+  'First-line seizure':'Benzodiazepines (lorazepam, diazepam, midazolam)',
+  'Avoid which anticonvulsant':'Phenytoin — ineffective/harmful in TCA (worsens Na block), INH (needs B6), theophylline',
+  'Hyperthermia Rx':'Aggressive cooling (ice, evaporative) + benzos (decrease adrenergic tone/serotonin) + fluids',
+  'Avoid for tox hyperthermia':'Antipyretics (acetaminophen, NSAIDs) — ineffective (NOT hypothalamic set-point fever)'
+};
+
+function rev(id,obj){
+  const el=document.getElementById(id);
+  el.style.display='block';
+  el.innerHTML='<div class="fb-header">Answer Key</div>'+Object.entries(obj).map(([k,v])=>`<div class="fb-row"><div class="fb-q">${k}</div><div class="fb-a">${v}</div></div>`).join('');
+}
+
+function rq(btn,idx){
+  const box=btn.closest('.pq-box');
+  const ans=box.querySelector('.pq-ans');
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide':'Reveal';
+}
+</script>
+</body>
+</html>
