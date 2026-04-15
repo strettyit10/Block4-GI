@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI28 Intestinal Pathology Case Review — Hub 1 Core Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ── BASE ── */
+body{font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;background:#F7F5F0;color:#2C2C2C;min-height:100vh;line-height:1.6}
+
+/* ── TOP NAV ── */
+.topnav{background:#1B3A4B;border-bottom:3px solid #C9A84C;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-text{font-family:'Crimson Pro',Georgia,serif;font-size:1.35em;font-weight:700;color:#F2E8CF;letter-spacing:.02em}
+.nav-brand-sub{font-size:.72em;color:#C9A84C;font-weight:500;margin-left:6px;letter-spacing:.04em;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:.8em;color:rgba(255,255,255,0.7);font-weight:500;padding:6px 14px;border-radius:5px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* ── CONTAINER ── */
+.container{max-width:1060px;margin:0 auto;padding:28px 24px}
+
+/* ── HEADER ── */
+.header{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1B3A4B 0%,#C9A84C 50%,#1B3A4B 100%)}
+.hub-tag{display:inline-block;background:#1B3A4B;color:#F2E8CF;font-family:'Source Sans 3',sans-serif;font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+.header h1{font-family:'Crimson Pro',Georgia,serif;font-size:2em;color:#1B3A4B;margin-bottom:6px;line-height:1.25;font-weight:700}
+.header h1 span{color:#8B6914;font-weight:600;font-style:italic}
+.header .subtitle{color:#5A5A5A;font-size:.88em;line-height:1.6;margin-bottom:14px}
+.source-strip{display:flex;gap:8px;flex-wrap:wrap}
+.source-badge{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:4px;padding:4px 10px;font-size:.75em;color:#5A5A5A}
+.source-badge strong{color:#1B3A4B}
+
+/* ── HUB PROGRESSION ── */
+.hub-prog{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:12px 18px;margin-bottom:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hub-step{padding:7px 16px;border-radius:4px;font-size:.82em;font-weight:600}
+.hub-step.current{background:#1B3A4B;color:#F2E8CF}
+.hub-step.next{background:#F7F5F0;border:1px solid #D6CEB8;color:#7A7060;text-decoration:none;transition:all .2s}
+.hub-step.next:hover{border-color:#C9A84C;color:#8B6914}
+.hub-arrow{color:#C9A84C;font-size:1em;font-weight:700}
+.hub-prog-label{font-size:.76em;color:#7A7060;margin-right:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat-card{background:#FFF;border:1px solid #D6CEB8;border-radius:6px;padding:14px;text-align:center}
+.stat-num{font-family:'Crimson Pro',Georgia,serif;font-size:1.8em;font-weight:700;color:#1B3A4B}
+.stat-label{font-size:.68em;color:#7A7060;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid #D6CEB8;padding-bottom:0}
+.tab-btn{background:none;border:none;color:#7A7060;font-size:.84em;font-weight:600;padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;font-family:inherit}
+.tab-btn:hover{color:#1B3A4B}
+.tab-btn.active{color:#1B3A4B;border-bottom-color:#C9A84C}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.fc{perspective:1000px;cursor:pointer;position:relative;z-index:1}
+.fc-inner{position:relative;transform-style:preserve-3d;transition:transform .5s,height .3s}
+.fc.flipped{z-index:10}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;top:0;left:0;right:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;padding:22px}
+.fc-front{background:#FFFFFF;border:1px solid #D6CEB8;border-top:3px solid #1B3A4B}
+.fc-back{transform:rotateY(180deg);background:#FFFDF5;border:1px solid #C9A84C}
+.fc-label{font-size:.66em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-family:'Source Sans 3',sans-serif}
+.fc-q{font-size:.92em;color:#2C2C2C;line-height:1.55}
+.fc-a{font-size:.88em;color:#2C2C2C;line-height:1.65}
+.fc-flip-hint{font-size:.67em;color:#9A9080;margin-top:10px;font-style:italic}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.82em;color:#7A7060}
+.fc-progress .prog-num{color:#1B3A4B;font-weight:700}
+
+/* ── FILL-IN-BLANK ── */
+.fib-list{display:flex;flex-direction:column;gap:16px}
+.fib-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;border-left:4px solid #1B3A4B}
+.fib-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.fib-prompt{font-size:.93em;color:#2C2C2C;line-height:1.65;margin-bottom:12px}
+.fib-hint{font-size:.8em;color:#7A7060;font-style:italic;margin-bottom:10px}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fib-input{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:9px 14px;color:#2C2C2C;font-size:.9em;font-family:inherit;min-width:200px;transition:border-color .2s}
+.fib-input:focus{outline:none;border-color:#C9A84C;background:#FFFDF5}
+.fib-input.correct{border-color:#2E7D32;background:#F1F8F2}
+.fib-input.incorrect{border-color:#C62828;background:#FEF5F5}
+.fib-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:background .2s}
+.fib-btn:hover{background:#264E63}
+.fib-reveal-btn{background:#FFF;border:1px solid #D6CEB8;color:#7A7060;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.82em;font-weight:600;font-family:inherit;transition:all .2s}
+.fib-reveal-btn:hover{border-color:#C9A84C;color:#8B6914}
+.fib-feedback{font-size:.82em;margin-top:8px;padding:7px 12px;border-radius:4px;display:none}
+.fib-feedback.correct{background:#F1F8F2;border:1px solid #A5D6A7;color:#2E7D32;display:block}
+.fib-feedback.incorrect{background:#FEF5F5;border:1px solid #FFCDD2;color:#C62828;display:block}
+
+/* ── ORDERING ── */
+.ordering-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.ordering-intro strong{color:#1B3A4B}
+.order-drill{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #C9A84C;border-radius:6px;padding:22px;margin-bottom:20px}
+.drill-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:5px}
+.drill-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.order-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;min-height:40px}
+.order-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:12px 16px;cursor:grab;font-size:.86em;color:#2C2C2C;line-height:1.4;display:flex;align-items:flex-start;gap:10px;transition:all .15s;user-select:none}
+.order-item:active{cursor:grabbing}
+.order-item:hover{border-color:#C9A84C;background:#FFFDF5}
+.order-item.dragging{opacity:.6;border-style:dashed;border-color:#C9A84C}
+.order-item.drag-over{border-color:#C9A84C;background:#FFF8E1;transform:scale(1.01)}
+.order-item .item-grip{color:#C9A84C;font-size:1.1em;flex-shrink:0;margin-top:1px}
+.order-item .item-text{flex:1}
+.order-item.correct-pos{background:#F1F8F2;border-color:#66BB6A}
+.order-item.wrong-pos{background:#FEF5F5;border-color:#EF5350;color:#991b1b}
+.order-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-check-btn{background:#1B3A4B;border:none;color:#F2E8CF;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:background .2s}
+.order-check-btn:hover{background:#264E63}
+.order-ghost-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:9px 18px;border-radius:5px;cursor:pointer;font-size:.84em;font-weight:600;font-family:inherit;transition:all .2s}
+.order-ghost-btn:hover{border-color:#C9A84C;color:#8B6914}
+.order-feedback{font-size:.84em;padding:8px 14px;border-radius:5px;margin-bottom:8px}
+.order-feedback.correct{background:#F1F8F2;border:1px solid #66BB6A;color:#2E7D32}
+.order-feedback.incorrect{background:#FEF5F5;border:1px solid #EF5350;color:#C62828}
+.order-answer{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:14px 18px;font-size:.83em;margin-top:8px;display:none}
+.order-answer ol{padding-left:20px;line-height:1.9}
+.order-answer li{color:#2C2C2C}
+.order-answer li span{color:#1B3A4B;font-weight:600}
+
+/* ── MATCHING ── */
+.match-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A}
+.match-intro strong{color:#1B3A4B}
+.match-set{background:#FFFFFF;border:1px solid #D6CEB8;border-left:4px solid #1B3A4B;border-radius:6px;padding:22px;margin-bottom:20px}
+.match-set-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.05em;font-weight:700;color:#1B3A4B;margin-bottom:4px}
+.match-set-hint{font-size:.79em;color:#7A7060;margin-bottom:14px;font-style:italic}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.match-cols{grid-template-columns:1fr}}
+.match-col-label{font-size:.7em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.match-item{background:#F7F5F0;border:1px solid #D6CEB8;border-radius:5px;padding:11px 14px;font-size:.85em;color:#2C2C2C;line-height:1.4;cursor:pointer;transition:all .2s;margin-bottom:6px}
+.match-item:hover:not(.matched-correct):not(.matched-wrong){border-color:#C9A84C!important;background:#FFFDF5!important}
+.match-item.selected{border-color:#1B3A4B!important;background:#EBF0F3!important;color:#1B3A4B!important;font-weight:600}
+.match-item.matched-correct{border-color:#66BB6A!important;background:#F1F8F2!important;color:#2E7D32!important;cursor:default}
+.match-item.flash-wrong{animation:flashRed .5s ease forwards}
+@keyframes flashRed{0%{background:#FEF5F5;border-color:#EF5350}100%{background:#F7F5F0;border-color:#D6CEB8}}
+.match-score{margin-top:12px;font-size:.83em;color:#7A7060}
+.match-score .correct-count{color:#2E7D32;font-weight:700}
+.match-reset-btn{background:none;border:1px solid #D6CEB8;color:#7A7060;padding:7px 16px;border-radius:5px;cursor:pointer;font-size:.8em;font-weight:600;font-family:inherit;margin-top:10px;transition:all .2s}
+.match-reset-btn:hover{border-color:#C9A84C;color:#8B6914}
+
+/* ── TEST TRAPS ── */
+.trap-intro{background:#FFFDF5;border:1px solid #E8DFC8;border-left:4px solid #C9A84C;border-radius:6px;padding:14px 18px;margin-bottom:20px;font-size:.84em;color:#5A5A5A;line-height:1.6}
+.trap-intro strong{color:#1B3A4B}
+.trap-card{background:#FFFFFF;border:1px solid #D6CEB8;border-radius:6px;padding:22px;margin-bottom:18px;border-left:4px solid #C9A84C}
+.trap-num{font-size:.68em;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.trap-statement{font-family:'Crimson Pro',Georgia,serif;font-size:1em;color:#2C2C2C;line-height:1.55;margin-bottom:16px;background:#FFFDF5;border-radius:5px;padding:16px;border-left:3px solid #C9A84C;font-style:italic}
+.trap-btns{display:flex;gap:10px;margin-bottom:8px}
+.trap-btn{padding:9px 28px;border-radius:5px;border:2px solid;font-size:.9em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.trap-btn-true{background:none;border-color:#66BB6A;color:#2E7D32}
+.trap-btn-true:hover:not(:disabled){background:#F1F8F2;border-color:#43A047}
+.trap-btn-false{background:none;border-color:#EF5350;color:#C62828}
+.trap-btn-false:hover:not(:disabled){background:#FEF5F5;border-color:#E53935}
+.trap-btn:disabled{opacity:.5;cursor:not-allowed}
+.trap-btn.sel-correct{background:#F1F8F2;border-color:#43A047;color:#2E7D32}
+.trap-btn.sel-wrong{background:#FEF5F5;border-color:#E53935;color:#C62828}
+.trap-exp{padding:14px 18px;border-radius:5px;font-size:.87em;line-height:1.65;margin-top:4px;display:none}
+.trap-exp.show-c{background:#F1F8F2;border:1px solid #A5D6A7;color:#1B5E20;display:block}
+.trap-exp.show-w{background:#FEF5F5;border:1px solid #FFCDD2;color:#B71C1C;display:block}
+.trap-exp strong{color:#1B3A4B}
+
+/* ── REFERENCE ── */
+.ref-section{margin-bottom:28px}
+.ref-title{font-family:'Crimson Pro',Georgia,serif;font-size:.95em;font-weight:700;color:#1B3A4B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #C9A84C}
+.ref-table{width:100%;border-collapse:collapse;font-size:.84em}
+.ref-table th{background:#1B3A4B;color:#F2E8CF;font-weight:600;text-align:left;padding:10px 14px;font-size:.88em;letter-spacing:.03em}
+.ref-table td{padding:10px 14px;border-bottom:1px solid #E8E0CD;color:#2C2C2C;vertical-align:top;line-height:1.55;background:#FFF}
+.ref-table tr:nth-child(even) td{background:#FAFAF5}
+.ref-table tr:hover td{background:#FFFDF5}
+.ref-table .key{color:#1B3A4B;font-weight:600}
+.ref-note{background:#FFFDF5;border:1px solid #E8DFC8;border-radius:5px;padding:13px 18px;font-size:.83em;color:#5A5A5A;line-height:1.6;margin-top:10px}
+.ref-note strong{color:#1B3A4B}
+
+/* ── FOOTER ── */
+.footer{text-align:center;font-size:.78em;color:#7A7060;border-top:2px solid #D6CEB8;padding-top:16px;margin-top:32px}
+.footer a{color:#1B3A4B;text-decoration:none;font-weight:600}
+.footer a:hover{color:#C9A84C;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="nav-brand">
+    <span class="nav-brand-text">HoyaDocs</span>
+    <span class="nav-brand-sub">Block 4 — GI</span>
+  </div>
+  <div class="nav-actions">
+    <a href="../lecture-guides/gi28-intestinal-path-case-review.html" class="nav-back">📖 Lecture Guide</a>
+    <a href="https://strettyit10.github.io/Block4-GI/active-recall-hub.html" class="nav-back">🎯 Active Drill Hub</a>
+    <a href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" class="nav-back">✅ Daily Checklist</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<div class="header">
+  <div class="hub-tag">Hub 1 — Core Concepts</div>
+  <h1>GI28 Intestinal Pathology Case Review <span>Active Drills</span></h1>
+  <div class="subtitle">
+    Flashcards · Fill-in-Blank · Drag-and-Drop Ordering · Matching · Interactive Test Traps<br>
+    Lecture 28 · GI Block · IBD, C. difficile, Diverticular Disease, Polyps & CRC — LOs 1–4
+  </div>
+  <div class="source-strip">
+    <div class="source-badge"><strong>Primary:</strong> GI28 Lecture Guide (HoyaDocs)</div>
+    <div class="source-badge"><strong>LOs:</strong> GI28 LOs 1–4</div>
+    <div class="source-badge"><strong>Coverage:</strong> IBD, pseudomembranous colitis, diverticular disease, adenoma-carcinoma</div>
+  </div>
+</div>
+
+<div class="hub-prog">
+  <span class="hub-prog-label">Hub Progression:</span>
+  <span class="hub-step current">Hub 1 — Core Concepts</span>
+  <span class="hub-arrow">→</span>
+  <a href="gi28-hub2-intestinal-path-case-review.html" class="hub-step next">Hub 2 — Step 1 Extensions</a>
+  <span class="hub-arrow">→</span>
+  <a href="gi28-hub3-intestinal-path-case-review.html" class="hub-step next">Hub 3 — Practice Questions</a>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Flashcards</div></div>
+  <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Fill-in-Blank</div></div>
+  <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Ordering Drills</div></div>
+  <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Match Sets</div></div>
+  <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Test Traps</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('fib',this)">Fill-in-Blank</button>
+  <button class="tab-btn" onclick="switchTab('ordering',this)">Ordering</button>
+  <button class="tab-btn" onclick="switchTab('matching',this)">Matching</button>
+  <button class="tab-btn" onclick="switchTab('traps',this)">Test Traps</button>
+  <button class="tab-btn" onclick="switchTab('reference',this)">Reference</button>
+</div>
+
+<!-- ══ FLASHCARDS ══════════════════════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-flashcards">
+  <div class="fc-progress"><span>Click a card to flip · <span class="prog-num">20</span> cards total (LOs 1-4)</span></div>
+  <div class="fc-grid">
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Signs & Symptoms</div><div class="fc-q">What is the classic presentation of Crohn disease?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>RLQ pain, abdominal cramping, microcytic anemia, occult GI bleeding</strong><br><br>Young adult with skip lesions visible on colonoscopy; may have fistulas, aphthous ulcers, or cobblestone appearance.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Signs & Symptoms</div><div class="fc-q">How does ulcerative colitis typically present clinically?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Bloody diarrhea (may be profuse), abdominal pain, urgency, tenesmus</strong><br><br>Continuous mucosal inflammation starting at rectum extending proximally; no skip lesions; increased CRC risk after 7 years.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">What are the pathologic hallmarks distinguishing Crohn from UC?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Crohn:</strong> transmural involvement, skip lesions, noncaseating granulomas, fistulas<br><strong>UC:</strong> mucosa/submucosa only, continuous inflammation, crypt abscesses, pseudopolyps</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">Define a skip lesion and why it occurs in Crohn disease.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Skip lesion:</strong> areas of normal bowel interspersed between inflamed segments<br><br>Occurs in Crohn (transmural) but NOT in UC (continuous inflammation from rectum). Classic finding on colonoscopy.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">What complications of Crohn disease result from transmural inflammation?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Fistulas, strictures, sinus tracts, abscess formation, perforation</strong><br><br>Transmural means all bowel layers involved; explains why complications penetrate beyond mucosa. Can form fistulas to skin, bladder, other bowel loops.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Signs & Symptoms</div><div class="fc-q">What is pseudomembranous colitis and what causes it?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Caused by Clostridium difficile toxins A & B</strong><br><br>Yellow pseudomembranes (necrotic mucosa), volcano lesions on colonoscopy. Risk factors: clindamycin, fluoroquinolones, cephalosporins, prolonged antibiotics.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">Describe the histologic findings in C. difficile colitis.</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Volcano lesions:</strong> erupting necrotic tips of epithelium with pseudomembrane (fibrin, mucus, debris)<br><br>Acute inflammation, mucus depletion, cryptitis. Pseudomembrane can span multiple crypts.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Signs & Symptoms</div><div class="fc-q">What is the typical presentation of diverticulitis?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>LLQ pain, fever, elevated WBC, nausea, constipation or diarrhea</strong><br><br>Inflammation of colonic diverticula; most common in sigmoid (smallest radius → highest intraluminal pressure). Risk factors: low fiber, advanced age, NSAIDs.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">What anatomic structure do colonic diverticula herniate through, and why is the sigmoid most affected?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>False diverticula herniate at vasa recta (blood vessel penetration sites)</strong><br><br>Sigmoid has smallest luminal radius → highest intraluminal pressure by Laplace law → most prone to herniation and diverticulitis.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 2 — Pathology</div><div class="fc-q">What are the major complications of diverticulitis?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Pericolic abscess, perforation, fistulization (colovesical, colovaginal), stricture, peritonitis</strong><br><br>Pericolic abscess most common complication; can be managed percutaneously. Perforation → free air, sepsis, emergency surgery.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Polyps</div><div class="fc-q">What are the three main histologic types of adenomatous polyps?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Tubular, villous, tubulovillous</strong><br><br>Tubular = tubular glands (most common, lowest malignant potential). Villous = finger-like villi (highest risk). Tubulovillous = mixed features. Sessile serrated = different pathway (BRAF, CIMP, MSI).</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Polyps</div><div class="fc-q">What does "Big, Villous, Bad" refer to in adenoma risk stratification?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Big:</strong> size >10mm<br><strong>Villous:</strong> villous or tubulovillous histology<br><strong>Bad:</strong> high-grade dysplasia<br><br>Any of these features raises malignant potential; guide surveillance intervals post-polypectomy.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Molecular</div><div class="fc-q">Describe the adenoma-carcinoma sequence (APC-KRAS-p53).</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>APC loss → KRAS activation → p53 mutation → CIN (chromosomal instability)</strong><br><br>Early adenomas lose APC; accumulate additional mutations over 10–15 years; progression to carcinoma. Explains why CRC risk rises with age and screening detects adenomas before malignancy.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Molecular</div><div class="fc-q">What is the serrated pathway and what genes distinguish it from the adenoma-carcinoma sequence?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Serrated pathway:</strong> BRAF mutation → CIMP (CpG island methylator phenotype) → MSI (microsatellite instability)<br><br>Contrasts with CIN pathway. Sessile serrated polyps follow this route; can progress to CRC faster; higher risk of right-sided cancer and CIMP-high phenotype.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — CRC</div><div class="fc-q">How do right-sided and left-sided colorectal cancers differ clinically?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Right-sided:</strong> anemia (iron-deficiency), occult blood, palpable mass, may be asymptomatic<br><strong>Left-sided:</strong> apple-core strictures, obstruction, change in bowel habits, visible blood in stool<br><br>Right = larger lumen, proximal obstruction less likely. Left = narrower lumen, obstructive symptoms earlier.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 3 — Crohn vs UC</div><div class="fc-q">What is the "CHRISTMAS" mnemonic for Crohn disease complications?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>C</strong> = Cobblestone, <strong>H</strong> = fistulas (Holes), <strong>R</strong> = Rectal bleeding, <strong>I</strong> = Ileitis, <strong>S</strong> = Strictures, <strong>T</strong> = Transmural, <strong>M</strong> = skip lesions (patchiness), <strong>A</strong> = Abdominal pain, <strong>S</strong> = Sigma (sigmoid) spared</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — Signs & Symptoms</div><div class="fc-q">What is toxic megacolon and why is it a medical emergency?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Dilation of colon (>6cm) during severe IBD flare, fulminant colitis, or C. difficile infection</strong><br><br>Risk of perforation, sepsis, death. Presents with abdominal distension, pain, fever, altered mental status. Managed with NPO, IV fluids, antibiotics; surgery if perforation or no improvement in 48h.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 1 — IBD Surveillance</div><div class="fc-q">What are the surveillance recommendations for IBD-associated CRC?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Colonoscopy every 1–2 years after 7 years of IBD (earlier if extensive disease or primary sclerosing cholangitis)</strong><br><br>PSC + UC = annual surveillance. p53 mutations appear early in IBD-associated CRC. Dysplasia detection is key to preventing malignancy.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Hereditary Syndromes</div><div class="fc-q">What gene is mutated in FAP, and what is the cancer risk?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>APC (adenomatous polyposis coli) germline mutation</strong><br><br>Hundreds to thousands of adenomas develop by age 20–30; nearly 100% CRC risk by age 50 if untreated. Screening begins age 10–12; prophylactic colectomy often performed by age 20–25.</div></div>
+      </div>
+    </div>
+
+    <div class="fc" onclick="flipCard(this)">
+      <div class="fc-inner">
+        <div class="fc-front"><div class="fc-label">LO 4 — Hereditary Syndromes</div><div class="fc-q">What is Lynch syndrome (HNPCC) and which genes are involved?</div><div class="fc-flip-hint">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a"><strong>Lynch syndrome (Hereditary Nonpolyposis CRC):</strong> germline mismatch repair gene mutations (MLH1, MSH2, MSH6, PMS2)<br><br>Causes microsatellite instability (MSI-high); ~70% lifetime CRC risk by age 70. Accounts for 2–4% of all CRCs. Colonoscopy every 1–2 years from age 20–25.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FILL-IN-BLANK ════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-fib">
+  <div class="fib-list">
+
+    <div class="fib-card">
+      <div class="fib-num">Question 1</div>
+      <div class="fib-prompt">In Crohn disease, the <input class="fib-input" data-answers="transmural,full thickness,all layers"> pattern of inflammation distinguishes it from UC, which is limited to the <input class="fib-input" data-answers="mucosa,mucosa and submucosa,superficial"> .</div>
+      <div class="fib-hint">Hint: One disease goes deep; the other stays shallow.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 2</div>
+      <div class="fib-prompt">The histologic hallmark of Crohn disease is the presence of <input class="fib-input" data-answers="noncaseating granulomas,granulomas,non-caseating"> , while UC shows <input class="fib-input" data-answers="crypt abscesses,abscesses in crypts,cryptitis"> .</div>
+      <div class="fib-hint">Granulomas in Crohn; neutrophil-filled crypts in UC.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 3</div>
+      <div class="fib-prompt">C. difficile produces two exotoxins: <input class="fib-input" data-answers="Toxin A,toxin A,TxA"> and <input class="fib-input" data-answers="Toxin B,toxin B,TxB"> . Both inactivate <input class="fib-input" data-answers="Rho,Rho proteins,ras homolog family"> proteins, disrupting tight junctions.</div>
+      <div class="fib-hint">Both toxins are named with letters; they damage the Rho family of GTPases.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 4</div>
+      <div class="fib-prompt">Diverticula are "false diverticula" because they herniate only the <input class="fib-input" data-answers="mucosa and submucosa,mucosa,mucosa/submucosa"> through the muscular layer, not the entire bowel wall.</div>
+      <div class="fib-hint">False = not all layers; herniation occurs at weak points.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 5</div>
+      <div class="fib-prompt">The primary treatment of C. difficile colitis is <input class="fib-input" data-answers="oral vancomycin,vancomycin,oral vanco"> or <input class="fib-input" data-answers="fidaxomicin,fecal microbiota transplantation"> . For recurrent infection, <input class="fib-input" data-answers="fecal microbiota transplantation,FMT,fecal transplant"> is effective.</div>
+      <div class="fib-hint">Oral antibiotics are first-line; FMT for refractory disease.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 6</div>
+      <div class="fib-prompt">Adenomatous polyps progress to carcinoma via the <input class="fib-input" data-answers="adenoma-carcinoma sequence,APC-KRAS-p53 sequence,adenoma carcinoma sequence"> . The first mutation is usually in <input class="fib-input" data-answers="APC,adenomatous polyposis coli,APC gene"> .</div>
+      <div class="fib-hint">APC → KRAS → p53 over years to decades.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 7</div>
+      <div class="fib-prompt">Sessile serrated polyps follow a different molecular pathway called the <input class="fib-input" data-answers="serrated pathway,BRAF-CIMP-MSI pathway,serrated adenoma pathway"> , driven by <input class="fib-input" data-answers="BRAF,BRAF mutations,BRAF gene mutations"> mutations and resulting in <input class="fib-input" data-answers="MSI,microsatellite instability,MSI-high"> .</div>
+      <div class="fib-hint">BRAF → CIMP → MSI; very different from APC-KRAS-p53.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 8</div>
+      <div class="fib-prompt">IBD-associated CRC risk increases significantly after <input class="fib-input" data-answers="7 years,7,seven years"> of disease. Patients with <input class="fib-input" data-answers="primary sclerosing cholangitis,PSC,PSC + UC"> have even higher risk and require annual surveillance.</div>
+      <div class="fib-hint">7-year rule for IBD CRC risk; PSC + UC = highest risk group.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 9</div>
+      <div class="fib-prompt">Right-sided CRC typically presents with <input class="fib-input" data-answers="anemia,iron deficiency anemia,iron-deficiency anemia"> and <input class="fib-input" data-answers="occult blood,occult GI bleeding,positive FOBT"> , while left-sided CRC presents with <input class="fib-input" data-answers="obstruction,apple-core stricture,change in bowel habits"> .</div>
+      <div class="fib-hint">Right = anemia; Left = obstruction and change in habits.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+    <div class="fib-card">
+      <div class="fib-num">Question 10</div>
+      <div class="fib-prompt">The sigmoidal and rectal pattern of diverticular disease is due to the <input class="fib-input" data-answers="taeniae coli,teniae coli,small luminal radius"> . The Laplace law states that wall tension is proportional to <input class="fib-input" data-answers="pressure and radius,radius,intraluminal pressure x radius"> .</div>
+      <div class="fib-hint">Sigmoid has the smallest radius; highest pressure by Laplace.</div>
+      <div class="fib-row">
+        <button class="fib-btn" onclick="checkFib(this)">Check</button>
+        <button class="fib-reveal-btn" onclick="revealFib(this)">Reveal</button>
+      </div>
+      <div class="fib-feedback"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ORDERING ═════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-ordering">
+  <div class="ordering-intro">
+    <strong>Drag items into the correct order</strong>, then click <strong>Check</strong> to validate. Click the item handle to grab and reorder.
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 1: Adenoma-Carcinoma Sequence (CIN Pathway)</div>
+    <div class="drill-hint">Order the molecular progression from earliest to latest event.</div>
+    <div class="order-list" id="order-list-1" ondrop="dropItem(event,'order-list-1')" ondragover="dropOnItem(event,'order-list-1')">
+      <div class="order-item" data-pos="2" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-1')" ondrag="dropOnItem(event,'order-list-1')"><span class="item-grip">≡</span><span class="item-text">KRAS mutation → oncogene activation</span></div>
+      <div class="order-item" data-pos="3" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-1')" ondrag="dropOnItem(event,'order-list-1')"><span class="item-grip">≡</span><span class="item-text">p53 mutation → loss of cell cycle control → chromosomal instability (CIN)</span></div>
+      <div class="order-item" data-pos="1" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-1')" ondrag="dropOnItem(event,'order-list-1')"><span class="item-grip">≡</span><span class="item-text">APC mutation → adenoma initiation</span></div>
+      <div class="order-item" data-pos="4" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-1')" ondrag="dropOnItem(event,'order-list-1')"><span class="item-grip">≡</span><span class="item-text">Additional mutations → carcinoma development</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-1','fb-order-1')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('ans-order-1')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-order-1"></div>
+    <div class="order-answer" id="ans-order-1">
+      <ol><li><span>APC mutation</span> → adenoma initiation</li><li><span>KRAS mutation</span> → oncogene activation</li><li><span>p53 mutation</span> → loss of cell cycle control → CIN</li><li><span>Additional mutations</span> → carcinoma development</li></ol>
+    </div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 2: Crohn Disease Complications (from Most to Least Common)</div>
+    <div class="drill-hint">Order by typical frequency in clinical practice.</div>
+    <div class="order-list" id="order-list-2" ondrop="dropItem(event,'order-list-2')" ondragover="dropOnItem(event,'order-list-2')">
+      <div class="order-item" data-pos="2" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-2')" ondrag="dropOnItem(event,'order-list-2')"><span class="item-grip">≡</span><span class="item-text">Fistula formation</span></div>
+      <div class="order-item" data-pos="1" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-2')" ondrag="dropOnItem(event,'order-list-2')"><span class="item-grip">≡</span><span class="item-text">Strictures and obstruction</span></div>
+      <div class="order-item" data-pos="4" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-2')" ondrag="dropOnItem(event,'order-list-2')"><span class="item-grip">≡</span><span class="item-text">Abscess formation</span></div>
+      <div class="order-item" data-pos="3" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-2')" ondrag="dropOnItem(event,'order-list-2')"><span class="item-grip">≡</span><span class="item-text">Perforation</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-2','fb-order-2')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('ans-order-2')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-order-2"></div>
+    <div class="order-answer" id="ans-order-2">
+      <ol><li><span>Strictures and obstruction</span></li><li><span>Fistula formation</span></li><li><span>Perforation</span></li><li><span>Abscess formation</span></li></ol>
+    </div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 3: Diverticular Disease Complications (Clinical Progression)</div>
+    <div class="drill-hint">Order from initial inflammation through most severe complication.</div>
+    <div class="order-list" id="order-list-3" ondrop="dropItem(event,'order-list-3')" ondragover="dropOnItem(event,'order-list-3')">
+      <div class="order-item" data-pos="3" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-3')" ondrag="dropOnItem(event,'order-list-3')"><span class="item-grip">≡</span><span class="item-text">Perforation and peritonitis</span></div>
+      <div class="order-item" data-pos="1" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-3')" ondrag="dropOnItem(event,'order-list-3')"><span class="item-grip">≡</span><span class="item-text">Acute diverticulitis (localized inflammation)</span></div>
+      <div class="order-item" data-pos="2" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-3')" ondrag="dropOnItem(event,'order-list-3')"><span class="item-grip">≡</span><span class="item-text">Pericolic abscess formation</span></div>
+      <div class="order-item" data-pos="4" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-3')" ondrag="dropOnItem(event,'order-list-3')"><span class="item-grip">≡</span><span class="item-text">Fistulization (colovesical, colovaginal)</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-3','fb-order-3')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('ans-order-3')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-order-3"></div>
+    <div class="order-answer" id="ans-order-3">
+      <ol><li><span>Acute diverticulitis</span> (localized inflammation)</li><li><span>Pericolic abscess formation</span></li><li><span>Perforation and peritonitis</span></li><li><span>Fistulization</span> (colovesical, colovaginal)</li></ol>
+    </div>
+  </div>
+
+  <div class="order-drill">
+    <div class="drill-title">Drill 4: Polyp Malignant Risk Features</div>
+    <div class="drill-hint">Order "Big, Villous, Bad" features by urgency of follow-up.</div>
+    <div class="order-list" id="order-list-4" ondrop="dropItem(event,'order-list-4')" ondragover="dropOnItem(event,'order-list-4')">
+      <div class="order-item" data-pos="3" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-4')" ondrag="dropOnItem(event,'order-list-4')"><span class="item-grip">≡</span><span class="item-text">High-grade dysplasia (Bad)</span></div>
+      <div class="order-item" data-pos="1" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-4')" ondrag="dropOnItem(event,'order-list-4')"><span class="item-grip">≡</span><span class="item-text">Polyp size >10mm (Big)</span></div>
+      <div class="order-item" data-pos="2" draggable="true" ondragstart="dragStart(event)" ondragover="dropOnItem(event,'order-list-4')" ondrag="dropOnItem(event,'order-list-4')"><span class="item-grip">≡</span><span class="item-text">Villous or tubulovillous histology (Villous)</span></div>
+    </div>
+    <div class="order-actions">
+      <button class="order-check-btn" onclick="checkOrder('order-list-4','fb-order-4')">Check Order</button>
+      <button class="order-ghost-btn" onclick="showOrderAnswer('ans-order-4')">Show Answer</button>
+    </div>
+    <div class="order-feedback" id="fb-order-4"></div>
+    <div class="order-answer" id="ans-order-4">
+      <ol><li><span>Polyp size >10mm</span> (Big)</li><li><span>Villous or tubulovillous histology</span> (Villous)</li><li><span>High-grade dysplasia</span> (Bad)</li></ol>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ MATCHING ══════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-matching">
+  <div class="match-intro">
+    <strong>Click items in the left column, then click a match in the right column.</strong> Correct pairs turn green.
+  </div>
+
+  <div class="match-set">
+    <div class="match-set-title">Match 1: IBD Feature → Disease</div>
+    <div class="match-set-hint">Connect each pathologic feature to Crohn or UC.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Feature</div>
+        <div class="match-item" data-pair="pair-1" onclick="selectMatch(this,'match-1')">Transmural inflammation</div>
+        <div class="match-item" data-pair="pair-2" onclick="selectMatch(this,'match-1')">Skip lesions</div>
+        <div class="match-item" data-pair="pair-3" onclick="selectMatch(this,'match-1')">Continuous mucosal involvement</div>
+        <div class="match-item" data-pair="pair-4" onclick="selectMatch(this,'match-1')">Crypt abscesses</div>
+        <div class="match-item" data-pair="pair-5" onclick="selectMatch(this,'match-1')">Noncaseating granulomas</div>
+        <div class="match-item" data-pair="pair-6" onclick="selectMatch(this,'match-1')">Fistulas and strictures</div>
+      </div>
+      <div>
+        <div class="match-col-label">Disease</div>
+        <div class="match-item" data-pair="pair-1" onclick="selectMatch(this,'match-1')">Crohn Disease</div>
+        <div class="match-item" data-pair="pair-3" onclick="selectMatch(this,'match-1')">Ulcerative Colitis</div>
+        <div class="match-item" data-pair="pair-2" onclick="selectMatch(this,'match-1')">Crohn Disease</div>
+        <div class="match-item" data-pair="pair-4" onclick="selectMatch(this,'match-1')">Ulcerative Colitis</div>
+        <div class="match-item" data-pair="pair-5" onclick="selectMatch(this,'match-1')">Crohn Disease</div>
+        <div class="match-item" data-pair="pair-6" onclick="selectMatch(this,'match-1')">Crohn Disease</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="match-1-score">0</span>/6</div>
+    <button class="match-reset-btn" onclick="resetMatch('match-1')">Reset</button>
+  </div>
+
+  <div class="match-set">
+    <div class="match-set-title">Match 2: C. difficile & Diverticular Terms</div>
+    <div class="match-set-hint">Match clinical/pathologic terms to their definitions.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Term</div>
+        <div class="match-item" data-pair="pair-7" onclick="selectMatch(this,'match-2')">Pseudomembrane</div>
+        <div class="match-item" data-pair="pair-8" onclick="selectMatch(this,'match-2')">Volcano lesion</div>
+        <div class="match-item" data-pair="pair-9" onclick="selectMatch(this,'match-2')">Vasa recta</div>
+        <div class="match-item" data-pair="pair-10" onclick="selectMatch(this,'match-2')">Colovesical fistula</div>
+        <div class="match-item" data-pair="pair-11" onclick="selectMatch(this,'match-2')">Pericolic abscess</div>
+      </div>
+      <div>
+        <div class="match-col-label">Definition</div>
+        <div class="match-item" data-pair="pair-7" onclick="selectMatch(this,'match-2')">Yellow-white fibrin + debris coating inflamed mucosa</div>
+        <div class="match-item" data-pair="pair-9" onclick="selectMatch(this,'match-2')">Blood vessel perforations through colonic muscular wall</div>
+        <div class="match-item" data-pair="pair-8" onclick="selectMatch(this,'match-2')">Necrotic epithelial tip erupting into lumen (C. difficile)</div>
+        <div class="match-item" data-pair="pair-11" onclick="selectMatch(this,'match-2')">Fluid collection adjacent to inflamed diverticulum</div>
+        <div class="match-item" data-pair="pair-10" onclick="selectMatch(this,'match-2')">Abnormal tract between colon and bladder</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="match-2-score">0</span>/5</div>
+    <button class="match-reset-btn" onclick="resetMatch('match-2')">Reset</button>
+  </div>
+
+  <div class="match-set">
+    <div class="match-set-title">Match 3: Polyp/CRC Genes & Pathways</div>
+    <div class="match-set-hint">Match genetic mutations to their associated pathways or syndromes.</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-label">Gene/Mutation</div>
+        <div class="match-item" data-pair="pair-12" onclick="selectMatch(this,'match-3')">APC</div>
+        <div class="match-item" data-pair="pair-13" onclick="selectMatch(this,'match-3')">BRAF</div>
+        <div class="match-item" data-pair="pair-14" onclick="selectMatch(this,'match-3')">KRAS</div>
+        <div class="match-item" data-pair="pair-15" onclick="selectMatch(this,'match-3')">p53</div>
+        <div class="match-item" data-pair="pair-16" onclick="selectMatch(this,'match-3')">Lynch syndrome (MMR)</div>
+      </div>
+      <div>
+        <div class="match-col-label">Pathway/Feature</div>
+        <div class="match-item" data-pair="pair-12" onclick="selectMatch(this,'match-3')">Adenoma-carcinoma sequence (CIN); FAP germline</div>
+        <div class="match-item" data-pair="pair-14" onclick="selectMatch(this,'match-3')">Oncogene activation in adenomas</div>
+        <div class="match-item" data-pair="pair-15" onclick="selectMatch(this,'match-3')">Loss of tumor suppressor (late in adenoma-CA sequence)</div>
+        <div class="match-item" data-pair="pair-13" onclick="selectMatch(this,'match-3')">Serrated pathway (BRAF → CIMP → MSI)</div>
+        <div class="match-item" data-pair="pair-16" onclick="selectMatch(this,'match-3')">Microsatellite instability (MSI); mismatch repair defect</div>
+      </div>
+    </div>
+    <div class="match-score">Score: <span class="correct-count" id="match-3-score">0</span>/5</div>
+    <button class="match-reset-btn" onclick="resetMatch('match-3')">Reset</button>
+  </div>
+
+</div>
+
+<!-- ══ TEST TRAPS ═════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-traps">
+  <div class="trap-intro">
+    <strong>Each statement below may be true or false.</strong> Click TRUE or FALSE, then see the explanation.
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 1</div>
+    <div class="trap-statement">Ulcerative colitis can involve the entire GI tract, including the small bowel and proximal colon, with skip lesions.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> UC is characterized by <strong>continuous mucosal involvement starting at the rectum</strong> and extending proximally—no skip lesions. The terminal ileum is typically spared. Transmural involvement and skip lesions are hallmarks of <strong>Crohn disease</strong>, not UC.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 2</div>
+    <div class="trap-statement">Pseudomembranous colitis is always caused by antibiotic use.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> While <strong>antibiotic-associated C. difficile is most common</strong>, C. difficile colitis can occur without recent antibiotics—especially in hospitalized or immunocompromised patients. Antibiotics are a major risk factor but not required.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 3</div>
+    <div class="trap-statement">True diverticula include only the mucosa herniated through the muscular wall.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> <strong>False diverticula</strong> (most common in colon) include only mucosa + submucosa. <strong>True diverticula</strong> (found in small bowel) include all layers. Colonic diverticula are false—herniation occurs at vasa recta weak points.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 4</div>
+    <div class="trap-statement">The adenoma-carcinoma sequence is driven primarily by BRAF mutations and microsatellite instability.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> The classic adenoma-carcinoma sequence is driven by <strong>APC → KRAS → p53</strong> mutations (CIN pathway). BRAF mutations and MSI characterize the <strong>serrated pathway</strong> (sessile serrated polyps), which is a different route to CRC.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 5</div>
+    <div class="trap-statement">Right-sided colorectal cancers typically present with obstructive symptoms and "apple-core" appearance on imaging.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> <strong>Left-sided CRCs</strong> present with obstruction and apple-core strictures because the left colon has a narrower lumen. <strong>Right-sided CRCs</strong> have a larger lumen and typically present with anemia and occult blood, not obstruction.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 6</div>
+    <div class="trap-statement">Tubular adenomas have the highest malignant potential and require the most aggressive surveillance.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> <strong>Villous and tubulovillous adenomas</strong> have higher malignant potential. Tubular adenomas are the most common but have <strong>lowest risk</strong>. The "Big, Villous, Bad" rule captures high-risk features: large size, villous histology, and high-grade dysplasia.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 7</div>
+    <div class="trap-statement">Toxic megacolon is a specific complication of Crohn disease and does not occur in ulcerative colitis.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,false)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,false)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>FALSE.</strong> Toxic megacolon can occur in <strong>both Crohn disease and UC</strong> during severe, fulminant flares. It also occurs with fulminant C. difficile colitis. It is not pathognomonic for Crohn disease.
+    </div>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-num">Trap 8</div>
+    <div class="trap-statement">MSI-high colorectal cancers are responsive to checkpoint inhibitors like pembrolizumab.</div>
+    <div class="trap-btns">
+      <button class="trap-btn trap-btn-true" onclick="judgeTrap(this,true)">TRUE</button>
+      <button class="trap-btn trap-btn-false" onclick="judgeTrap(this,true)">FALSE</button>
+    </div>
+    <div class="trap-exp">
+      <strong>TRUE.</strong> <strong>MSI-high tumors</strong> have high mutational burden and are responsive to immune checkpoint inhibitors (pembrolizumab, nivolumab). This is a key insight: serrated pathway CRCs with MSI may respond better to immunotherapy than CIN-pathway CRCs.
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ REFERENCE ══════════════════════════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-reference">
+
+  <div class="ref-section">
+    <div class="ref-title">Crohn Disease vs Ulcerative Colitis Comparison</div>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Crohn Disease</th>
+          <th>Ulcerative Colitis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">Pattern of inflammation</td>
+          <td>Skip lesions (patchy)</td>
+          <td>Continuous from rectum</td>
+        </tr>
+        <tr>
+          <td class="key">Depth of involvement</td>
+          <td>Transmural (all layers)</td>
+          <td>Mucosa + submucosa only</td>
+        </tr>
+        <tr>
+          <td class="key">Location</td>
+          <td>Terminal ileum > colon; can involve entire GI tract</td>
+          <td>Colon + rectum; starts at rectum</td>
+        </tr>
+        <tr>
+          <td class="key">Histology</td>
+          <td>Noncaseating granulomas, fissuring ulcers</td>
+          <td>Crypt abscesses, goblet cell loss, pseudopolyps</td>
+        </tr>
+        <tr>
+          <td class="key">Key complications</td>
+          <td>Fistulas, strictures, abscesses, perforation</td>
+          <td>Toxic megacolon, fulminant colitis, CRC</td>
+        </tr>
+        <tr>
+          <td class="key">Extraintestinal manifestations</td>
+          <td>Arthropathy, erythema nodosum, aphthous ulcers, pyoderma, uveitis</td>
+          <td>PSC (very common), arthropathy, erythema nodosum</td>
+        </tr>
+        <tr>
+          <td class="key">Mnemonic</td>
+          <td>CHRISTMAS (Cobblestone, Holes, Rectal bleed, Ileitis, Strictures, Transmural, Mucosal patchiness, Abdominal pain, Sigma spared)</td>
+          <td>ULCCCERS (Ulceration, Loss of goblet cells, Continuous, Cryptitis, Crypt abscess, Epithelial necrosis, Rectum, Stricture rare)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ref-note">
+      <strong>Key distinction:</strong> Crohn = transmural + skip lesions + complications (fistula, stricture). UC = mucosal + continuous + CRC/PSC risk. Both are chronic inflammatory bowel diseases with extraintestinal manifestations.
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Pseudomembranous Colitis (C. difficile) Essentials</div>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">Causative organism</td>
+          <td>Gram+ anaerobic spore-forming rod; toxigenic strains produce Toxins A & B</td>
+        </tr>
+        <tr>
+          <td class="key">Risk factors (4 Cs)</td>
+          <td><strong>Clindamycin, Cephalosporins, fluoroquinolones, prolonged antibiotics</strong> (also vancomycin); Hospitalization; Age >65; Immunosuppression</td>
+        </tr>
+        <tr>
+          <td class="key">Pathology</td>
+          <td>Volcano lesions (necrotic epithelial eruptions), pseudomembranes (yellow-white fibrin), no granulomas</td>
+        </tr>
+        <tr>
+          <td class="key">Diagnosis</td>
+          <td>Stool NAAT/PCR (most sensitive), toxin detection (EIA A/B), colonoscopy with pseudomembranes</td>
+        </tr>
+        <tr>
+          <td class="key">Treatment (mild-moderate)</td>
+          <td><strong>Oral vancomycin 125mg QID or fidaxomicin 200mg BID</strong> (not IV vanco—poor intraluminal levels)</td>
+        </tr>
+        <tr>
+          <td class="key">Treatment (fulminant)</td>
+          <td>Oral vancomycin + IV metronidazole; consider vancomycin enema; possible colectomy if perforation/toxic megacolon</td>
+        </tr>
+        <tr>
+          <td class="key">Recurrent infection</td>
+          <td>Fecal microbiota transplantation (FMT) 85–90% cure rate</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ref-note">
+      <strong>Teaching point:</strong> Oral vancomycin is preferred because high intraluminal concentrations are needed; IV vanco does not achieve adequate colon levels.
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Diverticular Disease Summary</div>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">Definition</td>
+          <td>False (pseudo) diverticula: herniation of mucosa + submucosa through muscular layer at vasa recta weak points</td>
+        </tr>
+        <tr>
+          <td class="key">Epidemiology</td>
+          <td>Sigmoid > left colon > right colon (West); right colon more common in Asia; increased with age, low fiber, NSAIDs</td>
+        </tr>
+        <tr>
+          <td class="key">Pathophysiology</td>
+          <td>Small luminal radius → high intraluminal pressure (Laplace law); taeniae coli create weak points; herniation at vasa recta</td>
+        </tr>
+        <tr>
+          <td class="key">Diverticulitis presentation</td>
+          <td><strong>LLQ pain</strong>, fever, elevated WBC; may progress to abscess, perforation, fistula, or stricture</td>
+        </tr>
+        <tr>
+          <td class="key">Diverticular bleeding</td>
+          <td>Painless hematochezia; often stops spontaneously; managed conservatively; angiography or surgery if recurrent</td>
+        </tr>
+        <tr>
+          <td class="key">Complications</td>
+          <td>Pericolic abscess, perforation, peritonitis, colovesical/colovaginal fistula, stricture</td>
+        </tr>
+        <tr>
+          <td class="key">Prevention</td>
+          <td>High-fiber diet, adequate hydration, avoid NSAIDs</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ref-note">
+      <strong>Clinical pearl:</strong> Most diverticulosis is asymptomatic and discovered incidentally. Acute diverticulitis is infection/inflammation of a diverticulum; uncomplicated cases managed medically; complicated cases (perforation, peritonitis) require surgery.
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <div class="ref-title">Adenoma-Carcinoma Progression & Polyp Classification</div>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Polyp Type</th>
+          <th>Histology</th>
+          <th>Malignant Risk</th>
+          <th>Molecular Pathway</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">Tubular adenoma</td>
+          <td>Tubular glands, regular architecture</td>
+          <td>Lowest</td>
+          <td>APC → KRAS → p53 (CIN)</td>
+        </tr>
+        <tr>
+          <td class="key">Villous adenoma</td>
+          <td>Finger-like villi, complex architecture</td>
+          <td><strong>Highest</strong></td>
+          <td>APC → KRAS → p53 (CIN)</td>
+        </tr>
+        <tr>
+          <td class="key">Tubulovillous</td>
+          <td>Mixed tubular + villous</td>
+          <td>Intermediate</td>
+          <td>APC → KRAS → p53 (CIN)</td>
+        </tr>
+        <tr>
+          <td class="key">Sessile serrated</td>
+          <td>Saw-tooth pattern, shallow crypts</td>
+          <td>Moderate-high (faster progression)</td>
+          <td>BRAF → CIMP → MSI (serrated)</td>
+        </tr>
+        <tr>
+          <td class="key">Hyperplastic</td>
+          <td>Small, elongated crypts, minimal dysplasia</td>
+          <td>Very low</td>
+          <td>None (benign)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ref-note">
+      <strong>Big, Villous, Bad rule:</strong> Adenomas >10mm, villous histology, or high-grade dysplasia have higher CRC risk and shorter surveillance intervals (3 years or sooner). Sessile serrated lesions require aggressive follow-up due to faster progression.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>GI28 Hub 1 — Core Concepts</strong><br>
+  <a href="https://strettyit10.github.io/Block4-GI/">HoyaDocs GI Block</a> | Study resource — not a substitute for lectures or official curriculum
+</div>
+
+</div>
+
+<script>
+function fixCardHeights(){let maxH=0;document.querySelectorAll('.fc').forEach(fc=>{const front=fc.querySelector('.fc-front');const back=fc.querySelector('.fc-back');if(front&&back){maxH=Math.max(maxH,front.scrollHeight,back.scrollHeight);}});if(maxH>0){document.querySelectorAll('.fc-inner').forEach(inner=>{inner.style.height=maxH+'px';});}}
+function flipCard(el){el.classList.toggle('flipped');}
+window.addEventListener('load',function(){fixCardHeights();});
+window.addEventListener('resize',function(){fixCardHeights();});
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='flashcards') requestAnimationFrame(fixCardHeights);
+}
+function checkFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  const fb=card.querySelector('.fib-feedback');
+  let allCorrect=true;
+  inputs.forEach(inp=>{
+    const val=inp.value.trim().toLowerCase();
+    const accepted=inp.dataset.answers.split(',').map(a=>a.trim().toLowerCase());
+    if(accepted.some(a=>val.includes(a)||a.includes(val)&&val.length>2)){
+      inp.classList.remove('incorrect');inp.classList.add('correct');
+    } else {
+      inp.classList.remove('correct');inp.classList.add('incorrect');allCorrect=false;
+    }
+  });
+  fb.className='fib-feedback '+(allCorrect?'correct':'incorrect');
+  fb.textContent=allCorrect?'✓ Correct!':'✗ Not quite — use Reveal to see the answer.';
+}
+function revealFib(btn){
+  const card=btn.closest('.fib-card');
+  const inputs=card.querySelectorAll('.fib-input');
+  inputs.forEach(inp=>{
+    const ans=inp.dataset.answers.split(',')[0];
+    inp.value=ans;inp.classList.add('correct');inp.classList.remove('incorrect');
+  });
+  const fb=card.querySelector('.fib-feedback');
+  fb.className='fib-feedback correct';fb.textContent='Answer revealed.';
+}
+let dragSrc=null;
+function dragStart(e){dragSrc=e.currentTarget;e.dataTransfer.effectAllowed='move';}
+function dropOnItem(e,listId){
+  e.preventDefault();e.stopPropagation();
+  const target=e.currentTarget;target.classList.remove('drag-over');
+  if(!dragSrc||dragSrc===target)return;
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  const srcIdx=items.indexOf(dragSrc);
+  const tgtIdx=items.indexOf(target);
+  if(srcIdx<tgtIdx)list.insertBefore(dragSrc,target.nextSibling);
+  else list.insertBefore(dragSrc,target);
+}
+function dropItem(e,listId){e.preventDefault();}
+function checkOrder(listId,fbId){
+  const list=document.getElementById(listId);
+  const items=Array.from(list.children);
+  let correct=0;
+  items.forEach((item,idx)=>{
+    item.classList.remove('correct-pos','wrong-pos');
+    if(parseInt(item.dataset.pos)===idx+1){item.classList.add('correct-pos');correct++;}
+    else item.classList.add('wrong-pos');
+  });
+  const fb=document.getElementById(fbId);
+  fb.className='order-feedback '+(correct===items.length?'correct':'incorrect');
+  fb.textContent=correct===items.length?`✓ Perfect! All ${items.length} items in the correct order.`:`${correct}/${items.length} correct — keep trying or show the answer.`;
+}
+function showOrderAnswer(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+let matchState={};
+function selectMatch(el,setId){
+  if(el.classList.contains('matched-correct'))return;
+  if(!matchState[setId])matchState[setId]={selected:null,score:0};
+  const state=matchState[setId];
+  if(state.selected===null){
+    document.querySelectorAll(`[onclick*="${setId}"].selected`).forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');state.selected=el;
+  } else {
+    const prev=state.selected;
+    if(prev===el){el.classList.remove('selected');state.selected=null;return;}
+    if(prev.dataset.pair===el.dataset.pair){
+      prev.classList.remove('selected');prev.classList.add('matched-correct');
+      el.classList.add('matched-correct');state.selected=null;state.score++;
+      document.getElementById(setId+'-score').textContent=state.score;
+    } else {
+      [prev,el].forEach(e=>{e.classList.remove('selected');e.classList.add('flash-wrong');setTimeout(()=>e.classList.remove('flash-wrong'),500);});
+      state.selected=null;
+    }
+  }
+}
+function resetMatch(setId){
+  matchState[setId]={selected:null,score:0};
+  document.querySelectorAll(`[onclick*="${setId}"]`).forEach(e=>{e.classList.remove('matched-correct','selected','flash-wrong');});
+  document.getElementById(setId+'-score').textContent='0';
+}
+function judgeTrap(btn,correct){
+  const card=btn.closest('.trap-card');
+  const btns=card.querySelectorAll('.trap-btn');
+  btns.forEach(b=>b.disabled=true);
+  const userSaidTrue=btn.classList.contains('trap-btn-true');
+  const isCorrect=(userSaidTrue===correct);
+  btn.classList.add(isCorrect?'sel-correct':'sel-wrong');
+  const exp=card.querySelector('.trap-exp');
+  exp.className='trap-exp '+(isCorrect?'show-c':'show-w');
+}
+</script>
+</body>
+</html>
