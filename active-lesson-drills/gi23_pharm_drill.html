@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GI Pharm Drill</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:#fff;color:#111;padding:24px 32px;font-size:14.5px;line-height:1.55;max-width:1280px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:3px solid #1e3a8a}
+.title{font-size:28px;font-weight:800;color:#1e3a8a;display:flex;align-items:center;gap:10px}
+.title .emo{font-size:26px}
+.chips{margin-top:8px;color:#64748b;font-size:13.5px}
+.chip{margin-right:6px}
+.key-btn{background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:700;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.key-btn:hover{background:#166534}
+.intro{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:11px 15px;margin-bottom:20px;font-size:13.5px;color:#1e40af}
+.intro strong{display:block;margin-bottom:2px;font-size:14.5px}
+.tab-hdr{font-size:18px;font-weight:800;color:#fff;letter-spacing:.04em;margin:28px 0 14px;padding:12px 18px;background:linear-gradient(90deg,#1e3a8a 0%,#1D4ED8 100%);border-radius:8px;text-transform:uppercase;box-shadow:0 2px 4px rgba(30,58,138,.18)}
+.sub-hdr{font-size:12.5px;font-weight:800;color:#fff;letter-spacing:.04em;margin:24px 0 12px;padding:8px 14px;background:#1e3a8a;border-left:5px solid #f59e0b;border-radius:4px;text-transform:uppercase;box-shadow:0 1px 2px rgba(30,58,138,.18)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px}
+.qa{background:#fff;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden}
+.qa .q{font-size:12.5px;font-weight:700;color:#334155;letter-spacing:.03em;padding:9px 13px 5px;text-transform:uppercase;line-height:1.4}
+.qa .a{border-left:3px solid #1D4ED8;background:#f8fafc;padding:9px 13px;min-height:48px}
+.qa .a input,.qa .a textarea{width:100%;border:none;background:transparent;outline:none;font-size:13.5px;color:#1e293b;font-family:inherit;resize:vertical;line-height:1.55}
+.qa .a textarea{min-height:52px}
+.qa .a input:focus,.qa .a textarea:focus{outline:2px solid #93c5fd;border-radius:3px}
+.a .num{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.a .num:last-child{margin-bottom:0}
+.a .num .n{font-weight:700;color:#1D4ED8;font-size:12.5px;min-width:20px;flex-shrink:0}
+.a .num input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:2px 0;font-family:inherit;line-height:1.55}
+.a .num input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+/* Two-part Q/A */
+.a .part{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.a .part:last-child{margin-bottom:0}
+.a .part label{font-weight:700;color:#1D4ED8;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;padding-top:3px;min-width:78px;flex-shrink:0}
+.a .part input,.a .part textarea{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:2px 0;font-family:inherit;line-height:1.55}
+.a .part textarea{border:1.5px dashed #cbd5e1;border-radius:4px;padding:4px 6px;min-height:40px;resize:vertical}
+.a .part input:focus,.a .part textarea:focus{border-bottom-color:#1D4ED8;border-color:#1D4ED8;border-style:solid;outline:none}
+/* Mnemonic rows */
+.a.mnem{display:flex;flex-direction:column;gap:6px}
+.a.mnem .mrow{display:flex;align-items:center;gap:10px}
+.a.mnem .mkey{font-weight:800;color:#fff;background:#1D4ED8;font-size:13.5px;min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.a.mnem .mrow input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:3px 0;font-family:inherit}
+.a.mnem .mrow input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+/* Mechanism with arrows */
+.a.mech{display:flex;flex-direction:column;gap:4px}
+.a.mech .mstep{display:flex;align-items:center;gap:8px}
+.a.mech .snum{font-weight:800;color:#1D4ED8;font-size:12px;min-width:24px;flex-shrink:0}
+.a.mech .mstep input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:3px 0;font-family:inherit}
+.a.mech .mstep input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+.a.mech .arrow{text-align:center;color:#1D4ED8;font-weight:800;font-size:16px;line-height:1;padding:2px 0 2px 32px}
+/* Hint */
+.hintcell{position:relative}
+.hint-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#fef3c7;color:#92400e;border:1px solid #fbbf24;cursor:pointer;font-size:11px;font-weight:800;margin-left:6px;vertical-align:middle;font-family:inherit;flex-shrink:0}
+.hint-btn:hover{background:#fde68a}
+.hint-row{display:flex;align-items:center;gap:4px}
+.hint-row input{flex:1}
+.hint-txt{display:none;font-size:12px;color:#92400e;background:#fffbeb;border-left:3px solid #f59e0b;padding:5px 9px;margin-top:5px;border-radius:0 4px 4px 0;font-style:italic;line-height:1.45}
+.hint-txt.show{display:block}
+table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:13px;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden}
+th{background:#eff6ff;text-align:left;padding:9px 11px;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:#1e40af;border-bottom:1px solid #bfdbfe;font-weight:700}
+td{padding:8px 11px;border-top:1px solid #e2e8f0;vertical-align:top;font-size:13px}
+td.rl{font-weight:700;color:#1e293b;background:#f8fafc;white-space:nowrap}
+td input{width:100%;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13px;color:#1e293b;padding:2px 0;font-family:inherit}
+td input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid}
+.trap{background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:11px 15px;margin:10px 0 14px;font-size:13px;color:#78350f}
+.trap-hdr{font-weight:800;color:#92400e;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.trap textarea{width:100%;border:1px solid #fbbf24;background:#fffbeb;border-radius:4px;padding:6px 9px;font-size:13px;color:#78350f;outline:none;font-family:inherit;resize:vertical;min-height:48px;line-height:1.5}
+.trap textarea:focus{border-color:#f59e0b}
+.tri{background:#fee2e2;border-left:4px solid #dc2626;border-radius:0 6px 6px 0;padding:11px 15px;margin:10px 0 14px;font-size:13px;color:#7f1d1d}
+.tri-hdr{font-weight:800;color:#991b1b;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.tri textarea{width:100%;border:1px solid #fca5a5;background:#fff;border-radius:4px;padding:6px 9px;font-size:13px;color:#7f1d1d;outline:none;font-family:inherit;resize:vertical;min-height:48px;line-height:1.5}
+.note{font-size:12px;color:#64748b;font-style:italic;margin:4px 0 8px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:18px;border-bottom:2px solid #1e3a8a;padding-bottom:0;position:sticky;top:0;background:#fff;z-index:10;padding-top:6px}
+.tab{padding:10px 18px;border-radius:8px 8px 0 0;border:1.5px solid #cbd5e1;border-bottom:none;background:#f8fafc;color:#475569;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.tab:hover{background:#eff6ff;color:#1e3a8a;border-color:#bfdbfe}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8;box-shadow:0 -2px 4px rgba(29,78,216,.15)}
+.panel{display:none}
+.panel.active{display:block;animation:fadeIn .2s ease-in}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:820px){body{padding:14px}.grid2,.grid3{grid-template-columns:1fr}.title{font-size:22px}.tab-hdr{font-size:15px;padding:10px 12px}.sub-hdr{font-size:12.5px}table{display:block;overflow-x:auto}.tabs{position:static}.tab{padding:7px 10px;font-size:12px}}
+</style></head><body>
+
+<div class="top">
+  <div>
+    <div class="title"><span class="emo">💊</span> Lecture 23 — GI Pharmacology</div>
+    <div class="chips">Acid Suppression · H. pylori · GERD · Cytoprotection · Antiemetics · Antidiarrheals · Laxatives · IBD Biologics</div>
+  </div>
+  <a class="key-btn" href="gi23_pharm_key.html" target="_blank">✅ View Answer Key</a>
+</div>
+
+<div class="intro">
+  <strong>GI Pharmacology — Active Recall Drill</strong>
+  Close notes. Fill from memory. Check against the answer key (opens in new window). High-yield focus: parietal cell targets, PPI vs P-CAB, H. pylori quadruple therapy, vomiting reflex receptors, antiemetic class selection, laxative onset/class, IBD biologic targets.
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="sw(0)">1 · Acid Suppression</button>
+  <button class="tab" onclick="sw(1)">2 · H. pylori &amp; Cytoprotection</button>
+  <button class="tab" onclick="sw(2)">3 · GERD</button>
+  <button class="tab" onclick="sw(3)">4 · Vomiting &amp; Antiemetics</button>
+  <button class="tab" onclick="sw(4)">5 · Antidiarrheals &amp; Laxatives</button>
+  <button class="tab" onclick="sw(5)">6 · IBD Biologics</button>
+</div>
+
+<!-- ═══════════════════════ TAB 1 ═══════════════════════ -->
+<div class="panel active">
+<div class="sub-hdr">Parietal Cell Targets</div>
+<div class="grid2">
+  <div class="qa"><div class="q">3 Stimulatory Inputs to Parietal Cell (NT → Receptor → Cell of Origin)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Final Common Pump Blocked by PPIs/P-CABs</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Why Anticholinergics Are Rarely Used for Acid Suppression</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Which Target Has the Most Potent Acid Suppression?</div><div class="a"><input></div></div>
+</div>
+
+<div class="sub-hdr">H₂ Receptor Antagonists ("-tidines")</div>
+<table>
+  <thead><tr><th style="width:18%">Drug</th><th>Unique Feature</th><th>Key ADR / Concern</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Cimetidine</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: CYP450 inhibitor + anti-androgen effects.</div></td><td><input></td></tr>
+    <tr><td class="rl">Ranitidine</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: withdrawn from market — contamination issue.</div></td><td><input></td></tr>
+    <tr><td class="rl">Famotidine</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: most potent H₂ blocker, minimal CYP interactions.</div></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">MOA of H₂ Blockers (Mechanism Class, Reversibility)</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Receptor target on parietal cell"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Reversibility (reversible/irreversible)"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Net effect on gastric acid secretion"></div></div></div>
+  <div class="qa"><div class="q">Key Limitation of Long-Term H₂ Blocker Use</div><div class="a"><textarea></textarea></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — CIMETIDINE DRUG INTERACTIONS</div>
+  <textarea placeholder="Fill in: which CYPs, which drugs affected, and the clinical consequence"></textarea>
+</div>
+
+<div class="sub-hdr">Proton Pump Inhibitors ("-prazoles")</div>
+<div class="grid2">
+  <div class="qa"><div class="q">MOA (Complete Chain — Prodrug → Activation → Binding Type)</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Prodrug form + absorption"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Where/how activated"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Molecular target + binding type"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">4.</span><input placeholder="Net effect on acid secretion"></div></div></div>
+  <div class="qa"><div class="q">When Must PPIs Be Taken (Meal Timing)? Why?</div><div class="a"><div class="part"><label>When:</label><input></div><div class="part"><label>Why:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Why No Tolerance Develops (vs H₂ Blockers)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">PPI with LEAST CYP450 Interactions</div><div class="a"><input></div></div>
+</div>
+<table>
+  <thead><tr><th style="width:22%">PPI</th><th>CYP Effects / Notes</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Omeprazole / Esomeprazole</td><td><input></td></tr>
+    <tr><td class="rl">Pantoprazole</td><td><input></td></tr>
+    <tr><td class="rl">Lansoprazole</td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">5 Long-Term PPI Adverse Effects</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div><div class="num"><span class="n">4.</span><input></div><div class="num"><span class="n">5.</span><input></div></div></div>
+  <div class="qa"><div class="q">Mechanism — Why PPIs Cause B12 Deficiency</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Drug effect on gastric acid"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Required step for B12 absorption that fails"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Where B12 is absorbed + clinical result"></div></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — PPI + CLOPIDOGREL</div>
+  <textarea placeholder="Which PPIs? Which CYP? What happens to clopidogrel effect? Preferred alternative?"></textarea>
+</div>
+
+<div class="sub-hdr">P-CABs (Potassium-Competitive Acid Blockers)</div>
+<table>
+  <thead><tr><th style="width:22%">Feature</th><th>PPIs</th><th>P-CABs (e.g., Vonoprazan)</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Binding</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Requires Acid Activation?</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Onset</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Meal-Timing Required?</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Antacids</div>
+<table>
+  <thead><tr><th style="width:22%">Antacid</th><th>Key Side Effect</th><th>Unique Fact</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Aluminum Hydroxide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: binds phosphate in gut — used in CKD hyperphosphatemia.</div></td></tr>
+    <tr><td class="rl">Magnesium Hydroxide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: "Milk of Magnesia" — also used as an osmotic laxative.</div></td></tr>
+    <tr><td class="rl">Calcium Carbonate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: rebound acid + a named syndrome from chronic excess use.</div></td></tr>
+    <tr><td class="rl">Sodium Bicarbonate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: fastest onset + risk of systemic alkalosis and Na⁺ load.</div></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Mnemonic: Mg vs Al GI Effect</div><div class="a mnem"><div class="mrow"><span class="mkey">M</span><input placeholder="Mg = __ (word 1)"></div><div class="mrow"><span class="mkey">G</span><input placeholder="Mg = M__ G__ (word 2 + effect)"></div><div class="mrow"><span class="mkey">A</span><input placeholder="Al = __ (word 1)"></div><div class="mrow"><span class="mkey">L</span><input placeholder="Al = A__ L__ (word 2 + effect)"></div></div></div>
+  <div class="qa"><div class="q">Milk-Alkali Syndrome — Triad + Causative Antacid</div><div class="a"><div class="part"><label>Triad 1:</label><input></div><div class="part"><label>Triad 2:</label><input></div><div class="part"><label>Triad 3:</label><input></div><div class="part"><label>Antacid:</label><input></div></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — ANTACID DRUG INTERACTIONS</div>
+  <textarea placeholder="Which drugs have ↓ absorption with antacids? What's the spacing rule?"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 2 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">H. pylori — Virulence & Diagnosis</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Key Virulence Enzyme + Mechanism of Acid Survival</div><div class="a"><div class="part"><label>Enzyme:</label><input></div><div class="part"><label>Mechanism:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Long-Term Complications of Untreated H. pylori (2)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">Gold-Standard Non-Invasive Dx Test + How It Works</div><div class="a"><div class="part"><label>Test:</label><input></div><div class="part"><label>Mechanism:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Why Serology (IgG) Is NOT Used to Confirm Eradication</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Treatment Regimens</div>
+<table>
+  <thead><tr><th style="width:22%">Regimen</th><th>Drugs (all 4 / all 3)</th><th>Duration / When Used</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Quadruple Therapy (preferred, 1st-line)</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Triple Therapy (older, falling out of favor)</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Why Is Triple Therapy Falling Out of Favor?</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">PPI's Dual Role in H. pylori Therapy</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">Post-Treatment Retesting: When? Which Test(s)?</div><div class="a"><div class="part"><label>When:</label><input></div><div class="part"><label>Test(s):</label><input></div></div></div>
+  <div class="qa"><div class="q">Bismuth in Quadruple Therapy — Why Added? (2 roles)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+</div>
+
+<div class="sub-hdr">Cytoprotective Agents</div>
+<table>
+  <thead><tr><th style="width:18%">Drug</th><th>MOA</th><th>Key Use / Unique Fact</th><th>Contraindication / ADR</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Sucralfate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: requires acidic pH — don't co-administer with PPI/H₂ blocker.</div></td><td><input></td></tr>
+    <tr><td class="rl">Misoprostol</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: PGE₁ analog — prevents NSAID ulcers, used in OB for labor induction.</div></td><td><input></td></tr>
+    <tr><td class="rl">Bismuth subsalicylate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: black stools + black tongue; part of quadruple H. pylori therapy.</div></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — MISOPROSTOL IN PREGNANCY</div>
+  <textarea placeholder="Why contraindicated? What is it used for therapeutically in obstetrics? Pregnancy category?"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 3 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">GERD Pathophysiology</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Primary Mechanical Defect in GERD</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Normal LES Resting Pressure (mmHg)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">3 Normal Esophageal Defense Mechanisms</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Progression: Chronic GERD → ??? → ??? (name both)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+</div>
+
+<div class="sub-hdr">Factors That Reduce LES Pressure (Drug/Food)</div>
+<table>
+  <thead><tr><th style="width:22%">Category</th><th>Examples to List</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Dietary (≥4)</td><td><input></td></tr>
+    <tr><td class="rl">Drugs (≥5 classes)</td><td><input></td></tr>
+    <tr><td class="rl">Systemic disease</td><td><input></td></tr>
+    <tr><td class="rl">Physiologic</td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Stepwise Treatment</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Step 1 (Lifestyle)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Step 2 (On-Demand Drug Class)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Step 3 (Mild/Intermittent Symptoms)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Step 4 (Frequent/Severe or Erosive)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Step 5 (Refractory / Failed BID PPI)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Surgical Option for Refractory GERD</div><div class="a"><input></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — DRUG-INDUCED GERD</div>
+  <textarea placeholder="Name 5 common classes that lower LES pressure and worsen GERD"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 4 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">Vomiting Reflex — 4 Centers & Receptor Profiles</div>
+<table>
+  <thead><tr><th style="width:22%">Center</th><th>Location / Feature</th><th>Key Receptors</th><th>Stimulus</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Emetic Center</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">CTZ (Area Postrema)</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">NTS (Nucleus Tractus Solitarius)</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Vestibular System</td><td><input></td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Why Is the CTZ Uniquely Accessible to Blood-Borne Toxins?</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Which 2 Receptors Dominate Motion Sickness (Vestibular)?</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+</div>
+
+<div class="sub-hdr">Antiemetic Classes</div>
+<table>
+  <thead><tr><th style="width:20%">Class</th><th>Prototype Drug(s)</th><th>Best Use</th><th>Key ADR</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">5-HT₃ Antagonists</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">NK₁ Antagonists</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">D₂ Antagonists</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">H₁ Antagonists</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">M₁ Antagonists</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Cannabinoids</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Corticosteroids</td><td><input></td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Best Regimen for Chemo-Induced N/V (Acute, Triple Therapy — 3 drug classes)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Ondansetron Key ADR to Monitor on ECG</div><div class="a"><input></div></div>
+</div>
+
+<div class="sub-hdr">Prokinetics</div>
+<table>
+  <thead><tr><th style="width:20%">Drug</th><th>MOA (Dual)</th><th>Clinical Use</th><th>Key ADR / Black Box</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Metoclopramide</td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Erythromycin</td><td><input></td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — METOCLOPRAMIDE IN PARKINSON'S</div>
+  <textarea placeholder="Why contraindicated? What's the mechanism?"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 5 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">Antidiarrheal Agents</div>
+<table>
+  <thead><tr><th style="width:20%">Drug</th><th>MOA</th><th>Key Use / Unique Fact</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Loperamide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: OTC; P-glycoprotein keeps it out of CNS at therapeutic doses.</div></td></tr>
+    <tr><td class="rl">Diphenoxylate/Atropine</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: why is atropine added? (Schedule V controlled drug.)</div></td></tr>
+    <tr><td class="rl">Bismuth subsalicylate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: traveler's diarrhea + avoid in children (Reye syndrome — salicylate).</div></td></tr>
+    <tr><td class="rl">Octreotide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: somatostatin analog — VIPoma, carcinoid, variceal bleeding.</div></td></tr>
+    <tr><td class="rl">Rifaximin</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: non-absorbable — hepatic encephalopathy (↓ NH₃-producing flora).</div></td></tr>
+  </tbody>
+</table>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — LOPERAMIDE IN C. DIFFICILE / EHEC</div>
+  <textarea placeholder="Why is antimotility contraindicated in inflammatory/infectious diarrhea?"></textarea>
+</div>
+
+<div class="sub-hdr">Laxatives by Class</div>
+<table>
+  <thead><tr><th style="width:20%">Class</th><th>Prototype Drug(s)</th><th>Onset</th><th>MOA / Unique Fact</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Bulk-Forming</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: absorb water → ↑ stool bulk; safest for chronic use.</div></td></tr>
+    <tr><td class="rl">Osmotic</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: lactulose also traps NH₃ in gut (hepatic encephalopathy).</div></td></tr>
+    <tr><td class="rl">Stimulant</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: long-term use → melanosis coli (benign pigmentation).</div></td></tr>
+    <tr><td class="rl">Stool Softener</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: surfactant — limited efficacy; prophylactic use.</div></td></tr>
+    <tr><td class="rl">Cl⁻ Channel Activator</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: ClC-2 channel activator — used in IBS-C / opioid-induced constipation.</div></td></tr>
+    <tr><td class="rl">Guanylate Cyclase-C Agonist</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: ↑ cGMP → ↑ Cl⁻/HCO₃⁻ secretion; for IBS-C.</div></td></tr>
+    <tr><td class="rl">PAMORA (peripheral μ-opioid antag.)</td><td><input></td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: excluded from CNS → doesn't reverse central analgesia.</div></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Lactulose Dual Use — Laxative AND ???</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Why Do PAMORAs NOT Reverse Central Analgesia?</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 6 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">IBD Treatment Pyramid (Bottom = Mild → Top = Severe)</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Step 1 (Mildest)</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Step 2 (Induction only — NOT maintenance; why?)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Step 3 (Immunomodulators — name 2)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">Step 4 (Biologics — 3 target categories)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Step 5 (Last-Line)</div><div class="a"><input></div></div>
+</div>
+
+<div class="sub-hdr">5-ASAs (Mesalamine & Related)</div>
+<div class="grid2">
+  <div class="qa"><div class="q">MOA (Local Anti-Inflammatory)</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Site of action + delivery"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Eicosanoid / ROS / NF-κB effects"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Net anti-inflammatory result"></div></div></div>
+  <div class="qa"><div class="q">More Effective in UC or CD? Why?</div><div class="a"><div class="part"><label>UC or CD:</label><input></div><div class="part"><label>Why:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Sulfasalazine — What Is the 2nd Component? ADR It Causes?</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Key Renal ADR of Mesalamine</div><div class="a"><input></div></div>
+</div>
+
+<div class="sub-hdr">Biologics</div>
+<table>
+  <thead><tr><th style="width:22%">Class / Drug</th><th>Target</th><th>Black Box / Key Concern</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Anti-TNF-α (infliximab, adalimumab)</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Ustekinumab</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Risankizumab</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Vedolizumab</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Natalizumab</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — NATALIZUMAB & PML</div>
+  <textarea placeholder="What virus? What integrin does natalizumab target? How does vedolizumab avoid this risk? Screening before starting?"></textarea>
+</div>
+
+<div class="sub-hdr">Immunomodulators</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Azathioprine / 6-MP — What Enzymes to Check Before Starting? Why?</div><div class="a"><div class="part"><label>Enzymes:</label><input></div><div class="part"><label>Why:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Azathioprine / 6-MP Key ADRs (3)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Methotrexate — Preferred in UC or CD?</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">MTX Pre-Screening Before Starting for IBD (Tests)</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Anti-TNF Pre-Screening & ADRs</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Mandatory Infectious Pre-Screens Before Anti-TNF (2)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">Malignancy Risk Increased with Anti-TNF + Thiopurine Combo</div><div class="a"><input></div></div>
+</div>
+
+<div class="sub-hdr">FMT (Fecal Microbiota Transplant)</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Gold-Standard Indication for FMT</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Emerging (Non-Standard) Indication</div><div class="a"><input></div></div>
+</div>
+
+<p class="note">Drill complete. When you've attempted every field, open the answer key and self-grade. Circle anything you missed and review the relevant lecture section.</p>
+</div>
+
+<script>
+function h(btn){
+  var hintTxt = btn.parentElement.nextElementSibling;
+  if(hintTxt && hintTxt.classList.contains('hint-txt')){
+    hintTxt.classList.toggle('show');
+  }
+}
+function sw(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body></html>

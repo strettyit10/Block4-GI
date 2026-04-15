@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GI21 Poisoning Drill</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:#fff;color:#111;padding:24px 32px;font-size:14.5px;line-height:1.55;max-width:1280px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:3px solid #1e3a8a}
+.title{font-size:28px;font-weight:800;color:#1e3a8a;display:flex;align-items:center;gap:10px}
+.title .emo{font-size:26px}
+.chips{margin-top:8px;color:#64748b;font-size:13.5px}
+.chip{margin-right:6px}
+.key-btn{background:#14532d;color:#fff;text-decoration:none;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:700;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.key-btn:hover{background:#166534}
+.intro{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:11px 15px;margin-bottom:20px;font-size:13.5px;color:#1e40af}
+.intro strong{display:block;margin-bottom:2px;font-size:14.5px}
+.sub-hdr{font-size:12.5px;font-weight:800;color:#fff;letter-spacing:.04em;margin:24px 0 12px;padding:8px 14px;background:#1e3a8a;border-left:5px solid #f59e0b;border-radius:4px;text-transform:uppercase;box-shadow:0 1px 2px rgba(30,58,138,.18)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px}
+.qa{background:#fff;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden}
+.qa .q{font-size:12.5px;font-weight:700;color:#334155;letter-spacing:.03em;padding:9px 13px 5px;text-transform:uppercase;line-height:1.4}
+.qa .a{border-left:3px solid #1D4ED8;background:#f8fafc;padding:9px 13px;min-height:48px}
+.qa .a input,.qa .a textarea{width:100%;border:none;background:transparent;outline:none;font-size:13.5px;color:#1e293b;font-family:inherit;resize:vertical;line-height:1.55}
+.qa .a textarea{min-height:52px}
+.qa .a input:focus,.qa .a textarea:focus{outline:2px solid #93c5fd;border-radius:3px}
+.a .num{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.a .num:last-child{margin-bottom:0}
+.a .num .n{font-weight:700;color:#1D4ED8;font-size:12.5px;min-width:20px;flex-shrink:0}
+.a .num input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:2px 0;font-family:inherit;line-height:1.55}
+.a .num input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+.a .part{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.a .part:last-child{margin-bottom:0}
+.a .part label{font-weight:700;color:#1D4ED8;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;padding-top:3px;min-width:78px;flex-shrink:0}
+.a .part input,.a .part textarea{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:2px 0;font-family:inherit;line-height:1.55}
+.a .part textarea{border:1.5px dashed #cbd5e1;border-radius:4px;padding:4px 6px;min-height:40px;resize:vertical}
+.a .part input:focus,.a .part textarea:focus{border-bottom-color:#1D4ED8;border-color:#1D4ED8;border-style:solid;outline:none}
+.a.mnem{display:flex;flex-direction:column;gap:6px}
+.a.mnem .mrow{display:flex;align-items:center;gap:10px}
+.a.mnem .mkey{font-weight:800;color:#fff;background:#1D4ED8;font-size:13.5px;min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.a.mnem .mrow input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:3px 0;font-family:inherit}
+.a.mnem .mrow input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+.a.mech{display:flex;flex-direction:column;gap:4px}
+.a.mech .mstep{display:flex;align-items:center;gap:8px}
+.a.mech .snum{font-weight:800;color:#1D4ED8;font-size:12px;min-width:24px;flex-shrink:0}
+.a.mech .mstep input{flex:1;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13.5px;color:#1e293b;padding:3px 0;font-family:inherit}
+.a.mech .mstep input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid;outline:none}
+.a.mech .arrow{text-align:center;color:#1D4ED8;font-weight:800;font-size:16px;line-height:1;padding:2px 0 2px 32px}
+.hintcell{position:relative}
+.hint-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#fef3c7;color:#92400e;border:1px solid #fbbf24;cursor:pointer;font-size:11px;font-weight:800;margin-left:6px;vertical-align:middle;font-family:inherit;flex-shrink:0}
+.hint-btn:hover{background:#fde68a}
+.hint-row{display:flex;align-items:center;gap:4px}
+.hint-row input{flex:1}
+.hint-txt{display:none;font-size:12px;color:#92400e;background:#fffbeb;border-left:3px solid #f59e0b;padding:5px 9px;margin-top:5px;border-radius:0 4px 4px 0;font-style:italic;line-height:1.45}
+.hint-txt.show{display:block}
+table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:13px;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden}
+th{background:#eff6ff;text-align:left;padding:9px 11px;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:#1e40af;border-bottom:1px solid #bfdbfe;font-weight:700}
+td{padding:8px 11px;border-top:1px solid #e2e8f0;vertical-align:top;font-size:13px}
+td.rl{font-weight:700;color:#1e293b;background:#f8fafc;white-space:nowrap}
+td input{width:100%;border:none;border-bottom:1.5px dashed #cbd5e1;background:transparent;outline:none;font-size:13px;color:#1e293b;padding:2px 0;font-family:inherit}
+td input:focus{border-bottom-color:#1D4ED8;border-bottom-style:solid}
+.trap{background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:11px 15px;margin:10px 0 14px;font-size:13px;color:#78350f}
+.trap-hdr{font-weight:800;color:#92400e;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.trap textarea{width:100%;border:1px solid #fbbf24;background:#fffbeb;border-radius:4px;padding:6px 9px;font-size:13px;color:#78350f;outline:none;font-family:inherit;resize:vertical;min-height:48px;line-height:1.5}
+.trap textarea:focus{border-color:#f59e0b}
+.tri{background:#fee2e2;border-left:4px solid #dc2626;border-radius:0 6px 6px 0;padding:11px 15px;margin:10px 0 14px;font-size:13px;color:#7f1d1d}
+.tri-hdr{font-weight:800;color:#991b1b;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.tri textarea{width:100%;border:1px solid #fca5a5;background:#fff;border-radius:4px;padding:6px 9px;font-size:13px;color:#7f1d1d;outline:none;font-family:inherit;resize:vertical;min-height:48px;line-height:1.5}
+.note{font-size:12px;color:#64748b;font-style:italic;margin:4px 0 8px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:18px;border-bottom:2px solid #1e3a8a;padding-bottom:0;position:sticky;top:0;background:#fff;z-index:10;padding-top:6px}
+.tab{padding:10px 18px;border-radius:8px 8px 0 0;border:1.5px solid #cbd5e1;border-bottom:none;background:#f8fafc;color:#475569;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.tab:hover{background:#eff6ff;color:#1e3a8a;border-color:#bfdbfe}
+.tab.active{background:#1D4ED8;color:#fff;border-color:#1D4ED8;box-shadow:0 -2px 4px rgba(29,78,216,.15)}
+.panel{display:none}
+.panel.active{display:block;animation:fadeIn .2s ease-in}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:820px){body{padding:14px}.grid2,.grid3{grid-template-columns:1fr}.title{font-size:22px}.sub-hdr{font-size:12.5px}table{display:block;overflow-x:auto}.tabs{position:static}.tab{padding:7px 10px;font-size:12px}}
+</style></head><body>
+
+<div class="top">
+  <div>
+    <div class="title"><span class="emo">☠️</span> Lecture 21 — Poisoning Conference</div>
+    <div class="chips">Approach · Decontamination · Enhanced Elimination · Toxidromes · APAP/Salicylates · Opioids/TCA/CO · Toxic Alcohols · Antidotes</div>
+  </div>
+  <a class="key-btn" href="gi21_pharm_key.html" target="_blank">✅ View Answer Key</a>
+</div>
+
+<div class="intro">
+  <strong>Poisoning &amp; Antidotes — Active Recall Drill</strong>
+  Close notes. Fill from memory. Check against the answer key (opens in new window). High-yield focus: 4 classic toxidromes, decontamination/enhanced-elimination mnemonics (LAME Ca, SLIME, CPSA), APAP NAPQI pathway, TCA NaHCO₃, opioid triad, CO co-oximetry, toxic alcohols + fomepizole, and the antidote master table.
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="sw(0)">1 · Approach &amp; Labs</button>
+  <button class="tab" onclick="sw(1)">2 · Decon &amp; Enhanced Elim</button>
+  <button class="tab" onclick="sw(2)">3 · Toxidromes</button>
+  <button class="tab" onclick="sw(3)">4 · APAP, Salicylates &amp; Iron</button>
+  <button class="tab" onclick="sw(4)">5 · Opioids, TCA, CO, Alcohols</button>
+  <button class="tab" onclick="sw(5)">6 · Antidotes &amp; Delayed Tox</button>
+</div>
+
+<!-- ═══════════════════════ TAB 1 ═══════════════════════ -->
+<div class="panel active">
+<div class="sub-hdr">Epidemiology &amp; Top Killers (NPDS)</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Primary U.S. Source of Poisoning Epidemiology Data</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Approx % of NPDS Exposures in Children ≤5 yrs</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Mnemonic — Top 4 NPDS Killers ("SOAP")</div><div class="a mnem"><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___ (#1 fatal class)"></div><div class="mrow"><span class="mkey">O</span><input placeholder="O = ___ (#3 fatal class)"></div><div class="mrow"><span class="mkey">A</span><input placeholder="A = ___ (#2 fatal class)"></div><div class="mrow"><span class="mkey">P</span><input placeholder="P = ___ (#4 fatal class — alcohols)"></div></div></div>
+  <div class="qa"><div class="q">Why Most Childhood Exposures Are Low Fatality but Most Adult Deaths Are High Fatality</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Focused History — "WARS" Framework</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Mnemonic — "WARS" for Poisoning History</div><div class="a mnem"><div class="mrow"><span class="mkey">W</span><input placeholder="W = ___ "></div><div class="mrow"><span class="mkey">A</span><input placeholder="A = ___ "></div><div class="mrow"><span class="mkey">R</span><input placeholder="R = ___ "></div><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___ "></div></div></div>
+  <div class="qa"><div class="q">2 Additional Critical History Items Beyond WARS</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">U.S. Poison Control Hotline Number + When to Call</div><div class="a"><div class="part"><label>Number:</label><input></div><div class="part"><label>When:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Why Patient Weight + Age Matter for Risk Assessment</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Alert Presentations — When to Suspect a Toxin</div>
+<table>
+  <thead><tr><th style="width:24%">Red-Flag Category</th><th>Examples to List (≥2 each)</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">🧠 Neurological</td><td><input></td></tr>
+    <tr><td class="rl">❤️ Cardiovascular</td><td><input></td></tr>
+    <tr><td class="rl">⚗️ Metabolic</td><td><input></td></tr>
+    <tr><td class="rl">👶 Pediatric / Multi-Family</td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Classic Alert Scenarios → "Think Of"</div>
+<table>
+  <thead><tr><th style="width:55%">Scenario</th><th>Likely Toxin</th></tr></thead>
+  <tbody>
+    <tr><td>Flu-like illness in winter, no fever, multiple family members + pets ill</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: incomplete combustion → carboxyhemoglobin.</div></td></tr>
+    <tr><td>Young healthy adult with unexplained wide-complex arrhythmia</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: Na-channel blockade + anticholinergic features.</div></td></tr>
+    <tr><td>Child AMS after visiting grandparents</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: ingested a cardiac med (digoxin/CCB/β-blocker).</div></td></tr>
+    <tr><td>Anion-gap metabolic acidosis + visual changes</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: toxic alcohol → formic acid.</div></td></tr>
+    <tr><td>Profound miosis + respiratory depression + AMS</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: classic narcotic triad.</div></td></tr>
+    <tr><td>New seizures in adult on TB-prophylaxis drug</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: B6 depletion → ↓ GABA.</div></td></tr>
+    <tr><td>Elevated LFTs, RUQ pain, 48–72h after a "minor" overdose</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: NAPQI → centrilobular necrosis.</div></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Universal Labs in Significant Poisoning</div>
+<table>
+  <thead><tr><th style="width:30%">Test</th><th>Why?</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">BMP</td><td><input></td></tr>
+    <tr><td class="rl">LFTs + PT/INR</td><td><input></td></tr>
+    <tr><td class="rl">APAP level</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: silent killer — always in intentional OD.</div></td></tr>
+    <tr><td class="rl">Salicylate level</td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: co-ingestion screen — always in intentional OD.</div></td></tr>
+    <tr><td class="rl">EKG</td><td><input></td></tr>
+    <tr><td class="rl">ABG with co-oximetry</td><td><input></td></tr>
+    <tr><td class="rl">Urine drug screen (UDS)</td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — UDS LIMITATIONS</div>
+  <textarea placeholder="Why does a NEGATIVE urine drug screen NOT rule out poisoning? Name false positives + commonly missed toxins."></textarea>
+</div>
+
+<div class="sub-hdr">Targeted Labs &amp; Osmol Gap</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Osmol Gap — Formula + Cutoff + What It Suggests</div><div class="a"><div class="part"><label>Formula:</label><input></div><div class="part"><label>Cutoff:</label><input></div><div class="part"><label>Suggests:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">EKG Findings → Toxin Mapping (4)</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="Wide QRS &gt;120 ms → ?"></div><div class="num"><span class="n">2.</span><input placeholder="QT prolongation → ?"></div><div class="num"><span class="n">3.</span><input placeholder="Bradycardia + AV block → ?"></div><div class="num"><span class="n">4.</span><input placeholder="Bidirectional VT → ?"></div></div></div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 2 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">External Decontamination</div>
+<table>
+  <thead><tr><th style="width:24%">Exposure Route</th><th>Action / Key Detail</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">👁️ Ocular</td><td><input></td></tr>
+    <tr><td class="rl">🫁 Inhalation</td><td><input></td></tr>
+    <tr><td class="rl">🖐️ Skin/Dermal</td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">GI Decontamination — Activated Charcoal</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Activated Charcoal — Standard Adult Dose + Time Window</div><div class="a"><div class="part"><label>Dose:</label><input></div><div class="part"><label>Window:</label><input></div></div></div>
+  <div class="qa"><div class="q">Why Time Window Matters (MOA in 1 line)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Single-Dose Charcoal Contraindications (≥3)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Status of Ipecac in Modern Practice</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Mnemonic — Toxins NOT Adsorbed by Activated Charcoal ("LAME Ca")</div>
+<div class="grid2">
+  <div class="qa"><div class="q">"LAME Ca" — 5 Categories Charcoal Misses</div><div class="a mnem"><div class="mrow"><span class="mkey">L</span><input placeholder="L = ___"></div><div class="mrow"><span class="mkey">A</span><input placeholder="A = ___ (toxic alcohols)"></div><div class="mrow"><span class="mkey">M</span><input placeholder="M = ___ (heavy metals — iron, lead)"></div><div class="mrow"><span class="mkey">E</span><input placeholder="E = ___ (acid/base salts)"></div><div class="mrow"><span class="mkey">Ca</span><input placeholder="Ca = ___ (acids, alkalis)"></div></div></div>
+  <div class="qa"><div class="q">Whole-Bowel Irrigation (WBI) — 4 Indications</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div><div class="num"><span class="n">4.</span><input></div></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — CAUSTIC INGESTION (NaOH, ACID)</div>
+  <textarea placeholder="3 things you must NOT do (emesis, NG, neutralization). Why? What CAN you do? Endoscopy timing?"></textarea>
+</div>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — HYDROCARBONS</div>
+  <textarea placeholder="Why is induced emesis / lavage absolutely contraindicated? What is the actual mechanism of toxicity?"></textarea>
+</div>
+
+<div class="sub-hdr">Enhanced Elimination — Urinary Alkalinization</div>
+<div class="grid2">
+  <div class="qa"><div class="q">2 Drugs Removed by Urinary Alkalinization + Target Urine pH</div><div class="a"><div class="part"><label>Drug 1:</label><input></div><div class="part"><label>Drug 2:</label><input></div><div class="part"><label>Target pH:</label><input></div></div></div>
+  <div class="qa"><div class="q">Mechanism (Ion Trapping) — 4 Steps</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Drug class (weak acid/base) given"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="NaHCO₃ raises urine pH"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Drug becomes ionized in tubular fluid"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">4.</span><input placeholder="Net effect on reabsorption + excretion"></div></div></div>
+</div>
+
+<div class="sub-hdr">Mnemonic — Hemodialysis-Removable Toxins ("SLIME")</div>
+<div class="grid2">
+  <div class="qa"><div class="q">"SLIME" — 5 Toxins Removed by HD</div><div class="a mnem"><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___"></div><div class="mrow"><span class="mkey">L</span><input placeholder="L = ___"></div><div class="mrow"><span class="mkey">I</span><input placeholder="I = ___ (alcohol)"></div><div class="mrow"><span class="mkey">M</span><input placeholder="M = ___ + ___ (alcohol + biguanide)"></div><div class="mrow"><span class="mkey">E</span><input placeholder="E = ___ (antifreeze)"></div></div></div>
+  <div class="qa"><div class="q">Properties That Make a Toxin "Dialyzable" (4)</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="MW"></div><div class="num"><span class="n">2.</span><input placeholder="Vd"></div><div class="num"><span class="n">3.</span><input placeholder="Protein binding"></div><div class="num"><span class="n">4.</span><input placeholder="Water solubility"></div></div></div>
+</div>
+
+<div class="sub-hdr">Multi-Dose Activated Charcoal (MDAC) — "CPSA"</div>
+<div class="grid2">
+  <div class="qa"><div class="q">"CPSA" — 4 Indications for MDAC</div><div class="a mnem"><div class="mrow"><span class="mkey">C</span><input placeholder="C = ___"></div><div class="mrow"><span class="mkey">P</span><input placeholder="P = ___"></div><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___"></div><div class="mrow"><span class="mkey">A</span><input placeholder="A = ___ (theophylline)"></div></div></div>
+  <div class="qa"><div class="q">MDAC Mechanism of Action ("Gut Dialysis")</div><div class="a"><textarea></textarea></div></div>
+</div>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — DIGOXIN &amp; HEMODIALYSIS</div>
+  <textarea placeholder="Why is HD INEFFECTIVE for digoxin (despite small MW)? What is the actual antidote and how does it work?"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 3 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">Anticholinergic Toxidrome — "Hot, Dry, Red, Mad"</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Mnemonic — 4 "Hatter Signs" (Hot/Dry/Red/Mad)</div><div class="a mnem"><div class="mrow"><span class="mkey">H</span><input placeholder="Hot as a ___ → ___"></div><div class="mrow"><span class="mkey">D</span><input placeholder="Dry as a ___ → ___"></div><div class="mrow"><span class="mkey">R</span><input placeholder="Red as a ___ → ___"></div><div class="mrow"><span class="mkey">M</span><input placeholder="Mad as a ___ → ___"></div></div></div>
+  <div class="qa"><div class="q">Mnemonic — "Can't ___, Can't ___, Can't ___, Can't ___" (4 peripheral signs)</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="Can't see → ?"></div><div class="num"><span class="n">2.</span><input placeholder="Can't spit → ?"></div><div class="num"><span class="n">3.</span><input placeholder="Can't pee → ?"></div><div class="num"><span class="n">4.</span><input placeholder="Can't 💩 → ?"></div></div></div>
+  <div class="qa"><div class="q">Causative Agents (≥4 categories)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Antidote + 1 Critical Contraindication</div><div class="a"><div class="part"><label>Antidote:</label><input></div><div class="part"><label>Avoid in:</label><input></div></div></div>
+</div>
+
+<div class="sub-hdr">Cholinergic Toxidrome — SLUDGE / DUMBELS</div>
+<div class="grid2">
+  <div class="qa"><div class="q">"SLUDGE" — Muscarinic Effects (6)</div><div class="a mnem"><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___"></div><div class="mrow"><span class="mkey">L</span><input placeholder="L = ___"></div><div class="mrow"><span class="mkey">U</span><input placeholder="U = ___"></div><div class="mrow"><span class="mkey">D</span><input placeholder="D = ___"></div><div class="mrow"><span class="mkey">G</span><input placeholder="G = ___"></div><div class="mrow"><span class="mkey">E</span><input placeholder="E = ___"></div></div></div>
+  <div class="qa"><div class="q">"DUMBELS" — Adds Life-Threatening Features (7)</div><div class="a mnem"><div class="mrow"><span class="mkey">D</span><input placeholder="D = ___"></div><div class="mrow"><span class="mkey">U</span><input placeholder="U = ___"></div><div class="mrow"><span class="mkey">M</span><input placeholder="M = ___ ← key pupil sign"></div><div class="mrow"><span class="mkey">B</span><input placeholder="B = ___ + ___ + ___ (3 Bs — fatal)"></div><div class="mrow"><span class="mkey">E</span><input placeholder="E = ___"></div><div class="mrow"><span class="mkey">L</span><input placeholder="L = ___"></div><div class="mrow"><span class="mkey">S</span><input placeholder="S = ___ / ___"></div></div></div>
+  <div class="qa"><div class="q">Nicotinic Effects (4)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div><div class="num"><span class="n">4.</span><input></div></div></div>
+  <div class="qa"><div class="q">Causative Agents — 2 Drug Classes + Plant Source</div><div class="a"><textarea></textarea></div></div>
+</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Treatment — 2 Antidotes + Endpoint</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Antidote 1 + receptor target"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Titrate to endpoint (NOT heart rate — what?)"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Antidote 2 + mechanism (regenerates ___)"></div></div></div>
+  <div class="qa"><div class="q">Why Pralidoxime Timing Is Critical ("Aging")</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Sympathomimetic Toxidrome</div>
+<div class="grid2">
+  <div class="qa"><div class="q">5 Hallmark Signs</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div><div class="num"><span class="n">4.</span><input></div><div class="num"><span class="n">5.</span><input></div></div></div>
+  <div class="qa"><div class="q">Causative Agents (≥3)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Treatment — 1st-Line + What to AVOID in Cocaine OD + Why</div><div class="a"><div class="part"><label>1st-line:</label><input></div><div class="part"><label>Avoid:</label><input></div><div class="part"><label>Why:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Sympathomimetic vs Anticholinergic — KEY Discriminator (2 Findings)</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="Skin: ___ vs ___"></div><div class="num"><span class="n">2.</span><input placeholder="Bowel sounds: ___ vs ___"></div></div></div>
+</div>
+
+<div class="sub-hdr">Opioid (Narcotic) Toxidrome — Classic Triad</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Classic Opioid Triad (3)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Antidote + Why Repeat Dosing or Infusion May Be Needed</div><div class="a"><div class="part"><label>Antidote:</label><input></div><div class="part"><label>Why repeat:</label><textarea></textarea></div></div></div>
+</div>
+
+<div class="sub-hdr">Side-by-Side Toxidrome Comparison</div>
+<table>
+  <thead><tr><th>Feature</th><th>Anticholinergic</th><th>Cholinergic</th><th>Sympathomimetic</th><th>Opioid</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Pupils</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">HR</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Temp</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Skin</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Bowel sounds</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Mental status</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Respiration</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Antidote</td><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<!-- ═══════════════════════ TAB 4 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">APAP (Acetaminophen) — 4-Phase Course</div>
+<table>
+  <thead><tr><th style="width:12%">Phase</th><th>Time</th><th>Features</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">I</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">II</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">III</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">IV</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">APAP Toxic Metabolite Pathway (Mechanism Chain)</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="APAP metabolized via CYP___"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Toxic metabolite formed (name)"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Normally detoxified by ___ (which is depleted)"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">4.</span><input placeholder="Result: ___ hepatic necrosis"></div></div></div>
+  <div class="qa"><div class="q">Risk-Stratification Tool + Antidote + Time Window</div><div class="a"><div class="part"><label>Tool:</label><input></div><div class="part"><label>Antidote:</label><input></div><div class="part"><label>Best if &lt;:</label><input></div></div></div>
+  <div class="qa"><div class="q">NAC Mechanism (2 actions)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">Why "Looks Fine in the ED" Is the Wrong Reason to Skip Treatment</div><div class="a"><textarea></textarea></div></div>
+</div>
+
+<div class="sub-hdr">Salicylate (ASA) Poisoning</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Early Signs (≥3)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">Classic Acid-Base Pattern (Mixed Disorder)</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Mechanism of Hyperthermia + Late Acidosis</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Salicylates uncouple ___"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Energy released as ___ instead of ATP"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Hyperthermia + lactate accumulation → ___ acidosis"></div></div></div>
+  <div class="qa"><div class="q">Treatment — 1st-Line Enhanced Elimination + When to Dialyze</div><div class="a"><div class="part"><label>1st-line:</label><input></div><div class="part"><label>HD when:</label><textarea></textarea></div></div></div>
+</div>
+
+<div class="sub-hdr">Iron Poisoning — 5-Phase Course</div>
+<table>
+  <thead><tr><th style="width:14%">Phase</th><th>Time</th><th>What Happens</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">1 — GI</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">2 — "Quiet"</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">3 — Systemic</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">4 — Hepatic</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">5 — Late/Scarring</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Iron Antidote + Mechanism</div><div class="a"><div class="part"><label>Antidote:</label><input></div><div class="part"><label>Mechanism:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Key Lab Test + Optimal Timing Post-Ingestion</div><div class="a"><div class="part"><label>Test:</label><input></div><div class="part"><label>Timing:</label><input></div></div></div>
+</div>
+<div class="trap">
+  <div class="trap-hdr">🚩 TRAP — IRON PHASE 2 "APPARENT RECOVERY"</div>
+  <textarea placeholder="Why is Phase 2 deceptive? What MUST you do before discharging an iron-ingestion patient who 'looks better'?"></textarea>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 5 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">Opioid Overdose</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Receptor Target + Mechanism of Death</div><div class="a"><div class="part"><label>Receptor:</label><input></div><div class="part"><label>Death from:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Opioids Particularly Tricky for Naloxone Reversal (≥2)</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="Long t½"></div><div class="num"><span class="n">2.</span><input placeholder="High receptor affinity / partial agonist"></div></div></div>
+</div>
+
+<div class="sub-hdr">TCA (Tricyclic Antidepressant) Overdose — 3 Receptor Effects</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Receptor Effect 1 → EKG Finding</div><div class="a"><div class="part"><label>Effect:</label><input></div><div class="part"><label>EKG:</label><input></div></div></div>
+  <div class="qa"><div class="q">Receptor Effect 2 → Hemodynamic Finding</div><div class="a"><div class="part"><label>Effect:</label><input></div><div class="part"><label>BP:</label><input></div></div></div>
+  <div class="qa"><div class="q">Receptor Effect 3 → Peripheral Findings</div><div class="a"><div class="part"><label>Effect:</label><input></div><div class="part"><label>Findings:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Why TCA Also Causes Seizures (4th mechanism)</div><div class="a"><textarea></textarea></div></div>
+</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Antidote + Mechanism + Target Serum pH</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="Antidote (drug + dose)"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="2 mechanisms of QRS narrowing"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Goal serum pH"></div></div></div>
+  <div class="qa"><div class="q">2 Drugs to AVOID in TCA OD + Why</div><div class="a"><div class="num"><span class="n">1.</span><input placeholder="Avoid: ___ → why?"></div><div class="num"><span class="n">2.</span><input placeholder="Avoid: ___ → why?"></div></div></div>
+</div>
+
+<div class="sub-hdr">Carbon Monoxide (CO) Poisoning</div>
+<div class="grid2">
+  <div class="qa"><div class="q">CO Mechanism — 2 Pathways of O₂ Deprivation</div><div class="a mech"><div class="mstep"><span class="snum">1.</span><input placeholder="CO binds Hb with ___× affinity vs O₂"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">2.</span><input placeholder="Effect on O₂-Hb dissociation curve"></div><div class="arrow">↓</div><div class="mstep"><span class="snum">3.</span><input placeholder="Also inhibits ___ → cellular asphyxia"></div></div></div>
+  <div class="qa"><div class="q">Diagnostic Test — Why Standard SpO₂ Fails</div><div class="a"><div class="part"><label>Correct test:</label><input></div><div class="part"><label>SpO₂ fails because:</label><textarea></textarea></div></div></div>
+</div>
+<table>
+  <thead><tr><th style="width:14%">Severity</th><th>COHb %</th><th>Symptoms</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Mild</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: "flu without ___"</div></td></tr>
+    <tr><td class="rl">Moderate</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Severe</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Treatment — Tier 1 vs Tier 2 (HBO Indications)</div><div class="a"><div class="part"><label>Tier 1:</label><input></div><div class="part"><label>HBO indicated:</label><textarea></textarea></div></div></div>
+  <div class="qa"><div class="q">Why Cherry-Red Skin Is NOT a Reliable Sign</div><div class="a"><textarea></textarea></div></div>
+</div>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — CO + PREGNANCY</div>
+  <textarea placeholder="Why is the fetus more vulnerable? Lower threshold for what treatment?"></textarea>
+</div>
+
+<div class="sub-hdr">Toxic Alcohols — Methanol vs Ethylene Glycol</div>
+<table>
+  <thead><tr><th style="width:18%">Feature</th><th>Methanol</th><th>Ethylene Glycol</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Source</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Toxic Metabolite</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Hallmark End-Organ Injury</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Urine Finding</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Latent Period</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="qa"><div class="q">Both Show Which 2 Lab Gaps?</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div></div></div>
+  <div class="qa"><div class="q">1st-Line Antidote + Mechanism + Backup if Unavailable</div><div class="a"><div class="part"><label>1st-line:</label><input></div><div class="part"><label>Mechanism:</label><textarea></textarea></div><div class="part"><label>Backup:</label><input></div></div></div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ TAB 6 ═══════════════════════ -->
+<div class="panel">
+<div class="sub-hdr">Antidote Master Table</div>
+<table>
+  <thead><tr><th style="width:24%">Toxin</th><th>Antidote</th><th>Mechanism (1 line)</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Acetaminophen (APAP)</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: replenishes ___; conjugates NAPQI.</div></td></tr>
+    <tr><td class="rl">Opioids</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Benzodiazepines</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: GABA-A competitive antagonist — use with caution.</div></td></tr>
+    <tr><td class="rl">Beta-Blockers</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: bypass blocked β-receptor → ↑ cAMP via different GPCR.</div></td></tr>
+    <tr><td class="rl">Calcium Channel Blockers</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Digoxin</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: antibody fragments bind free dig + pull from tissue.</div></td></tr>
+    <tr><td class="rl">Organophosphates</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: antimuscarinic + reactivates AChE before "aging".</div></td></tr>
+    <tr><td class="rl">Methanol / Ethylene Glycol</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Carbon Monoxide</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Cyanide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: B12 precursor binds CN⁻ → cyanocobalamin (urine).</div></td></tr>
+    <tr><td class="rl">Iron</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Lead — mild/moderate</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: oral DMSA (succimer); outpatient.</div></td></tr>
+    <tr><td class="rl">Lead — severe / encephalopathy</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: 2-drug IV regimen; avoid 1 in peanut allergy.</div></td></tr>
+    <tr><td class="rl">Methemoglobinemia</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: dye that donates electrons via NADPH → reduces Fe³⁺ → Fe²⁺.</div></td></tr>
+    <tr><td class="rl">Warfarin</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Heparin</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Isoniazid (INH)</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: B6 → restores GABA synthesis (gram for gram).</div></td></tr>
+    <tr><td class="rl">TCA</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Sulfonylureas (refractory hypoglycemia)</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Delayed Toxicity — "Looks Fine ≠ Safe"</div>
+<table>
+  <thead><tr><th style="width:22%">Toxin</th><th>Onset of Toxicity</th><th>Critical Action</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">APAP</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Hydrofluoric acid</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: hypocalcemia → arrhythmia; topical/IV calcium gluconate.</div></td></tr>
+    <tr><td class="rl">Ethylene glycol</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Methanol</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Iron</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Sulfonylureas</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: serial glucose 12–24h; octreotide for refractory.</div></td></tr>
+    <tr><td class="rl">SR / XR formulations</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: extended-release → delayed peak; consider WBI.</div></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Rapid Toxicity — Treat in Minutes</div>
+<table>
+  <thead><tr><th style="width:22%">Toxin</th><th>Onset</th><th>Hallmark Presentation + Antidote</th></tr></thead>
+  <tbody>
+    <tr><td class="rl">Isoniazid (INH)</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: refractory seizures → pyridoxine.</div></td></tr>
+    <tr><td class="rl">TCA</td><td><input></td><td><input></td></tr>
+    <tr><td class="rl">Cyanide</td><td><input></td><td class="hintcell"><div class="hint-row"><input><button class="hint-btn" onclick="h(this)" type="button">?</button></div><div class="hint-txt">Think: cytochrome oxidase block; lactic acidosis; hydroxocobalamin.</div></td></tr>
+    <tr><td class="rl">Organophosphates</td><td><input></td><td><input></td></tr>
+  </tbody>
+</table>
+
+<div class="sub-hdr">Supportive Care Cornerstones</div>
+<div class="grid2">
+  <div class="qa"><div class="q">Why Supportive Care Is the Cornerstone of Most Poisonings</div><div class="a"><textarea></textarea></div></div>
+  <div class="qa"><div class="q">Indications to Intubate (≥3)</div><div class="a"><div class="num"><span class="n">1.</span><input></div><div class="num"><span class="n">2.</span><input></div><div class="num"><span class="n">3.</span><input></div></div></div>
+  <div class="qa"><div class="q">First-Line Anticonvulsant in Toxic Seizures</div><div class="a"><input></div></div>
+  <div class="qa"><div class="q">Mandatory Step Before Discharge for ALL Intentional ODs</div><div class="a"><input></div></div>
+</div>
+<div class="tri">
+  <div class="tri-hdr">🛑 HARD TRAP — FLUMAZENIL CONTRAINDICATIONS</div>
+  <textarea placeholder="2 settings where flumazenil is dangerous + why. What's the half-life issue?"></textarea>
+</div>
+
+<p class="note">Drill complete. When you've attempted every field, open the answer key and self-grade. Circle anything you missed and review the relevant lecture section.</p>
+</div>
+
+<script>
+function h(btn){
+  var hintTxt = btn.parentElement.nextElementSibling;
+  if(hintTxt && hintTxt.classList.contains('hint-txt')){
+    hintTxt.classList.toggle('show');
+  }
+}
+function sw(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body></html>
