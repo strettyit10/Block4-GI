@@ -40,17 +40,11 @@
   button.primary { background: #e8f0fb; color: #1a4fa0; border-color: #a0bce8; }
   #table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
-  col.col-heading    { width: 150px; }
-  col.col-chapter    { width: 160px; }
-  col.col-subchapter { width: 160px; }
-  col.col-mapped     { width: 180px; }
-  col.col-count      { width: 80px; }
-  col.col-tag        { }
   th { background: #f7f7f5; text-align: left; padding: 8px 10px; font-weight: 500; font-size: 12px; color: #555; border-bottom: 1px solid #e5e5e5; cursor: pointer; user-select: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   th:hover { color: #111; }
   td { padding: 7px 10px; border-bottom: 0.5px solid #eee; vertical-align: top; overflow: hidden; }
-  td.chapter-cell, td.subchapter-cell, td.mapped-cell { text-overflow: ellipsis; white-space: nowrap; }
-  td.mapped-cell { font-size: 12px; color: #555; }
+  td.truncate { text-overflow: ellipsis; white-space: nowrap; }
+  td.mapped-cell { font-size: 12px; color: #555; text-overflow: ellipsis; white-space: nowrap; }
   td.mapped-cell .mapped-num { font-family: monospace; color: #999; margin-right: 4px; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #f7f7f5; }
@@ -64,8 +58,9 @@
   .tree-row:hover { background: #f7f7f5; }
   .tog { font-size: 10px; color: #aaa; width: 12px; flex-shrink: 0; }
   .t-resource { font-weight: 500; color: #111; }
-  .t-subject { color: #555; }
-  .t-chapter { font-weight: 500; color: #111; }
+  .t-l1 { color: #555; }
+  .t-heading { font-weight: 500; color: #111; }
+  .t-chapter { color: #555; font-weight: 500; }
   .t-subnum { font-size: 11px; color: #aaa; flex-shrink: 0; min-width: 34px; font-family: monospace; }
   .t-subchapter { color: #555; }
   .t-tag { font-family: monospace; font-size: 11px; color: #999; word-break: break-all; }
@@ -73,44 +68,46 @@
   .tree-children { padding-left: 18px; border-left: 0.5px solid #e5e5e5; margin-left: 5px; }
   .tree-children.collapsed { display: none; }
   .leaf-row { display: flex; align-items: baseline; gap: 6px; padding: 2px 4px; flex-wrap: nowrap; border-radius: 6px; }
-  .leaf-row:hover { background: transparent; }
-  .leaf-block:hover .leaf-row { background: transparent; }
+  .leaf-row:hover { background: #f7f7f5; }
   .leaf-indent { width: 12px; flex-shrink: 0; }
-  .leaf-block { border-radius: 6px; }
-  .leaf-block:hover { background: #f7f7f5; }
-  .leaf-extra-tag { padding-left: 56px; }
 </style>
 </head>
 <body>
 
 <p class="page-title">Anki package parser</p>
-<p class="page-sub">Extract chapter / subchapter / card counts and hierarchy from an .apkg file</p>
+<p class="page-sub">Extract hierarchy and card counts from an .apkg file</p>
 
 <div class="config-grid">
   <label>Third-party resource</label>
   <select id="prefix-select" onchange="onConfigChange()">
-    <option value="#AK_Step1_v12::#Bootcamp">Bootcamp</option>
-    <option value="#AK_Step1_v12::#B&B">Boards &amp; Beyond (B&amp;B)</option>
-    <option value="#AK_Step1_v12::#FirstAid">First Aid</option>
-    <option value="#AK_Step1_v12::#Pathoma">Pathoma</option>
-    <option value="#AK_Step1_v12::#Physeo">Physeo</option>
-    <option disabled>── Sketchy ──</option>
-    <option value="#AK_Step1_v12::#SketchyMicro">Sketchy Micro</option>
-    <option value="#AK_Step1_v12::#SketchyPath">Sketchy Path</option>
-    <option value="#AK_Step1_v12::#SketchyPharm">Sketchy Pharm</option>
-    <option value="#AK_Step1_v12::#SketchyAnatomy">Sketchy Anatomy</option>
-    <option value="#AK_Step1_v12::#SketchyPhysiology">Sketchy Physiology</option>
-    <option disabled>── In-House ──</option>
-    <option value="Block4">Block 4</option>
-    <option value="GUSOM">GUSOM</option>
-    <option value="custom">Custom…</option>
+    <optgroup label="Bootcamp">
+      <option value="bootcamp|#AK_Step1_v12::#Bootcamp">Bootcamp</option>
+    </optgroup>
+    <optgroup label="Sketchy">
+      <option value="sketchy|#AK_Step1_v12::#SketchyMicro">SketchyMicro</option>
+      <option value="sketchy|#AK_Step1_v12::#SketchyPharm">SketchyPharm</option>
+      <option value="sketchy|#AK_Step1_v12::#SketchyPath">SketchyPath</option>
+      <option value="sketchy|#AK_Step1_v12::#SketchyPhysiology">SketchyPhysiology</option>
+    </optgroup>
+    <optgroup label="Other">
+      <option value="subject|#AK_Step1_v12::#B&B">Boards &amp; Beyond (B&amp;B)</option>
+      <option value="subject|#AK_Step1_v12::Pathoma">Pathoma</option>
+      <option value="subject|#AK_Step1_v12::Physeo">Physeo</option>
+      <option value="custom|">Custom…</option>
+    </optgroup>
   </select>
-  <label id="custom-resource-label" style="display:none">Custom prefix</label>
-  <input type="text" id="custom-resource-input" placeholder="e.g. #AK_Step1_v12::MySource" style="display:none" oninput="onConfigChange()">
+
   <label id="subject-label">Subject <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
   <input type="text" id="subject-input" placeholder="e.g. Endocrinology, Reproductive…" value="Endocrinology" oninput="onConfigChange()">
-  <label id="heading-label" style="display:none">Heading <span style="font-size:11px;color:#aaa">(must match tag exactly)</span></label>
-  <input type="text" id="heading-input" style="display:none" placeholder="e.g. 01_Bacteria, 02_Viruses…" oninput="onConfigChange()">
+
+  <label id="custom-base-label" style="display:none">Custom prefix</label>
+  <input type="text" id="custom-base-input" placeholder="e.g. #AK_Step1_v12::MySource" style="display:none" oninput="onConfigChange()">
+  <label id="custom-depth-label" style="display:none">Levels after prefix</label>
+  <select id="custom-depth-select" style="display:none" onchange="onConfigChange()">
+    <option value="2">2 — Chapter → Subchapter</option>
+    <option value="3">3 — Heading → Chapter → Subchapter</option>
+  </select>
+
   <div class="preview-block">
     <div class="preview-label">Matching tags that look like:</div>
     <div class="preview-tag" id="tag-preview"></div>
@@ -125,10 +122,7 @@
   <p class="hint">Anki package files (.apkg) only</p>
 </div>
 
-<div style="display:flex; align-items:center; gap:10px;">
-  <div id="status" style="flex:1"></div>
-  <button id="reset-btn" style="display:none; color:#c0392b; border-color:#e0a8a8;" onclick="resetAll()">Reset</button>
-</div>
+<div id="status"></div>
 <div id="summary" style="display:none"></div>
 
 <div id="results" style="display:none">
@@ -136,16 +130,14 @@
     <div class="tab active" onclick="switchTab('table')">Table</div>
     <div class="tab" onclick="switchTab('tree')">Hierarchy map</div>
   </div>
-
   <div id="panel-table" class="panel active">
     <div class="toolbar">
-      <input id="search" type="text" placeholder="Search chapters, subchapters, or tags…" oninput="renderTable()">
+      <input id="search" type="text" placeholder="Search…" oninput="renderTable()">
       <button onclick="exportCSV()">Export CSV</button>
       <button class="primary" onclick="exportTSV()">Export for Google Sheets / Excel</button>
     </div>
     <div id="table-wrap"></div>
   </div>
-
   <div id="panel-tree" class="panel">
     <div class="tree-toolbar">
       <button onclick="setAllTree(true)">Expand all</button>
@@ -165,95 +157,83 @@ let allRows = [], sortCol = 0, sortDir = 1, cachedNoteRows = null;
 
 function label(s) { return s.replace(/_/g, ' '); }
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function getNum(s) { const m = s.match(/^(\d+)/); return m ? parseInt(m[1], 10) : null; }
+function formatNum(a, b) { return (a !== null && b !== null) ? `${a}.${String(b).padStart(2,'0')}` : ''; }
+function mappedLabel(chRaw, subRaw) { const n = formatNum(getNum(chRaw), getNum(subRaw)); return n ? `${n} ${label(subRaw)}` : label(subRaw); }
 
-function getChapterNum(chapterRaw) { const m = chapterRaw.match(/^(\d+)/); return m ? parseInt(m[1], 10) : null; }
-function getSubchapterNum(subRaw) { const m = subRaw.match(/^(\d+)/); return m ? parseInt(m[1], 10) : null; }
-function formatSubNum(chapterNum, subNum) {
-  if (chapterNum === null || subNum === null) return '';
-  return `${chapterNum}.${String(subNum).padStart(2, '0')}`;
+function getMode() { const val = document.getElementById('prefix-select').value; return val.split('|')[0]; }
+function getBasePrefix() {
+  const val = document.getElementById('prefix-select').value;
+  const [mode, base] = val.split('|');
+  if (mode === 'custom') return document.getElementById('custom-base-input').value.trim();
+  return base;
 }
-function stripLeadingNum(s) { return s.replace(/^\d+\s*/, ''); }
-function mappedLabel(chapterRaw, subRaw) {
-  const num = formatSubNum(getChapterNum(chapterRaw), getSubchapterNum(subRaw));
-  return num ? `${num} ${stripLeadingNum(label(subRaw))}` : label(subRaw);
+function getResourceDisplayName() {
+  const val = document.getElementById('prefix-select').value;
+  const [mode, base] = val.split('|');
+  if (mode === 'custom') return base.split('::').pop() || 'Resource';
+  const map = {
+    '#AK_Step1_v12::#Bootcamp':'Bootcamp',
+    '#AK_Step1_v12::#SketchyMicro':'SketchyMicro',
+    '#AK_Step1_v12::#SketchyPharm':'SketchyPharm',
+    '#AK_Step1_v12::#SketchyPath':'SketchyPath',
+    '#AK_Step1_v12::#SketchyPhysiology':'SketchyPhysiology',
+    '#AK_Step1_v12::#B&B':'B&B',
+    '#AK_Step1_v12::Pathoma':'Pathoma',
+    '#AK_Step1_v12::Physeo':'Physeo'
+  };
+  return map[base] || base.split('::').pop();
 }
-
-function getResourceBase() {
-  const s = document.getElementById('prefix-select').value;
-  return s === 'custom' ? document.getElementById('custom-resource-input').value.trim() : s;
-}
-function getResourceName() {
-  const s = document.getElementById('prefix-select').value;
-  const map = {'#AK_Step1_v12::#Bootcamp':'Bootcamp','#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#FirstAid':'First Aid','#AK_Step1_v12::#Pathoma':'Pathoma','#AK_Step1_v12::#SketchyMicro':'Sketchy Micro','#AK_Step1_v12::#SketchyPath':'Sketchy Path','#AK_Step1_v12::#SketchyPharm':'Sketchy Pharm','#AK_Step1_v12::#SketchyAnatomy':'Sketchy Anatomy','#AK_Step1_v12::#SketchyPhysiology':'Sketchy Physiology','#AK_Step1_v12::#Physeo':'Physeo','Block4':'Block 4','GUSOM':'GUSOM'};
-  return s === 'custom' ? (document.getElementById('custom-resource-input').value.split('::').pop() || 'Resource') : (map[s] || s);
+function getDepth() {
+  const mode = getMode();
+  if (mode === 'sketchy') return 3;
+  if (mode === 'custom') return parseInt(document.getElementById('custom-depth-select').value, 10);
+  return 2;
 }
 function getSubject() { return document.getElementById('subject-input').value.trim(); }
 function getFullPrefix() {
-  const b = getResourceBase();
-  if (!b) return '';
-  if (resourceUsesHeading()) {
-    const h = getHeading();
-    return h ? `${b}::${h}::` : `${b}::`;
-  }
-  if (resourceSkipsSubject()) return `${b}::`;
+  const base = getBasePrefix(), mode = getMode();
+  if (!base) return '';
+  if (mode === 'sketchy') return base + '::';
   const sub = getSubject();
-  return sub ? `${b}::${sub}::` : `${b}::`;
+  return sub ? `${base}::${sub}::` : `${base}::`;
 }
 
 function updatePreview() {
-  const base = getResourceBase() || '#AK_Step1_v12::Resource';
-  if (resourceUsesHeading()) {
-    const heading = getHeading() || '<Heading>';
-    document.getElementById('tag-preview').innerHTML =
-      `<span class="seg-matched">${esc(base)}::${esc(heading)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
-  } else if (resourceSkipsSubject()) {
-    document.getElementById('tag-preview').innerHTML =
-      `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  const base = getBasePrefix() || '#AK_Step1_v12::Resource';
+  const mode = getMode();
+  const sub = getSubject() || '<Subject>';
+  let preview = '';
+  if (mode === 'sketchy' || (mode === 'custom' && getDepth() === 3)) {
+    preview = `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Heading&gt;</strong>::<strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
   } else {
-    const subject = getSubject() || '<Subject>';
-    document.getElementById('tag-preview').innerHTML =
-      `<span class="seg-matched">${esc(base)}::${esc(subject)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+    preview = `<span class="seg-matched">${esc(base)}::${esc(sub)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
   }
+  document.getElementById('tag-preview').innerHTML = preview;
 }
-function resourceSkipsSubject() {
-  const v = document.getElementById('prefix-select').value;
-  return v === '#AK_Step1_v12::#Pathoma' || v.startsWith('#AK_Step1_v12::#Sketchy') || v === 'Block4' || v === 'GUSOM';
-}
-function resourceUsesHeading() {
-  const v = document.getElementById('prefix-select').value;
-  return v.startsWith('#AK_Step1_v12::#Sketchy') || v === 'Block4' || v === 'GUSOM';
-}
-function getHeading() { return document.getElementById('heading-input').value.trim(); }
+
 function onConfigChange() {
-  const isCustom = document.getElementById('prefix-select').value === 'custom';
-  const noSubject = resourceSkipsSubject();
-  const hasHeading = resourceUsesHeading();
-  document.getElementById('custom-resource-label').style.display = isCustom ? '' : 'none';
-  document.getElementById('custom-resource-input').style.display = isCustom ? '' : 'none';
-  document.getElementById('subject-label').style.display = noSubject ? 'none' : '';
-  document.getElementById('subject-input').style.display = noSubject ? 'none' : '';
-  document.getElementById('heading-label').style.display = hasHeading ? '' : 'none';
-  document.getElementById('heading-input').style.display = hasHeading ? '' : 'none';
+  const mode = getMode();
+  const isCustom = mode === 'custom';
+  const needsSubject = mode === 'bootcamp' || mode === 'subject';
+  document.getElementById('subject-label').style.display = needsSubject ? '' : 'none';
+  document.getElementById('subject-input').style.display = needsSubject ? '' : 'none';
+  document.getElementById('custom-base-label').style.display = isCustom ? '' : 'none';
+  document.getElementById('custom-base-input').style.display = isCustom ? '' : 'none';
+  document.getElementById('custom-depth-label').style.display = isCustom ? '' : 'none';
+  document.getElementById('custom-depth-select').style.display = isCustom ? '' : 'none';
   updatePreview();
   if (cachedNoteRows) reparse();
 }
-function setStatus(msg, err) {
-  const el = document.getElementById('status');
-  el.textContent = msg;
-  el.className = err ? 'status-err' : '';
-}
+
+function setStatus(msg, err) { const el = document.getElementById('status'); el.textContent = msg; el.className = err ? 'status-err' : ''; }
 function handleDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
 function handleDragLeave() { document.getElementById('drop-zone').classList.remove('drag-over'); }
 function handleDrop(e) { e.preventDefault(); document.getElementById('drop-zone').classList.remove('drag-over'); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }
 
 async function getDbBytes(zip) {
   const b = zip.file('collection.anki21b');
-  if (b) {
-    setStatus('Decompressing collection (zstd)…');
-    const c = await b.async('uint8array');
-    if (window.fzstd) return window.fzstd.decompress(c);
-    throw new Error('fzstd not available — cannot decompress .anki21b');
-  }
+  if (b) { setStatus('Decompressing collection (zstd)…'); const c = await b.async('uint8array'); if (window.fzstd) return window.fzstd.decompress(c); throw new Error('fzstd not available'); }
   const a21 = zip.file('collection.anki21'); if (a21) return new Uint8Array(await a21.async('arraybuffer'));
   const a2 = zip.file('collection.anki2'); if (a2) return new Uint8Array(await a2.async('arraybuffer'));
   throw new Error('No collection database found in package');
@@ -280,9 +260,9 @@ async function handleFile(file) {
 
 function reparse(filename) {
   if (!cachedNoteRows) return;
-  const prefix = getFullPrefix();
-  if (!prefix) { setStatus('Please configure the resource and subject above.', true); return; }
-  allRows = extractRows(cachedNoteRows, prefix);
+  const prefix = getFullPrefix(), depth = getDepth();
+  if (!prefix) { setStatus('Please configure the resource above.', true); return; }
+  allRows = extractRows(cachedNoteRows, prefix, depth);
   if (!allRows.length) {
     setStatus(`No cards found matching: ${prefix}`, true);
     document.getElementById('summary').style.display = 'none';
@@ -290,82 +270,52 @@ function reparse(filename) {
     return;
   }
   setStatus(`Loaded ${filename || 'package'} — ${allRows.length} subchapters found.`);
-  showSummary();
+  showSummary(depth);
   document.getElementById('results').style.display = 'block';
-  document.getElementById('reset-btn').style.display = '';
-  renderTable();
-  renderTree();
+  renderTable(depth);
+  renderTree(depth);
 }
 
-function resetAll() {
-  allRows = [];
-  cachedNoteRows = null;
-  sortCol = 0;
-  sortDir = 1;
-  document.getElementById('status').textContent = '';
-  document.getElementById('summary').style.display = 'none';
-  document.getElementById('summary').innerHTML = '';
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('table-wrap').innerHTML = '';
-  document.getElementById('tree-wrap').innerHTML = '';
-  document.getElementById('search').value = '';
-  document.getElementById('reset-btn').style.display = 'none';
-  document.getElementById('heading-input').value = '';
-  const fileInput = document.querySelector('#drop-zone input');
-  if (fileInput) fileInput.value = '';
-}
-
-function extractRows(noteRows, prefix) {
-  const threeLevel = resourceUsesHeading() && !getHeading();
-  const subMap = {};
-  const tagCounts = {};
+function extractRows(noteRows, prefix, depth) {
+  const tagMap = {};
   const prefixLower = prefix.toLowerCase();
   for (const row of noteRows) {
     const tags = (row[0] || '').trim().split(/\s+/);
     for (const rawTag of tags) {
       if (!rawTag) continue;
-      const tag = (prefix.startsWith('#') && !rawTag.startsWith('#')) ? '#' + rawTag : rawTag;
+      const tag = rawTag.startsWith('#') ? rawTag : '#' + rawTag;
       if (!tag.toLowerCase().startsWith(prefixLower)) continue;
       const parts = tag.slice(prefix.length).split('::');
-      let heading = '', chapter, subchapter;
-      if (threeLevel) {
-        if (parts.length < 3 || !parts[0] || !parts[1] || !parts[2]) continue;
-        heading = parts[0];
-        chapter = parts[1];
-        subchapter = parts[2];
-      } else {
-        if (parts.length < 2 || !parts[0] || !parts[1]) continue;
-        chapter = parts[0];
-        subchapter = parts[1];
-      }
-      const key = (heading ? heading + '|||' : '') + chapter + '|||' + subchapter;
-      if (!subMap[key]) {
-        subMap[key] = { heading, chapter, subchapter, count: 0, tags: [] };
-        tagCounts[key] = {};
-      }
-      subMap[key].count += 1;
-      if (!tagCounts[key][tag]) {
-        tagCounts[key][tag] = true;
-        subMap[key].tags.push(tag);
-      }
+      if (parts.length < depth || parts.slice(0, depth).some(p => !p)) continue;
+      const key = parts.slice(0, depth).join('|||') + '|||' + tag;
+      tagMap[key] = (tagMap[key] || 0) + 1;
     }
   }
-  const result = Object.values(subMap);
-  for (const r of result) { r.tag = r.tags[0] || ''; }
-  return result.sort((a, b) => (a.heading || '').localeCompare(b.heading || '') || a.chapter.localeCompare(b.chapter) || a.subchapter.localeCompare(b.subchapter));
+  return Object.entries(tagMap).map(([k, count]) => {
+    const parts = k.split('|||');
+    const tag = parts[parts.length - 1];
+    const levels = parts.slice(0, -1);
+    return depth === 3
+      ? { heading: levels[0], chapter: levels[1], subchapter: levels[2], count, tag }
+      : { heading: null, chapter: levels[0], subchapter: levels[1], count, tag };
+  }).sort((a, b) => {
+    if (a.heading && b.heading) { const h = a.heading.localeCompare(b.heading); if (h) return h; }
+    const c = a.chapter.localeCompare(b.chapter); if (c) return c;
+    return a.subchapter.localeCompare(b.subchapter);
+  });
 }
 
-function showSummary() {
-  const hd = hasHeadings();
-  const headingCount = hd ? new Set(allRows.map(r => r.heading)).size : 0;
-  const chapters = new Set(allRows.map(r => (r.heading||'') + '|||' + r.chapter)).size;
+function showSummary(depth) {
+  const headings = depth === 3 ? new Set(allRows.map(r => r.heading)).size : null;
+  const chapters = new Set(allRows.map(r => (depth === 3 ? r.heading+'||' : '')+r.chapter)).size;
   const totalCards = allRows.reduce((s, r) => s + r.count, 0);
+  let html = '';
+  if (headings !== null) html += `<div class="stat"><div class="val">${headings}</div><div class="lbl">Headings</div></div>`;
+  html += `<div class="stat"><div class="val">${chapters}</div><div class="lbl">Chapters</div></div>`;
+  html += `<div class="stat"><div class="val">${allRows.length}</div><div class="lbl">Subchapters</div></div>`;
+  html += `<div class="stat"><div class="val">${totalCards.toLocaleString()}</div><div class="lbl">Total cards</div></div>`;
   document.getElementById('summary').style.display = 'flex';
-  document.getElementById('summary').innerHTML = `
-    ${hd ? `<div class="stat"><div class="val">${headingCount}</div><div class="lbl">Headings</div></div>` : ''}
-    <div class="stat"><div class="val">${chapters}</div><div class="lbl">Chapters</div></div>
-    <div class="stat"><div class="val">${allRows.length}</div><div class="lbl">Subchapters</div></div>
-    <div class="stat"><div class="val">${totalCards.toLocaleString()}</div><div class="lbl">Total cards</div></div>`;
+  document.getElementById('summary').innerHTML = html;
 }
 
 function switchTab(name) {
@@ -375,129 +325,109 @@ function switchTab(name) {
   document.getElementById('panel-' + name).classList.add('active');
 }
 
-function hasHeadings() { return allRows.some(r => r.heading); }
-
 function getFiltered() {
   const q = (document.getElementById('search').value || '').toLowerCase();
-  return q ? allRows.filter(r =>
-    (r.heading && r.heading.toLowerCase().includes(q)) ||
-    r.chapter.toLowerCase().includes(q) ||
-    r.subchapter.toLowerCase().includes(q) ||
-    r.tags.some(t => t.toLowerCase().includes(q))
-  ) : allRows;
+  if (!q) return allRows;
+  return allRows.filter(r => (r.heading||'').toLowerCase().includes(q) || r.chapter.toLowerCase().includes(q) || r.subchapter.toLowerCase().includes(q) || r.tag.toLowerCase().includes(q));
 }
-function getSorted(rows) {
-  const hd = hasHeadings();
-  const cols = hd ? ['heading','chapter','subchapter','mapped','count','tag'] : ['chapter','subchapter','mapped','count','tag'];
+function getSorted(rows, depth) {
+  const colKeys = depth === 3 ? ['heading','chapter','subchapter','mapped','count','tag'] : ['chapter','subchapter','mapped','count','tag'];
   return [...rows].sort((a,b) => {
-    const c = cols[sortCol];
+    const c = colKeys[sortCol];
     if (c === 'count') return sortDir*(a.count-b.count);
     if (c === 'mapped') return sortDir*mappedLabel(a.chapter,a.subchapter).localeCompare(mappedLabel(b.chapter,b.subchapter));
     return sortDir*(a[c]||'').localeCompare(b[c]||'');
   });
 }
-function renderTable() {
-  const rows = getSorted(getFiltered());
+
+function renderTable(depth) {
+  depth = depth || getDepth();
+  const rows = getSorted(getFiltered(), depth);
   const wrap = document.getElementById('table-wrap');
   if (!rows.length) { wrap.innerHTML = '<div id="empty">No results match your search.</div>'; return; }
-  const hd = hasHeadings();
-  const headers = hd ? ['Heading','Chapter','Subchapter','Mapped Subchapter','# Cards','Tag'] : ['Chapter','Subchapter','Mapped Subchapter','# Cards','Tag'];
-  const colCount = headers.length;
-  const arrs = Array.from({length: colCount}, (_,i) => i===sortCol?(sortDir===1?' ↑':' ↓'):'');
-  const colgroup = hd
-    ? '<col class="col-heading"><col class="col-chapter"><col class="col-subchapter"><col class="col-mapped"><col class="col-count"><col class="col-tag">'
-    : '<col class="col-chapter"><col class="col-subchapter"><col class="col-mapped"><col class="col-count"><col class="col-tag">';
-  wrap.innerHTML = `<table>
-    <colgroup>${colgroup}</colgroup>
+  const headers = depth === 3
+    ? ['Heading','Chapter','Subchapter','Mapped Subchapter','# Cards','Tag']
+    : ['Chapter','Subchapter','Mapped Subchapter','# Cards','Tag'];
+  const colWidths = depth === 3
+    ? ['140px','140px','140px','160px','70px','']
+    : ['160px','160px','180px','80px',''];
+  const arrs = headers.map((_,i) => i===sortCol?(sortDir===1?' ↑':' ↓'):'');
+  const cols = colWidths.map(w => w ? `<col style="width:${w}">` : '<col>').join('');
+  wrap.innerHTML = `<table><colgroup>${cols}</colgroup>
     <thead><tr>${headers.map((h,i)=>`<th onclick="sortBy(${i})">${h}${arrs[i]}</th>`).join('')}</tr></thead>
     <tbody>${rows.map(r => {
-      const num = formatSubNum(getChapterNum(r.chapter), getSubchapterNum(r.subchapter));
-      return `<tr>
-        ${hd ? `<td class="chapter-cell">${esc(label(r.heading))}</td>` : ''}
-        <td class="chapter-cell">${esc(label(r.chapter))}</td>
-        <td class="subchapter-cell">${esc(label(r.subchapter))}</td>
-        <td class="mapped-cell">${num ? `<span class="mapped-num">${esc(num)}</span>` : ''}${esc(num ? stripLeadingNum(label(r.subchapter)) : label(r.subchapter))}</td>
-        <td class="count-cell">${r.count}</td>
-        <td class="tag-cell">${r.tags.map(t => esc(t)).join('<br>')}</td>
-      </tr>`;
+      const num = formatNum(getNum(r.chapter), getNum(r.subchapter));
+      const mappedCell = `<td class="mapped-cell">${num?`<span class="mapped-num">${esc(num)}</span>`:''}${esc(label(r.subchapter))}</td>`;
+      if (depth === 3) return `<tr><td class="truncate">${esc(label(r.heading))}</td><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mappedCell}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
+      return `<tr><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mappedCell}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
     }).join('')}</tbody></table>`;
 }
-function sortBy(col) { if(sortCol===col) sortDir*=-1; else {sortCol=col;sortDir=1;} renderTable(); }
+function sortBy(col) { if(sortCol===col) sortDir*=-1; else {sortCol=col;sortDir=1;} renderTable(getDepth()); }
 
-function buildStructuredMap() {
-  const hd = hasHeadings();
-  if (hd) {
-    const headingMap = {};
-    for (const row of allRows) {
-      const h = row.heading || '(none)';
-      if (!headingMap[h]) headingMap[h] = {};
-      if (!headingMap[h][row.chapter]) headingMap[h][row.chapter] = [];
-      headingMap[h][row.chapter].push(row);
-    }
-    return { hasHeadings: true, headingMap };
+function buildStructure(depth) {
+  if (depth === 2) {
+    const map = {};
+    for (const r of allRows) { if (!map[r.chapter]) map[r.chapter]=[]; map[r.chapter].push(r); }
+    return map;
   }
-  const chapterMap = {};
-  for (const row of allRows) {
-    if (!chapterMap[row.chapter]) chapterMap[row.chapter] = [];
-    chapterMap[row.chapter].push(row);
+  const map = {};
+  for (const r of allRows) {
+    if (!map[r.heading]) map[r.heading]={};
+    if (!map[r.heading][r.chapter]) map[r.heading][r.chapter]=[];
+    map[r.heading][r.chapter].push(r);
   }
-  return { hasHeadings: false, chapterMap };
+  return map;
 }
 
-function renderChapterNodes(chapterMap, idPrefix) {
-  const chapters = Object.keys(chapterMap).sort((a,b) => a.localeCompare(b));
-  let html = '';
-  for (const chapter of chapters) {
-    const chapterNum = getChapterNum(chapter);
-    const cid = idPrefix + chapter.replace(/[^a-zA-Z0-9_-]/g, '_');
-    html += `<div class="tree-node">`;
-    html += `<div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-chapter">${esc(label(chapter))}</span></div>`;
-    html += `<div class="tree-children" id="ch-${esc(cid)}">`;
-    for (const row of chapterMap[chapter]) {
-      const subNum = getSubchapterNum(row.subchapter);
-      const numLabel = formatSubNum(chapterNum, subNum);
-      html += `<div class="leaf-block"><div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(numLabel)}</span><span class="t-subchapter">${esc(label(row.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(row.tags[0])}</span></div>`;
-      for (let ti = 1; ti < row.tags.length; ti++) {
-        html += `<div class="leaf-row leaf-extra-tag"><span class="leaf-indent"></span><span class="t-arrow">→</span><span class="t-tag">${esc(row.tags[ti])}</span></div>`;
-      }
-      html += `</div>`;
-    }
-    html += `</div></div>`;
-  }
-  return html;
-}
-
-function renderTree() {
-  const resourceName = getResourceName();
-  const struct = buildStructuredMap();
-  let html = `<div class="tree-node">`;
-
-  if (struct.hasHeadings) {
-    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span></div>`;
+function renderTree(depth) {
+  depth = depth || getDepth();
+  const resourceName = getResourceDisplayName();
+  const subjectName = depth === 2 ? label(getSubject()) : null;
+  const struct = buildStructure(depth);
+  let html = '<div class="tree-node">';
+  if (depth === 2) {
+    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span><span class="t-arrow">→</span><span class="t-l1">${esc(subjectName)}</span></div>`;
     html += `<div class="tree-children" id="ch-root">`;
-    const headings = Object.keys(struct.headingMap).sort((a,b) => a.localeCompare(b));
-    for (const heading of headings) {
-      const hid = 'h_' + heading.replace(/[^a-zA-Z0-9_-]/g, '_');
-      html += `<div class="tree-node">`;
-      html += `<div class="tree-row" onclick="toggleNode('${esc(hid)}')"><span class="tog" id="tog-${esc(hid)}">▾</span><span class="t-subject">${esc(label(heading))}</span></div>`;
-      html += `<div class="tree-children" id="ch-${esc(hid)}">`;
-      html += renderChapterNodes(struct.headingMap[heading], hid + '_');
+    for (const chapter of Object.keys(struct).sort()) {
+      const chNum = getNum(chapter);
+      const cid = 'c_'+chapter.replace(/[^a-zA-Z0-9_-]/g,'_');
+      html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-heading">${esc(label(chapter))}</span></div>`;
+      html += `<div class="tree-children" id="ch-${esc(cid)}">`;
+      for (const r of struct[chapter]) {
+        const n = formatNum(chNum, getNum(r.subchapter));
+        html += `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(n)}</span><span class="t-subchapter">${esc(label(r.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(r.tag)}</span></div>`;
+      }
       html += `</div></div>`;
     }
+    html += `</div>`;
   } else {
-    const subjectName = label(getSubject());
-    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span>${subjectName ? `<span class="t-arrow">→</span><span class="t-subject">${esc(subjectName)}</span>` : ''}</div>`;
+    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span></div>`;
     html += `<div class="tree-children" id="ch-root">`;
-    html += renderChapterNodes(struct.chapterMap, 'c_');
+    for (const heading of Object.keys(struct).sort()) {
+      const hid = 'h_'+heading.replace(/[^a-zA-Z0-9_-]/g,'_');
+      html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(hid)}')"><span class="tog" id="tog-${esc(hid)}">▾</span><span class="t-heading">${esc(label(heading))}</span></div>`;
+      html += `<div class="tree-children" id="ch-${esc(hid)}">`;
+      for (const chapter of Object.keys(struct[heading]).sort()) {
+        const chNum = getNum(chapter);
+        const cid = 'c_'+heading.replace(/[^a-zA-Z0-9_-]/g,'_')+'_'+chapter.replace(/[^a-zA-Z0-9_-]/g,'_');
+        html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-chapter">${esc(label(chapter))}</span></div>`;
+        html += `<div class="tree-children" id="ch-${esc(cid)}">`;
+        for (const r of struct[heading][chapter]) {
+          const n = formatNum(chNum, getNum(r.subchapter));
+          html += `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(n)}</span><span class="t-subchapter">${esc(label(r.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(r.tag)}</span></div>`;
+        }
+        html += `</div></div>`;
+      }
+      html += `</div></div>`;
+    }
+    html += `</div>`;
   }
-
-  html += `</div></div>`;
+  html += '</div>';
   document.getElementById('tree-wrap').innerHTML = html;
 }
 
 function toggleNode(id) {
-  const ch = document.getElementById('ch-' + id);
-  const tog = document.getElementById('tog-' + id);
+  const ch = document.getElementById('ch-'+id), tog = document.getElementById('tog-'+id);
   if (!ch) return;
   ch.classList.toggle('collapsed');
   tog.textContent = ch.classList.contains('collapsed') ? '▸' : '▾';
@@ -507,32 +437,21 @@ function setAllTree(expand) {
   document.querySelectorAll('.tog').forEach(el => el.textContent = expand ? '▾' : '▸');
 }
 
-function buildChapterHierarchy(chapterMap) {
-  const chapters = Object.keys(chapterMap).sort((a,b) => a.localeCompare(b));
-  return chapters.map(ch => {
-    const chapterNum = getChapterNum(ch);
-    return {
-      chapter: label(ch),
-      subchapters: chapterMap[ch].map(r => {
-        const subNum = getSubchapterNum(r.subchapter);
-        return { number: formatSubNum(chapterNum, subNum), subchapter: label(r.subchapter), tags: r.tags };
-      })
-    };
-  });
-}
-
 function buildHierarchy() {
-  const resourceName = getResourceName();
-  const struct = buildStructuredMap();
-  if (struct.hasHeadings) {
-    const headings = Object.keys(struct.headingMap).sort((a,b) => a.localeCompare(b));
-    return { resource: resourceName, headings: headings.map(h => ({
-      heading: label(h),
-      chapters: buildChapterHierarchy(struct.headingMap[h])
+  const depth = getDepth(), resourceName = getResourceDisplayName(), struct = buildStructure(depth);
+  if (depth === 2) {
+    return { resource: resourceName, subject: label(getSubject()), chapters: Object.keys(struct).sort().map(ch => ({
+      chapter: label(ch),
+      subchapters: struct[ch].map(r => ({ number: formatNum(getNum(ch), getNum(r.subchapter)), subchapter: label(r.subchapter), tag: r.tag }))
     }))};
   }
-  const subjectName = label(getSubject());
-  return { resource: resourceName, subject: subjectName, chapters: buildChapterHierarchy(struct.chapterMap) };
+  return { resource: resourceName, headings: Object.keys(struct).sort().map(h => ({
+    heading: label(h),
+    chapters: Object.keys(struct[h]).sort().map(ch => ({
+      chapter: label(ch),
+      subchapters: struct[h][ch].map(r => ({ number: formatNum(getNum(ch), getNum(r.subchapter)), subchapter: label(r.subchapter), tag: r.tag }))
+    }))
+  }))};
 }
 
 function exportHierarchyText() {
@@ -541,51 +460,41 @@ function exportHierarchyText() {
   if (h.headings) {
     lines.push(h.resource);
     for (const hd of h.headings) {
-      lines.push(`\n  ${hd.heading}`);
+      lines.push(`\n${hd.heading}`);
       for (const ch of hd.chapters) {
-        lines.push(`\n    ${ch.chapter}`);
-        for (const sub of ch.subchapters) {
-          const num = sub.number ? `${sub.number} ` : '';
-          lines.push(`      * ${num}${sub.subchapter}`);
-          for (const t of sub.tags) { lines.push(`            → ${t}`); }
-        }
+        lines.push(`  ${ch.chapter}`);
+        for (const sub of ch.subchapters) { lines.push(`    * ${sub.number?sub.number+' ':''}${sub.subchapter} → ${sub.tag}`); }
       }
     }
   } else {
-    lines.push(`${h.resource}${h.subject ? ' → ' + h.subject : ''}`);
+    lines.push(`${h.resource} → ${h.subject}`);
     for (const ch of h.chapters) {
       lines.push(`\n${ch.chapter}`);
-      for (const sub of ch.subchapters) {
-        const num = sub.number ? `${sub.number} ` : '';
-        lines.push(`  * ${num}${sub.subchapter}`);
-        for (const t of sub.tags) { lines.push(`      → ${t}`); }
-      }
+      for (const sub of ch.subchapters) { lines.push(`  * ${sub.number?sub.number+' ':''}${sub.subchapter} → ${sub.tag}`); }
     }
   }
   downloadText(lines.join('\n'), 'hierarchy.txt');
 }
-function exportHierarchyJSON() {
-  downloadText(JSON.stringify(buildHierarchy(), null, 2), 'hierarchy.json');
-}
+function exportHierarchyJSON() { downloadText(JSON.stringify(buildHierarchy(), null, 2), 'hierarchy.json'); }
 
-function toDelimited(rows, sep) {
-  const hd = hasHeadings();
-  const maxTags = Math.max(1, ...rows.map(r => r.tags.length));
-  const headers = hd ? ['Heading','Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards'] : ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards'];
-  for (let i = 0; i < maxTags; i++) headers.push(i === 0 ? 'Tag' : `Tag ${i + 1}`);
+function toDelimited(rows, sep, depth) {
+  const headers = depth === 3
+    ? ['Heading','Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag']
+    : ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag'];
   const escape = v => sep===',' ? `"${String(v).replace(/"/g,'""')}"` : String(v);
   return [headers.join(sep), ...rows.map(r => {
     const ml = mappedLabel(r.chapter, r.subchapter);
-    const base = hd ? [label(r.heading || ''), label(r.chapter), label(r.subchapter), ml, r.count] : [label(r.chapter), label(r.subchapter), ml, r.count];
-    for (let i = 0; i < maxTags; i++) base.push(r.tags[i] || '');
+    const base = depth === 3
+      ? [label(r.heading), label(r.chapter), label(r.subchapter), ml, r.count, r.tag]
+      : [label(r.chapter), label(r.subchapter), ml, r.count, r.tag];
     return base.map(escape).join(sep);
   })].join('\n');
 }
 function downloadText(text, filename) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download = filename; a.click(); }
-function exportCSV() { downloadText(toDelimited(getSorted(getFiltered()),','),'anki_cards.csv'); }
-function exportTSV() { downloadText(toDelimited(getSorted(getFiltered()),'\t'),'anki_cards.tsv'); }
+function exportCSV() { const d=getDepth(); downloadText(toDelimited(getSorted(getFiltered(),d),',',d),'anki_cards.csv'); }
+function exportTSV() { const d=getDepth(); downloadText(toDelimited(getSorted(getFiltered(),d),'\t',d),'anki_cards.tsv'); }
 
-updatePreview();
+onConfigChange();
 </script>
 </body>
 </html>
