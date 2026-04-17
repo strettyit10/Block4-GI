@@ -518,74 +518,170 @@ button { cursor: pointer; }
 }
 .resource-stack {
   display: grid;
-  gap: 12px;
-}
-.resource-group {
-  border: 1px solid rgba(188, 168, 143, 0.6);
-  border-radius: 18px;
-  padding: 14px;
-  background: rgba(255, 250, 244, 0.72);
-}
-.resource-group.skin-a { background: rgba(22, 101, 52, 0.05); border-color: rgba(22, 101, 52, 0.18); }
-.resource-group.skin-b { background: rgba(14, 116, 144, 0.05); border-color: rgba(14, 116, 144, 0.18); }
-.resource-group.skin-c { background: rgba(120, 53, 15, 0.05); border-color: rgba(120, 53, 15, 0.18); }
-.resource-head {
-  display: flex;
-  justify-content: space-between;
   gap: 10px;
+}
+/* ══════════════════════════════════════════════════════════
+   Planner-style 3rd-Party Resource rows
+   Each provider is rendered as a full-width colored row.
+   Mapped → colored pill + subchapter rows below.
+   N/A    → faded row, grey "N/A" pill, single-line message.
+   ══════════════════════════════════════════════════════════ */
+.tp-res-row {
+  border: 1.5px solid;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity .15s;
+}
+.tp-res-row.na { opacity: 0.55; }
+
+.tp-res-head {
+  display: flex;
   align-items: center;
-  margin-bottom: 10px;
-}
-.resource-head strong { font-size: 1rem; }
-.resource-group.provider-bootcamp .resource-head strong { color: #d97706; }
-.resource-group.provider-bb .resource-head strong { color: #e11d48; }
-.resource-group.provider-sketchy .resource-head strong { color: #0ea5e9; }
-.resource-group.provider-physeo .resource-head strong { color: #16a34a; }
-.resource-group.provider-pathoma .resource-head strong { color: #7c3aed; }
-.resource-head span { color: var(--muted); font-size: 0.8rem; }
-.resource-head-main {
-  display: grid;
-  gap: 3px;
-}
-.resource-toggle {
-  flex-shrink: 0;
-}
-.resource-list {
-  display: grid;
-  gap: 10px;
-}
-.resource-item {
-  border-top: 1px solid rgba(188, 168, 143, 0.5);
-  padding-top: 10px;
-}
-.resource-item:first-child {
-  border-top: 0;
-  padding-top: 0;
-}
-.resource-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
   gap: 14px;
+  flex-wrap: wrap;
+  min-height: 30px;
 }
-.resource-item-title { font-weight: 700; font-size: 0.83rem; color: var(--ink); }
-.resource-item-copy {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
-.resource-link {
+
+.tp-status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1.5px solid;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-left: auto;
+  line-height: 1;
+  min-width: 78px;
+  justify-content: center;
+}
+.tp-status-pill.na {
+  color: #8b8680;
+  background: transparent;
+  border-color: #cec8c0;
+}
+
+.tp-res-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
   white-space: nowrap;
-  color: var(--accent-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.tp-res-module {
+  color: var(--muted);
+  font-size: 0.88rem;
+  flex: 1;
+  min-width: 160px;
+}
+
+.tp-res-count {
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.tp-res-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 2px 0 0 6px;
+  padding-left: 12px;
+  border-left: 2px solid;
+}
+
+.tp-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  flex-wrap: wrap;
+}
+
+.tp-sub-label { flex: 1; min-width: 140px; }
+
+.tp-sub-count {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(0,0,0,0.08);
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.tp-sub-count.empty { opacity: 0.45; font-style: italic; font-weight: 500; }
+
+.tp-sub-link {
+  margin-left: auto;
   font-weight: 700;
   text-decoration: none;
+  font-size: 0.78rem;
+  white-space: nowrap;
 }
-.resource-link:hover { text-decoration: underline; }
+.tp-sub-link:hover { text-decoration: underline; }
+
+.tp-xref {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 6px 10px 2px;
+}
+
+/* ── Provider palettes (matched to screenshot) ── */
+/* Bootcamp — blue */
+.tp-res-row.bootcamp { background: #eff6ff; border-color: #bfdbfe; }
+.tp-res-row.bootcamp .tp-status-pill { color: #1d4ed8; background: #dbeafe; border-color: #93c5fd; }
+.tp-res-row.bootcamp .tp-res-body { border-left-color: #60a5fa; }
+.tp-res-row.bootcamp .tp-sub-row { background: rgba(59, 130, 246, 0.10); color: #1e3a8a; }
+.tp-res-row.bootcamp .tp-sub-link { color: #1d4ed8; }
+
+/* Boards & Beyond — green */
+.tp-res-row.bb { background: #f0fdf4; border-color: #bbf7d0; }
+.tp-res-row.bb .tp-status-pill { color: #15803d; background: #dcfce7; border-color: #86efac; }
+.tp-res-row.bb .tp-res-body { border-left-color: #4ade80; }
+.tp-res-row.bb .tp-sub-row { background: rgba(34, 197, 94, 0.10); color: #14532d; }
+.tp-res-row.bb .tp-sub-link { color: #15803d; }
+
+/* Pathoma — red */
+.tp-res-row.pathoma { background: #fef2f2; border-color: #fecaca; }
+.tp-res-row.pathoma .tp-status-pill { color: #b91c1c; background: #fee2e2; border-color: #fca5a5; }
+.tp-res-row.pathoma .tp-res-body { border-left-color: #f87171; }
+.tp-res-row.pathoma .tp-sub-row { background: rgba(239, 68, 68, 0.10); color: #7f1d1d; }
+.tp-res-row.pathoma .tp-sub-link { color: #b91c1c; }
+
+/* Physeo — purple */
+.tp-res-row.physeo { background: #faf5ff; border-color: #e9d5ff; }
+.tp-res-row.physeo .tp-status-pill { color: #6b21a8; background: #f3e8ff; border-color: #d8b4fe; }
+.tp-res-row.physeo .tp-res-body { border-left-color: #c084fc; }
+.tp-res-row.physeo .tp-sub-row { background: rgba(168, 85, 247, 0.10); color: #581c87; }
+.tp-res-row.physeo .tp-sub-link { color: #6b21a8; }
+
+/* Sketchy — amber / tan */
+.tp-res-row.sketchy { background: #fefce8; border-color: #fde68a; }
+.tp-res-row.sketchy .tp-status-pill { color: #854d0e; background: #fef3c7; border-color: #fcd34d; }
+.tp-res-row.sketchy .tp-res-body { border-left-color: #facc15; }
+.tp-res-row.sketchy .tp-sub-row { background: rgba(234, 179, 8, 0.12); color: #713f12; }
+.tp-res-row.sketchy .tp-sub-link { color: #854d0e; }
+
+@media (max-width: 560px) {
+  .tp-res-head { gap: 10px; }
+  .tp-res-module { min-width: 100%; order: 4; }
+  .tp-res-count { margin-left: auto; }
+  .tp-sub-label { min-width: 100%; }
+  .tp-sub-link { margin-left: 0; }
+}
 .resource-status-row {
   display: flex;
   gap: 10px;
@@ -816,7 +912,8 @@ let selectedLecture = (() => {
 })();
 let showQidTable = false;
 let showObjectives = false;
-let resourceVisibility = Object.fromEntries(RESOURCE_META.map((resource) => [resource.key, false]));
+let showResources = true;
+let resourceVisibility = Object.fromEntries(RESOURCE_META.map((resource) => [resource.key, true]));
 
 function esc(value) {
   const div = document.createElement('div');
@@ -1013,33 +1110,69 @@ function renderDetail(lecture) {
       `).join('')
     : '<p class="resource-item-copy">No learning objectives were mapped for this lecture yet.</p>';
 
-  const resourceMarkup = groupedResources.length
+  // Provider metadata — fixed order to mirror the Study Planner screenshot
+  const PROVIDER_ROWS = [
+    { key: 'bootcamp', label: 'Bootcamp',        dot: '🔵' },
+    { key: 'bb',       label: 'Boards & Beyond', dot: '🟢' },
+    { key: 'pathoma',  label: 'Pathoma',         dot: '🔴' },
+    { key: 'physeo',   label: 'Physeo',          dot: '🟣' },
+    { key: 'sketchy',  label: 'Sketchy',         dot: '🟤' },
+  ];
+
+  const hasAnyResource = groupedResources.length > 0;
+
+  const resourceMarkup = hasAnyResource
     ? `
-      <div class="resource-stack">${groupedResources.map((group, index) => `
-        <section class="resource-group provider-${group.key} skin-${index % 3 === 0 ? 'a' : index % 3 === 1 ? 'b' : 'c'}">
-          <div class="resource-head">
-            <div class="resource-head-main">
-              <strong>${esc(group.label)}</strong>
-              <span>${group.items.length} item${group.items.length === 1 ? '' : 's'}</span>
+      <div class="resource-stack">${PROVIDER_ROWS.map((provider) => {
+        const items = lecture[provider.key] || [];
+        const mapped = items.length > 0;
+
+        if (!mapped) {
+          return `
+            <div class="tp-res-row ${provider.key} na">
+              <div class="tp-res-head">
+                <span class="tp-status-pill na">N/A</span>
+                <span class="tp-res-label">${provider.dot} ${esc(provider.label)}</span>
+                <span class="tp-res-module">Not available for this lecture</span>
+              </div>
             </div>
-            <button class="toggle-btn resource-toggle" type="button" data-resource-toggle="${group.key}">${resourceVisibility[group.key] === false ? 'Show' : 'Hide'} ${esc(group.label)}</button>
+          `;
+        }
+
+        // Build a concise module label: "<Label> <first section> + N more"
+        const firstSection = items[0].section || provider.label;
+        const moreCount = items.length - 1;
+        const moduleLabel = moreCount > 0
+          ? `${esc(firstSection)} + ${moreCount} more`
+          : esc(firstSection);
+        const countLabel = items.length === 1 ? '1 section' : `${items.length} sections`;
+
+        const subRows = items.map((item) => {
+          const ankiCount = typeof item.count === 'number' ? item.count : null;
+          const countMarkup = ankiCount !== null
+            ? `<span class="tp-sub-count">${ankiCount} ANKing card${ankiCount === 1 ? '' : 's'}</span>`
+            : `<span class="tp-sub-count empty">— cards</span>`;
+          return `
+            <div class="tp-sub-row">
+              <span class="tp-sub-label">${esc(item.section || provider.label)}${item.subchapters && item.subchapters !== item.section ? ` — ${esc(item.subchapters)}` : ''}${item.xref ? ` <em style="opacity:.8">(${esc(item.xref)})</em>` : ''}</span>
+              ${countMarkup}
+              ${item.html ? `<a class="tp-sub-link" href="${item.html}" target="_blank" rel="noopener noreferrer">Open cards ↗</a>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="tp-res-row ${provider.key}">
+            <div class="tp-res-head">
+              <span class="tp-status-pill">✓ Mapped</span>
+              <span class="tp-res-label">${provider.dot} ${esc(provider.label)}</span>
+              <span class="tp-res-module">${moduleLabel}</span>
+              <span class="tp-res-count">${countLabel}</span>
+            </div>
+            <div class="tp-res-body">${subRows}</div>
           </div>
-          <div class="resource-list${resourceVisibility[group.key] === false ? ' is-hidden' : ''}">
-            ${group.items.map((item) => `
-              <article class="resource-item">
-                <div class="resource-item-top">
-                  <div>
-                    <div class="resource-item-title">${esc(item.section || group.label)}</div>
-                    ${item.subchapters ? `<p class="resource-item-copy">${esc(item.subchapters)}</p>` : ''}
-                    ${item.xref ? `<p class="resource-item-copy"><em>${esc(item.xref)}</em></p>` : ''}
-                  </div>
-                  ${item.html ? `<a class="resource-link" href="${item.html}" target="_blank" rel="noopener noreferrer">Open cards ↗</a>` : ''}
-                </div>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `).join('')}</div>
+        `;
+      }).join('')}</div>
     `
     : '<p class="resource-item-copy">No third-party resources were mapped for this lecture yet.</p>';
 
@@ -1130,8 +1263,9 @@ function renderDetail(lecture) {
       <section class="card resources-card">
         <div class="section-head">
           <h3>3rd Party Resources</h3>
+          <button class="toggle-btn" id="resourcesToggle" type="button">${showResources ? 'Hide' : 'Show'} 3rd party resources</button>
         </div>
-        <div id="resourcesBody">${resourceMarkup}</div>
+        <div class="${showResources ? '' : 'is-hidden'}" id="resourcesBody">${resourceMarkup}</div>
       </section>
 
       <section class="card learning-card">
@@ -1152,13 +1286,13 @@ function renderDetail(lecture) {
     });
   }
 
-  document.querySelectorAll('[data-resource-toggle]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const key = button.dataset.resourceToggle;
-      resourceVisibility[key] = resourceVisibility[key] === false;
+  const resourcesToggle = document.getElementById('resourcesToggle');
+  if (resourcesToggle) {
+    resourcesToggle.addEventListener('click', () => {
+      showResources = !showResources;
       renderDetail(lecture);
     });
-  });
+  }
 
   const objectivesToggle = document.getElementById('objectivesToggle');
   if (objectivesToggle) {
