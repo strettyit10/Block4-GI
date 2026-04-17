@@ -3361,21 +3361,7 @@ function render() {
     }
     h += '</div>';
 
-    // ── BACKLOG SUMMARY BANNER ──
-    const blStats = getBacklogStats();
-    if (blStats.count > 0) {
-      const hoursBehind = blStats.time / 60;
-      const sev = hoursBehind >= 8 ? 'high' : hoursBehind >= 3 ? 'mid' : 'low';
-      const sevColor = sev === 'high' ? '#b91c1c' : sev === 'mid' ? '#b45309' : 'var(--accent)';
-      h += '<div class="progress-card" style="padding:12px 18px;display:flex;align-items:center;gap:14px;border-left:4px solid ' + sevColor + '">';
-      h += '<div style="font-size:1.4rem">📚</div>';
-      h += '<div style="flex:1">';
-      h += '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3)">Backlog</div>';
-      h += '<div style="font-size:0.92rem;font-weight:700;color:' + sevColor + '">' + blStats.count + ' task' + (blStats.count === 1 ? '' : 's') + ' · <span style="font-size:1.05rem">' + fmtTime(blStats.time) + '</span> behind</div>';
-      h += '</div>';
-      h += '<button onclick="switchTab(\'backlog\')" style="padding:6px 14px;font-size:0.75rem;background:var(--surface);color:var(--ink-2);border:1px solid var(--rule);border-radius:6px;font-weight:700;cursor:pointer">View Backlog →</button>';
-      h += '</div>';
-    }
+    // (Backlog summary banner removed)
 
     // ── PROGRESS ──
     h += `<div class="progress-card">
@@ -3438,54 +3424,7 @@ function render() {
       bucket1Html += '</div>';
     }
 
-    // Carry-over tasks from days before yesterday
-    const carryOver = getCarryOverTasks(ds);
-    // Stash carry-over items in a global lookup so the Backlog buttons can retrieve by index
-    window._carryLookup = {};
-    if (carryOver.length > 0) {
-      // Group by original date
-      const byDate = {};
-      for (const item of carryOver) {
-        if (!byDate[item.date]) byDate[item.date] = [];
-        byDate[item.date].push(item);
-      }
-      const dates = Object.keys(byDate).sort().reverse();
-      let coIdx = 0;
-      for (const od of dates) {
-        const items = byDate[od];
-        // Collect lookup IDs for this card so "Backlog All" can grab them
-        const cardLookupIds = [];
-        for (const it of items) {
-          const lid = 'co_' + coIdx++;
-          window._carryLookup[lid] = it;
-          cardLookupIds.push(lid);
-        }
-        const allIdsJson = JSON.stringify(cardLookupIds).replace(/"/g, '&quot;');
-        bucket1Html += '<div class="session-card" style="border-left:3px solid #b45309">';
-        bucket1Html += '<div class="session-label" style="align-items:center;gap:8px;flex-wrap:wrap">';
-        bucket1Html += '<span class="session-title" style="color:#b45309">⚠ Overdue from ' + od + '</span>';
-        bucket1Html += '<span class="block-tag" style="background:#fef3c7;color:#92400e">' + items.length + ' task' + (items.length === 1 ? '' : 's') + '</span>';
-        bucket1Html += '<button onclick="backlogAllInCard(' + allIdsJson + ')" title="Move all tasks on this card to the Backlog tab and remove this card" style="margin-left:auto;padding:4px 10px;font-size:0.68rem;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:6px;font-weight:700;cursor:pointer;white-space:nowrap">→ Backlog All</button>';
-        bucket1Html += '</div>';
-        for (let idx = 0; idx < items.length; idx++) {
-          const item = items[idx];
-          const lookupId = cardLookupIds[idx];
-          const key = item.key;
-          const checked = !!(state.days[ds] && state.days[ds].tasks && state.days[ds].tasks[key]);
-          bucket1Tasks.push({ key, checked, time: item.time });
-          bucket1Html += '<div class="task ' + (checked ? 'done' : '') + '" style="align-items:center">';
-          bucket1Html += '<input type="checkbox" ' + (checked ? 'checked' : '') + ' onchange="toggle(\'' + key.replace(/'/g,"\\'") + '\', this.checked)">';
-          bucket1Html += '<div class="task-text" style="flex:1">' + esc(item.text);
-          if (item.time && checked) bucket1Html += ' <span class="task-time saved">✓ ' + item.time + ' min done</span>';
-          else if (item.time) bucket1Html += ' <span class="task-time">' + item.time + ' min</span>';
-          bucket1Html += '<span style="font-size:0.65rem;color:var(--ink-3);margin-left:6px">· ' + esc(item.sessTitle) + '</span>';
-          bucket1Html += '</div>';
-          bucket1Html += '<button onclick="addToBacklog(window._carryLookup[\'' + lookupId + '\'])" style="padding:3px 8px;font-size:0.65rem;background:var(--surface);color:var(--ink-3);border:1px solid var(--rule);border-radius:5px;font-weight:600;cursor:pointer;white-space:nowrap">→ Backlog</button>';
-          bucket1Html += '</div>';
-        }
-        bucket1Html += '</div>';
-      }
-    }
+    // (Carry-over / overdue tasks removed — Daily Checklist shows only today's plan)
 
     if (bucket1Tasks.length > 0) {
       const bd = bucket1Tasks.filter(t => t.checked).length;
