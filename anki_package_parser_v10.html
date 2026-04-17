@@ -59,6 +59,7 @@
   .tog { font-size: 10px; color: #aaa; width: 12px; flex-shrink: 0; }
   .t-resource { font-weight: 500; color: #111; }
   .t-l1 { color: #555; }
+  .t-group { font-weight: 500; color: #111; }
   .t-heading { font-weight: 500; color: #111; }
   .t-chapter { color: #555; font-weight: 500; }
   .t-subnum { font-size: 11px; color: #aaa; flex-shrink: 0; min-width: 34px; font-family: monospace; }
@@ -108,6 +109,7 @@
   <select id="custom-depth-select" style="display:none" onchange="onConfigChange()">
     <option value="2">2 — Chapter → Subchapter</option>
     <option value="3">3 — Heading → Chapter → Subchapter</option>
+    <option value="4">4 — Group → Heading → Chapter → Subchapter</option>
   </select>
 
   <div class="preview-block">
@@ -162,29 +164,23 @@ function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').re
 function getNum(s) { const m = s.match(/^(\d+)/); return m ? parseInt(m[1], 10) : null; }
 function formatNum(a, b) { return (a !== null && b !== null) ? `${a}.${String(b).padStart(2,'0')}` : ''; }
 function mappedLabel(chRaw, subRaw) { const n = formatNum(getNum(chRaw), getNum(subRaw)); return n ? `${n} ${label(subRaw)}` : label(subRaw); }
+function slug(s) { return s.replace(/[^a-zA-Z0-9_-]/g,'_'); }
 
-function getMode() { const val = document.getElementById('prefix-select').value; return val.split('|')[0]; }
+function getMode() { return document.getElementById('prefix-select').value.split('|')[0]; }
 function getBasePrefix() {
-  const val = document.getElementById('prefix-select').value;
-  const [mode, base] = val.split('|');
-  if (mode === 'custom') return document.getElementById('custom-base-input').value.trim();
-  return base;
+  const [mode, base] = document.getElementById('prefix-select').value.split('|');
+  return mode === 'custom' ? document.getElementById('custom-base-input').value.trim() : base;
 }
 function getResourceDisplayName() {
-  const val = document.getElementById('prefix-select').value;
-  const [mode, base] = val.split('|');
-  if (mode === 'custom') return base.split('::').pop() || 'Resource';
+  const [mode, base] = document.getElementById('prefix-select').value.split('|');
+  if (mode === 'custom') return document.getElementById('custom-base-input').value.split('::').pop() || 'Resource';
   const map = {
     '#AK_Step1_v12::#Bootcamp':'Bootcamp',
-    '#AK_Step1_v12::#SketchyMicro':'SketchyMicro',
-    '#AK_Step1_v12::#SketchyPharm':'SketchyPharm',
-    '#AK_Step1_v12::#SketchyPath':'SketchyPath',
-    '#AK_Step1_v12::#SketchyPhysiology':'SketchyPhysiology',
+    '#AK_Step1_v12::#SketchyMicro':'SketchyMicro','#AK_Step1_v12::#SketchyPharm':'SketchyPharm',
+    '#AK_Step1_v12::#SketchyPath':'SketchyPath','#AK_Step1_v12::#SketchyPhysiology':'SketchyPhysiology',
     '#AK_Step1_v12::#SketchyAnatomy':'SketchyAnatomy',
-    '#AK_Step1_v12::#B&B':'B&B',
-    '#AK_Step1_v12::#FirstAid':'First Aid',
-    '#AK_Step1_v12::Pathoma':'Pathoma',
-    '#AK_Step1_v12::Physeo':'Physeo'
+    '#AK_Step1_v12::#B&B':'B&B','#AK_Step1_v12::#FirstAid':'First Aid',
+    '#AK_Step1_v12::Pathoma':'Pathoma','#AK_Step1_v12::Physeo':'Physeo'
   };
   return map[base] || base.split('::').pop();
 }
@@ -205,21 +201,21 @@ function getFullPrefix() {
 
 function updatePreview() {
   const base = getBasePrefix() || '#AK_Step1_v12::Resource';
-  const mode = getMode();
-  const sub = getSubject() || '<Subject>';
-  let preview = '';
-  if (mode === 'sketchy' || (mode === 'custom' && getDepth() === 3)) {
+  const mode = getMode(), depth = getDepth(), sub = getSubject() || '<Subject>';
+  let preview;
+  if (mode === 'sketchy' || (mode === 'custom' && depth === 3))
     preview = `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Heading&gt;</strong>::<strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
-  } else {
+  else if (mode === 'custom' && depth === 4)
+    preview = `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Group&gt;</strong>::<strong>&lt;Heading&gt;</strong>::<strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  else if (mode === 'custom')
+    preview = `<span class="seg-matched">${esc(base)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
+  else
     preview = `<span class="seg-matched">${esc(base)}::${esc(sub)}::</span><strong>&lt;Chapter&gt;</strong>::<strong>&lt;Subchapter&gt;</strong>`;
-  }
   document.getElementById('tag-preview').innerHTML = preview;
 }
 
 function onConfigChange() {
-  const mode = getMode();
-  const isCustom = mode === 'custom';
-  const needsSubject = mode === 'bootcamp' || mode === 'subject';
+  const mode = getMode(), isCustom = mode === 'custom', needsSubject = !isCustom && (mode === 'bootcamp' || mode === 'subject');
   document.getElementById('subject-label').style.display = needsSubject ? '' : 'none';
   document.getElementById('subject-input').style.display = needsSubject ? '' : 'none';
   document.getElementById('custom-base-label').style.display = isCustom ? '' : 'none';
@@ -276,13 +272,11 @@ function reparse(filename) {
   setStatus(`Loaded ${filename || 'package'} — ${allRows.length} subchapters found.`);
   showSummary(depth);
   document.getElementById('results').style.display = 'block';
-  renderTable(depth);
-  renderTree(depth);
+  renderTable(depth); renderTree(depth);
 }
 
 function extractRows(noteRows, prefix, depth) {
-  const tagMap = {};
-  const prefixLower = prefix.toLowerCase();
+  const tagMap = {}, prefixLower = prefix.toLowerCase();
   for (const row of noteRows) {
     const tags = (row[0] || '').trim().split(/\s+/);
     for (const rawTag of tags) {
@@ -296,26 +290,24 @@ function extractRows(noteRows, prefix, depth) {
     }
   }
   return Object.entries(tagMap).map(([k, count]) => {
-    const parts = k.split('|||');
-    const tag = parts[parts.length - 1];
-    const levels = parts.slice(0, -1);
-    return depth === 3
-      ? { heading: levels[0], chapter: levels[1], subchapter: levels[2], count, tag }
-      : { heading: null, chapter: levels[0], subchapter: levels[1], count, tag };
-  }).sort((a, b) => {
-    if (a.heading && b.heading) { const h = a.heading.localeCompare(b.heading); if (h) return h; }
-    const c = a.chapter.localeCompare(b.chapter); if (c) return c;
+    const parts = k.split('|||'), tag = parts[parts.length-1], L = parts.slice(0,-1);
+    if (depth === 4) return { group: L[0], heading: L[1], chapter: L[2], subchapter: L[3], count, tag };
+    if (depth === 3) return { group: null, heading: L[0], chapter: L[1], subchapter: L[2], count, tag };
+    return { group: null, heading: null, chapter: L[0], subchapter: L[1], count, tag };
+  }).sort((a,b) => {
+    if (a.group && b.group) { const g=a.group.localeCompare(b.group); if(g) return g; }
+    if (a.heading && b.heading) { const h=a.heading.localeCompare(b.heading); if(h) return h; }
+    const c=a.chapter.localeCompare(b.chapter); if(c) return c;
     return a.subchapter.localeCompare(b.subchapter);
   });
 }
 
 function showSummary(depth) {
-  const headings = depth === 3 ? new Set(allRows.map(r => r.heading)).size : null;
-  const chapters = new Set(allRows.map(r => (depth === 3 ? r.heading+'||' : '')+r.chapter)).size;
-  const totalCards = allRows.reduce((s, r) => s + r.count, 0);
+  const totalCards = allRows.reduce((s,r) => s+r.count, 0);
   let html = '';
-  if (headings !== null) html += `<div class="stat"><div class="val">${headings}</div><div class="lbl">Headings</div></div>`;
-  html += `<div class="stat"><div class="val">${chapters}</div><div class="lbl">Chapters</div></div>`;
+  if (depth === 4) html += `<div class="stat"><div class="val">${new Set(allRows.map(r=>r.group)).size}</div><div class="lbl">Groups</div></div>`;
+  if (depth >= 3) html += `<div class="stat"><div class="val">${new Set(allRows.map(r=>(r.group||'')+r.heading)).size}</div><div class="lbl">Headings</div></div>`;
+  html += `<div class="stat"><div class="val">${new Set(allRows.map(r=>(r.group||'')+(r.heading||'')+r.chapter)).size}</div><div class="lbl">Chapters</div></div>`;
   html += `<div class="stat"><div class="val">${allRows.length}</div><div class="lbl">Subchapters</div></div>`;
   html += `<div class="stat"><div class="val">${totalCards.toLocaleString()}</div><div class="lbl">Total cards</div></div>`;
   document.getElementById('summary').style.display = 'flex';
@@ -323,180 +315,146 @@ function showSummary(depth) {
 }
 
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelector(`.tab[onclick="switchTab('${name}')"]`).classList.add('active');
-  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
 }
 
 function getFiltered() {
-  const q = (document.getElementById('search').value || '').toLowerCase();
+  const q = (document.getElementById('search').value||'').toLowerCase();
   if (!q) return allRows;
-  return allRows.filter(r => (r.heading||'').toLowerCase().includes(q) || r.chapter.toLowerCase().includes(q) || r.subchapter.toLowerCase().includes(q) || r.tag.toLowerCase().includes(q));
+  return allRows.filter(r => (r.group||'').toLowerCase().includes(q)||(r.heading||'').toLowerCase().includes(q)||r.chapter.toLowerCase().includes(q)||r.subchapter.toLowerCase().includes(q)||r.tag.toLowerCase().includes(q));
 }
 function getSorted(rows, depth) {
-  const colKeys = depth === 3 ? ['heading','chapter','subchapter','mapped','count','tag'] : ['chapter','subchapter','mapped','count','tag'];
+  const keys = depth===4 ? ['group','heading','chapter','subchapter','mapped','count','tag']
+              : depth===3 ? ['heading','chapter','subchapter','mapped','count','tag']
+              : ['chapter','subchapter','mapped','count','tag'];
   return [...rows].sort((a,b) => {
-    const c = colKeys[sortCol];
-    if (c === 'count') return sortDir*(a.count-b.count);
-    if (c === 'mapped') return sortDir*mappedLabel(a.chapter,a.subchapter).localeCompare(mappedLabel(b.chapter,b.subchapter));
+    const c=keys[sortCol];
+    if (c==='count') return sortDir*(a.count-b.count);
+    if (c==='mapped') return sortDir*mappedLabel(a.chapter,a.subchapter).localeCompare(mappedLabel(b.chapter,b.subchapter));
     return sortDir*(a[c]||'').localeCompare(b[c]||'');
   });
 }
 
 function renderTable(depth) {
-  depth = depth || getDepth();
-  const rows = getSorted(getFiltered(), depth);
-  const wrap = document.getElementById('table-wrap');
-  if (!rows.length) { wrap.innerHTML = '<div id="empty">No results match your search.</div>'; return; }
-  const headers = depth === 3
-    ? ['Heading','Chapter','Subchapter','Mapped Subchapter','# Cards','Tag']
-    : ['Chapter','Subchapter','Mapped Subchapter','# Cards','Tag'];
-  const colWidths = depth === 3
-    ? ['140px','140px','140px','160px','70px','']
-    : ['160px','160px','180px','80px',''];
-  const arrs = headers.map((_,i) => i===sortCol?(sortDir===1?' ↑':' ↓'):'');
-  const cols = colWidths.map(w => w ? `<col style="width:${w}">` : '<col>').join('');
+  depth = depth||getDepth();
+  const rows = getSorted(getFiltered(), depth), wrap = document.getElementById('table-wrap');
+  if (!rows.length) { wrap.innerHTML='<div id="empty">No results match your search.</div>'; return; }
+  const headers = depth===4 ? ['Group','Heading','Chapter','Subchapter','Mapped Subchapter','# Cards','Tag']
+                : depth===3 ? ['Heading','Chapter','Subchapter','Mapped Subchapter','# Cards','Tag']
+                : ['Chapter','Subchapter','Mapped Subchapter','# Cards','Tag'];
+  const colWidths = depth===4 ? ['110px','110px','120px','120px','150px','65px','']
+                  : depth===3 ? ['140px','140px','140px','160px','70px','']
+                  : ['160px','160px','180px','80px',''];
+  const arrs = headers.map((_,i)=>i===sortCol?(sortDir===1?' ↑':' ↓'):'');
+  const cols = colWidths.map(w=>w?`<col style="width:${w}">` : '<col>').join('');
   wrap.innerHTML = `<table><colgroup>${cols}</colgroup>
     <thead><tr>${headers.map((h,i)=>`<th onclick="sortBy(${i})">${h}${arrs[i]}</th>`).join('')}</tr></thead>
-    <tbody>${rows.map(r => {
-      const num = formatNum(getNum(r.chapter), getNum(r.subchapter));
-      const mappedCell = `<td class="mapped-cell">${num?`<span class="mapped-num">${esc(num)}</span>`:''}${esc(label(r.subchapter))}</td>`;
-      if (depth === 3) return `<tr><td class="truncate">${esc(label(r.heading))}</td><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mappedCell}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
-      return `<tr><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mappedCell}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
+    <tbody>${rows.map(r=>{
+      const num=formatNum(getNum(r.chapter),getNum(r.subchapter));
+      const mc=`<td class="mapped-cell">${num?`<span class="mapped-num">${esc(num)}</span>`:''}${esc(label(r.subchapter))}</td>`;
+      if (depth===4) return `<tr><td class="truncate">${esc(label(r.group))}</td><td class="truncate">${esc(label(r.heading))}</td><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mc}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
+      if (depth===3) return `<tr><td class="truncate">${esc(label(r.heading))}</td><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mc}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
+      return `<tr><td class="truncate">${esc(label(r.chapter))}</td><td class="truncate">${esc(label(r.subchapter))}</td>${mc}<td class="count-cell">${r.count}</td><td class="tag-cell">${esc(r.tag)}</td></tr>`;
     }).join('')}</tbody></table>`;
 }
 function sortBy(col) { if(sortCol===col) sortDir*=-1; else {sortCol=col;sortDir=1;} renderTable(getDepth()); }
 
 function buildStructure(depth) {
-  if (depth === 2) {
-    const map = {};
-    for (const r of allRows) { if (!map[r.chapter]) map[r.chapter]=[]; map[r.chapter].push(r); }
-    return map;
-  }
-  const map = {};
+  const m={};
   for (const r of allRows) {
-    if (!map[r.heading]) map[r.heading]={};
-    if (!map[r.heading][r.chapter]) map[r.heading][r.chapter]=[];
-    map[r.heading][r.chapter].push(r);
+    if (depth===2) { if(!m[r.chapter]) m[r.chapter]=[]; m[r.chapter].push(r); }
+    else if (depth===3) { if(!m[r.heading]) m[r.heading]={}; if(!m[r.heading][r.chapter]) m[r.heading][r.chapter]=[]; m[r.heading][r.chapter].push(r); }
+    else { if(!m[r.group]) m[r.group]={}; if(!m[r.group][r.heading]) m[r.group][r.heading]={}; if(!m[r.group][r.heading][r.chapter]) m[r.group][r.heading][r.chapter]=[]; m[r.group][r.heading][r.chapter].push(r); }
   }
-  return map;
+  return m;
+}
+
+function leafRows(chRaw, rows) {
+  const chNum=getNum(chRaw);
+  return rows.map(r=>{const n=formatNum(chNum,getNum(r.subchapter)); return `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(n)}</span><span class="t-subchapter">${esc(label(r.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(r.tag)}</span></div>`;}).join('');
+}
+function chapterBlock(chRaw, rows, idPrefix) {
+  const cid=idPrefix+'_'+slug(chRaw);
+  return `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-chapter">${esc(label(chRaw))}</span></div><div class="tree-children" id="ch-${esc(cid)}">${leafRows(chRaw,rows)}</div></div>`;
+}
+function headingBlock(hRaw, chMap, idPrefix) {
+  const hid=idPrefix+'_'+slug(hRaw);
+  const inner=Object.keys(chMap).sort().map(ch=>chapterBlock(ch,chMap[ch],hid)).join('');
+  return `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(hid)}')"><span class="tog" id="tog-${esc(hid)}">▾</span><span class="t-heading">${esc(label(hRaw))}</span></div><div class="tree-children" id="ch-${esc(hid)}">${inner}</div></div>`;
 }
 
 function renderTree(depth) {
-  depth = depth || getDepth();
-  const resourceName = getResourceDisplayName();
-  const subjectName = depth === 2 ? label(getSubject()) : null;
-  const struct = buildStructure(depth);
-  let html = '<div class="tree-node">';
-  if (depth === 2) {
-    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span><span class="t-arrow">→</span><span class="t-l1">${esc(subjectName)}</span></div>`;
-    html += `<div class="tree-children" id="ch-root">`;
-    for (const chapter of Object.keys(struct).sort()) {
-      const chNum = getNum(chapter);
-      const cid = 'c_'+chapter.replace(/[^a-zA-Z0-9_-]/g,'_');
-      html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-heading">${esc(label(chapter))}</span></div>`;
-      html += `<div class="tree-children" id="ch-${esc(cid)}">`;
-      for (const r of struct[chapter]) {
-        const n = formatNum(chNum, getNum(r.subchapter));
-        html += `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(n)}</span><span class="t-subchapter">${esc(label(r.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(r.tag)}</span></div>`;
-      }
-      html += `</div></div>`;
-    }
-    html += `</div>`;
+  depth=depth||getDepth();
+  const resourceName=getResourceDisplayName(), struct=buildStructure(depth);
+  let html='<div class="tree-node">';
+  if (depth===2) {
+    const subjectName=label(getSubject());
+    html+=`<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span><span class="t-arrow">→</span><span class="t-l1">${esc(subjectName)}</span></div><div class="tree-children" id="ch-root">`;
+    html+=Object.keys(struct).sort().map(ch=>{
+      const cid='c_'+slug(ch);
+      return `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-heading">${esc(label(ch))}</span></div><div class="tree-children" id="ch-${esc(cid)}">${leafRows(ch,struct[ch])}</div></div>`;
+    }).join('');
+    html+=`</div>`;
+  } else if (depth===3) {
+    html+=`<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span></div><div class="tree-children" id="ch-root">`;
+    html+=Object.keys(struct).sort().map(h=>headingBlock(h,struct[h],'h')).join('');
+    html+=`</div>`;
   } else {
-    html += `<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span></div>`;
-    html += `<div class="tree-children" id="ch-root">`;
-    for (const heading of Object.keys(struct).sort()) {
-      const hid = 'h_'+heading.replace(/[^a-zA-Z0-9_-]/g,'_');
-      html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(hid)}')"><span class="tog" id="tog-${esc(hid)}">▾</span><span class="t-heading">${esc(label(heading))}</span></div>`;
-      html += `<div class="tree-children" id="ch-${esc(hid)}">`;
-      for (const chapter of Object.keys(struct[heading]).sort()) {
-        const chNum = getNum(chapter);
-        const cid = 'c_'+heading.replace(/[^a-zA-Z0-9_-]/g,'_')+'_'+chapter.replace(/[^a-zA-Z0-9_-]/g,'_');
-        html += `<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(cid)}')"><span class="tog" id="tog-${esc(cid)}">▾</span><span class="t-chapter">${esc(label(chapter))}</span></div>`;
-        html += `<div class="tree-children" id="ch-${esc(cid)}">`;
-        for (const r of struct[heading][chapter]) {
-          const n = formatNum(chNum, getNum(r.subchapter));
-          html += `<div class="leaf-row"><span class="leaf-indent"></span><span class="t-subnum">${esc(n)}</span><span class="t-subchapter">${esc(label(r.subchapter))}</span><span class="t-arrow">→</span><span class="t-tag">${esc(r.tag)}</span></div>`;
-        }
-        html += `</div></div>`;
-      }
-      html += `</div></div>`;
+    html+=`<div class="tree-row" onclick="toggleNode('root')"><span class="tog" id="tog-root">▾</span><span class="t-resource">${esc(resourceName)}</span></div><div class="tree-children" id="ch-root">`;
+    for (const grp of Object.keys(struct).sort()) {
+      const gid='g_'+slug(grp);
+      html+=`<div class="tree-node"><div class="tree-row" onclick="toggleNode('${esc(gid)}')"><span class="tog" id="tog-${esc(gid)}">▾</span><span class="t-group">${esc(label(grp))}</span></div><div class="tree-children" id="ch-${esc(gid)}">`;
+      html+=Object.keys(struct[grp]).sort().map(h=>headingBlock(h,struct[grp][h],gid)).join('');
+      html+=`</div></div>`;
     }
-    html += `</div>`;
+    html+=`</div>`;
   }
-  html += '</div>';
-  document.getElementById('tree-wrap').innerHTML = html;
+  html+='</div>';
+  document.getElementById('tree-wrap').innerHTML=html;
 }
 
-function toggleNode(id) {
-  const ch = document.getElementById('ch-'+id), tog = document.getElementById('tog-'+id);
-  if (!ch) return;
-  ch.classList.toggle('collapsed');
-  tog.textContent = ch.classList.contains('collapsed') ? '▸' : '▾';
-}
-function setAllTree(expand) {
-  document.querySelectorAll('.tree-children').forEach(el => el.classList.toggle('collapsed', !expand));
-  document.querySelectorAll('.tog').forEach(el => el.textContent = expand ? '▾' : '▸');
-}
+function toggleNode(id) { const ch=document.getElementById('ch-'+id),tog=document.getElementById('tog-'+id); if(!ch) return; ch.classList.toggle('collapsed'); tog.textContent=ch.classList.contains('collapsed')?'▸':'▾'; }
+function setAllTree(expand) { document.querySelectorAll('.tree-children').forEach(el=>el.classList.toggle('collapsed',!expand)); document.querySelectorAll('.tog').forEach(el=>el.textContent=expand?'▾':'▸'); }
 
 function buildHierarchy() {
-  const depth = getDepth(), resourceName = getResourceDisplayName(), struct = buildStructure(depth);
-  if (depth === 2) {
-    return { resource: resourceName, subject: label(getSubject()), chapters: Object.keys(struct).sort().map(ch => ({
-      chapter: label(ch),
-      subchapters: struct[ch].map(r => ({ number: formatNum(getNum(ch), getNum(r.subchapter)), subchapter: label(r.subchapter), tag: r.tag }))
-    }))};
-  }
-  return { resource: resourceName, headings: Object.keys(struct).sort().map(h => ({
-    heading: label(h),
-    chapters: Object.keys(struct[h]).sort().map(ch => ({
-      chapter: label(ch),
-      subchapters: struct[h][ch].map(r => ({ number: formatNum(getNum(ch), getNum(r.subchapter)), subchapter: label(r.subchapter), tag: r.tag }))
-    }))
-  }))};
+  const depth=getDepth(), resourceName=getResourceDisplayName(), struct=buildStructure(depth);
+  const subFn=(ch,rows)=>rows.map(r=>({number:formatNum(getNum(ch),getNum(r.subchapter)),subchapter:label(r.subchapter),tag:r.tag}));
+  const chFn=(chMap)=>Object.keys(chMap).sort().map(ch=>({chapter:label(ch),subchapters:subFn(ch,chMap[ch])}));
+  if (depth===2) return {resource:resourceName,subject:label(getSubject()),chapters:Object.keys(struct).sort().map(ch=>({chapter:label(ch),subchapters:subFn(ch,struct[ch])}))};
+  if (depth===3) return {resource:resourceName,headings:Object.keys(struct).sort().map(h=>({heading:label(h),chapters:chFn(struct[h])}))};
+  return {resource:resourceName,groups:Object.keys(struct).sort().map(g=>({group:label(g),headings:Object.keys(struct[g]).sort().map(h=>({heading:label(h),chapters:chFn(struct[g][h])}))}))};
 }
 
 function exportHierarchyText() {
-  const h = buildHierarchy();
-  const lines = [];
-  if (h.headings) {
-    lines.push(h.resource);
-    for (const hd of h.headings) {
-      lines.push(`\n${hd.heading}`);
-      for (const ch of hd.chapters) {
-        lines.push(`  ${ch.chapter}`);
-        for (const sub of ch.subchapters) { lines.push(`    * ${sub.number?sub.number+' ':''}${sub.subchapter} → ${sub.tag}`); }
-      }
-    }
-  } else {
-    lines.push(`${h.resource} → ${h.subject}`);
-    for (const ch of h.chapters) {
-      lines.push(`\n${ch.chapter}`);
-      for (const sub of ch.subchapters) { lines.push(`  * ${sub.number?sub.number+' ':''}${sub.subchapter} → ${sub.tag}`); }
-    }
-  }
-  downloadText(lines.join('\n'), 'hierarchy.txt');
+  const h=buildHierarchy(), lines=[];
+  const writeSubs=(subs,indent)=>subs.forEach(s=>lines.push(`${indent}* ${s.number?s.number+' ':''}${s.subchapter} → ${s.tag}`));
+  const writeChs=(chs,indent)=>chs.forEach(c=>{lines.push(`${indent}${c.chapter}`);writeSubs(c.subchapters,indent+'  ');});
+  if (h.groups) { lines.push(h.resource); h.groups.forEach(g=>{lines.push(`\n${g.group}`);g.headings.forEach(hd=>{lines.push(`  ${hd.heading}`);writeChs(hd.chapters,'    ');});}); }
+  else if (h.headings) { lines.push(h.resource); h.headings.forEach(hd=>{lines.push(`\n${hd.heading}`);writeChs(hd.chapters,'  ');}); }
+  else { lines.push(`${h.resource} → ${h.subject}`); writeChs(h.chapters,''); }
+  downloadText(lines.join('\n'),'hierarchy.txt');
 }
-function exportHierarchyJSON() { downloadText(JSON.stringify(buildHierarchy(), null, 2), 'hierarchy.json'); }
+function exportHierarchyJSON() { downloadText(JSON.stringify(buildHierarchy(),null,2),'hierarchy.json'); }
 
 function toDelimited(rows, sep, depth) {
-  const headers = depth === 3
-    ? ['Heading','Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag']
-    : ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag'];
-  const escape = v => sep===',' ? `"${String(v).replace(/"/g,'""')}"` : String(v);
-  return [headers.join(sep), ...rows.map(r => {
-    const ml = mappedLabel(r.chapter, r.subchapter);
-    const base = depth === 3
-      ? [label(r.heading), label(r.chapter), label(r.subchapter), ml, r.count, r.tag]
-      : [label(r.chapter), label(r.subchapter), ml, r.count, r.tag];
+  const headers = depth===4 ? ['Group','Heading','Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag']
+                : depth===3 ? ['Heading','Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag']
+                : ['Chapter','Subchapter','Mapped Subchapter','Number of Anki Cards','Tag'];
+  const escape=v=>sep===','?`"${String(v).replace(/"/g,'""')}"`:String(v);
+  return [headers.join(sep),...rows.map(r=>{
+    const ml=mappedLabel(r.chapter,r.subchapter);
+    const base=depth===4?[label(r.group),label(r.heading),label(r.chapter),label(r.subchapter),ml,r.count,r.tag]
+              :depth===3?[label(r.heading),label(r.chapter),label(r.subchapter),ml,r.count,r.tag]
+              :[label(r.chapter),label(r.subchapter),ml,r.count,r.tag];
     return base.map(escape).join(sep);
   })].join('\n');
 }
-function downloadText(text, filename) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download = filename; a.click(); }
-function exportCSV() { const d=getDepth(); downloadText(toDelimited(getSorted(getFiltered(),d),',',d),'anki_cards.csv'); }
-function exportTSV() { const d=getDepth(); downloadText(toDelimited(getSorted(getFiltered(),d),'\t',d),'anki_cards.tsv'); }
+function downloadText(text,filename){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=filename;a.click();}
+function exportCSV(){const d=getDepth();downloadText(toDelimited(getSorted(getFiltered(),d),',',d),'anki_cards.csv');}
+function exportTSV(){const d=getDepth();downloadText(toDelimited(getSorted(getFiltered(),d),'\t',d),'anki_cards.tsv');}
 
 onConfigChange();
 </script>
