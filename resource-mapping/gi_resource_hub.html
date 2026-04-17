@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HoyaDocs GI - Lecture Resource Hub Alt</title>
+<title>HoyaDocs GI · Lecture Resource Hub</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -798,7 +798,7 @@ td { font-size: 0.9rem; vertical-align: top; }
         <div class="eyebrow">Block 4 • GI Resource Hub</div>
         <h1>GI Resource Hub</h1>
         <p><strong>Per Lecture One Stop Shop</strong></p>
-        <p>choose a lecture on the left, then review learning objectives, mapped resources, and UWorld IDs in one detail pane on the right</p>
+        <p>choose a lecture on the left, then review learning objectives, mapped resources, UWorld IDs, lecture study guides, active-recall drills, and Drill Hubs 1 / 2 / 3 in one detail pane on the right</p>
       </div>
       <aside class="summary-card search-wrap">
         <label class="search-label" for="searchBox">Search lectures</label>
@@ -827,7 +827,7 @@ td { font-size: 0.9rem; vertical-align: top; }
     <main class="panel detail-shell" id="detailPane"></main>
   </section>
 
-  <div class="footer-note">Original file preserved. This is an alternate presentation with the same source data.</div>
+  <div class="footer-note">Updated April 16, 2026 — now links all 23 lecture study guides, 22 active-recall drills, and 19 lectures × 3 Drill Hubs (Hub #1 · Hub #2 · Hub #3). Last refreshed as new guides, recall drills, and drill hubs came online.</div>
 </div>
 
 <script>
@@ -865,6 +865,7 @@ const GUIDE_FILES = {
   7: 'gi07-gi-primer-endoderm-gut-tube.html',
   8: 'gi08-abdominal-viscera-gi-tract.html',
   9: 'gi09-10-secretions-i-ii.html',
+  10: 'gi09-10-secretions-i-ii.html',
   12: 'gi12-gi-embryology.html',
   13: 'gi13-abdominal-viscera-ii.html',
   14: 'gi14-overview-of-the-liver.html',
@@ -874,7 +875,16 @@ const GUIDE_FILES = {
   19: 'gi19-20-intestinal-pathology.html',
   20: 'gi19-20-intestinal-pathology.html',
   21: 'gi21-poisoning-conference.html',
+  22: 'gi22-gi-pathology-lab.html',
   23: 'gi23-gi-pharmacology.html',
+  24: 'gi23-gi-pharmacology.html',
+  25: 'gi25-gi-infections.html',
+  26: 'gi26-parasitology.html',
+  28: 'gi28-intestinal-path-case-review.html',
+  29: 'gi29-retroperitoneum.html',
+  33: 'gi33-histology-liver-gallbladder-pancreas.html',
+  34: 'gi34-35-liver-disease.html',
+  35: 'gi34-35-liver-disease.html',
 };
 
 const RECALL_FILES = {
@@ -886,17 +896,50 @@ const RECALL_FILES = {
   7: 'gi07_active_recall.html',
   8: 'gi08_active_recall.html',
   9: 'gi09_active_recall.html',
+  10: 'gi09_active_recall.html',
   12: 'gi12_active_recall.html',
   13: 'gi13_active_recall.html',
   14: 'gi14_active_recall.html',
   15: 'gi15_active_recall.html',
+  16: 'gi16-17_active_recall.html',
+  17: 'gi16-17_active_recall.html',
+  19: 'gi19-20_active_recall.html',
+  20: 'gi19-20_active_recall.html',
+  21: 'gi21_active_recall.html',
+  22: 'gi22_active_recall.html',
+  23: 'gi23_active_recall.html',
+  24: 'gi23_active_recall.html',
+  25: 'gi25_active_recall.html',
+  26: 'gi26_active_recall.html',
+  28: 'gi28_active_recall.html',
+  29: 'gi29_active_recall.html',
+  33: 'gi33_active_recall.html',
 };
 
 const HUB_FILES = {
   1: { hub1: 'gi01-hub1-gi-overview.html', hub2: 'gi01-hub2-gi-overview.html', hub3: 'gi01-hub3-gi-overview.html' },
   2: { hub1: 'gi02-hub1-motility.html', hub2: 'gi02-hub2-motility.html', hub3: 'gi02-hub3-motility.html' },
+  3: { hub1: 'gi03-hub1-anterior-abdominal-wall.html', hub2: 'gi03-hub2-anterior-abdominal-wall.html', hub3: 'gi03-hub3-anterior-abdominal-wall.html' },
   4: { hub1: 'gi04-hub1-histology.html', hub2: 'gi04-hub2-histology.html', hub3: 'gi04-hub3-histology.html' },
   5: { hub1: 'gi05-hub1-bile-workshop.html', hub2: 'gi05-hub2-bile-workshop.html', hub3: 'gi05-hub3-bile-workshop.html' },
+  7: { hub1: 'gi07-hub1-gi-primer.html', hub2: 'gi07-hub2-gi-primer.html', hub3: 'gi07-hub3-gi-primer.html' },
+  8: { hub1: 'gi08-hub1-abdominal-viscera-gi-tract.html', hub2: 'gi08-hub2-abdominal-viscera-gi-tract.html', hub3: 'gi08-hub3-abdominal-viscera-gi-tract.html' },
+  9: { hub1: 'gi09-10-hub1-secretions.html', hub2: 'gi09-10-hub2-secretions.html', hub3: 'gi09-10-hub3-secretions.html' },
+  10: { hub1: 'gi09-10-hub1-secretions.html', hub2: 'gi09-10-hub2-secretions.html', hub3: 'gi09-10-hub3-secretions.html' },
+  12: { hub1: 'gi12-hub1-gi-embryology.html', hub2: 'gi12-hub2-gi-embryology.html', hub3: 'gi12-hub3-gi-embryology.html' },
+  13: { hub1: 'gi13-hub1-abdominal-viscera-ii.html', hub2: 'gi13-hub2-abdominal-viscera-ii.html', hub3: 'gi13-hub3-abdominal-viscera-ii.html' },
+  14: { hub1: 'gi14-hub1-overview-of-the-liver.html', hub2: 'gi14-hub2-overview-of-the-liver.html', hub3: 'gi14-hub3-overview-of-the-liver.html' },
+  15: { hub1: 'gi15-hub1-esophagus-stomach-disease.html', hub2: 'gi15-hub2-esophagus-stomach-disease.html', hub3: 'gi15-hub3-esophagus-stomach-disease.html' },
+  16: { hub1: 'gi16-17-hub1-digestion-absorption.html', hub2: 'gi16-17-hub2-digestion-absorption.html', hub3: 'gi16-17-hub3-digestion-absorption.html' },
+  17: { hub1: 'gi16-17-hub1-digestion-absorption.html', hub2: 'gi16-17-hub2-digestion-absorption.html', hub3: 'gi16-17-hub3-digestion-absorption.html' },
+  19: { hub1: 'gi19-20-hub1-intestinal-pathology.html', hub2: 'gi19-20-hub2-intestinal-pathology.html', hub3: 'gi19-20-hub3-intestinal-pathology.html' },
+  20: { hub1: 'gi19-20-hub1-intestinal-pathology.html', hub2: 'gi19-20-hub2-intestinal-pathology.html', hub3: 'gi19-20-hub3-intestinal-pathology.html' },
+  21: { hub1: 'gi21-hub1-poisoning.html', hub2: 'gi21-hub2-poisoning.html', hub3: 'gi21-hub3-poisoning.html' },
+  22: { hub1: 'gi22-hub1-gi-pathology-lab.html', hub2: 'gi22-hub2-gi-pathology-lab.html', hub3: 'gi22-hub3-gi-pathology-lab.html' },
+  23: { hub1: 'gi23-hub1-gi-pharmacology.html', hub2: 'gi23-hub2-gi-pharmacology.html', hub3: 'gi23-hub3-gi-pharmacology.html' },
+  24: { hub1: 'gi23-hub1-gi-pharmacology.html', hub2: 'gi23-hub2-gi-pharmacology.html', hub3: 'gi23-hub3-gi-pharmacology.html' },
+  28: { hub1: 'gi28-hub1-intestinal-path-case-review.html', hub2: 'gi28-hub2-intestinal-path-case-review.html', hub3: 'gi28-hub3-intestinal-path-case-review.html' },
+  29: { hub1: 'gi29-hub1-retroperitoneum.html', hub2: 'gi29-hub2-retroperitoneum.html', hub3: 'gi29-hub3-retroperitoneum.html' },
 };
 
 let activeSubject = 'all';
