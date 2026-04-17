@@ -96,17 +96,6 @@
       text-shadow: 0 1px 8px rgba(0,0,0,0.25);
     }
 
-    .dark-toggle {
-      width: 28px; height: 28px; border-radius: 7px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.82rem; color: rgba(255,255,255,0.7);
-      flex-shrink: 0;
-      transition: background 0.14s;
-    }
-    .dark-toggle:hover { background: rgba(255,255,255,0.16); }
-
     .sb-block {
       font-size: 0.72rem; font-weight: 500;
       color: rgba(255,255,255,0.42);
@@ -213,9 +202,10 @@
 
     /* ── HERO JUMP BUTTONS ── */
     .hero-jump {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
       margin-top: 6px;
     }
+    @media (max-width: 1024px) { .hero-jump { grid-template-columns: repeat(2, 1fr); } }
     .hero-jump-btn {
       display: flex; align-items: center; justify-content: center; gap: 7px;
       padding: 10px 14px; border-radius: 10px;
@@ -331,6 +321,24 @@
     .bc-purple { background: var(--bc-pur-bg); border-color: var(--bc-pur-br); }
     .bc-purple:hover { box-shadow: 0 12px 40px rgba(109,40,217,0.14), 0 3px 10px rgba(109,40,217,0.07); }
     .bc-purple .bcard-cta, .bc-purple .bcard-label { color: var(--bc-pur-tx); }
+
+    .bc-dkpurple { background: #4c1d95; border-color: #6d28d9; color: #f1f5f9; }
+    .bc-dkpurple:hover { box-shadow: 0 12px 40px rgba(76,29,149,0.35), 0 3px 10px rgba(76,29,149,0.2); }
+    .bc-dkpurple h3 { color: #f1f5f9; }
+    .bc-dkpurple p  { color: #e9d5ff; }
+    .bc-dkpurple .bcard-label { color: #c4b5fd; }
+    .bc-dkpurple .bcard-cta   { color: #4ade80; }
+    .bc-dkpurple .bcard-icon  { background: rgba(255,255,255,0.18); }
+    .bc-dkpurple .bcard-watermark { color: #fff; }
+
+    .bc-dark { background: #14532d; border-color: #166534; color: #f1f5f9; }
+    .bc-dark:hover { box-shadow: 0 12px 40px rgba(20,83,45,0.35), 0 3px 10px rgba(20,83,45,0.2); }
+    .bc-dark h3 { color: #f1f5f9; }
+    .bc-dark p  { color: #dcfce7; }
+    .bc-dark .bcard-label { color: #86efac; }
+    .bc-dark .bcard-cta   { color: #fef08a; }
+    .bc-dark .bcard-icon  { background: rgba(255,255,255,0.18); }
+    .bc-dark .bcard-watermark { color: #fff; }
 
     /* ══════════════════════════════════════
        UTILITY ROWS
@@ -533,6 +541,25 @@
       color: var(--bc-grn-tx);
     }
 
+    /* Themed mini variant — uses the hub's primary palette (green in GI / rose in Repro) */
+    .mini-link-card.mlc-themed {
+      background: var(--bc-grn-bg);
+      border-color: var(--bc-grn-br);
+    }
+    .mini-link-card.mlc-themed:hover { border-color: var(--bc-grn-tx); }
+    .mini-link-card.mlc-themed .mlc-icon {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(255,255,255,0.55);
+    }
+    .mini-link-card.mlc-themed .mlc-title { color: var(--bc-grn-tx); }
+
+    /* "Coming Soon" placeholder — dimmed, non-interactive */
+    .mini-link-card.mlc-coming-soon {
+      opacity: 0.55;
+      cursor: default;
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
@@ -541,8 +568,7 @@
   <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar">
     <div class="sb-brand">
-      <span class="sb-name">HoyaDocs</span>
-      <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
+      <a href="https://hoyadocs.com/" class="sb-name">HoyaDocs</a>
     </div>
     <div class="sb-block">Block 4 - GI</div>
 
@@ -609,6 +635,7 @@
           <a class="hero-jump-btn" href="#lecture-tools"><span class="hero-jump-icon">📘</span>Lecture Study Tools</a>
           <a class="hero-jump-btn" href="#mapping-tools"><span class="hero-jump-icon">🗂</span>3rd Party Mapping</a>
           <a class="hero-jump-btn" href="#exam-tools"><span class="hero-jump-icon">🩺</span>Exam Study Tools</a>
+          <a class="hero-jump-btn" href="https://hoyadocs.com/"><span class="hero-jump-icon">🏠</span>Return to HoyaDocs Main Page</a>
         </div>
       </section>
 
@@ -618,51 +645,9 @@
           <span class="section-divider-text">Lecture Study Tools</span>
           <div class="section-divider-line"></div>
         </div>
-        <div class="bento">
+        <div class="bento bento-3">
 
-          <div style="display:flex; flex-direction:column; gap:12px;">
-
-            <a class="bcard bc-green" href="./lecture-guides/index.html" style="flex:1;">
-              <span class="bcard-watermark">📖</span>
-              <div class="bcard-header">
-                <div class="bcard-icon">📖</div>
-                <div class="bcard-header-text">
-                  <span class="bcard-label">Lecture · 01</span>
-                  <h3>Lecture Study Guides</h3>
-                </div>
-              </div>
-              <p>Per-lecture organized guides with key concepts, diagrams, and exam-focused notes.</p>
-              <span class="bcard-cta">Open section →</span>
-            </a>
-
-            <a class="bcard bc-green" href="./active-recall-hub.html" style="flex:1;">
-              <span class="bcard-watermark">🎯</span>
-              <div class="bcard-header">
-                <div class="bcard-icon">🎯</div>
-                <div class="bcard-header-text">
-                  <span class="bcard-label">Lecture · 02</span>
-                  <h3>Active Drills</h3>
-                </div>
-              </div>
-              <p>Gamified practice for vignettes, trap questions, mechanisms, and drug facts.</p>
-              <span class="bcard-cta">Open section →</span>
-            </a>
-
-            <a class="bcard bc-green" href="https://strettyit10.github.io/Block4-GI/planning/daily_checklist.html" style="flex:1;">
-              <span class="bcard-watermark">✅</span>
-              <div class="bcard-header">
-                <div class="bcard-icon">✅</div>
-                <div class="bcard-header-text">
-                  <span class="bcard-label">Lecture · 03</span>
-                  <h3>Daily Checklist</h3>
-                </div>
-              </div>
-              <p>Track daily study tasks and complete learning objectives lecture by lecture.</p>
-              <span class="bcard-cta">Open checklist →</span>
-            </a>
-
-          </div>
-
+          <!-- Column 1: Calendar (spans full column height) -->
           <div style="display:flex; flex-direction:column; gap:12px;">
 
             <div class="bcard bc-blue" style="flex:1;">
@@ -679,11 +664,74 @@
               </div>
             </div>
 
-            <a class="mini-link-card" href="https://docs.google.com/spreadsheets/d/1oMKX3NlM3xTTb3RDQ7VQsGdDEwuwEbfoX2mf09r-6K8/edit?usp=sharing" target="_blank" rel="noopener">
+          </div>
+
+          <!-- Column 2: Lecture Study Guides + Active Drills -->
+          <div style="display:flex; flex-direction:column; gap:12px;">
+
+            <a class="bcard bc-dark" href="./lecture-guides/index.html" style="flex:1;">
+              <span class="bcard-watermark">📖</span>
+              <div class="bcard-header">
+                <div class="bcard-icon">📖</div>
+                <div class="bcard-header-text">
+                  <span class="bcard-label">Lecture · 01</span>
+                  <h3>Lecture Study Guides</h3>
+                </div>
+              </div>
+              <p>Per-lecture organized guides with key concepts, diagrams, and exam-focused notes.</p>
+              <span class="bcard-cta">Open section →</span>
+            </a>
+
+            <a class="bcard bc-dark" href="./active-recall-hub.html" style="flex:1;">
+              <span class="bcard-watermark">🎯</span>
+              <div class="bcard-header">
+                <div class="bcard-icon">🎯</div>
+                <div class="bcard-header-text">
+                  <span class="bcard-label">Lecture · 02</span>
+                  <h3>Active Drills</h3>
+                </div>
+              </div>
+              <p>Gamified practice for vignettes, trap questions, mechanisms, and drug facts.</p>
+              <span class="bcard-cta">Open section →</span>
+            </a>
+
+          </div>
+
+          <!-- Column 3: 4 themed quick-access minis -->
+          <div style="display:flex; flex-direction:column; gap:12px;">
+
+            <a class="mini-link-card mlc-themed" href="https://docs.google.com/spreadsheets/d/1oMKX3NlM3xTTb3RDQ7VQsGdDEwuwEbfoX2mf09r-6K8/edit?usp=sharing" target="_blank" rel="noopener">
               <span class="mlc-icon">📋</span>
               <div class="mlc-body">
                 <div class="mlc-title">Block 4 GI Check List</div>
-                <div class="mlc-desc">Google sheet checklist of GI lectures</div>
+                <div class="mlc-desc">Google sheet of GI lectures</div>
+              </div>
+              <span class="mlc-arrow">→</span>
+            </a>
+
+            <a class="mini-link-card mlc-themed" href="./planning/daily_checklist.html">
+              <span class="mlc-icon">✅</span>
+              <div class="mlc-body">
+                <div class="mlc-title">Daily Checklist</div>
+                <div class="mlc-desc">Daily study tasks & LOs</div>
+              </div>
+              <span class="mlc-arrow">→</span>
+            </a>
+
+            <a class="mini-link-card mlc-themed" href="./planning/lecture_planner.html">
+              <span class="mlc-icon">📅</span>
+              <div class="mlc-body">
+                <div class="mlc-title">Lecture Planning</div>
+                <div class="mlc-desc">Plan your lecture study week</div>
+              </div>
+              <span class="mlc-arrow">→</span>
+            </a>
+
+            <a class="mini-link-card mlc-themed mlc-coming-soon" aria-disabled="true">
+              <span class="mlc-icon">✨</span>
+              <div class="mlc-body">
+                <div class="mlc-title">Coming Soon</div>
+                <div class="mlc-desc">New study tool in development</div>
               </div>
               <span class="mlc-arrow">→</span>
             </a>
@@ -740,7 +788,7 @@
             <span class="bcard-cta">Open explorer →</span>
           </a>
 
-          <a class="bcard bc-purple" href="./resource-mapping/HoyaDocs-UWorld-QID-Mapping.xlsx">
+          <a class="bcard bc-dkpurple" href="./resource-mapping/HoyaDocs-UWorld-QID-Mapping.xlsx">
             <span class="bcard-watermark">📊</span>
             <div class="bcard-header">
               <div class="bcard-icon">📊</div>
@@ -753,10 +801,10 @@
             <span class="bcard-cta">Download xlsx →</span>
           </a>
 
-          <a class="bcard bc-purple" href="./resource-mapping/HoyaDocs_Resource_Mapping.xlsx">
-            <span class="bcard-watermark">📑</span>
+          <a class="bcard bc-dkpurple" href="./resource-mapping/HoyaDocs_Resource_Mapping.xlsx">
+            <span class="bcard-watermark">📊</span>
             <div class="bcard-header">
-              <div class="bcard-icon">📑</div>
+              <div class="bcard-icon">📊</div>
               <div class="bcard-header-text">
                 <span class="bcard-label">Mapping · 05</span>
                 <h3>Resource Mapping</h3>
@@ -766,17 +814,17 @@
             <span class="bcard-cta">Download xlsx →</span>
           </a>
 
-          <a class="bcard bc-purple" href="./planning/lecture_planner.html">
-            <span class="bcard-watermark">📅</span>
+          <a class="bcard bc-purple" href="./anki_package_parser_v10.html">
+            <span class="bcard-watermark">🃏</span>
             <div class="bcard-header">
-              <div class="bcard-icon">📅</div>
+              <div class="bcard-icon">🃏</div>
               <div class="bcard-header-text">
                 <span class="bcard-label">Mapping · 06</span>
-                <h3>Lecture Planning</h3>
+                <h3>Anki Mapping</h3>
               </div>
             </div>
-            <p>Plan your weekly lecture study schedule with per-lecture resource selection and task tracking.</p>
-            <span class="bcard-cta">Open planner →</span>
+            <p>Upload an Anki deck (.apkg) and extract out the relevant tags — map cards to your lectures.</p>
+            <span class="bcard-cta">Open tool →</span>
           </a>
 
         </div>
@@ -803,17 +851,17 @@
             <span class="bcard-cta">Open section →</span>
           </a>
 
-          <a class="bcard bc-rose" href="./study-guides/parasites.html">
-            <span class="bcard-watermark">🪱</span>
+          <a class="bcard bc-rose" href="./study-guides/">
+            <span class="bcard-watermark">📘</span>
             <div class="bcard-header">
-              <div class="bcard-icon">🪱</div>
+              <div class="bcard-icon">📘</div>
               <div class="bcard-header-text">
                 <span class="bcard-label">Exam · 02</span>
-                <h3>HY Parasite Info</h3>
+                <h3>Coming Soon! Subject Based HY Study Guides</h3>
               </div>
             </div>
-            <p>High-yield USMLE Step 1 parasitology study guide — organisms, lifecycles, clinical presentations, and rapid-review tables.</p>
-            <span class="bcard-cta">Open guide →</span>
+            <p>Summary notes, curated review pages, and structured study documents for in-house and Step 1 prep.</p>
+            <span class="bcard-cta">Coming soon →</span>
           </a>
 
           <a class="bcard bc-rose" href="#">
@@ -914,21 +962,6 @@
 </nav>
 
 <script>
-  // ── Dark mode toggle ──
-  function toggleDark() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const next = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    document.getElementById('darkToggle').textContent = next === 'dark' ? '☀️' : '🌙';
-  }
-
-  // Set correct icon on load
-  document.addEventListener('DOMContentLoaded', function () {
-    const t = document.documentElement.getAttribute('data-theme');
-    document.getElementById('darkToggle').textContent = t === 'dark' ? '☀️' : '🌙';
-  });
-
   // ── Today's GI Lectures ──
   const GI_LECTURES = [{"d":"2026-04-06","title":"IL GI Overview","lecturer":"Mulroney","start":"08:00","end":"08:30","course":"Phys","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/228454/pages/il-gi-overview"},{"d":"2026-04-06","title":"Introduction/Motility","lecturer":"Mulroney","start":"09:00","end":"10:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/introduction-slash-motility"},{"d":"2026-04-06","title":"Anterior Abdominal Wall/Hernia","lecturer":"Uren","start":"10:00","end":"11:00","course":"Anat","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/anterior-abdominal-wall-slash-hernia"},{"d":"2026-04-06","title":"Esophagus/Stomach/Intestines","lecturer":"Notario","start":"11:00","end":"12:00","course":"Hist","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/esophagus-slash-stomach-slash-intestines"},{"d":"2026-04-06","title":"IL Bile Workshop with Quizzes","lecturer":"Mulroney","start":"13:00","end":"14:00","course":"Phys","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/228454/pages/il-bile-workshop-and-making-a-micelle"},{"d":"2026-04-06","title":"IL Making a Micelle","lecturer":"Mulroney","start":"14:00","end":"14:15","course":"Phys","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/228454/pages/il-bile-workshop-and-making-a-micelle"},{"d":"2026-04-06","title":"IL GI Primer","lecturer":"Gallicano","start":"14:30","end":"15:00","course":"Embr","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/218027/pages/block-4-primer-materials"},{"d":"2026-04-07","title":"Abdominal Viscera I: Gastrointestinal Tract","lecturer":"Uren","start":"09:00","end":"10:00","course":"Anat","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/abdominal-viscera-i-gastrointestinal-tract"},{"d":"2026-04-07","title":"Secretions I","lecturer":"Mulroney","start":"10:00","end":"11:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/secretions-i-ii"},{"d":"2026-04-07","title":"Secretions II","lecturer":"Mulroney","start":"11:00","end":"12:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/secretions-i-ii"},{"d":"2026-04-07","title":"GA Lab #1: Abdominal Wall and Inguinal Region","lecturer":"GA Faculty","start":"13:00","end":"17:00","course":"Anat","location":"GA Labs","link":"https://georgetown.instructure.com/courses/218039/pages/gi-ga-lab-2"},{"d":"2026-04-08","title":"GI Embryology","lecturer":"Coker","start":"09:00","end":"10:00","course":"Embr","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/gi-embryology"},{"d":"2026-04-08","title":"Abdominal Viscera II: Liver and Pancreas","lecturer":"Uren","start":"10:00","end":"11:00","course":"Anat","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/abdominal-viscera-ii-liver-and-pancreas"},{"d":"2026-04-08","title":"Overview of the Liver","lecturer":"Mulroney","start":"11:00","end":"12:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/overview-of-the-liver"},{"d":"2026-04-08","title":"Optional Block 3 Post-Exam Review","lecturer":"N/A","start":"13:30","end":"15:30","course":"N/A","location":"GA-2/4","link":""},{"d":"2026-04-09","title":"Esophagus/Stomach Disease","lecturer":"Zeck","start":"09:00","end":"10:00","course":"Path","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/esophagus-slash-stomach-disease"},{"d":"2026-04-09","title":"Digestion/Absorption I","lecturer":"Mulroney","start":"10:00","end":"11:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/digestion-slash-absorption-i-ii"},{"d":"2026-04-09","title":"Digestion/Absorption II","lecturer":"Mulroney","start":"11:00","end":"12:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/digestion-slash-absorption-i-ii"},{"d":"2026-04-09","title":"GA Lab #2: Peritoneal Cavity and Foregut Derivatives","lecturer":"GA Faculty","start":"13:00","end":"17:00","course":"Anat","location":"GA Labs","link":"https://georgetown.instructure.com/courses/218039/pages/gi-ga-lab-2"},{"d":"2026-04-10","title":"Intestinal Pathology I","lecturer":"Zeck","start":"09:00","end":"10:00","course":"Path","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/intestinal-pathology-i"},{"d":"2026-04-10","title":"Intestinal Pathology II","lecturer":"Zeck","start":"10:00","end":"11:00","course":"Path","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/intestinal-pathology-ii"},{"d":"2026-04-10","title":"MANDATORY Foundational Rounds","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-04-13","title":"Poisoning Conference and Cases","lecturer":"Clancy","start":"13:00","end":"14:30","course":"Pharm","location":"GA-2/4","link":""},{"d":"2026-04-14","title":"GI Lab","lecturer":"Furlong","start":"09:00","end":"10:00","course":"Path","location":"Zoom","link":""},{"d":"2026-04-14","title":"Treatment of Peptic Ulcer Slides","lecturer":"Mulroney","start":"10:00","end":"11:00","course":"Pharm","location":"Zoom","link":"https://georgetown.instructure.com/courses/228454/pages/treatment-of-peptic-ulcer-gerd-and-other-gi-disorders"},{"d":"2026-04-14","title":"Treatment of GERD and Other GI Disorders","lecturer":"Mulroney","start":"11:00","end":"12:00","course":"Pharm","location":"Zoom","link":"https://georgetown.instructure.com/courses/228454/pages/treatment-of-peptic-ulcer-gerd-and-other-gi-disorders"},{"d":"2026-04-14","title":"GI Development Primer Quiz DUE 11:59","lecturer":"N/A","start":"17:00","end":"17:30","course":"Embr","location":"N/A","link":""},{"d":"2026-04-15","title":"GI Infections","lecturer":"Kumar, P.","start":"09:00","end":"10:30","course":"Micro","location":"Zoom","link":""},{"d":"2026-04-15","title":"Parasitology","lecturer":"Timpone","start":"10:30","end":"12:00","course":"Micro","location":"Zoom","link":""},{"d":"2026-04-15","title":"GA Lab #3: Midgut and Hindgut Derivatives","lecturer":"GA Faculty","start":"13:00","end":"17:00","course":"Anat","location":"GA Labs","link":"https://georgetown.instructure.com/courses/218039/pages/gi-ga-lab-2"},{"d":"2026-04-16","title":"Intestinal Pathology Case Review","lecturer":"Mattar","start":"09:00","end":"10:00","course":"Path","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/intestinal-pathology-case-review"},{"d":"2026-04-16","title":"Retroperitoneum","lecturer":"Uren","start":"10:00","end":"11:00","course":"Anat","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/retroperitoneum"},{"d":"2026-04-16","title":"Medically Assisted Nutrition and Hydration: Ethical Issues and Clinical Grounding","lecturer":"Sheehan","start":"13:00","end":"14:00","course":"Ethics","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/228454/pages/medically-assisted-nutrition-and-hydration-ethical-issues-and-clinical-grounding"},{"d":"2026-04-16","title":"IL Trudy's Ulcer","lecturer":"Mulroney","start":"14:00","end":"15:00","course":"Phys","location":"Pre-recorded","link":"https://georgetown.instructure.com/courses/228454/pages/il-trudys-ulcer-2"},{"d":"2026-04-17","title":"Abdominal Pain","lecturer":"Alimi","start":"09:00","end":"10:00","course":"DRT","location":"GA-2/4","link":""},{"d":"2026-04-17","title":"MANDATORY Foundational Round","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-04-20","title":"Liver and Biliary Tract","lecturer":"Djakiew","start":"11:00","end":"12:00","course":"Hist","location":"GA-2/4","link":""},{"d":"2026-04-21","title":"Liver Disease I","lecturer":"Furlong","start":"09:00","end":"10:00","course":"Path","location":"GA-2/4","link":""},{"d":"2026-04-21","title":"Liver Disease II","lecturer":"Furlong","start":"10:00","end":"11:00","course":"Path","location":"GA-2/4","link":""},{"d":"2026-04-21","title":"Liver Enzymes","lecturer":"Thomas","start":"11:00","end":"12:00","course":"DRT","location":"GA-2/4","link":""},{"d":"2026-04-21","title":"GA Lab #4: Posterior Abdominal Wall","lecturer":"GA Faculty","start":"13:00","end":"16:00","course":"Anat","location":"GA Labs","link":"https://georgetown.instructure.com/courses/218039/pages/gi-ga-lab-2"},{"d":"2026-04-21","title":"Optional GA Review with Dr. Uren","lecturer":"Uren","start":"16:00","end":"17:00","course":"Anat","location":"LA-6","link":""},{"d":"2026-04-21","title":"Poisoning Cases DUE 11:59pm","lecturer":"N/A","start":"17:00","end":"17:30","course":"Pharm","location":"N/A","link":""},{"d":"2026-04-22","title":"Pancreas Disease","lecturer":"Wood","start":"09:00","end":"10:00","course":"Path","location":"Zoom","link":""},{"d":"2026-04-22","title":"Liver/Pancreas Lab","lecturer":"Furlong","start":"10:00","end":"11:00","course":"Path","location":"Zoom","link":""},{"d":"2026-04-22","title":"Mandatory Education Case Review Group A (Iron overload)","lecturer":"Path Resident","start":"13:00","end":"14:00","course":"Path","location":"Zoom","link":""},{"d":"2026-04-23","title":"Mandatory Education Case Review Group B (Iron overload)","lecturer":"Path Resident","start":"13:00","end":"14:00","course":"Path","location":"Zoom","link":""},{"d":"2026-04-24","title":"PSW Cholera/Lactose Intolerance","lecturer":"Mulroney","start":"09:00","end":"10:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/psw-cholera-slash-lactose-intolerance"},{"d":"2026-04-24","title":"MANDATORY Foundational Rounds","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-04-24","title":"Optional GI GA Practical Review (Snowball","lecturer":"Coker","start":"13:00","end":"14:30","course":"Anat","location":"GA Labs","link":""},{"d":"2026-04-26","title":"Trudy's Ulcer Assignment DUE 11:59pm","lecturer":"Mulroney","start":"17:00","end":"17:30","course":"Phys","location":"N/A","link":""},{"d":"2026-04-27","title":"GI GA Written Exam","lecturer":"N/A","start":"09:00","end":"09:45","course":"Anat","location":"LA-6","link":""},{"d":"2026-04-27","title":"GI GA Practical Exam","lecturer":"N/A","start":"10:00","end":"17:00","course":"Anat","location":"GA Labs","link":""},{"d":"2026-04-27","title":"IL Clinical Conundrum - Mr. Q","lecturer":"Verbesey","start":"13:00","end":"14:00","course":"Phys","location":"Assignment","link":"https://georgetown.instructure.com/courses/228454/pages/clinical-conundrum"},{"d":"2026-04-28","title":"Module Wrap-Up","lecturer":"Carroll","start":"09:00","end":"10:00","course":"Path","location":"GA-2/4","link":""},{"d":"2026-04-29","title":"PE-Advanced Abdominal Exam","lecturer":"Alimi","start":"13:00","end":"14:00","course":"CP","location":"GA-2/4","link":""},{"d":"2026-04-29","title":"Abdominal Imaging","lecturer":"Krishnan","start":"14:00","end":"15:00","course":"DRT","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/abdominal-imaging"},{"d":"2026-04-30","title":"Mandatory - Clinical Conundrum - Mr. Q","lecturer":"Verbesey","start":"09:00","end":"10:00","course":"Phys","location":"GA-2/4","link":""},{"d":"2026-05-01","title":"PSW Chronic Pancreatitis","lecturer":"Mulroney","start":"10:00","end":"11:00","course":"Phys","location":"GA-2/4","link":"https://georgetown.instructure.com/courses/228454/pages/psw-chronic-pancreatitis"},{"d":"2026-05-01","title":"MANDATORY Foundational Rounds","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-05-02","title":"Phys Quiz Open","lecturer":"Mulroney","start":"09:00","end":"10:00","course":"Phys","location":"N/A","link":""},{"d":"2026-05-03","title":"Phys Quiz DUE at 11:59pm","lecturer":"Mulroney","start":"09:00","end":"10:00","course":"Phys","location":"N/A","link":""},{"d":"2026-05-05","title":"GI POCUS","lecturer":"Poon","start":"13:00","end":"14:00","course":"CP","location":"GA-2/4","link":""},{"d":"2026-05-07","title":"MANDATORY - Path Gross Conference","lecturer":"Path Resident","start":"13:00","end":"14:00","course":"Path","location":"GA-2/4","link":""},{"d":"2026-05-08","title":"MANDATORY Foundational Rounds","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-05-08","title":"Optional Phys Quiz Review","lecturer":"Mulroney","start":"12:00","end":"12:30","course":"Phys","location":"N/A","link":""},{"d":"2026-05-15","title":"Optional GI & RPD GA Written Post-Exam Review","lecturer":"GA Faculty","start":"12:00","end":"12:30","course":"N/A","location":"LA-6","link":""},{"d":"2026-05-15","title":"Optional Review with Dr. Mulroney","lecturer":"Mulroney","start":"13:00","end":"14:00","course":"Phys/Pharm","location":"Zoom","link":""},{"d":"2026-05-17","title":"Radiology Case Assignment DUE at 11:59 PM","lecturer":"N/A","start":"09:30","end":"10:00","course":"DRT","location":"N/A","link":""},{"d":"2026-05-18","title":"DRT Mandatory Session A - Radiology Review","lecturer":"Thakkar/Haji-Momenian","start":"15:00","end":"16:30","course":"DRT","location":"See DRT","link":""},{"d":"2026-05-20","title":"DRT Mandatory Session B - Radiology Review","lecturer":"Thakkar/Haji-Momenian","start":"14:30","end":"16:00","course":"DRT","location":"See DRT","link":""},{"d":"2026-05-22","title":"MANDATORY Foundational Rounds","lecturer":"N/A","start":"11:00","end":"12:00","course":"N/A","location":"DML","link":"https://georgetown.instructure.com/courses/218100/pages/block-4-foundational-rounds"},{"d":"2026-06-01","title":"GI Module Exam","lecturer":"N/A","start":"09:00","end":"13:00","course":"N/A","location":"N/A","link":""}];
 
