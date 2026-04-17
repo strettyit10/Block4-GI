@@ -150,6 +150,7 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .res-row.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br)}
 .res-row.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br)}
 .res-row.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br)}
+.res-row.FA{background:var(--c-fa-bg);border-color:var(--c-fa-br)}
 .res-row.na{background:transparent;border-color:var(--rule);opacity:.45}
 .res-row.not-included{opacity:.55;filter:grayscale(.4)}
 .res-include-btn{font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:12px;
@@ -160,6 +161,7 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .res-include-btn.PT{background:var(--c-pt-bg);border-color:var(--c-pt-br);color:var(--c-pt-tx)}
 .res-include-btn.PH{background:var(--c-ph-bg);border-color:var(--c-ph-br);color:var(--c-ph-tx)}
 .res-include-btn.SK{background:var(--c-sk-bg);border-color:var(--c-sk-br);color:var(--c-sk-tx)}
+.res-include-btn.FA{background:var(--c-fa-bg);border-color:var(--c-fa-br);color:var(--c-fa-tx)}
 .res-include-btn.not-inc{background:transparent;border-color:var(--rule);color:var(--ink-3)}
 .res-label{font-size:.78rem;font-weight:600;min-width:120px;color:var(--ink-2)}
 .res-module{font-size:.72rem;color:var(--ink-3);flex:1}
@@ -367,6 +369,17 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:po
 .sk-sub-label{flex:1;min-width:0}
 .sk-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
 .sk-no-subs{font-size:.72rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
+
+/* ── FA SUBCHAPTERS ── */
+.fa-subs-wrap{display:flex;flex-direction:column;gap:2px;margin-top:6px;padding-left:12px;border-left:2px solid var(--c-fa-br)}
+.fa-sub-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;
+  background:rgba(153,27,27,.05);font-size:.74rem;color:var(--c-fa-tx)}
+[data-theme="dark"] .fa-sub-row{background:rgba(252,165,165,.06)}
+.fa-sub-row.done-sub{background:rgba(153,27,27,.12);text-decoration:line-through;opacity:.65}
+[data-theme="dark"] .fa-sub-row.done-sub{background:rgba(252,165,165,.12)}
+.fa-sub-cb{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--c-fa-tx);white-space:nowrap;flex-shrink:0}
+.fa-sub-label{flex:1;min-width:0}
+.fa-xref{font-size:.67rem;color:var(--ink-3);font-style:italic;padding:4px 8px;margin-top:2px}
 
 /* ── MOBILE ── */
 @media(max-width:700px){
@@ -909,7 +922,7 @@ let STATE = {};
 function defaultPP(){ return {uworld:'Not Started',activeLearning:'Not Started',drillHub:'Not Started',qbank:'Not Started'}; }
 
 // Resources that support per-subchapter checkboxes (any resource with a subs[] array)
-const SUBS_RES = ['BC','BB','PT','PH','SK'];
+const SUBS_RES = ['BC','BB','PT','PH','SK','FA'];
 
 function resHasSubs(l, r){
   return Array.isArray(l.res?.[r]?.subs) && l.res[r].subs.length > 0;
