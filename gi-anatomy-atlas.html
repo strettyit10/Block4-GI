@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GI Anatomy Atlas — HoyaDocs Lab Practical Prep</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:#faf8f3;color:#1c2e23;line-height:1.7;font-size:15.5px;overflow:hidden}
+.app{display:flex;height:100vh}
+.sidebar{width:280px;background:#f3efe7;border-right:1px solid #e6ddc9;display:flex;flex-direction:column;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.sb-top{padding:14px 14px 10px;border-bottom:1px solid #e6ddc9;background:#ede6d6}
+.sb-brand{display:block;font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:#14532d;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:1px solid #d4c9ad;margin-bottom:8px;transition:color 0.12s}
+.sb-brand:hover{color:#0f3a1f;text-decoration:underline}
+.sb-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#14532d;letter-spacing:-0.01em;cursor:pointer;transition:color 0.12s;display:block;line-height:1.15}
+.sb-title:hover{color:#0f3a1f}
+.sb-sub{font-size:11px;color:#6b7b6c;margin-top:3px;font-style:italic}
+.sb-search{margin-top:10px}
+.sb-search input{width:100%;padding:7px 11px;border:1px solid #d4c9ad;border-radius:4px;background:white;font-size:12.5px;font-family:Georgia,serif}
+.sb-search input:focus{outline:none;border-color:#14532d;background:#fffef8}
+.sb-progress{padding:8px 14px;background:#ede6d6;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;font-size:11px;color:#4b5b4c}
+.sb-progress-bar{flex:1;height:5px;background:#d4c9ad;border-radius:3px;overflow:hidden}
+.sb-progress-fill{height:100%;background:#14532d;transition:width 0.4s}
+.sb-list{flex:1;overflow-y:auto;padding:6px 0}
+.sb-home{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:12px;font-weight:700;color:#14532d;cursor:pointer;border-bottom:1px solid #e6ddc9;transition:background 0.12s;user-select:none}
+.sb-home:hover{background:rgba(20,83,45,0.08)}
+.sb-home.active{background:#14532d;color:white}
+.cat-group{margin-bottom:2px}
+.cat-header{padding:7px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:#14532d;cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;background:transparent;transition:background 0.12s}
+.cat-header:hover{background:rgba(20,83,45,0.05)}
+.cat-chevron{font-size:9px;transition:transform 0.2s;color:#8a9b8b}
+.cat-group.collapsed .cat-chevron{transform:rotate(-90deg)}
+.cat-count{margin-left:auto;background:rgba(20,83,45,0.1);color:#14532d;font-size:9.5px;padding:1px 6px;border-radius:8px;font-weight:700;letter-spacing:0.3px}
+.cat-list{display:block}
+.cat-group.collapsed .cat-list{display:none}
+.dz-item{padding:5px 14px 5px 26px;font-size:12.5px;color:#3c4d3d;cursor:pointer;display:flex;align-items:center;gap:7px;line-height:1.35;border-left:3px solid transparent;transition:all 0.1s;font-family:Georgia,serif}
+.dz-item:hover{background:rgba(20,83,45,0.06);color:#14532d}
+.dz-item.active{background:#14532d;color:white;border-left-color:#fbbf24;font-weight:600}
+.dz-item.active .dz-check{color:#fbbf24}
+.dz-check{font-size:11px;color:#a0a79e;flex-shrink:0;width:12px}
+.dz-item.learned .dz-check{color:#16a34a}
+.dz-item.active.learned .dz-check{color:#86efac}
+.dz-name{flex:1;min-width:0}
+.main-top{background:white;padding:11px 24px;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.main-top h1{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#14532d;letter-spacing:-0.01em;flex:1;cursor:pointer;transition:color 0.12s}
+.main-top h1:hover{color:#0f3a1f}
+.main-top .meta{font-size:11.5px;color:#6b7b6c;font-style:italic}
+.btn{padding:6px 12px;background:white;border:1px solid #d4c9ad;border-radius:4px;font-size:11.5px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.12s;white-space:nowrap}
+.btn:hover{border-color:#14532d;color:#14532d}
+.btn.print{background:#14532d;color:white;border-color:#14532d}
+.btn.print:hover{background:#0f3a1f;color:white}
+.btn.excel{background:#107c41;color:white;border-color:#107c41}
+.btn.excel:hover{background:#0b5a2e;color:white}
+.content{flex:1;overflow-y:auto;background:#faf8f3}
+.content-inner{max-width:1200px;margin:0 auto;padding:42px 56px 120px}
+.cat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#8a9b8b;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.cat-dot{width:8px;height:8px;border-radius:50%;background:#14532d}
+.dz-title{font-family:Georgia,serif;font-size:34px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.15;margin-bottom:16px}
+.dz-oneliner{font-size:17px;color:#3c4d3d;line-height:1.55;margin-bottom:28px;padding:14px 18px;background:#ede6d6;border-left:3px solid #14532d;border-radius:0 5px 5px 0;font-style:italic;max-width:900px}
+.sec{margin-bottom:28px;max-width:900px}
+.sec h3{font-family:Georgia,serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#14532d;margin-bottom:10px;padding-bottom:5px;border-bottom:1.5px solid #d4c9ad;display:flex;align-items:center;gap:7px}
+.sec p,.sec ul{font-size:15px;color:#1c2e23;line-height:1.75}
+.sec ul{padding-left:22px;margin-top:4px}
+.sec ul li{margin-bottom:5px}
+.sec strong{color:#14532d;font-weight:700}
+.callout{margin:20px 0;padding:14px 18px;border-radius:5px;font-size:14.5px;line-height:1.7;max-width:900px}
+.callout h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.callout ul{padding-left:20px;margin-top:5px}
+.callout li{margin-bottom:4px}
+.callout.hy{background:#fdf4d3;border-left:4px solid #eab308;color:#713f12}
+.callout.hy h4,.callout.hy strong{color:#78350f}
+.callout.mn{background:#ffe7d6;border-left:4px solid #ea580c;color:#7c2d12}
+.callout.mn h4,.callout.mn strong{color:#9a3412}
+.callout.trap{background:#fde3e3;border-left:4px solid #dc2626;color:#7f1d1d}
+.callout.trap h4,.callout.trap strong{color:#991b1b}
+.footer-nav{position:sticky;bottom:0;background:linear-gradient(to top,#faf8f3 60%,rgba(250,248,243,0));padding:24px 56px 22px;max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.nav-btn{flex:1;padding:11px 14px;background:white;border:1.5px solid #d4c9ad;border-radius:6px;font-size:13px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0}
+.nav-btn:hover{border-color:#14532d;color:#14532d;background:#fffef8}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed}
+.nav-btn.learn{flex:0.8;background:#14532d;color:white;border-color:#14532d}
+.nav-btn.learn:hover{background:#0f3a1f;color:white}
+.nav-btn.learn.learned{background:#16a34a;border-color:#16a34a}
+.kbd{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.25);padding:1px 5px;border-radius:3px;font-family:ui-monospace,Menlo,monospace;font-size:10px;margin-left:4px}
+.nav-btn:not(.learn) .kbd{background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
+.home-hero{text-align:center;padding:20px 0 26px;border-bottom:1px solid #e6ddc9;margin-bottom:28px}
+.home-brand{font-size:12px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#14532d;opacity:0.65;margin-bottom:10px}
+.home-title{font-family:Georgia,serif;font-size:50px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.05;margin-bottom:14px}
+.home-sub{font-size:17.5px;color:#3c4d3d;font-style:italic;max-width:700px;margin:0 auto 22px;line-height:1.55}
+.home-start{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#14532d;color:white;border:none;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;text-decoration:none}
+.home-start:hover{background:#0f3a1f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,83,45,0.25)}
+.home-section-title{font-family:Georgia,serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#14532d;margin:36px 0 16px;padding-bottom:8px;border-bottom:1.5px solid #d4c9ad}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.home-cat{background:#f3efe7;border:1px solid #e6ddc9;border-radius:8px;padding:14px 16px;transition:all 0.15s}
+.home-cat:hover{border-color:#14532d;box-shadow:0 2px 10px rgba(20,83,45,0.08)}
+.home-cat-title{font-family:Georgia,serif;font-size:13.5px;font-weight:700;color:#14532d;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #d4c9ad;display:flex;align-items:center;gap:6px}
+.home-cat-count{margin-left:auto;background:rgba(20,83,45,0.12);font-size:10.5px;padding:1px 7px;border-radius:8px;font-weight:700}
+.home-dz-list{display:flex;flex-direction:column;gap:2px}
+.home-dz{font-size:13px;color:#3c4d3d;padding:4px 7px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.1s;font-family:Georgia,serif;border-left:2px solid transparent}
+.home-dz:hover{background:#14532d;color:white;border-left-color:#fbbf24}
+.home-dz:hover .home-check{color:#fbbf24}
+.home-dz.learned{color:#16a34a}
+.home-dz .home-check{font-size:10px;width:10px;flex-shrink:0;color:#b5bbb2}
+.home-dz.learned .home-check{color:#16a34a}
+.empty{text-align:center;padding:80px 20px;color:#8a9b8b;font-style:italic}
+.menu-toggle{display:none;padding:8px 11px;background:#14532d;color:white;border:none;border-radius:4px;font-size:16px;cursor:pointer;line-height:1;order:-1}
+@media(max-width:1000px){.content-inner{padding:32px 40px 120px}.footer-nav{padding:20px 40px 20px}}
+@media(max-width:720px){
+  body{font-size:14.5px}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;width:270px;max-width:85vw;transform:translateX(-100%);transition:transform 0.3s;box-shadow:0 0 20px rgba(0,0,0,0.15)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-toggle{display:block}
+  .main-top{padding:9px 12px;gap:6px;flex-wrap:nowrap;overflow-x:auto}
+  .main-top h1{font-size:14px;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .main-top .meta{display:none}
+  .main-top .btn{padding:5px 9px;font-size:11px}
+  .content-inner{padding:20px 18px 140px;max-width:100%}
+  .dz-title{font-size:24px}
+  .home-title{font-size:30px}
+  .home-sub{font-size:15px}
+  .home-hero{padding:14px 0 20px;margin-bottom:22px}
+  .home-grid{grid-template-columns:1fr;gap:12px}
+  .home-section-title{margin-top:24px}
+  .dz-oneliner{font-size:15px;padding:11px 14px;margin-bottom:22px}
+  .sec{margin-bottom:22px}
+  .sec h3{font-size:12px}
+  .sec p,.sec ul,.callout{font-size:14px}
+  .footer-nav{padding:14px 14px;max-width:100%;gap:6px;flex-wrap:wrap}
+  .nav-btn{padding:9px 10px;font-size:12px;min-width:0}
+  .nav-btn .kbd{display:none}
+  .nav-btn.learn{flex:1 1 100%;order:0;padding:11px 10px}
+  .nav-btn:not(.learn){flex:1}
+}
+@media(max-width:400px){.main-top .btn{padding:5px 8px;font-size:10.5px}.main-top h1{font-size:13px}.home-title{font-size:26px}}
+.sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:90}
+.sb-backdrop.show{display:block}
+@media print{
+  body{overflow:visible;background:white;font-size:10.5pt}
+  .app{display:block;height:auto}
+  .sidebar,.main-top,.footer-nav,.sb-backdrop{display:none!important}
+  .main{overflow:visible}
+  .content{overflow:visible;background:white}
+  .content-inner{max-width:100%;padding:0}
+  .dz-entry{page-break-after:always;padding:20px 30px;break-after:page}
+  .dz-entry:last-child{page-break-after:auto}
+  .callout,.dz-oneliner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.sb-list::-webkit-scrollbar,.content::-webkit-scrollbar{width:8px}
+.sb-list::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.content::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.sb-list::-webkit-scrollbar-thumb:hover,.content::-webkit-scrollbar-thumb:hover{background:#14532d}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <a class="sb-brand" href="https://hoyadocs.com/Block4-GI/" target="_blank" rel="noopener">HoyaDocs</a>
+    <span class="sb-title" onclick="goHome()">GI Anatomy Atlas</span>
+    <div class="sb-sub">Lab Practical Prep · Labs 1–4</div>
+    <div class="sb-search"><input type="text" id="search" placeholder="Search…"></div>
+  </div>
+  <div class="sb-progress">
+    <span id="learnedText">0 / 0</span>
+    <div class="sb-progress-bar"><div class="sb-progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="sb-list" id="sbList"></div>
+</aside>
+<div class="sb-backdrop" id="sbBackdrop" onclick="closeSidebar()"></div>
+<main class="main">
+  <div class="main-top">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h1 onclick="goHome()">GI Anatomy Lab Structures</h1>
+    <span class="meta">↑↓ navigate · space = learn</span>
+    <button class="btn" id="prevBtn" title="Previous">◀</button>
+    <button class="btn" id="nextBtn" title="Next">▶</button>
+    <button class="btn print" id="printBtn">🖨 PDF</button>
+    <button class="btn excel" id="excelBtn">📊 Excel</button>
+  </div>
+  <div class="content" id="content"></div>
+</main>
+</div>
+<script>
+const DISEASES = [
+// ═══════════════ OSTEOLOGY & SURFACE ANATOMY ═══════════════
+{id:"xiphoid",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Xiphoid Process",
+oneLiner:"Distal cartilaginous tip of sternum. T9 vertebral level. Upper midline landmark of abdomen.",
+path:"Small cartilaginous process projecting inferiorly from the body of the sternum. Ossifies with age. Lies at the <strong>T9 vertebral level</strong>.",
+clin:"Marks the superior midline of the abdomen. Just below it is the epigastric region.",
+dx:"Landmark for CPR chest compressions (compress above it, not on it — can fracture and cause liver laceration).",
+hy:["<strong>T9 vertebral level</strong>","Upper midline landmark","Inferior sternal attachment of diaphragm"]},
+
+{id:"costal-margin",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Costal Margin",
+oneLiner:"Inferior edge of the rib cage — costal cartilages of ribs 7–10 + tips of ribs 11, 12. Superior boundary of abdomen.",
+path:"Arch formed by the <strong>joined costal cartilages of ribs 7–10</strong>, with the free-floating tips of ribs 11 &amp; 12 forming the lateral extensions.",
+clin:"<ul><li>Superior boundary of anterior abdominal wall</li><li>Right costal margin: liver normally just barely palpable below it</li><li>Left costal margin: spleen not normally palpable; if palpable = splenomegaly</li></ul>",
+dx:"Murphy's sign: palpate deep below R costal margin as patient inhales → pain + arrest of inspiration = cholecystitis.",
+hy:["Ribs 7–10 fused cartilages","Superior boundary of abdomen","Landmark for liver/spleen/GB exam"]},
+
+{id:"pubic-symphysis",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Pubic Symphysis",
+oneLiner:"Cartilaginous joint between the two pubic bones at the anterior midline of the pelvis. Inferior midline landmark.",
+path:"Secondary cartilaginous joint (symphysis) uniting the right + left pubic bodies via a fibrocartilaginous disc.",
+clin:"Softens in late pregnancy via <strong>relaxin</strong> to allow pelvic widening for childbirth. Can separate (diastasis symphysis pubis) post-partum.",
+hy:["Anterior midline of pelvis","Relaxin softens in pregnancy","Lower midline landmark"]},
+
+{id:"pubic-tubercle",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Pubic Tubercle",
+oneLiner:"Small bony prominence on superior pubic ramus ~2.5 cm lateral to pubic symphysis. Medial attachment of the inguinal ligament.",
+path:"Prominent tubercle on the superior pubic ramus. Palpable through the skin just lateral to midline at groin.",
+clin:"<ul><li>Medial attachment of the <strong>inguinal ligament</strong></li><li>Site where the conjoint tendon inserts</li><li>Inguinal hernia bulges ABOVE + medial to the tubercle; femoral hernia bulges BELOW + lateral</li></ul>",
+tx:"On a cadaver, palpate the pubic tubercle first — it's the medial anchor for tracing the inguinal ligament laterally to the ASIS.",
+hy:["Medial attachment of inguinal ligament","<strong>Inguinal hernia</strong> above/medial; <strong>femoral hernia</strong> below/lateral","Conjoint tendon insertion"]},
+
+{id:"asis",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Anterior Superior Iliac Spine (ASIS)",
+oneLiner:"Most anterior projection of the iliac crest. Lateral attachment of the inguinal ligament.",
+path:"Anterior end of the iliac crest on the ilium. Easily palpable at the anterior pelvic brim.",
+clin:"<ul><li>Lateral attachment of the <strong>inguinal ligament</strong></li><li>Attachment of sartorius muscle</li><li>Landmark for <strong>McBurney's point</strong> (1/3 from ASIS to umbilicus — appendicitis)</li><li>Origin of meralgia paresthetica (lateral cutaneous n. of thigh passes just medial to ASIS under the inguinal lig)</li></ul>",
+hy:["Lateral anchor of inguinal ligament","<strong>McBurney's point</strong> (1/3 ASIS → umbilicus)","Sartorius origin"]},
+
+{id:"iliac-crest",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Iliac Crest",
+oneLiner:"Superior ridge of the ilium. Where you rest your hands on your hips. Vertebral level <strong>L4</strong>.",
+path:"The curved superior border of the ilium, from ASIS anteriorly to PSIS posteriorly. Palpable throughout its length.",
+clin:"<ul><li><strong>L4 vertebral level</strong> (aortic bifurcation is just above)</li><li>Landmark for <strong>lumbar puncture</strong> (line between iliac crests = L4 → needle at L3-L4 or L4-L5 interspace to avoid conus)</li><li>Site of <strong>bone marrow biopsy</strong> (posterior iliac crest)</li><li>Origin of quadratus lumborum, transversus abdominis, internal oblique</li></ul>",
+hy:["<strong>L4 level</strong> — key for lumbar puncture","Bone marrow biopsy site","Attachment for all 3 flat abdominal muscles"]},
+
+{id:"iliac-tubercle",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Iliac Tubercle",
+oneLiner:"Small lateral bump on the outer lip of the iliac crest, ~5 cm posterior to ASIS. Defines the <strong>transtubercular plane (L5)</strong>.",
+path:"A small thickening on the outer lip of the iliac crest, about 5 cm posterior to the ASIS.",
+clin:"Marks the <strong>transtubercular plane</strong> — horizontal plane at the L5 vertebral level that serves as the inferior horizontal boundary in the 9-region scheme of the abdomen.",
+hy:["L5 vertebral level","Defines transtubercular plane","Do NOT confuse with ASIS"]},
+
+{id:"umbilicus",cat:"Osteology & Surface",ck:"surf",emoji:"🦴",name:"Umbilicus",
+oneLiner:"Midline scar from the severed umbilical cord. Usually at the <strong>L3–L4 disc</strong> level. Central dermatome = <strong>T10</strong>.",
+path:"Skin scar at anterior midline from fetal umbilical cord. Embryologic 'home' of the round ligament of liver (lig teres) — remnant of the left umbilical vein — which runs in the free edge of the falciform ligament from the umbilicus to the porta hepatis.",
+clin:"<ul><li><strong>T10 dermatome</strong> → midgut visceral pain (early appendicitis) refers here</li><li><strong>Aortic bifurcation</strong> lies directly behind (L4 level)</li><li><strong>Caput medusae</strong>: paraumbilical vein recanalization in portal HTN</li><li><strong>Sister Mary Joseph nodule</strong>: periumbilical metastatic nodule from intra-abdominal malignancy (esp. gastric)</li></ul>",
+hy:["<strong>T10 dermatome</strong>","L3-L4 disc level","Caput medusae in portal HTN","Sister Mary Joseph nodule"]},
+
+{id:"quadrants",cat:"Osteology & Surface",ck:"surf",emoji:"🎯",name:"Four Abdominal Quadrants",
+oneLiner:"Divided by the <strong>median plane</strong> (vertical) + <strong>transumbilical plane</strong> (horizontal). Most common clinical scheme.",
+path:"Four quadrants: <strong>RUQ, LUQ, RLQ, LLQ</strong>. Median + transumbilical planes cross at the umbilicus.",
+clin:"<ul><li><strong>RUQ</strong>: liver (R lobe), gallbladder, duodenum, head of pancreas, R kidney, hepatic flexure</li><li><strong>LUQ</strong>: stomach, spleen, body/tail of pancreas, L kidney, splenic flexure</li><li><strong>RLQ</strong>: cecum, appendix, R ovary/tube, R ureter, part of ileum — classic appendicitis location</li><li><strong>LLQ</strong>: sigmoid colon, L ovary/tube, L ureter — classic diverticulitis location</li></ul>",
+hy:["<strong>Cholecystitis</strong>: RUQ","<strong>Appendicitis</strong>: RLQ (McBurney's)","<strong>Diverticulitis</strong>: LLQ ('left-sided appendicitis')","<strong>Splenic rupture</strong>: LUQ"]},
+
+{id:"regions",cat:"Osteology & Surface",ck:"surf",emoji:"🎯",name:"Nine Abdominal Regions",
+oneLiner:"3×3 grid made by two vertical (midclavicular) + two horizontal (subcostal + transtubercular) planes.",
+path:"<strong>Top row</strong>: R hypochondriac / epigastric / L hypochondriac. <strong>Middle row</strong>: R lumbar (flank) / umbilical / L lumbar. <strong>Bottom row</strong>: R inguinal (groin) / hypogastric (pubic) / L inguinal.",
+clin:"More precise than quadrants for localizing organs + pain referral by gut region: <strong>foregut → epigastric, midgut → umbilical, hindgut → hypogastric</strong>.",
+hy:["Foregut pain → epigastric","Midgut pain → umbilical","Hindgut pain → hypogastric","9 regions vs 4 quadrants — depends on reference"],
+mn:"<strong>HEH / LUL / GHG</strong>: Hypochondriac-Epigastric-Hypochondriac / Lumbar-Umbilical-Lumbar / Groin-Hypogastric-Groin (reading top to bottom)."},
+
+{id:"vertical-planes",cat:"Osteology & Surface",ck:"surf",emoji:"📐",name:"Vertical Planes (Median + Midclavicular)",
+oneLiner:"<strong>Median plane</strong> divides abdomen L/R. <strong>Midclavicular lines</strong> are the two vertical lines in the 9-region scheme.",
+path:"<strong>Median (midsagittal) plane</strong>: vertical anterior midline.<br><strong>Midclavicular lines (MCLs)</strong>: pass through midpoint of each clavicle, vertically down through abdomen.",
+clin:"<ul><li>Median plane = division for 4 quadrants + midline laparotomy incision</li><li>Right MCL: GB fundus at tip of 9th costal cartilage (Murphy's sign)</li><li>Apical heart beat at left MCL, 5th intercostal space</li></ul>",
+hy:["Median plane: divides quadrants + midline laparotomy","Right MCL: gallbladder fundus","Left MCL: apex beat"]},
+
+{id:"horizontal-planes",cat:"Osteology & Surface",ck:"surf",emoji:"📐",name:"Horizontal Planes (Subcostal, Transumbilical, Transtubercular)",
+oneLiner:"Three horizontal planes: <strong>Subcostal (L3)</strong>, <strong>Transumbilical (L3-L4)</strong>, <strong>Transtubercular (L5)</strong>.",
+path:"<strong>Subcostal</strong>: across lowest points of costal margins = bottom of rib 10 (L3). Upper horizontal line in 9-region scheme.<br><strong>Transumbilical</strong>: through umbilicus (~L3-L4 disc). Used in 4-quadrant scheme.<br><strong>Transtubercular</strong>: through iliac tubercles (L5). Lower horizontal line in 9-region scheme.<br><strong>Transpyloric (extra)</strong>: midway xiphoid-to-umbilicus (L1) — crosses pylorus, SMA origin, pancreatic neck, hilum of kidneys.",
+clin:"<ul><li><strong>Transpyloric (L1)</strong>: bonus high-yield plane — SMA origin, L renal v, pancreatic neck, fundus of gallbladder</li><li>Aortic bifurcation at transumbilical (L4)</li><li>IVC formation at transtubercular (L5)</li></ul>",
+hy:["Subcostal = L3","Transumbilical = L3-L4","Transtubercular = L5","<strong>Transpyloric = L1</strong> (SMA, pylorus, pancreatic neck)"]},
+
+// ═══════════════ ANTERIOR ABDOMINAL WALL ═══════════════
+{id:"campers",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Camper's Fascia",
+oneLiner:"Superficial fatty layer of the abdominal superficial fascia — the yellow fatty layer just under skin.",
+path:"The more superficial of two layers of the superficial fascia of the anterior abdominal wall. Fatty, yellow; thickness varies with body fat. Continuous with the superficial fascia of the thigh + perineum.",
+clin:"First fascial layer encountered in a laparotomy or C-section incision.",
+hy:["Superficial fatty layer","<strong>C</strong>amper's = <strong>C</strong>ushion","Continuous onto thigh"]},
+
+{id:"scarpas",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Scarpa's Fascia",
+oneLiner:"Deep membranous layer of the superficial abdominal fascia. Becomes <strong>Colles' fascia</strong> in perineum — urinary extravasation pathway.",
+path:"Deep membranous layer of superficial fascia. Thin, fibrous, white. Below the umbilicus. Fuses inferiorly with the <strong>fascia lata of thigh (~1 cm below inguinal lig)</strong>, the <strong>Colles' fascia of perineum</strong>, and the <strong>Dartos fascia of scrotum</strong>.",
+dx:"<strong>Straddle injury with urethral rupture below the perineal membrane</strong> → urine extravasates into superficial pouch → tracks deep to Scarpa's fascia into <strong>scrotum, penis, and anterior abdominal wall</strong>, but NOT into the thigh (fascia lata fusion blocks it).",
+hy:["Membranous fascia","Continuous with Colles', Dartos, Buck's fascias","<strong>Urinary extravasation</strong> tracks deep to Scarpa's","Fuses with fascia lata → no thigh spread"]},
+
+{id:"ant-cut-nerves",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"⚡",name:"Anterior Cutaneous Nerves",
+oneLiner:"Terminal branches of T7–T12 thoracoabdominal nerves + L1 iliohypogastric. Pierce rectus sheath near midline.",
+path:"Terminal anterior cutaneous branches of the ventral rami of T7–T12 (thoracoabdominal + subcostal) and L1 (iliohypogastric). Pierce rectus sheath about 2–3 cm from midline.",
+clin:"Supply the skin of the anterior abdominal wall in a dermatomal pattern (T7 = xiphoid, T10 = umbilicus, L1 = suprapubic/inguinal).",
+hy:["T7–T12 + L1","Dermatomal distribution","T10 = umbilicus"]},
+
+{id:"lat-cut-nerves",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"⚡",name:"Lateral Cutaneous Nerves",
+oneLiner:"Lateral branches of T7–T12 ventral rami. Pierce lateral abdominal wall to supply flank skin.",
+path:"Lateral cutaneous branches of the thoracoabdominal + subcostal nerves (T7–T12). Pierce the muscles of the lateral wall and divide into anterior + posterior branches.",
+clin:"Supply skin of the lateral abdominal wall (flank).",
+hy:["Lateral branches of T7–T12","Flank skin"]},
+
+{id:"ext-oblique",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"External Oblique Muscle & Aponeurosis",
+oneLiner:"Most superficial flat abdominal muscle. Fibers run <strong>inferomedially</strong> ('hands in pockets'). Aponeurosis forms the anterior rectus sheath + inguinal ligament.",
+path:"<strong>Origin</strong>: external surfaces of ribs 5–12. <strong>Insertion</strong> (via aponeurosis): linea alba, pubic tubercle, anterior iliac crest. <strong>Fibers</strong>: <strong>inferomedial</strong> (like hands-in-front-pockets). <strong>Innervation</strong>: thoracoabdominal (T7–T11) + subcostal (T12).",
+clin:"<ul><li><strong>Action</strong>: compresses abdomen; rotates trunk to <strong>opposite</strong> side</li><li><strong>Free inferior edge of aponeurosis = inguinal ligament</strong></li><li>Contributes to <strong>anterior rectus sheath</strong> at all levels</li><li>Forms <strong>external spermatic fascia</strong> of the spermatic cord</li></ul>",
+hy:["Fibers <strong>inferomedial</strong> (hands in pockets)","Rotates to OPPOSITE side","Inguinal lig = free inferior edge of its aponeurosis","Anterior sheath at all levels"]},
+
+{id:"int-oblique",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Internal Oblique Muscle & Aponeurosis",
+oneLiner:"Middle flat muscle. Fibers run <strong>superomedially</strong> (perpendicular to EO). Aponeurosis <strong>SPLITS</strong> above arcuate line to sandwich rectus.",
+path:"<strong>Origin</strong>: thoracolumbar fascia, iliac crest, lateral 2/3 of inguinal ligament. <strong>Insertion</strong>: ribs 10–12, linea alba, pubic crest (via conjoint tendon with TA). <strong>Fibers</strong>: <strong>superomedial</strong> (up + in — perpendicular to EO). <strong>Innervation</strong>: T7–T12, iliohypogastric + ilioinguinal (L1).",
+clin:"<ul><li><strong>Action</strong>: compresses abdomen; rotates trunk to <strong>SAME</strong> side (ipsilateral)</li><li>Aponeurosis <strong>SPLITS above the arcuate line</strong> to contribute to BOTH anterior + posterior sheaths</li><li>Gives rise to the <strong>cremaster muscle</strong> of the spermatic cord</li><li>Joins TA to form the <strong>conjoint tendon</strong> inserting on pubic crest</li></ul>",
+hy:["Fibers <strong>superomedial</strong>","Rotates to SAME side (Ipsi = IO)","<strong>Aponeurosis splits</strong> above arcuate","<strong>Gives rise to cremaster</strong>","Conjoint tendon with TA"]},
+
+{id:"trans-abdom",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Transversus Abdominis Muscle & Aponeurosis",
+oneLiner:"Deepest flat muscle. Fibers run <strong>horizontally</strong>. Aponeurosis forms posterior sheath (above arcuate); slips anterior (below arcuate).",
+path:"<strong>Origin</strong>: inner costal cartilages 7–12, thoracolumbar fascia, iliac crest, lateral 1/3 of inguinal ligament. <strong>Insertion</strong>: linea alba, pubic crest (via conjoint tendon). <strong>Fibers</strong>: <strong>horizontal</strong>. <strong>Innervation</strong>: T7–T12, iliohypogastric + ilioinguinal.",
+clin:"<ul><li><strong>Action</strong>: PURE compression — <strong>does NOT rotate</strong> the trunk (its own fiber direction doesn't allow it)</li><li>Forms <strong>posterior rectus sheath</strong> above the arcuate line</li><li>All 3 aponeurosis slips shift anterior below the arcuate line</li><li>Its fascial extension evaginates through deep ring as <strong>internal spermatic fascia</strong></li></ul>",
+hy:["<strong>Horizontal fibers</strong>","<strong>No rotation</strong> — only compression","Conjoint tendon","Internal spermatic fascia derivative","Arching fibers = roof of inguinal canal"]},
+
+{id:"rectus-abdom",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Rectus Abdominis Muscle & Tendinous Intersections",
+oneLiner:"Vertical 'six-pack' strap muscle. Flexes trunk. Interrupted by 3 tendinous intersections that adhere only to anterior sheath.",
+path:"<strong>Origin</strong>: pubic crest + pubic symphysis. <strong>Insertion</strong>: xiphoid process + costal cartilages 5–7. Paired, vertical, strap-like muscle within the rectus sheath. <strong>Innervation</strong>: T7–T12.<br><strong>Tendinous intersections</strong>: 3 transverse fibrous bands (at xiphoid, umbilicus, midway between). Fuse with <strong>anterior sheath only</strong> — allow hematoma to spread vertically behind rectus but not in front.",
+clin:"<ul><li><strong>Action</strong>: flexes trunk (sit-ups); tenses abdominal wall</li><li>Creates 'six-pack' appearance via tendinous intersections</li><li><strong>Divarication of recti</strong>: widening of linea alba (pregnancy, obesity)</li><li>Behind rectus below arcuate line: vulnerable to <strong>rectus sheath hematoma</strong> from inferior epigastric a tear</li></ul>",
+hy:["Flexes trunk","3 tendinous intersections (six-pack)","<strong>Adhere only to anterior sheath</strong>","T7–T12 innervation"]},
+
+{id:"linea-alba",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Linea Alba",
+oneLiner:"Avascular midline fibrous raphe from xiphoid to pubic symphysis where bilateral aponeuroses interdigitate.",
+path:"White midline tendinous seam formed by the decussation of the aponeuroses of EO + IO + TA from both sides. Widest at umbilicus; narrows inferiorly.",
+clin:"<ul><li><strong>Avascular</strong> → surgical plane for <strong>midline laparotomy</strong></li><li>Widens at the umbilicus → <strong>umbilical hernia</strong> site (common in infants, pregnancy, obesity)</li><li><strong>Divarication of recti</strong>: thinning + stretching in pregnancy</li></ul>",
+hy:["Avascular","Midline laparotomy plane","Umbilical hernia site","Aponeurotic interdigitation"]},
+
+{id:"rectus-sheath",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Rectus Sheath (Anterior + Posterior)",
+oneLiner:"Envelops rectus abdominis. <strong>ABOVE arcuate line</strong>: IO aponeurosis SPLITS. <strong>BELOW arcuate line</strong>: all 3 aponeuroses slip ANTERIOR — only transversalis fascia + peritoneum behind rectus.",
+path:"<strong>Above arcuate line (upper 3/4)</strong>:<br>• Anterior sheath = EO aponeurosis + anterior half of IO aponeurosis<br>• Posterior sheath = posterior half of IO + TA aponeurosis<br><strong>Below arcuate line (lower 1/4)</strong>:<br>• Anterior sheath = ALL 3 aponeuroses (EO + IO + TA)<br>• <strong>Posterior sheath = ABSENT</strong> (only transversalis fascia + extraperitoneal fat + parietal peritoneum)",
+clin:"<ul><li>Contains rectus abdominis, superior + inferior epigastric vessels, and anterior cutaneous nerves</li><li><strong>Rectus sheath hematoma</strong> (from inferior epigastric a tear): contained above arcuate, but spreads freely into pelvis below arcuate (no posterior wall)</li></ul>",
+hy:["Above arcuate: IO <strong>SPLITS</strong>","Below arcuate: all aponeuroses <strong>SLIP</strong> anterior","Below arcuate: <strong>NO posterior sheath</strong>"],
+mn:"<strong>'Above = Split, Below = Slip'</strong>"},
+
+{id:"arcuate",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Arcuate Line",
+oneLiner:"Curved inferior edge of the posterior rectus sheath — ~1/3 of the way from umbilicus to pubis. Below it there is NO posterior sheath.",
+path:"A curved, concave-down line where all 3 aponeuroses transition anterior to rectus. Located approximately midway between the umbilicus and pubis (often cited as 1/3 above the pubic symphysis).",
+clin:"<ul><li><strong>Inferior epigastric a.</strong> enters rectus sheath at this level (pierces transversalis fascia)</li><li>Below: rectus sheath hematoma can dissect into pelvis</li></ul>",
+hy:["Midway umbilicus ↔ pubis (concave down)","Inferior epigastric a enters sheath here","Posterior sheath ends here"]},
+
+{id:"sup-epigastric",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🩸",name:"Superior Epigastric Artery",
+oneLiner:"Terminal branch of <strong>internal thoracic artery</strong>. Descends in rectus sheath from costal margin. Anastomoses with inferior epigastric.",
+path:"One of two terminal branches of the internal thoracic artery (other is musculophrenic). Enters the rectus sheath at its upper end, descends behind rectus abdominis. Anastomoses with inferior epigastric near the umbilicus.",
+clin:"<ul><li><strong>Anastomosis with inferior epigastric</strong> provides a collateral circulation</li><li>In <strong>coarctation of the aorta</strong>: blood diverts subclavian → internal thoracic → superior epigastric → inferior epigastric → external iliac → distal aorta (rib notching from dilated intercostals)</li></ul>",
+hy:["From internal thoracic a","Anastomoses with inferior epigastric","Collateral in coarctation"]},
+
+{id:"inf-epigastric",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🩸",name:"Inferior Epigastric Artery",
+oneLiner:"Branch of external iliac just above inguinal ligament. Runs in rectus sheath. Landmark for <strong>direct vs indirect inguinal hernias</strong>.",
+path:"Arises from the external iliac artery just above the inguinal ligament. Runs superomedially, enters the rectus sheath by piercing the <strong>transversalis fascia at the arcuate line</strong>. Ascends behind rectus abdominis. Forms the <strong>lateral umbilical fold</strong> of peritoneum.",
+clin:"<ul><li><strong>Landmark for hernia classification</strong>: <strong>Indirect hernia = LATERAL</strong> to it (through deep ring); <strong>Direct hernia = MEDIAL</strong> to it (through Hesselbach's triangle)</li><li>Injured in <strong>laparoscopic port placement</strong> or rectus sheath hematoma</li></ul>",
+hy:["From external iliac artery","<strong>Indirect hernia: lateral</strong>","<strong>Direct hernia: medial</strong>","<strong>MDs don't LIE</strong>","Lateral umbilical fold","Injury risk in laparoscopy"]},
+
+{id:"transversalis",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🛡️",name:"Transversalis Fascia",
+oneLiner:"Endoabdominal fascia lining the entire abdominopelvic cavity deep to TA. Evaginates through deep ring as <strong>internal spermatic fascia</strong>.",
+path:"A continuous fibrous sheet lining the <strong>entire inner surface of the abdominopelvic cavity</strong>, deep to all muscles. Named according to region: transversalis over TA, iliac fascia over iliacus, psoas fascia over psoas, etc. Between transversus abdominis and parietal peritoneum.",
+clin:"<ul><li>Evaginates through the <strong>deep inguinal ring</strong> to form the <strong>internal spermatic fascia</strong> of the cord</li><li>Forms the <strong>posterior wall of inguinal canal</strong> (weak spot — direct hernia site)</li><li>Below arcuate line: the only fascial layer behind rectus</li></ul>",
+hy:["Endoabdominal fascia","→ internal spermatic fascia","Posterior wall of inguinal canal (direct hernia site)"]},
+
+{id:"parietal-perit",cat:"Anterior Abdominal Wall",ck:"wall",emoji:"🫧",name:"Parietal Peritoneum",
+oneLiner:"Innermost layer of abdominal wall. <strong>Somatic innervation</strong> (T7–L1) = sharp, well-localized pain.",
+path:"Serous membrane lining inner abdominal wall. Continuous with visceral peritoneum via mesenteries + ligaments. Innervated by somatic branches of the overlying body wall nerves (T7–L1 intercostals + subcostal + L1).",
+clin:"<ul><li>Sharp, well-localized pain (somatic innervation)</li><li>Irritation → <strong>rebound tenderness, guarding, rigidity</strong></li><li>In appendicitis: periumbilical visceral pain (T10) localizes to RLQ when inflamed parietal peritoneum is reached</li></ul>",
+hy:["<strong>Somatic</strong> innervation","Sharp, well-localized pain","Signs of peritonitis: rebound + guarding","Pain localizes when parietal involved"]},
+// ═══════════════ INGUINAL REGION ═══════════════
+{id:"ing-ligament",cat:"Inguinal Region & Cord",ck:"ing",emoji:"🩳",name:"Inguinal Ligament",
+oneLiner:"Free inferior edge of EO aponeurosis rolled under. Runs from <strong>ASIS</strong> (lateral) to <strong>pubic tubercle</strong> (medial). Forms floor of inguinal canal.",
+path:"The thickened, rolled-under inferior free edge of the external oblique aponeurosis. Runs from ASIS to pubic tubercle.",
+clin:"<ul><li><strong>Floor</strong> of the inguinal canal</li><li>Separates abdomen from thigh: <strong>inguinal hernia above</strong> it; <strong>femoral hernia below</strong> it</li><li>Medial attachment = lacunar ligament (extension to pectineal line)</li></ul>",
+hy:["ASIS → pubic tubercle","Floor of inguinal canal","Separates inguinal from femoral hernias","Free edge of EO aponeurosis"],
+mn:"<strong>APT</strong> = <strong>A</strong>SIS → <strong>P</strong>ubic <strong>T</strong>ubercle"},
+
+{id:"super-ring",cat:"Inguinal Region & Cord",ck:"ing",emoji:"🩳",name:"Superficial Inguinal Ring",
+oneLiner:"Triangular defect in EO aponeurosis just superior to the pubic tubercle. Exit of inguinal canal.",
+path:"A triangular opening in the external oblique aponeurosis. Located just above and lateral to the pubic tubercle. Bounded by medial + lateral crura (+ intercrural fibers).",
+clin:"<ul><li>Exit for <strong>spermatic cord (M)</strong> or <strong>round ligament of uterus (F)</strong></li><li>Emerging structures become covered in the external spermatic fascia (derived from EO)</li></ul>",
+hy:["Exit of canal","Just above pubic tubercle","External spermatic fascia originates here"]},
+
+{id:"ing-canal",cat:"Inguinal Region & Cord",ck:"ing",emoji:"🩳",name:"Inguinal Canal",
+oneLiner:"4 cm oblique passage through the lower abdominal wall. Transmits spermatic cord (M) or round lig uterus (F). 4 walls + 2 rings.",
+path:"Obliquely-oriented passage in the lower abdominal wall, running from the deep ring to the superficial ring (superolateral → inferomedial).<br><strong>Walls</strong>:<br>• <strong>Anterior</strong>: EO aponeurosis (+ IO laterally)<br>• <strong>Posterior</strong>: transversalis fascia (+ <strong>conjoint tendon</strong> medially)<br>• <strong>Roof</strong>: arching fibers of IO + TA<br>• <strong>Floor</strong>: inguinal ligament (+ lacunar ligament medially)",
+clin:"<ul><li><strong>Indirect hernia</strong>: through deep ring → canal → superficial ring, lateral to inf. epigastric</li><li><strong>Direct hernia</strong>: through posterior wall weakness (Hesselbach's triangle), medial to inf. epigastric</li><li>Transmits: spermatic cord (M) / round lig uterus (F) + <strong>ilioinguinal nerve</strong> (enters side wall, NOT via deep ring)</li></ul>",
+hy:["4 walls: anterior EO, posterior transversalis, roof IO+TA arch, floor inguinal lig","Ilioinguinal n travels in canal","Conjoint tendon reinforces medial posterior wall"]},
+
+{id:"deep-ring",cat:"Inguinal Region & Cord",ck:"ing",emoji:"🩳",name:"Deep Inguinal Ring",
+oneLiner:"Outpouching of transversalis fascia midway between ASIS + pubic symphysis. Entry of inguinal canal. <strong>Lateral to inferior epigastric a</strong>.",
+path:"An oval opening in the transversalis fascia midway between the ASIS and the pubic symphysis, just above the midpoint of the inguinal ligament. Lies <strong>lateral to the inferior epigastric artery</strong>.",
+clin:"<ul><li><strong>Indirect inguinal hernias</strong> pass through the deep ring (LATERAL to inf. epigastric)</li><li>Transversalis fascia invests structures here → <strong>internal spermatic fascia</strong> as they exit</li></ul>",
+hy:["Midway ASIS ↔ pubic symphysis","<strong>Lateral to inferior epigastric a</strong>","Origin of internal spermatic fascia","Indirect hernia entry"]},
+
+{id:"ilioinguinal",cat:"Inguinal Region & Cord",ck:"ing",emoji:"⚡",name:"Ilioinguinal Nerve (L1)",
+oneLiner:"Passes <strong>THROUGH the inguinal canal</strong> (enters through side wall, not deep ring). Supplies anterior scrotum/labia + upper medial thigh.",
+path:"Ventral ramus of L1. Emerges from lateral border of psoas, runs in plane between IO + TA, pierces IO near the deep ring to enter the canal, travels through the canal <strong>ON TOP</strong> of the cord, exits via superficial ring.",
+clin:"<ul><li>Motor: IO + TA (lower portion)</li><li>Sensory: anterior scrotum + root of penis (M); mons pubis + labia majora (F); upper medial thigh</li><li><strong>Afferent of cremasteric reflex</strong> (efferent = genital br. of genitofemoral)</li><li>At risk in inguinal hernia repair + appendectomy → neuroma or numbness</li></ul>",
+hy:["Travels IN canal but <strong>NOT through deep ring</strong>","Afferent of cremasteric reflex","Anterior scrotum/labia + medial thigh"]},
+
+{id:"iliohypogastric",cat:"Inguinal Region & Cord",ck:"ing",emoji:"⚡",name:"Iliohypogastric Nerve (L1)",
+oneLiner:"Runs <strong>ABOVE the inguinal canal</strong>, between IO + EO. Supplies suprapubic skin.",
+path:"Ventral ramus of L1 (may share trunk with ilioinguinal). Emerges from lateral psoas, runs between IO + TA, then between IO + EO. Becomes cutaneous above + lateral to the superficial ring.",
+clin:"<ul><li>Motor: IO + TA</li><li>Sensory: <strong>suprapubic skin</strong> + posterolateral gluteal region</li><li>At risk during Pfannenstiel + hernia repair</li></ul>",
+hy:["<strong>Above</strong> canal (not through)","Suprapubic skin","L1 ventral ramus"]},
+
+// ═══════════════ SPERMATIC CORD & TESTIS ═══════════════
+{id:"cord",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Spermatic Cord",
+oneLiner:"Bundle traveling from deep ring → canal → superficial ring → scrotum. Rule of 3s: 3 arteries, 3 veins, 3 nerves, 3 other structures, 3 fascial coverings.",
+path:"A cord-like bundle that suspends the testis + brings its vessels/nerves/ducts to/from the scrotum. Begins at the deep ring, runs through inguinal canal, exits superficial ring, ends at the testis.",
+clin:"<ul><li><strong>3 Arteries</strong>: testicular (aorta L2), cremasteric (inf. epigastric), deferential (vesical)</li><li><strong>3 Veins</strong>: pampiniform plexus, cremasteric, deferential</li><li><strong>3 Nerves</strong>: genital br. genitofemoral, sympathetic plexus, ilioinguinal (on top, technically outside)</li><li><strong>3 Other</strong>: ductus deferens, lymphatics (→ para-aortic!), remains of processus vaginalis</li><li><strong>3 Fascial coverings</strong>: external spermatic (EO), cremaster (IO), internal spermatic (transversalis)</li></ul>",
+hy:["<strong>Rule of 3s</strong>","Testicular lymph → para-aortic nodes (L2)","Pampiniform → countercurrent heat exchange"],
+mn:"<strong>3 × 4 = 12 things</strong> in the cord (3 arteries, 3 veins, 3 nerves, 3 other)."},
+
+{id:"vas",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Ductus (Vas) Deferens",
+oneLiner:"Thickest structure in the cord. Muscular tube from epididymis tail → ejaculatory duct. Crosses ureter ('water under the bridge').",
+path:"Thick muscular tube (~45 cm). From tail of epididymis, ascends in cord through canal, then loops over the pelvic ureter ('water under the bridge' with the ureter going under), runs posterior to bladder, joins seminal vesicle duct → ejaculatory duct → prostatic urethra.",
+clin:"<ul><li><strong>Vasectomy</strong>: cut at scrotal level</li><li>Crosses <strong>over the ureter</strong> — iatrogenic ureter injury risk in pelvic surgery</li><li>Cord's thickest, most easily palpable structure</li></ul>",
+hy:["Ductus crosses <strong>OVER</strong> the ureter (water under the bridge)","Vasectomy site","Palpable in cord"]},
+
+{id:"ext-spermatic",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"External Spermatic Fascia",
+oneLiner:"Outermost cord covering. Derived from <strong>external oblique aponeurosis</strong> at superficial ring.",
+path:"Thin fibrous layer. Acquired as the cord passes through the superficial inguinal ring. Derived from EO aponeurosis.",
+hy:["From EO","Outermost cord layer","Acquired at superficial ring"]},
+
+{id:"cremaster",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Cremasteric Muscle & Fascia",
+oneLiner:"Middle cord covering. Derived from <strong>internal oblique muscle + fascia</strong>. Efferent of cremasteric reflex.",
+path:"Skeletal muscle loops + fascia. Derived from internal oblique as cord exits canal. Innervated by <strong>genital branch of genitofemoral nerve</strong>.",
+clin:"<ul><li><strong>Cremasteric reflex</strong>: stroke inner thigh (ilioinguinal = afferent, L1) → cremaster contracts, elevating testis ipsilaterally (genital br of genitofemoral = efferent, L1-L2)</li><li><strong>Absent in testicular torsion</strong> or L1-L2 cord/root lesion</li></ul>",
+hy:["From IO","<strong>Efferent of cremasteric reflex</strong>","Absent reflex → torsion"]},
+
+{id:"int-spermatic",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Internal Spermatic Fascia",
+oneLiner:"Innermost cord covering. Derived from <strong>transversalis fascia</strong> at deep ring.",
+path:"Thin fibrous layer acquired as structures pass through the deep inguinal ring. Derived from transversalis fascia.",
+hy:["From transversalis fascia","Acquired at deep ring","Innermost cord layer"]},
+
+{id:"testicular-a",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Testicular Artery",
+oneLiner:"Arises from <strong>abdominal aorta at L2</strong>. Long course to scrotum — reflects embryologic origin of testis.",
+path:"Paired branch of the abdominal aorta at ~L2. Descends retroperitoneally, crosses ureter + external iliac a, enters deep ring, travels in cord to testis.",
+clin:"<ul><li>Long course → vulnerable to volume depletion in torsion</li><li><strong>Testicular cancer lymph drainage</strong>: to para-aortic (L2) nodes — same as arterial origin. NOT superficial inguinal nodes (that's scrotal skin)</li></ul>",
+hy:["Arises from aorta at L2","Testicular cancer → para-aortic (L2) lymph","Scrotum skin → superficial inguinal lymph"]},
+
+{id:"pampiniform",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Pampiniform Plexus of Veins",
+oneLiner:"Network of veins around testicular artery. Countercurrent heat exchanger. Drains into testicular vein (R → IVC; L → L renal v).",
+path:"Vine-like network (pampiniform = 'tendril-shaped') of veins surrounding the testicular artery. Acts as countercurrent heat exchanger — cools arterial blood before it reaches testis (optimal spermatogenesis at 35°C).",
+clin:"<ul><li><strong>Varicocele</strong>: dilated pampiniform plexus. <strong>Left more common</strong> (L testicular vein drains to L renal vein — longer course + 90° angle + nutcracker risk)</li><li>Classic 'bag of worms' on exam, worse with standing/Valsalva</li><li><strong>New left varicocele in older man → rule out RCC</strong> (tumor thrombus in L renal vein)</li></ul>",
+hy:["<strong>Left varicocele more common</strong>","Left testicular v → L renal v (not IVC)","Right testicular v → IVC directly","<strong>New L varicocele + cirrhosis age → think RCC</strong>"]},
+
+{id:"scrotum",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Scrotum",
+oneLiner:"Pouch housing testes. Layers: skin → Dartos (Scarpa's) → external spermatic → cremaster → internal spermatic → tunica vaginalis → tunica albuginea → testis.",
+path:"Skin + Dartos smooth muscle (thermoregulates via wrinkling) + fascial layers of the cord. The scrotum itself is embryologically body wall — drains lymph to <strong>superficial inguinal nodes</strong> (NOT para-aortic).",
+clin:"<ul><li><strong>Scrotal lymph → superficial inguinal nodes</strong>; testicular lymph → para-aortic — don't confuse!</li><li>Scrotal cancer = SCC classically in chimney sweeps</li></ul>",
+hy:["Lymph: scrotum → superficial inguinal; testis → para-aortic","Dartos muscle = from Scarpa's fascia"]},
+
+{id:"testis",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Testis",
+oneLiner:"Paired male gonad in scrotum. Produces sperm + testosterone. Surrounded by tunica vaginalis + tunica albuginea.",
+path:"Ovoid organ (~4 cm) in scrotum. Covered anteriorly + laterally by tunica vaginalis; capsule = tunica albuginea sends septa that divide the gland into 250-300 lobules. Each lobule contains 1-3 seminiferous tubules. Posterior surface: epididymis + cord structures.",
+clin:"<ul><li>Produces sperm (seminiferous tubules) + testosterone (Leydig cells)</li><li><strong>Testicular torsion</strong>: twists around cord → ischemia. Urgent detorsion. 'Bell-clapper deformity' from abnormal tunica vaginalis.</li><li>Testicular cancer: germ cell tumors (95%) — seminoma, embryonal, yolk sac, choriocarcinoma, teratoma</li></ul>",
+hy:["Lymph drains to <strong>para-aortic</strong> nodes (embryologic)","Torsion = surgical emergency","95% tumors germ cell"]},
+
+{id:"tunica-vag",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Tunica Vaginalis (Parietal + Visceral)",
+oneLiner:"Outermost cover of testis derived from <strong>processus vaginalis</strong> (peritoneum that descended with testis). Potential space between layers.",
+path:"<strong>Parietal layer</strong>: lines the scrotal sac. <strong>Visceral layer</strong>: hugs the testis anteriorly + laterally (NOT posteriorly where epididymis sits). Potential space between = where fluid accumulates.",
+clin:"<ul><li><strong>Hydrocele</strong>: fluid between parietal + visceral layers — transilluminates</li><li><strong>Hematocele</strong>: blood in same space</li><li>Communicating hydrocele = patent processus vaginalis (infants); simple hydrocele = idiopathic (adults)</li><li>Congenital cause of <strong>indirect inguinal hernia</strong> = failure of processus vaginalis to obliterate</li></ul>",
+hy:["Derived from <strong>processus vaginalis</strong>","Hydrocele between layers","Patent PV → indirect hernia"]},
+
+{id:"albuginea",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Tunica Albuginea",
+oneLiner:"Dense fibrous <strong>capsule of the testis</strong>. Sends septa inward dividing testis into ~250 lobules.",
+path:"White (albuginea = 'white') fibrous capsule directly on the testicular parenchyma. Mediastinum testis = posterior thickening where cord structures enter/exit. Septa radiate from mediastinum to divide lobules.",
+clin:"<strong>Testicular rupture</strong> = tear in tunica albuginea (trauma) → surgical emergency. Also present in penis (erectile tissue capsule) and ovary — different organs.",
+hy:["True capsule of testis","Divides into lobules","Mediastinum testis"]},
+
+{id:"seminiferous",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Seminiferous Tubules & Lobules",
+oneLiner:"Coiled tubules in testicular lobules where <strong>spermatogenesis</strong> occurs. Each lobule has 1–3 tubules.",
+path:"~250 lobules; each with 1–3 seminiferous tubules. Tubules contain <strong>Sertoli cells</strong> (sustentacular, form blood-testis barrier, secrete inhibin + androgen-binding protein) and <strong>germ cells</strong> (spermatogonia → spermatocytes → spermatids). Between tubules are <strong>Leydig cells</strong> (testosterone). Tubules drain → rete testis → efferent ductules → head of epididymis.",
+clin:"<ul><li><strong>Spermatogenesis</strong> occurs here — requires 35°C (why scrotal)</li><li><strong>Cryptorchidism</strong>: undescended testis → higher temp → ↑ cancer risk (seminoma), infertility</li></ul>",
+hy:["Sertoli (nurse) + germ cells in tubule; Leydig (testosterone) between","<strong>Cryptorchidism</strong> → seminoma risk","Requires 35°C"]},
+
+{id:"epididymis",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♂️",name:"Epididymis (Head, Body, Tail)",
+oneLiner:"Comma-shaped coiled tube on posterior testis. <strong>Head</strong>: sperm entry via efferent ductules. <strong>Body</strong>: sperm maturation. <strong>Tail</strong>: storage, becomes ductus deferens.",
+path:"<strong>Head</strong>: superior pole — receives efferent ductules from rete testis. <strong>Body</strong>: long coiled duct (~6 m if uncoiled) along posterolateral testis. <strong>Tail</strong>: inferior pole, continues as <strong>ductus deferens</strong>.",
+clin:"<ul><li>Site of sperm maturation + storage (5–10 days transit)</li><li><strong>Epididymitis</strong>: &lt;35 yr = chlamydia/gonorrhea; &gt;35 yr = E. coli / UTI organisms</li><li>Tender epididymis = <strong>Prehn sign positive</strong> → epididymitis; painless + loss of cremasteric reflex → torsion</li></ul>",
+hy:["Sperm maturation site","Epididymitis: &lt;35 = STI; &gt;35 = E. coli","Prehn sign: pain relieved by elevation = epididymitis"]},
+
+{id:"round-lig-uterus",cat:"Inguinal Region & Cord",ck:"ing",emoji:"♀️",name:"Round Ligament of the Uterus",
+oneLiner:"Female analog of male gubernaculum. Passes from uterus → deep ring → inguinal canal → superficial ring → labium majus.",
+path:"Fibrous cord derived from the embryonic gubernaculum. Attaches uterus near the uterotubal junction, runs anterolaterally, enters deep ring, traverses inguinal canal, exits superficial ring, terminates in connective tissue of labium majus.",
+clin:"<ul><li>Much thinner than spermatic cord — harder to find on dissection</li><li>Helps maintain anteverted uterus</li><li>Site of endometriosis + rarely round ligament varicosities in pregnancy</li><li>Can harbor <strong>indirect inguinal hernia</strong> in females (rare)</li></ul>",
+hy:["From gubernaculum","Uterus → inguinal canal → labium majus","Female analog of spermatic cord path"]},
+
+// ═══════════════ STOMACH & SMALL INTESTINE ═══════════════
+{id:"greater-curve",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Greater Curvature of Stomach",
+oneLiner:"Convex, inferior-left border of stomach. Attachment for <strong>greater omentum, gastrosplenic + gastrocolic ligaments</strong>. Supplied by gastroepiploic + short gastric arteries.",
+path:"Long convex curve running from cardiac notch → fundus → body → pyloric antrum. Much longer than lesser curvature.",
+clin:"<ul><li>Attaches: <strong>greater omentum (+ gastrocolic lig), gastrosplenic lig, gastrophrenic lig</strong></li><li>Vessels: <strong>right + left gastroepiploic arteries</strong> (anastomose) + <strong>short gastrics</strong> (fundus)</li><li>Vagal: anterior + posterior vagal trunks send branches</li></ul>",
+hy:["Greater omentum attachment","R + L gastroepiploic aa","Short gastrics to fundus"]},
+
+{id:"lesser-curve",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Lesser Curvature of Stomach",
+oneLiner:"Concave, superior-right border. Attachment for the <strong>lesser omentum (hepatogastric + hepatoduodenal ligs)</strong>. <strong>#1 gastric ulcer site</strong>.",
+path:"Short concave curve from cardia to pylorus along the superior-right aspect of stomach. Marked by the angular incisure (incisura angularis) where curve turns medially.",
+clin:"<ul><li>Attaches <strong>lesser omentum</strong> (hepatogastric + hepatoduodenal ligs to liver)</li><li>Vessels: <strong>left + right gastric arteries</strong> (anastomose along curve)</li><li><strong>Most common site of gastric ulcers</strong> (type I, non-acid hypersecretor) — erode into L gastric artery if posterior</li></ul>",
+hy:["Lesser omentum attachment","L + R gastric aa","<strong>#1 gastric ulcer site</strong>","Posterior ulcer → L gastric a bleed"]},
+
+{id:"cardia",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Cardia & Cardiac Notch",
+oneLiner:"Region surrounding esophageal opening (Z-line). <strong>Cardiac notch</strong>: acute angle between esophagus and fundus = anti-reflux valve.",
+path:"<strong>Cardia</strong>: zone immediately around the gastroesophageal junction (about 3 cm below diaphragm). The <strong>Z-line</strong> is the squamo-columnar mucosal transition here. <strong>Cardiac notch</strong>: sharp angle formed where esophagus meets the left fundal dome.",
+clin:"<ul><li><strong>Lower esophageal sphincter (LES)</strong> — physiologic sphincter (no true smooth muscle thickening); relies on diaphragmatic crus + acute cardiac angle</li><li><strong>Hiatal hernia</strong>: cardia herniates into thorax → loss of anti-reflux mechanism → GERD</li><li><strong>Barrett esophagus</strong>: metaplastic columnar epithelium replaces squamous at Z-line from chronic GERD</li></ul>",
+hy:["Cardiac notch = anti-reflux angle","Hiatal hernia → GERD","Barrett at Z-line"]},
+
+{id:"fundus",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Fundus of Stomach",
+oneLiner:"Domed upper region of stomach, superior to the cardiac notch. Under the left dome of diaphragm. Gas-filled on upright X-ray (magenblase).",
+path:"Most superior part of stomach. Lies against the left hemidiaphragm. Contains <strong>parietal cells</strong> (HCl + IF) and <strong>chief cells</strong> (pepsinogen). Supplied by <strong>short gastric arteries</strong> via the gastrosplenic ligament.",
+clin:"<ul><li>Gas-filled on upright CXR/AXR → <strong>gastric air bubble (magenblase)</strong> — helps identify stomach on imaging</li><li>Site of <strong>autoimmune gastritis</strong> (Type A) → parietal cell destruction → achlorhydria + B12 def (pernicious anemia)</li><li>Short gastric aa preserved in partial gastrectomy sparing fundus</li></ul>",
+hy:["Gas bubble on X-ray","Parietal + chief cells","Short gastric a supply","Autoimmune gastritis site"]},
+
+{id:"stomach-body",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Body of Stomach",
+oneLiner:"Main central portion of the stomach. Contains the bulk of parietal + chief cells. Classic gastric ulcer site is along lesser curve of body.",
+path:"Main central region between fundus (above) and pyloric part (below). Walls contain rugae (gastric folds). Histology: body + fundus mucosa has parietal cells (acid + IF) and chief cells (pepsinogen).",
+clin:"<ul><li>Major acid + pepsinogen production site</li><li>Gastric ulcers along lesser curve of body = <strong>Type I</strong> (non-acid hypersecretor)</li></ul>",
+hy:["Parietal + chief cells","Gastric ulcer lesser curve body","Rugae"]},
+
+{id:"pylorus",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🍖",name:"Pylorus",
+oneLiner:"Distal narrow part of stomach → duodenum. Contains <strong>pyloric antrum</strong> (G cells → gastrin) + <strong>pyloric sphincter</strong>. L1 (transpyloric plane).",
+path:"<strong>Pyloric antrum</strong>: wider proximal portion containing G cells (gastrin secretion) + D cells (somatostatin). <strong>Pyloric canal</strong>: narrower distal portion. <strong>Pyloric sphincter</strong>: thickened circular smooth muscle controlling gastric emptying.",
+clin:"<ul><li><strong>Pyloric stenosis (infant)</strong>: hypertrophy of pyloric muscle at 3–6 wk → projectile non-bilious vomiting, visible peristalsis, palpable 'olive' mass. Fix: pyloromyotomy (Ramstedt).</li><li><strong>Pyloric antrum</strong> is #1 site for <strong>H. pylori gastritis</strong> + gastric cancer (intestinal type)</li><li>Located at L1 (transpyloric plane)</li></ul>",
+hy:["Pyloric stenosis = 'olive' mass","H. pylori in antrum","G cells = gastrin; D cells = somatostatin","L1 level"]},
+
+{id:"jejunum",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🔄",name:"Jejunum",
+oneLiner:"Proximal 2/5 of SB after duodenum. Thick wall, tall plicae, <strong>FEW arcades</strong>, <strong>LONG vasa recta</strong>, less mesenteric fat.",
+path:"Second part of the small intestine, beginning at the duodenojejunal flexure (at ligament of Treitz). Mostly in the LUQ. Intraperitoneal, suspended by the mesentery proper.",
+clin:"<ul><li>Wall: thicker, deeper red, more plicae circulares (valvulae conniventes)</li><li>Mesentery: <strong>few arcades (1–2 tiers), long vasa recta</strong>, 'windows' of translucency (less fat)</li><li>Site of most absorption</li></ul>",
+hy:["Few arcades, long vasa recta","Thicker wall, more plicae","Less mesenteric fat","Proximal 2/5 of SB"]},
+
+{id:"ileum",cat:"Stomach & Small Intestine",ck:"stom",emoji:"🔄",name:"Ileum",
+oneLiner:"Distal 3/5 of SB. Thinner wall, fewer plicae, <strong>MANY arcades</strong>, <strong>SHORT vasa recta</strong>, more mesenteric fat. Peyer's patches.",
+path:"Distal part of small intestine, ending at ileocecal valve. Mostly in the RLQ/pelvis. Intraperitoneal on the mesentery proper.",
+clin:"<ul><li>Absorbs <strong>B12</strong> (via intrinsic factor receptor) + <strong>bile salts</strong></li><li>Contains <strong>Peyer's patches</strong> (lymphoid aggregates) — site of Salmonella typhi invasion, Yersinia ulceration</li><li><strong>Terminal ileum disease (Crohn's, resection)</strong>: B12 deficiency + bile salt loss → gallstones + oxalate kidney stones</li><li><strong>Meckel diverticulum</strong>: ~2 feet from ileocecal valve</li></ul>",
+hy:["Many arcades, short vasa recta","B12 + bile salt absorption","Peyer's patches","Terminal ileum Crohn's","Meckel at 2 feet"]},
+// ═══════════════ LARGE INTESTINE ═══════════════
+{id:"cecum",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Cecum",
+oneLiner:"Blind pouch in RLQ below ileocecal valve. Intraperitoneal. Teniae converge at base of appendix.",
+path:"Blind-ended sac that begins the large intestine. Located in RLQ, below the ileocecal junction. Usually intraperitoneal but no mesentery of its own (retrocecal recess).",
+clin:"<ul><li><strong>Cecal volvulus</strong>: younger patients, congenital mobility (failure of fixation)</li><li>Typhlitis (neutropenic enterocolitis) in chemotherapy patients</li></ul>",
+hy:["Blind pouch, RLQ","Cecal volvulus (younger, congenital)","Teniae converge at appendix base"]},
+
+{id:"appendix",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Appendix",
+oneLiner:"Vermiform extension of posteromedial cecum. Hangs on the <strong>mesoappendix</strong>. Contains <strong>appendicular artery (end artery)</strong>.",
+path:"Narrow tubular outgrowth of the posteromedial cecum, ~6–10 cm long. Variable position: <strong>retrocecal (most common, ~65%)</strong>, pelvic, subcecal, preileal, postileal. Midgut derivative.",
+clin:"<ul><li><strong>Appendicitis</strong>: periumbilical pain (T10 visceral) → RLQ pain (parietal)</li><li><strong>McBurney's point</strong>: 1/3 ASIS to umbilicus</li><li><strong>Psoas sign</strong>: retrocecal appendix irritates psoas</li><li><strong>Obturator sign</strong>: pelvic appendix irritates obturator internus</li><li><strong>Appendicular artery</strong> is an END ARTERY (no collaterals) → rapid gangrene</li><li>Most common location for <strong>carcinoid tumor</strong></li></ul>",
+hy:["McBurney's point","End artery → gangrene","Retrocecal most common","Carcinoid tumor location"]},
+
+{id:"asc-colon",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Ascending Colon",
+oneLiner:"Right flank. <strong>Secondarily retroperitoneal</strong>. From cecum to hepatic flexure.",
+path:"Ascends along the right flank from cecum to the hepatic (right colic) flexure under the right lobe of liver. Secondarily retroperitoneal — lost its mesentery during development by fusion to the posterior wall.",
+clin:"<ul><li>Right-sided CRC: presents with <strong>iron-deficiency anemia, occult blood loss, weight loss</strong> (large lumen + liquid stool → tumor grows silently)</li><li>Supplied by right colic + ileocolic (SMA)</li></ul>",
+hy:["Secondarily retroperitoneal","Right CRC: anemia + occult bleed","Liquid stool here"]},
+
+{id:"hepatic-flexure",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Right Colic (Hepatic) Flexure",
+oneLiner:"Bend between ascending + transverse colon. Under right lobe of liver. Lower than splenic flexure.",
+path:"Right colonic angle (~90°) beneath the right lobe of the liver. Marks transition from the retroperitoneal ascending colon to the intraperitoneal transverse colon.",
+clin:"Usually below splenic flexure (splenic flexure is higher + sharper). Imprint of hepatic flexure on the inferior liver surface.",
+hy:["Under R liver","Lower than splenic flexure","Asc → Trans transition"]},
+
+{id:"trans-colon",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Transverse Colon",
+oneLiner:"Horizontal across upper abdomen. Intraperitoneal on <strong>transverse mesocolon</strong>. Contains the <strong>midgut/hindgut transition</strong>.",
+path:"From hepatic to splenic flexure. Intraperitoneal, suspended by transverse mesocolon attached to the anterior surface of the pancreas. Separates supramesocolic (liver, spleen, stomach) from inframesocolic compartment (SB loops).",
+clin:"<ul><li>Proximal 2/3 = <strong>midgut</strong> (SMA, middle colic)</li><li>Distal 1/3 = <strong>hindgut</strong> (IMA, left colic)</li><li><strong>Splenic flexure = Griffith's point</strong>: watershed zone at SMA↔IMA junction</li></ul>",
+hy:["On transverse mesocolon","Middle colic a (SMA)","Midgut/hindgut boundary in distal third"]},
+
+{id:"splenic-flexure",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Left Colic (Splenic) Flexure",
+oneLiner:"Higher and sharper than hepatic flexure. Under spleen. Anchored by the <strong>phrenicocolic ligament</strong>. <strong>Griffith's watershed point</strong>.",
+path:"Sharp angular junction between transverse and descending colon, near the spleen. Held high against the diaphragm by the phrenicocolic ligament (peritoneal fold from colon to diaphragm).",
+clin:"<ul><li><strong>Griffith's point</strong>: watershed between SMA (middle colic) + IMA (left colic) territories</li><li><strong>Ischemic colitis</strong> classically here (hypoperfusion)</li><li>Splenectomy: preserve phrenicocolic ligament</li></ul>",
+hy:["<strong>Griffith's point</strong> = SMA↔IMA watershed","Ischemic colitis common here","Phrenicocolic lig anchors it"]},
+
+{id:"desc-colon",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Descending Colon",
+oneLiner:"Left flank. <strong>Secondarily retroperitoneal</strong>. Splenic flexure to sigmoid. Common site of diverticula.",
+path:"Descends along the left flank from splenic flexure to the iliac crest level. Secondarily retroperitoneal (like ascending colon).",
+clin:"<ul><li>Diverticulosis + diverticulitis classically here (+ sigmoid)</li><li>Left-sided CRC: obstructive symptoms, apple-core lesion, hematochezia</li><li>Supplied by left colic artery (IMA)</li></ul>",
+hy:["Secondarily retroperitoneal","Diverticular disease site","Left CRC → obstruction"]},
+
+{id:"sigmoid",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Sigmoid Colon",
+oneLiner:"S-shaped mobile colon in LLQ. Intraperitoneal on <strong>sigmoid mesocolon</strong>. Volvulus + diverticulitis + cancer — classic 'triple threat'.",
+path:"Greek letter 'Σ' shape. Extends from iliac crest → pelvic brim → joins rectum at S3. Intraperitoneal on inverted-V sigmoid mesocolon (apex overlies left ureter + common iliac bifurcation).",
+clin:"<ul><li><strong>Diverticulitis</strong>: most common here</li><li><strong>Sigmoid volvulus</strong>: elderly, nursing home, chronic constipation</li><li>CRC common site</li><li>Sigmoid mesocolon root crosses left ureter + common iliac vessels</li></ul>",
+hy:["On sigmoid mesocolon","Diverticulitis #1 site","Sigmoid volvulus in elderly","Apex overlies L ureter + iliacs"]},
+
+{id:"rectum",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Rectum",
+oneLiner:"Pelvic end of GI tract. Upper 1/3 intraperitoneal, lower 1/3 retroperitoneal. Teniae absent — longitudinal muscle is continuous.",
+path:"From rectosigmoid junction (S3) to anorectal junction. Follows sacral curvature. Upper 1/3 intraperitoneal (anterior + lateral peritoneal coverage); middle 1/3 partial; lower 1/3 completely retroperitoneal.<br><strong>Teniae coli spread to become a continuous outer longitudinal muscle layer at the rectum.</strong>",
+clin:"<ul><li>Blood supply: <strong>Superior rectal (IMA/hindgut)</strong> upper; <strong>middle rectal (internal iliac)</strong> middle; <strong>inferior rectal (internal pudendal)</strong> lower</li><li><strong>Dentate line</strong>: separates endodermal (above, visceral, painless bleeding) from ectodermal (below, somatic, painful)</li><li><strong>Internal hemorrhoids (above)</strong> = painless bleeding; <strong>external hemorrhoids (below)</strong> = painful</li><li><strong>Blumer shelf</strong>: rectal mass on DRE from peritoneal mets of gastric cancer</li></ul>",
+hy:["No teniae (continuous longitudinal m)","Dentate line divides arterial/venous/lymphatic","Internal vs external hemorrhoid pain","Blumer shelf"]},
+
+{id:"teniae",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Teniae Coli",
+oneLiner:"3 longitudinal muscle bands running length of colon. Condensed outer longitudinal muscle.",
+path:"Three distinct bands (taenia libera, taenia mesocolica, taenia omentalis) running from cecum to rectosigmoid junction. Shorter than colon → creates haustra. Converge at base of appendix.",
+clin:"<ul><li><strong>Disappear at rectum</strong> (longitudinal muscle becomes uniform)</li><li>Surgical landmark: follow teniae to the base of the appendix</li><li>On AXR: haustra (from teniae) don't fully cross lumen (vs valvulae conniventes of SB that do)</li></ul>",
+hy:["3 bands (cecum → rectosigmoid)","Converge at appendix","Absent in rectum"]},
+
+{id:"haustra",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Haustra",
+oneLiner:"Sacculations of the colonic wall created because teniae are shorter than the colon length.",
+path:"Bulging pouches along the outer surface of the large intestine between teniae. Due to tonic contraction of the tenia shortening the wall.",
+clin:"<ul><li><strong>Loss of haustra = 'lead pipe' colon</strong> seen in chronic ulcerative colitis</li><li>Haustra do NOT fully cross the lumen on AXR (valvulae conniventes of SB do — distinguishes SBO vs LBO)</li></ul>",
+hy:["Loss = lead pipe (UC)","Don't cross lumen (AXR distinguishing)","From teniae shortening"]},
+
+{id:"appendages",cat:"Large Intestine",ck:"lint",emoji:"🧻",name:"Omental (Epiploic) Appendages",
+oneLiner:"Small fat-filled peritoneal tags hanging off the colonic serosa. Absent in rectum + SB.",
+path:"Small pouches of omentum containing adipose tissue, attached to the colon's serosal surface along the teniae.",
+clin:"<strong>Epiploic appendagitis</strong>: torsion or thrombosis of an epiploic appendage → acute abdominal pain that mimics appendicitis (R-sided) or diverticulitis (L-sided). Self-limited; CT shows fat stranding around an oval lesion.",
+hy:["On colon only (not SB/rectum)","Epiploic appendagitis mimics appendicitis/diverticulitis"]},
+
+// ═══════════════ LIVER, GB, BILIARY & SPLEEN ═══════════════
+{id:"right-lobe",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Right Lobe of Liver",
+oneLiner:"Largest lobe. Makes up majority of liver mass. Contains majority of hepatocytes.",
+path:"The largest anatomic lobe. Separated from left lobe anteriorly by the falciform ligament (though this is only an anatomic, not functional, boundary). Contains most of the segments (V, VI, VII, VIII in Couinaud).",
+clin:"Most common site for <strong>hepatic abscess</strong> (amebic — 'anchovy paste'), <strong>hepatocellular carcinoma</strong>, and <strong>metastases</strong>.",
+hy:["Largest lobe","Most hepatocyte mass","Most mets + HCC"]},
+
+{id:"left-lobe",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Left Lobe of Liver",
+oneLiner:"Anatomically smaller; functionally ~50% of liver. Segments II + III; quadrate (IV) is anatomically right but functionally left.",
+path:"Smaller than right lobe anatomically. Lies under left dome of diaphragm. Separated from R by falciform ligament anteriorly, ligamentum venosum fissure superiorly.",
+clin:"Extensions beyond the midline can reach near the spleen and overlie the stomach. Left hepatectomy possible with segments II + III + IV.",
+hy:["Anatomic vs functional lobes differ","Segments II + III","Quadrate = functionally left lobe"]},
+
+{id:"caudate",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Caudate Lobe",
+oneLiner:"Posterior lobe bordered by IVC (right), ligamentum venosum (left), porta hepatis (below). Drains directly to IVC — spared/hypertrophies in <strong>Budd-Chiari</strong>.",
+path:"Small posterior lobe on inferior surface of liver. Borders: IVC on right, fissure for ligamentum venosum on left, porta hepatis below. Couinaud segment I.",
+clin:"<ul><li>Unique: drains via <strong>small accessory hepatic veins directly into IVC</strong>, bypassing the main 3 hepatic veins</li><li>In <strong>Budd-Chiari (hepatic vein occlusion)</strong>: caudate lobe is spared and hypertrophies — classic radiologic finding</li></ul>",
+hy:["<strong>Caval side</strong> (above porta)","Direct IVC drainage","<strong>Spared in Budd-Chiari</strong>","Segment I"],
+mn:"<strong>C</strong>audate = <strong>C</strong>aval lobe (near IVC)"},
+
+{id:"quadrate",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Quadrate Lobe",
+oneLiner:"Rectangular lobe on inferior liver between gallbladder (right), ligamentum teres (left), porta hepatis (above). Anatomically R but functionally L.",
+path:"On inferior liver surface. Bounded by: gallbladder fossa on right, ligamentum teres (round lig of liver) on left, porta hepatis posteriorly/superiorly, liver edge anteriorly. Couinaud segment IV.",
+clin:"Anatomically continuous with right lobe but receives portal + arterial supply from the LEFT portal triad — hence functionally part of the left lobe.",
+hy:["Between GB and round lig","Under porta hepatis","Anatomically R, functionally L","Segment IV"]},
+
+{id:"bare-area",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Bare Area of Liver",
+oneLiner:"Posterosuperior region of the right lobe <strong>not covered by peritoneum</strong>. Directly attached to the diaphragm.",
+path:"Triangular area on the posterosuperior right lobe where liver is directly fused to the diaphragm without peritoneal covering. Bordered by the <strong>coronary ligament</strong> (peritoneal reflection).",
+clin:"<ul><li>Clinical pathway for hepatic lymph to reach thoracic lymphatics → pleural effusion in liver abscess (right subphrenic)</li><li>Hepatic veins exit liver here into IVC</li></ul>",
+hy:["No peritoneum","Bordered by coronary lig","Liver-to-thoracic lymph communication"]},
+
+{id:"porta-hepatis",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🫀",name:"Porta Hepatis",
+oneLiner:"Transverse fissure on inferior liver — 'gateway' where portal triad enters + bile/hepatic ducts leave. Between caudate (above) + quadrate (below).",
+path:"Transverse fissure on inferior surface of liver. Location where: hepatic artery proper + portal vein enter liver, and R + L hepatic ducts leave. Also transmits lymphatics + autonomic nerves.",
+clin:"<ul><li><strong>Pringle maneuver</strong>: pinch the hepatoduodenal ligament (which contains the portal triad entering the porta hepatis) to control liver bleeding</li><li>Persistent bleeding despite Pringle = bleeding from hepatic veins (drain directly to IVC, not through porta)</li></ul>",
+hy:["'Gate of liver'","Between caudate + quadrate","Entry of portal triad","Pringle compression site"]},
+
+{id:"gallbladder",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"💚",name:"Gallbladder",
+oneLiner:"Pear-shaped sac on inferior liver storing bile. Parts: fundus → body → neck → cystic duct. Fundus at tip of 9th costal cartilage, right MCL.",
+path:"Parts: <strong>fundus</strong> (rounded anterior tip), <strong>body</strong> (main storage region), <strong>neck</strong> (narrow tapering), <strong>cystic duct</strong>. The fundus contacts the anterior abdominal wall at the tip of the 9th costal cartilage (right MCL).",
+clin:"<ul><li><strong>Murphy's sign</strong>: palpate under R costal margin at inspiration → pain with arrest of inspiration = acute cholecystitis</li><li><strong>Cholelithiasis</strong>: 4 F's — Female, Fat, Forty, Fertile</li><li><strong>Courvoisier's sign</strong>: palpable non-tender distended GB + jaundice = pancreatic head cancer (NOT stones, which are usually painful from scarring)</li><li>Supplied by <strong>cystic artery</strong> (from R hepatic a, in triangle of Calot)</li></ul>",
+hy:["Fundus at 9th costal cartilage, R MCL","Murphy's sign","Courvoisier's sign","4 F's"]},
+
+{id:"spleen",cat:"Liver, GB, Biliary & Spleen",ck:"liver",emoji:"🟣",name:"Spleen",
+oneLiner:"LUQ, against ribs <strong>9–11</strong>. Foregut derivative (blood supply) though derived from dorsal mesogastrium. Largest lymphoid organ.",
+path:"Ovoid, ~12 × 7 × 3 cm. Surfaces: diaphragmatic (convex, against ribs 9–11), visceral (concave, with impressions of stomach, kidney, colon). Ligaments: <strong>gastrosplenic</strong> (ant — short gastrics + L gastroepiploic) + <strong>splenorenal</strong> (post — splenic a/v + tail of pancreas).",
+clin:"<ul><li><strong>Splenic rupture</strong>: LUQ trauma, hypovolemia, <strong>Kehr's sign</strong> (left shoulder pain — diaphragmatic irritation refers to C4)</li><li><strong>Post-splenectomy sepsis</strong>: encapsulated organisms (S. pneumoniae, H. influenzae, N. meningitidis) — vaccinate</li><li>Accessory spleens in 10%</li></ul>",
+hy:["Ribs 9–11 (1-3-5-7-9-11 rule)","Kehr's sign (L shoulder)","Encapsulated organism risk post-splenectomy","Tail of pancreas touches it"]},
+
+// ═══════════════ PERITONEUM, MESENTERY & LIGAMENTS ═══════════════
+{id:"visceral-perit",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🫧",name:"Visceral Peritoneum",
+oneLiner:"Covers intra-abdominal organs. <strong>Autonomic innervation</strong> — dull, poorly localized visceral pain, referred to midline.",
+path:"Serous membrane covering the surfaces of intraperitoneal organs. Continuous with parietal peritoneum via mesenteries + ligaments. Innervated by autonomic visceral afferents traveling with sympathetics.",
+clin:"<ul><li>Dull, crampy, poorly localized pain referred to the midline dermatome of the embryologic origin: <strong>foregut = epigastric (T5-T9), midgut = umbilical (T10), hindgut = hypogastric (T12-L2)</strong></li><li>Early appendicitis = periumbilical (visceral); later RLQ = parietal irritation</li></ul>",
+hy:["Autonomic (dull, referred)","Foregut → epigastric; Midgut → umbilical; Hindgut → hypogastric"]},
+
+{id:"greater-sac",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🫧",name:"Greater Peritoneal Sac",
+oneLiner:"Main peritoneal cavity — everything you see on opening the abdomen.",
+path:"The main peritoneal cavity. Bounded anteriorly by anterior abdominal wall, posteriorly by posterior abdominal wall, superiorly by diaphragm, inferiorly continuous with pelvic cavity.",
+clin:"Communicates with lesser sac via omental foramen. Site where ascites collects. Morrison's pouch (hepatorenal recess) is the most dependent part of the greater sac in supine patient — fluid on FAST ultrasound.",
+hy:["Main cavity","Morrison's pouch (hepatorenal recess) = lowest in supine","Communicates with lesser sac via omental foramen"]},
+
+{id:"lesser-sac",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🫧",name:"Lesser Peritoneal Sac (Omental Bursa)",
+oneLiner:"Pocket behind stomach + lesser omentum, in front of pancreas. Allows stomach to slide against posterior wall.",
+path:"Peritoneal recess posterior to the stomach + lesser omentum. Bounded anteriorly by lesser omentum + stomach + greater omentum (descending layer); posteriorly by diaphragm + pancreas + posterior wall; communicates with greater sac via <strong>omental foramen</strong> on the right.",
+clin:"<ul><li><strong>Pancreatic pseudocysts</strong> collect here</li><li>Posterior gastric ulcer may perforate into lesser sac (walled-off)</li></ul>",
+hy:["Behind stomach","Pancreatic pseudocyst collects here","Omental foramen = sole communication"]},
+
+{id:"omental-foramen",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🫧",name:"Omental (Epiploic) Foramen",
+oneLiner:"Entry to lesser sac. Boundaries: <strong>hepatoduodenal lig (anterior), IVC (posterior), caudate lobe (superior), 1st duodenum (inferior)</strong>.",
+path:"Also called foramen of Winslow. The only natural communication between greater and lesser peritoneal sacs. Posterior to the hepatoduodenal ligament.",
+clin:"<strong>Pringle maneuver</strong>: surgeon's finger passes through the foramen, thumb on the anterior hepatoduodenal lig → compresses portal triad to control bleeding from liver lacerations. Persistent bleeding = hepatic veins (not in triad, drain direct to IVC).",
+hy:["<strong>DIP on a C</strong> mnemonic","Duodenum inferior, IVC posterior, Portal triad anterior, Caudate superior","Pringle maneuver","Enters lesser sac"],
+mn:"<strong>DIP on a C</strong>: <strong>D</strong>uodenum (inferior), <strong>I</strong>VC (posterior), <strong>P</strong>ortal triad in hepatoduodenal lig (anterior), <strong>C</strong>audate lobe (superior)"},
+
+{id:"mesentery",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Mesentery Proper (Small Intestine)",
+oneLiner:"Fan-shaped double peritoneum suspending <strong>jejunum + ileum</strong>. Root runs from DJ flexure (upper L) to ileocecal junction (lower R).",
+path:"Fan-shaped double-layer fold of peritoneum. Root (~15 cm) runs obliquely across posterior wall from the L2 duodenojejunal flexure (upper left) to the right iliac fossa at the ileocecal junction. Free border extends ~6 m to follow the convoluted SB. Contains SMA branches + lacteals + autonomic nerves.",
+clin:"<ul><li>Root crosses 3rd part of duodenum, IVC, right ureter, right gonadal vessels</li><li>Closed-loop obstruction: bowel can twist around the mesentery root</li></ul>",
+hy:["Root: DJ flexure → RLQ","Contains SMA + lacteals","Fan-shaped"]},
+
+{id:"trans-mesocolon",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Transverse Mesocolon",
+oneLiner:"Suspends transverse colon from anterior surface of pancreas. Contains <strong>middle colic artery</strong> (SMA).",
+path:"Double layer of peritoneum attaching the transverse colon to the anterior border of the pancreas. Divides the abdomen into <strong>supramesocolic</strong> (stomach, liver, spleen above) and <strong>inframesocolic</strong> (SB + colon below) compartments.",
+clin:"<strong>Anatomic divider</strong> for abscess localization (e.g., subphrenic vs inframesocolic collections). Contains middle colic a.",
+hy:["From anterior pancreas","Middle colic a","Divides supra- vs inframesocolic compartments"]},
+
+{id:"sig-mesocolon",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Sigmoid Mesocolon",
+oneLiner:"Suspends sigmoid colon from pelvic wall. Inverted-V shape. Apex crosses <strong>left ureter + common iliac vessels</strong>.",
+path:"Inverted-V peritoneal fold. Contains sigmoid + superior rectal arteries (IMA branches). Apex overlies the bifurcation of the L common iliac artery + the L ureter.",
+clin:"<ul><li>Ureter injury risk during sigmoidectomy (crosses under root)</li><li>Long mesentery → predisposes to <strong>sigmoid volvulus</strong></li></ul>",
+hy:["Inverted-V shape","Apex over L ureter + iliacs","Long mesentery → volvulus"]},
+
+{id:"mesoappendix",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Mesoappendix",
+oneLiner:"Small mesentery of appendix. Contains <strong>appendicular artery</strong> (end artery from ileocolic).",
+path:"Triangular peritoneal fold attaching appendix to the mesentery of terminal ileum. Contains the appendicular artery, vein, and lymphatics.",
+clin:"<strong>Appendicular artery is an end artery</strong> — no collateral supply → appendicitis rapidly progresses to gangrene + perforation.",
+hy:["End artery","No collateral","From ileocolic a"]},
+
+{id:"greater-omentum",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Greater Omentum",
+oneLiner:"4-layered apron hanging from greater curvature over intestines. Contains gastroepiploic arteries + fat + lymph nodes. <strong>'Policeman of abdomen'</strong>.",
+path:"Four layers of peritoneum — descends from greater curvature, loops down over transverse colon + SB, folds back up, attaches to the transverse colon (via transverse mesocolon).",
+clin:"<ul><li><strong>'Policeman of the abdomen'</strong>: migrates to sites of inflammation + wraps around perforations/abscesses → walls off infection</li><li>Contains gastroepiploic arteries (R from GDA, L from splenic)</li><li>Omental metastases → 'omental caking' on CT (esp. ovarian, GI cancers)</li></ul>",
+hy:["4 layers","Policeman of abdomen","R + L gastroepiploic aa","Omental caking = ovarian mets"]},
+
+{id:"lesser-omentum",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🕸️",name:"Lesser Omentum",
+oneLiner:"Double peritoneum from lesser curvature + 1st duodenum to liver. 2 parts: <strong>hepatogastric</strong> + <strong>hepatoduodenal ligaments</strong>.",
+path:"Two components:<br>• <strong>Hepatogastric lig</strong>: liver ↔ lesser curvature (L + R gastric aa)<br>• <strong>Hepatoduodenal lig</strong>: liver ↔ 1st duodenum (the <strong>FREE RIGHT EDGE</strong> of the lesser omentum, containing <strong>portal triad</strong>)",
+clin:"Forms the anterior border of the omental foramen. Divided in gastric surgery for posterior access via lesser sac.",
+hy:["2 ligs: hepatogastric + hepatoduodenal","Hepatoduodenal = free R edge = portal triad","Anterior of omental foramen"]},
+
+{id:"hepatogastric",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Hepatogastric Ligament",
+oneLiner:"Part of lesser omentum connecting liver to lesser curvature of stomach. Contains L + R gastric aa.",
+path:"Thin peritoneal fold from inferior surface of liver to lesser curvature of stomach. Part of lesser omentum.",
+clin:"Divided during gastric surgery (e.g., gastrectomy) to gain access to the lesser sac.",
+hy:["Liver ↔ lesser curvature","L + R gastric aa","Divided in gastric surgery"]},
+
+{id:"hepatoduodenal",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Hepatoduodenal Ligament",
+oneLiner:"<strong>Free right edge of lesser omentum</strong>. From liver → 1st duodenum. Contains the <strong>PORTAL TRIAD</strong>.",
+path:"Thick cord-like right edge of lesser omentum. Contains: <strong>bile duct (anterior-right)</strong>, <strong>hepatic artery proper (anterior-left)</strong>, <strong>portal vein (posterior)</strong> — the portal triad.",
+clin:"<ul><li>Forms the <strong>anterior border of the omental foramen</strong></li><li><strong>Pringle maneuver</strong>: compress between finger + thumb to control liver inflow</li><li>Persistent bleeding despite Pringle = hepatic veins (drain to IVC, not in triad) or aberrant a</li></ul>",
+hy:["Contains portal triad","Free R edge of lesser omentum","Pringle maneuver site","Anterior of omental foramen"],
+mn:"Portal triad: <strong>'A-D-V'</strong> or Mickey Mouse face (artery + duct = ears, vein = head)"},
+
+{id:"falciform",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Falciform Ligament",
+oneLiner:"Sickle-shaped peritoneal fold anchoring liver to anterior abdominal wall. Separates R + L lobes anatomically. Contains <strong>round ligament of liver (lig teres)</strong> in free edge.",
+path:"From anterior abdominal wall (midline, umbilicus to diaphragm) to the anterior surface of the liver. Free lower edge contains the round ligament of the liver + paraumbilical veins.",
+clin:"<ul><li><strong>Anatomical</strong> separator of L/R liver lobes (but NOT functional — functional division is at Cantlie's line through GB fossa + IVC)</li><li>Paraumbilical veins within can recanalize → <strong>caput medusae</strong> in portal HTN</li></ul>",
+hy:["Sickle-shaped","Anatomic L/R divide","Contains round lig of liver","Caput medusae origin"]},
+
+{id:"lig-teres",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Round Ligament of Liver (Ligamentum Teres Hepatis)",
+oneLiner:"Fibrous remnant of fetal <strong>left umbilical vein</strong>. Runs in free edge of falciform ligament from umbilicus to porta hepatis.",
+path:"Rope-like fibrous cord in the free inferior edge of the falciform ligament. Connects umbilicus to the left branch of the portal vein at the porta hepatis.",
+clin:"<ul><li><strong>Recanalizes in portal hypertension</strong> → caput medusae via paraumbilical veins</li><li>Separates left + quadrate lobes on the inferior surface</li></ul>",
+hy:["Fetal L umbilical vein","Recanalizes in portal HTN","Between L + quadrate lobes"]},
+
+{id:"coronary",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Coronary Ligament (+ Triangular Ligaments)",
+oneLiner:"Peritoneal reflections from diaphragm onto liver superiorly/posteriorly. Bound the <strong>bare area</strong>. Extend as L + R triangular ligaments.",
+path:"Anterior + posterior folds reflecting from the diaphragm onto the superior surface of the liver. They are widely separated posteriorly, forming the <strong>bare area of the liver</strong> between them. Laterally, they converge as the <strong>left triangular</strong> and <strong>right triangular</strong> ligaments.",
+clin:"<strong>Divided in liver mobilization surgery</strong>. Left triangular lig is divided to access left lobe; right for right hemiliver.",
+hy:["Bounds bare area","Surgical division for liver mobilization","L + R triangular lig = lateral extensions"]},
+
+{id:"gastrophrenic",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Gastrophrenic Ligament",
+oneLiner:"From fundus of stomach to diaphragm. Superior part of greater omentum. No major vessels.",
+path:"Peritoneal reflection from the fundus of the stomach to the inferior surface of the diaphragm. Part of the superior attachment of greater omentum.",
+hy:["Fundus ↔ diaphragm","No major vessels","Part of greater omentum"]},
+
+{id:"gastrosplenic",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Gastrosplenic Ligament",
+oneLiner:"From greater curvature to splenic hilum. Contains <strong>short gastric</strong> + <strong>left gastroepiploic arteries</strong>.",
+path:"Peritoneal reflection from the greater curvature (upper part) to the hilum of the spleen. Anterior boundary of the lesser sac on the left side.",
+clin:"<strong>Divided in splenectomy</strong> to mobilize stomach from spleen. Contains short gastric aa (supply fundus) + L gastroepiploic a.",
+hy:["Stomach ↔ spleen","Short gastric + L gastroepiploic","Divided in splenectomy"]},
+
+{id:"splenorenal",cat:"Peritoneum, Mesentery & Ligaments",ck:"perit",emoji:"🔗",name:"Splenorenal Ligament",
+oneLiner:"From spleen to posterior wall (L kidney area). Contains <strong>splenic artery, splenic vein, and TAIL OF PANCREAS</strong>.",
+path:"Peritoneal reflection from the hilum of the spleen to the posterior abdominal wall over the left kidney. Part of the posterior wall of the lesser sac.",
+clin:"<strong>Tail of pancreas injury risk in splenectomy</strong> — tail extends into the splenorenal ligament. Contains splenic a + v.",
+hy:["Spleen ↔ L kidney area","Contains splenic a, v, <strong>TAIL of pancreas</strong>","Pancreatic fistula risk in splenectomy"]},
+// ═══════════════ FOREGUT VASCULATURE ═══════════════
+{id:"celiac-trunk",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Celiac Trunk",
+oneLiner:"First unpaired aortic branch at <strong>T12</strong>. Supplies all foregut structures. 3 branches: <strong>Left gastric, Splenic, Common hepatic</strong>.",
+path:"Short (~1-2 cm) midline vessel arising from the anterior aorta at T12 (just below the aortic hiatus). Divides into 3 branches immediately.",
+clin:"<ul><li>Foregut: distal esophagus → 2nd duodenum (at ampulla), + liver, gallbladder, spleen, proximal pancreas</li><li><strong>Median arcuate ligament syndrome</strong>: compression by the median arcuate lig of diaphragm → postprandial abdominal pain</li><li>Chronic mesenteric ischemia: atherosclerosis of celiac + SMA + IMA → postprandial pain + weight loss</li></ul>",
+hy:["T12 (just below aortic hiatus)","3 branches: <strong>Left Sock Hides</strong>","Median arcuate lig syndrome"],
+mn:"<strong>LSH</strong> = <strong>L</strong>eft gastric, <strong>S</strong>plenic, common <strong>H</strong>epatic"},
+
+{id:"common-hepatic",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Common Hepatic Artery",
+oneLiner:"Right branch of celiac. Splits into <strong>gastroduodenal</strong> + <strong>hepatic artery proper</strong>.",
+path:"Runs to the right from celiac, along the superior border of the pancreas. Splits at the superior border of the 1st duodenum into gastroduodenal (descending behind duodenum) + hepatic artery proper (ascending in hepatoduodenal lig).",
+hy:["Right branch of celiac","→ GDA + HAP","Runs along superior pancreas"]},
+
+{id:"gda",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Gastroduodenal Artery (GDA)",
+oneLiner:"Descends behind 1st duodenum. Branches: <strong>right gastroepiploic</strong> + <strong>superior pancreaticoduodenal</strong> arteries.",
+path:"Branch of common hepatic artery. Descends behind the 1st part of the duodenum. Gives off the <strong>right gastroepiploic artery</strong> (→ greater curvature) + <strong>superior pancreaticoduodenal arteries</strong> (→ head of pancreas + C-loop).",
+clin:"<strong>Posterior duodenal ulcer erodes into GDA → brisk upper GI bleed</strong> (classic Step 1 scenario).",
+hy:["Behind 1st duodenum","Posterior duodenal ulcer → GDA bleed","From common hepatic"]},
+
+{id:"r-gastroepiploic",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Right Gastroepiploic (Gastroomental) Artery",
+oneLiner:"Runs along greater curvature. From GDA. Anastomoses with left gastroepiploic (from splenic).",
+path:"Branch of GDA. Travels along greater curvature of stomach in the greater omentum, meeting the left gastroepiploic halfway.",
+hy:["From GDA","Greater curve R half","Anastomoses with L gastroepiploic"]},
+
+{id:"sup-panc-duo",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Superior Pancreaticoduodenal Arteries",
+oneLiner:"Anterior + posterior branches from GDA. Supply head of pancreas + C-loop of duodenum. Anastomose with inferior pancreaticoduodenal (SMA) = <strong>celiac ↔ SMA collateral</strong>.",
+path:"Anterior + posterior superior pancreaticoduodenal branches from GDA. Run around the head of pancreas.",
+clin:"<strong>Major celiac-SMA collateral</strong> — patients with celiac stenosis may develop large collaterals here. Dual supply of duodenum across the foregut/midgut boundary (ampulla of Vater).",
+hy:["Anterior + posterior","Anastomose with <strong>INFERIOR pancreaticoduodenal (SMA)</strong>","Celiac ↔ SMA collateral"]},
+
+{id:"hap",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Hepatic Artery Proper",
+oneLiner:"Continues from common hepatic after GDA. Ascends in <strong>hepatoduodenal ligament</strong> (portal triad). Branches: R gastric, L hepatic, R hepatic + cystic.",
+path:"Ascends in the free edge of the lesser omentum (hepatoduodenal ligament) with portal vein + bile duct. Branches near porta hepatis: <strong>right gastric a</strong> (to lesser curve), <strong>left + right hepatic aa</strong>.",
+clin:"<strong>Anterior-left of portal triad</strong> (A-D-V Mickey Mouse). Part of dual hepatic blood supply — provides ~25% of liver flow (but 50% of O2 delivery).",
+hy:["In hepatoduodenal lig","~25% liver flow","Anterior-left of triad"]},
+
+{id:"r-gastric",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Right Gastric Artery",
+oneLiner:"Small branch of hepatic a proper. Runs along lesser curvature. Anastomoses with left gastric a.",
+path:"Small artery, branch of hepatic artery proper. Courses along the lesser curvature, anastomoses with left gastric a to complete the lesser curve arc.",
+hy:["From HAP","Lesser curve R","Smaller than L gastric"]},
+
+{id:"l-hepatic",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Left Hepatic Artery",
+oneLiner:"Supplies L lobe + quadrate lobe of liver.",
+path:"One of two terminal branches of hepatic artery proper. Enters porta hepatis → left lobe + quadrate lobe.",
+clin:"Can be <strong>replaced or accessory</strong> from left gastric artery — variant important in hepatobiliary surgery.",
+hy:["To L + quadrate lobes","May be replaced from L gastric"]},
+
+{id:"r-hepatic",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Right Hepatic Artery",
+oneLiner:"Supplies R lobe + caudate lobe. Gives off the <strong>cystic artery</strong>.",
+path:"Other terminal branch of hepatic artery proper. Usually passes posterior to common hepatic duct to enter the porta hepatis and supply right lobe + caudate lobe. Gives off the cystic artery in the triangle of Calot.",
+clin:"<strong>Replaced/accessory R hepatic from SMA</strong> is a common variant (~15%) — travels posterior to portal vein, important in Whipple + liver transplant.",
+hy:["To R + caudate lobes","Gives cystic artery","May be replaced from SMA"]},
+
+{id:"cystic-a",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Cystic Artery",
+oneLiner:"Branch of R hepatic a (75%). Supplies gallbladder. In the <strong>Triangle of Calot</strong>.",
+path:"<strong>Triangle of Calot</strong> (cystohepatic triangle): <strong>cystic duct (inferior)</strong>, <strong>common hepatic duct (medial)</strong>, <strong>inferior liver surface (superior)</strong>. Cystic artery lies within.",
+clin:"<strong>Misidentification = bile duct injury</strong> during cholecystectomy — the critical view of safety in modern laparoscopic cholecystectomy.",
+hy:["In Triangle of Calot","Usually from R hepatic","Variant: from GDA, L hepatic, common hepatic","Bile duct injury risk"]},
+
+{id:"splenic-a",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Splenic Artery",
+oneLiner:"Largest + most tortuous celiac branch. Runs along superior border of pancreas to spleen. Gives <strong>left gastroepiploic</strong> + <strong>short gastric</strong> arteries.",
+path:"Travels tortuously along the superior border of the pancreas (supplies pancreatic body + tail via pancreatic branches). Terminal branches: short gastrics (via gastrosplenic lig to fundus), L gastroepiploic (greater curve L), splenic branches.",
+clin:"<ul><li><strong>Splenic artery aneurysm</strong>: 3rd most common intra-abdominal aneurysm; ruptures in pregnancy</li><li>Tortuous course increases with age</li></ul>",
+hy:["Largest celiac branch","Tortuous (snake-like)","Aneurysm in pregnancy","Along superior pancreas"]},
+
+{id:"l-gastroepiploic",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Left Gastroepiploic (Gastroomental) Artery",
+oneLiner:"From splenic a. Along L half of greater curvature. Anastomoses with R gastroepiploic.",
+path:"Branch of splenic artery near spleen. Travels in gastrosplenic lig + greater omentum along greater curvature, anastomosing with R gastroepiploic.",
+hy:["From splenic a","Greater curve L half","Complete arcade with R gastroepiploic"]},
+
+{id:"short-gastric",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Short Gastric Arteries",
+oneLiner:"From splenic a. Travel in gastrosplenic lig to supply fundus of stomach.",
+path:"Multiple short branches from splenic artery traveling in the gastrosplenic ligament to the fundus.",
+clin:"Preserved if partial gastrectomy spares the fundus. Can bleed if gastrosplenic lig is mobilized without ligation.",
+hy:["To fundus","In gastrosplenic lig","Must ligate in splenectomy"]},
+
+{id:"l-gastric",cat:"Foregut Vasculature",ck:"fgut",emoji:"🩸",name:"Left Gastric Artery",
+oneLiner:"Smallest celiac branch. Along lesser curve. Gives off <strong>esophageal branches</strong> → porto-systemic anastomosis site for <strong>esophageal varices</strong>.",
+path:"Arises from celiac, runs up to gastroesophageal junction, then descends along the lesser curvature. Anastomoses with right gastric. <strong>Esophageal branches</strong> supply distal esophagus → form connection to azygos system.",
+clin:"<ul><li><strong>Esophageal varices</strong>: portal HTN → reverse flow through L gastric vein into esophageal plexus (submucosal) → dilated + prone to rupture</li><li>Posterior lesser curve ulcer can erode into L gastric a → UGI bleed</li></ul>",
+hy:["Smallest celiac branch","<strong>Esophageal varices</strong> via esophageal branches","Lesser curve ulcer → L gastric bleed"]},
+
+// ═══════════════ PORTA HEPATIS & BILIARY TRACT ═══════════════
+{id:"portal-triad",cat:"Foregut Vasculature",ck:"fgut",emoji:"🔀",name:"Portal Triad",
+oneLiner:"3 structures in hepatoduodenal ligament: <strong>Bile duct (anterior-right), Hepatic artery proper (anterior-left), Portal vein (posterior)</strong>. Mickey Mouse face.",
+path:"The 3 key structures running in the hepatoduodenal ligament (free right edge of lesser omentum). Position: 'Mickey Mouse face' — bile duct + hepatic artery = ears, portal vein = head.",
+clin:"<ul><li><strong>Pringle maneuver</strong>: compression controls hepatic inflow</li><li>Persistent bleeding after Pringle = hepatic veins (drain directly to IVC, not in triad) OR aberrant/replaced hepatic artery</li></ul>",
+hy:["Bile duct anterior-right","Hepatic a anterior-left","Portal vein posterior","Pringle maneuver"],
+mn:"Mickey Mouse: duct + artery = ears, portal vein = head"},
+
+{id:"bile-duct",cat:"Foregut Vasculature",ck:"fgut",emoji:"💚",name:"Bile Duct (Common Bile Duct)",
+oneLiner:"Formed by union of cystic + common hepatic duct. Passes through pancreatic head → joins main pancreatic duct at <strong>ampulla of Vater</strong>.",
+path:"~7.5 cm long. Formed by union of common hepatic duct + cystic duct. Descends in hepatoduodenal lig → posterior to 1st duodenum → through/behind head of pancreas → joins main pancreatic duct at <strong>hepatopancreatic ampulla of Vater</strong> → opens at <strong>major duodenal papilla</strong> on posteromedial wall of 2nd duodenum. Surrounded by <strong>sphincter of Oddi</strong>.",
+clin:"<ul><li><strong>Pancreatic head cancer</strong>: obstructs CBD → painless jaundice + <strong>Courvoisier sign</strong> (palpable non-tender GB)</li><li><strong>Gallstone at ampulla</strong>: blocks both bile + pancreatic juice → obstructive jaundice + gallstone pancreatitis</li><li><strong>Charcot's triad</strong>: RUQ pain + jaundice + fever = ascending cholangitis</li></ul>",
+hy:["Through pancreatic head","Ampulla of Vater","Sphincter of Oddi","Courvoisier sign"]},
+
+{id:"common-hep-duct",cat:"Foregut Vasculature",ck:"fgut",emoji:"💚",name:"Common Hepatic Duct",
+oneLiner:"Union of right + left hepatic ducts. Descends from porta hepatis. Joined by cystic duct to become bile duct.",
+path:"Formed at porta hepatis by union of R + L hepatic ducts. Descends in free edge of lesser omentum. Meets cystic duct to become the bile duct.",
+clin:"Forms the <strong>medial border of the triangle of Calot</strong> (along with cystic duct inferior + liver superior).",
+hy:["R + L hepatic ducts unite","Medial border of Calot","Becomes bile duct"]},
+
+{id:"cystic-duct",cat:"Foregut Vasculature",ck:"fgut",emoji:"💚",name:"Cystic Duct",
+oneLiner:"From GB neck to bile duct. Contains <strong>spiral valves of Heister</strong>. <strong>Inferior border of Triangle of Calot</strong>.",
+path:"Short duct (~3 cm) from gallbladder neck. Contains spiral valves of Heister (oblique folds of mucosa). Joins common hepatic duct to form bile duct.",
+clin:"<strong>Stone impaction at cystic duct</strong> → acute cholecystitis (Mirizzi syndrome = stone compresses common hepatic duct). <strong>Critical structure to identify in cholecystectomy</strong> — critical view of safety.",
+hy:["Spiral valves of Heister","Inferior border of Calot","Mirizzi syndrome (compression)"]},
+
+// ═══════════════ DUODENUM ═══════════════
+{id:"duo-1",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🔀",name:"Duodenum — 1st Part (Superior, Duodenal Cap)",
+oneLiner:"L1. Horizontal. Only first 2 cm intraperitoneal ('duodenal cap'). Most common <strong>peptic ulcer site</strong>.",
+path:"Proximal horizontal part, ~5 cm. First 2 cm intraperitoneal (attached to hepatoduodenal lig); rest secondarily retroperitoneal. Posteriorly: GDA, bile duct, portal vein, IVC.",
+clin:"<ul><li><strong>#1 peptic ulcer site</strong> (~70% of PUD)</li><li><strong>Anterior wall ulcer → perforation</strong> into peritoneum (free air under diaphragm)</li><li><strong>Posterior wall ulcer → bleed</strong> into GDA (brisk UGI bleed)</li><li>Brunner gland hypertrophy (mucus + bicarb) compensates for H. pylori-driven acid</li></ul>",
+hy:["L1 level, duodenal cap","Most PUD","Anterior = perforate; Posterior = bleed GDA","Brunner gland hypertrophy"]},
+
+{id:"duo-2",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🔀",name:"Duodenum — 2nd Part (Descending)",
+oneLiner:"L1–L3. Right of vertebrae. Contains the <strong>AMPULLA OF VATER</strong> (major duodenal papilla) = <strong>foregut → midgut boundary</strong>.",
+path:"Descends from L1 to L3 along right side of vertebral column. Secondarily retroperitoneal. Posteriorly related to R kidney/hilum. Medially: head of pancreas. Contains <strong>major duodenal papilla</strong> (ampulla of Vater opening) on posteromedial wall + <strong>minor duodenal papilla</strong> ~2 cm above (accessory pancreatic duct).",
+clin:"<ul><li><strong>Ampulla of Vater</strong>: point where CBD + main pancreatic duct empty → site of ERCP cannulation</li><li>Foregut/midgut transition at ampulla — dual blood supply (superior + inferior pancreaticoduodenal aa)</li><li>Pancreatic head tumors can obstruct ampulla</li></ul>",
+hy:["L1–L3","<strong>Ampulla of Vater</strong> = foregut/midgut boundary","Major papilla posteromedial","Minor papilla ~2 cm above"]},
+
+{id:"duo-3",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🔀",name:"Duodenum — 3rd Part (Horizontal)",
+oneLiner:"L3. Crosses aorta + IVC. Crossed anteriorly by <strong>SMA + SMV</strong> → <strong>SMA syndrome</strong>.",
+path:"Horizontal, crosses midline at L3 level. Secondarily retroperitoneal. Passes anterior to aorta + IVC. Crossed anteriorly by the SMA + SMV (root of mesentery).",
+clin:"<strong>SMA (superior mesenteric artery) syndrome</strong>: compression of 3rd duodenum between SMA (anterior) and aorta (posterior) in patients with rapid weight loss, eating disorders, spinal surgery, or cachexia → postprandial vomiting + early satiety.",
+hy:["L3, crosses aorta","SMA + SMV cross anteriorly","<strong>SMA syndrome</strong>"]},
+
+{id:"duo-4",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🔀",name:"Duodenum — 4th Part (Ascending)",
+oneLiner:"L3 → L2. Left of aorta. Ends at <strong>Ligament of Treitz</strong> (duodenojejunal flexure).",
+path:"Ascends from L3 to L2 on left of aorta. Ends at duodenojejunal flexure, held by the <strong>ligament of Treitz (suspensory muscle of duodenum)</strong> — fibromuscular band from R crus of diaphragm.",
+clin:"<strong>Ligament of Treitz = landmark dividing upper vs lower GI bleeds</strong>. Bleeding proximal = melena/hematemesis (UGI); distal = hematochezia typically.",
+hy:["Ends at Treitz","DJ flexure","Upper vs lower GI bleed boundary"]},
+
+// ═══════════════ PANCREAS ═══════════════
+{id:"pancreas-head",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Head of Pancreas",
+oneLiner:"Nestled in C-loop of duodenum. Right of SMV. <strong>Common bile duct passes through</strong> → pancreatic head cancer → painless jaundice.",
+path:"Broad rightmost portion, lies in the C-shape of duodenum. Right of the SMV. The <strong>common bile duct traverses the head</strong> posteriorly before joining main pancreatic duct at ampulla.",
+clin:"<ul><li><strong>Most common pancreatic cancer site</strong></li><li>→ <strong>painless jaundice</strong> (CBD obstruction)</li><li>→ <strong>Courvoisier sign</strong> (palpable non-tender distended GB)</li><li><strong>Whipple procedure</strong> = pancreaticoduodenectomy for head cancer</li></ul>",
+hy:["In C-loop of duodenum","CBD through it","Head cancer → painless jaundice","Whipple procedure"]},
+
+{id:"uncinate",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Uncinate Process of Pancreas",
+oneLiner:"Hook-shaped extension of head <strong>posterior to SMA + SMV</strong>. Derived from ventral pancreatic bud. Can cause SMA syndrome or be unresectable.",
+path:"Inferior extension of the head that hooks posteriorly behind the SMA + SMV. Derives from the <strong>ventral pancreatic bud</strong> that rotated during development.",
+clin:"<ul><li>Tumors here often encase SMA/SMV → unresectable</li><li>Anatomic oddity: pancreatic tissue behind the mesenteric vessels</li></ul>",
+hy:["Posterior to SMA/SMV","From ventral bud (rotated)","Tumor encases SMA → unresectable"]},
+
+{id:"pancreas-neck",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Neck of Pancreas",
+oneLiner:"Narrow region anterior to SMA + SMV. <strong>Portal vein formation here</strong> (SMV + splenic v unite BEHIND the neck).",
+path:"Narrow ~2 cm region connecting head + body. Anterior to SMA + SMV. <strong>SMV + splenic vein unite BEHIND the neck → hepatic portal vein</strong>.",
+clin:"<ul><li>Site of <strong>pancreatic transection</strong> in blunt abdominal trauma (compresses against L1)</li><li>Site of Whipple anastomoses</li></ul>",
+hy:["Anterior to SMA/SMV","Portal vein forms behind it","Trauma transection site"]},
+
+{id:"pancreas-body",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Body of Pancreas",
+oneLiner:"Main central portion. Crosses midline at L1–L2. <strong>Splenic artery</strong> runs tortuously along superior border.",
+path:"Wedge-shaped middle portion crossing the midline at L1–L2 vertebrae. Anterior border: transverse mesocolon attachment. Posterior relations: aorta, SMA origin, L renal vessels, L adrenal, L kidney.",
+clin:"Splenic a aneurysm can be here. Body/tail tumors present late (often after mets).",
+hy:["L1–L2 crosses midline","Splenic a along superior border","Transverse mesocolon attaches to anterior"]},
+
+{id:"pancreas-tail",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Tail of Pancreas",
+oneLiner:"Extends to <strong>splenic hilum in the splenorenal ligament</strong>. ONLY <strong>intraperitoneal</strong> part of pancreas.",
+path:"Narrow tapering tip extending toward the spleen. Enclosed within the splenorenal ligament along with splenic a + v.",
+clin:"<strong>Tail injury during splenectomy</strong> → pancreatic fistula (15% complication). Islet cell tumors (insulinoma) tend to be in tail.",
+hy:["ONLY intraperitoneal part","In splenorenal lig","Splenectomy injury risk","Insulinoma location"]},
+
+{id:"pancreatic-duct",cat:"Duodenum & Pancreas",ck:"duop",emoji:"🥒",name:"Main Pancreatic Duct (of Wirsung)",
+oneLiner:"Runs the length of pancreas. Joins bile duct at <strong>ampulla of Vater</strong> → major duodenal papilla. Controlled by <strong>sphincter of Oddi</strong>.",
+path:"Drains entire pancreas from tail to head. Joins bile duct at the hepatopancreatic ampulla of Vater → opens on major duodenal papilla in 2nd duodenum. The <strong>accessory duct of Santorini</strong> drains upper head + uncinate, opens at minor papilla ~2 cm above.",
+clin:"<ul><li><strong>Pancreas divisum</strong>: failure of dorsal + ventral bud ducts to fuse → main duct drains only head via accessory papilla → recurrent pancreatitis</li><li><strong>Annular pancreas</strong>: ring of pancreas encircles 2nd duodenum → duodenal obstruction</li><li>Obstruction → chronic pancreatitis</li></ul>",
+hy:["Duct of Wirsung","Ampulla of Vater","Sphincter of Oddi","Pancreas divisum","Annular pancreas"]},
+// ═══════════════ MIDGUT & HINDGUT VASCULATURE ═══════════════
+{id:"sma",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Superior Mesenteric Artery (SMA)",
+oneLiner:"Unpaired aortic branch at <strong>L1 (transpyloric plane)</strong>. Supplies midgut. Passes behind pancreatic neck, over uncinate, between pancreas + 3rd duodenum.",
+path:"Arises from anterior aorta at L1. Runs behind neck of pancreas, then anterior to uncinate process + 3rd part of duodenum, entering root of mesentery. Branches: inferior pancreaticoduodenal (right), middle colic (forward), right colic (right), ileocolic (right), intestinal aa (left).",
+clin:"<ul><li><strong>SMA embolism</strong>: atrial fibrillation patient with acute severe abdominal pain 'out of proportion to exam' + lactic acidosis → midgut infarction (emergency)</li><li><strong>SMA syndrome</strong>: 3rd duodenum compressed between SMA + aorta (thin patient, rapid weight loss)</li></ul>",
+hy:["L1 transpyloric","Midgut","SMA embolism (AFib patient)","SMA syndrome"]},
+
+{id:"inf-panc-duo",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Inferior Pancreaticoduodenal Arteries",
+oneLiner:"First right SMA branch. Supplies head of pancreas + C-loop duodenum distal to ampulla. Anastomoses with SUPERIOR pancreaticoduodenal (from GDA/celiac).",
+path:"Anterior + posterior branches. Run around head of pancreas, anastomosing with superior pancreaticoduodenal aa from GDA.",
+clin:"<strong>Main celiac ↔ SMA collateral</strong>. In chronic mesenteric ischemia from celiac stenosis, blood flows backward through these → celiac territory.",
+hy:["Anterior + posterior","Celiac ↔ SMA anastomosis","Dual supply of duodenum"]},
+
+{id:"middle-colic",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Middle Colic Artery",
+oneLiner:"Runs forward through <strong>transverse mesocolon</strong>. Supplies proximal 2/3 of transverse colon.",
+path:"Branch of SMA that passes anteriorly in the transverse mesocolon. Anastomoses with right colic (R) + left colic (via marginal a of Drummond).",
+hy:["Through transverse mesocolon","Proximal 2/3 TC","Meets left colic at splenic flexure"]},
+
+{id:"right-colic",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Right Colic Artery",
+oneLiner:"Branch of SMA (or ileocolic in variant). Supplies ascending colon + hepatic flexure.",
+path:"Often a direct SMA branch, sometimes arises from ileocolic. Anastomoses with middle colic (above) + ileocolic (below) via marginal a of Drummond.",
+hy:["Ascending colon","Variant origins common","Part of marginal arc"]},
+
+{id:"ileocolic",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Ileocolic Artery",
+oneLiner:"Lowest right SMA branch. Supplies terminal ileum, cecum, proximal ascending colon, appendix.",
+path:"Last right-sided SMA branch. Gives off the <strong>appendicular artery</strong> (to appendix via mesoappendix) + terminal ileum branches + branches to cecum + anterior/posterior cecal branches.",
+hy:["Lowest R SMA branch","Ileum + cecum","Gives appendicular artery"]},
+
+{id:"appendicular-a",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Appendicular Artery",
+oneLiner:"Branch of ileocolic. Runs in <strong>mesoappendix</strong>. <strong>END ARTERY</strong> — no collateral supply.",
+path:"Arises from ileocolic, runs within the free edge of the mesoappendix to reach the tip of the appendix.",
+clin:"<strong>End artery → no collateral → untreated appendicitis rapidly progresses to ischemia + gangrene + perforation</strong> within 24–72 hours.",
+hy:["<strong>END ARTERY</strong>","In mesoappendix","Rapid gangrene in appendicitis"]},
+
+{id:"intestinal-a",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Intestinal Arteries (Arcades + Vasa Recta)",
+oneLiner:"15–18 left-sided SMA branches to jejunum + ileum. Form arcades + vasa recta. <strong>Jejunum: few arcades, long vasa recta. Ileum: many arcades, short vasa recta.</strong>",
+path:"Multiple left-sided branches off SMA entering the mesentery. Form <strong>arcades</strong> (loops) near the mesenteric root, which give off <strong>vasa recta</strong> (straight end arteries) that reach the bowel wall.",
+clin:"<ul><li>Jejunum: <strong>1–2 tiers of arcades, LONG vasa recta</strong></li><li>Ileum: <strong>3–5 tiers of arcades, SHORT vasa recta</strong></li><li>Mesenteric 'windows' visible in jejunum (less fat)</li></ul>",
+hy:["Jejunum: few arcades, long vasa recta","Ileum: many arcades, short vasa recta","Lab practical identification"]},
+
+{id:"smv",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🟦",name:"Superior Mesenteric Vein (SMV)",
+oneLiner:"Drains midgut. Runs to the RIGHT of SMA in mesenteric root. Joins splenic vein BEHIND pancreatic neck → <strong>hepatic portal vein</strong>.",
+path:"Begins as tributaries from jejunum, ileum, colon (ileocolic, right colic, middle colic veins). Runs upward in mesentery, to the right of SMA. Unites with splenic vein behind the neck of pancreas → portal vein.",
+clin:"<strong>Landmark in Whipple procedure</strong> — must be dissected from pancreatic head. Tumor encasement of SMV → often unresectable.",
+hy:["Right of SMA","Midgut drainage","Joins splenic v → portal","Whipple landmark"]},
+
+{id:"ima",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Inferior Mesenteric Artery (IMA)",
+oneLiner:"Unpaired aortic branch at <strong>L3</strong>. Supplies hindgut. 3 branches: <strong>left colic, sigmoid, superior rectal</strong>.",
+path:"Arises from anterior aorta at L3 (just above aortic bifurcation at L4). Retroperitoneal. Branches: left colic (up + left), sigmoid aa (2–4 branches into sigmoid mesocolon), superior rectal (terminal branch).",
+clin:"<ul><li><strong>Sacrificed in AAA repair</strong> — generally tolerated if marginal artery intact</li><li>Chronic mesenteric ischemia involves celiac + SMA + IMA (all 3 mesenteric)</li></ul>",
+hy:["L3 level","Hindgut","3 branches: L colic, sigmoid, superior rectal"]},
+
+{id:"left-colic",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Left Colic Artery",
+oneLiner:"First IMA branch. Supplies descending colon + distal 1/3 of transverse colon. Anastomoses with middle colic via <strong>marginal a of Drummond</strong>.",
+path:"First branch of IMA. Ascends retroperitoneally toward splenic flexure, where it anastomoses with middle colic (from SMA) via marginal artery.",
+hy:["Descending + distal TC","Meets middle colic at splenic flexure","SMA↔IMA anastomosis"]},
+
+{id:"sigmoid-a",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Sigmoid Arteries",
+oneLiner:"2–4 branches from IMA. Supply sigmoid colon. Form arcades in sigmoid mesocolon.",
+path:"Multiple branches (usually 2–4) from IMA traveling in sigmoid mesocolon to sigmoid colon. Anastomose with left colic + superior rectal.",
+hy:["2–4 branches","In sigmoid mesocolon","Form arcades"]},
+
+{id:"sup-rectal",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Superior Rectal Artery",
+oneLiner:"Terminal branch of IMA. Supplies upper rectum. Anastomoses with middle + inferior rectal (internal iliac) → <strong>porto-systemic anastomosis</strong>.",
+path:"Terminal branch of IMA after sigmoid branches. Descends over the sacral promontory into pelvis, supplies upper rectum down to dentate line.",
+clin:"<strong>Porto-systemic anastomosis</strong>: superior rectal (→ IMV → portal) ↔ middle + inferior rectal (→ internal iliac → systemic). Site of <strong>internal hemorrhoids</strong> in portal HTN.",
+hy:["IMA terminal branch","Upper rectum","<strong>Porto-systemic anastomosis</strong>","Hemorrhoid site"]},
+
+{id:"drummond",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🩸",name:"Marginal Artery of Drummond",
+oneLiner:"Continuous arterial arcade along mesenteric border of entire colon. <strong>Main SMA ↔ IMA collateral</strong>. Weak at splenic flexure.",
+path:"Running along the mesenteric border of the colon, connecting ileocolic → R colic → middle colic → L colic → sigmoid. <strong>Marginal artery of Drummond</strong> is the name for this continuous connection.",
+clin:"<ul><li><strong>Griffith's point (splenic flexure)</strong>: watershed between SMA + IMA — may be weak/absent → <strong>ischemic colitis</strong> in hypoperfusion</li><li><strong>Sudeck's point (rectosigmoid junction)</strong>: watershed between IMA (sigmoid a) + internal iliac (rectal aa)</li><li>The <strong>arc of Riolan</strong> is a more central, variable meandering mesenteric collateral</li></ul>",
+hy:["Continuous colonic arcade","SMA ↔ IMA","Weak at <strong>Griffith's point (splenic flexure)</strong>","Sudeck's point at rectosigmoid"]},
+
+{id:"imv",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🟦",name:"Inferior Mesenteric Vein (IMV)",
+oneLiner:"Drains hindgut. Ascends on LEFT of IMA. Usually joins <strong>SPLENIC VEIN</strong> (not SMV directly).",
+path:"Begins from superior rectal v + sigmoid/colic tributaries. Ascends retroperitoneally, to the left of the IMA. Hooks under body of pancreas → most commonly empties into <strong>splenic vein</strong> (also variants: joins SMV or junction).",
+hy:["Hindgut drainage","Joins splenic vein","Retroperitoneal","Landmark in pancreatic surgery"]},
+
+{id:"splenic-v",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🟦",name:"Splenic Vein",
+oneLiner:"Drains spleen, pancreas, parts of stomach. Receives IMV. Runs behind body/tail of pancreas. Joins SMV → portal vein.",
+path:"Formed at splenic hilum by multiple splenic tributaries. Runs horizontally behind the body + tail of pancreas (different from tortuous splenic artery above). Receives IMV. Unites with SMV behind pancreatic neck → portal vein.",
+clin:"<strong>Splenic vein thrombosis</strong> (chronic pancreatitis, pancreatic cancer) → <strong>isolated gastric varices</strong> via short gastrics (left-sided portal HTN).",
+hy:["Behind body/tail pancreas","Receives IMV","Joins SMV → portal vein","Splenic v thrombosis → gastric varices"]},
+
+{id:"portal-v",cat:"Midgut & Hindgut Vasculature",ck:"mhgut",emoji:"🟦",name:"Hepatic Portal Vein",
+oneLiner:"Formed by union of <strong>SMV + splenic vein</strong> behind pancreatic neck at L1. Carries nutrient-rich blood from gut to liver.",
+path:"Forms at L1 behind pancreatic neck. Ascends in the hepatoduodenal ligament (<strong>posterior to bile duct + hepatic a proper</strong>). Enters porta hepatis, divides into left + right portal branches. Provides ~75% of liver blood flow.",
+clin:"<ul><li><strong>Portal hypertension</strong> → porto-systemic anastomoses: esophageal varices (L gastric v ↔ azygos), caput medusae (paraumbilical ↔ wall veins), internal hemorrhoids (superior rectal ↔ middle/inferior rectal)</li><li>Portal vein thrombosis — cirrhosis, malignancy</li></ul>",
+hy:["SMV + splenic v = portal","Posterior in portal triad","~75% liver blood flow","3 porto-systemic anastomoses"]},
+
+// ═══════════════ ABDOMINAL AORTA & BRANCHES ═══════════════
+{id:"aorta",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Abdominal Aorta",
+oneLiner:"From aortic hiatus (<strong>T12</strong>) to bifurcation (<strong>L4</strong>). To the LEFT of IVC. Paired + unpaired branches.",
+path:"Enters abdomen through aortic hiatus behind diaphragm at T12. Descends in front of vertebral bodies to L4, where it bifurcates into R + L common iliac arteries.<br><strong>Unpaired branches (gut)</strong>: Celiac (T12), SMA (L1), IMA (L3)<br><strong>Paired branches (body wall + organs)</strong>: inferior phrenic, middle suprarenal, renal, gonadal, lumbar, common iliac",
+clin:"<ul><li><strong>Abdominal aortic aneurysm (AAA)</strong>: most commonly <strong>infrarenal</strong> (below renal arteries); pulsatile mass, smoker, elderly male</li><li><strong>Ruptured AAA</strong>: sudden back pain + hypotension + pulsatile mass</li><li>Bifurcation at umbilicus level (L4)</li></ul>",
+hy:["T12 → L4","LEFT of IVC","AAA infrarenal","Bifurcation = L4 = umbilicus"]},
+
+{id:"inf-phrenic",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Inferior Phrenic Arteries",
+oneLiner:"Paired, arise just above celiac (T12). Supply diaphragm. Give off <strong>SUPERIOR SUPRARENAL arteries</strong>.",
+path:"First paired branches of abdominal aorta. Ascend over the crura to supply the inferior surface of diaphragm. Give off superior suprarenal arteries to adrenal glands.",
+hy:["First paired branch","Supply diaphragm","Give rise to superior suprarenal a"]},
+
+{id:"mid-suprarenal-a",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Middle Suprarenal Arteries",
+oneLiner:"Paired. <strong>Directly from aorta at L1</strong>. Middle component of triple adrenal arterial supply.",
+path:"Paired small branches arising directly from the abdominal aorta at approximately L1 (same level as SMA origin). One of three arteries supplying each adrenal gland.",
+hy:["Direct from aorta (~L1)","Middle of triple adrenal supply"]},
+
+{id:"renal-a",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Renal Arteries",
+oneLiner:"Paired at L1–L2. <strong>Right passes posterior to IVC</strong> (longer course). Each gives off <strong>inferior suprarenal artery</strong>.",
+path:"Arise from aorta at L1–L2, just below SMA origin. Right renal artery is longer, passes posterior to IVC. Each artery gives off the inferior suprarenal a before entering renal hilum.",
+clin:"<ul><li><strong>Accessory renal arteries</strong> common (~30%) — often to lower pole; can compress ureter → hydronephrosis</li><li><strong>Renal artery stenosis</strong>: atherosclerosis (elderly) or fibromuscular dysplasia (young F) → renovascular HTN</li></ul>",
+hy:["L1–L2","R a passes behind IVC","Gives inferior suprarenal a","Accessory aa common"]},
+
+{id:"gonadal-a",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Gonadal Arteries (Testicular/Ovarian)",
+oneLiner:"Paired at L2 from aorta. Long descent reflects embryologic origin of gonads in abdomen.",
+path:"Paired branches of aorta at L2. Descend retroperitoneally. Testicular: cross ureter + external iliac, enter deep ring → spermatic cord. Ovarian: cross common iliac, enter pelvis → suspensory ligament of ovary.",
+clin:"<ul><li>Hemorrhage during oophorectomy if not ligated</li><li>Testicular cancer → lymph to para-aortic (L2) — same level as arterial origin</li></ul>",
+hy:["L2","Long descent","Testicular cancer → para-aortic nodes","Ovarian: suspensory ligament"]},
+
+{id:"lumbar-a",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Lumbar Arteries",
+oneLiner:"4 pairs (L1–L4). Segmental, like intercostals. Supply posterior body wall + spinal cord.",
+path:"4 pairs arising from posterolateral aorta. Pass around vertebral bodies. Supply posterior abdominal wall, lumbar vertebrae, spinal cord (via spinal branches).",
+hy:["4 pairs","Segmental (like intercostals)","Supply posterior wall + cord"]},
+
+{id:"common-iliac-a",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Common Iliac Arteries",
+oneLiner:"Terminal bifurcation of aorta at <strong>L4</strong>. Each divides into <strong>external iliac</strong> (lower limb) + <strong>internal iliac</strong> (pelvis).",
+path:"Bifurcate from aorta at L4 (umbilicus level). Descend ~5 cm, then at sacroiliac joint divide into external iliac (continues as femoral) + internal iliac (pelvic viscera, gluteal region).",
+clin:"AAA can extend into common iliacs (iliac aneurysms).",
+hy:["L4 bifurcation","External (→ femoral) + Internal (→ pelvis)"]},
+
+// ═══════════════ INFERIOR VENA CAVA & TRIBUTARIES ═══════════════
+{id:"ivc",cat:"Aorta & IVC",ck:"avc",emoji:"⭕",name:"Inferior Vena Cava (IVC)",
+oneLiner:"Formed at <strong>L5</strong> by union of common iliac veins. RIGHT of aorta. Ascends through caval opening (T8) → right atrium.",
+path:"Begins at L5 by union of R + L common iliac veins. Ascends to the right of aorta on the vertebral bodies. Passes through caval opening of diaphragm at <strong>T8</strong> (in central tendon). Receives tributaries but NOT gut venous blood (gut → portal system).",
+clin:"<ul><li><strong>Budd-Chiari syndrome</strong>: hepatic vein → IVC obstruction</li><li><strong>IVC filter</strong>: placed below renal veins to prevent PE from lower limb DVT</li><li><strong>Compression by gravid uterus</strong> in 3rd trimester → supine hypotensive syndrome</li></ul>",
+hy:["L5 formation","RIGHT of aorta","Caval opening T8","No gut blood (that's portal)"]},
+
+{id:"r-renal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Right Renal Vein",
+oneLiner:"Short. Drains directly into IVC. Does NOT receive gonadal or adrenal tributaries.",
+path:"Short (~2.5 cm) vein from right kidney hilum directly into IVC.",
+hy:["Short, direct to IVC","No tributaries from R gonadal/R adrenal (those go direct to IVC)"]},
+
+{id:"l-renal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Left Renal Vein",
+oneLiner:"<strong>LONGEST abdominal vein</strong>. Crosses midline anterior to aorta, under SMA → IVC. Receives <strong>L suprarenal + L gonadal veins</strong>.",
+path:"Long (~7.5 cm) vein. Crosses midline <strong>anterior to aorta + posterior to SMA</strong> to reach IVC. Receives: left suprarenal vein (superior), left gonadal vein (inferior), sometimes hemiazygos communication.",
+clin:"<ul><li><strong>Nutcracker syndrome</strong>: L renal vein compressed between aorta + SMA (thin patient) → ↑ L renal venous pressure → L flank pain, hematuria, L varicocele, pelvic congestion</li><li><strong>New L varicocele in older man → rule out RCC</strong> (tumor thrombus in L renal v)</li></ul>",
+hy:["Longest abdominal vein","Between aorta + SMA (nutcracker)","Receives L suprarenal + L gonadal","RCC → tumor thrombus"]},
+
+{id:"r-suprarenal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Right Suprarenal Vein",
+oneLiner:"Short. Drains <strong>DIRECTLY INTO IVC</strong>. Injury risk during R adrenalectomy.",
+path:"Very short vein from right adrenal → IVC. Different from left suprarenal which goes via L renal vein.",
+hy:["Direct to IVC","Short — high injury risk in R adrenalectomy"]},
+
+{id:"l-suprarenal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Left Suprarenal Vein",
+oneLiner:"Drains into <strong>LEFT RENAL VEIN</strong> (not IVC directly). Asymmetric — matches gonadal pattern.",
+path:"Drains L adrenal gland via the L renal vein → IVC. Longer pathway than right side.",
+hy:["→ L renal v (not IVC)","Asymmetry with R","Matches L gonadal pattern"]},
+
+{id:"r-gonadal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Right Gonadal (Testicular/Ovarian) Vein",
+oneLiner:"Drains directly into IVC (short path). R-sided varicocele uncommon.",
+path:"Ascends retroperitoneally with gonadal artery. Empties directly into IVC (below R renal vein).",
+clin:"R varicocele is rare. When present, consider retroperitoneal mass compressing IVC or situs inversus.",
+hy:["Direct to IVC","R varicocele rare"]},
+
+{id:"l-gonadal-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Left Gonadal (Testicular/Ovarian) Vein",
+oneLiner:"Drains into <strong>LEFT RENAL VEIN</strong> (not IVC). Longer course → <strong>L varicocele common</strong>.",
+path:"Ascends retroperitoneally, crosses external iliac a, empties into L renal vein at 90° angle. Longer + higher-resistance path than R.",
+clin:"<ul><li><strong>L varicocele (M)</strong>: much more common than R due to long course + 90° junction + risk of nutcracker syndrome</li><li>Ovarian vein compression can cause pelvic congestion in females</li><li><strong>New L varicocele in older man → workup for RCC</strong> (tumor thrombus obstructs L renal v → backup into gonadal)</li></ul>",
+hy:["→ L renal v","Long course","L varicocele common","<strong>New L varicocele → RCC</strong>"]},
+
+{id:"common-iliac-v",cat:"Aorta & IVC",ck:"avc",emoji:"🟦",name:"Common Iliac Veins",
+oneLiner:"Unite at <strong>L5</strong> to form IVC. Receive external + internal iliac veins.",
+path:"Formed by external + internal iliac veins at sacroiliac joint level. L common iliac v crosses right of midline (passes behind R common iliac a) to join R common iliac v → IVC at L5.",
+clin:"<strong>May-Thurner syndrome</strong>: L common iliac v compressed by overlying R common iliac a against L5 → DVT of L lower limb.",
+hy:["Form IVC at L5","<strong>May-Thurner</strong> (L iliac v compression)"]},
+// ═══════════════ KIDNEYS & ADRENALS ═══════════════
+{id:"kidney-overall",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Kidneys (Overview)",
+oneLiner:"Paired retroperitoneal bean-shaped organs at <strong>T12–L3</strong>. Right kidney lower than left (liver pushes down). Hilum faces anteromedially.",
+path:"Retroperitoneal (primary — never had peritoneal covering). Positioned on posterior wall between T12 and L3. R kidney is slightly lower. Hilum contains (<strong>anterior → posterior</strong>): renal <strong>V</strong>ein, renal <strong>A</strong>rtery, <strong>U</strong>reter (<strong>VAU</strong>).",
+clin:"<ul><li><strong>Horseshoe kidney</strong>: lower poles fuse; caught under IMA as kidneys ascend embryologically</li><li><strong>Ectopic/pelvic kidney</strong>: failed ascent</li><li>Kidneys are superior to L1 transpyloric plane</li></ul>",
+hy:["Retroperitoneal","T12–L3","R lower than L","Hilum: <strong>V-A-U</strong> anterior to posterior"]},
+
+{id:"renal-fascia",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Fascia (Gerota's)",
+oneLiner:"Fibrous envelope enclosing kidney + adrenal + perirenal fat. Open inferiorly, fuses superiorly.",
+path:"Strong fibrous layer with anterior + posterior leaflets. Encloses <strong>kidney + adrenal + perirenal fat</strong>. Superior pole: fused (closed). Medial + inferior: open (allows abscess to track inferiorly).",
+clin:"<ul><li>Perinephric abscesses track <strong>inferiorly</strong> toward pelvis but not superiorly (blocked above)</li><li>Surgical plane for nephrectomy</li></ul>",
+hy:["Fibrous envelope","Open inferiorly (abscess tracks to pelvis)","Surgical plane"]},
+
+{id:"perirenal-fat",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Perirenal (Perinephric) Fat",
+oneLiner:"Fat layer between renal capsule and Gerota's fascia. Cushions kidney.",
+path:"Adipose tissue surrounding the kidney within Gerota's fascia. Pararenal fat is OUTSIDE Gerota's.",
+clin:"Reduced in cachexia + rapid weight loss → contributes to SMA syndrome (loss of fat pad around 3rd duodenum).",
+hy:["Within Gerota's","Cushion","Reduced in cachexia"]},
+
+{id:"renal-capsule",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Capsule",
+oneLiner:"True fibrous capsule directly on kidney surface. Innermost covering.",
+path:"Tough thin fibrous capsule adherent to kidney surface. Easily stripped in healthy kidney; more adherent in chronic inflammation.",
+clin:"<strong>Stretch of capsule = flank pain</strong> (pyelonephritis, hydronephrosis, renal cell carcinoma).",
+hy:["True fibrous capsule","Stretch = flank pain"]},
+
+{id:"cortex",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Cortex",
+oneLiner:"Outer 1/3 of kidney. Contains <strong>glomeruli + most PCT/DCT</strong>.",
+path:"Outer region containing renal corpuscles (glomeruli + Bowman capsule), proximal + distal tubules. Extends between pyramids as renal columns of Bertin.",
+clin:"<ul><li>Site of most kidney biopsies (glomerular disease)</li><li>Renal cell carcinoma arises from cortical tubules</li></ul>",
+hy:["Outer 1/3","Glomeruli","Biopsy target"]},
+
+{id:"medulla",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Medulla",
+oneLiner:"Inner 2/3 of kidney. Contains <strong>renal pyramids + loops of Henle + collecting ducts</strong>.",
+path:"Inner part of kidney containing 8–18 <strong>renal pyramids</strong>. Contains loops of Henle + collecting ducts. Site of concentration gradient for urine concentration.",
+clin:"<ul><li><strong>Medullary sponge kidney</strong>: cystic dilation of collecting ducts</li><li><strong>Papillary necrosis</strong>: DM, sickle cell, analgesic use (NSAIDs), UTI — affects medulla at papilla</li></ul>",
+hy:["Inner 2/3","Pyramids","Loops of Henle","Papillary necrosis"]},
+
+{id:"pyramid",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Pyramid",
+oneLiner:"Triangular units of medulla. Apex = papilla (projects into minor calyx). Base toward cortex.",
+path:"8–18 conical structures in medulla. Base faces cortex; apex (papilla) projects into a minor calyx. Contains loops of Henle + collecting ducts directing flow from cortex → papilla.",
+hy:["8–18 per kidney","Apex = papilla","Base toward cortex"]},
+
+{id:"column",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Column (of Bertin)",
+oneLiner:"Cortical tissue extending between pyramids.",
+path:"Columns of cortical tissue reaching into the medulla between pyramids. Contain interlobar vessels.",
+clin:"<strong>Hypertrophied column of Bertin</strong>: normal variant that can look like a mass on imaging → avoid biopsy.",
+hy:["Cortex extending between pyramids","Contains interlobar vessels","Pseudotumor variant"]},
+
+{id:"papilla",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Papilla",
+oneLiner:"Tip of renal pyramid. Projects into minor calyx. Urine exits here.",
+path:"Apex of each pyramid. Contains the openings of collecting ducts (area cribrosa). Projects into the cup of a minor calyx.",
+clin:"<strong>Papillary necrosis</strong>: classic in diabetes, sickle cell, analgesic nephropathy, acute pyelonephritis, obstruction (DPAS mnemonic or SAAD: Sickle cell, Analgesic, Acute pyelo, DM). Papillae slough → hematuria + urinary obstruction.",
+hy:["Urine exit point","Papillary necrosis (DPAS/SAAD)","Collecting duct openings"]},
+
+{id:"minor-calyx",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Minor Calyx",
+oneLiner:"Cup-shaped chamber around each papilla. First part of urinary collecting system.",
+path:"8–18 minor calyces, each enclosing 1 or more papillae. Wall contains smooth muscle for peristalsis.",
+hy:["Cup around papilla","8–18 per kidney","First collecting chamber"]},
+
+{id:"major-calyx",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Major Calyx",
+oneLiner:"Formed by union of 2–4 minor calyces. Typically 2–3 major calyces per kidney.",
+path:"Formed by merging of minor calyces. Typically 2–3 major calyces (upper, middle, lower) per kidney. Open into renal pelvis.",
+clin:"<strong>Dilated in hydronephrosis</strong> — 'clubbing of calyces' on imaging due to chronic obstruction.",
+hy:["2–3 per kidney","Dilation = hydronephrosis"]},
+
+{id:"renal-pelvis",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Renal Pelvis",
+oneLiner:"Funnel formed by union of major calyces. Inside the renal sinus. Narrows to become ureter at UPJ.",
+path:"Expanded funnel-shaped upper end of ureter within renal sinus. Formed by the major calyces.",
+clin:"<strong>Transitional cell (urothelial) carcinoma</strong> can occur here — presents with hematuria.",
+hy:["Funnel","Urothelial cancer site","Narrows to ureter at UPJ"]},
+
+{id:"upj",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Ureteropelvic Junction (UPJ)",
+oneLiner:"Where renal pelvis becomes ureter. <strong>First of 3 ureteric constrictions</strong> — common stone lodging site + congenital obstruction site.",
+path:"Narrowing where the pelvis funnel becomes the ureter. Is the first of three anatomic constrictions of the ureter.",
+clin:"<ul><li><strong>Congenital UPJ obstruction</strong>: most common cause of hydronephrosis in children</li><li>Kidney stone impaction site</li></ul>",
+hy:["1st ureteric constriction","Congenital obstruction in kids","Stone lodging site"]},
+
+{id:"ureter",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🫘",name:"Ureter",
+oneLiner:"Retroperitoneal muscular tube from renal pelvis → bladder. ~25 cm long. <strong>3 constrictions + 'water under bridge'</strong> relation.",
+path:"Descends retroperitoneally on psoas muscle, crosses pelvic brim at bifurcation of common iliac a, enters pelvis, runs under uterine artery (F) or ductus deferens (M) — <strong>'water under the bridge'</strong> — to enter bladder at ureterovesical junction. 3 constrictions: <strong>UPJ, pelvic brim (iliac crossing), UVJ (narrowest)</strong>.",
+clin:"<ul><li><strong>Kidney stone ('renal colic')</strong>: excruciating flank → groin ('loin to groin') pain from stone lodging at any of 3 constrictions; most commonly UVJ</li><li><strong>Hysterectomy ureter injury</strong>: at level of uterine artery ('water under the bridge')</li><li>Crossed by ovarian/testicular vessels + gonadal vein</li></ul>",
+hy:["'Water under the bridge' (ureter under uterine a / vas deferens)","3 constrictions: UPJ, pelvic brim, <strong>UVJ (narrowest)</strong>","Renal colic = loin to groin","Hysterectomy injury"]},
+
+{id:"adrenals",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🔶",name:"Suprarenal (Adrenal) Glands",
+oneLiner:"Paired glands on superomedial pole of each kidney. Within Gerota's fascia. Cortex (3 zones) + medulla. <strong>Triple arterial supply</strong>.",
+path:"Small pyramidal (R) or crescent-shaped (L) glands atop each kidney. Separated from kidney by fat septum but within Gerota's fascia. <strong>Cortex zones</strong> (outside → in): <strong>G</strong>lomerulosa (mineralocorticoid), <strong>F</strong>asciculata (glucocorticoid), <strong>R</strong>eticularis (sex hormones). <strong>Medulla</strong>: chromaffin cells → catecholamines.",
+clin:"<ul><li><strong>Pheochromocytoma</strong>: medulla — HTN, headache, sweating, palpitations</li><li><strong>Conn syndrome</strong> (aldosteronoma): glomerulosa</li><li><strong>Cushing syndrome</strong> (cortisol excess): fasciculata</li><li><strong>Waterhouse-Friderichsen</strong>: bilateral adrenal hemorrhage from N. meningitidis sepsis</li></ul>",
+hy:["Cortex: <strong>GFR Makes Good Sex</strong>","Medulla: neural crest chromaffin cells","Triple arterial supply","Asymmetric venous drainage"]},
+
+{id:"sup-suprarenal-a",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🔶",name:"Superior Suprarenal Artery",
+oneLiner:"From <strong>inferior phrenic artery</strong>. Top of adrenal.",
+path:"Multiple small branches from the inferior phrenic a. Reach adrenal at superior pole.",
+hy:["From inferior phrenic a","Top of adrenal","Top of triple supply"]},
+
+{id:"inf-suprarenal-a",cat:"Kidneys & Adrenals",ck:"kidn",emoji:"🔶",name:"Inferior Suprarenal Artery",
+oneLiner:"From <strong>renal artery</strong>. Bottom of adrenal.",
+path:"Branches off renal artery before it enters renal hilum. Reaches adrenal at inferior pole.",
+hy:["From renal a","Bottom of adrenal","Bottom of triple supply"]},
+
+// ═══════════════ POSTERIOR WALL MUSCLES ═══════════════
+{id:"psoas-major",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"💪",name:"Psoas Major",
+oneLiner:"Medial posterior wall muscle. O: T12–L5. I: lesser trochanter (with iliacus → iliopsoas). Main <strong>hip flexor</strong>. L1–L3.",
+path:"<strong>Origin</strong>: T12 vertebral body + transverse processes + discs of L1–L5.<br><strong>Insertion</strong>: lesser trochanter of femur (joins iliacus = iliopsoas tendon).<br><strong>Innervation</strong>: ventral rami L1–L3.<br>Lumbar plexus forms <strong>within</strong> psoas major.",
+clin:"<ul><li><strong>Psoas sign</strong>: pain on hip extension → retrocecal appendicitis irritating psoas</li><li><strong>Psoas abscess</strong>: can spread from vertebral osteomyelitis (TB = Pott's disease) or diverticulitis</li></ul>",
+hy:["Main hip flexor","<strong>Psoas sign</strong>","Lumbar plexus forms within","TB Pott's → psoas abscess"]},
+
+{id:"psoas-minor",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"💪",name:"Psoas Minor (Variable)",
+oneLiner:"Thin muscle on anterior surface of psoas major. <strong>Absent in ~40%</strong> of people. Weak trunk flexor.",
+path:"Origin: T12–L1 bodies + discs. Insertion: pectineal line / iliopubic eminence. Innervation: L1.",
+hy:["Variable — absent in 40%","On anterior psoas major","Weak trunk flexor"]},
+
+{id:"iliacus",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"💪",name:"Iliacus Muscle",
+oneLiner:"Fills iliac fossa. Joins psoas → iliopsoas (hip flexor). Innervated by <strong>FEMORAL NERVE</strong>.",
+path:"<strong>Origin</strong>: iliac fossa. <strong>Insertion</strong>: lesser trochanter (joins psoas major = iliopsoas). <strong>Innervation</strong>: <strong>femoral nerve (L2–L4)</strong> — different from psoas.",
+hy:["Fills iliac fossa","Joins psoas = iliopsoas","<strong>Femoral nerve</strong> innervation"]},
+
+{id:"ql",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"💪",name:"Quadratus Lumborum (QL)",
+oneLiner:"Lateral posterior wall muscle. From iliac crest to 12th rib + L1–L4 TPs. <strong>Lateral flexor</strong> of spine. Stabilizes rib 12.",
+path:"<strong>Origin</strong>: iliac crest.<br><strong>Insertion</strong>: 12th rib + transverse processes of L1–L4.<br><strong>Action</strong>: lateral flexion of vertebral column; fixes 12th rib during inspiration (accessory of respiration).<br><strong>Innervation</strong>: subcostal (T12) + L1–L4 ventral rami.",
+hy:["Lateral posterior wall","Iliac crest → rib 12 + L1–L4 TPs","Lateral flexor","Stabilizes rib 12"]},
+
+// ═══════════════ DIAPHRAGM ═══════════════
+{id:"diaphragm",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Diaphragm",
+oneLiner:"Dome-shaped muscular partition between thorax + abdomen. Innervated by <strong>phrenic nerves (C3, C4, C5)</strong>. 3 openings.",
+path:"Muscular + tendinous dome. Origin: sternal part (xiphoid), costal part (ribs 7–12), lumbar part (crura from L1–L3 + arcuate ligaments). Insertion: central tendon.<br><strong>3 openings</strong>: caval (T8), esophageal (T10), aortic (T12).",
+clin:"<ul><li>Innervation <strong>C3, 4, 5 keeps the diaphragm alive</strong></li><li><strong>Kehr's sign</strong>: central diaphragmatic irritation refers to shoulder tip via C4 dermatome</li><li><strong>Hiatal hernia</strong>: sliding (most common) — GE junction through esophageal hiatus</li><li>Phrenic nerve palsy → elevated hemidiaphragm</li></ul>",
+hy:["<strong>C3, 4, 5 keeps diaphragm alive</strong>","3 openings (T8/T10/T12)","Kehr's sign","Hiatal hernia"]},
+
+{id:"central-tendon",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Central Tendon (of Diaphragm)",
+oneLiner:"Aponeurotic center where muscle fibers converge. Fused with pericardium above. Contains <strong>caval opening (T8)</strong>.",
+path:"Strong aponeurosis in the center of the diaphragm. Trefoil shape. Fused with fibrous pericardium above. Transmits IVC through caval opening.",
+hy:["Fused with pericardium","Contains caval opening","Central aponeurosis"]},
+
+{id:"right-crus",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Right Crus (of Diaphragm)",
+oneLiner:"Longer crus. Originates from <strong>L1–L3</strong>. Forms the <strong>esophageal hiatus</strong> (fibers sling around esophagus).",
+path:"Muscular band from bodies of L1–L3. Fibers loop around the esophagus to form the esophageal hiatus at T10. Attaches to central tendon above.",
+clin:"Fibers contribute to the physiological anti-reflux barrier at GE junction (extrinsic LES).",
+hy:["L1–L3 origin","Forms esophageal hiatus (T10)","Longer than left crus"]},
+
+{id:"left-crus",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Left Crus (of Diaphragm)",
+oneLiner:"Shorter crus. Originates from <strong>L1–L2</strong>. Together with R crus forms the <strong>median arcuate ligament</strong> over the aorta.",
+path:"Muscular band from bodies of L1–L2. Shorter than R crus.",
+clin:"<strong>Median arcuate ligament syndrome</strong>: arcuate ligament (formed by R + L crura) compresses celiac trunk → postprandial abdominal pain (rare).",
+hy:["L1–L2 origin","Shorter","Forms median arcuate ligament"]},
+
+{id:"caval-opening",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Caval Opening (T8)",
+oneLiner:"<strong>T8</strong>. In <strong>central tendon</strong>. Transmits <strong>IVC + right phrenic nerve</strong>.",
+path:"Opening at T8 in the central tendon of the diaphragm.",
+clin:"Opening enlarges with inspiration → aids venous return to heart.",
+hy:["T8","Central tendon","<strong>IVC + R phrenic n</strong>","<strong>'I ate (8) the IVC'</strong>"]},
+
+{id:"esoph-hiatus",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Esophageal Hiatus (T10)",
+oneLiner:"<strong>T10</strong>. In <strong>right crus</strong>. Transmits <strong>esophagus + vagal trunks + L gastric a/v esophageal branches</strong>.",
+path:"Opening in the muscular right crus at T10 level. Surrounded by diaphragmatic crura fibers (which act as a physiologic sphincter).",
+clin:"<strong>Sliding hiatal hernia</strong>: GE junction slides up through this hiatus → GERD. <strong>Paraesophageal hernia</strong>: stomach herniates alongside esophagus.",
+hy:["T10","Right crus","Esophagus + vagal trunks","'10 EGGS' = Esophagus + vaGal + Gastric branches"]},
+
+{id:"aortic-hiatus",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"🫁",name:"Aortic Hiatus (T12)",
+oneLiner:"<strong>T12</strong>. <strong>BEHIND</strong> the diaphragm (not truly through it). Between R + L crura. Transmits <strong>aorta + thoracic duct + azygos vein</strong>.",
+path:"Lies posterior to diaphragm, at T12. Aorta passes behind the median arcuate ligament formed by the crura. Because structures are behind the diaphragm, hiatus size doesn't change with respiration.",
+hy:["T12","<strong>BEHIND diaphragm</strong> (not through)","Aorta + thoracic duct + azygos","<strong>'AT 12'</strong>"]},
+
+// ═══════════════ NERVES ═══════════════
+{id:"subcostal",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Subcostal Nerve (T12)",
+oneLiner:"Ventral ramus of T12. Not part of lumbar plexus but runs territory. Along inferior border of 12th rib.",
+path:"Largest of the thoracoabdominal nerves. Runs in the subcostal groove along the inferior border of rib 12. Motor to lower IO + TA; sensory to skin above iliac crest + lower abdomen.",
+hy:["T12 ventral ramus","Along rib 12","NOT part of lumbar plexus","Lower abdominal wall + skin above iliac crest"]},
+
+{id:"genitofemoral",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Genitofemoral Nerve (L1–L2)",
+oneLiner:"Pierces psoas ANTERIORLY. 2 branches: <strong>genital</strong> (cremaster + anterior scrotum) + <strong>femoral</strong> (skin of femoral triangle).",
+path:"Ventral rami of L1 + L2. Pierces the anterior surface of psoas major. Divides into:<br>• <strong>Genital branch</strong>: enters spermatic cord via deep ring, innervates <strong>cremaster muscle (EFFERENT of cremasteric reflex)</strong> + anterior scrotum/labium majus<br>• <strong>Femoral branch</strong>: passes under inguinal ligament, supplies skin of femoral triangle",
+clin:"<strong>Cremasteric reflex</strong>: stroke inner thigh (ilioinguinal = afferent) → cremaster contracts, lifts testis (genital branch of genitofemoral = efferent). Absent in testicular torsion.",
+hy:["Pierces psoas anteriorly","<strong>Genital br = cremaster efferent</strong>","Femoral br = femoral triangle skin"]},
+
+{id:"lat-fem-cut",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Lateral Cutaneous Nerve of the Thigh (L2–L3)",
+oneLiner:"Lateral border of psoas. Passes under inguinal ligament just medial to ASIS → lateral thigh skin. Entrapment = <strong>meralgia paresthetica</strong>.",
+path:"Ventral rami of L2 + L3. Emerges from lateral border of psoas, crosses iliacus, passes UNDER inguinal ligament medial to ASIS, supplies skin of lateral thigh.",
+clin:"<strong>Meralgia paresthetica</strong>: entrapment under the inguinal ligament (tight belt, obesity, pregnancy, pregnancy) → burning + numbness on lateral thigh. No motor deficit.",
+hy:["L2–L3","Lateral thigh skin","<strong>Meralgia paresthetica</strong>","No motor"]},
+
+{id:"femoral",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Femoral Nerve (L2–L4)",
+oneLiner:"Largest branch of lumbar plexus. <strong>Dorsal divisions</strong>. Lateral border of psoas. Anterior thigh (quadriceps) + medial leg (saphenous).",
+path:"Formed from <strong>dorsal divisions</strong> of ventral rami L2–L4. Emerges lateral to psoas, descends between psoas + iliacus, passes under inguinal ligament lateral to femoral vessels (<strong>NAVEL</strong>: Nerve, Artery, Vein, Empty, Lymphatic from lateral to medial).",
+clin:"<ul><li><strong>Motor</strong>: quadriceps (knee extension), sartorius, iliacus, pectineus</li><li><strong>Sensory</strong>: anterior thigh skin + medial leg (via saphenous nerve)</li><li><strong>Femoral nerve palsy</strong>: can't extend knee (stairs), loss of patellar reflex, no pain with hip extension</li></ul>",
+hy:["L2–L4 dorsal","Anterior thigh motor","Knee extension","Patellar reflex","Lateral to femoral a (NAVEL)"]},
+
+{id:"obturator",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Obturator Nerve (L2–L4)",
+oneLiner:"Medial border of psoas. <strong>Ventral divisions</strong>. Exits through obturator foramen. Medial thigh adductors + skin.",
+path:"Formed from <strong>ventral divisions</strong> of L2–L4. Emerges from medial border of psoas, descends through obturator foramen into medial thigh.",
+clin:"<ul><li><strong>Motor</strong>: adductor muscles of thigh</li><li><strong>Sensory</strong>: medial thigh skin</li><li><strong>Obturator sign</strong>: pain on internal rotation of flexed hip → pelvic appendicitis irritating obturator internus</li></ul>",
+hy:["L2–L4 ventral","Adductors","Obturator sign (pelvic appendix)","Medial thigh sensation"]},
+
+{id:"sympathetic-trunk",cat:"Posterior Wall, Diaphragm & Nerves",ck:"pwn",emoji:"⚡",name:"Sympathetic Trunk (Abdominal)",
+oneLiner:"Chain of ganglia medial to psoas on lumbar vertebral bodies. Splanchnic nerves pass THROUGH (no synapse) to prevertebral ganglia.",
+path:"Paired ganglionated chains running along the vertebral column. In abdomen: on the lumbar vertebral bodies, medial to psoas. Splanchnic nerves from T5–L2 pass through the trunk without synapsing + synapse at <strong>prevertebral (celiac, SMA, IMA, hypogastric) ganglia</strong> before reaching the gut.",
+clin:"<ul><li><strong>Referred pain by embryologic gut region</strong>: Foregut (T5–T9) → epigastric; Midgut (T10–T11) → periumbilical; Hindgut (T12–L2) → hypogastric</li><li>Adrenal medulla = special: receives preganglionic sympathetic fibers directly (no synapse — chromaffin cells = modified postganglionic neurons)</li></ul>",
+hy:["Medial to psoas","Splanchnics pass through (no synapse)","Synapse at prevertebral ganglia","Foregut T5-9 / Midgut T10-11 / Hindgut T12-L2"]}
+];
+
+const state={currentId:null,learned:new Set(),search:"",collapsed:new Set()};
+function groupByCategory(){
+  const map={};
+  DISEASES.forEach(d=>{
+    if(!map[d.cat])map[d.cat]={key:d.ck,emoji:d.emoji,items:[]};
+    map[d.cat].items.push(d);
+  });
+  return map;
+}
+function getVisibleDiseases(){
+  const q=state.search.toLowerCase().trim();
+  if(!q)return DISEASES;
+  return DISEASES.filter(d=>{
+    const hay=(d.name+" "+d.cat+" "+d.oneLiner+" "+(d.path||"")+" "+(d.clin||"")+" "+(d.dx||"")+" "+(d.tx||"")+" "+(d.hy||[]).join(" ")+" "+(d.mn||"")+" "+(d.trap||"")).toLowerCase();
+    return hay.includes(q);
+  });
+}
+function renderSidebar(){
+  const visible=getVisibleDiseases();
+  const visibleIds=new Set(visible.map(d=>d.id));
+  const groups=groupByCategory();
+  const list=document.getElementById("sbList");
+  let html=`<div class="sb-home ${state.currentId===null?"active":""}" onclick="goHome()">🏠 Home</div>`;
+  Object.entries(groups).forEach(([cat,info])=>{
+    const visibleItems=info.items.filter(d=>visibleIds.has(d.id));
+    if(!visibleItems.length)return;
+    const collapsed=state.collapsed.has(cat)&&!state.search;
+    html+=`<div class="cat-group ${collapsed?"collapsed":""}" data-cat="${cat}"><div class="cat-header" onclick="toggleCat('${cat.replace(/'/g,"\\'")}')"><span class="cat-chevron">▼</span><span>${info.emoji} ${cat}</span><span class="cat-count">${visibleItems.length}</span></div><div class="cat-list">`;
+    visibleItems.forEach(d=>{
+      const active=state.currentId===d.id;
+      const learned=state.learned.has(d.id);
+      html+=`<div class="dz-item ${active?"active":""} ${learned?"learned":""}" data-id="${d.id}" onclick="selectDisease('${d.id}')"><span class="dz-check">${learned?"✓":"○"}</span><span class="dz-name">${d.name}</span></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  list.innerHTML=html||`<div class="empty" style="padding:30px 14px">No matches.</div>`;
+}
+function toggleCat(cat){
+  if(state.collapsed.has(cat))state.collapsed.delete(cat);
+  else state.collapsed.add(cat);
+  renderSidebar();
+}
+function renderHomepage(){
+  const content=document.getElementById("content");
+  const groups=groupByCategory();
+  let catCardsHtml="";
+  Object.entries(groups).forEach(([cat,info])=>{
+    catCardsHtml+=`<div class="home-cat"><div class="home-cat-title">${info.emoji} ${cat} <span class="home-cat-count">${info.items.length}</span></div><div class="home-dz-list">${info.items.map(d=>{const learned=state.learned.has(d.id);return `<div class="home-dz ${learned?"learned":""}" onclick="selectDisease('${d.id}')"><span class="home-check">${learned?"✓":"○"}</span><span>${d.name}</span></div>`;}).join("")}</div></div>`;
+  });
+  content.innerHTML=`<div class="content-inner"><div class="home-hero"><div class="home-brand">HoyaDocs · Block 4 GI</div><h1 class="home-title">Welcome to the GI Anatomy Atlas</h1><p class="home-sub">An interactive reference for all 4 GI dissection labs — every structure with anatomy, relations, clinical significance, lab practical tips, and mnemonics.</p><button class="home-start" onclick="selectDisease('xiphoid')">Start with Xiphoid Process →</button></div><h2 class="home-section-title">Browse All Structures</h2><p style="font-size:13.5px;color:#6b7b6c;margin-bottom:18px;font-style:italic;">Click any structure to open it. Use the sidebar to search or navigate by category. Use ← → arrow keys to move between structures and Space to mark as learned.</p><div class="home-grid">${catCardsHtml}</div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function renderContent(){
+  if(state.currentId===null){renderHomepage();return;}
+  const content=document.getElementById("content");
+  const d=DISEASES.find(x=>x.id===state.currentId);
+  if(!d){content.innerHTML='<div class="empty">Not found.</div>';return;}
+  const learned=state.learned.has(d.id);
+  const visible=getVisibleDiseases();
+  const idx=visible.findIndex(x=>x.id===d.id);
+  const prev=idx>0?visible[idx-1]:null;
+  const next=idx<visible.length-1?visible[idx+1]:null;
+  content.innerHTML=`<div class="content-inner"><div class="dz-entry"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Anatomy &amp; Description</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🔗 Relations &amp; Connections</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>🩺 Clinical Significance</h3><p>${d.dx}</p></div>`:""}${d.tx?`<div class="sec"><h3>🧭 Lab Practical Tip</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div><div class="footer-nav"><button class="nav-btn" onclick="navigate(-1)" ${prev?"":"disabled"}>◀ ${prev?shorten(prev.name,24):"Previous"}<span class="kbd">←</span></button><button class="nav-btn learn ${learned?"learned":""}" onclick="toggleLearned()">${learned?"✓ Learned":"Mark Learned"}<span class="kbd">Space</span></button><button class="nav-btn" onclick="navigate(1)" ${next?"":"disabled"}>${next?shorten(next.name,24):"Next"} ▶<span class="kbd">→</span></button></div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function shorten(s,n){return s.length>n?s.slice(0,n-1)+"…":s;}
+function goHome(){state.currentId=null;renderSidebar();renderContent();closeSidebar();}
+function selectDisease(id){
+  state.currentId=id;
+  const d=DISEASES.find(x=>x.id===id);
+  if(d)state.collapsed.delete(d.cat);
+  renderSidebar();renderContent();closeSidebar();
+  setTimeout(()=>{const el=document.querySelector(`.dz-item[data-id="${id}"]`);if(el)el.scrollIntoView({block:"nearest",behavior:"smooth"});},50);
+}
+function navigate(dir){
+  const visible=getVisibleDiseases();
+  if(state.currentId===null){if(dir>0&&visible.length)selectDisease(visible[0].id);return;}
+  const idx=visible.findIndex(x=>x.id===state.currentId);
+  const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=visible.length)return;
+  selectDisease(visible[newIdx].id);
+}
+function toggleLearned(){
+  if(!state.currentId)return;
+  if(state.learned.has(state.currentId))state.learned.delete(state.currentId);
+  else state.learned.add(state.currentId);
+  renderSidebar();renderContent();updateProgress();
+}
+function updateProgress(){
+  document.getElementById("learnedText").textContent=`${state.learned.size} / ${DISEASES.length}`;
+  document.getElementById("progressFill").style.width=(DISEASES.length?state.learned.size/DISEASES.length*100:0)+"%";
+}
+function toggleSidebar(){
+  const open=document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sbBackdrop").classList.toggle("show",open);
+}
+function closeSidebar(){if(window.innerWidth<=720){document.getElementById("sidebar").classList.remove("open");document.getElementById("sbBackdrop").classList.remove("show");}}
+function exportExcel(){
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>th{background:#14532d;color:white;padding:8px;font-weight:bold;text-align:left;border:1px solid #0f3a1f}td{padding:6px 8px;border:1px solid #e2e8f0;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}.cat{background:#dcfce7;font-weight:bold}</style></head><body><table><tr><th>#</th><th>Category</th><th>Structure</th><th>One-Liner</th><th>Anatomy &amp; Description</th><th>Relations &amp; Connections</th><th>Clinical Significance</th><th>Lab Practical Tip</th><th>High-Yield</th><th>Mnemonic</th><th>Exam Trap</th><th>Learned</th></tr>`;
+  DISEASES.forEach((d,i)=>{
+    const strip=(s)=>(s||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+    html+=`<tr><td>${i+1}</td><td class="cat">${d.cat}</td><td><strong>${d.name}</strong></td><td>${strip(d.oneLiner)}</td><td>${strip(d.path)}</td><td>${strip(d.clin)}</td><td>${strip(d.dx)}</td><td>${strip(d.tx)}</td><td>${(d.hy||[]).map(strip).join(" • ")}</td><td>${strip(d.mn)}</td><td>${strip(d.trap)}</td><td>${state.learned.has(d.id)?"✓":""}</td></tr>`;
+  });
+  html+=`</table></body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:"application/vnd.ms-excel"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="GI_Anatomy_Lab_Atlas.xls";a.click();
+  URL.revokeObjectURL(url);
+}
+function printAll(){
+  const content=document.getElementById("content");
+  const original=content.innerHTML;
+  content.innerHTML=`<div class="content-inner">${DISEASES.map(d=>`<div class="dz-entry" style="page-break-after:always;margin-bottom:40px;"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Anatomy &amp; Description</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🔗 Relations &amp; Connections</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>🩺 Clinical Significance</h3><p>${d.dx}</p></div>`:""}${d.tx?`<div class="sec"><h3>🧭 Lab Practical Tip</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div>`).join("")}</div>`;
+  setTimeout(()=>{window.print();content.innerHTML=original;renderContent();},300);
+}
+document.getElementById("search").addEventListener("input",(e)=>{state.search=e.target.value;renderSidebar();});
+document.getElementById("prevBtn").onclick=()=>navigate(-1);
+document.getElementById("nextBtn").onclick=()=>navigate(1);
+document.getElementById("printBtn").onclick=printAll;
+document.getElementById("excelBtn").onclick=exportExcel;
+document.addEventListener("keydown",(e)=>{
+  if(e.target.tagName==="INPUT")return;
+  if(state.currentId===null&&e.key!=="ArrowRight"&&e.key!=="ArrowDown")return;
+  if(e.key==="ArrowLeft"){e.preventDefault();navigate(-1);}
+  else if(e.key==="ArrowRight"){e.preventDefault();navigate(1);}
+  else if(e.key===" "){e.preventDefault();toggleLearned();}
+  else if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    const visible=getVisibleDiseases();
+    const idx=visible.findIndex(x=>x.id===state.currentId);
+    const dir=e.key==="ArrowDown"?1:-1;
+    const newIdx=idx===-1?0:idx+dir;
+    if(newIdx>=0&&newIdx<visible.length)selectDisease(visible[newIdx].id);
+  }
+  else if(e.key==="Escape"){goHome();}
+});
+Object.keys(groupByCategory()).forEach(c=>state.collapsed.add(c));
+renderSidebar();
+renderHomepage();
+updateProgress();
+</script>
+</body>
+</html>
