@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GI Disease Study Guide — USMLE Step 1 Prep</title>
+<title>GI Disease Atlas — HoyaDocs USMLE Step 1 Prep</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -12,15 +12,15 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 /* LAYOUT */
 .app{display:flex;height:100vh}
 .sidebar{width:280px;background:#f3efe7;border-right:1px solid #e6ddc9;display:flex;flex-direction:column;flex-shrink:0}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
 /* SIDEBAR TOP */
 .sb-top{padding:14px 14px 10px;border-bottom:1px solid #e6ddc9;background:#ede6d6}
-.sb-brand{display:block;font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:#14532d;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:1px solid #d4c9ad;margin-bottom:8px;transition:color 0.12s}
+.sb-brand{display:block;font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:#14532d;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:1px solid #d4c9ad;margin-bottom:8px;transition:color 0.12s}
 .sb-brand:hover{color:#0f3a1f;text-decoration:underline}
-.sb-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#14532d;letter-spacing:-0.01em;cursor:pointer;transition:color 0.12s}
+.sb-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#14532d;letter-spacing:-0.01em;cursor:pointer;transition:color 0.12s;display:block;line-height:1.15}
 .sb-title:hover{color:#0f3a1f}
-.sb-sub{font-size:11px;color:#6b7b6c;margin-top:2px;font-style:italic}
+.sb-sub{font-size:11px;color:#6b7b6c;margin-top:3px;font-style:italic}
 .sb-search{margin-top:10px}
 .sb-search input{width:100%;padding:7px 11px;border:1px solid #d4c9ad;border-radius:4px;background:white;font-size:12.5px;font-family:Georgia,serif}
 .sb-search input:focus{outline:none;border-color:#14532d;background:#fffef8}
@@ -32,6 +32,9 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 
 /* SIDEBAR LIST */
 .sb-list{flex:1;overflow-y:auto;padding:6px 0}
+.sb-home{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:12px;font-weight:700;color:#14532d;cursor:pointer;border-bottom:1px solid #e6ddc9;transition:background 0.12s;user-select:none}
+.sb-home:hover{background:rgba(20,83,45,0.08)}
+.sb-home.active{background:#14532d;color:white}
 .cat-group{margin-bottom:2px}
 .cat-header{padding:7px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:#14532d;cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;background:transparent;transition:background 0.12s}
 .cat-header:hover{background:rgba(20,83,45,0.05)}
@@ -51,10 +54,13 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 
 /* MAIN TOP BAR */
 .main-top{background:white;padding:11px 24px;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.main-top h1{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#14532d;letter-spacing:-0.01em;flex:1}
+.main-top h1{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#14532d;letter-spacing:-0.01em;flex:1;cursor:pointer;transition:color 0.12s}
+.main-top h1:hover{color:#0f3a1f}
 .main-top .meta{font-size:11.5px;color:#6b7b6c;font-style:italic}
-.btn{padding:6px 12px;background:white;border:1px solid #d4c9ad;border-radius:4px;font-size:11.5px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.12s}
+.btn{padding:6px 12px;background:white;border:1px solid #d4c9ad;border-radius:4px;font-size:11.5px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.12s;white-space:nowrap}
 .btn:hover{border-color:#14532d;color:#14532d}
+.btn.home-btn{background:#fef3c7;border-color:#eab308;color:#78350f}
+.btn.home-btn:hover{background:#fde68a;color:#78350f;border-color:#d97706}
 .btn.print{background:#14532d;color:white;border-color:#14532d}
 .btn.print:hover{background:#0f3a1f;color:white}
 .btn.excel{background:#107c41;color:white;border-color:#107c41}
@@ -62,22 +68,21 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 
 /* CONTENT PANE */
 .content{flex:1;overflow-y:auto;background:#faf8f3}
-.content-inner{max-width:1200px;margin:0 auto;padding:42px 64px 120px}
-.reading-inner{max-width:820px;margin:0 auto}
+.content-inner{max-width:1200px;margin:0 auto;padding:42px 56px 120px}
 
 .cat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#8a9b8b;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .cat-dot{width:8px;height:8px;border-radius:50%;background:#14532d}
 .dz-title{font-family:Georgia,serif;font-size:34px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.15;margin-bottom:16px}
-.dz-oneliner{font-size:17px;color:#3c4d3d;line-height:1.55;margin-bottom:28px;padding:14px 18px;background:#ede6d6;border-left:3px solid #14532d;border-radius:0 5px 5px 0;font-style:italic}
+.dz-oneliner{font-size:17px;color:#3c4d3d;line-height:1.55;margin-bottom:28px;padding:14px 18px;background:#ede6d6;border-left:3px solid #14532d;border-radius:0 5px 5px 0;font-style:italic;max-width:900px}
 
-.sec{margin-bottom:28px}
+.sec{margin-bottom:28px;max-width:900px}
 .sec h3{font-family:Georgia,serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#14532d;margin-bottom:10px;padding-bottom:5px;border-bottom:1.5px solid #d4c9ad;display:flex;align-items:center;gap:7px}
 .sec p,.sec ul{font-size:15px;color:#1c2e23;line-height:1.75}
 .sec ul{padding-left:22px;margin-top:4px}
 .sec ul li{margin-bottom:5px}
 .sec strong{color:#14532d;font-weight:700}
 
-.callout{margin:20px 0;padding:14px 18px;border-radius:5px;font-size:14.5px;line-height:1.7}
+.callout{margin:20px 0;padding:14px 18px;border-radius:5px;font-size:14.5px;line-height:1.7;max-width:900px}
 .callout h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .callout ul{padding-left:20px;margin-top:5px}
 .callout li{margin-bottom:4px}
@@ -92,8 +97,8 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 .callout.trap strong{color:#991b1b}
 
 /* FOOTER NAV */
-.footer-nav{position:sticky;bottom:0;background:linear-gradient(to top,#faf8f3 60%,rgba(250,248,243,0));padding:24px 52px 22px;max-width:720px;margin:0 auto;display:flex;gap:10px;align-items:center;border-top:0}
-.nav-btn{flex:1;padding:11px 14px;background:white;border:1.5px solid #d4c9ad;border-radius:6px;font-size:13px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.footer-nav{position:sticky;bottom:0;background:linear-gradient(to top,#faf8f3 60%,rgba(250,248,243,0));padding:24px 56px 22px;max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center;border-top:0}
+.nav-btn{flex:1;padding:11px 14px;background:white;border:1.5px solid #d4c9ad;border-radius:6px;font-size:13px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0}
 .nav-btn:hover{border-color:#14532d;color:#14532d;background:#fffef8}
 .nav-btn:disabled{opacity:0.4;cursor:not-allowed}
 .nav-btn.learn{flex:0.8;background:#14532d;color:white;border-color:#14532d}
@@ -102,33 +107,94 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 .kbd{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.25);padding:1px 5px;border-radius:3px;font-family:ui-monospace,Menlo,monospace;font-size:10px;margin-left:4px}
 .nav-btn:not(.learn) .kbd{background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
 
-/* EMPTY STATE */
+/* HOMEPAGE */
+.home-hero{text-align:center;padding:20px 0 26px;border-bottom:1px solid #e6ddc9;margin-bottom:28px}
+.home-brand{font-size:12px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#14532d;opacity:0.65;margin-bottom:10px}
+.home-title{font-family:Georgia,serif;font-size:50px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.05;margin-bottom:14px}
+.home-sub{font-size:17.5px;color:#3c4d3d;font-style:italic;max-width:700px;margin:0 auto 22px;line-height:1.55}
+.home-start{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#14532d;color:white;border:none;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;text-decoration:none}
+.home-start:hover{background:#0f3a1f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,83,45,0.25)}
+
+.home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.home-stat{background:#ede6d6;border-left:3px solid #14532d;border-radius:0 6px 6px 0;padding:14px 18px}
+.home-stat-num{font-family:Georgia,serif;font-size:26px;font-weight:700;color:#14532d;line-height:1.1}
+.home-stat-label{font-size:11.5px;color:#6b7b6c;text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-style:italic}
+
+.home-section-title{font-family:Georgia,serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#14532d;margin:36px 0 16px;padding-bottom:8px;border-bottom:1.5px solid #d4c9ad}
+
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.home-cat{background:#f3efe7;border:1px solid #e6ddc9;border-radius:8px;padding:14px 16px;transition:all 0.15s}
+.home-cat:hover{border-color:#14532d;box-shadow:0 2px 10px rgba(20,83,45,0.08)}
+.home-cat-title{font-family:Georgia,serif;font-size:13.5px;font-weight:700;color:#14532d;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #d4c9ad;display:flex;align-items:center;gap:6px}
+.home-cat-count{margin-left:auto;background:rgba(20,83,45,0.12);font-size:10.5px;padding:1px 7px;border-radius:8px;font-weight:700}
+.home-dz-list{display:flex;flex-direction:column;gap:2px}
+.home-dz{font-size:13px;color:#3c4d3d;padding:4px 7px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.1s;font-family:Georgia,serif;border-left:2px solid transparent}
+.home-dz:hover{background:#14532d;color:white;border-left-color:#fbbf24}
+.home-dz:hover .home-check{color:#fbbf24}
+.home-dz.learned{color:#16a34a}
+.home-dz .home-check{font-size:10px;width:10px;flex-shrink:0;color:#b5bbb2}
+.home-dz.learned .home-check{color:#16a34a}
+
 .empty{text-align:center;padding:80px 20px;color:#8a9b8b;font-style:italic}
 
 /* MOBILE */
-.menu-toggle{display:none;padding:8px;background:#14532d;color:white;border:none;border-radius:4px;font-size:14px;cursor:pointer}
+.menu-toggle{display:none;padding:8px 11px;background:#14532d;color:white;border:none;border-radius:4px;font-size:16px;cursor:pointer;line-height:1;order:-1}
+@media(max-width:1000px){
+  .content-inner{padding:32px 40px 120px}
+  .footer-nav{padding:20px 40px 20px}
+  .home-stats{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:720px){
-  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);transition:transform 0.3s;box-shadow:0 0 20px rgba(0,0,0,0.15)}
+  body{font-size:14.5px}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;width:270px;max-width:85vw;transform:translateX(-100%);transition:transform 0.3s;box-shadow:0 0 20px rgba(0,0,0,0.15)}
   .sidebar.open{transform:translateX(0)}
   .menu-toggle{display:block}
-  .content-inner{padding:24px 20px 120px}
-  .dz-title{font-size:26px}
-  .footer-nav{padding:18px 20px}
+  .main-top{padding:9px 12px;gap:6px;flex-wrap:nowrap;overflow-x:auto}
+  .main-top h1{font-size:14px;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .main-top .meta{display:none}
+  .main-top .btn{padding:5px 9px;font-size:11px}
+  .content-inner{padding:20px 18px 140px;max-width:100%}
+  .dz-title{font-size:24px}
+  .home-title{font-size:30px}
+  .home-sub{font-size:15px}
+  .home-hero{padding:14px 0 20px;margin-bottom:22px}
+  .home-grid{grid-template-columns:1fr;gap:12px}
+  .home-stats{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
+  .home-stat{padding:10px 14px}
+  .home-stat-num{font-size:22px}
+  .home-section-title{margin-top:24px}
+  .dz-oneliner{font-size:15px;padding:11px 14px;margin-bottom:22px}
+  .sec{margin-bottom:22px}
+  .sec h3{font-size:12px}
+  .sec p,.sec ul,.callout{font-size:14px}
+  .footer-nav{padding:14px 14px;max-width:100%;gap:6px;flex-wrap:wrap}
+  .nav-btn{padding:9px 10px;font-size:12px;min-width:0}
+  .nav-btn .kbd{display:none}
+  .nav-btn.learn{flex:1 1 100%;order:0;padding:11px 10px}
+  .nav-btn:not(.learn){flex:1}
 }
+@media(max-width:400px){
+  .main-top .btn{padding:5px 8px;font-size:10.5px}
+  .main-top h1{font-size:13px}
+  .home-title{font-size:26px}
+  .home-brand{font-size:10.5px}
+}
+
+/* SIDEBAR BACKDROP */
+.sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:90}
+.sb-backdrop.show{display:block}
 
 /* PRINT */
 @media print{
   body{overflow:visible;background:white;font-size:10.5pt}
   .app{display:block;height:auto}
-  .sidebar,.main-top,.footer-nav{display:none!important}
+  .sidebar,.main-top,.footer-nav,.sb-backdrop{display:none!important}
   .main{overflow:visible}
   .content{overflow:visible;background:white}
   .content-inner{max-width:100%;padding:0}
   .dz-entry{page-break-after:always;padding:20px 30px;break-after:page}
   .dz-entry:last-child{page-break-after:auto}
-  .callout{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .dz-oneliner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .callout,.dz-oneliner,.home-stat{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
 /* SCROLLBAR */
@@ -143,7 +209,8 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
 
 <aside class="sidebar" id="sidebar">
   <div class="sb-top">
-    <div class="sb-title">GI Disease Atlas</div>
+    <a class="sb-brand" href="https://hoyadocs.com/Block4-GI/" target="_blank" rel="noopener">HoyaDocs</a>
+    <span class="sb-title" onclick="goHome()">GI Disease Atlas</span>
     <div class="sb-sub">USMLE Step 1 · 75 diseases</div>
     <div class="sb-search"><input type="text" id="search" placeholder="Search…"></div>
   </div>
@@ -154,19 +221,19 @@ body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:
   <div class="sb-list" id="sbList"></div>
 </aside>
 
+<div class="sb-backdrop" id="sbBackdrop" onclick="closeSidebar()"></div>
+
 <main class="main">
   <div class="main-top">
-    <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-    <h1>GI Disease Study Guide</h1>
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h1 onclick="goHome()">GI Disease Study Guide</h1>
     <span class="meta">↑↓ navigate · space = learn</span>
     <button class="btn" id="prevBtn" title="Previous">◀</button>
     <button class="btn" id="nextBtn" title="Next">▶</button>
     <button class="btn print" id="printBtn">🖨 PDF</button>
     <button class="btn excel" id="excelBtn">📊 Excel</button>
   </div>
-  <div class="content" id="content">
-    <div class="empty">Select a disease from the sidebar to begin.</div>
-  </div>
+  <div class="content" id="content"></div>
 </main>
 
 </div>
@@ -742,13 +809,13 @@ function renderSidebar(){
   const visibleIds=new Set(visible.map(d=>d.id));
   const groups=groupByCategory();
   const list=document.getElementById("sbList");
-  let html="";
+  let html=`<div class="sb-home ${state.currentId===null?"active":""}" onclick="goHome()">🏠 Home</div>`;
   Object.entries(groups).forEach(([cat,info])=>{
     const visibleItems=info.items.filter(d=>visibleIds.has(d.id));
     if(!visibleItems.length)return;
     const collapsed=state.collapsed.has(cat)&&!state.search;
     html+=`<div class="cat-group ${collapsed?"collapsed":""}" data-cat="${cat}">
-      <div class="cat-header" onclick="toggleCat('${cat}')">
+      <div class="cat-header" onclick="toggleCat('${cat.replace(/'/g,"\\'")}')">
         <span class="cat-chevron">▼</span>
         <span>${info.emoji} ${cat}</span>
         <span class="cat-count">${visibleItems.length}</span>
@@ -773,17 +840,46 @@ function toggleCat(cat){
   renderSidebar();
 }
 
-// ═══════════════ MAIN CONTENT ═══════════════
-function renderContent(){
+// ═══════════════ HOMEPAGE ═══════════════
+function renderHomepage(){
   const content=document.getElementById("content");
-  if(!state.currentId){
-    content.innerHTML=`<div class="content-inner"><div class="empty">
-      <p style="font-size:18px;color:#14532d;margin-bottom:14px;">Welcome to the GI Disease Atlas</p>
-      <p style="max-width:400px;margin:0 auto 18px;">Choose a disease from the sidebar — or start with Meckel diverticulum to work through everything alphabetically by category.</p>
-      <button class="nav-btn" style="display:inline-flex;max-width:240px;margin:0 auto;background:#14532d;color:white;border-color:#14532d;" onclick="selectDisease(DISEASES[0].id)">Start with ${DISEASES[0].name} ▶</button>
-    </div></div>`;
-    return;
-  }
+  const groups=groupByCategory();
+
+  let catCardsHtml="";
+  Object.entries(groups).forEach(([cat,info])=>{
+    catCardsHtml+=`<div class="home-cat">
+      <div class="home-cat-title">${info.emoji} ${cat} <span class="home-cat-count">${info.items.length}</span></div>
+      <div class="home-dz-list">
+        ${info.items.map(d=>{
+          const learned=state.learned.has(d.id);
+          return `<div class="home-dz ${learned?"learned":""}" onclick="selectDisease('${d.id}')">
+            <span class="home-check">${learned?"✓":"○"}</span>
+            <span>${d.name}</span>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`;
+  });
+
+  content.innerHTML=`<div class="content-inner">
+    <div class="home-hero">
+      <div class="home-brand">HoyaDocs · Block 4 GI</div>
+      <h1 class="home-title">Welcome to the GI Disease Atlas</h1>
+      <p class="home-sub">An interactive USMLE Step 1 reference covering all 75 GI diseases — pathophysiology, clinical pearls, buzzwords, mnemonics, and exam traps.</p>
+      <button class="home-start" onclick="selectDisease('meckel')">Start with Meckel Diverticulum →</button>
+    </div>
+
+    <h2 class="home-section-title">Browse All Diseases</h2>
+    <p style="font-size:13.5px;color:#6b7b6c;margin-bottom:18px;font-style:italic;">Click any disease to open it. Use the sidebar to search or navigate by category. Use ← → arrow keys to move between diseases and Space to mark as learned.</p>
+    <div class="home-grid">${catCardsHtml}</div>
+  </div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+
+// ═══════════════ DISEASE CONTENT ═══════════════
+function renderContent(){
+  if(state.currentId===null){renderHomepage();return;}
+  const content=document.getElementById("content");
   const d=DISEASES.find(x=>x.id===state.currentId);
   if(!d){content.innerHTML='<div class="empty">Not found.</div>';return;}
   const learned=state.learned.has(d.id);
@@ -806,25 +902,31 @@ function renderContent(){
       ${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}
     </div>
     <div class="footer-nav">
-      <button class="nav-btn" onclick="navigate(-1)" ${prev?"":"disabled"}>◀ ${prev?prev.name.slice(0,30):"Previous"}<span class="kbd">←</span></button>
+      <button class="nav-btn" onclick="navigate(-1)" ${prev?"":"disabled"}>◀ ${prev?shorten(prev.name,24):"Previous"}<span class="kbd">←</span></button>
       <button class="nav-btn learn ${learned?"learned":""}" onclick="toggleLearned()">${learned?"✓ Learned":"Mark Learned"}<span class="kbd">Space</span></button>
-      <button class="nav-btn" onclick="navigate(1)" ${next?"":"disabled"}>${next?next.name.slice(0,30):"Next"} ▶<span class="kbd">→</span></button>
+      <button class="nav-btn" onclick="navigate(1)" ${next?"":"disabled"}>${next?shorten(next.name,24):"Next"} ▶<span class="kbd">→</span></button>
     </div>
   </div>`;
+  document.getElementById("content").scrollTo(0,0);
 }
 
+function shorten(s,n){return s.length>n?s.slice(0,n-1)+"…":s;}
+
 // ═══════════════ NAVIGATION ═══════════════
+function goHome(){
+  state.currentId=null;
+  renderSidebar();
+  renderContent();
+  closeSidebar();
+}
+
 function selectDisease(id){
   state.currentId=id;
-  // expand category containing this disease
   const d=DISEASES.find(x=>x.id===id);
   if(d)state.collapsed.delete(d.cat);
   renderSidebar();
   renderContent();
-  document.getElementById("content").scrollTo(0,0);
-  // close mobile sidebar
-  if(window.innerWidth<=720)document.getElementById("sidebar").classList.remove("open");
-  // scroll sidebar to selected
+  closeSidebar();
   setTimeout(()=>{
     const el=document.querySelector(`.dz-item[data-id="${id}"]`);
     if(el)el.scrollIntoView({block:"nearest",behavior:"smooth"});
@@ -833,6 +935,10 @@ function selectDisease(id){
 
 function navigate(dir){
   const visible=getVisibleDiseases();
+  if(state.currentId===null){
+    if(dir>0&&visible.length)selectDisease(visible[0].id);
+    return;
+  }
   const idx=visible.findIndex(x=>x.id===state.currentId);
   const newIdx=idx+dir;
   if(newIdx<0||newIdx>=visible.length)return;
@@ -851,6 +957,18 @@ function toggleLearned(){
 function updateProgress(){
   document.getElementById("learnedText").textContent=`${state.learned.size} / ${DISEASES.length}`;
   document.getElementById("progressFill").style.width=(DISEASES.length?state.learned.size/DISEASES.length*100:0)+"%";
+}
+
+// ═══════════════ SIDEBAR TOGGLE (MOBILE) ═══════════════
+function toggleSidebar(){
+  const open=document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sbBackdrop").classList.toggle("show",open);
+}
+function closeSidebar(){
+  if(window.innerWidth<=720){
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("sbBackdrop").classList.remove("show");
+  }
 }
 
 // ═══════════════ EXCEL EXPORT ═══════════════
@@ -890,7 +1008,6 @@ function exportExcel(){
 
 // ═══════════════ PRINT ═══════════════
 function printAll(){
-  // Build full content with every disease as a section
   const content=document.getElementById("content");
   const original=content.innerHTML;
   content.innerHTML=`<div class="content-inner">${DISEASES.map(d=>`
@@ -919,9 +1036,9 @@ document.getElementById("nextBtn").onclick=()=>navigate(1);
 document.getElementById("printBtn").onclick=printAll;
 document.getElementById("excelBtn").onclick=exportExcel;
 
-// Keyboard shortcuts
 document.addEventListener("keydown",(e)=>{
   if(e.target.tagName==="INPUT")return;
+  if(state.currentId===null&&e.key!=="ArrowRight"&&e.key!=="ArrowDown")return;
   if(e.key==="ArrowLeft"){e.preventDefault();navigate(-1);}
   else if(e.key==="ArrowRight"){e.preventDefault();navigate(1);}
   else if(e.key===" "){e.preventDefault();toggleLearned();}
@@ -933,12 +1050,13 @@ document.addEventListener("keydown",(e)=>{
     const newIdx=idx===-1?0:idx+dir;
     if(newIdx>=0&&newIdx<visible.length)selectDisease(visible[newIdx].id);
   }
+  else if(e.key==="Escape"){goHome();}
 });
 
-// Init — all categories collapsed by default except first
-Object.keys(groupByCategory()).slice(1).forEach(c=>state.collapsed.add(c));
+// Init — collapse all cats by default
+Object.keys(groupByCategory()).forEach(c=>state.collapsed.add(c));
 renderSidebar();
-renderContent();
+renderHomepage();
 updateProgress();
 </script>
 </body>
