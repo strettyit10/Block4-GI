@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GI Pharmacology Atlas — HoyaDocs USMLE Step 1 Prep</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:#faf8f3;color:#1c2e23;line-height:1.7;font-size:15.5px;overflow:hidden}
+.app{display:flex;height:100vh}
+.sidebar{width:280px;background:#f3efe7;border-right:1px solid #e6ddc9;display:flex;flex-direction:column;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.sb-top{padding:14px 14px 10px;border-bottom:1px solid #e6ddc9;background:#ede6d6}
+.sb-brand{display:block;font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:#14532d;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:1px solid #d4c9ad;margin-bottom:8px;transition:color 0.12s}
+.sb-brand:hover{color:#0f3a1f;text-decoration:underline}
+.sb-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#14532d;letter-spacing:-0.01em;cursor:pointer;transition:color 0.12s;display:block;line-height:1.15}
+.sb-title:hover{color:#0f3a1f}
+.sb-sub{font-size:11px;color:#6b7b6c;margin-top:3px;font-style:italic}
+.sb-search{margin-top:10px}
+.sb-search input{width:100%;padding:7px 11px;border:1px solid #d4c9ad;border-radius:4px;background:white;font-size:12.5px;font-family:Georgia,serif}
+.sb-search input:focus{outline:none;border-color:#14532d;background:#fffef8}
+.sb-progress{padding:8px 14px;background:#ede6d6;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;font-size:11px;color:#4b5b4c}
+.sb-progress-bar{flex:1;height:5px;background:#d4c9ad;border-radius:3px;overflow:hidden}
+.sb-progress-fill{height:100%;background:#14532d;transition:width 0.4s}
+.sb-list{flex:1;overflow-y:auto;padding:6px 0}
+.sb-home{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:12px;font-weight:700;color:#14532d;cursor:pointer;border-bottom:1px solid #e6ddc9;transition:background 0.12s;user-select:none}
+.sb-home:hover{background:rgba(20,83,45,0.08)}
+.sb-home.active{background:#14532d;color:white}
+.cat-group{margin-bottom:2px}
+.cat-header{padding:7px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:#14532d;cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;background:transparent;transition:background 0.12s}
+.cat-header:hover{background:rgba(20,83,45,0.05)}
+.cat-chevron{font-size:9px;transition:transform 0.2s;color:#8a9b8b}
+.cat-group.collapsed .cat-chevron{transform:rotate(-90deg)}
+.cat-count{margin-left:auto;background:rgba(20,83,45,0.1);color:#14532d;font-size:9.5px;padding:1px 6px;border-radius:8px;font-weight:700;letter-spacing:0.3px}
+.cat-list{display:block}
+.cat-group.collapsed .cat-list{display:none}
+.dz-item{padding:5px 14px 5px 26px;font-size:12.5px;color:#3c4d3d;cursor:pointer;display:flex;align-items:center;gap:7px;line-height:1.35;border-left:3px solid transparent;transition:all 0.1s;font-family:Georgia,serif}
+.dz-item:hover{background:rgba(20,83,45,0.06);color:#14532d}
+.dz-item.active{background:#14532d;color:white;border-left-color:#fbbf24;font-weight:600}
+.dz-item.active .dz-check{color:#fbbf24}
+.dz-check{font-size:11px;color:#a0a79e;flex-shrink:0;width:12px}
+.dz-item.learned .dz-check{color:#16a34a}
+.dz-item.active.learned .dz-check{color:#86efac}
+.dz-name{flex:1;min-width:0}
+.main-top{background:white;padding:11px 24px;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.main-top h1{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#14532d;letter-spacing:-0.01em;flex:1;cursor:pointer;transition:color 0.12s}
+.main-top h1:hover{color:#0f3a1f}
+.main-top .meta{font-size:11.5px;color:#6b7b6c;font-style:italic}
+.btn{padding:6px 12px;background:white;border:1px solid #d4c9ad;border-radius:4px;font-size:11.5px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.12s;white-space:nowrap}
+.btn:hover{border-color:#14532d;color:#14532d}
+.btn.print{background:#14532d;color:white;border-color:#14532d}
+.btn.print:hover{background:#0f3a1f;color:white}
+.btn.excel{background:#107c41;color:white;border-color:#107c41}
+.btn.excel:hover{background:#0b5a2e;color:white}
+.content{flex:1;overflow-y:auto;background:#faf8f3}
+.content-inner{max-width:1200px;margin:0 auto;padding:42px 56px 120px}
+.cat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#8a9b8b;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.cat-dot{width:8px;height:8px;border-radius:50%;background:#14532d}
+.dz-title{font-family:Georgia,serif;font-size:34px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.15;margin-bottom:16px}
+.dz-oneliner{font-size:17px;color:#3c4d3d;line-height:1.55;margin-bottom:28px;padding:14px 18px;background:#ede6d6;border-left:3px solid #14532d;border-radius:0 5px 5px 0;font-style:italic;max-width:900px}
+.sec{margin-bottom:28px;max-width:900px}
+.sec h3{font-family:Georgia,serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#14532d;margin-bottom:10px;padding-bottom:5px;border-bottom:1.5px solid #d4c9ad;display:flex;align-items:center;gap:7px}
+.sec p,.sec ul{font-size:15px;color:#1c2e23;line-height:1.75}
+.sec ul{padding-left:22px;margin-top:4px}
+.sec ul li{margin-bottom:5px}
+.sec strong{color:#14532d;font-weight:700}
+.callout{margin:20px 0;padding:14px 18px;border-radius:5px;font-size:14.5px;line-height:1.7;max-width:900px}
+.callout h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.callout ul{padding-left:20px;margin-top:5px}
+.callout li{margin-bottom:4px}
+.callout.hy{background:#fdf4d3;border-left:4px solid #eab308;color:#713f12}
+.callout.hy h4,.callout.hy strong{color:#78350f}
+.callout.mn{background:#ffe7d6;border-left:4px solid #ea580c;color:#7c2d12}
+.callout.mn h4,.callout.mn strong{color:#9a3412}
+.callout.trap{background:#fde3e3;border-left:4px solid #dc2626;color:#7f1d1d}
+.callout.trap h4,.callout.trap strong{color:#991b1b}
+.footer-nav{position:sticky;bottom:0;background:linear-gradient(to top,#faf8f3 60%,rgba(250,248,243,0));padding:24px 56px 22px;max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.nav-btn{flex:1;padding:11px 14px;background:white;border:1.5px solid #d4c9ad;border-radius:6px;font-size:13px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0}
+.nav-btn:hover{border-color:#14532d;color:#14532d;background:#fffef8}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed}
+.nav-btn.learn{flex:0.8;background:#14532d;color:white;border-color:#14532d}
+.nav-btn.learn:hover{background:#0f3a1f;color:white}
+.nav-btn.learn.learned{background:#16a34a;border-color:#16a34a}
+.kbd{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.25);padding:1px 5px;border-radius:3px;font-family:ui-monospace,Menlo,monospace;font-size:10px;margin-left:4px}
+.nav-btn:not(.learn) .kbd{background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
+.home-hero{text-align:center;padding:20px 0 26px;border-bottom:1px solid #e6ddc9;margin-bottom:28px}
+.home-brand{font-size:12px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#14532d;opacity:0.65;margin-bottom:10px}
+.home-title{font-family:Georgia,serif;font-size:50px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.05;margin-bottom:14px}
+.home-sub{font-size:17.5px;color:#3c4d3d;font-style:italic;max-width:700px;margin:0 auto 22px;line-height:1.55}
+.home-start{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#14532d;color:white;border:none;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;text-decoration:none}
+.home-start:hover{background:#0f3a1f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,83,45,0.25)}
+.home-section-title{font-family:Georgia,serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#14532d;margin:36px 0 16px;padding-bottom:8px;border-bottom:1.5px solid #d4c9ad}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.home-cat{background:#f3efe7;border:1px solid #e6ddc9;border-radius:8px;padding:14px 16px;transition:all 0.15s}
+.home-cat:hover{border-color:#14532d;box-shadow:0 2px 10px rgba(20,83,45,0.08)}
+.home-cat-title{font-family:Georgia,serif;font-size:13.5px;font-weight:700;color:#14532d;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #d4c9ad;display:flex;align-items:center;gap:6px}
+.home-cat-count{margin-left:auto;background:rgba(20,83,45,0.12);font-size:10.5px;padding:1px 7px;border-radius:8px;font-weight:700}
+.home-dz-list{display:flex;flex-direction:column;gap:2px}
+.home-dz{font-size:13px;color:#3c4d3d;padding:4px 7px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.1s;font-family:Georgia,serif;border-left:2px solid transparent}
+.home-dz:hover{background:#14532d;color:white;border-left-color:#fbbf24}
+.home-dz:hover .home-check{color:#fbbf24}
+.home-dz.learned{color:#16a34a}
+.home-dz .home-check{font-size:10px;width:10px;flex-shrink:0;color:#b5bbb2}
+.home-dz.learned .home-check{color:#16a34a}
+.empty{text-align:center;padding:80px 20px;color:#8a9b8b;font-style:italic}
+.menu-toggle{display:none;padding:8px 11px;background:#14532d;color:white;border:none;border-radius:4px;font-size:16px;cursor:pointer;line-height:1;order:-1}
+@media(max-width:1000px){.content-inner{padding:32px 40px 120px}.footer-nav{padding:20px 40px 20px}}
+@media(max-width:720px){
+  body{font-size:14.5px}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;width:270px;max-width:85vw;transform:translateX(-100%);transition:transform 0.3s;box-shadow:0 0 20px rgba(0,0,0,0.15)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-toggle{display:block}
+  .main-top{padding:9px 12px;gap:6px;flex-wrap:nowrap;overflow-x:auto}
+  .main-top h1{font-size:14px;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .main-top .meta{display:none}
+  .main-top .btn{padding:5px 9px;font-size:11px}
+  .content-inner{padding:20px 18px 140px;max-width:100%}
+  .dz-title{font-size:24px}
+  .home-title{font-size:30px}
+  .home-sub{font-size:15px}
+  .home-hero{padding:14px 0 20px;margin-bottom:22px}
+  .home-grid{grid-template-columns:1fr;gap:12px}
+  .home-section-title{margin-top:24px}
+  .dz-oneliner{font-size:15px;padding:11px 14px;margin-bottom:22px}
+  .sec{margin-bottom:22px}
+  .sec h3{font-size:12px}
+  .sec p,.sec ul,.callout{font-size:14px}
+  .footer-nav{padding:14px 14px;max-width:100%;gap:6px;flex-wrap:wrap}
+  .nav-btn{padding:9px 10px;font-size:12px;min-width:0}
+  .nav-btn .kbd{display:none}
+  .nav-btn.learn{flex:1 1 100%;order:0;padding:11px 10px}
+  .nav-btn:not(.learn){flex:1}
+}
+@media(max-width:400px){.main-top .btn{padding:5px 8px;font-size:10.5px}.main-top h1{font-size:13px}.home-title{font-size:26px}}
+.sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:90}
+.sb-backdrop.show{display:block}
+@media print{
+  body{overflow:visible;background:white;font-size:10.5pt}
+  .app{display:block;height:auto}
+  .sidebar,.main-top,.footer-nav,.sb-backdrop{display:none!important}
+  .main{overflow:visible}
+  .content{overflow:visible;background:white}
+  .content-inner{max-width:100%;padding:0}
+  .dz-entry{page-break-after:always;padding:20px 30px;break-after:page}
+  .dz-entry:last-child{page-break-after:auto}
+  .callout,.dz-oneliner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.sb-list::-webkit-scrollbar,.content::-webkit-scrollbar{width:8px}
+.sb-list::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.content::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.sb-list::-webkit-scrollbar-thumb:hover,.content::-webkit-scrollbar-thumb:hover{background:#14532d}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <a class="sb-brand" href="https://hoyadocs.com/Block4-GI/" target="_blank" rel="noopener">HoyaDocs</a>
+    <span class="sb-title" onclick="goHome()">GI Pharm Atlas</span>
+    <div class="sb-sub">USMLE Step 1 · 56 medications</div>
+    <div class="sb-search"><input type="text" id="search" placeholder="Search…"></div>
+  </div>
+  <div class="sb-progress">
+    <span id="learnedText">0 / 0</span>
+    <div class="sb-progress-bar"><div class="sb-progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="sb-list" id="sbList"></div>
+</aside>
+<div class="sb-backdrop" id="sbBackdrop" onclick="closeSidebar()"></div>
+<main class="main">
+  <div class="main-top">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h1 onclick="goHome()">GI Pharmacology Study Guide</h1>
+    <span class="meta">↑↓ navigate · space = learn</span>
+    <button class="btn" id="prevBtn" title="Previous">◀</button>
+    <button class="btn" id="nextBtn" title="Next">▶</button>
+    <button class="btn print" id="printBtn">🖨 PDF</button>
+    <button class="btn excel" id="excelBtn">📊 Excel</button>
+  </div>
+  <div class="content" id="content"></div>
+</main>
+</div>
+<script>
+const DISEASES = [
+// ═══════════════ H. PYLORI ANTIBIOTICS ═══════════════
+{id:"metronidazole",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Metronidazole (Flagyl)",
+oneLiner:"Nitroimidazole. Anaerobe + protozoan killer. Produces toxic free radicals inside anaerobic organisms. <strong>Disulfiram-like reaction with alcohol</strong>.",
+path:"<strong>Prodrug</strong> — activated by anaerobic microbes' ferredoxin/nitroreductase (oxygen sensitive). Forms reactive nitro radicals → damage DNA + proteins of anaerobes. No activity against aerobes.",
+clin:"<ul><li><strong>H. pylori quad therapy</strong> (with PPI + bismuth + tetracycline)</li><li><strong>C. difficile</strong> (mild cases — now 2nd-line after vancomycin/fidaxomicin)</li><li><strong>Protozoa</strong>: Giardia, Entamoeba, Trichomonas</li><li><strong>Anaerobes</strong>: Bacteroides, Clostridium (intra-abdominal, pelvic)</li><li>Bacterial vaginosis (Gardnerella)</li></ul>",
+dx:"<ul><li><strong>Disulfiram-like reaction with alcohol</strong> (flushing, nausea, tachycardia) — avoid EtOH during + 3 days after</li><li>Metallic taste</li><li>Peripheral neuropathy (with chronic use)</li><li>Headache</li></ul>",
+hy:["<strong>Disulfiram reaction</strong> with alcohol","<strong>GET GAP on the METRO</strong>: Giardia, Entamoeba, Trichomonas, Gardnerella, Anaerobes, H. Pylori","Activated in anaerobic conditions","Peripheral neuropathy (chronic)"],
+mn:"<strong>GET GAP on the METRO</strong>: <strong>G</strong>iardia, <strong>E</strong>ntamoeba, <strong>T</strong>richomonas, <strong>G</strong>ardnerella, <strong>A</strong>naerobes, <strong>H. P</strong>ylori"},
+
+{id:"tetracycline",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Tetracycline",
+oneLiner:"Bacteriostatic. Inhibits 30S ribosomal subunit. Part of <strong>bismuth quadruple therapy</strong>. Chelated by divalent cations.",
+path:"Binds <strong>30S ribosomal subunit</strong> → blocks aminoacyl-tRNA attachment to the ribosomal A site → inhibits bacterial protein synthesis. Bacteriostatic.",
+clin:"<ul><li>H. pylori bismuth quadruple therapy (PPI + bismuth + tetracycline + metronidazole)</li><li>Rickettsiae (Rocky Mountain spotted fever, typhus)</li><li>Chlamydia, Mycoplasma pneumoniae</li><li>Lyme disease (doxycycline is preferred tetracycline analog)</li><li>Acne (anti-inflammatory effect)</li></ul>",
+dx:"<ul><li><strong>Photosensitivity</strong></li><li><strong>Tooth discoloration + impaired bone growth in kids &lt;8 yr</strong> — contraindicated</li><li><strong>Contraindicated in pregnancy</strong> (teratogen — teeth/bones)</li><li>Fanconi syndrome (from expired drug)</li><li>GI upset, esophagitis (take with water, stay upright)</li></ul>",
+tx:"<strong>Chelated by divalent cations (Ca²⁺, Mg²⁺, Fe²⁺, Al³⁺)</strong> — don't take with milk, antacids, or iron supplements; binds + prevents absorption.",
+hy:["<strong>Avoid in kids &lt;8 + pregnancy</strong>","<strong>Chelated by Ca/Mg/Fe/Al</strong> (take separately from dairy/antacids)","Photosensitivity","30S ribosome (bacteriostatic)"],
+trap:"Giving tetracycline with milk or antacids → near-zero absorption. Space doses several hours apart."},
+
+{id:"bismuth-abx",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Bismuth Subsalicylate (Pepto-Bismol)",
+oneLiner:"Multi-mechanism: antimicrobial vs H. pylori, mucosal coating, antidiarrheal. Component of quad therapy. <strong>Black stool + black tongue</strong> (not melena).",
+path:"Multiple actions: (1) <strong>Direct antimicrobial</strong> against H. pylori; (2) <strong>Coats ulcers</strong> (protective barrier); (3) Stimulates mucus + bicarbonate; (4) Antisecretory via salicylate; (5) Prevents bacterial binding to intestinal cells.",
+clin:"<ul><li>H. pylori quad therapy</li><li>Traveler's diarrhea (prophylaxis + treatment)</li><li>Dyspepsia, heartburn, nausea</li></ul>",
+dx:"<ul><li><strong>Black stool</strong> + <strong>black tongue</strong> (from bismuth — benign, NOT melena/GI bleed)</li><li><strong>Reye syndrome</strong> risk in children with viral illness (salicylate component) — avoid in kids with chickenpox/flu</li><li>Salicylate toxicity with high doses (tinnitus, hyperventilation)</li></ul>",
+hy:["<strong>Black stool + black tongue</strong> (NOT melena)","Reye syndrome risk in kids with viral illness","H. pylori coverage + mucosal protection","Traveler's diarrhea"],
+trap:"Black stool from bismuth can mimic melena on history — ask about Pepto-Bismol use."},
+
+{id:"amoxicillin",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Amoxicillin",
+oneLiner:"Aminopenicillin β-lactam. <strong>First-line H. pylori triple therapy</strong> component. Bactericidal.",
+path:"Binds <strong>penicillin-binding proteins (PBPs)</strong> → inhibits transpeptidation → cell wall defect → autolysis. Bactericidal. Wider spectrum than penicillin G due to ability to cross gram-negative outer membrane.",
+clin:"<ul><li><strong>H. pylori triple therapy</strong> (PPI + clarithromycin + amoxicillin)</li><li>Otitis media, strep throat, sinusitis</li><li>Lyme disease (early)</li><li>Endocarditis prophylaxis (dental procedures)</li><li>UTIs (less now due to resistance)</li></ul>",
+dx:"<ul><li>Hypersensitivity reactions (immediate IgE anaphylaxis; delayed serum sickness, SJS)</li><li><strong>Maculopapular rash with EBV mono</strong> (not a true allergy — delayed T-cell response to amoxicillin metabolites)</li><li>Pseudomembranous colitis</li><li>Diarrhea (disrupts gut flora)</li></ul>",
+hy:["<strong>Amoxicillin + EBV = rash</strong> (not true allergy)","β-lactam cell wall inhibitor","H. pylori first-line","Endocarditis prophylaxis"]},
+
+{id:"clarithromycin",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Clarithromycin",
+oneLiner:"Macrolide. Binds 50S ribosome. <strong>H. pylori triple therapy</strong>. Strong CYP3A4 inhibitor + QT prolongation.",
+path:"Binds <strong>50S ribosomal subunit (23S rRNA)</strong> → blocks translocation → inhibits protein synthesis. Bacteriostatic.",
+clin:"<ul><li><strong>H. pylori triple therapy</strong></li><li>Atypical pneumonia (Mycoplasma, Legionella, Chlamydia)</li><li>Upper respiratory infections</li><li>MAC prophylaxis (HIV)</li></ul>",
+dx:"<ul><li>GI upset (common), metallic taste</li><li><strong>QT prolongation → torsades</strong> (especially with other QT drugs)</li><li><strong>CYP3A4 inhibition</strong> → ↑ levels of warfarin, statins (simvastatin/lovastatin contraindicated), carbamazepine, digoxin</li><li>Hepatotoxicity (cholestatic hepatitis)</li><li>Rising resistance → check local H. pylori resistance rates</li></ul>",
+hy:["<strong>Strong CYP inhibitor</strong>","QT prolongation","H. pylori (resistance rising)","Covers atypical pneumonia"],
+mn:"'Clari<strong>thro</strong>mycin' raises <strong>THR</strong>ee things: warfarin, statins, digoxin — watch for toxicity."},
+
+{id:"levofloxacin",cat:"H. pylori Antibiotics",ck:"hp",emoji:"🦠",name:"Levofloxacin",
+oneLiner:"Fluoroquinolone. Inhibits DNA gyrase + topoisomerase IV. <strong>Salvage H. pylori therapy</strong> when first-line fails.",
+path:"Inhibits bacterial <strong>topoisomerase II (DNA gyrase)</strong> + <strong>topoisomerase IV</strong> → prevents DNA supercoiling + replication. Bactericidal.",
+clin:"<ul><li>H. pylori salvage therapy (2nd-line after failed triple/quad)</li><li>UTI, pyelonephritis, prostatitis</li><li>Atypical pneumonia, community-acquired pneumonia</li><li>Tuberculosis (MDR)</li></ul>",
+dx:"<ul><li><strong>Tendon rupture</strong> (Achilles, especially in elderly + steroid users) — black box warning</li><li><strong>QT prolongation</strong> → torsades</li><li>CNS effects — seizures, confusion</li><li><strong>Cartilage damage</strong> → contraindicated in kids &amp; pregnancy</li><li>C. difficile risk (disrupts flora)</li><li>GI upset, photosensitivity</li></ul>",
+hy:["<strong>Tendon rupture</strong> (esp. Achilles + elderly + steroids)","<strong>Avoid in kids + pregnancy</strong>","QT prolongation","<strong>C. diff risk</strong> (one of the '4 C's')"],
+mn:"<strong>4 C's</strong> of C. diff antibiotics: <strong>C</strong>lindamycin, <strong>C</strong>ephalosporins, <strong>C</strong>iprofloxacin (fluoroquinolones), ampi<strong>C</strong>illin."},
+
+// ═══════════════ H2 BLOCKERS ═══════════════
+{id:"cimetidine",cat:"H2 Blockers",ck:"h2",emoji:"🛑",name:"Cimetidine (Tagamet)",
+oneLiner:"First H2 antagonist. Competitively blocks H2 receptor on parietal cells → ↓ acid. <strong>Many side effects — rarely used now</strong>.",
+path:"Competitively inhibits <strong>H2 histamine receptor</strong> on basolateral membrane of parietal cells → ↓ Gs-mediated adenylate cyclase activation → ↓ cAMP → ↓ H+/K+ ATPase activity → ↓ acid secretion.",
+clin:"<ul><li>Historically: PUD, GERD, gastritis, stress ulcer prophylaxis</li><li>Rarely used clinically now due to side effect profile</li></ul>",
+dx:"<ul><li><strong>Antiandrogenic effects</strong>: gynecomastia, galactorrhea, impotence, decreased libido (inhibits androgen receptors + increases prolactin)</li><li><strong>Potent CYP450 inhibitor</strong> → many drug interactions (warfarin, phenytoin, theophylline, lidocaine)</li><li>Crosses BBB → <strong>confusion</strong> in elderly</li><li>Crosses placenta</li><li>↓ creatinine clearance (inhibits tubular secretion)</li></ul>",
+hy:["<strong>Antiandrogenic (gynecomastia, impotence)</strong>","<strong>Potent CYP inhibitor</strong>","Confusion in elderly","Rarely used now"],
+trap:"'Cimetidine' = 'See Men Die' from gynecomastia + sexual side effects. Famotidine has virtually none of these."},
+
+{id:"famotidine",cat:"H2 Blockers",ck:"h2",emoji:"🛑",name:"Famotidine (Pepcid)",
+oneLiner:"Most commonly used H2 blocker. <strong>Minimal side effects</strong>. No antiandrogenic effects; no CYP inhibition.",
+path:"Same mechanism as cimetidine: competitive H2 receptor antagonist → ↓ acid secretion. ~20–50× more potent than cimetidine.",
+clin:"<ul><li>GERD (1st-line OTC acid reducer)</li><li>PUD</li><li>Allergic reactions (H2 histamine contribution; combined with H1 blockers)</li><li>Stress ulcer prophylaxis (weaker than PPIs)</li></ul>",
+dx:"<ul><li>Minimal — occasionally headache, constipation, confusion in elderly</li><li>No antiandrogenic effects</li><li>No significant CYP inhibition</li></ul>",
+hy:["Preferred H2 blocker","No antiandrogenic SE","No CYP inhibition","OTC"]},
+
+{id:"ranitidine",cat:"H2 Blockers",ck:"h2",emoji:"🛑",name:"Ranitidine (Zantac)",
+oneLiner:"Formerly popular H2 blocker. <strong>WITHDRAWN 2020</strong> due to NDMA (nitrosamine) contamination — a probable human carcinogen.",
+path:"H2 receptor antagonist — same mechanism as cimetidine/famotidine. Moderate potency.",
+clin:"<ul><li>Historical use: GERD, PUD</li><li>No longer commercially available in US + many other markets</li></ul>",
+dx:"<strong>NDMA contamination</strong> found in samples → probable carcinogen → voluntary withdrawal + FDA recall (2020).",
+hy:["<strong>Withdrawn 2020 — NDMA carcinogen</strong>","Was popular but no longer available","Substitutes: famotidine"]},
+
+// ═══════════════ PPIs ═══════════════
+{id:"omeprazole",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Omeprazole (Prilosec)",
+oneLiner:"Prototype PPI. <strong>Irreversibly inhibits H+/K+ ATPase</strong>. Prodrug activated in acidic canaliculi. Most potent acid suppression.",
+path:"<strong>Prodrug</strong> — weak base that accumulates in acidic secretory canaliculi of parietal cells → activated to sulfenamide → <strong>covalently + irreversibly binds H+/K+ ATPase</strong> (proton pump) → blocks acid secretion. Restoration of acid requires synthesis of new pump (24–48 hr).",
+clin:"<ul><li><strong>PUD</strong>, <strong>GERD</strong> (erosive esophagitis)</li><li><strong>Zollinger-Ellison</strong> (gastrinoma)</li><li><strong>H. pylori eradication</strong> (+ antibiotics)</li><li><strong>Stress ulcer prophylaxis</strong> in ICU</li><li>Barrett esophagus</li></ul>",
+dx:"<ul><li>Short-term: headache, GI upset, rash</li><li><strong>Long-term use (&gt;1 year)</strong>:<ul><li>↑ risk <strong>C. diff colitis</strong></li><li>↑ <strong>pneumonia</strong> (↓ gastric bacterial killing)</li><li><strong>Hypomagnesemia</strong></li><li><strong>Vitamin B12 deficiency</strong> (needs acid for absorption)</li><li><strong>Osteoporosis / hip fractures</strong> (↓ Ca absorption)</li><li><strong>Rebound acid hypersecretion</strong> on discontinuation</li><li>Gastric polyps (fundic gland)</li><li>May mask gastric cancer symptoms</li></ul></li></ul>",
+tx:"<strong>Take BEFORE meals</strong> (proton pumps active after food). Metabolized by <strong>CYP2C19</strong> (→ interactions with clopidogrel: omeprazole reduces antiplatelet effect).",
+hy:["<strong>Irreversible binding</strong>","Take before meals","CYP2C19 → <strong>reduces clopidogrel efficacy</strong>","Long-term: C. diff, osteoporosis, B12 def, hypoMg","Rebound acid on withdrawal"],
+trap:"Pantoprazole has least CYP interaction (preferred if on clopidogrel). Omeprazole/esomeprazole interact most."},
+
+{id:"esomeprazole",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Esomeprazole (Nexium)",
+oneLiner:"S-isomer of omeprazole. Slightly longer half-life. Same mechanism + same side effect profile.",
+path:"Pure S-enantiomer of omeprazole — cleaner pharmacokinetics (less variability). Same irreversible H+/K+ ATPase binding.",
+clin:"Same as omeprazole: GERD, PUD, Zollinger-Ellison, H. pylori.",
+dx:"Same as omeprazole. Still CYP2C19 metabolized (clopidogrel interaction).",
+hy:["S-isomer of omeprazole","Marketed as 'better' but similar","Clopidogrel interaction"]},
+
+{id:"lansoprazole",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Lansoprazole (Prevacid)",
+oneLiner:"PPI. Same mechanism as omeprazole. Slightly faster onset.",
+path:"Proton pump inhibitor — same irreversible binding to H+/K+ ATPase.",
+clin:"Same indications: PUD, GERD, Zollinger-Ellison, H. pylori.",
+dx:"Same class effects as omeprazole. CYP2C19/3A4 metabolism.",
+hy:["PPI class effects","Slightly faster onset than omeprazole"]},
+
+{id:"pantoprazole",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Pantoprazole (Protonix)",
+oneLiner:"PPI with <strong>FEWEST drug interactions</strong> (minimal CYP effects). Available <strong>IV</strong> — preferred in ICU + GI bleed.",
+path:"Same irreversible H+/K+ ATPase binding. Metabolized primarily via <strong>CYP2C19 but less potent inhibitor</strong> than omeprazole.",
+clin:"<ul><li>GI bleed (IV) — ICU setting, variceal + peptic</li><li>Stress ulcer prophylaxis in ICU</li><li>GERD, PUD, ZE</li><li>Preferred when patient also on clopidogrel</li></ul>",
+dx:"Same class effects (long-term C. diff, osteoporosis, etc.).",
+hy:["<strong>IV available</strong> → ICU/bleed","<strong>Least CYP interactions</strong> of PPIs","Preferred with clopidogrel"]},
+
+// ═══════════════ P-CABs ═══════════════
+{id:"vonoprazan",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Vonoprazan (Voquezna)",
+oneLiner:"<strong>Potassium-competitive acid blocker (P-CAB)</strong>. Reversibly blocks K⁺ site on H+/K+ ATPase. <strong>Doesn't need food</strong>, fast onset.",
+path:"<strong>Reversibly</strong> and competitively inhibits the <strong>K⁺ binding site</strong> on H+/K+ ATPase (different site than PPIs). Does NOT require activation by acid → effective on first dose without food. Highly stable at gastric pH. Longer duration of acid suppression than PPIs (~24 hr).",
+clin:"<ul><li>Erosive esophagitis (superior to PPIs in healing)</li><li><strong>H. pylori eradication</strong> (with amoxicillin ± clarithromycin — vonoprazan-based regimens approved)</li><li>PUD, NSAID-induced ulcers</li><li>Nighttime acid breakthrough (better than PPIs for nocturnal control)</li></ul>",
+dx:"<ul><li>Hypergastrinemia (more pronounced than PPIs)</li><li>Fundic gland polyps</li><li>Generally similar long-term risks as PPIs (C. diff, B12, osteoporosis — emerging data)</li></ul>",
+hy:["<strong>Reversible</strong> (unlike PPIs)","<strong>No food requirement</strong> (acts on first dose)","Fast onset","Better nocturnal acid control","Newer H. pylori regimens"]},
+
+{id:"tegoprazan",cat:"PPIs & P-CABs",ck:"ppi",emoji:"🔒",name:"Tegoprazan (K-CAB)",
+oneLiner:"Another P-CAB. Same class as vonoprazan. Primarily used in South Korea + other Asian markets.",
+path:"Reversible K⁺-competitive inhibitor of H+/K+ ATPase.",
+clin:"Erosive esophagitis, GERD, PUD, H. pylori. Similar profile to vonoprazan.",
+hy:["Asian markets","Same class as vonoprazan","Rapid + reversible acid suppression"]},
+
+// ═══════════════ ANTACIDS & ANTICHOLINERGIC ═══════════════
+{id:"atropine",cat:"Antacids & Anticholinergic",ck:"ant",emoji:"🧂",name:"Atropine",
+oneLiner:"Muscarinic antagonist. Rarely used for acid suppression now. In <strong>Lomotil</strong> at sub-therapeutic dose as abuse deterrent.",
+path:"Competitive antagonist at all <strong>muscarinic receptors (M1–M5)</strong>. In stomach: blocks M1 + M3 on parietal cells → ↓ acid. Also blocks motility + secretions throughout body.",
+clin:"<ul><li>Bradycardia (opens AV node — M2 antagonism)</li><li>Organophosphate poisoning</li><li>Pre-op drying of secretions</li><li>Pupil dilation (ophthalmology)</li><li>In <strong>Lomotil</strong> (diphenoxylate + atropine) — deterrent dose</li></ul>",
+dx:"<strong>Anticholinergic toxidrome</strong>: 'Hot as a hare, dry as a bone, red as a beet, blind as a bat, mad as a hatter' — dry mouth, blurry vision, urinary retention, constipation, tachycardia, hyperthermia, delirium.",
+hy:["<strong>Anticholinergic toxidrome</strong> (hot/dry/red/blind/mad)","In Lomotil as abuse deterrent","Not first-line for acid now","Jimsonweed toxicity"]},
+
+{id:"sodium-bicarb",cat:"Antacids & Anticholinergic",ck:"ant",emoji:"🧂",name:"Sodium Bicarbonate",
+oneLiner:"Chemical neutralizer: <strong>NaHCO₃ + HCl → NaCl + H₂O + CO₂</strong>. Fast onset, short duration. Systemic alkalosis risk.",
+path:"Neutralizes gastric HCl directly. Produces CO₂ gas (belching). Bicarbonate is absorbed → can cause systemic alkalosis with overuse.",
+clin:"Quick relief of heartburn (self-medication). Not for chronic use.",
+dx:"<ul><li><strong>Metabolic alkalosis</strong> (systemic)</li><li>Gas/belching</li><li>Sodium overload → HTN, fluid retention, CHF exacerbation</li><li>Rebound acid hypersecretion</li></ul>",
+hy:["Systemic absorption → alkalosis","High sodium → HTN/CHF","Gas/belching"]},
+
+{id:"calcium-carbonate",cat:"Antacids & Anticholinergic",ck:"ant",emoji:"🧂",name:"Calcium Carbonate (Tums)",
+oneLiner:"Chemical neutralizer + calcium supplement. <strong>Milk-alkali syndrome</strong> with excess + dairy.",
+path:"<strong>CaCO₃ + 2 HCl → CaCl₂ + H₂O + CO₂</strong>. Potent, longer duration than NaHCO₃. Provides dietary calcium.",
+clin:"<ul><li>Heartburn (OTC)</li><li>Osteoporosis prevention (Ca supplement)</li><li>Hyperphosphatemia in CKD (phosphate binder)</li></ul>",
+dx:"<ul><li><strong>Constipation</strong></li><li><strong>Rebound acid hypersecretion</strong> (calcium stimulates gastrin)</li><li><strong>Milk-alkali syndrome</strong>: hypercalcemia + metabolic alkalosis + acute kidney injury (classic triad from Ca + absorbable alkali excess)</li><li>Hypercalcemia</li></ul>",
+hy:["<strong>Milk-alkali syndrome</strong> (hyperCa + alkalosis + AKI)","Rebound acid (gastrin rise)","Constipation","Phosphate binder in CKD"],
+trap:"Milk-alkali syndrome is a classic Step 1 vignette: elderly woman on Tums + calcium + dairy → nausea, confusion, ↑ Ca, ↑ HCO₃⁻, ↑ Cr."},
+
+{id:"mag-hydroxide",cat:"Antacids & Anticholinergic",ck:"ant",emoji:"🧂",name:"Magnesium Hydroxide",
+oneLiner:"Neutralizer + osmotic laxative. <strong>'Mg = Must Go'</strong> (diarrhea). Hypermagnesemia in CKD.",
+path:"<strong>Mg(OH)₂ + 2 HCl → MgCl₂ + 2 H₂O</strong>. Unabsorbed Mg²⁺ acts osmotically in gut → draws water in → laxative effect.",
+clin:"<ul><li>Antacid (heartburn)</li><li>Osmotic laxative (Milk of Magnesia)</li><li>Often combined with Al(OH)₃ to balance bowel effects</li></ul>",
+dx:"<ul><li><strong>Diarrhea</strong> (from osmotic effect)</li><li><strong>Hypermagnesemia</strong> in renal failure (can't excrete Mg) → weakness, bradycardia, hyporeflexia, cardiac arrest</li></ul>",
+hy:["<strong>'Mg = Must Go'</strong> (diarrhea)","Hypermagnesemia in CKD","Combined with Al in antacids"]},
+
+{id:"al-hydroxide",cat:"Antacids & Anticholinergic",ck:"ant",emoji:"🧂",name:"Aluminum Hydroxide",
+oneLiner:"Neutralizer + phosphate binder. <strong>'Al = Ain't Leaving'</strong> (constipation). Phosphate binder in CKD.",
+path:"<strong>Al(OH)₃ + 3 HCl → AlCl₃ + 3 H₂O</strong>. Binds dietary phosphate → prevents absorption.",
+clin:"<ul><li>Antacid</li><li>Phosphate binder in CKD (historically — now largely replaced by sevelamer due to toxicity)</li><li>Combined with Mg(OH)₂ in most antacid products</li></ul>",
+dx:"<ul><li><strong>Constipation</strong></li><li><strong>Hypophosphatemia</strong> (binds dietary P)</li><li><strong>Aluminum accumulation in dialysis patients</strong>: encephalopathy (dementia), osteomalacia (bone pain), microcytic anemia</li></ul>",
+hy:["<strong>'Al = Ain't Leaving'</strong> (constipation)","Aluminum toxicity in dialysis","Phosphate binder"],
+mn:"<strong>Mg = Must Go</strong> (diarrhea); <strong>Al = Ain't Leaving</strong> (constipation). Combined in Maalox to balance."},
+
+// ═══════════════ CYTOPROTECTIVE ═══════════════
+{id:"sucralfate",cat:"Cytoprotective Agents",ck:"cyto",emoji:"🛡️",name:"Sucralfate",
+oneLiner:"Sucrose octasulfate + Al(OH)₃. <strong>Requires acid</strong> to form sticky gel that coats ulcer bed. Don't combine with PPIs.",
+path:"In <strong>acidic environment</strong>, sucralfate polymerizes into a <strong>viscous, sticky gel</strong> that selectively binds to <strong>positively-charged ulcer surfaces</strong> (exposed proteins). Forms a physical barrier over ulcer → protects from acid + pepsin. Also stimulates prostaglandin + bicarbonate + mucus secretion.",
+clin:"<ul><li>PUD (adjunct)</li><li>Stress ulcer prophylaxis in ICU (alternative to PPI/H2 — doesn't raise gastric pH → lower risk of pneumonia)</li><li>Bile reflux gastritis</li><li>Radiation proctitis/esophagitis</li></ul>",
+dx:"<ul><li><strong>Constipation</strong> (Al content)</li><li>Binds/interferes with absorption of other drugs (fluoroquinolones, digoxin, warfarin, phenytoin) — space doses</li><li>Hypophosphatemia (Al-phosphate binding)</li></ul>",
+tx:"<strong>Needs acidic pH</strong> to polymerize. <strong>Don't give with PPI or H2 blocker</strong> — lose efficacy in neutral environment.",
+hy:["<strong>Needs acid environment</strong>","Don't combine with PPI/H2","Stress ulcer prophylaxis (doesn't raise pH)","Space from other drugs"]},
+
+{id:"misoprostol",cat:"Cytoprotective Agents",ck:"cyto",emoji:"🛡️",name:"Misoprostol (Cytotec)",
+oneLiner:"<strong>PGE1 analog</strong>. Replaces prostaglandins suppressed by NSAIDs. <strong>CONTRAINDICATED in pregnancy</strong> (abortifacient).",
+path:"Prostaglandin E1 analog. Two parietal cell actions: (1) <strong>↓ acid secretion</strong> (Gi-coupled — opposite of histamine's Gs); (2) <strong>↑ mucus + bicarbonate + mucosal blood flow</strong>. Also: <strong>uterine smooth muscle contractions</strong> + cervical softening.",
+clin:"<ul><li><strong>NSAID-induced ulcer prevention</strong> (high-risk chronic NSAID users — elderly, prior GI bleed)</li><li><strong>Cervical ripening + labor induction</strong> (unique obstetric use)</li><li><strong>Medical abortion</strong> (with mifepristone for pregnancy termination)</li><li><strong>Postpartum hemorrhage</strong> (off-label)</li></ul>",
+dx:"<ul><li>Diarrhea, abdominal cramps</li><li><strong>Uterine contractions / abortion risk</strong> — CATEGORY X for treating ulcers in pregnancy</li></ul>",
+hy:["<strong>PGE1 analog</strong>","<strong>NSAID ulcer prevention</strong>","<strong>Abortifacient — avoid in pregnancy (except intentionally)</strong>","Cervical ripening"],
+trap:"Misoprostol for ulcers = contraindicated in pregnancy. Same drug is used intentionally for abortion or labor induction — different dose/context."},
+
+// ═══════════════ EMETICS ═══════════════
+{id:"ipecac",cat:"Emetics",ck:"em",emoji:"🤮",name:"Syrup of Ipecac (Emetine)",
+oneLiner:"Central + peripheral emetic. <strong>No longer recommended</strong> for poisoning (causes harm).",
+path:"Two mechanisms: (1) direct irritation of gastric mucosa; (2) stimulation of <strong>chemoreceptor trigger zone (CTZ)</strong> via emetine. Induces vomiting in 15–30 min.",
+clin:"<ul><li>Historically: household poisoning (oral ingestion)</li><li><strong>NO longer recommended</strong> — AAP withdrew recommendation 2003</li><li>Replaced by activated charcoal + supportive care for most poisonings</li></ul>",
+dx:"<ul><li>Prolonged vomiting</li><li>Mallory-Weiss tears, aspiration pneumonia</li><li><strong>Cardiotoxicity (cardiomyopathy)</strong> with chronic abuse (bulimia)</li><li>Electrolyte disturbances</li></ul>",
+hy:["<strong>No longer recommended</strong>","Cardiomyopathy from chronic use (bulimia)","Activated charcoal preferred"]},
+
+{id:"apomorphine",cat:"Emetics",ck:"em",emoji:"🤮",name:"Apomorphine",
+oneLiner:"<strong>Dopamine D2 agonist</strong>. Stimulates CTZ → vomiting. Main modern use: <strong>Parkinson's 'off' episodes</strong>.",
+path:"Dopamine D2 receptor agonist → activates chemoreceptor trigger zone (CTZ in area postrema, which uses dopamine receptors) → vomiting. In Parkinson's, crosses BBB → improves motor symptoms.",
+clin:"<ul><li><strong>Parkinson's disease</strong>: rescue treatment for sudden 'off' periods (SC injection)</li><li>Historical emetic use (rarely)</li></ul>",
+dx:"<ul><li>Severe nausea, vomiting (when used as emetic — intended effect)</li><li>Orthostatic hypotension</li><li>QT prolongation</li><li>Yawning, somnolence</li></ul>",
+hy:["<strong>D2 agonist → CTZ</strong>","Parkinson's rescue therapy (primary modern use)","Not 'morphine' — apo + morphine (structural)"]},
+
+// ═══════════════ ANTIEMETICS ═══════════════
+{id:"ondansetron",cat:"Antiemetics",ck:"aem",emoji:"😌",name:"Ondansetron (Zofran)",
+oneLiner:"<strong>5-HT3 receptor antagonist</strong>. First-line for <strong>chemotherapy-induced N/V</strong>. QT prolongation.",
+path:"Blocks <strong>serotonin (5-HT3) receptors</strong> in:<br>• <strong>Chemoreceptor trigger zone (CTZ)</strong> in area postrema<br>• <strong>Peripheral vagal afferents</strong> in GI tract (enterochromaffin cells of gut)<br>Chemo damages gut enterochromaffin cells → serotonin release → vagal afferents → vomiting center. Ondansetron blocks this cascade.",
+clin:"<ul><li><strong>Chemotherapy-induced N/V</strong> (first-line)</li><li>Radiation-induced N/V</li><li>Post-operative N/V</li><li>Hyperemesis gravidarum (often off-label, though safety generally acceptable)</li></ul>",
+dx:"<ul><li><strong>QT prolongation → torsades</strong> (especially with other QT drugs)</li><li>Headache (common)</li><li>Constipation</li><li>Serotonin syndrome risk (rare, when combined with SSRIs)</li></ul>",
+hy:["<strong>5-HT3 antagonist</strong>","<strong>Chemo N/V first-line</strong>","<strong>QT prolongation</strong>","Constipation"]},
+
+{id:"metoclopramide",cat:"Antiemetics",ck:"aem",emoji:"😌",name:"Metoclopramide (Reglan)",
+oneLiner:"<strong>D2 antagonist + 5-HT4 agonist</strong>. <strong>Prokinetic</strong> — promotes gastric emptying. Used in <strong>gastroparesis</strong>. <strong>EPS risk</strong>.",
+path:"<strong>Central</strong>: D2 receptor antagonist in CTZ → antiemetic effect.<br><strong>Peripheral</strong>: 5-HT4 agonist → ↑ ACh release from myenteric neurons → ↑ LES tone + ↑ gastric emptying + ↑ intestinal peristalsis.",
+clin:"<ul><li><strong>Diabetic gastroparesis</strong></li><li>Persistent GERD (adjunct)</li><li>Post-op N/V, chemo N/V</li><li>Migraine-associated vomiting</li><li>Facilitates passage of NG tube through pylorus</li></ul>",
+dx:"<ul><li><strong>Extrapyramidal symptoms (EPS)</strong>: dystonia (acute), akathisia, parkinsonism, <strong>tardive dyskinesia</strong> (black box warning — esp. elderly + long-term use)</li><li>Hyperprolactinemia → galactorrhea (D2 blockade in pituitary)</li><li>Diarrhea</li><li>Sedation, depression</li><li><strong>Contraindicated in bowel obstruction, Parkinson's disease, pheochromocytoma, GI bleed</strong></li></ul>",
+hy:["<strong>Prokinetic</strong> via 5-HT4 + D2","<strong>EPS + tardive dyskinesia</strong>","Contraindicated in obstruction + PD","Gastroparesis"],
+trap:"Metoclopramide = D2 blocker → can worsen Parkinson's disease symptoms. Contraindicated in PD."},
+
+{id:"chlorpromazine",cat:"Antiemetics",ck:"aem",emoji:"😌",name:"Chlorpromazine",
+oneLiner:"Typical antipsychotic (low potency). <strong>D2 antagonist</strong> → antiemetic + antipsychotic. Classic side effect: <strong>corneal deposits</strong>.",
+path:"Phenothiazine that blocks multiple receptors: <strong>D2 (antipsychotic + antiemetic via CTZ)</strong>, H1 (sedation), α1 (orthostasis), M1 (anticholinergic effects).",
+clin:"<ul><li>Nausea + vomiting (esp. chemotherapy, postoperative)</li><li><strong>Intractable hiccups</strong> (classic, unique use)</li><li>Psychosis (schizophrenia — historical)</li></ul>",
+dx:"<ul><li>EPS, tardive dyskinesia</li><li>Sedation (H1), orthostatic hypotension (α1)</li><li>Anticholinergic effects</li><li><strong>Corneal + lens deposits</strong> (unique to chlorpromazine)</li><li>Skin deposits (gray-blue discoloration)</li><li>QT prolongation</li><li>Hepatotoxicity (cholestasis)</li></ul>",
+hy:["<strong>Corneal deposits</strong> (unique)","<strong>Intractable hiccups</strong>","D2 antagonist","Low-potency typical antipsychotic"]},
+
+{id:"nabilone",cat:"Antiemetics",ck:"aem",emoji:"😌",name:"Nabilone",
+oneLiner:"<strong>Synthetic cannabinoid (THC analog)</strong>. CB1 agonist. <strong>Refractory chemo N/V</strong> after 5-HT3 failure.",
+path:"Activates <strong>CB1 cannabinoid receptors</strong> in brain (vomiting center + CTZ) → antiemetic effect. Similar to dronabinol.",
+clin:"<ul><li><strong>Refractory chemotherapy-induced N/V</strong> (when 5-HT3 antagonists fail)</li><li>AIDS-related anorexia/cachexia</li></ul>",
+dx:"<ul><li>Euphoria, dysphoria</li><li>Drowsiness, dizziness</li><li>Dry mouth</li><li>↑ appetite (desired in cachexia)</li><li>Tachycardia</li><li>Orthostatic hypotension</li></ul>",
+hy:["Cannabinoid — CB1 agonist","Refractory chemo N/V","AIDS wasting","Schedule II controlled substance"]},
+
+// ═══════════════ MOTION SICKNESS ═══════════════
+{id:"scopolamine",cat:"Motion Sickness Drugs",ck:"mot",emoji:"🚢",name:"Scopolamine",
+oneLiner:"Muscarinic antagonist. <strong>Transdermal patch</strong> behind ear for motion sickness. Anticholinergic effects.",
+path:"Blocks <strong>muscarinic receptors (M1)</strong> in the vestibular system + vomiting center → prevents motion-induced nausea. Lipophilic → crosses BBB.",
+clin:"<ul><li><strong>Motion sickness</strong> (patch behind ear, applied 4 hr before travel)</li><li>Pre-op secretion drying</li><li>Postoperative nausea</li></ul>",
+dx:"<ul><li>Anticholinergic: dry mouth, blurry vision, urinary retention, constipation</li><li>Confusion/delirium (especially elderly)</li><li>Unilateral mydriasis (if patient touches eye after patch)</li><li>Withdrawal after patch removal: dizziness, N/V</li></ul>",
+hy:["<strong>Transdermal patch behind ear</strong>","<strong>Prevents</strong> (not treats) motion sickness","Anticholinergic effects","Unilateral pupil dilation if touches eye"]},
+
+{id:"dimenhydrinate",cat:"Motion Sickness Drugs",ck:"mot",emoji:"🚢",name:"Dimenhydrinate (Dramamine)",
+oneLiner:"First-generation H1 antihistamine (+ anticholinergic). OTC motion sickness drug.",
+path:"H1 receptor antagonist with anticholinergic activity — crosses BBB → sedation + antiemetic effects on vomiting center + vestibular system.",
+clin:"<ul><li>Motion sickness (prevent + treat)</li><li>Vertigo</li><li>Nausea/vomiting</li></ul>",
+dx:"<ul><li>Sedation (significant)</li><li>Anticholinergic effects</li><li>Paradoxical excitation in children</li></ul>",
+hy:["First-gen H1","Sedating","OTC","Anticholinergic"]},
+
+{id:"diphenhydramine",cat:"Motion Sickness Drugs",ck:"mot",emoji:"🚢",name:"Diphenhydramine (Benadryl)",
+oneLiner:"First-gen H1 antihistamine + anticholinergic + sedating. Multiple uses: allergy, sleep, motion sickness, <strong>acute dystonia</strong>.",
+path:"H1 receptor antagonist that crosses BBB → sedation + antiemetic effects. Also blocks muscarinic receptors → anticholinergic effects.",
+clin:"<ul><li>Motion sickness, N/V</li><li>Allergic reactions (anaphylaxis adjunct)</li><li>Insomnia (OTC sleep aids)</li><li><strong>Acute dystonia</strong> from antipsychotics (crosses BBB → blocks central anticholinergic deficit)</li></ul>",
+dx:"<ul><li>Sedation, drowsiness</li><li>Anticholinergic effects</li><li>Confusion/delirium in elderly (Beers list — avoid)</li><li>Paradoxical excitation in children</li></ul>",
+hy:["<strong>Acute dystonia reversal</strong> from antipsychotics","First-gen H1 — sedating","Beers list (avoid in elderly)","Multiple uses"]},
+
+// ═══════════════ ANTIDIARRHEALS ═══════════════
+{id:"ors",cat:"Antidiarrheals",ck:"ad",emoji:"🚫",name:"Oral Rehydration Solution (ORS)",
+oneLiner:"Glucose + sodium + electrolyte solution. <strong>Lifesaving for diarrheal dehydration</strong> (cholera, rotavirus). WHO essential medicine.",
+path:"Exploits the <strong>Na⁺-glucose cotransport (SGLT1)</strong> in intact small bowel enterocytes: glucose drives sodium absorption even when cholera toxin/ETEC toxins are active; water follows osmotically. Bypasses the toxin-damaged secretory pathway.",
+clin:"<ul><li><strong>Cholera</strong> — massive impact in global health (mortality &lt;1% vs &gt;50% without)</li><li>Rotavirus diarrhea in children</li><li>Any dehydrating diarrhea (travelers, ETEC)</li></ul>",
+dx:"<ul><li>Hypernatremia if improperly mixed</li><li>Vomiting if given too rapidly</li></ul>",
+hy:["<strong>SGLT1-mediated Na+ cotransport</strong>","<strong>Lifesaving in cholera</strong>","WHO essential medicine","Bypasses toxin-damaged crypt secretion"]},
+
+{id:"lomotil",cat:"Antidiarrheals",ck:"ad",emoji:"🚫",name:"Diphenoxylate + Atropine (Lomotil)",
+oneLiner:"Weak μ-opioid agonist + atropine (deterrent). Slows gut motility. <strong>Contraindicated in bloody / infectious diarrhea</strong>.",
+path:"Diphenoxylate activates <strong>μ-opioid receptors</strong> on myenteric plexus → ↓ gut motility + ↑ water absorption. Small dose of <strong>atropine added at sub-therapeutic levels as abuse deterrent</strong> (makes it unpleasant at supratherapeutic doses). Less potent than loperamide.",
+clin:"<ul><li>Non-infectious, non-bloody diarrhea</li><li>IBS-D</li></ul>",
+dx:"<ul><li>Opioid effects at high dose: euphoria, respiratory depression</li><li>Anticholinergic effects (atropine component)</li><li><strong>CONTRAINDICATED in EHEC, C. diff, invasive bloody diarrhea</strong> (prolongs toxin exposure → toxic megacolon, HUS)</li><li>Abuse potential (controlled substance)</li></ul>",
+hy:["<strong>Atropine = abuse deterrent</strong>","μ-opioid at therapeutic dose","<strong>CI in infectious/bloody diarrhea</strong>","Controlled substance"]},
+
+{id:"loperamide",cat:"Antidiarrheals",ck:"ad",emoji:"🚫",name:"Loperamide (Imodium)",
+oneLiner:"<strong>Peripheral μ-opioid agonist</strong>. OTC antidiarrheal. Doesn't cross BBB at therapeutic dose → no opioid high.",
+path:"Binds <strong>μ-opioid receptors on myenteric plexus</strong> → ↓ ACh release → ↓ peristalsis + ↑ water/electrolyte absorption. P-glycoprotein substrate — actively pumped out of CNS → no central effects at therapeutic doses.",
+clin:"<ul><li>Acute + chronic non-infectious diarrhea</li><li>IBS-D</li><li>High-output ileostomy</li><li>Traveler's diarrhea (non-invasive)</li></ul>",
+dx:"<ul><li>Constipation</li><li>Abdominal cramping</li><li><strong>Abuse at high doses</strong> → saturates P-gp → CNS penetration → euphoria + cardiotoxicity (QT prolongation, torsades, sudden death — especially with CYP inhibitors)</li><li><strong>CONTRAINDICATED in bloody/infectious diarrhea</strong> (C. diff, EHEC) → toxic megacolon, HUS</li></ul>",
+hy:["<strong>No BBB penetration</strong> (P-gp)","OTC","<strong>CI in infectious/bloody diarrhea</strong>","High-dose abuse → cardiotoxicity"]},
+
+{id:"bismuth-ad",cat:"Antidiarrheals",ck:"ad",emoji:"🚫",name:"Bismuth Subsalicylate (Pepto-Bismol) — Antidiarrheal",
+oneLiner:"Also used in antidiarrheal context. Antimicrobial + mucosal coat + antisecretory. Black stool benign.",
+path:"Multi-mechanism (see H. pylori entry): antimicrobial, mucosal coating, antisecretory via salicylate component, anti-inflammatory.",
+clin:"<ul><li>Traveler's diarrhea (prophylaxis + acute)</li><li>Dyspepsia, mild gastritis</li><li>Adjunct to ORS</li></ul>",
+dx:"Black stool + black tongue (benign). Salicylate toxicity with excess. Reye syndrome risk in kids with viral illness.",
+hy:["<strong>Black stool + tongue</strong>","Traveler's diarrhea prophylaxis","Reye risk in kids","Antimicrobial effect too"]},
+
+// ═══════════════ LAXATIVES ═══════════════
+{id:"psyllium",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Psyllium (Metamucil)",
+oneLiner:"<strong>Bulk-forming</strong> laxative. Soluble fiber absorbs water → bulky, soft stool → promotes peristalsis.",
+path:"Indigestible plant fiber. Absorbs water → bulks + softens stool → physically stretches colon → stimulates peristalsis via stretch reflex.",
+clin:"<ul><li>Chronic constipation (first-line)</li><li>IBS (both IBS-C and IBS-D — normalizes bowel habits)</li><li>Diverticular disease (prevents recurrence)</li><li>Hemorrhoids (soft stool → less straining)</li></ul>",
+dx:"<ul><li>Bloating, gas (initially)</li><li>Obstruction if inadequate water (must take with fluids)</li><li>Allergic reactions (rare)</li></ul>",
+hy:["<strong>Bulk-forming</strong>","Take with water","Safe for chronic use","IBS + diverticular disease"]},
+
+{id:"sorbitol",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Sorbitol",
+oneLiner:"<strong>Non-absorbed sugar alcohol</strong>. Osmotic laxative. Classic 'sugar-free candy' GI distress.",
+path:"Poorly absorbed sugar alcohol. Retains water in gut lumen osmotically → softens + bulks stool → promotes evacuation.",
+clin:"<ul><li>Constipation (OTC)</li><li>Prior use with polystyrene sulfonate for hyperkalemia (GI-distress association)</li><li>'Sugar-free' sweetener in foods (diabetic chewing gum → diarrhea)</li></ul>",
+dx:"<ul><li>Bloating, cramping, flatulence</li><li>Diarrhea (at higher doses)</li></ul>",
+hy:["Osmotic","Sugar alcohol","'Sugar-free gum diarrhea'","Found in sugar-free foods"]},
+
+{id:"peg",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Polyethylene Glycol / PEG (Miralax)",
+oneLiner:"<strong>Osmotic laxative</strong>. Non-absorbable polymer. First-line for chronic constipation. Safe, well-tolerated.",
+path:"High-MW polymer not absorbed in gut. Retains water osmotically → soft, bulky stool. No significant electrolyte shifts at standard doses.",
+clin:"<ul><li>Chronic constipation (first-line adult + pediatric)</li><li>IBS-C</li><li>Functional constipation</li></ul>",
+dx:"<ul><li>Minimal — bloating, occasional diarrhea</li><li>Rarely electrolyte disturbances at usual doses</li></ul>",
+hy:["<strong>First-line osmotic laxative</strong>","Safe for chronic use","Non-absorbable polymer","Minimal electrolyte shifts"]},
+
+{id:"golytely",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"GoLytely (PEG + Electrolytes)",
+oneLiner:"High-volume PEG solution for <strong>colonoscopy prep</strong>. Electrolytes added to prevent dehydration.",
+path:"Same PEG osmotic mechanism — 4 L over evening + morning before colonoscopy delivers a massive osmotic bowel flush. Added Na⁺, K⁺, HCO₃⁻, Cl⁻ prevent electrolyte disturbances from rapid fluid shifts.",
+clin:"Colonoscopy preparation; some surgical bowel preps.",
+dx:"<ul><li>Nausea, bloating, abdominal discomfort</li><li>Aspiration risk if vomiting</li><li>Rare electrolyte disturbances</li></ul>",
+hy:["<strong>Colonoscopy prep</strong>","PEG + electrolytes = minimal shifts","Contrast with sodium phosphate prep (risk of AKI — rarely used now)"]},
+
+{id:"senna",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Senna",
+oneLiner:"<strong>Anthraquinone stimulant laxative</strong>. Activated by colonic bacteria. <strong>Melanosis coli</strong> with chronic use.",
+path:"Senna glycosides (anthraquinones) → reach colon intact → activated by colonic bacteria → <strong>directly irritate enteric nerve plexus</strong> → ↑ peristalsis + ↑ water/electrolyte secretion.",
+clin:"<ul><li>Short-term constipation relief</li><li><strong>Opioid-induced constipation</strong> (common in cancer/palliative care)</li><li>Pre-colonoscopy adjunct</li></ul>",
+dx:"<ul><li>Abdominal cramping</li><li><strong>Melanosis coli</strong>: brown/black pigmentation of colonic mucosa (histology: lipofuscin-laden macrophages) — benign, reversible</li><li>Dependence + atonic colon with chronic use</li><li>Hypokalemia, dehydration</li></ul>",
+hy:["<strong>Melanosis coli</strong> (pigmented colon — benign)","Opioid-induced constipation","Anthraquinone — bacterial activation","Short-term use only"]},
+
+{id:"cascara",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Cascara Sagrada",
+oneLiner:"Another <strong>anthraquinone stimulant laxative</strong>. Same mechanism + same melanosis coli risk as senna.",
+path:"Bark-derived anthraquinones. Same mechanism as senna — colonic bacterial activation → direct enteric nerve stimulation.",
+clin:"Historical use for constipation. Less commonly used now.",
+dx:"Similar to senna: cramping, melanosis coli, dependence.",
+hy:["Anthraquinone","Melanosis coli","Similar to senna"]},
+
+{id:"castor-oil",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Castor Oil (Ricinoleic Acid)",
+oneLiner:"Stimulant laxative hydrolyzed to <strong>ricinoleic acid</strong> in small bowel → stimulates SB peristalsis. Rapid onset.",
+path:"Hydrolyzed by pancreatic lipase in SB to <strong>ricinoleic acid</strong> → directly irritates small intestinal mucosa + stimulates peristalsis. Unlike other stimulant laxatives, acts primarily in SB (not colon).",
+clin:"<ul><li>Historical bowel prep</li><li>Emergency bowel evacuation</li><li>Rarely used now</li></ul>",
+dx:"<ul><li>Abdominal cramping, dehydration, electrolyte disturbances</li><li>Ricin (different protein from castor bean) is highly toxic — not the oil</li></ul>",
+hy:["<strong>SB-acting</strong> (unlike senna/bisacodyl)","Ricinoleic acid","Rapid onset","Ricin ≠ castor oil (don't confuse)"]},
+
+{id:"bisacodyl",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Bisacodyl (Dulcolax / Ex-Lax)",
+oneLiner:"<strong>Diphenylmethane stimulant laxative</strong>. Enteric-coated (dissolves in colon). Rapid onset.",
+path:"Hydrolyzed to active metabolite → <strong>stimulates colonic motility</strong> + ↑ water/electrolyte secretion. Works predominantly in colon.",
+clin:"<ul><li>Acute constipation</li><li>Bowel prep (combined with PEG)</li><li>Opioid-induced constipation</li></ul>",
+dx:"<ul><li>Cramping, abdominal pain</li><li>Chronic use: hypokalemia, atonic colon</li><li>Don't crush enteric-coated tablet (premature release → gastric irritation)</li></ul>",
+hy:["<strong>Diphenylmethane stimulant</strong> (different from senna anthraquinones)","Enteric coated","Don't crush","Rapid onset (~6 hr PO)"]},
+
+{id:"mag-citrate",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Magnesium Citrate",
+oneLiner:"<strong>Saline osmotic laxative</strong>. Used for bowel prep. Hypermagnesemia risk in CKD.",
+path:"Mg²⁺ salt poorly absorbed → osmotic retention of water in gut lumen → bowel evacuation.",
+clin:"<ul><li>Colonoscopy prep (alternative to PEG)</li><li>Acute constipation</li><li>Bowel cleansing before imaging</li></ul>",
+dx:"<ul><li>Diarrhea (intended)</li><li>Dehydration, electrolyte disturbances</li><li><strong>Hypermagnesemia in renal failure</strong> → weakness, bradycardia, hyporeflexia, cardiac arrest (fatal)</li></ul>",
+hy:["<strong>CI in CKD (hyperMg)</strong>","Bowel prep alternative","Saline osmotic"]},
+
+{id:"milk-of-magnesia",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Milk of Magnesia (Mg(OH)₂)",
+oneLiner:"Same Mg(OH)₂ as antacid. At higher doses, acts as saline osmotic laxative.",
+path:"Mg²⁺ osmotic effect in gut lumen → water retention → soft stool.",
+clin:"Antacid (low dose) + laxative (higher dose). OTC.",
+dx:"Hypermagnesemia in CKD. Diarrhea expected.",
+hy:["Dual use: antacid + laxative","CKD CI (hyperMg)"]},
+
+// ═══════════════ STOOL SOFTENER ═══════════════
+{id:"docusate",cat:"Laxatives",ck:"lax",emoji:"🚽",name:"Docusate / DSS (Colace)",
+oneLiner:"<strong>Surfactant stool softener</strong>. Allows water + fat into stool. Prevention, not treatment.",
+path:"Anionic surfactant (dioctyl sodium sulfosuccinate, DSS). <strong>Emulsifies stool</strong> — allows water + fat to penetrate dry fecal mass → softens stool. Does NOT stimulate peristalsis.",
+clin:"<ul><li><strong>Prevention</strong> of constipation in at-risk patients (post-op, immobilized, elderly, opioid users)</li><li>Painful defecation (hemorrhoids, fissure) — softer stool causes less pain</li><li>Not effective for acute constipation</li></ul>",
+dx:"<ul><li>Minimal (bloating, cramping rare)</li><li>Efficacy is debated — some evidence suggests no better than placebo</li></ul>",
+hy:["<strong>Softens only</strong> — doesn't drive defecation","Prevention, not treatment","Useful with hemorrhoids/fissures","Efficacy questioned"]},
+
+// ═══════════════ IBD — 5-ASA ═══════════════
+{id:"mesalazine",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Mesalazine / 5-ASA",
+oneLiner:"<strong>Topical anti-inflammatory</strong> for colon. <strong>First-line for UC</strong>, maintenance of remission.",
+path:"5-aminosalicylic acid — active form. Delivered to colon in various forms (enteric-coated, pH-dependent, prodrugs: <strong>sulfasalazine</strong> = 5-ASA + sulfapyridine; <strong>olsalazine, balsalazide</strong>). Inhibits <strong>COX + lipoxygenase</strong>, ↓ prostaglandins + leukotrienes, scavenges free radicals, blocks NF-κB.",
+clin:"<ul><li><strong>Ulcerative colitis</strong> — induction + maintenance (first-line for mild–moderate)</li><li><strong>Crohn's colitis</strong> (limited efficacy)</li><li>Topical preparations (enemas, suppositories) for distal disease</li></ul>",
+dx:"<ul><li>Headache, GI upset, nausea</li><li><strong>Interstitial nephritis</strong></li><li>Oligospermia (reversible) — sulfasalazine only</li><li><strong>Sulfa allergy</strong> reactions (sulfasalazine) — contraindicated</li></ul>",
+hy:["<strong>UC first-line</strong>","<strong>Sulfasalazine</strong> = 5-ASA + sulfapyridine (prodrug)","Less effective in Crohn's","Interstitial nephritis"],
+trap:"Patient with sulfa allergy: use mesalazine/olsalazine/balsalazide (no sulfa), not sulfasalazine."},
+
+// ═══════════════ IBD — STEROIDS ═══════════════
+{id:"prednisone",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Prednisone",
+oneLiner:"Oral glucocorticoid. Used for <strong>IBD flares only</strong> (not maintenance). Classic Cushing-like side effects.",
+path:"Prodrug → converted to <strong>prednisolone</strong> by liver. Binds cytoplasmic glucocorticoid receptor → translocates to nucleus → modulates transcription → ↓ NF-κB → ↓ cytokines, prostaglandins, leukotrienes. Broad anti-inflammatory + immunosuppressive.",
+clin:"<ul><li>IBD flares (Crohn's + UC, induction only)</li><li>Many autoimmune conditions (lupus, RA, vasculitis)</li><li>Asthma, COPD exacerbations</li><li>Transplant (anti-rejection)</li></ul>",
+dx:"<strong>Cushing-like effects with chronic use</strong>:<ul><li>Moon face, buffalo hump, truncal obesity, striae</li><li>Osteoporosis, avascular necrosis (hip)</li><li>Hyperglycemia (steroid-induced diabetes)</li><li>HTN, fluid retention</li><li>Psychiatric (mania, depression)</li><li>Cataracts, glaucoma</li><li>Immunosuppression → opportunistic infections (PCP, TB reactivation)</li><li>Adrenal suppression (taper slowly; no abrupt stop)</li><li>Peptic ulcer (add PPI)</li><li>Leukocytosis (demargination)</li></ul>",
+hy:["<strong>Flares only, not maintenance</strong>","Cushing side effects","Adrenal suppression (no abrupt stop)","Leukocytosis from demargination"]},
+
+{id:"prednisolone",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Prednisolone",
+oneLiner:"Active form of prednisone. Preferred in <strong>liver disease</strong> (no hepatic activation required).",
+path:"Active glucocorticoid — same mechanism as prednisone. Doesn't require hepatic conversion.",
+clin:"Same as prednisone — preferred in hepatic dysfunction.",
+dx:"Same as prednisone (Cushing-like chronic effects).",
+hy:["Active form","Preferred in liver disease","No hepatic conversion needed"]},
+
+{id:"budesonide",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Budesonide",
+oneLiner:"<strong>Topical steroid with high first-pass metabolism</strong> → minimal systemic effects. Ileal/right-colonic Crohn's, mild-moderate UC.",
+path:"Glucocorticoid with extensive first-pass hepatic metabolism (~90%) → minimal systemic bioavailability → much less Cushing-like SE. Released in distal ileum + right colon (ileal-release capsule).",
+clin:"<ul><li><strong>Mild-moderate Crohn's (ileocecal, R colon)</strong></li><li>Mild-moderate UC (rectal/proximal prep)</li><li>Microscopic colitis</li><li>Inhaled form for asthma</li></ul>",
+dx:"<ul><li>Less systemic effects than prednisone (but still some — adrenal suppression, osteoporosis with long-term use)</li><li>Classic steroid effects still possible but much reduced</li></ul>",
+hy:["<strong>90% first-pass metabolism</strong>","Ileocecal Crohn's","Fewer systemic effects","Still 'steroid' for flares only"]},
+
+// ═══════════════ IBD — IMMUNOSUPPRESSANTS ═══════════════
+{id:"methotrexate",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Methotrexate",
+oneLiner:"<strong>Folate antagonist</strong>. Inhibits DHFR. Used in Crohn's maintenance. Teratogenic. Rescue with folinic acid.",
+path:"<strong>Inhibits dihydrofolate reductase (DHFR)</strong> → ↓ tetrahydrofolate → ↓ thymidine + purine synthesis → ↓ DNA synthesis → ↓ rapidly dividing cells (cancer cells, immune cells).",
+clin:"<ul><li><strong>Crohn's maintenance</strong> (induction + maintenance; less effective in UC)</li><li>Rheumatoid arthritis (first-line DMARD)</li><li>Psoriasis (severe)</li><li>Leukemia, breast cancer, trophoblastic disease, ectopic pregnancy</li><li>Medical abortion (high dose)</li></ul>",
+dx:"<ul><li><strong>Hepatotoxicity</strong></li><li><strong>Pulmonary fibrosis / hypersensitivity pneumonitis</strong></li><li>Bone marrow suppression (pancytopenia)</li><li>Mucositis, stomatitis</li><li><strong>Teratogenic</strong> (CI in pregnancy — Category X)</li><li>Nephrotoxicity</li><li><strong>Rescue with folinic acid (leucovorin)</strong> after high-dose MTX — bypasses DHFR</li></ul>",
+hy:["<strong>Folinic acid rescue</strong> (NOT folate)","Teratogenic","Hepatotoxic","Pulmonary fibrosis","Monitor LFTs + CBC"]},
+
+{id:"azathioprine",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Azathioprine",
+oneLiner:"<strong>Prodrug of 6-MP</strong>. Inhibits purine synthesis. <strong>IBD maintenance of remission</strong>. Check TPMT genotype. Allopurinol interaction.",
+path:"Prodrug → converted non-enzymatically to <strong>6-mercaptopurine (6-MP)</strong> → activated to 6-thioguanine → incorporates into DNA + inhibits de novo purine synthesis → ↓ lymphocyte proliferation.",
+clin:"<ul><li><strong>Maintenance of IBD remission</strong> (Crohn's + UC)</li><li>Steroid-sparing in IBD</li><li>Autoimmune conditions (lupus)</li><li>Transplant rejection prevention</li></ul>",
+dx:"<ul><li><strong>Bone marrow suppression</strong> (check CBC regularly)</li><li>Hepatotoxicity</li><li><strong>Pancreatitis</strong></li><li><strong>↑ lymphoma risk</strong> (non-Hodgkin, hepatosplenic T-cell) — especially in combination with anti-TNF</li><li>Skin cancer (non-melanoma)</li><li><strong>TPMT deficiency</strong> → ↑↑ toxicity (check genotype before starting — pharmacogenomic test)</li></ul>",
+tx:"<strong>Drug interaction with ALLOPURINOL</strong>: xanthine oxidase normally metabolizes 6-MP. Allopurinol inhibits XO → ↑↑ 6-MP levels → severe toxicity. <strong>Reduce azathioprine dose by 75%</strong> if used together, or choose alternative.",
+hy:["<strong>Check TPMT genotype</strong>","<strong>Allopurinol interaction</strong> (↓ dose 75%)","Pancreatitis + lymphoma risks","Prodrug → 6-MP"]},
+
+{id:"6mp",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"6-Mercaptopurine (6-MP)",
+oneLiner:"Active metabolite of azathioprine. Same actions + side effects + allopurinol interaction.",
+path:"Purine analog — activated to 6-thioguanine → DNA incorporation + inhibits purine synthesis.",
+clin:"Same indications as azathioprine: IBD maintenance, ALL (leukemia), autoimmune.",
+dx:"Same as azathioprine: BM suppression, hepatotoxicity, pancreatitis, lymphoma risk, TPMT sensitive, allopurinol interaction.",
+hy:["Active form of azathioprine","Allopurinol interaction","TPMT testing","ALL chemotherapy use"]},
+
+// ═══════════════ IBD — BIOLOGICS ═══════════════
+{id:"infliximab",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Infliximab (Remicade)",
+oneLiner:"<strong>Chimeric anti-TNF-α monoclonal antibody</strong>. IV infusion. Moderate-severe IBD. <strong>Screen for TB before starting</strong>.",
+path:"Chimeric (mouse-human) IgG1 monoclonal antibody that <strong>binds + neutralizes TNF-α</strong> (soluble + membrane-bound) → ↓ inflammation cascade → ↓ cytokine production, ↓ immune cell activation.",
+clin:"<ul><li><strong>Moderate-severe Crohn's + UC</strong> (induction + maintenance)</li><li>Crohn's fistulas (classic indication)</li><li>Rheumatoid arthritis</li><li>Psoriasis + psoriatic arthritis</li><li>Ankylosing spondylitis</li></ul>",
+dx:"<ul><li><strong>Reactivation of latent TB</strong> — must do <strong>PPD or IGRA (Quantiferon) BEFORE starting</strong></li><li><strong>Hepatitis B reactivation</strong> — check HBsAg/HBcAb</li><li>Infusion reactions (including anaphylaxis)</li><li>Serum sickness-like reaction (with anti-infliximab antibody formation)</li><li>Opportunistic infections (fungal, bacterial)</li><li>Demyelinating disease (can unmask MS)</li><li><strong>Lymphoma</strong> (especially hepatosplenic T-cell lymphoma with combined azathioprine)</li><li>Drug-induced lupus</li><li>Heart failure exacerbation</li></ul>",
+hy:["<strong>Screen for TB + Hep B before starting</strong>","Infusion reactions","Anti-TNF-α","IV","Chimeric (can develop anti-drug Abs)"],
+trap:"Don't start infliximab without TB + Hep B screening. Classic Step 1 vignette: patient on anti-TNF develops cavitary lung disease → TB reactivation."},
+
+{id:"adalimumab",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Adalimumab (Humira)",
+oneLiner:"<strong>Fully human anti-TNF-α mAb</strong>. Subcutaneous injection. Same indications as infliximab but SC route → patient convenience.",
+path:"Fully human IgG1 monoclonal antibody targeting TNF-α. Lower immunogenicity than chimeric infliximab.",
+clin:"Same as infliximab: moderate-severe IBD, RA, psoriasis, AS, uveitis.",
+dx:"<strong>Same as infliximab</strong>: TB/HBV reactivation, opportunistic infection, lymphoma, demyelination, CHF — need pre-treatment TB screening. Injection site reactions instead of infusion reactions.",
+hy:["<strong>Fully human</strong> (less immunogenic)","<strong>SC injection</strong>","TB + HBV screen required","Same class effects as infliximab"]},
+
+{id:"risankizumab",cat:"IBD Medications",ck:"ibd",emoji:"🔥",name:"Risankizumab-rzaa (Skyrizi)",
+oneLiner:"<strong>Anti-IL-23 p19 subunit</strong> monoclonal antibody. Newer biologic for Crohn's + psoriasis.",
+path:"Humanized IgG1 mAb that binds the <strong>p19 subunit of IL-23</strong> → prevents IL-23 signaling → ↓ Th17 cell differentiation → ↓ IL-17, IL-22 → ↓ inflammation.",
+clin:"<ul><li><strong>Moderate-severe Crohn's disease</strong> (approved 2022)</li><li>Moderate-severe plaque psoriasis</li><li>Psoriatic arthritis</li></ul>",
+dx:"<ul><li>Upper respiratory infections (common)</li><li>Headache</li><li>Injection site reactions</li><li>Opportunistic infection risk (lower than anti-TNF)</li><li>TB screening recommended (less stringent than anti-TNF)</li></ul>",
+hy:["<strong>IL-23 p19 inhibitor</strong>","Newer mechanism (vs anti-TNF)","For Crohn's + psoriasis","Generally well-tolerated"]}
+];
+
+const state={currentId:null,learned:new Set(),search:"",collapsed:new Set()};
+function groupByCategory(){
+  const map={};
+  DISEASES.forEach(d=>{
+    if(!map[d.cat])map[d.cat]={key:d.ck,emoji:d.emoji,items:[]};
+    map[d.cat].items.push(d);
+  });
+  return map;
+}
+function getVisibleDiseases(){
+  const q=state.search.toLowerCase().trim();
+  if(!q)return DISEASES;
+  return DISEASES.filter(d=>{
+    const hay=(d.name+" "+d.cat+" "+d.oneLiner+" "+(d.path||"")+" "+(d.clin||"")+" "+(d.dx||"")+" "+(d.tx||"")+" "+(d.hy||[]).join(" ")+" "+(d.mn||"")+" "+(d.trap||"")).toLowerCase();
+    return hay.includes(q);
+  });
+}
+function renderSidebar(){
+  const visible=getVisibleDiseases();
+  const visibleIds=new Set(visible.map(d=>d.id));
+  const groups=groupByCategory();
+  const list=document.getElementById("sbList");
+  let html=`<div class="sb-home ${state.currentId===null?"active":""}" onclick="goHome()">🏠 Home</div>`;
+  Object.entries(groups).forEach(([cat,info])=>{
+    const visibleItems=info.items.filter(d=>visibleIds.has(d.id));
+    if(!visibleItems.length)return;
+    const collapsed=state.collapsed.has(cat)&&!state.search;
+    html+=`<div class="cat-group ${collapsed?"collapsed":""}" data-cat="${cat}"><div class="cat-header" onclick="toggleCat('${cat.replace(/'/g,"\\'")}')"><span class="cat-chevron">▼</span><span>${info.emoji} ${cat}</span><span class="cat-count">${visibleItems.length}</span></div><div class="cat-list">`;
+    visibleItems.forEach(d=>{
+      const active=state.currentId===d.id;
+      const learned=state.learned.has(d.id);
+      html+=`<div class="dz-item ${active?"active":""} ${learned?"learned":""}" data-id="${d.id}" onclick="selectDisease('${d.id}')"><span class="dz-check">${learned?"✓":"○"}</span><span class="dz-name">${d.name}</span></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  list.innerHTML=html||`<div class="empty" style="padding:30px 14px">No matches.</div>`;
+}
+function toggleCat(cat){
+  if(state.collapsed.has(cat))state.collapsed.delete(cat);
+  else state.collapsed.add(cat);
+  renderSidebar();
+}
+function renderHomepage(){
+  const content=document.getElementById("content");
+  const groups=groupByCategory();
+  let catCardsHtml="";
+  Object.entries(groups).forEach(([cat,info])=>{
+    catCardsHtml+=`<div class="home-cat"><div class="home-cat-title">${info.emoji} ${cat} <span class="home-cat-count">${info.items.length}</span></div><div class="home-dz-list">${info.items.map(d=>{const learned=state.learned.has(d.id);return `<div class="home-dz ${learned?"learned":""}" onclick="selectDisease('${d.id}')"><span class="home-check">${learned?"✓":"○"}</span><span>${d.name}</span></div>`;}).join("")}</div></div>`;
+  });
+  content.innerHTML=`<div class="content-inner"><div class="home-hero"><div class="home-brand">HoyaDocs · Block 4 GI</div><h1 class="home-title">Welcome to the GI Pharm Atlas</h1><p class="home-sub">An interactive USMLE Step 1 reference for all 56 GI medications — mechanism of action, clinical uses, adverse effects, and exam traps.</p><button class="home-start" onclick="selectDisease('omeprazole')">Start with Omeprazole →</button></div><h2 class="home-section-title">Browse All Medications</h2><p style="font-size:13.5px;color:#6b7b6c;margin-bottom:18px;font-style:italic;">Click any drug to open it. Use the sidebar to search or navigate by category. Use ← → arrow keys to move between drugs and Space to mark as learned.</p><div class="home-grid">${catCardsHtml}</div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function renderContent(){
+  if(state.currentId===null){renderHomepage();return;}
+  const content=document.getElementById("content");
+  const d=DISEASES.find(x=>x.id===state.currentId);
+  if(!d){content.innerHTML='<div class="empty">Not found.</div>';return;}
+  const learned=state.learned.has(d.id);
+  const visible=getVisibleDiseases();
+  const idx=visible.findIndex(x=>x.id===d.id);
+  const prev=idx>0?visible[idx-1]:null;
+  const next=idx<visible.length-1?visible[idx+1]:null;
+  content.innerHTML=`<div class="content-inner"><div class="dz-entry"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Mechanism of Action</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🩺 Clinical Uses</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>⚠️ Adverse Effects</h3>${d.dx.trim().startsWith("<ul>")?d.dx:"<p>"+d.dx+"</p>"}</div>`:""}${d.tx?`<div class="sec"><h3>💊 Pharmacokinetics &amp; Notes</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div><div class="footer-nav"><button class="nav-btn" onclick="navigate(-1)" ${prev?"":"disabled"}>◀ ${prev?shorten(prev.name,24):"Previous"}<span class="kbd">←</span></button><button class="nav-btn learn ${learned?"learned":""}" onclick="toggleLearned()">${learned?"✓ Learned":"Mark Learned"}<span class="kbd">Space</span></button><button class="nav-btn" onclick="navigate(1)" ${next?"":"disabled"}>${next?shorten(next.name,24):"Next"} ▶<span class="kbd">→</span></button></div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function shorten(s,n){return s.length>n?s.slice(0,n-1)+"…":s;}
+function goHome(){state.currentId=null;renderSidebar();renderContent();closeSidebar();}
+function selectDisease(id){
+  state.currentId=id;
+  const d=DISEASES.find(x=>x.id===id);
+  if(d)state.collapsed.delete(d.cat);
+  renderSidebar();renderContent();closeSidebar();
+  setTimeout(()=>{const el=document.querySelector(`.dz-item[data-id="${id}"]`);if(el)el.scrollIntoView({block:"nearest",behavior:"smooth"});},50);
+}
+function navigate(dir){
+  const visible=getVisibleDiseases();
+  if(state.currentId===null){if(dir>0&&visible.length)selectDisease(visible[0].id);return;}
+  const idx=visible.findIndex(x=>x.id===state.currentId);
+  const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=visible.length)return;
+  selectDisease(visible[newIdx].id);
+}
+function toggleLearned(){
+  if(!state.currentId)return;
+  if(state.learned.has(state.currentId))state.learned.delete(state.currentId);
+  else state.learned.add(state.currentId);
+  renderSidebar();renderContent();updateProgress();
+}
+function updateProgress(){
+  document.getElementById("learnedText").textContent=`${state.learned.size} / ${DISEASES.length}`;
+  document.getElementById("progressFill").style.width=(DISEASES.length?state.learned.size/DISEASES.length*100:0)+"%";
+}
+function toggleSidebar(){
+  const open=document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sbBackdrop").classList.toggle("show",open);
+}
+function closeSidebar(){if(window.innerWidth<=720){document.getElementById("sidebar").classList.remove("open");document.getElementById("sbBackdrop").classList.remove("show");}}
+function exportExcel(){
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>th{background:#14532d;color:white;padding:8px;font-weight:bold;text-align:left;border:1px solid #0f3a1f}td{padding:6px 8px;border:1px solid #e2e8f0;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}.cat{background:#dcfce7;font-weight:bold}</style></head><body><table><tr><th>#</th><th>Category</th><th>Medication</th><th>One-Liner</th><th>Mechanism of Action</th><th>Clinical Uses</th><th>Adverse Effects</th><th>PK / Notes</th><th>High-Yield</th><th>Mnemonic</th><th>Exam Trap</th><th>Learned</th></tr>`;
+  DISEASES.forEach((d,i)=>{
+    const strip=(s)=>(s||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+    html+=`<tr><td>${i+1}</td><td class="cat">${d.cat}</td><td><strong>${d.name}</strong></td><td>${strip(d.oneLiner)}</td><td>${strip(d.path)}</td><td>${strip(d.clin)}</td><td>${strip(d.dx)}</td><td>${strip(d.tx)}</td><td>${(d.hy||[]).map(strip).join(" • ")}</td><td>${strip(d.mn)}</td><td>${strip(d.trap)}</td><td>${state.learned.has(d.id)?"✓":""}</td></tr>`;
+  });
+  html+=`</table></body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:"application/vnd.ms-excel"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="GI_Pharm_Study_Guide.xls";a.click();
+  URL.revokeObjectURL(url);
+}
+function printAll(){
+  const content=document.getElementById("content");
+  const original=content.innerHTML;
+  content.innerHTML=`<div class="content-inner">${DISEASES.map(d=>`<div class="dz-entry" style="page-break-after:always;margin-bottom:40px;"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Mechanism of Action</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🩺 Clinical Uses</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>⚠️ Adverse Effects</h3>${d.dx.trim().startsWith("<ul>")?d.dx:"<p>"+d.dx+"</p>"}</div>`:""}${d.tx?`<div class="sec"><h3>💊 Pharmacokinetics &amp; Notes</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div>`).join("")}</div>`;
+  setTimeout(()=>{window.print();content.innerHTML=original;renderContent();},300);
+}
+document.getElementById("search").addEventListener("input",(e)=>{state.search=e.target.value;renderSidebar();});
+document.getElementById("prevBtn").onclick=()=>navigate(-1);
+document.getElementById("nextBtn").onclick=()=>navigate(1);
+document.getElementById("printBtn").onclick=printAll;
+document.getElementById("excelBtn").onclick=exportExcel;
+document.addEventListener("keydown",(e)=>{
+  if(e.target.tagName==="INPUT")return;
+  if(state.currentId===null&&e.key!=="ArrowRight"&&e.key!=="ArrowDown")return;
+  if(e.key==="ArrowLeft"){e.preventDefault();navigate(-1);}
+  else if(e.key==="ArrowRight"){e.preventDefault();navigate(1);}
+  else if(e.key===" "){e.preventDefault();toggleLearned();}
+  else if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    const visible=getVisibleDiseases();
+    const idx=visible.findIndex(x=>x.id===state.currentId);
+    const dir=e.key==="ArrowDown"?1:-1;
+    const newIdx=idx===-1?0:idx+dir;
+    if(newIdx>=0&&newIdx<visible.length)selectDisease(visible[newIdx].id);
+  }
+  else if(e.key==="Escape"){goHome();}
+});
+Object.keys(groupByCategory()).forEach(c=>state.collapsed.add(c));
+renderSidebar();
+renderHomepage();
+updateProgress();
+</script>
+</body>
+</html>
