@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI Anatomy Structures — Flashcard Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#e0f2fe 0%,#fef3c7 100%);min-height:100vh;color:#1e293b;padding:16px;line-height:1.55}
+.app{max-width:1100px;margin:0 auto}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:24px;font-weight:800;color:#1e3a5f;margin-bottom:4px}
+.header .sub{color:#64748b;font-size:13px}
+.header .sub strong{color:#1e3a5f}
+
+/* TAB BAR */
+.tabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:14px 0 10px;background:white;padding:6px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.tab{padding:9px 16px;border:none;background:transparent;font-size:13px;font-weight:700;color:#64748b;cursor:pointer;border-radius:8px;transition:all 0.15s;white-space:nowrap}
+.tab:hover{background:#f1f5f9;color:#1e3a5f}
+.tab.active{background:#1e3a5f;color:white}
+
+/* FILTER ROW */
+.filter-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.filter-btn{padding:6px 12px;border:1.5px solid #cbd5e1;background:white;font-size:12px;font-weight:600;color:#475569;cursor:pointer;border-radius:6px;transition:all 0.15s}
+.filter-btn:hover{border-color:#1e3a5f}
+.filter-btn.active{background:#1e3a5f;color:white;border-color:#1e3a5f}
+.filter-btn.l1.active{background:#0284c7;border-color:#0284c7}
+.filter-btn.l2.active{background:#15803d;border-color:#15803d}
+.filter-btn.l3.active{background:#7c3aed;border-color:#7c3aed}
+.filter-btn.l4.active{background:#ea580c;border-color:#ea580c}
+
+/* PROGRESS */
+.progress-bar{background:white;height:10px;border-radius:6px;overflow:hidden;margin-bottom:14px;box-shadow:inset 0 1px 2px rgba(0,0,0,0.08)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#0284c7,#15803d,#7c3aed,#ea580c);transition:width 0.4s;width:0%}
+.stats{display:flex;gap:12px;justify-content:center;font-size:12px;color:#475569;margin-bottom:14px;flex-wrap:wrap}
+.stats span{background:white;padding:5px 12px;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.stats strong{color:#1e3a5f}
+
+/* VIEW CONTAINER */
+.view{display:none}
+.view.active{display:block}
+
+/* BROWSE: CARD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{perspective:1000px;height:180px;cursor:pointer}
+.card-inner{position:relative;width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d}
+.card.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;padding:12px;display:flex;flex-direction:column;box-shadow:0 2px 6px rgba(0,0,0,0.08);overflow:hidden}
+.card-front{background:white;border:2px solid #e2e8f0}
+.card-front.l1{border-color:#0284c7;background:linear-gradient(135deg,#fff 0%,#e0f2fe 100%)}
+.card-front.l2{border-color:#15803d;background:linear-gradient(135deg,#fff 0%,#dcfce7 100%)}
+.card-front.l3{border-color:#7c3aed;background:linear-gradient(135deg,#fff 0%,#f3e8ff 100%)}
+.card-front.l4{border-color:#ea580c;background:linear-gradient(135deg,#fff 0%,#fed7aa 100%)}
+.card-back{background:#1e3a5f;color:white;transform:rotateY(180deg);overflow-y:auto}
+.card-back.l1{background:#075985}
+.card-back.l2{background:#166534}
+.card-back.l3{background:#6b21a8}
+.card-back.l4{background:#9a3412}
+
+.card .lab-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;margin-bottom:4px}
+.card .structure-name{font-size:15px;font-weight:700;color:#1e3a5f;line-height:1.3;margin-bottom:6px;flex:1}
+.card .type-badge{display:inline-block;align-self:flex-start;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(30,58,95,0.1);color:#1e3a5f;margin-bottom:4px}
+.card .hint{font-size:11px;color:#64748b;font-style:italic;margin-top:auto}
+.card-back .back-title{font-size:13px;font-weight:700;margin-bottom:6px}
+.card-back .back-item{font-size:11.5px;line-height:1.6;margin-bottom:5px}
+.card-back .back-item strong{color:#fde047}
+.card-back .mnemonic{background:rgba(255,255,255,0.15);padding:6px 8px;border-radius:5px;margin-top:6px;font-size:11px;border-left:3px solid #fde047}
+.learned-badge{position:absolute;top:6px;right:6px;background:#16a34a;color:white;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;z-index:5}
+.card.learned .card-front{opacity:0.5}
+
+/* STUDY MODE (SINGLE CARD) */
+.study-wrap{text-align:center;margin-bottom:16px}
+.study-card{max-width:520px;margin:0 auto;background:white;border-radius:16px;padding:28px 22px;box-shadow:0 4px 20px rgba(0,0,0,0.1);min-height:340px;display:flex;flex-direction:column}
+.study-card .lab-indicator{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.study-card.l1 .lab-indicator{color:#0284c7}
+.study-card.l2 .lab-indicator{color:#15803d}
+.study-card.l3 .lab-indicator{color:#7c3aed}
+.study-card.l4 .lab-indicator{color:#ea580c}
+.study-card .structure-title{font-size:26px;font-weight:800;color:#1e3a5f;margin-bottom:10px;line-height:1.2}
+.study-card .type-badge{align-self:center;margin-bottom:16px}
+.reveal-area{margin-top:16px;text-align:left;font-size:13.5px;line-height:1.7}
+.reveal-area.hidden{display:none}
+.reveal-area .fact{margin-bottom:8px;padding:8px 12px;background:#f8fafc;border-left:3px solid #2563eb;border-radius:4px}
+.reveal-area .fact strong{color:#1e3a5f;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px}
+.reveal-area .mnemonic{background:#fef3c7;border-left:3px solid #eab308;padding:10px 12px;border-radius:4px;margin-top:8px;font-size:13px}
+.reveal-area .mnemonic strong{color:#78350f}
+.reveal-area .clinical{background:#fef2f2;border-left:3px solid #dc2626;padding:10px 12px;border-radius:4px;margin-top:8px;font-size:13px}
+.reveal-area .clinical strong{color:#7f1d1d}
+.study-controls{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.study-btn{padding:9px 18px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s}
+.btn-reveal{background:#2563eb;color:white}
+.btn-reveal:hover{background:#1d4ed8}
+.btn-learn{background:#16a34a;color:white}
+.btn-learn:hover{background:#15803d}
+.btn-skip{background:#e2e8f0;color:#475569}
+.btn-skip:hover{background:#cbd5e1}
+.btn-next{background:#1e3a5f;color:white}
+.btn-next:hover{background:#334e68}
+.nav-row{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.nav-btn{padding:6px 14px;border:1.5px solid #cbd5e1;background:white;font-size:12px;font-weight:600;color:#475569;cursor:pointer;border-radius:6px}
+.nav-btn:hover{border-color:#1e3a5f}
+
+/* QUIZ MODE */
+.quiz-wrap{max-width:560px;margin:0 auto}
+.quiz-card{background:white;border-radius:16px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+.quiz-prompt{font-size:13px;color:#64748b;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.quiz-question{font-size:15.5px;color:#1e293b;margin-bottom:16px;line-height:1.55;font-weight:500}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-option{text-align:left;padding:12px 14px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;font-size:13.5px;font-weight:600;color:#1e293b;cursor:pointer;transition:all 0.15s}
+.quiz-option:hover{border-color:#1e3a5f;background:#f1f5f9}
+.quiz-option.correct{border-color:#16a34a;background:#f0fdf4;color:#14532d}
+.quiz-option.wrong{border-color:#dc2626;background:#fef2f2;color:#7f1d1d}
+.quiz-option.disabled{pointer-events:none;opacity:0.7}
+.quiz-feedback{margin-top:14px;padding:12px 14px;border-radius:8px;font-size:13px;line-height:1.6;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:#f0fdf4;border-left:4px solid #16a34a;color:#14532d}
+.quiz-feedback.wrong{background:#fef2f2;border-left:4px solid #dc2626;color:#7f1d1d}
+.quiz-feedback strong{color:#1e3a5f}
+.score-row{display:flex;gap:14px;justify-content:center;margin:12px 0;font-size:13px;font-weight:700}
+.score-row .streak{color:#ea580c}
+.score-row .total{color:#1e3a5f}
+
+/* MNEMONIC BANK */
+.mnemonic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mnem-card{background:white;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,0.06);border-left:4px solid #eab308}
+.mnem-card h4{font-size:14px;font-weight:700;color:#78350f;margin-bottom:6px}
+.mnem-card .phrase{font-size:13.5px;font-weight:700;color:#1e3a5f;background:#fef3c7;padding:6px 10px;border-radius:5px;margin-bottom:8px;font-style:italic}
+.mnem-card .expansion{font-size:12.5px;line-height:1.7;color:#475569}
+.mnem-card .expansion strong{color:#1e3a5f}
+
+/* RELATIONS MAP */
+.region-block{background:white;border-radius:10px;padding:14px 18px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.region-block h3{font-size:15px;font-weight:700;color:#1e3a5f;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #e2e8f0}
+.region-block .triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px}
+.region-block .triple > div{background:#f8fafc;padding:8px 10px;border-radius:6px;border-left:3px solid #2563eb}
+.region-block .triple > div strong{display:block;color:#1e3a5f;margin-bottom:3px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px 20px;color:#64748b;font-size:14px}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .study-card{padding:20px 16px}
+  .study-card .structure-title{font-size:22px}
+  .tabs{flex-wrap:wrap}
+  .tab{padding:7px 10px;font-size:12px}
+  .region-block .triple{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+    <h1>&#129451; GI Anatomy Structures — Flashcard Lab</h1>
+    <p class="sub">Active Recall for the 2026 GI Practical · <strong>146 structures</strong> · Labs 1–4</p>
+</div>
+
+<div class="tabs" id="tabs">
+    <button class="tab active" data-view="browse">&#128218; Browse Cards</button>
+    <button class="tab" data-view="study">&#127919; Study Mode</button>
+    <button class="tab" data-view="quiz">&#129504; Quiz Me</button>
+    <button class="tab" data-view="mnemonics">&#128161; Mnemonics</button>
+    <button class="tab" data-view="relations">&#128279; Key Relations</button>
+</div>
+
+<div class="filter-row" id="filters">
+    <button class="filter-btn active" data-lab="all">All Labs</button>
+    <button class="filter-btn l1" data-lab="1">Lab 1 · Wall</button>
+    <button class="filter-btn l2" data-lab="2">Lab 2 · Peritoneum</button>
+    <button class="filter-btn l3" data-lab="3">Lab 3 · Mid/Hindgut</button>
+    <button class="filter-btn l4" data-lab="4">Lab 4 · Post. Wall</button>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="stats">
+    <span>Showing: <strong id="statShown">0</strong></span>
+    <span>Learned: <strong id="statLearned">0</strong></span>
+    <span>Progress: <strong id="statPct">0%</strong></span>
+    <span><button id="resetBtn" style="background:none;border:none;color:#dc2626;font-weight:700;cursor:pointer;font-size:12px">&#10227; Reset</button></span>
+</div>
+
+<!-- BROWSE VIEW -->
+<div class="view active" id="view-browse">
+    <div class="grid" id="cardGrid"></div>
+</div>
+
+<!-- STUDY VIEW -->
+<div class="view" id="view-study">
+    <div class="study-wrap">
+        <div class="study-card" id="studyCard">
+            <div class="lab-indicator" id="studyLab"></div>
+            <div class="structure-title" id="studyName"></div>
+            <span class="type-badge" id="studyType"></span>
+            <div class="reveal-area hidden" id="studyReveal"></div>
+        </div>
+        <div class="study-controls">
+            <button class="study-btn btn-reveal" id="btnReveal">&#128065; Reveal Answer</button>
+            <button class="study-btn btn-learn" id="btnLearn">&#10003; Got it!</button>
+            <button class="study-btn btn-skip" id="btnSkip">Skip</button>
+            <button class="study-btn btn-next" id="btnNext">Next &rarr;</button>
+        </div>
+        <div class="nav-row">
+            <button class="nav-btn" id="btnShuffle">&#127922; Shuffle</button>
+            <button class="nav-btn" id="btnPrev">&larr; Prev</button>
+        </div>
+    </div>
+</div>
+
+<!-- QUIZ VIEW -->
+<div class="view" id="view-quiz">
+    <div class="score-row">
+        <span class="streak">&#128293; Streak: <span id="streak">0</span></span>
+        <span class="total">&#127942; Correct: <span id="correctCount">0</span> / <span id="attemptCount">0</span></span>
+    </div>
+    <div class="quiz-wrap">
+        <div class="quiz-card">
+            <div class="quiz-prompt" id="quizPrompt"></div>
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+            <div style="text-align:center;margin-top:14px">
+                <button class="study-btn btn-next" id="btnQuizNext" style="display:none">Next Question &rarr;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MNEMONICS VIEW -->
+<div class="view" id="view-mnemonics">
+    <div class="mnemonic-grid" id="mnemGrid"></div>
+</div>
+
+<!-- RELATIONS VIEW -->
+<div class="view" id="view-relations">
+    <div id="relationsContent"></div>
+</div>
+
+</div>
+
+<script>
+// ============ DATA ============
+const STRUCTURES = [
+// LAB 1 – Osteology & Surface Anatomy
+{n:"Xiphoid process",lab:1,t:"bone",loc:"Tip of sternum",rel:"Vertebral level T9. Superior midline landmark of abdomen.",cl:"Site for CPR chest compressions reference. Can be fractured in CPR.",hi:"T9 level"},
+{n:"Costal margin",lab:1,t:"bone",loc:"Inferior rib cage edge",rel:"Formed by ribs 7–10 costal cartilages + tips of ribs 11, 12. Superior boundary of abdomen.",cl:"Landmark for liver edge (normally not palpable below right costal margin).",hi:"Upper boundary"},
+{n:"Pubic symphysis",lab:1,t:"bone",loc:"Anterior midline of pelvis",rel:"Cartilaginous joint between two pubic bones. Inferior midline landmark.",cl:"Softens in late pregnancy via relaxin.",hi:"Lower midline"},
+{n:"Pubic tubercle",lab:1,t:"bone",loc:"Superior pubic ramus, ~2.5 cm lateral to symphysis",rel:"Medial attachment of inguinal ligament.",cl:"Inguinal hernias bulge above/medial to tubercle; femoral below/lateral.",hi:"Inguinal lig. medial anchor"},
+{n:"Anterior Superior Iliac Spine (ASIS)",lab:1,t:"bone",loc:"Most anterior projection of iliac crest",rel:"Lateral attachment of inguinal ligament. Landmark for McBurney's point.",cl:"McBurney's = 1/3 from ASIS toward umbilicus (appendicitis).",hi:"Inguinal lig. lateral anchor"},
+{n:"Iliac crest",lab:1,t:"bone",loc:"Superior ridge of ilium",rel:"Vertebral level L4. Hands rest here.",cl:"Landmark for lumbar puncture (L3/4 or L4/5 interspace).",hi:"L4 level"},
+{n:"Iliac tubercle",lab:1,t:"bone",loc:"Outer lip of iliac crest, ~5 cm posterior to ASIS",rel:"Defines the transtubercular plane (L5).",cl:"Don't confuse with ASIS.",hi:"Transtubercular plane"},
+{n:"Umbilicus",lab:1,t:"landmark",loc:"Midline abdominal scar of cord",rel:"Level L3–L4 disc. Aortic bifurcation at L4 just behind.",cl:"Site of caput medusae in portal HTN; referred pain from midgut (T10).",hi:"T10 dermatome"},
+{n:"Median plane",lab:1,t:"plane",loc:"Vertical midline",rel:"Divides abdomen left/right.",cl:"Used for midline laparotomy incision through linea alba.",hi:"Midline"},
+{n:"Transumbilical plane",lab:1,t:"plane",loc:"Horizontal plane through umbilicus",rel:"With median plane forms 4 quadrants.",cl:"Clinical quadrant definition.",hi:"Quadrant divider"},
+{n:"Right Upper Quadrant (RUQ)",lab:1,t:"region",loc:"Upper right quarter",rel:"Contains: liver (R lobe), GB, duodenum, R kidney, hepatic flexure.",cl:"Pain: cholecystitis, hepatitis.",hi:"Liver/GB"},
+{n:"Left Upper Quadrant (LUQ)",lab:1,t:"region",loc:"Upper left quarter",rel:"Stomach, spleen, L kidney, pancreas (most), splenic flexure.",cl:"Pain: splenic rupture, gastric ulcer.",hi:"Stomach/spleen"},
+{n:"Right Lower Quadrant (RLQ)",lab:1,t:"region",loc:"Lower right quarter",rel:"Cecum, appendix, R ovary/tube, R ureter.",cl:"Classic for appendicitis (McBurney's point).",hi:"Appendix"},
+{n:"Left Lower Quadrant (LLQ)",lab:1,t:"region",loc:"Lower left quarter",rel:"Sigmoid, L ovary/tube, L ureter, descending colon.",cl:"Classic for diverticulitis.",hi:"Sigmoid/diverticula"},
+{n:"Midclavicular lines",lab:1,t:"plane",loc:"Vertical through mid-clavicle",rel:"Separate central (epigastric/umbilical/hypogastric) from lateral (hypochondriac/lumbar/inguinal) columns of 9-region scheme.",cl:"Liver edge palpable at right MCL.",hi:"Vertical region divider"},
+{n:"Transtubercular plane",lab:1,t:"plane",loc:"Horizontal through iliac tubercles",rel:"L5 level. Lower horizontal in 9-region scheme.",cl:"Marks IVC formation level.",hi:"L5 horizontal"},
+{n:"Subcostal plane",lab:1,t:"plane",loc:"Horizontal through inferior rib 10",rel:"L3 level. Upper horizontal in 9-region scheme.",cl:"Defines upper border of umbilical region.",hi:"L3 horizontal"},
+{n:"Epigastric region",lab:1,t:"region",loc:"Central upper region",rel:"Stomach, L lobe liver, pancreas, duodenum.",cl:"Foregut pain refers here.",hi:"Central upper"},
+{n:"Hypochondriac regions (L/R)",lab:1,t:"region",loc:"Lateral upper regions (under ribs)",rel:"R: liver, GB. L: spleen, stomach fundus.",cl:"Murphy's sign in R hypochondriac.",hi:"Under ribs"},
+{n:"Umbilical region",lab:1,t:"region",loc:"Central middle region",rel:"Jejunum, ileum, transverse colon.",cl:"Midgut pain refers here (T10).",hi:"Central middle"},
+{n:"Lumbar (flank) regions (L/R)",lab:1,t:"region",loc:"Lateral middle regions",rel:"R: ascending colon, R kidney. L: descending colon, L kidney.",cl:"Flank pain = kidney/ureter.",hi:"Flanks"},
+{n:"Hypogastric (pubic) region",lab:1,t:"region",loc:"Central lower region",rel:"Bladder, uterus, sigmoid.",cl:"Hindgut + pelvic pain refers here.",hi:"Central lower"},
+{n:"Inguinal (groin) regions (L/R)",lab:1,t:"region",loc:"Lateral lower regions",rel:"R: cecum, appendix. L: sigmoid.",cl:"Hernia bulges here.",hi:"Groins"},
+
+// LAB 1 – Wall Fascia & Nerves
+{n:"Camper's fascia",lab:1,t:"fascia",loc:"Superficial fatty layer of abdominal superficial fascia",rel:"Above Scarpa's. Continuous with superficial fascia of thigh.",cl:"First layer cut in laparotomy or C-section.",hi:"Fatty, superficial"},
+{n:"Scarpa's fascia",lab:1,t:"fascia",loc:"Deep membranous layer of abdominal superficial fascia",rel:"Below Camper's. Continues as Colles' fascia in perineum, Dartos in scrotum. Fuses with fascia lata ~1 cm below inguinal ligament.",cl:"Extravasated urine (straddle injury) tracks deep to Scarpa's onto wall but NOT into thigh.",hi:"Membranous, deeper"},
+{n:"Anterior cutaneous nerves",lab:1,t:"nerve",loc:"Pierce rectus sheath near midline",rel:"Terminal branches of T7–T12 anterior rami.",cl:"Injured in paramedian incisions.",hi:"Midline skin"},
+{n:"Lateral cutaneous nerves",lab:1,t:"nerve",loc:"Pierce lateral abdominal wall",rel:"Branches of T7–T12 anterior rami.",cl:"Supply flank skin.",hi:"Flank skin"},
+
+// LAB 1 – Anterolateral Wall Muscles
+{n:"External oblique muscle",lab:1,t:"muscle",loc:"Most superficial flat muscle",rel:"Fibers run inferomedially ('hands in pockets'). O: ribs 5–12. I: linea alba, pubic tubercle, iliac crest via aponeurosis. Inferior free edge = inguinal ligament.",cl:"Action: compress abdomen + rotate trunk to OPPOSITE side.",mn:"Inferomedial fibers = hands in front pockets",hi:"Down & in"},
+{n:"External oblique aponeurosis",lab:1,t:"aponeurosis",loc:"Anterior to rectus (all levels)",rel:"Forms anterior rectus sheath (both above + below arcuate). Inferior edge = inguinal ligament.",cl:"Opens at superficial inguinal ring above pubic tubercle.",hi:"Anterior sheath"},
+{n:"Internal oblique muscle",lab:1,t:"muscle",loc:"Middle flat muscle",rel:"Fibers run superomedially (perpendicular to EO). O: thoracolumbar fascia, iliac crest, lateral 2/3 inguinal lig. I: ribs 10–12, linea alba, pubic crest (conjoint tendon).",cl:"Action: compress + rotate to SAME side. Gives rise to cremaster muscle.",mn:"Ipsi = Internal",hi:"Up & in"},
+{n:"Internal oblique aponeurosis",lab:1,t:"aponeurosis",loc:"Splits above arcuate line; all anterior below",rel:"Above arcuate: half in anterior, half in posterior sheath. Below: all in anterior.",cl:"Provides main bulk of both sheath layers above arcuate line.",hi:"Splits above arcuate"},
+{n:"Transversus abdominis muscle",lab:1,t:"muscle",loc:"Deepest flat muscle",rel:"Fibers run horizontally. O: ribs 7–12 cartilage, thoracolumbar fascia, iliac crest, lateral 1/3 inguinal lig. I: linea alba, pubic crest.",cl:"Action: compression ONLY (no rotation). Conjoint tendon = TA + IO on pubic crest.",mn:"Horizontal = across = Transversus",hi:"Weightlifting belt"},
+{n:"Transversus abdominis aponeurosis",lab:1,t:"aponeurosis",loc:"Posterior to rectus above arcuate; anterior below",rel:"Contributes to posterior sheath above arcuate line.",cl:"Below arcuate: moves to anterior sheath.",hi:"Posterior sheath above"},
+{n:"Rectus abdominis muscle",lab:1,t:"muscle",loc:"Vertical strap on midline",rel:"O: pubic crest + symphysis. I: xiphoid + costal cartilages 5–7. 3 tendinous intersections create 'six-pack'.",cl:"Action: flex trunk. Innervation: T7–T12.",hi:"Six-pack flexor"},
+{n:"Tendinous intersections",lab:1,t:"tendon",loc:"3 fibrous bands crossing rectus",rel:"At xiphoid, umbilicus, and between. Adhere firmly to anterior sheath only.",cl:"Create visible 'six-pack' appearance.",hi:"Six-pack lines"},
+{n:"Linea alba",lab:1,t:"aponeurosis",loc:"Midline fibrous raphe",rel:"From xiphoid to pubic symphysis. Avascular. Interdigitating aponeuroses.",cl:"Surgical plane for midline laparotomy. Widens at umbilicus (umbilical hernia site).",hi:"Midline white line"},
+{n:"Anterior rectus sheath",lab:1,t:"fascia",loc:"In front of rectus muscle",rel:"Above arcuate: EO + ½ IO aponeurosis. Below arcuate: ALL 3 aponeuroses.",cl:"Adheres to tendinous intersections.",hi:"Always present"},
+{n:"Posterior rectus sheath",lab:1,t:"fascia",loc:"Behind rectus muscle (upper 3/4 only)",rel:"Above arcuate: ½ IO + TA aponeurosis. Below arcuate: ABSENT (only transversalis fascia).",cl:"Rectus sheath hematoma spreads freely below arcuate line into pelvis.",hi:"Gone below arcuate!"},
+{n:"Arcuate line",lab:1,t:"landmark",loc:"~Midway umbilicus to pubic symphysis (curved concave-down edge)",rel:"Marks where posterior rectus sheath ends (1/3 of way above pubis).",cl:"Site of inferior epigastric a. piercing transversalis fascia to enter sheath.",mn:"Above = Split, Below = Slip",hi:"No posterior sheath below"},
+{n:"Superior epigastric artery",lab:1,t:"artery",loc:"Descends in rectus sheath from costal margin",rel:"Terminal branch of internal thoracic artery. Anastomoses with inferior epigastric near umbilicus.",cl:"Collateral in coarctation of aorta (causes rib notching).",hi:"From internal thoracic"},
+{n:"Inferior epigastric artery",lab:1,t:"artery",loc:"Ascends behind rectus in sheath",rel:"Arises from external iliac just above inguinal lig. Forms lateral umbilical fold.",cl:"Landmark dividing direct (medial) from indirect (lateral) hernias. Injured in laparoscopic port placement or rectus hematoma.",mn:"MDs don't LIE",hi:"Hernia landmark"},
+{n:"Transversalis fascia",lab:1,t:"fascia",loc:"Deep to transversus abdominis; endoabdominal fascia",rel:"Lines entire abdominopelvic cavity. Evaginates through deep ring → internal spermatic fascia.",cl:"Hesselbach's triangle weakness → direct hernia.",hi:"Deep wall lining"},
+{n:"Parietal peritoneum",lab:1,t:"membrane",loc:"Deepest layer lining abdominal wall",rel:"Innervated by somatic nerves (T7–L1).",cl:"Sharp, well-localized pain. Irritation → RLQ localization in appendicitis.",hi:"Somatic pain"},
+
+// LAB 1 – Inguinal Region
+{n:"Inguinal ligament",lab:1,t:"ligament",loc:"Free inferior edge of EO aponeurosis",rel:"Runs from ASIS (lateral) to pubic tubercle (medial). Forms FLOOR of inguinal canal.",cl:"Separates abdomen from thigh. Inguinal hernia above, femoral below.",mn:"APT = ASIS → Pubic Tubercle",hi:"Floor of canal"},
+{n:"Superficial inguinal ring",lab:1,t:"opening",loc:"Triangular defect in EO aponeurosis above & lateral to pubic tubercle",rel:"Exit of inguinal canal. Bounded by medial + lateral crura.",cl:"Cord/round lig emerges here toward scrotum/labium.",hi:"Canal exit"},
+{n:"Inguinal canal",lab:1,t:"space",loc:"Oblique ~4 cm passage in lower abdominal wall",rel:"Walls: Anterior = EO aponeurosis. Posterior = transversalis fascia + conjoint tendon. Roof = arching IO + TA. Floor = inguinal ligament.",cl:"Transmits spermatic cord (M) or round lig. of uterus (F) + ilioinguinal n.",hi:"Tube through the wall"},
+{n:"Deep inguinal ring",lab:1,t:"opening",loc:"Outpouching of transversalis fascia, lateral to inferior epigastric a.",rel:"Midway between ASIS and pubic symphysis. Entry to canal.",cl:"Indirect hernias originate here (lateral to inf. epigastric).",hi:"Canal entry"},
+{n:"Ilioinguinal nerve",lab:1,t:"nerve",loc:"Passes THROUGH inguinal canal (but not through deep ring)",rel:"From L1. Runs in canal, exits superficial ring.",cl:"Supplies skin of anterior scrotum/labia + upper medial thigh. Afferent of cremasteric reflex. Risk in hernia repair.",hi:"Inside the canal"},
+{n:"Iliohypogastric nerve",lab:1,t:"nerve",loc:"Runs ABOVE inguinal canal, between IO and EO",rel:"From L1. Becomes cutaneous above superficial ring.",cl:"Supplies suprapubic skin. Motor to IO + TA.",hi:"Above the canal"},
+
+// LAB 1 – Spermatic Cord & Testis (Male)
+{n:"Spermatic cord",lab:1,t:"structure",loc:"Bundle from deep ring → canal → superficial ring → scrotum",rel:"Rule of 3s: 3 arteries (testicular, cremasteric, vas), 3 veins (pampiniform, cremasteric, vas), 3 nerves (genital br. of genitofemoral, sympathetics, ilioinguinal on top), 3 other (vas, lymph, processus vag. remnant).",cl:"Testicular torsion twists cord.",mn:"3×3 = 12 things inside",hi:"Scrotal lifeline"},
+{n:"Ductus (vas) deferens",lab:1,t:"duct",loc:"Thickest structure in cord",rel:"Connects epididymis tail → ejaculatory duct. Crosses over ureter in pelvis.",cl:"'Water (ureter) under the bridge (ductus)' — cut in vasectomy.",hi:"Cord's thickest cord"},
+{n:"External spermatic fascia",lab:1,t:"fascia",loc:"Outermost cord covering",rel:"Derived from EO aponeurosis.",cl:"Present in both direct + indirect hernia sacs.",hi:"From EO"},
+{n:"Cremasteric muscle/fascia",lab:1,t:"muscle",loc:"Middle cord covering",rel:"Derived from IO muscle. Efferent of cremasteric reflex (via genital br. of genitofemoral).",cl:"Elevates testis in response to cold / inner thigh stroke.",hi:"From IO"},
+{n:"Internal spermatic fascia",lab:1,t:"fascia",loc:"Innermost cord covering",rel:"Derived from transversalis fascia (evagination at deep ring).",cl:"Only indirect hernias (through deep ring) have all 3 fasciae.",hi:"From transversalis"},
+{n:"Testicular artery",lab:1,t:"artery",loc:"Travels in cord",rel:"Arises from abdominal aorta at L2.",cl:"Long course → variable perfusion. Risk in torsion.",hi:"From aorta at L2"},
+{n:"Pampiniform plexus of veins",lab:1,t:"vein",loc:"Network surrounding testicular artery in cord",rel:"Drains into testicular vein (R → IVC; L → L renal vein). Acts as countercurrent heat exchanger.",cl:"Varicocele = dilated plexus. Left more common (L drains to renal vein + nutcracker).",hi:"Cooling coil"},
+{n:"Scrotum",lab:1,t:"skin",loc:"Pouch containing testes",rel:"Layers: skin, Dartos (from Scarpa's), external spermatic fascia, cremaster, internal spermatic fascia, tunica vaginalis.",cl:"Lymph drains to superficial inguinal nodes (NOT para-aortic like testis!).",hi:"Pouch"},
+{n:"Testis",lab:1,t:"organ",loc:"Within scrotum",rel:"Surrounded by tunica vaginalis (outer) + tunica albuginea (inner capsule). Septae divide into lobules.",cl:"Testicular cancer spreads to para-aortic nodes (L2) — embryologic origin.",hi:"Sperm factory"},
+{n:"Tunica vaginalis (parietal layer)",lab:1,t:"membrane",loc:"Outer layer lining scrotal sac",rel:"Derived from processus vaginalis (peritoneum).",cl:"Fluid between parietal & visceral layers = hydrocele.",hi:"Outer sheath"},
+{n:"Tunica vaginalis (visceral layer)",lab:1,t:"membrane",loc:"Inner layer hugging testis",rel:"Covers anterior + lateral testis (bare area posteriorly).",cl:"Continuous with parietal at posterior.",hi:"Hugs testis"},
+{n:"Tunica albuginea",lab:1,t:"capsule",loc:"Tough fibrous capsule of testis proper",rel:"Sends septae inward to form lobules.",cl:"Testicular rupture = tear in albuginea.",hi:"White capsule"},
+{n:"Lobules (testis)",lab:1,t:"structure",loc:"Inside testis",rel:"250–300 lobules, each with 1–3 seminiferous tubules.",cl:"Site of sperm production.",hi:"Sperm compartments"},
+{n:"Seminiferous tubules",lab:1,t:"duct",loc:"Inside each lobule",rel:"Connect to rete testis → efferent ductules → head of epididymis.",cl:"Site of spermatogenesis.",hi:"Sperm birthplace"},
+{n:"Epididymis — head",lab:1,t:"duct",loc:"Superior pole of testis",rel:"Receives efferent ductules from rete testis.",cl:"Entry of sperm into epididymis.",hi:"Sperm entry"},
+{n:"Epididymis — body",lab:1,t:"duct",loc:"Along posterolateral testis",rel:"Long coiled tubule (~6m uncoiled).",cl:"Sperm maturation occurs here.",hi:"Sperm maturation"},
+{n:"Epididymis — tail",lab:1,t:"duct",loc:"Inferior pole of testis",rel:"Continues as vas deferens.",cl:"Sperm storage prior to ejaculation.",hi:"Sperm storage"},
+
+// LAB 1 – Female
+{n:"Round ligament of the uterus",lab:1,t:"ligament",loc:"Travels through inguinal canal to labium majus",rel:"Embryologic analog of male gubernaculum. Much thinner than spermatic cord.",cl:"Site of endometriosis; ilioinguinal neuralgia after pelvic surgery.",hi:"Female canal contents"},
+
+// LAB 2 – Stomach
+{n:"Stomach — greater curvature",lab:2,t:"organ",loc:"Left/inferior convex curve of stomach",rel:"Attached to greater omentum (gastrocolic + gastrosplenic + gastrophrenic ligs).",cl:"Supplied by L + R gastroepiploic + short gastric arteries.",hi:"Convex side"},
+{n:"Stomach — lesser curvature",lab:2,t:"organ",loc:"Right/superior concave curve",rel:"Attached to lesser omentum (hepatogastric ligament).",cl:"Supplied by L gastric (celiac) + R gastric (hepatic proper). Most common ulcer site.",hi:"Concave side"},
+{n:"Cardia",lab:2,t:"organ",loc:"Part of stomach surrounding esophageal opening",rel:"GE (Z-line) junction = squamocolumnar transition.",cl:"Barrett's esophagus here. Lower esophageal sphincter guards.",hi:"Esophageal entry"},
+{n:"Cardiac notch",lab:2,t:"landmark",loc:"Sharp angle between esophagus and fundus",rel:"Against diaphragm. Acts as functional anti-reflux valve.",cl:"Lost in hiatal hernia.",hi:"Angle of His"},
+{n:"Fundus",lab:2,t:"organ",loc:"Dome superior to cardiac notch, left",rel:"Under left dome of diaphragm.",cl:"Gas-filled on upright X-ray (magenblase).",hi:"Gas bubble"},
+{n:"Body (of stomach)",lab:2,t:"organ",loc:"Main central region",rel:"Contains parietal cells (HCl + IF) + chief cells (pepsinogen).",cl:"Common ulcer site (type I, non-acid hypersecretor).",hi:"Acid-making zone"},
+{n:"Pylorus",lab:2,t:"organ",loc:"Distal narrow region → duodenum",rel:"Pyloric antrum (G cells → gastrin) → pyloric canal → pyloric sphincter.",cl:"Pyloric stenosis in infants (HPS).",hi:"Gastric outlet"},
+
+// LAB 2 – Small Intestine
+{n:"Duodenum",lab:2,t:"organ",loc:"1st part of small intestine; C-shaped; ~25 cm",rel:"4 parts (1st-4th). Most is secondarily retroperitoneal; only 1st 2 cm intraperitoneal.",cl:"Ends at ligament of Treitz (DJ flexure).",hi:"C-loop"},
+{n:"Jejunum",lab:2,t:"organ",loc:"Mid small intestine (LUQ mostly)",rel:"Thicker wall, more plicae, FEW arcades, LONG vasa recta, less fat.",cl:"Where most absorption occurs.",hi:"Plica-heavy"},
+{n:"Ileum",lab:2,t:"organ",loc:"Distal small intestine (RLQ)",rel:"Thinner wall, MANY arcades, SHORT vasa recta, Peyer's patches, more mesenteric fat.",cl:"B12 + bile salt absorption. Meckel's diverticulum common here.",hi:"Peyer's patches"},
+
+// LAB 2 – Large Intestine
+{n:"Cecum",lab:2,t:"organ",loc:"Blind pouch in RLQ below ileocecal valve",rel:"Intraperitoneal. Attachment of appendix at convergence of teniae.",cl:"Most volvulus site in elderly; typhlitis in neutropenia.",hi:"Colon's start"},
+{n:"Appendix",lab:2,t:"organ",loc:"Arises from posteromedial cecum",rel:"Variable position: retrocecal (most common), pelvic. Midgut.",cl:"Appendicitis: pain starts periumbilical (T10), shifts to RLQ (McBurney's).",hi:"Blind worm"},
+{n:"Ascending colon",lab:2,t:"organ",loc:"Right flank, RLQ → RUQ",rel:"Secondarily retroperitoneal. Between cecum and hepatic flexure.",cl:"Cancer often presents late (liquid stool passes).",hi:"Going up"},
+{n:"Right colic (hepatic) flexure",lab:2,t:"organ",loc:"Under right lobe of liver",rel:"Bend between ascending and transverse colon.",cl:"Marks SMA/celiac boundary vaguely; lower than splenic flexure.",hi:"Under liver"},
+{n:"Transverse colon",lab:2,t:"organ",loc:"Crosses abdomen upper-mid region",rel:"Intraperitoneal on transverse mesocolon (from pancreas). Contains midgut→hindgut boundary at distal 1/3.",cl:"Middle colic art supplies proximal 2/3 (SMA).",hi:"Mobile cross-piece"},
+{n:"Left colic (splenic) flexure",lab:2,t:"organ",loc:"Under spleen, higher and sharper than right",rel:"Anchored by phrenicocolic ligament. Watershed area (Griffith's point: SMA↔IMA).",cl:"Ischemic colitis classically here.",hi:"Griffith's point"},
+{n:"Descending colon",lab:2,t:"organ",loc:"Left flank",rel:"Secondarily retroperitoneal.",cl:"Common site of diverticula.",hi:"Going down"},
+{n:"Sigmoid colon",lab:2,t:"organ",loc:"LLQ, S-shaped",rel:"Intraperitoneal on sigmoid mesocolon.",cl:"Diverticulitis, volvulus, cancer common.",hi:"S-curve"},
+{n:"Rectum",lab:2,t:"organ",loc:"Pelvic end of colon",rel:"Upper 1/3 intraperitoneal; middle partial; lower 1/3 fully retroperitoneal. Teniae absent.",cl:"Dentate line splits arterial supply + venous drainage + lymphatics.",hi:"Pelvic end"},
+{n:"Teniae coli",lab:2,t:"muscle",loc:"3 longitudinal muscle bands of colon",rel:"Condensed outer longitudinal muscle. Shorter than colon → create haustra. Converge at appendix base.",cl:"Absent in rectum. Surgical landmark for appendix.",hi:"3 bands"},
+{n:"Haustra",lab:2,t:"structure",loc:"Sacculations of colonic wall",rel:"Caused by short teniae relative to colon length.",cl:"On AXR, haustra do NOT cross full lumen (vs. small bowel valvulae conniventes that do).",hi:"Pouches"},
+{n:"Omental (epiploic) appendages",lab:2,t:"structure",loc:"Fatty tags on colon serosal surface",rel:"NOT on small intestine or rectum.",cl:"Epiploic appendagitis mimics appendicitis/diverticulitis.",hi:"Fatty tags"},
+
+// LAB 2 – Liver
+{n:"Liver — right lobe",lab:2,t:"organ",loc:"Largest lobe, RUQ",rel:"Functionally independent from L lobe by blood supply (but touches).",cl:"Most hepatocyte mass.",hi:"Biggest"},
+{n:"Liver — left lobe",lab:2,t:"organ",loc:"Smaller left lobe",rel:"Separated from R lobe by falciform lig anatomically, portal vein branches functionally.",cl:"~50% of functional mass despite smaller size.",hi:"Anatomic half"},
+{n:"Caudate lobe",lab:2,t:"organ",loc:"Posterior, above porta hepatis",rel:"Between IVC (R) and ligamentum venosum (L). Superior to porta.",cl:"Spared/hypertrophies in Budd-Chiari (drains directly to IVC).",mn:"Caudate = Caval side",hi:"Near IVC"},
+{n:"Quadrate lobe",lab:2,t:"organ",loc:"Inferior, below porta hepatis",rel:"Between GB (R) and round ligament (L). Anatomically R lobe, functionally L lobe.",cl:"Easy landmark on inferior liver view.",hi:"Between GB + round lig"},
+{n:"Bare area of liver",lab:2,t:"structure",loc:"Posterosuperior R lobe NOT covered by peritoneum",rel:"Attached directly to diaphragm. Bordered by coronary ligament.",cl:"Lymph flows from liver to thoracic duct here (pleural effusion in liver abscess).",hi:"Peritoneum-free"},
+{n:"Porta hepatis",lab:2,t:"structure",loc:"Transverse fissure on inferior liver",rel:"Between caudate (above) + quadrate (below). Transmits portal triad in + bile ducts out.",cl:"Site of Pringle maneuver.",hi:"Liver gate"},
+
+// LAB 2 – GB & Spleen
+{n:"Gallbladder",lab:2,t:"organ",loc:"Pear-shaped sac on inferior liver",rel:"Parts: fundus, body, neck → cystic duct. Fundus at 9th costal cart, R MCL.",cl:"Murphy's sign in cholecystitis. Stones = most common pathology.",hi:"Bile storage"},
+{n:"Spleen",lab:2,t:"organ",loc:"LUQ, ribs 9–11 on left",rel:"Intraperitoneal. Ligaments: gastrosplenic (ant) + splenorenal (post).",cl:"Largest lymphoid organ. Kehr's sign in rupture (L shoulder pain).",mn:"1-3-5-7-9-11",hi:"Filter + lymphoid"},
+
+// LAB 2 – Peritoneal Cavity
+{n:"Visceral peritoneum",lab:2,t:"membrane",loc:"Covers organ surfaces",rel:"Innervated autonomically (sympathetic/parasympathetic).",cl:"Dull, poorly localized, referred pain.",hi:"Organ surface"},
+{n:"Greater peritoneal sac",lab:2,t:"space",loc:"Main peritoneal cavity",rel:"Everything you see on opening abdomen.",cl:"Site of most ascites.",hi:"Big sac"},
+{n:"Lesser peritoneal sac (omental bursa)",lab:2,t:"space",loc:"Pocket behind stomach + lesser omentum, in front of pancreas",rel:"Communicates with greater sac via omental foramen.",cl:"Pancreatic pseudocysts collect here.",hi:"Behind stomach"},
+{n:"Omental (epiploic) foramen",lab:2,t:"opening",loc:"Entry to lesser sac",rel:"Boundaries: Anterior = hepatoduodenal lig, Posterior = IVC, Superior = caudate lobe, Inferior = 1st duodenum.",cl:"Site of Pringle maneuver (finger inside, pinch hepatoduodenal).",mn:"DIP on a C",hi:"Lesser sac door"},
+
+// LAB 2 – Mesentery
+{n:"Mesentery proper",lab:2,t:"mesentery",loc:"Fan-shaped double peritoneum suspending jejunum + ileum",rel:"Root: DJ flexure (L2 upper left) → ileocecal junction (R iliac fossa). ~15 cm root, 6 m free edge.",cl:"Contains SMA branches + lacteals + autonomic nerves.",hi:"Fan of SB"},
+{n:"Transverse mesocolon",lab:2,t:"mesentery",loc:"Suspends transverse colon from pancreas",rel:"Contains middle colic artery. Divides supra- from inframesocolic compartments.",cl:"Anatomic landmark for abscess localization.",hi:"TC's mesentery"},
+{n:"Sigmoid mesocolon",lab:2,t:"mesentery",loc:"Suspends sigmoid from pelvic wall",rel:"Inverted-V shape. Apex over left ureter + common iliac vessels.",cl:"Contains sigmoid + superior rectal aa.",hi:"Sigmoid suspender"},
+{n:"Mesoappendix",lab:2,t:"mesentery",loc:"Small mesentery of appendix",rel:"Contains appendicular artery (end artery from ileocolic).",cl:"No collateral = ischemia/gangrene in appendicitis.",hi:"Appendix's mesentery"},
+
+// LAB 2 – Omentum
+{n:"Greater omentum",lab:2,t:"omentum",loc:"Apron of 4 peritoneal layers from greater curvature",rel:"Loops down from stomach, back up to transverse colon. Contains fat + gastroepiploic arteries.",cl:"'Policeman of abdomen' — walls off infection.",hi:"Apron"},
+{n:"Lesser omentum",lab:2,t:"omentum",loc:"Lesser curvature + 1st duo → liver",rel:"Split into hepatogastric + hepatoduodenal ligaments.",cl:"Forms anterior border of omental foramen.",hi:"Upper omentum"},
+
+// LAB 2 – Ligaments
+{n:"Hepatogastric ligament",lab:2,t:"ligament",loc:"Liver ↔ lesser curvature of stomach",rel:"Part of lesser omentum. Contains L + R gastric aa + vv.",cl:"Divided to access lesser sac through lesser omentum.",hi:"Part of lesser om."},
+{n:"Hepatoduodenal ligament",lab:2,t:"ligament",loc:"Liver ↔ 1st duodenum",rel:"Free R edge of lesser omentum. Contains portal TRIAD (bile duct, hepatic a proper, portal vein).",cl:"Pringle maneuver site. Anterior border of omental foramen.",mn:"Mickey Mouse (DA ears, V head)",hi:"Portal triad"},
+{n:"Falciform ligament",lab:2,t:"ligament",loc:"Anterior abdominal wall ↔ liver (anterior surface)",rel:"Sickle-shaped; contains round lig of liver in free edge. Separates L + R lobes anatomically.",cl:"Remnant of ventral mesentery.",hi:"Sickle-shape"},
+{n:"Round ligament of the liver (lig. teres)",lab:2,t:"ligament",loc:"Free edge of falciform ligament",rel:"Connects umbilicus to porta hepatis (left branch of portal v).",cl:"Remnant of L UMBILICAL VEIN. Recanalizes in portal HTN → caput medusae.",hi:"Umbilical v remnant"},
+{n:"Coronary ligament",lab:2,t:"ligament",loc:"Liver ↔ diaphragm",rel:"'Crown' around bare area. Splits into L + R triangular ligaments.",cl:"Defines bare area boundary.",hi:"Liver's crown"},
+{n:"Left triangular ligament",lab:2,t:"ligament",loc:"L limit of coronary lig",rel:"L lobe ↔ diaphragm.",cl:"Divided in L liver resection.",hi:"L coronary edge"},
+{n:"Right triangular ligament",lab:2,t:"ligament",loc:"R limit of coronary lig",rel:"R lobe ↔ diaphragm.",cl:"Divided in R liver resection.",hi:"R coronary edge"},
+{n:"Gastrophrenic ligament",lab:2,t:"ligament",loc:"Fundus ↔ diaphragm",rel:"Part of greater omentum superiorly.",cl:"Anchors fundus.",hi:"Fundus → diaphragm"},
+{n:"Gastrosplenic ligament",lab:2,t:"ligament",loc:"Greater curvature ↔ spleen hilum",rel:"Contains short gastric + L gastroepiploic arteries.",cl:"Divided in splenectomy.",hi:"Stomach → spleen"},
+{n:"Splenorenal ligament",lab:2,t:"ligament",loc:"Spleen ↔ L kidney/posterior wall",rel:"Contains SPLENIC artery + vein + TAIL of pancreas.",cl:"Tail of pancreas injury in splenectomy!",hi:"Splenic vessels + tail"},
+
+// LAB 2 – Foregut vasculature
+{n:"Celiac trunk",lab:2,t:"artery",loc:"Unpaired branch of aorta at T12",rel:"3 branches: Left gastric, Splenic, Common hepatic (LSH).",cl:"Supplies entire foregut. Median arcuate lig syndrome can compress it.",mn:"Left Sock Hides",hi:"Foregut trunk"},
+{n:"Common hepatic artery",lab:2,t:"artery",loc:"R branch of celiac",rel:"Splits into gastroduodenal + hepatic artery proper.",cl:"Rare aneurysm can rupture into common bile duct → hemobilia.",hi:"Celiac → GDA + HAP"},
+{n:"Gastroduodenal artery",lab:2,t:"artery",loc:"Descends behind 1st duodenum",rel:"Branch of common hepatic. Gives R gastroepiploic + superior pancreaticoduodenal aa.",cl:"Posterior duodenal ulcer → brisk UGI bleed from GDA.",hi:"Behind 1st duo"},
+{n:"Right gastroepiploic (gastroomental) artery",lab:2,t:"artery",loc:"Along greater curvature of stomach",rel:"From GDA. Anastomoses with L gastroepiploic (from splenic).",cl:"Supplies greater curvature + greater omentum.",hi:"Greater curve R half"},
+{n:"Superior pancreaticoduodenal arteries",lab:2,t:"artery",loc:"Around head of pancreas + C-loop",rel:"From GDA. Anterior + posterior branches.",cl:"Anastomose with INFERIOR pancreaticoduodenal (from SMA) — celiac↔SMA collateral.",hi:"Head of pancreas"},
+{n:"Hepatic artery proper",lab:2,t:"artery",loc:"In hepatoduodenal ligament",rel:"From common hepatic, after GDA branches off. Branches: R gastric, L hepatic, R hepatic, cystic.",cl:"Forms anterior-left of portal triad.",hi:"In triad"},
+{n:"Right gastric artery",lab:2,t:"artery",loc:"Along lesser curvature",rel:"From hepatic artery proper. Anastomoses with left gastric.",cl:"Smaller than L gastric.",hi:"Lesser curve R side"},
+{n:"Left hepatic artery",lab:2,t:"artery",loc:"To left + quadrate lobes",rel:"Branch of hepatic a proper.",cl:"Can be replaced/accessory from L gastric (variant).",hi:"L + quadrate"},
+{n:"Right hepatic artery",lab:2,t:"artery",loc:"To right + caudate lobes",rel:"Branch of hepatic a proper.",cl:"Can be replaced/accessory from SMA (variant). Gives cystic artery.",hi:"R + caudate"},
+{n:"Cystic artery",lab:2,t:"artery",loc:"In triangle of Calot",rel:"Usually from R hepatic artery (75%). Borders of Calot: cystic duct, common hepatic duct, inferior liver.",cl:"Misidentified = bile duct injury in cholecystectomy.",hi:"In Calot's triangle"},
+{n:"Splenic artery",lab:2,t:"artery",loc:"Largest branch of celiac; tortuous along superior pancreas",rel:"Branches: short gastrics, L gastroepiploic, pancreatic branches.",cl:"Splenic art aneurysm = 3rd most common intra-ab aneurysm; ruptures in pregnancy.",hi:"Tortuous snake"},
+{n:"Left gastroepiploic (gastroomental) artery",lab:2,t:"artery",loc:"Along greater curvature (L side)",rel:"From splenic artery. Anastomoses with R gastroepiploic.",cl:"Supplies greater curve L + greater omentum.",hi:"Greater curve L half"},
+{n:"Short gastric arteries",lab:2,t:"artery",loc:"To gastric fundus",rel:"From splenic a, travel in gastrosplenic lig.",cl:"Preserved if partial gastrectomy spares fundus.",hi:"Fundus"},
+{n:"Left gastric artery",lab:2,t:"artery",loc:"Smallest celiac branch",rel:"Runs along lesser curvature. Gives esophageal branches.",cl:"Esophageal branches = porto-systemic anastomosis site (varices).",hi:"Lesser curve L"},
+
+// LAB 2 – Porta Hepatis
+{n:"Portal triad",lab:2,t:"structure",loc:"Hepatoduodenal ligament",rel:"3 structures: Bile duct (AR), Hepatic artery proper (AL), Portal vein (Posterior). Pringle maneuver compresses.",cl:"~75% liver inflow is portal.",mn:"Mickey Mouse face",hi:"3 in 1 lig"},
+{n:"Bile duct",lab:2,t:"duct",loc:"Anterior-right of portal triad",rel:"Formed by union of cystic + common hepatic ducts. Passes through pancreatic head → ampulla of Vater → major papilla in 2nd duo.",cl:"Pancreatic head cancer obstructs → painless jaundice.",hi:"Drains bile"},
+{n:"Hepatic portal vein",lab:2,t:"vein",loc:"Posterior in portal triad",rel:"Formed by SMV + splenic vein behind pancreatic neck. IMV joins splenic usually.",cl:"Portal HTN → varices, caput medusae, hemorrhoids.",hi:"Bloody posterior"},
+{n:"Common hepatic duct",lab:2,t:"duct",loc:"Descends from porta hepatis",rel:"Union of R + L hepatic ducts. Joined by cystic → bile duct.",cl:"Proximal to cystic duct junction.",hi:"Before cystic joins"},
+{n:"Cystic duct",lab:2,t:"duct",loc:"From GB neck to bile duct",rel:"Forms lower border of Calot's triangle. Contains spiral valves of Heister.",cl:"Stone impaction → cholecystitis.",hi:"GB → CBD"},
+
+// LAB 3 – Midgut Vasculature
+{n:"Superior mesenteric artery (SMA)",lab:3,t:"artery",loc:"Unpaired aortic branch at L1 (transpyloric)",rel:"Behind pancreas neck, over uncinate, between pancreas (above) + 3rd duo (below). Right-side branches to colon, left-side intestinal branches.",cl:"SMA embolism → midgut infarction. SMA syndrome = 3rd duo compression.",hi:"L1 midgut trunk"},
+{n:"Inferior pancreaticoduodenal arteries",lab:3,t:"artery",loc:"First branch of SMA",rel:"Anastomoses with superior pancreaticoduodenal (celiac) — main celiac↔SMA collateral.",cl:"Dual supply of duodenum across ampulla of Vater boundary.",hi:"Collateral to celiac"},
+{n:"Middle colic artery",lab:3,t:"artery",loc:"Through transverse mesocolon",rel:"Branch of SMA. Supplies proximal 2/3 of TC.",cl:"End of SMA territory meets IMA at splenic flexure.",hi:"TC (proximal 2/3)"},
+{n:"Right colic artery",lab:3,t:"artery",loc:"Right side from SMA",rel:"Supplies ascending colon. Variable — often branch of ileocolic.",cl:"Anastomoses with middle + ileocolic via marginal artery.",hi:"Ascending colon"},
+{n:"Ileocolic artery",lab:3,t:"artery",loc:"Lowest right SMA branch",rel:"Supplies terminal ileum, cecum, proximal ascending colon, appendix.",cl:"Gives appendicular artery (end artery).",hi:"Terminal ileum + cecum"},
+{n:"Appendicular artery",lab:3,t:"artery",loc:"In mesoappendix",rel:"Branch of ileocolic artery. END ARTERY (no collateral).",cl:"Rapid gangrene/perforation in untreated appendicitis.",hi:"End artery"},
+{n:"Intestinal arteries",lab:3,t:"artery",loc:"Left-side SMA branches into mesentery",rel:"15–18 jejunal + ileal branches. Form arcades → vasa recta.",cl:"Jejunum: few arcades, long vasa recta. Ileum: many arcades, short vasa recta.",hi:"Jej + ile supply"},
+{n:"Vasa recta",lab:3,t:"artery",loc:"Straight arteries from arcades to bowel wall",rel:"Long in jejunum, short in ileum.",cl:"Identified on exam of bowel.",hi:"Straight arteries"},
+{n:"Arterial arcades",lab:3,t:"artery",loc:"Loops between intestinal arteries in mesentery",rel:"Few (1–2 tiers) in jejunum; many (3–5) in ileum.",cl:"Arcade pattern differs jejunum vs ileum — practical ID.",hi:"Loops"},
+{n:"Superior mesenteric vein (SMV)",lab:3,t:"vein",loc:"Right of SMA in mesentery root",rel:"Drains midgut. Unites with splenic v behind pancreatic neck → portal vein.",cl:"Crosses 3rd duodenum in root of mesentery.",hi:"Midgut drainage"},
+{n:"Splenic vein",lab:3,t:"vein",loc:"Behind body/tail of pancreas",rel:"Drains spleen, pancreas, parts of stomach. Receives IMV. Joins SMV behind pancreatic neck → portal v.",cl:"Pancreatic cancer can cause splenic vein thrombosis → isolated gastric varices.",hi:"Under pancreas"},
+
+// LAB 3 – Hindgut Vasculature
+{n:"Inferior mesenteric artery (IMA)",lab:3,t:"artery",loc:"Unpaired aortic branch at L3",rel:"3 branches: L colic, sigmoid aa, superior rectal a.",cl:"Supplies hindgut. Sacrificed in some AAA repairs.",hi:"L3 hindgut trunk"},
+{n:"Left colic artery",lab:3,t:"artery",loc:"First IMA branch",rel:"Supplies distal 1/3 TC + descending colon. Anastomoses with middle colic via marginal artery.",cl:"Watershed at splenic flexure (Griffith's).",hi:"Desc + distal TC"},
+{n:"Sigmoid arteries",lab:3,t:"artery",loc:"2–4 branches from IMA",rel:"Supply sigmoid colon. Form arcades.",cl:"Most distal anastomoses.",hi:"Sigmoid"},
+{n:"Superior rectal artery",lab:3,t:"artery",loc:"Terminal branch of IMA",rel:"Supplies upper rectum. Anastomoses with middle + inferior rectal (internal iliac) = porto-systemic site.",cl:"Internal hemorrhoid zone.",hi:"Upper rectum"},
+{n:"Marginal artery (of Drummond)",lab:3,t:"artery",loc:"Along mesenteric border of entire colon",rel:"Continuous arcade connecting ileocolic → R colic → middle colic → L colic → sigmoid.",cl:"Main SMA↔IMA collateral. Weak at splenic flexure (Griffith's).",hi:"Colon lifeline"},
+{n:"Inferior mesenteric vein (IMV)",lab:3,t:"vein",loc:"Left of IMA, ascends",rel:"Drains hindgut. Hooks under pancreas body → joins SPLENIC vein (usually).",cl:"Hindgut drainage bypasses midgut.",hi:"Joins splenic"},
+
+// LAB 3 – Duodenum
+{n:"Duodenum — superior (1st) part",lab:3,t:"organ",loc:"L1; horizontal; duodenal cap on X-ray",rel:"First 2 cm intraperitoneal; rest secondarily retroperitoneal. Behind: GDA, bile duct, portal v, IVC.",cl:"Most common peptic ulcer site. Posterior ulcer → GDA bleed.",hi:"Duodenal cap"},
+{n:"Duodenum — descending (2nd) part",lab:3,t:"organ",loc:"L1–L3; right of vertebrae",rel:"AMPULLA of VATER (major papilla) + minor papilla. FOREGUT→MIDGUT boundary at ampulla.",cl:"ERCP target. Stone at ampulla → jaundice + pancreatitis.",hi:"Ampulla here"},
+{n:"Duodenum — horizontal (3rd) part",lab:3,t:"organ",loc:"L3; crosses aorta + IVC",rel:"Crossed anteriorly by SMA + SMV + root of mesentery.",cl:"SMA syndrome: compression between aorta + SMA.",hi:"Between SMA + aorta"},
+{n:"Duodenum — ascending (4th) part",lab:3,t:"organ",loc:"L3 → L2; left of aorta",rel:"Ends at LIGAMENT OF TREITZ (DJ flexure).",cl:"Above Treitz = upper GI bleed; below = lower.",hi:"Ends at Treitz"},
+
+// LAB 3 – Pancreas
+{n:"Head of pancreas",lab:3,t:"organ",loc:"Nestled in duodenal C-loop",rel:"Right of SMV. CBD passes through it.",cl:"Most common pancreatic cancer site → painless jaundice + Courvoisier's sign.",hi:"In C-loop"},
+{n:"Uncinate process of pancreas",lab:3,t:"organ",loc:"Hook-shaped extension of head BEHIND SMA + SMV",rel:"Derived from ventral bud that rotated.",cl:"Can trap SMA (SMA syndrome) or be unresectable in cancer.",hi:"Behind SMA/V"},
+{n:"Neck of pancreas",lab:3,t:"organ",loc:"Narrow region anterior to SMA + SMV",rel:"SMV + splenic v unite BEHIND it to form portal v.",cl:"Pancreatic transection site in blunt trauma (compression against L1).",hi:"Portal v birthplace"},
+{n:"Body of pancreas",lab:3,t:"organ",loc:"Crosses midline over L1/L2",rel:"Splenic artery runs tortuously along superior border.",cl:"Adjacent to Tr mesocolon and L kidney posteriorly.",hi:"Main mass"},
+{n:"Tail of pancreas",lab:3,t:"organ",loc:"Extends to splenic hilum",rel:"ONLY intraperitoneal part. In splenorenal ligament.",cl:"Risk of injury in splenectomy → pancreatic fistula.",hi:"Intraperitoneal tail"},
+{n:"Main pancreatic duct",lab:3,t:"duct",loc:"Runs length of pancreas",rel:"Joins CBD at hepatopancreatic ampulla of Vater → major papilla of 2nd duo. Controlled by sphincter of Oddi.",cl:"Obstruction → chronic pancreatitis.",hi:"Duct of Wirsung"},
+
+// LAB 4 – Aorta & Branches
+{n:"Abdominal aorta",lab:4,t:"artery",loc:"From T12 (aortic hiatus) to L4 (bifurcation)",rel:"Left of IVC. 3 unpaired (celiac, SMA, IMA) + paired branches.",cl:"Abdominal aortic aneurysm (AAA) — most common infrarenal.",hi:"Midline artery"},
+{n:"Inferior phrenic arteries",lab:4,t:"artery",loc:"Paired, just above celiac at T12",rel:"Supply diaphragm. Give off SUPERIOR SUPRARENAL arteries.",cl:"Contribute to triple adrenal supply.",hi:"Top pair"},
+{n:"Middle suprarenal arteries",lab:4,t:"artery",loc:"Paired, directly from aorta (~L1)",rel:"Middle contribution to adrenal triple supply.",cl:"Between superior (from inf phrenic) + inferior (from renal).",hi:"Aortic → adrenal"},
+{n:"Renal arteries",lab:4,t:"artery",loc:"Paired at L1–L2, below SMA",rel:"R is longer, passes posterior to IVC. Each gives INFERIOR SUPRARENAL before entering hilum.",cl:"Accessory renal aa common — can compress ureter → hydronephrosis.",hi:"To kidneys"},
+{n:"Gonadal (testicular/ovarian) arteries",lab:4,t:"artery",loc:"Paired at L2",rel:"Long course; testicular travels through inguinal canal.",cl:"Risk in hernia repair.",hi:"Long descent"},
+{n:"Lumbar arteries",lab:4,t:"artery",loc:"4 paired pairs (L1–L4)",rel:"Segmental to posterior wall. Like intercostals.",cl:"Can bleed in AAA repair.",hi:"Wall segmental"},
+{n:"Common iliac arteries",lab:4,t:"artery",loc:"Aortic bifurcation at L4",rel:"Split into internal iliac (pelvis) + external iliac (lower limb).",cl:"AAA can extend into common iliacs.",hi:"Aortic terminal"},
+
+// LAB 4 – IVC & Tributaries
+{n:"Inferior vena cava",lab:4,t:"vein",loc:"Formed at L5, ascends right of aorta, through caval hiatus (T8)",rel:"Collects blood below diaphragm. Right of aorta.",cl:"Budd-Chiari involves hepatic v → IVC.",hi:"Right of aorta"},
+{n:"Right renal vein",lab:4,t:"vein",loc:"Short; enters IVC directly",rel:"Drains R kidney + R suprarenal + R gonadal? NO — R suprarenal + R gonadal enter IVC independently.",cl:"Wait: R renal drains R kidney only. R suprarenal + R gonadal drain directly to IVC.",hi:"R kidney → IVC"},
+{n:"Right suprarenal vein",lab:4,t:"vein",loc:"Short; drains directly into IVC",rel:"Risk of injury in R adrenalectomy.",cl:"Direct → IVC (unlike left).",hi:"Direct → IVC"},
+{n:"Right gonadal (testicular/ovarian) vein",lab:4,t:"vein",loc:"Drains directly into IVC",rel:"Short, direct.",cl:"R-sided varicocele uncommon because direct drainage.",hi:"Direct → IVC"},
+{n:"Left renal vein",lab:4,t:"vein",loc:"Long; crosses midline anterior to aorta, under SMA → IVC",rel:"Receives L suprarenal + L gonadal veins. Longest abdominal vein.",cl:"Nutcracker syndrome: compressed between aorta + SMA → L flank pain + L varicocele.",hi:"Longest abd vein"},
+{n:"Left suprarenal vein",lab:4,t:"vein",loc:"Drains into LEFT RENAL VEIN (not IVC)",rel:"Detours via renal vein.",cl:"Not directly to IVC.",hi:"→ L renal first"},
+{n:"Left gonadal (testicular/ovarian) vein",lab:4,t:"vein",loc:"Drains into LEFT RENAL VEIN (not IVC)",rel:"Longer path → higher back-pressure.",cl:"L varicocele common. New L varicocele in older man → rule out RCC!",hi:"→ L renal first"},
+{n:"Common iliac veins",lab:4,t:"vein",loc:"Unite at L5 → IVC",rel:"Drain pelvis + lower limbs.",cl:"DVT can extend from iliofemoral to IVC.",hi:"Form IVC"},
+
+// LAB 4 – Kidneys
+{n:"Renal fascia (Gerota's)",lab:4,t:"fascia",loc:"Fibrous envelope outside perirenal fat",rel:"Encloses kidney + adrenal + perirenal fat. Closed superiorly, open inferiorly.",cl:"Abscesses track inferiorly but not superiorly.",hi:"Kidney's blanket"},
+{n:"Perirenal fat",lab:4,t:"fat",loc:"Between renal capsule + Gerota's",rel:"Cushions kidney.",cl:"Reduced in cachexia + SMA syndrome.",hi:"Cushion fat"},
+{n:"Ureter",lab:4,t:"duct",loc:"Retroperitoneal tube from renal pelvis to bladder",rel:"Passes under uterine a (F) / ductus deferens (M) — 'water under bridge'. 3 constrictions: UPJ, pelvic brim, UVJ (narrowest).",cl:"Stones lodge at constrictions. Injured in hysterectomy.",hi:"Water under bridge"},
+{n:"Renal capsule",lab:4,t:"capsule",loc:"Innermost — on kidney surface",rel:"Tough fibrous covering.",cl:"Stretching → flank pain in pyelonephritis.",hi:"On kidney"},
+{n:"Renal cortex",lab:4,t:"structure",loc:"Outer 1/3 of kidney",rel:"Contains glomeruli + most PCT/DCT.",cl:"Biopsy target.",hi:"Outer filter"},
+{n:"Renal medulla",lab:4,t:"structure",loc:"Inner 2/3 of kidney",rel:"Contains pyramids + loops of Henle + collecting ducts.",cl:"Medullary sponge kidney.",hi:"Inner collector"},
+{n:"Renal pyramid",lab:4,t:"structure",loc:"Triangular units of medulla",rel:"Apex = papilla; base toward cortex.",cl:"8–18 per kidney.",hi:"Medullary wedge"},
+{n:"Renal column (of Bertin)",lab:4,t:"structure",loc:"Cortical tissue between pyramids",rel:"Extensions of cortex.",cl:"Hypertrophied column of Bertin = pseudotumor on imaging.",hi:"Cortex between"},
+{n:"Renal papilla",lab:4,t:"structure",loc:"Tip of renal pyramid",rel:"Projects into minor calyx.",cl:"Papillary necrosis: DM, sickle, NSAID, infection (DPAS/SAAD).",hi:"Urine exit"},
+{n:"Minor calyx",lab:4,t:"duct",loc:"Cup around each papilla",rel:"Drains one papilla.",cl:"8–18 per kidney.",hi:"Cup around papilla"},
+{n:"Major calyx",lab:4,t:"duct",loc:"Union of 2–4 minor calyces",rel:"2–3 major calyces per kidney.",cl:"Dilation in hydronephrosis.",hi:"Minor → major"},
+{n:"Renal pelvis",lab:4,t:"duct",loc:"Funnel inside renal sinus",rel:"Union of major calyces. Becomes ureter at UPJ.",cl:"Transitional cell carcinoma site.",hi:"Urine funnel"},
+{n:"Ureteropelvic junction (UPJ)",lab:4,t:"structure",loc:"Narrowest superior point of ureter",rel:"Where renal pelvis becomes ureter.",cl:"1st of 3 stone impaction sites. Congenital UPJ obstruction.",hi:"First narrowing"},
+
+// LAB 4 – Adrenal
+{n:"Superior suprarenal artery",lab:4,t:"artery",loc:"Top of adrenal",rel:"From INFERIOR PHRENIC artery.",cl:"Part of triple supply.",hi:"From inf phrenic"},
+{n:"Middle suprarenal artery",lab:4,t:"artery",loc:"Middle of adrenal",rel:"Directly from AORTA at ~L1.",cl:"Middle of triple supply.",hi:"From aorta"},
+{n:"Inferior suprarenal artery",lab:4,t:"artery",loc:"Bottom of adrenal",rel:"From RENAL artery.",cl:"Bottom of triple supply.",hi:"From renal art"},
+
+// LAB 4 – Muscles
+{n:"Psoas major muscle",lab:4,t:"muscle",loc:"Medial posterior wall, along vertebral column",rel:"O: T12–L5. I: lesser trochanter (with iliacus = iliopsoas). Innerv: L1–L3.",cl:"Main hip flexor. Positive psoas sign = retrocecal appendicitis.",hi:"Hip flexor"},
+{n:"Psoas minor muscle",lab:4,t:"muscle",loc:"Anterior surface of psoas major (variable — absent ~40%)",rel:"O: T12–L1. I: pectineal line. Weak trunk flexor.",cl:"Not reliably present.",hi:"Variable"},
+{n:"Iliacus muscle",lab:4,t:"muscle",loc:"Fills iliac fossa",rel:"O: iliac fossa. I: lesser trochanter (with psoas). Innerv: femoral n (L2–L4).",cl:"Hip flexor. Femoral nerve innervation important.",hi:"Fills iliac fossa"},
+{n:"Quadratus lumborum (QL)",lab:4,t:"muscle",loc:"Lateral posterior wall",rel:"O: iliac crest. I: 12th rib + L1–L4 TPs. Innerv: T12 + L1–L4.",cl:"Lateral flexor of vertebral column; stabilizes rib 12 during inspiration.",hi:"Lateral bender"},
+
+// LAB 4 – Diaphragm
+{n:"Diaphragm",lab:4,t:"muscle",loc:"Dome-shaped musculotendinous partition T-A",rel:"Innerv: phrenic (C3,4,5). Openings: T8 caval, T10 esoph, T12 aortic.",cl:"'C3,4,5 keeps diaphragm alive.' Referred shoulder pain (Kehr).",mn:"I 8 10 EGGs AT 12",hi:"Dome separator"},
+{n:"Central tendon (diaphragm)",lab:4,t:"tendon",loc:"Aponeurotic center of diaphragm",rel:"Fused with pericardium above. Contains caval opening at T8.",cl:"Rises with expiration.",hi:"Fused to heart"},
+{n:"Right crus (diaphragm)",lab:4,t:"muscle",loc:"Longer; arises from L1–L3 vertebrae",rel:"Forms esophageal hiatus (sling around esophagus).",cl:"Helps act as physiologic sphincter.",hi:"Esophageal hiatus"},
+{n:"Left crus (diaphragm)",lab:4,t:"muscle",loc:"Shorter; arises from L1–L2 vertebrae",rel:"With right crus forms aortic hiatus.",cl:"Between crura = aortic hiatus.",hi:"Shorter crus"},
+{n:"Caval opening (T8)",lab:4,t:"opening",loc:"In central tendon",rel:"Transmits IVC + right phrenic nerve.",cl:"'I 8 the IVC.'",hi:"T8 — IVC"},
+{n:"Esophageal hiatus (T10)",lab:4,t:"opening",loc:"In right crus (muscular)",rel:"Transmits esophagus + anterior/posterior vagal trunks + L gastric a/v esophageal branches.",cl:"Sliding hiatal hernia here.",hi:"T10 — esophagus"},
+{n:"Aortic hiatus (T12)",lab:4,t:"opening",loc:"BEHIND diaphragm (not through it)",rel:"Between R + L crura. Transmits aorta, thoracic duct, azygos v.",cl:"'AT 12 = aorta, thoracic duct.'",hi:"T12 — aorta"},
+
+// LAB 4 – Nerves
+{n:"Subcostal nerve (T12)",lab:4,t:"nerve",loc:"Runs along inferior border of 12th rib",rel:"Ventral ramus of T12. NOT part of lumbar plexus but shares territory.",cl:"Supplies lower abdominal wall + skin above iliac crest.",hi:"T12 — under rib 12"},
+{n:"Iliohypogastric nerve (L1)",lab:4,t:"nerve",loc:"Emerges from lateral border of psoas",rel:"Motor to IO + TA. Sensory to suprapubic skin.",cl:"Risk in Pfannenstiel + hernia repair.",hi:"L1 wall"},
+{n:"Ilioinguinal nerve (L1)",lab:4,t:"nerve",loc:"Lateral psoas; through inguinal canal",rel:"Motor to IO + TA. Sensory to anterior scrotum/labia + medial upper thigh.",cl:"Cremasteric reflex afferent.",hi:"L1 canal"},
+{n:"Genitofemoral nerve (L1–L2)",lab:4,t:"nerve",loc:"Pierces psoas anteriorly",rel:"GENITAL br → cremaster (efferent of reflex) + anterior scrotum. FEMORAL br → skin of femoral triangle.",cl:"Injury in appendectomy → impaired cremasteric reflex.",hi:"Cremaster motor"},
+{n:"Lateral cutaneous nerve of thigh (L2–L3)",lab:4,t:"nerve",loc:"Lateral border of psoas",rel:"Passes under inguinal lig medial to ASIS.",cl:"Meralgia paresthetica: entrapment → burning lateral thigh (tight belt/pregnancy).",hi:"Lat thigh skin"},
+{n:"Femoral nerve (L2–L4, dorsal divs)",lab:4,t:"nerve",loc:"Lateral border of psoas",rel:"Anterior thigh (quads, sartorius, iliacus, pectineus). Saphenous br → medial leg.",cl:"Femoral n lesion: can't extend knee, loss of patellar reflex.",hi:"Anterior thigh motor"},
+{n:"Obturator nerve (L2–L4, ventral divs)",lab:4,t:"nerve",loc:"Medial border of psoas",rel:"Medial thigh adductors + skin.",cl:"Can't adduct (cross legs); medial thigh numbness.",hi:"Medial thigh motor"},
+{n:"Sympathetic trunk (abdominal)",lab:4,t:"nerve",loc:"Medial to psoas, on lumbar vertebral bodies",rel:"Chain of ganglia. Splanchnic nerves (T5–T12) pass through to prevertebral ganglia.",cl:"Foregut T5–T9, Midgut T10–T11, Hindgut T12–L2 pain referral.",hi:"Sympathetic chain"}
+];
+
+const MNEMONICS = [
+{title:"Inguinal Hernia Classification",phrase:"MDs don't LIE",expand:"<strong>M</strong>edial to inferior epigastric = <strong>D</strong>irect hernia; <strong>L</strong>ateral = <strong>I</strong>ndirect. The inferior epigastric artery is the dividing landmark."},
+{title:"Rectus Sheath Rule",phrase:"Above = Split, Below = Slip",expand:"<strong>Above</strong> arcuate line: IO aponeurosis SPLITS to form both anterior + posterior sheath. <strong>Below</strong> arcuate: ALL aponeuroses SLIP anterior; only transversalis fascia lies behind rectus."},
+{title:"Abdominal Wall Muscle Fibers",phrase:"Hands in Pockets / Up & In / Across",expand:"<strong>EO</strong> = inferomedial (hands in front pockets). <strong>IO</strong> = superomedial (perpendicular to EO). <strong>TA</strong> = horizontal (across)."},
+{title:"Omental Foramen Boundaries",phrase:"DIP on a C",expand:"<strong>D</strong>uodenum (1st part, inferior), <strong>I</strong>VC (posterior), <strong>P</strong>ortal triad in hepatoduodenal lig (anterior), <strong>C</strong>audate lobe (superior)."},
+{title:"Celiac Trunk Branches",phrase:"Left Sock Hides",expand:"<strong>L</strong>eft gastric, <strong>S</strong>plenic, common <strong>H</strong>epatic — the 3 branches of celiac trunk."},
+{title:"Retroperitoneal Organs",phrase:"SAD PUCKER",expand:"<strong>S</strong>uprarenal, <strong>A</strong>orta/IVC, <strong>D</strong>uodenum (2nd–4th), <strong>P</strong>ancreas (except tail), <strong>U</strong>reters, <strong>C</strong>olon (asc + desc), <strong>K</strong>idneys, <strong>E</strong>sophagus (lower), <strong>R</strong>ectum (lower 2/3)."},
+{title:"Diaphragm Openings",phrase:"I 8 10 EGGs AT 12",expand:"<strong>T8</strong> = I (IVC) ate. <strong>T10</strong> = EGG (Esophagus + vagal Gastric branches). <strong>T12</strong> = AT (Aorta + Thoracic duct + azygos). Note: aortic hiatus is BEHIND diaphragm."},
+{title:"Adrenal Cortex Zones",phrase:"GFR Makes Good Sex",expand:"<strong>G</strong>lomerulosa → Mineralocorticoids (aldosterone = salt). <strong>F</strong>asciculata → Glucocorticoids (cortisol = sugar). <strong>R</strong>eticularis → Sex hormones (androgens)."},
+{title:"Posterior Wall Muscles",phrase:"PIL-Q (medial → lateral)",expand:"<strong>P</strong>soas major → <strong>I</strong>liacus → <strong>L</strong>umbar plexus emerges → <strong>Q</strong>uadratus lumborum. Lumbar plexus emerges within/between psoas and QL."},
+{title:"Lumbar Plexus (top → bottom)",phrase:"Interested In Getting Laid Friday? Obviously!",expand:"<strong>I</strong>liohypogastric (L1), <strong>I</strong>lioinguinal (L1), <strong>G</strong>enitofemoral (L1-L2), <strong>L</strong>ateral cutaneous (L2-L3), <strong>F</strong>emoral (L2-L4), <strong>O</strong>bturator (L2-L4)."},
+{title:"Portal Triad in Hepatoduodenal Lig",phrase:"Mickey Mouse Face (ADV)",expand:"<strong>Anterior-Left</strong>: hepatic <strong>A</strong>rtery proper. <strong>Anterior-Right</strong>: bile <strong>D</strong>uct. <strong>Posterior</strong>: portal <strong>V</strong>ein. The artery + duct are Mickey's ears; portal vein is his head."},
+{title:"Caudate vs Quadrate Lobe",phrase:"Caudate = Caval side",expand:"<strong>C</strong>audate = near <strong>C</strong>aval (IVC). Sits ABOVE porta hepatis. <strong>Q</strong>uadrate = between GB + round lig; BELOW porta hepatis."},
+{title:"Spermatic Cord Rule of 3s",phrase:"3 × 3 = 12 things",expand:"3 Arteries (testicular, cremasteric, vas), 3 Veins (pampiniform, cremasteric, vas), 3 Nerves (genital br GF, sympathetics, ilioinguinal on top), 3 Other (vas deferens, lymph, processus remnant)."},
+{title:"Spermatic Fascia Layers",phrase:"Every Class Is (EO-Cremaster-Internal)",expand:"Outside → in: <strong>E</strong>xternal spermatic fascia (from EO) → <strong>C</strong>remaster muscle/fascia (from IO) → <strong>I</strong>nternal spermatic fascia (from transversalis)."},
+{title:"Inguinal Ligament Anchors",phrase:"APT",expand:"<strong>A</strong>SIS to <strong>P</strong>ubic <strong>T</strong>ubercle. Inguinal ligament = inferior free edge of EO aponeurosis curled under."},
+{title:"Watershed Points of Colon",phrase:"Griffith Splenic, Sudeck Sigmoid",expand:"<strong>G</strong>riffith's point = splenic flexure (SMA↔IMA). <strong>S</strong>udeck's point = rectosigmoid junction (IMA↔internal iliac). Both vulnerable to ischemic colitis."},
+{title:"9 Regions Grid",phrase:"HEH / LUL / GHG",expand:"Top row: <strong>H</strong>ypochondriac/<strong>E</strong>pigastric/<strong>H</strong>ypochondriac. Middle: <strong>L</strong>umbar/<strong>U</strong>mbilical/<strong>L</strong>umbar. Bottom: <strong>G</strong>roin (inguinal)/<strong>H</strong>ypogastric/<strong>G</strong>roin."},
+{title:"Phrenic Nerve Roots",phrase:"C3, 4, 5 keeps the diaphragm alive",expand:"Phrenic nerve = C3-C4-C5. Kehr's sign (referred shoulder pain) = central diaphragmatic irritation refers to C4 dermatome."},
+{title:"Gastric Ulcer Artery",phrase:"Left = Lesser, GDA = Deadly",expand:"Posterior <strong>lesser curve</strong> ulcer → erodes <strong>left gastric artery</strong>. Posterior <strong>duodenal</strong> ulcer → erodes <strong>gastroduodenal artery</strong> (brisk UGI bleed)."},
+{title:"Portal Venous Union",phrase:"SMV + Splenic = Portal; IMV hitchhikes",expand:"SMV + splenic v unite BEHIND pancreatic neck → hepatic portal vein. IMV typically joins the splenic vein first."}
+];
+
+// ============ STATE ============
+let state={
+    view:"browse",
+    labFilter:"all",
+    studyIdx:0,
+    studyOrder:[],
+    learned:new Set(),
+    quiz:{idx:null,options:[],answered:false,streak:0,correct:0,attempts:0}
+};
+try{let saved=JSON.parse(localStorage.getItem("gi_flashcards_learned"));}catch(e){}
+
+function getFiltered(){
+    if(state.labFilter==="all") return STRUCTURES.map((s,i)=>({...s,i}));
+    return STRUCTURES.map((s,i)=>({...s,i})).filter(s=>s.lab==+state.labFilter);
+}
+
+function updateStats(){
+    const list=getFiltered();
+    const learned=list.filter(s=>state.learned.has(s.i)).length;
+    const total=list.length;
+    const pct=total?Math.round(learned/total*100):0;
+    document.getElementById("statShown").textContent=total;
+    document.getElementById("statLearned").textContent=learned;
+    document.getElementById("statPct").textContent=pct+"%";
+    document.getElementById("progressFill").style.width=pct+"%";
+}
+
+// ============ BROWSE VIEW ============
+function renderBrowse(){
+    const list=getFiltered();
+    const grid=document.getElementById("cardGrid");
+    grid.innerHTML="";
+    if(!list.length){grid.innerHTML='<div class="empty">No structures in this filter.</div>';return}
+    list.forEach(s=>{
+        const card=document.createElement("div");
+        card.className="card"+(state.learned.has(s.i)?" learned":"");
+        card.innerHTML=`
+            ${state.learned.has(s.i)?'<div class="learned-badge">&#10003; LEARNED</div>':''}
+            <div class="card-inner">
+                <div class="card-face card-front l${s.lab}">
+                    <div class="lab-tag">Lab ${s.lab}</div>
+                    <div class="structure-name">${s.n}</div>
+                    <span class="type-badge">${s.t}</span>
+                    <div class="hint">${s.hi||"Click to flip"}</div>
+                </div>
+                <div class="card-face card-back l${s.lab}">
+                    <div class="back-title">${s.n}</div>
+                    <div class="back-item"><strong>Location:</strong> ${s.loc}</div>
+                    <div class="back-item"><strong>Relations:</strong> ${s.rel}</div>
+                    <div class="back-item"><strong>Clinical:</strong> ${s.cl||"—"}</div>
+                    ${s.mn?`<div class="mnemonic">&#129504; ${s.mn}</div>`:""}
+                </div>
+            </div>`;
+        card.onclick=(e)=>{
+            if(e.shiftKey){
+                // Shift-click toggles learned
+                if(state.learned.has(s.i))state.learned.delete(s.i);
+                else state.learned.add(s.i);
+                updateStats();
+                renderBrowse();
+            } else {
+                card.classList.toggle("flipped");
+            }
+        };
+        grid.appendChild(card);
+    });
+}
+
+// ============ STUDY VIEW ============
+function buildStudyOrder(){
+    const list=getFiltered();
+    state.studyOrder=list.map(s=>s.i);
+    state.studyIdx=0;
+}
+function shuffleStudy(){
+    for(let i=state.studyOrder.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [state.studyOrder[i],state.studyOrder[j]]=[state.studyOrder[j],state.studyOrder[i]];
+    }
+    state.studyIdx=0;
+    renderStudy();
+}
+function renderStudy(){
+    if(!state.studyOrder.length){buildStudyOrder()}
+    if(!state.studyOrder.length){
+        document.getElementById("studyName").textContent="No cards in filter.";
+        document.getElementById("studyReveal").classList.add("hidden");
+        return;
+    }
+    const s=STRUCTURES[state.studyOrder[state.studyIdx]];
+    const card=document.getElementById("studyCard");
+    card.className="study-card l"+s.lab;
+    document.getElementById("studyLab").textContent=`Lab ${s.lab} · ${state.studyIdx+1} / ${state.studyOrder.length}`;
+    document.getElementById("studyName").textContent=s.n;
+    document.getElementById("studyType").textContent=s.t;
+    const rev=document.getElementById("studyReveal");
+    rev.classList.add("hidden");
+    rev.innerHTML=`
+        <div class="fact"><strong>Location</strong>${s.loc}</div>
+        <div class="fact"><strong>Relations</strong>${s.rel}</div>
+        ${s.cl?`<div class="clinical"><strong>&#129658; Clinical:</strong> ${s.cl}</div>`:""}
+        ${s.mn?`<div class="mnemonic"><strong>&#129504; Mnemonic:</strong> ${s.mn}</div>`:""}
+    `;
+    document.getElementById("btnReveal").textContent="&#128065; Reveal Answer";
+    document.getElementById("btnReveal").innerHTML="&#128065; Reveal Answer";
+    document.getElementById("btnLearn").innerHTML=state.learned.has(state.studyOrder[state.studyIdx])?"&#10003; Unlearn":"&#10003; Got it!";
+}
+function studyNext(){state.studyIdx=(state.studyIdx+1)%state.studyOrder.length;renderStudy();}
+function studyPrev(){state.studyIdx=(state.studyIdx-1+state.studyOrder.length)%state.studyOrder.length;renderStudy();}
+
+// ============ QUIZ VIEW ============
+function nextQuiz(){
+    const list=getFiltered();
+    if(list.length<4){
+        document.getElementById("quizQuestion").innerHTML='<span style="color:#dc2626">Need at least 4 structures in filter to quiz.</span>';
+        document.getElementById("quizOptions").innerHTML="";
+        document.getElementById("quizPrompt").textContent="";
+        return;
+    }
+    const correctIdx=Math.floor(Math.random()*list.length);
+    const correct=list[correctIdx];
+    // Pick 3 distractors (preferably same lab if possible)
+    const poolSameLab=list.filter(s=>s.i!==correct.i&&s.lab===correct.lab);
+    const pool=list.filter(s=>s.i!==correct.i);
+    const usePool=poolSameLab.length>=3?poolSameLab:pool;
+    const distractors=[];
+    const used=new Set([correct.i]);
+    while(distractors.length<3&&usePool.length){
+        const pick=usePool[Math.floor(Math.random()*usePool.length)];
+        if(!used.has(pick.i)){distractors.push(pick);used.add(pick.i)}
+        if(distractors.length===usePool.length)break;
+    }
+    const options=[correct,...distractors].sort(()=>Math.random()-0.5);
+    state.quiz.idx=correct.i;
+    state.quiz.options=options.map(o=>o.i);
+    state.quiz.answered=false;
+
+    // Pick a random prompt type
+    const promptType=Math.floor(Math.random()*3);
+    let promptText="",questionText="";
+    if(promptType===0){
+        promptText="IDENTIFY THE STRUCTURE";
+        questionText=`<strong>Location:</strong> ${correct.loc}<br><strong>Relations:</strong> ${correct.rel}`;
+    } else if(promptType===1){
+        promptText="CLINICAL CORRELATION";
+        questionText=correct.cl?`<strong>Clinical clue:</strong> ${correct.cl}<br><em>(Located: ${correct.loc})</em>`:`<strong>Location:</strong> ${correct.loc}<br><strong>Relations:</strong> ${correct.rel}`;
+    } else {
+        promptText="IDENTIFY FROM RELATIONS";
+        questionText=`<strong>Relations:</strong> ${correct.rel}`;
+    }
+    document.getElementById("quizPrompt").textContent=promptText;
+    document.getElementById("quizQuestion").innerHTML=questionText;
+
+    const optsDiv=document.getElementById("quizOptions");
+    optsDiv.innerHTML="";
+    options.forEach(o=>{
+        const btn=document.createElement("button");
+        btn.className="quiz-option";
+        btn.textContent=o.n;
+        btn.onclick=()=>quizAnswer(btn,o.i);
+        optsDiv.appendChild(btn);
+    });
+    document.getElementById("quizFeedback").classList.remove("show");
+    document.getElementById("btnQuizNext").style.display="none";
+}
+function quizAnswer(btn,clickedIdx){
+    if(state.quiz.answered)return;
+    state.quiz.answered=true;
+    state.quiz.attempts++;
+    const opts=document.querySelectorAll(".quiz-option");
+    const correctIdx=state.quiz.idx;
+    const correct=STRUCTURES[correctIdx];
+    opts.forEach(o=>o.classList.add("disabled"));
+    if(clickedIdx===correctIdx){
+        btn.classList.add("correct");
+        state.quiz.correct++;
+        state.quiz.streak++;
+        const fb=document.getElementById("quizFeedback");
+        fb.className="quiz-feedback show correct";
+        fb.innerHTML=`&#127881; <strong>Correct!</strong> ${correct.n} &mdash; ${correct.cl||correct.rel.slice(0,120)+"..."}`;
+    } else {
+        btn.classList.add("wrong");
+        // highlight correct answer
+        opts.forEach(o=>{if(o.textContent===correct.n)o.classList.add("correct")});
+        state.quiz.streak=0;
+        const fb=document.getElementById("quizFeedback");
+        fb.className="quiz-feedback show wrong";
+        fb.innerHTML=`&#10060; <strong>Correct answer: ${correct.n}</strong><br>${correct.cl||correct.rel}`;
+    }
+    document.getElementById("streak").textContent=state.quiz.streak;
+    document.getElementById("correctCount").textContent=state.quiz.correct;
+    document.getElementById("attemptCount").textContent=state.quiz.attempts;
+    document.getElementById("btnQuizNext").style.display="inline-block";
+}
+
+// ============ MNEMONIC VIEW ============
+function renderMnemonics(){
+    const grid=document.getElementById("mnemGrid");
+    grid.innerHTML="";
+    MNEMONICS.forEach(m=>{
+        const card=document.createElement("div");
+        card.className="mnem-card";
+        card.innerHTML=`<h4>${m.title}</h4><div class="phrase">${m.phrase}</div><div class="expansion">${m.expand}</div>`;
+        grid.appendChild(card);
+    });
+}
+
+// ============ RELATIONS VIEW ============
+function renderRelations(){
+    const blocks=[
+        {title:"&#129451; Inguinal Canal Walls",triples:[
+            ["Anterior wall","EO aponeurosis (+ IO laterally)","The outer layer you cut first"],
+            ["Posterior wall","Transversalis fascia (+ conjoint tendon medially)","Where direct hernias push through"],
+            ["Roof","Arching fibers of IO + TA","Closes canal superiorly"],
+            ["Floor","Inguinal ligament (+ lacunar medially)","Separates inguinal from femoral region"]
+        ]},
+        {title:"&#128273; Portal Triad (Hepatoduodenal Ligament)",triples:[
+            ["Anterior-Left","Hepatic artery proper","25% of liver blood flow"],
+            ["Anterior-Right","Bile duct","Drains bile out"],
+            ["Posterior","Hepatic portal vein","75% of liver blood flow"]
+        ]},
+        {title:"&#129658; Omental Foramen (of Winslow) Boundaries",triples:[
+            ["Anterior","Hepatoduodenal lig (portal triad)","Pinched in Pringle maneuver"],
+            ["Posterior","Inferior vena cava","Don't puncture!"],
+            ["Superior","Caudate lobe of liver","Posterior hepatic lobe"],
+            ["Inferior","1st part of duodenum","Duodenal cap"]
+        ]},
+        {title:"&#128992; Hesselbach's Triangle (Direct Hernias)",triples:[
+            ["Medial","Lateral border of rectus abdominis","Medial edge"],
+            ["Lateral (Superior)","Inferior epigastric artery","THE landmark"],
+            ["Inferior","Inguinal ligament","Bottom edge"]
+        ]},
+        {title:"&#128308; Triangle of Calot (Cystohepatic)",triples:[
+            ["Medial","Common hepatic duct","Bile duct border"],
+            ["Inferior","Cystic duct","From GB"],
+            ["Superior","Inferior surface of liver","Roof"]
+        ]},
+        {title:"&#128167; Kidney Hilum (Anterior → Posterior)",triples:[
+            ["Anterior","Renal VEIN","Welcome sign"],
+            ["Middle","Renal ARTERY","Power supply"],
+            ["Posterior","URETER","Back exit"]
+        ]},
+        {title:"&#127797; Diaphragm Openings (T8, T10, T12)",triples:[
+            ["T8 — Caval","IVC + right phrenic nerve","In central tendon (I ate the IVC)"],
+            ["T10 — Esophageal","Esophagus + vagal trunks + L gastric a/v branches","In right crus (10 EGGs)"],
+            ["T12 — Aortic","Aorta + thoracic duct + azygos vein","BEHIND diaphragm (AT 12)"]
+        ]},
+        {title:"&#127749; 3 Ureter Constrictions (Stone Lodging Sites)",triples:[
+            ["1st (UPJ)","Ureteropelvic junction","Where renal pelvis → ureter"],
+            ["2nd","Pelvic brim","Over common iliac bifurcation"],
+            ["3rd (UVJ)","Ureterovesical junction","Narrowest — most common"]
+        ]},
+        {title:"&#129729; Spleen's Ligaments",triples:[
+            ["Gastrosplenic","Stomach ↔ spleen; short gastric + L gastroepiploic aa","Anterior"],
+            ["Splenorenal","Spleen ↔ L kidney; SPLENIC artery + vein + TAIL of pancreas","Posterior — tail of pancreas here!"],
+            ["Phrenicocolic","Splenic flexure support","Not a splenic lig directly but nearby"]
+        ]},
+        {title:"&#127858; Gastric Arterial Supply",triples:[
+            ["Lesser curvature","Left gastric (celiac) + R gastric (hepatic proper)","Meet midway"],
+            ["Greater curvature","L + R gastroepiploic (omental) + short gastrics","Supply greater curve"],
+            ["Fundus","Short gastric arteries (from splenic)","Via gastrosplenic lig"]
+        ]},
+        {title:"&#129386; Embryologic Gut Regions",triples:[
+            ["Foregut (T12 celiac)","Distal esophagus → 2nd duodenum at ampulla of Vater; liver, GB, spleen, proximal pancreas","Pain refers: epigastric"],
+            ["Midgut (L1 SMA)","Distal 2nd duo → 2/3 of transverse colon","Pain refers: periumbilical (T10)"],
+            ["Hindgut (L3 IMA)","Distal 1/3 TC → upper rectum","Pain refers: hypogastric/suprapubic"]
+        ]},
+        {title:"&#129658; Venous Drainage Asymmetry (Left vs Right)",triples:[
+            ["Right suprarenal","→ IVC directly","Short path"],
+            ["Right gonadal","→ IVC directly","Short path"],
+            ["Left suprarenal + Left gonadal","→ LEFT RENAL VEIN → IVC","Long path → varicocele risk"]
+        ]},
+        {title:"&#128164; Triple Adrenal Blood Supply",triples:[
+            ["Superior suprarenal","From INFERIOR PHRENIC artery","Top"],
+            ["Middle suprarenal","Directly from AORTA","Middle"],
+            ["Inferior suprarenal","From RENAL artery","Bottom"]
+        ]}
+    ];
+    const div=document.getElementById("relationsContent");
+    div.innerHTML="";
+    blocks.forEach(b=>{
+        const block=document.createElement("div");
+        block.className="region-block";
+        let html=`<h3>${b.title}</h3><div class="triple">`;
+        b.triples.forEach(t=>{
+            html+=`<div><strong>${t[0]}</strong>${t[1]}<br><em style="color:#64748b;font-size:11px">${t[2]}</em></div>`;
+        });
+        html+=`</div>`;
+        block.innerHTML=html;
+        div.appendChild(block);
+    });
+}
+
+// ============ WIRING ============
+document.querySelectorAll(".tab").forEach(t=>{
+    t.onclick=()=>{
+        document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+        t.classList.add("active");
+        document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+        const view=t.dataset.view;
+        document.getElementById("view-"+view).classList.add("active");
+        state.view=view;
+        if(view==="browse")renderBrowse();
+        else if(view==="study"){buildStudyOrder();renderStudy()}
+        else if(view==="quiz")nextQuiz();
+        else if(view==="mnemonics")renderMnemonics();
+        else if(view==="relations")renderRelations();
+    };
+});
+
+document.querySelectorAll(".filter-btn").forEach(b=>{
+    b.onclick=()=>{
+        document.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
+        b.classList.add("active");
+        state.labFilter=b.dataset.lab;
+        updateStats();
+        if(state.view==="browse")renderBrowse();
+        else if(state.view==="study"){buildStudyOrder();renderStudy()}
+        else if(state.view==="quiz")nextQuiz();
+    };
+});
+
+document.getElementById("btnReveal").onclick=()=>{
+    document.getElementById("studyReveal").classList.toggle("hidden");
+};
+document.getElementById("btnLearn").onclick=()=>{
+    const idx=state.studyOrder[state.studyIdx];
+    if(state.learned.has(idx))state.learned.delete(idx);
+    else state.learned.add(idx);
+    updateStats();
+    studyNext();
+};
+document.getElementById("btnSkip").onclick=studyNext;
+document.getElementById("btnNext").onclick=studyNext;
+document.getElementById("btnPrev").onclick=studyPrev;
+document.getElementById("btnShuffle").onclick=shuffleStudy;
+document.getElementById("btnQuizNext").onclick=nextQuiz;
+document.getElementById("resetBtn").onclick=()=>{
+    if(confirm("Reset learned progress?")){
+        state.learned.clear();
+        state.quiz.streak=0;state.quiz.correct=0;state.quiz.attempts=0;
+        document.getElementById("streak").textContent="0";
+        document.getElementById("correctCount").textContent="0";
+        document.getElementById("attemptCount").textContent="0";
+        updateStats();
+        if(state.view==="browse")renderBrowse();
+    }
+};
+
+// Init
+updateStats();
+renderBrowse();
+</script>
+</body>
+</html>
