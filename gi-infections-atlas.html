@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GI Infections Atlas — HoyaDocs USMLE Step 1 Prep</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;background:#faf8f3;color:#1c2e23;line-height:1.7;font-size:15.5px;overflow:hidden}
+.app{display:flex;height:100vh}
+.sidebar{width:280px;background:#f3efe7;border-right:1px solid #e6ddc9;display:flex;flex-direction:column;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.sb-top{padding:14px 14px 10px;border-bottom:1px solid #e6ddc9;background:#ede6d6}
+.sb-brand{display:block;font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:#14532d;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:1px solid #d4c9ad;margin-bottom:8px;transition:color 0.12s}
+.sb-brand:hover{color:#0f3a1f;text-decoration:underline}
+.sb-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#14532d;letter-spacing:-0.01em;cursor:pointer;transition:color 0.12s;display:block;line-height:1.15}
+.sb-title:hover{color:#0f3a1f}
+.sb-sub{font-size:11px;color:#6b7b6c;margin-top:3px;font-style:italic}
+.sb-search{margin-top:10px}
+.sb-search input{width:100%;padding:7px 11px;border:1px solid #d4c9ad;border-radius:4px;background:white;font-size:12.5px;font-family:Georgia,serif}
+.sb-search input:focus{outline:none;border-color:#14532d;background:#fffef8}
+.sb-progress{padding:8px 14px;background:#ede6d6;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;font-size:11px;color:#4b5b4c}
+.sb-progress-bar{flex:1;height:5px;background:#d4c9ad;border-radius:3px;overflow:hidden}
+.sb-progress-fill{height:100%;background:#14532d;transition:width 0.4s}
+.sb-list{flex:1;overflow-y:auto;padding:6px 0}
+.sb-home{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:12px;font-weight:700;color:#14532d;cursor:pointer;border-bottom:1px solid #e6ddc9;transition:background 0.12s;user-select:none}
+.sb-home:hover{background:rgba(20,83,45,0.08)}
+.sb-home.active{background:#14532d;color:white}
+.cat-group{margin-bottom:2px}
+.cat-header{padding:7px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:#14532d;cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;background:transparent;transition:background 0.12s}
+.cat-header:hover{background:rgba(20,83,45,0.05)}
+.cat-chevron{font-size:9px;transition:transform 0.2s;color:#8a9b8b}
+.cat-group.collapsed .cat-chevron{transform:rotate(-90deg)}
+.cat-count{margin-left:auto;background:rgba(20,83,45,0.1);color:#14532d;font-size:9.5px;padding:1px 6px;border-radius:8px;font-weight:700;letter-spacing:0.3px}
+.cat-list{display:block}
+.cat-group.collapsed .cat-list{display:none}
+.dz-item{padding:5px 14px 5px 26px;font-size:12.5px;color:#3c4d3d;cursor:pointer;display:flex;align-items:center;gap:7px;line-height:1.35;border-left:3px solid transparent;transition:all 0.1s;font-family:Georgia,serif;font-style:italic}
+.dz-item:hover{background:rgba(20,83,45,0.06);color:#14532d}
+.dz-item.active{background:#14532d;color:white;border-left-color:#fbbf24;font-weight:600}
+.dz-item.active .dz-check{color:#fbbf24}
+.dz-check{font-size:11px;color:#a0a79e;flex-shrink:0;width:12px;font-style:normal}
+.dz-item.learned .dz-check{color:#16a34a}
+.dz-item.active.learned .dz-check{color:#86efac}
+.dz-name{flex:1;min-width:0}
+.main-top{background:white;padding:11px 24px;border-bottom:1px solid #e6ddc9;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.main-top h1{font-family:Georgia,serif;font-size:17px;font-weight:700;color:#14532d;letter-spacing:-0.01em;flex:1;cursor:pointer;transition:color 0.12s}
+.main-top h1:hover{color:#0f3a1f}
+.main-top .meta{font-size:11.5px;color:#6b7b6c;font-style:italic}
+.btn{padding:6px 12px;background:white;border:1px solid #d4c9ad;border-radius:4px;font-size:11.5px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.12s;white-space:nowrap}
+.btn:hover{border-color:#14532d;color:#14532d}
+.btn.print{background:#14532d;color:white;border-color:#14532d}
+.btn.print:hover{background:#0f3a1f;color:white}
+.btn.excel{background:#107c41;color:white;border-color:#107c41}
+.btn.excel:hover{background:#0b5a2e;color:white}
+.content{flex:1;overflow-y:auto;background:#faf8f3}
+.content-inner{max-width:1200px;margin:0 auto;padding:42px 56px 120px}
+.cat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#8a9b8b;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.cat-dot{width:8px;height:8px;border-radius:50%;background:#14532d}
+.dz-title{font-family:Georgia,serif;font-size:34px;font-weight:700;font-style:italic;color:#14532d;letter-spacing:-0.025em;line-height:1.15;margin-bottom:16px}
+.dz-oneliner{font-size:17px;color:#3c4d3d;line-height:1.55;margin-bottom:28px;padding:14px 18px;background:#ede6d6;border-left:3px solid #14532d;border-radius:0 5px 5px 0;font-style:italic;max-width:900px}
+.sec{margin-bottom:28px;max-width:900px}
+.sec h3{font-family:Georgia,serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#14532d;margin-bottom:10px;padding-bottom:5px;border-bottom:1.5px solid #d4c9ad;display:flex;align-items:center;gap:7px}
+.sec p,.sec ul{font-size:15px;color:#1c2e23;line-height:1.75}
+.sec ul{padding-left:22px;margin-top:4px}
+.sec ul li{margin-bottom:5px}
+.sec strong{color:#14532d;font-weight:700}
+.callout{margin:20px 0;padding:14px 18px;border-radius:5px;font-size:14.5px;line-height:1.7;max-width:900px}
+.callout h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.callout ul{padding-left:20px;margin-top:5px}
+.callout li{margin-bottom:4px}
+.callout.hy{background:#fdf4d3;border-left:4px solid #eab308;color:#713f12}
+.callout.hy h4,.callout.hy strong{color:#78350f}
+.callout.mn{background:#ffe7d6;border-left:4px solid #ea580c;color:#7c2d12}
+.callout.mn h4,.callout.mn strong{color:#9a3412}
+.callout.trap{background:#fde3e3;border-left:4px solid #dc2626;color:#7f1d1d}
+.callout.trap h4,.callout.trap strong{color:#991b1b}
+.footer-nav{position:sticky;bottom:0;background:linear-gradient(to top,#faf8f3 60%,rgba(250,248,243,0));padding:24px 56px 22px;max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.nav-btn{flex:1;padding:11px 14px;background:white;border:1.5px solid #d4c9ad;border-radius:6px;font-size:13px;font-weight:600;color:#4b5b4c;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0}
+.nav-btn:hover{border-color:#14532d;color:#14532d;background:#fffef8}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed}
+.nav-btn.learn{flex:0.8;background:#14532d;color:white;border-color:#14532d}
+.nav-btn.learn:hover{background:#0f3a1f;color:white}
+.nav-btn.learn.learned{background:#16a34a;border-color:#16a34a}
+.kbd{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.25);padding:1px 5px;border-radius:3px;font-family:ui-monospace,Menlo,monospace;font-size:10px;margin-left:4px}
+.nav-btn:not(.learn) .kbd{background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
+.home-hero{text-align:center;padding:20px 0 26px;border-bottom:1px solid #e6ddc9;margin-bottom:28px}
+.home-brand{font-size:12px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#14532d;opacity:0.65;margin-bottom:10px}
+.home-title{font-family:Georgia,serif;font-size:50px;font-weight:700;color:#14532d;letter-spacing:-0.025em;line-height:1.05;margin-bottom:14px}
+.home-sub{font-size:17.5px;color:#3c4d3d;font-style:italic;max-width:700px;margin:0 auto 22px;line-height:1.55}
+.home-start{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#14532d;color:white;border:none;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:Georgia,serif;transition:all 0.15s;text-decoration:none}
+.home-start:hover{background:#0f3a1f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,83,45,0.25)}
+.home-section-title{font-family:Georgia,serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#14532d;margin:36px 0 16px;padding-bottom:8px;border-bottom:1.5px solid #d4c9ad}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.home-cat{background:#f3efe7;border:1px solid #e6ddc9;border-radius:8px;padding:14px 16px;transition:all 0.15s}
+.home-cat:hover{border-color:#14532d;box-shadow:0 2px 10px rgba(20,83,45,0.08)}
+.home-cat-title{font-family:Georgia,serif;font-size:13.5px;font-weight:700;color:#14532d;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #d4c9ad;display:flex;align-items:center;gap:6px}
+.home-cat-count{margin-left:auto;background:rgba(20,83,45,0.12);font-size:10.5px;padding:1px 7px;border-radius:8px;font-weight:700}
+.home-dz-list{display:flex;flex-direction:column;gap:2px}
+.home-dz{font-size:13px;color:#3c4d3d;padding:4px 7px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.1s;font-family:Georgia,serif;font-style:italic;border-left:2px solid transparent}
+.home-dz:hover{background:#14532d;color:white;border-left-color:#fbbf24}
+.home-dz:hover .home-check{color:#fbbf24}
+.home-dz.learned{color:#16a34a}
+.home-dz .home-check{font-size:10px;width:10px;flex-shrink:0;color:#b5bbb2;font-style:normal}
+.home-dz.learned .home-check{color:#16a34a}
+.empty{text-align:center;padding:80px 20px;color:#8a9b8b;font-style:italic}
+.menu-toggle{display:none;padding:8px 11px;background:#14532d;color:white;border:none;border-radius:4px;font-size:16px;cursor:pointer;line-height:1;order:-1}
+@media(max-width:1000px){.content-inner{padding:32px 40px 120px}.footer-nav{padding:20px 40px 20px}}
+@media(max-width:720px){
+  body{font-size:14.5px}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;width:270px;max-width:85vw;transform:translateX(-100%);transition:transform 0.3s;box-shadow:0 0 20px rgba(0,0,0,0.15)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-toggle{display:block}
+  .main-top{padding:9px 12px;gap:6px;flex-wrap:nowrap;overflow-x:auto}
+  .main-top h1{font-size:14px;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .main-top .meta{display:none}
+  .main-top .btn{padding:5px 9px;font-size:11px}
+  .content-inner{padding:20px 18px 140px;max-width:100%}
+  .dz-title{font-size:24px}
+  .home-title{font-size:30px}
+  .home-sub{font-size:15px}
+  .home-hero{padding:14px 0 20px;margin-bottom:22px}
+  .home-grid{grid-template-columns:1fr;gap:12px}
+  .home-section-title{margin-top:24px}
+  .dz-oneliner{font-size:15px;padding:11px 14px;margin-bottom:22px}
+  .sec{margin-bottom:22px}
+  .sec h3{font-size:12px}
+  .sec p,.sec ul,.callout{font-size:14px}
+  .footer-nav{padding:14px 14px;max-width:100%;gap:6px;flex-wrap:wrap}
+  .nav-btn{padding:9px 10px;font-size:12px;min-width:0}
+  .nav-btn .kbd{display:none}
+  .nav-btn.learn{flex:1 1 100%;order:0;padding:11px 10px}
+  .nav-btn:not(.learn){flex:1}
+}
+@media(max-width:400px){.main-top .btn{padding:5px 8px;font-size:10.5px}.main-top h1{font-size:13px}.home-title{font-size:26px}}
+.sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:90}
+.sb-backdrop.show{display:block}
+@media print{
+  body{overflow:visible;background:white;font-size:10.5pt}
+  .app{display:block;height:auto}
+  .sidebar,.main-top,.footer-nav,.sb-backdrop{display:none!important}
+  .main{overflow:visible}
+  .content{overflow:visible;background:white}
+  .content-inner{max-width:100%;padding:0}
+  .dz-entry{page-break-after:always;padding:20px 30px;break-after:page}
+  .dz-entry:last-child{page-break-after:auto}
+  .callout,.dz-oneliner{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.sb-list::-webkit-scrollbar,.content::-webkit-scrollbar{width:8px}
+.sb-list::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.content::-webkit-scrollbar-thumb{background:#d4c9ad;border-radius:4px}
+.sb-list::-webkit-scrollbar-thumb:hover,.content::-webkit-scrollbar-thumb:hover{background:#14532d}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <a class="sb-brand" href="https://hoyadocs.com/Block4-GI/" target="_blank" rel="noopener">HoyaDocs</a>
+    <span class="sb-title" onclick="goHome()">GI Infections Atlas</span>
+    <div class="sb-sub">USMLE Step 1 · 55 organisms</div>
+    <div class="sb-search"><input type="text" id="search" placeholder="Search…"></div>
+  </div>
+  <div class="sb-progress">
+    <span id="learnedText">0 / 0</span>
+    <div class="sb-progress-bar"><div class="sb-progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="sb-list" id="sbList"></div>
+</aside>
+<div class="sb-backdrop" id="sbBackdrop" onclick="closeSidebar()"></div>
+<main class="main">
+  <div class="main-top">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h1 onclick="goHome()">GI Infections Study Guide</h1>
+    <span class="meta">↑↓ navigate · space = learn</span>
+    <button class="btn" id="prevBtn" title="Previous">◀</button>
+    <button class="btn" id="nextBtn" title="Next">▶</button>
+    <button class="btn print" id="printBtn">🖨 PDF</button>
+    <button class="btn excel" id="excelBtn">📊 Excel</button>
+  </div>
+  <div class="content" id="content"></div>
+</main>
+</div>
+<script>
+const DISEASES = [
+// ═══════════════ VIRUSES ═══════════════
+{id:"rotavirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Rotavirus",
+oneLiner:"Most common cause of severe watery diarrhea in children &lt;2 yr worldwide. Non-enveloped segmented dsRNA virus. Oral vaccine available.",
+path:"<strong>Reoviridae</strong> family — non-enveloped, <strong>segmented dsRNA</strong> virus. Destroys <strong>villus tips</strong> of small bowel → ↓ absorption + osmotic diarrhea. <strong>NSP4</strong> is a viral enterotoxin → secretory component. Transmission: fecal-oral.",
+clin:"<ul><li>Daycare/winter outbreaks in kids 6 mo–2 yr</li><li>Profuse <strong>watery diarrhea</strong>, vomiting, low-grade fever</li><li>NO blood or mucus</li><li>Main danger: <strong>dehydration</strong> (leading cause of diarrheal death worldwide in under-5)</li></ul>",
+dx:"Stool antigen (ELISA) or PCR.",
+tx:"<strong>Oral rehydration therapy (ORT)</strong>. Live attenuated oral vaccine (RotaTeq, Rotarix) given to infants.",
+hy:["<strong>#1 severe childhood diarrhea worldwide</strong>","<strong>Segmented dsRNA</strong>, non-enveloped","<strong>NSP4 enterotoxin</strong>","Damages villus tips → malabsorption","Winter/daycare","Prevent with oral vaccine"],
+mn:"<strong>R</strong>otavirus = <strong>R</strong>eovirus, <strong>R</strong>ehydration, <strong>R</strong>ice-water? No — that's cholera. Rotavirus = villus destruction + osmotic diarrhea.",
+trap:"Historical RotaShield (1998) vaccine was withdrawn due to <strong>intussusception</strong> risk. Current vaccines (RotaTeq, Rotarix) have much smaller risk — still a boards-classic association."},
+
+{id:"norovirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Norovirus",
+oneLiner:"Most common viral gastroenteritis in adults (all ages). Cruise ships, nursing homes, schools. Alcohol-sanitizer resistant — soap + water.",
+path:"<strong>Caliciviridae</strong> family — non-enveloped, <strong>positive-sense ssRNA</strong>. Very low infectious dose (~18 particles). Highly stable in environment. <strong>Alcohol-resistant</strong>.",
+clin:"<ul><li>Acute <strong>vomiting + watery diarrhea</strong> (vomiting often dominant)</li><li>Brief illness (24–60 hr)</li><li>Epidemic outbreaks: cruise ships, schools, nursing homes, restaurants</li><li>Low-grade fever, abdominal cramps</li></ul>",
+dx:"Clinical diagnosis; RT-PCR for outbreak investigation.",
+tx:"Supportive (ORT). No antiviral.",
+hy:["<strong>Cruise ship / dorm outbreak</strong> = Norovirus","<strong>Alcohol-sanitizer resistant</strong> → wash hands with soap + water","Positive-sense ssRNA, non-enveloped","Extremely low infectious dose","Vomiting > diarrhea (but has both)"],
+mn:"<strong>'N</strong>oro = <strong>N</strong>o cruise (outbreak on boat). <strong>N</strong>eeds soap, <strong>N</strong>ot alcohol."},
+
+{id:"adenovirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Adenovirus (enteric)",
+oneLiner:"Enteric serotypes <strong>40 &amp; 41</strong> cause prolonged pediatric diarrhea. 2nd most common viral cause of kid diarrhea. dsDNA, non-enveloped.",
+path:"<strong>Adenoviridae</strong> — dsDNA, non-enveloped, icosahedral. Serotypes 40/41 specific to gut (other serotypes cause respiratory, conjunctivitis, hemorrhagic cystitis).",
+clin:"Prolonged (1–2 wk) watery diarrhea in kids &lt;2 yr. Less severe than rotavirus; no seasonality.",
+dx:"Stool antigen or PCR.",
+tx:"Supportive.",
+hy:["Serotypes <strong>40, 41</strong> = enteric","2nd most common pediatric viral diarrhea","Longer duration than rotavirus","dsDNA, non-enveloped"]},
+
+{id:"enterovirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Enterovirus",
+oneLiner:"Picornaviridae family — Coxsackie A/B, Echovirus, Poliovirus, Enterovirus 71. Mostly extra-GI disease despite fecal-oral route.",
+path:"Non-enveloped, <strong>positive-sense ssRNA</strong>. Fecal-oral transmission but rarely causes prominent diarrhea — <strong>invades via gut then disseminates</strong>.",
+clin:"<ul><li>Coxsackie A → hand-foot-mouth disease, herpangina</li><li>Coxsackie B → myocarditis, pleurodynia</li><li>Echovirus → aseptic meningitis</li><li>Enterovirus 71 → HFMD with CNS involvement</li><li>GI symptoms minor or absent</li></ul>",
+hy:["Fecal-oral but causes extra-GI disease","Acid-stable (unlike rhinovirus)","Summer/fall epidemics","Picornavirus family"]},
+
+{id:"astrovirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Astrovirus",
+oneLiner:"Mild watery diarrhea in children and immunocompromised. <strong>Star-shaped</strong> on electron microscopy (hence name).",
+path:"Astroviridae — non-enveloped, ssRNA, star-shaped on EM.",
+clin:"Mild, self-limited watery diarrhea in kids (winter) and immunocompromised.",
+hy:["<strong>Star-shaped on EM</strong>","Mild pediatric diarrhea","Immunocompromised hosts"]},
+
+{id:"calicivirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Calicivirus",
+oneLiner:"Family name — includes Norovirus + Sapovirus. 'Cup-shaped' depressions on EM.",
+path:"Caliciviridae family: norovirus (main pathogen), sapovirus (mild pediatric). Non-enveloped, ssRNA, <strong>cup-like depressions</strong> on capsid (Latin: calyx = cup).",
+hy:["Family = norovirus + sapovirus","Cup-shaped depressions on EM (→ 'calyx')","Sapovirus = mild pediatric diarrhea"]},
+
+{id:"coronavirus",cat:"Viruses",ck:"viru",emoji:"🦠",name:"Coronavirus (enteric)",
+oneLiner:"Primarily respiratory but some strains (SARS-CoV-2, MERS) have GI manifestations — diarrhea in ~20% of COVID-19 patients.",
+path:"Enveloped, ssRNA, <strong>crown-like spike proteins</strong> on EM. ACE2 receptor on enterocytes → viral replication → GI symptoms.",
+clin:"Diarrhea, nausea, abdominal pain in subset of COVID-19 patients. Also respiratory illness.",
+hy:["Crown-like spikes (corona = crown)","ACE2 receptor on gut enterocytes","GI symptoms in ~20% of COVID-19"]},
+
+// ═══════════════ BACTERIA — CORE ═══════════════
+{id:"campylobacter-jejuni",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Campylobacter jejuni",
+oneLiner:"Most common bacterial cause of gastroenteritis in US. <strong>Comma/S-shaped</strong> gram-neg rod, <strong>oxidase+</strong>, grows at <strong>42°C</strong>. Poultry, raw milk, puppies.",
+path:"Gram-negative, <strong>curved/comma-shaped</strong> or S-shaped rod. <strong>Microaerophilic</strong>, grows at <strong>42°C</strong>. <strong>Oxidase+</strong>, catalase+. <strong>Motile</strong> via polar flagellum. Invades colon → bloody inflammatory diarrhea.",
+clin:"<ul><li>Bloody or watery diarrhea, fever, severe cramping abdominal pain</li><li>Can mimic <strong>appendicitis</strong> (RLQ pain, pseudoappendicitis)</li><li>1–7 day incubation</li><li><strong>Complications</strong>: Guillain-Barré syndrome (classic — molecular mimicry with gangliosides), reactive arthritis (HLA-B27), rare HUS</li></ul>",
+dx:"Stool culture on <strong>selective media at 42°C</strong> (Campy agar). Gram stain: curved 'gull-wing' rods.",
+tx:"Usually self-limited. <strong>Azithromycin</strong> or ciprofloxacin for severe/prolonged.",
+hy:["<strong>#1 bacterial gastroenteritis in US</strong>","Poultry, raw milk, puppy/pet exposure","<strong>Comma/S-shaped, gull-wing</strong>, oxidase+","Grows at <strong>42°C</strong>","<strong>Guillain-Barré syndrome</strong> (GBS) — most identified trigger worldwide","Reactive arthritis (HLA-B27)","Pseudoappendicitis"],
+mn:"<strong>Campy</strong> = <strong>C</strong>urved, <strong>C</strong>atalase+, <strong>C</strong>arried by <strong>C</strong>hickens, <strong>C</strong>auses GBS."},
+
+{id:"campylobacter-coli",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Campylobacter coli",
+oneLiner:"Less common than C. jejuni but similar presentation (bloody diarrhea). Same treatment. Associated with pigs/pork.",
+path:"Same microbiology as C. jejuni — curved gram-neg rod, microaerophilic, 42°C growth, oxidase+. Pork reservoir.",
+hy:["Clinically indistinguishable from C. jejuni","Pork exposure","Same GBS + reactive arthritis risk"]},
+
+{id:"campylobacter-fetus",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Campylobacter fetus",
+oneLiner:"Unusual Campylobacter — causes <strong>bacteremia</strong> + vascular infections in immunocompromised + elderly. Grows at <strong>25–37°C</strong> (NOT 42°C).",
+path:"Curved gram-neg rod but grows at LOWER temperatures than jejuni. Antiphagocytic S-layer protein protects from complement.",
+clin:"Bacteremia, endovascular infections (mycotic aneurysm, endocarditis), neonatal sepsis. Less prominent diarrhea.",
+hy:["Bacteremia &gt; diarrhea","25–37°C growth (unlike jejuni)","Immunocompromised, cirrhosis, elderly","S-layer protein"]},
+
+{id:"salmonella",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Salmonella spp. (non-typhoidal)",
+oneLiner:"Poultry, eggs, reptiles. Gram-neg rod, <strong>H2S+</strong>, <strong>motile</strong>, non-lactose-fermenter. <strong>Osteomyelitis in sickle cell</strong>. Large inoculum needed.",
+path:"Gram-negative rod, motile, facultative anaerobe. <strong>H2S+</strong>, non-lactose-fermenting. <strong>Acid-labile</strong> — requires large inoculum (10⁵+) unless gastric acid is low (PPI, H2 blocker), young, elderly, or sickle cell.",
+clin:"<ul><li>Fever, abdominal cramps, watery → bloody diarrhea, 12–72 hr post-exposure</li><li>Typically self-limited (5–7 days)</li><li>Shedding can persist weeks</li><li><strong>Complications</strong>: bacteremia (infants, immunocompromised, sickle cell), <strong>reactive arthritis</strong>, <strong>osteomyelitis in sickle cell disease</strong> (Salmonella &gt; S. aureus here!)</li></ul>",
+dx:"Stool culture. Blood culture if bacteremic.",
+tx:"Supportive for otherwise healthy (antibiotics can prolong carriage!). <strong>Ceftriaxone</strong> or cipro for severe disease, bacteremia, at-risk patients (sickle, immunocompromised, infants, elderly).",
+hy:["<strong>Poultry, eggs, reptile</strong> exposure","<strong>H2S+, motile, non-lactose</strong>","<strong>Salmonella osteomyelitis in sickle cell</strong> (vs S. aureus in everyone else)","Reactive arthritis","Large inoculum needed (acid-labile)","Don't treat routinely — prolongs shedding"],
+mn:"<strong>Salmon</strong>ella = <strong>S</strong>ickle cell osteo, <strong>S</strong>almon-swimming (motile), <strong>S</strong>wallows eggs, <strong>S</strong>tinks (H2S)."},
+
+{id:"shigella",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Shigella spp.",
+oneLiner:"Bloody dysentery with mucus. <strong>Low inoculum (~10 organisms)</strong>. Person-to-person. <strong>Non-motile</strong>, <strong>no H2S</strong>. S. dysenteriae makes Shiga toxin → HUS.",
+path:"Gram-neg rod, <strong>non-motile</strong>, <strong>non-lactose-fermenting</strong>, <strong>no H2S</strong>. <strong>Acid-stable</strong> → very low infectious dose (10–100 organisms — just shaking hands). Invades colonic epithelium. <strong>S. dysenteriae</strong> produces <strong>Shiga toxin</strong> (inactivates 60S ribosome).",
+clin:"<ul><li>Explosive <strong>bloody diarrhea with mucus</strong>, tenesmus, fever, severe cramps</li><li>Daycare + institutional outbreaks; MSM</li><li><strong>Febrile seizures in kids</strong></li><li><strong>HUS</strong> (from Shiga toxin in S. dysenteriae)</li><li>Reactive arthritis</li></ul>",
+dx:"Stool culture; PCR multiplex.",
+tx:"<strong>Ciprofloxacin</strong> or azithromycin (shortens shedding, prevents spread). TMP-SMX if susceptible.",
+hy:["<strong>Low inoculum → person-to-person</strong>","<strong>Non-motile, no H2S</strong> (differentiates from Salmonella)","<strong>Shiga toxin</strong> (S. dysenteriae) → HUS","Febrile seizures in children","Daycare outbreaks","Explosive bloody mucus diarrhea"],
+mn:"<strong>Sh</strong>igella = <strong>Sh</strong>ake hands (low dose), <strong>Sh</strong>iga toxin, <strong>Sh</strong>its blood. <strong>Don't</strong> move (non-motile), <strong>don't</strong> stink (no H2S).",
+trap:"Salmonella = Smells bad (H2S+), Moves (motile). Shigella = Silent (no H2S), Still (non-motile)."},
+
+{id:"yersinia-enterocolitica",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Yersinia enterocolitica",
+oneLiner:"<strong>Pseudoappendicitis</strong> from RLQ mesenteric adenitis. Pork products, unpasteurized milk, pets. <strong>Cold-growing</strong>. Iron-loving → hemochromatosis.",
+path:"Gram-neg rod, <strong>bipolar staining</strong> ('safety-pin' appearance). <strong>Grows at 4°C</strong> (cold enrichment — refrigerator). Invades through Peyer patches → mesenteric lymphadenitis.",
+clin:"<ul><li>Fever, abdominal pain (often <strong>RLQ — mimics appendicitis</strong>), diarrhea ± blood</li><li>Mesenteric adenitis</li><li><strong>Reactive arthritis</strong> (HLA-B27)</li><li>Erythema nodosum</li><li>Sepsis in <strong>iron overload</strong> (hemochromatosis, chronic transfusion)</li></ul>",
+dx:"Stool culture (cold enrichment at 4°C). Serology.",
+tx:"Self-limited usually. <strong>TMP-SMX</strong> or fluoroquinolones for severe.",
+hy:["<strong>Pseudoappendicitis</strong> with RLQ pain","<strong>Pork</strong>, unpasteurized milk, pets","<strong>Bipolar 'safety-pin'</strong> staining","<strong>Grows at 4°C</strong> (in the refrigerator!)","<strong>Iron overload/hemochromatosis</strong> → sepsis","Reactive arthritis + erythema nodosum"],
+mn:"<strong>Yers</strong>inia = <strong>Y</strong>ou're <strong>E</strong>ating <strong>R</strong>aw <strong>S</strong>ausage (pork)."},
+
+{id:"yersinia-pseudotuberculosis",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Yersinia pseudotuberculosis",
+oneLiner:"Rare; similar pseudoappendicitis presentation. Reservoir in wild animals (rabbits, rodents). Scarlet-fever-like illness in Far East ('Far East scarlet-like fever').",
+hy:["Similar to Y. enterocolitica","Scarlet-fever-like rash possible","Wild animal exposure"]},
+
+{id:"ecoli-general",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Escherichia coli (general)",
+oneLiner:"Gram-neg <strong>lactose-fermenting</strong> rod. Normal colonic flora. Multiple diarrheagenic pathotypes (EPEC, ETEC, EHEC, EIEC, EAEC) + extra-intestinal disease (UTI, neonatal meningitis, sepsis).",
+path:"<strong>Lactose-fermenter</strong> (pink on MacConkey, <strong>green metallic sheen on EMB</strong>). Indole+, motile. K1 capsule → neonatal meningitis. Extra-intestinal causes: UTI (#1), sepsis, cholangitis.",
+hy:["<strong>Lactose-fermenter</strong> (pink on MacConkey)","<strong>Green metallic sheen on EMB</strong>","Normal colon flora but can invade","Multiple diarrheagenic pathotypes","K1 → neonatal meningitis","#1 cause of UTI"]},
+
+{id:"vibrio-cholerae",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Vibrio cholerae",
+oneLiner:"<strong>'Rice-water'</strong> profuse non-bloody diarrhea from contaminated water. Massive dehydration → hypovolemic shock. <strong>Comma-shaped</strong>, oxidase+.",
+path:"Gram-neg, <strong>curved/comma-shaped</strong>, oxidase+, motile. <strong>TCBS agar</strong> (yellow colonies). <strong>Cholera toxin</strong> (A-B): A subunit <strong>ADP-ribosylates Gs</strong> → permanently activates <strong>adenylate cyclase</strong> → ↑ cAMP → activates <strong>CFTR</strong> → massive Cl⁻ secretion + water follows → profuse watery diarrhea.",
+clin:"<ul><li>Profuse <strong>rice-water stools</strong> (pale, flecks of mucus, no blood)</li><li>Severe dehydration, electrolyte loss, hypovolemic shock</li><li>No fever, no blood, no mucus (pure secretory diarrhea)</li><li>Death from dehydration within hours if untreated</li></ul>",
+dx:"Stool culture on <strong>TCBS agar</strong>. Dark-field microscopy: rapidly moving curved rods ('shooting stars').",
+tx:"<strong>Aggressive oral rehydration therapy (ORT)</strong> is lifesaving. <strong>Doxycycline</strong> or azithromycin shortens illness.",
+hy:["<strong>Rice-water stool</strong>","Comma-shaped, oxidase+","<strong>Cholera toxin</strong>: ADP-ribosylates Gs → ↑ cAMP → CFTR activation","Same mechanism as <strong>ETEC heat-labile toxin</strong>","ORT = lifesaving","Contaminated water, post-disaster outbreaks","Acid-labile (needs large inoculum)"],
+mn:"<strong>CHOLERA</strong> mechanism: <strong>C</strong>holera toxin → <strong>C</strong>yclic AMP up → <strong>C</strong>l⁻ out → <strong>C</strong>omes water → <strong>C</strong>rashes into shock."},
+
+{id:"vibrio-parahaemolyticus",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Vibrio parahaemolyticus",
+oneLiner:"Raw/undercooked <strong>seafood</strong> (sushi, shellfish). Self-limited watery diarrhea. <strong>Halophilic</strong> (salt-loving).",
+path:"Gram-neg curved rod, halophilic. TDH (thermostable direct hemolysin) = virulence factor.",
+clin:"Watery diarrhea, abdominal cramps, low-grade fever 24 hr after raw seafood. Self-limited 3 days.",
+hy:["<strong>Raw seafood/sushi</strong>","Halophilic (needs salt)","Japan, coastal US","Self-limited"]},
+
+{id:"vibrio-vulnificus",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Vibrio vulnificus",
+oneLiner:"<strong>Raw oysters + cirrhosis/hemochromatosis → sepsis + hemorrhagic bullae</strong>. Wound infection from seawater → necrotizing fasciitis. High mortality.",
+path:"Gram-neg curved rod, halophilic. <strong>Iron-loving</strong> — cirrhosis + hemochromatosis + iron overload enable rapid growth. Capsule resists phagocytosis.",
+clin:"<ul><li><strong>Wound infection</strong>: seawater contact → severe cellulitis, necrotizing fasciitis, hemorrhagic bullae</li><li><strong>Primary septicemia</strong>: raw oyster ingestion + chronic liver disease → bacteremia + hemorrhagic bullous skin lesions (50%+ mortality)</li><li>Rapid progression — emergency</li></ul>",
+dx:"Blood + wound cultures.",
+tx:"<strong>Doxycycline + ceftriaxone</strong> (or cipro). Aggressive wound debridement.",
+hy:["<strong>Raw oysters + cirrhosis</strong> = Vibrio vulnificus sepsis","<strong>Hemorrhagic bullae</strong>","Iron overload (hemochromatosis) = major risk","Seawater wound → necrotizing fasciitis","High mortality"],
+mn:"<strong>V</strong>ulnificus = <strong>V</strong>ery <strong>V</strong>iolent <strong>V</strong>ibrio in <strong>V</strong>ulnerable (liver) hosts."},
+
+{id:"listeria",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Listeria monocytogenes",
+oneLiner:"<strong>Gram-positive rod</strong>, <strong>tumbling motility</strong> at 22°C. Cold-growing. Deli meats, soft cheese, unpasteurized milk. Pregnancy + neonate + elderly danger.",
+path:"Gram-positive rod, <strong>facultative intracellular</strong> (like TB), <strong>actin-based motility</strong> ('rocket tails' — ActA), β-hemolytic, catalase+. Grows at refrigerator temp. <strong>Tumbling motility</strong> at 22°C (not at 37°C).",
+clin:"<ul><li><strong>Healthy adults</strong>: self-limited febrile gastroenteritis</li><li><strong>Pregnancy</strong>: amnionitis, fetal loss, neonatal sepsis (often 3rd trimester)</li><li><strong>Neonates</strong>: meningitis (part of triad: <strong>GBS, E. coli, Listeria</strong>)</li><li><strong>Elderly/immunocompromised</strong>: meningitis (with S. pneumoniae)</li></ul>",
+dx:"Blood/CSF cultures. Gram stain: short gram-positive rods.",
+tx:"<strong>Ampicillin</strong> (± gentamicin for synergy). (Cephalosporins do NOT cover Listeria — classic pitfall).",
+hy:["<strong>Deli meats, soft cheese, unpasteurized milk</strong>","<strong>Tumbling motility</strong> at 22°C","<strong>Actin rockets</strong> (ActA)","Cold-growing (4°C)","<strong>Pregnancy + neonate + elderly meningitis</strong>","<strong>Ampicillin</strong> (NOT cephalosporins!)","Facultative intracellular"],
+mn:"<strong>'L</strong>isteria <strong>L</strong>oves <strong>L</strong>unch meat and causes <strong>L</strong>ate (3rd trimester) fetal <strong>L</strong>oss.'",
+trap:"Cephalosporins miss Listeria. Must add <strong>ampicillin</strong> to empiric meningitis regimen in <strong>neonates &lt;1 mo</strong> and <strong>adults &gt;50</strong>."},
+
+{id:"cdiff",cat:"Bacteria (Core)",ck:"bact",emoji:"🧫",name:"Clostridioides difficile",
+oneLiner:"<strong>Pseudomembranous colitis</strong> from antibiotic disruption of flora. Toxins A (enterotoxin) + B (cytotoxin). Hospital/nursing home. Gram+ spore-forming anaerobe.",
+path:"Gram-positive anaerobic <strong>spore-former</strong>. Antibiotic exposure kills normal flora → C. diff overgrowth → <strong>Toxin A</strong> (enterotoxin) + <strong>Toxin B</strong> (cytotoxin; key virulence) → colonic mucosal damage → pseudomembranes. <strong>NAP1/BI/027 strain</strong> is hypervirulent (more toxin).",
+clin:"<ul><li>Watery diarrhea (sometimes bloody), cramps, fever, leukocytosis (often &gt;15k, can exceed 30k in fulminant)</li><li>Toxic megacolon in severe</li><li>Endoscopy: yellow-white <strong>pseudomembranes</strong> on colonic mucosa</li><li>Antibiotic-associated: <strong>C</strong>lindamycin (classic) + <strong>C</strong>ephalosporins + <strong>C</strong>iprofloxacin + ampi<strong>C</strong>illin</li></ul>",
+dx:"Stool <strong>PCR for toxin A/B genes</strong>. GDH antigen + toxin EIA 2-step algorithm.",
+tx:"<strong>Stop offending antibiotic</strong>. <strong>Oral vancomycin</strong> OR <strong>fidaxomicin</strong> (first-line). Metronidazole reserved for mild/unavailable. Fecal microbiota transplant (FMT) for recurrent. Surgery for fulminant toxic megacolon.",
+hy:["<strong>Antibiotic-associated</strong> diarrhea","<strong>Pseudomembranes</strong>","<strong>Toxins A + B</strong>","<strong>Oral vanc or fidaxomicin</strong> (IV vanc doesn't reach colon!)","<strong>Alcohol sanitizer does NOT kill spores</strong> — use soap + water","Contact isolation","Leukocytosis is a hallmark","FMT for recurrent"],
+mn:"<strong>4 C's</strong> that cause C. diff: <strong>C</strong>lindamycin, <strong>C</strong>ephalosporins, <strong>C</strong>iprofloxacin (fluoroquinolones), ampi<strong>C</strong>illin (penicillins).",
+trap:"<strong>IV vancomycin doesn't work</strong> — doesn't concentrate in colon. Always oral vancomycin for C. diff."},
+
+// ═══════════════ BACTERIA — E. COLI ═══════════════
+{id:"epec",cat:"Bacteria — E. coli",ck:"ecol",emoji:"🔸",name:"EPEC (Enteropathogenic)",
+oneLiner:"<strong>Pediatric E. coli</strong> diarrhea. Watery, non-bloody. <strong>Attaching-and-effacing</strong> lesions via intimin + Tir. <strong>No toxin</strong>.",
+path:"Uses <strong>intimin</strong> + Tir (translocated intimin receptor) to tightly adhere to enterocytes → <strong>effaces microvilli</strong> → forms actin <strong>pedestals</strong> beneath bacterium → destroys absorption surface. NO toxin.",
+clin:"Watery diarrhea in infants/children in developing world. Non-bloody.",
+hy:["<strong>Pediatric</strong> E. coli","<strong>Attaching-and-effacing lesions</strong>, pedestal formation","Intimin + Tir","<strong>No toxin</strong> — structural damage only"]},
+
+{id:"etec",cat:"Bacteria — E. coli",ck:"ecol",emoji:"🔸",name:"ETEC (Enterotoxigenic)",
+oneLiner:"<strong>Traveler's diarrhea</strong>. Watery, no blood. Heat-labile (LT, cholera-like) + heat-stable (ST) toxins.",
+path:"Two toxins: <strong>LT (heat-labile)</strong> = cholera toxin mechanism — ADP-ribosylates Gs → ↑ cAMP → Cl⁻ secretion. <strong>ST (heat-stable)</strong> = activates <strong>guanylate cyclase</strong> → ↑ cGMP → same result.",
+clin:"Profuse watery, non-bloody diarrhea 1–3 days after exposure. 'Montezuma's revenge' / 'Delhi belly'.",
+tx:"Usually self-limited. For severe: cipro, azithro, or rifaximin. Loperamide for symptoms. Bismuth for prophylaxis.",
+hy:["<strong>Traveler's diarrhea</strong>","<strong>LT toxin → ↑ cAMP</strong> (like cholera)","<strong>ST toxin → ↑ cGMP</strong>","Watery, no blood, no fever","Rifaximin for prevention"],
+mn:"<strong>ETEC</strong> = <strong>E</strong>verywhere <strong>T</strong>ravelers go, <strong>E</strong>nterotoxin <strong>C</strong>auses diarrhea."},
+
+{id:"ehec",cat:"Bacteria — E. coli",ck:"ecol",emoji:"🔸",name:"EHEC (O157:H7, Enterohemorrhagic)",
+oneLiner:"<strong>Undercooked ground beef</strong>, spinach, unpasteurized juice. <strong>Shiga-like toxin</strong> → bloody diarrhea + <strong>HUS</strong>. No fever. <strong>Do NOT give antibiotics</strong>.",
+path:"Produces <strong>Shiga-like toxin (verotoxin, Stx)</strong> — inactivates 60S ribosome in host cells. Damages endothelium, especially glomerular and intestinal. Does NOT ferment <strong>sorbitol</strong> (key lab finding).",
+clin:"<ul><li>Severe <strong>bloody diarrhea</strong> + abdominal cramps</li><li><strong>NO fever or low-grade</strong> (unlike Shigella)</li><li>3–10 day delay after exposure</li><li><strong>HUS</strong> (~10%, especially kids + elderly): hemolytic anemia + thrombocytopenia + AKI</li></ul>",
+dx:"<strong>Sorbitol-MacConkey (SMAC) agar</strong>: EHEC = colorless (sorbitol-negative); other E. coli = pink (sorbitol+). Stool Shiga toxin EIA/PCR.",
+tx:"<strong>SUPPORTIVE ONLY — NO ANTIBIOTICS</strong> (antibiotics can precipitate HUS by increasing toxin release). No antimotility agents. Supportive fluids + transfusion.",
+hy:["<strong>Undercooked ground beef</strong>, petting zoos, raw spinach","<strong>Shiga-like toxin</strong> (verotoxin, inactivates 60S)","<strong>NO FEVER</strong>","<strong>HUS triad</strong>: hemolytic anemia + thrombocytopenia + AKI","<strong>Sorbitol-negative</strong> on SMAC","<strong>NO ANTIBIOTICS</strong> — increases HUS risk!"],
+trap:"Giving antibiotics or antimotility agents to EHEC <strong>increases HUS risk</strong>. This is a classic Step 1 trap."},
+
+{id:"eiec",cat:"Bacteria — E. coli",ck:"ecol",emoji:"🔸",name:"EIEC (Enteroinvasive)",
+oneLiner:"Shigella-like <strong>invasive</strong> bloody diarrhea. No toxin. Rare in US; developing countries.",
+path:"Invades colonic mucosa (like Shigella — uses similar invasion plasmid). <strong>No toxin</strong>. Lactose-fermenter — distinguishes from Shigella in lab.",
+clin:"Bloody diarrhea + mucus, fever, cramps, tenesmus (Shigella-like).",
+hy:["<strong>Invasive — Shigella-like</strong>","No toxin","Bloody diarrhea + fever","Lactose-fermenter (vs Shigella non-fermenter)"]},
+
+{id:"eaec",cat:"Bacteria — E. coli",ck:"ecol",emoji:"🔸",name:"EAEC (Enteroaggregative)",
+oneLiner:"<strong>Persistent (&gt;14 days) diarrhea</strong> in travelers + immunocompromised + kids in developing countries. <strong>'Stacked-brick'</strong> aggregative adherence.",
+path:"Adheres to enterocytes in distinct <strong>'stacked-brick' / 'stacked bricks' pattern</strong>. Secretes toxins (ShET, EAST) + forms biofilm.",
+clin:"Chronic watery diarrhea &gt;14 days, often bloody. HIV patients, kids in developing countries, travelers.",
+hy:["<strong>Persistent diarrhea (&gt;2 weeks)</strong>","<strong>'Stacked-brick' pattern</strong>","HIV / immunocompromised","2nd most common traveler's diarrhea after ETEC"]},
+
+// ═══════════════ BACTERIA — TOXIN / FOOD POISONING ═══════════════
+{id:"staph-aureus-fp",cat:"Bacteria — Toxin",ck:"toxn",emoji:"☠️",name:"Staphylococcus aureus (food poisoning)",
+oneLiner:"<strong>Preformed heat-stable enterotoxin</strong> in picnic foods (mayo, custard, deli meat). Rapid onset 1–6 hr. Vomiting predominant.",
+path:"<strong>Heat-stable superantigen</strong> enterotoxin produced in food <em>before</em> ingestion (bacteria not needed). Cross-links MHC II → massive cytokine release → vomiting via vagal afferents.",
+clin:"<ul><li><strong>Rapid onset (1–6 hr)</strong> after eating</li><li><strong>Vomiting predominant</strong>, some diarrhea</li><li>Afebrile</li><li>Resolves &lt;24 hr</li></ul>",
+dx:"Clinical (outbreak + rapid onset + short duration).",
+tx:"Supportive (self-limited).",
+hy:["<strong>Preformed toxin</strong> — NOT an infection","<strong>Rapid onset 1–6 hr</strong>","<strong>Vomiting predominant</strong>","<strong>Picnic foods</strong>: mayonnaise, custard, potato salad, deli meats","<strong>Heat-stable</strong> (reheating doesn't kill it)","Superantigen"],
+mn:"<strong>S</strong>taph = <strong>S</strong>econds to Sick (<strong>S</strong>ame-day <strong>S</strong>picnic)."},
+
+{id:"bacillus-cereus",cat:"Bacteria — Toxin",ck:"toxn",emoji:"☠️",name:"Bacillus cereus",
+oneLiner:"<strong>Reheated fried rice</strong> (emetic form). Gram-positive spore-former. Two toxins: cereulide (emetic) + heat-labile enterotoxin (diarrheal).",
+path:"Gram-positive rod, <strong>spore-former</strong>, motile. Two syndromes:<br>• <strong>Emetic (1–6 hr)</strong>: preformed <strong>heat-stable cereulide</strong> toxin in <strong>rice</strong>.<br>• <strong>Diarrheal (8–16 hr)</strong>: heat-labile enterotoxin produced in gut after eating meat/sauce/dairy.",
+clin:"Emetic: vomiting 1–6 hr after fried rice. Diarrheal: watery diarrhea 8–16 hr after meat dishes.",
+hy:["<strong>Reheated fried rice</strong> = emetic form","<strong>Cereulide</strong> = heat-stable emetic toxin","Diarrheal form = heat-labile, meats/sauces","Gram-positive spore-former","<strong>Spores survive rice boiling</strong>, then germinate"],
+mn:"<strong>Bacillus cereus = 'Cereus' rice</strong>. Vomiting from <strong>V</strong>ery <strong>R</strong>apid <strong>R</strong>ice."},
+
+{id:"cperfringens",cat:"Bacteria — Toxin",ck:"toxn",emoji:"☠️",name:"Clostridium perfringens",
+oneLiner:"<strong>Reheated meat/gravy</strong>. 'Church supper' / 'cafeteria' outbreaks. 8–16 hr onset. Mild watery diarrhea.",
+path:"Gram-positive <strong>spore-former</strong>, obligate anaerobe. Spores survive cooking, germinate when food sits at warm temp (not refrigerated properly). Ingested bacteria produce enterotoxin in gut. Alpha toxin (lecithinase) → gas gangrene — different syndrome.",
+clin:"Watery diarrhea + cramps 8–16 hr after eating improperly stored meat. Low fever, no vomiting.",
+hy:["<strong>Reheated meat/gravy</strong>, church suppers","Late onset (8–16 hr)","Spore-former","Alpha toxin → gas gangrene (different disease)","3rd most common food poisoning in US"]},
+
+{id:"cbotulinum",cat:"Bacteria — Toxin",ck:"toxn",emoji:"☠️",name:"Clostridium botulinum",
+oneLiner:"<strong>Descending flaccid paralysis</strong>. Toxin blocks ACh release at NMJ. Canned/preserved food (adults); <strong>honey</strong> (infants — 'floppy baby').",
+path:"Gram-positive <strong>anaerobic spore-former</strong>. <strong>Botulinum toxin</strong> (most lethal substance known) — cleaves <strong>SNARE proteins</strong> (SNAP-25, synaptobrevin, syntaxin) in presynaptic terminal → blocks ACh release at NMJ → flaccid paralysis.",
+clin:"<ul><li><strong>Adult (food-borne)</strong>: descending, symmetric, <strong>flaccid paralysis</strong> starting with cranial nerves — diplopia, ptosis, dysphagia, dysarthria (<strong>4 D's</strong>), then respiratory failure</li><li><strong>Infant (<1 yr)</strong>: <strong>'floppy baby'</strong>, poor feeding, constipation — from ingestion of <strong>spores in honey</strong> (germinate in immature gut)</li><li>Wound botulism: IV drug users</li><li>Cardinal feature: <strong>no fever, alert, symmetric, descending</strong></li></ul>",
+dx:"Toxin assay in serum/stool/food. EMG.",
+tx:"<strong>Antitoxin</strong> (equine-derived for adults; BabyBIG for infants). <strong>Mechanical ventilation</strong>.",
+hy:["<strong>Descending, symmetric, flaccid paralysis</strong>","<strong>SNARE protein cleavage → blocks ACh release</strong>","<strong>Honey = no kids &lt;1 yr</strong>","Canned/preserved foods, bulging cans","4 D's: <strong>D</strong>iplopia, <strong>D</strong>ysphagia, <strong>D</strong>ysarthria, <strong>D</strong>yspnea","Antitoxin + ventilator","Contrast with <strong>Guillain-Barré (ascending)</strong> + <strong>tetanus (rigid, lockjaw)</strong>"],
+trap:"Ascending paralysis = GBS (not botulism). Rigid/spastic paralysis = tetanus (also Clostridium — same SNARE, but blocks GABA in CNS instead)."},
+
+// ═══════════════ BACTERIA — OTHER ═══════════════
+{id:"aeromonas",cat:"Bacteria (Other)",ck:"othr",emoji:"🔬",name:"Aeromonas",
+oneLiner:"Freshwater/reptile exposure. Watery → bloody diarrhea + wound infections. Oxidase+, gram-neg.",
+path:"Gram-negative rod, <strong>oxidase+</strong>, motile. Found in fresh + brackish water, reptiles, amphibians.",
+clin:"Watery diarrhea or bloody; wound infections after water exposure; sepsis in immunocompromised.",
+hy:["Fresh water, reptile, fish","Oxidase+ gram-neg","Wound + GI","Leech therapy → iatrogenic source"]},
+
+{id:"plesiomonas",cat:"Bacteria (Other)",ck:"othr",emoji:"🔬",name:"Plesiomonas shigelloides",
+oneLiner:"Uncooked shellfish; travel to Southeast Asia/Central America. Self-limited watery diarrhea. Oxidase+.",
+path:"Gram-negative rod, oxidase+. Often recovered from fresh water + seafood.",
+hy:["Shellfish, freshwater exposure","Usually self-limited","Southeast Asia travel"]},
+
+// ═══════════════ PROTOZOA ═══════════════
+{id:"giardia",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Giardia intestinalis (lamblia)",
+oneLiner:"<strong>Backpacker diarrhea</strong> from streams. <strong>Greasy, foul-smelling, fat-malabsorptive stools</strong>. NO blood. 'Owl-face' trophozoite.",
+path:"Flagellated protozoan. Two forms: <strong>trophozoite</strong> (active, with <strong>2 nuclei = 'owl face'</strong>, 4 pairs of flagella) + <strong>cyst</strong> (infectious, survives chlorination). Attaches to duodenal villi via sucking disk → inflammation + villous blunting → fat malabsorption.",
+clin:"<ul><li><strong>Watery, then greasy, foul-smelling, floating (steatorrhea)</strong> stools</li><li>Bloating, flatulence, cramps</li><li>NO blood, no mucus, no fever</li><li>Chronic → fat + fat-soluble vitamin malabsorption, weight loss</li><li>IgA deficiency + hypogammaglobulinemia predispose</li></ul>",
+dx:"<strong>Stool antigen EIA</strong> (first-line) or PCR. O&P — trophozoites/cysts (can miss — intermittent shedding).",
+tx:"<strong>Metronidazole</strong> or <strong>tinidazole</strong>. Nitazoxanide (peds).",
+hy:["<strong>Backpackers / hikers / campers</strong> drinking stream water","<strong>Daycare outbreaks</strong>","<strong>Owl-face trophozoite</strong> (2 nuclei)","<strong>Greasy, floating stools</strong> (fat malabsorption)","<strong>No blood</strong>","<strong>IgA deficiency</strong> = risk factor","Cyst is chlorine-resistant","Metronidazole"],
+mn:"<strong>G</strong>iardia = <strong>G</strong>iving <strong>G</strong>ross, <strong>G</strong>reasy, <strong>G</strong>assy diarrhea from <strong>G</strong>lacier streams."},
+
+{id:"entamoeba",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Entamoeba histolytica",
+oneLiner:"Bloody <strong>amebic dysentery</strong> + <strong>liver abscess</strong> ('anchovy paste'). <strong>Flask-shaped colonic ulcers</strong>. Trophozoites with <strong>ingested RBCs</strong>.",
+path:"Protozoan. Two forms: <strong>trophozoite</strong> (invasive) + <strong>cyst</strong> (infectious, with up to <strong>4 nuclei</strong>). Trophozoites invade colonic epithelium → <strong>flask-shaped ulcers</strong> (narrow neck, broad base). Hematogenous spread → liver abscess (right lobe, classic).",
+clin:"<ul><li><strong>Amebic dysentery</strong>: bloody diarrhea with mucus, cramps, tenesmus (weeks–months)</li><li><strong>Liver abscess</strong>: fever, RUQ pain, tender hepatomegaly, leukocytosis, ↑ alk phos — <strong>'anchovy paste'</strong> aspirate (brown-red)</li><li>Developing countries, MSM, fecal-oral</li></ul>",
+dx:"<strong>Stool O&P</strong>: cysts (up to 4 nuclei) + trophozoites with <strong>ingested RBCs</strong> (hallmark). <strong>Serology</strong> (positive in invasive disease — helpful for abscess since stool may be negative). PCR.",
+tx:"<strong>Metronidazole (or tinidazole) for invasive disease</strong> + <strong>paromomycin (luminal agent)</strong> to clear cysts from lumen and prevent relapse.",
+hy:["<strong>Flask-shaped colonic ulcers</strong>","<strong>Liver abscess, right lobe, 'anchovy paste'</strong>","<strong>Trophozoite with ingested RBCs</strong> (pathognomonic)","<strong>Cyst with up to 4 nuclei</strong>","<strong>Metronidazole + paromomycin</strong>","Developing countries + MSM transmission","DDx from E. dispar (non-pathogenic)"],
+mn:"<strong>Entamoeba</strong> = <strong>E</strong>ats <strong>R</strong>BCs, makes <strong>F</strong>lask ulcers + <strong>A</strong>nchovy abscess. <strong>Metro</strong> kills invasive, <strong>Paromo</strong> sweeps the lumen."},
+
+{id:"crypto",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Cryptosporidium parvum",
+oneLiner:"<strong>Severe chronic diarrhea in AIDS (CD4 &lt;100)</strong>. <strong>Acid-fast oocysts</strong>. Waterborne (pools, lakes — chlorine-resistant).",
+path:"Apicomplexan protozoan. <strong>Oocysts are chlorine-resistant</strong> → waterborne outbreaks (Milwaukee 1993 — largest US waterborne). Intracellular but extracytoplasmic location in enterocytes.",
+clin:"<ul><li><strong>Immunocompetent</strong>: self-limited watery diarrhea (1–2 wk)</li><li><strong>AIDS (CD4 &lt;100)</strong>: chronic, severe, voluminous watery diarrhea — can cause death</li></ul>",
+dx:"<strong>Modified acid-fast stain</strong> of stool → small pink oocysts. Antigen EIA, PCR.",
+tx:"<strong>Nitazoxanide</strong> (immunocompetent). In HIV: <strong>HAART</strong> to restore immunity is the key treatment.",
+hy:["<strong>AIDS (CD4 &lt;100) + chronic watery diarrhea</strong>","<strong>Acid-fast oocysts</strong>","<strong>Chlorine-resistant</strong> — pools, water parks, lakes","Milwaukee 1993 outbreak","Nitazoxanide + HAART"],
+mn:"<strong>Crypto</strong> is <strong>cryptic</strong> (acid-fast!) and <strong>creates chronic</strong> diarrhea in <strong>compromised</strong> hosts."},
+
+{id:"cyclospora",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Cyclospora cayetanensis",
+oneLiner:"Protracted watery diarrhea after eating <strong>imported berries / fresh produce / basil</strong>. Acid-fast oocysts. Tx: <strong>TMP-SMX</strong>.",
+path:"Apicomplexan. Oocysts need days in environment to become infectious. Outbreaks linked to raspberries, cilantro, basil, lettuce from endemic regions.",
+clin:"Prolonged watery diarrhea, fatigue, anorexia, 2–11 days after exposure.",
+dx:"Acid-fast stain — larger oocysts than Crypto (8–10 μm vs 4–5 μm). <strong>Autofluorescence under UV.</strong>",
+tx:"<strong>TMP-SMX</strong>.",
+hy:["<strong>Imported berries / basil</strong>","<strong>Acid-fast oocyst</strong> (larger than Crypto)","UV autofluorescence","<strong>TMP-SMX</strong>"]},
+
+{id:"isospora",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Cystoisospora (Isospora) belli",
+oneLiner:"Watery diarrhea in <strong>AIDS</strong>. Large oblong acid-fast oocysts. Tx: <strong>TMP-SMX</strong>.",
+path:"Apicomplexan. Tropical/subtropical. Fecal-oral.",
+clin:"Chronic watery diarrhea + weight loss in HIV/AIDS; mild/self-limited in immunocompetent.",
+dx:"Acid-fast stain — <strong>large oval/oblong oocysts</strong> (25 × 15 μm, biggest of the apicomplexans).",
+tx:"<strong>TMP-SMX</strong>.",
+hy:["AIDS + diarrhea","<strong>Large oval acid-fast oocyst</strong>","<strong>TMP-SMX</strong>","Tropical exposure"]},
+
+{id:"microsporidia",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Microsporidia",
+oneLiner:"Obligate intracellular <strong>fungi</strong> (reclassified from protozoa). Chronic diarrhea in AIDS. Main species: Enterocytozoon bieneusi, Encephalitozoon intestinalis.",
+path:"Now classified as <strong>FUNGI</strong> (not protozoa). Small spore-forming obligate intracellular. Inject contents into host cell via 'polar tubule'.",
+clin:"Chronic watery diarrhea + weight loss in AIDS (CD4 &lt;100). Can disseminate to biliary tree, sinuses.",
+dx:"Modified trichrome stain (spores — pink-red), calcofluor white fluorescence, EM.",
+tx:"<strong>Albendazole</strong> (E. intestinalis) or <strong>fumagillin</strong> (E. bieneusi). HAART.",
+hy:["Reclassified as <strong>fungi</strong>","AIDS + chronic diarrhea","Modified trichrome stain","Tx: Albendazole (Encephalitozoon); Fumagillin (Enterocytozoon)"]},
+
+{id:"septata",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Septata intestinalis",
+oneLiner:"Old name for <strong>Encephalitozoon intestinalis</strong> — microsporidium. Disseminates beyond gut (renal, biliary). Tx: <strong>Albendazole</strong>.",
+path:"Microsporidian fungus; forms septum within parasitophorous vacuole. Disseminating disease in AIDS.",
+hy:["= Encephalitozoon intestinalis","Disseminating microsporidiosis (gut, kidneys, biliary)","<strong>Albendazole</strong> (responds to it, unlike E. bieneusi)"]},
+
+{id:"enterocytozoon",cat:"Protozoa",ck:"prot",emoji:"🧪",name:"Enterocytozoon bieneusi",
+oneLiner:"Most common intestinal microsporidian in AIDS. Confined to enterocytes. Tx: <strong>Fumagillin</strong> (NOT albendazole).",
+path:"Microsporidian fungus. Strictly intestinal in most cases.",
+hy:["Most common intestinal microsporidiosis","Confined to enterocytes","<strong>Fumagillin</strong> — NOT albendazole (resistant)"]},
+
+// ═══════════════ PARASITES (WORMS) ═══════════════
+{id:"ascaris",cat:"Parasites (Roundworms)",ck:"para",emoji:"🪱",name:"Ascaris lumbricoides",
+oneLiner:"<strong>Largest intestinal nematode</strong>. Eggs in soil → ingested → hatch → lung migration → swallowed → mature in small bowel. Can cause obstruction.",
+path:"Ingest <strong>eggs</strong> from contaminated soil → larvae hatch in gut → migrate through lung (Löffler syndrome — eosinophilic pneumonitis) → coughed up + swallowed → adults mature in SB. Worms up to 30 cm long.",
+clin:"<ul><li>Mostly asymptomatic</li><li><strong>Löffler syndrome</strong>: eosinophilia + pulmonary infiltrates during lung migration</li><li>Heavy load: small bowel <strong>obstruction</strong>, biliary obstruction, pancreatitis</li></ul>",
+dx:"Stool O&P (eggs). Eosinophilia.",
+tx:"<strong>Albendazole</strong> or mebendazole.",
+hy:["<strong>Largest roundworm</strong> (up to 30 cm)","<strong>Löffler syndrome</strong> during lung migration","Small bowel obstruction","Ingested eggs in contaminated soil","Eosinophilia"]},
+
+{id:"enterobius",cat:"Parasites (Roundworms)",ck:"para",emoji:"🪱",name:"Enterobius vermicularis (pinworm)",
+oneLiner:"<strong>#1 intestinal helminth in US</strong>. Kids. Nocturnal <strong>perianal itching</strong>. Dx: <strong>Scotch tape test</strong>.",
+path:"Adult worms live in cecum/appendix; females migrate to perianal skin at night to lay eggs (intense itching). Fecal-oral reinfection via fingernails → family outbreaks.",
+clin:"Nocturnal perianal pruritus in kids; can cause insomnia. Rarely — appendicitis, vaginitis.",
+dx:"<strong>Scotch tape test</strong> at night/early morning — sticky tape pressed to anus reveals eggs under microscope.",
+tx:"<strong>Albendazole</strong>, mebendazole, or pyrantel pamoate. <strong>Treat whole household.</strong>",
+hy:["<strong>Most common helminth in US</strong>","<strong>Perianal itching at night</strong>","<strong>Scotch tape test</strong>","Kids + family outbreaks","Treat whole household"]},
+
+{id:"strongyloides",cat:"Parasites (Roundworms)",ck:"para",emoji:"🪱",name:"Strongyloides stercoralis",
+oneLiner:"<strong>Autoinfection</strong> — can persist for decades. <strong>Hyperinfection syndrome in immunocompromised</strong>. Eosinophilia.",
+path:"Larvae penetrate skin → lung → swallowed → adult in SB → eggs hatch in gut → rhabditiform larvae become filariform (can reinfect the same host through intestinal wall or perianal skin = <strong>autoinfection</strong>). Corticosteroids/HTLV-1 trigger <strong>hyperinfection syndrome</strong> (disseminates to lungs, CNS, sepsis with gram-neg bacteria from gut).",
+clin:"Often asymptomatic. GI: intermittent diarrhea, abdominal pain. Skin: migrating serpiginous rash (larva currens). <strong>Hyperinfection</strong>: fatal disseminated disease + gram-negative sepsis + meningitis.",
+dx:"Stool larvae (not eggs — hatch internally). Serology. Eosinophilia.",
+tx:"<strong>Ivermectin</strong> (first-line). Albendazole alternative.",
+hy:["<strong>Autoinfection</strong> — decades persistence","<strong>Hyperinfection syndrome</strong> with steroids, HTLV-1","Skin penetration → lung migration","<strong>Ivermectin</strong>","Screen before immunosuppression in endemic areas","Larva currens rash"]},
+
+{id:"trichuris",cat:"Parasites (Roundworms)",ck:"para",emoji:"🪱",name:"Trichuris trichiura (whipworm)",
+oneLiner:"Ingested eggs → adult in colon. Heavy infections cause <strong>rectal prolapse</strong> in kids. 'Whip-shaped' worms.",
+path:"Eggs ingested from contaminated soil. Adults embed in colonic mucosa — whip-shaped with thin anterior end.",
+clin:"Mostly asymptomatic. Heavy load → chronic colitis, <strong>rectal prolapse in kids</strong>, growth retardation.",
+tx:"Albendazole or mebendazole.",
+hy:["<strong>Whip-shaped</strong> worm","<strong>Rectal prolapse in kids</strong>","Eggs in soil","Colon"]},
+
+{id:"hookworms",cat:"Parasites (Roundworms)",ck:"para",emoji:"🪱",name:"Hookworms (Necator / Ancylostoma)",
+oneLiner:"Larvae <strong>penetrate skin</strong> (barefoot on contaminated soil) → <strong>iron-deficiency anemia</strong>. Eosinophilia.",
+path:"Larvae penetrate skin of feet → bloodstream → lung → swallowed → adults attach to SB mucosa → suck blood → chronic iron-deficiency anemia.",
+clin:"Ground itch at skin entry. Anemia (fatigue, pallor). Eosinophilia. Heavy infection in kids → growth retardation.",
+dx:"Stool O&P (eggs). Eosinophilia + microcytic anemia.",
+tx:"Albendazole or mebendazole. Iron replacement.",
+hy:["<strong>Iron-deficiency anemia</strong> from blood loss","<strong>Skin penetration</strong> (barefoot)","Eosinophilia","Necator americanus (New World) + Ancylostoma duodenale (Old World)","Löffler-like syndrome"]},
+
+// ═══════════════ NORMAL FLORA (GUT) ═══════════════
+{id:"ecoli-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Escherichia coli (flora)",
+oneLiner:"Normal gut flora in small numbers. Most common cause of UTI, neonatal meningitis (K1), gram-negative sepsis, cholangitis when ectopic.",
+path:"Normally resident in colon. Causes disease when spills into peritoneum (perforation), urinary tract (ascending UTI), or blood (sepsis).",
+hy:["<strong>#1 UTI</strong>","Ascending cholangitis, peritonitis","Neonatal meningitis (K1 capsule)","Gram-negative sepsis","Lactose-fermenter, green metallic sheen EMB"]},
+
+{id:"klebsiella-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Klebsiella",
+oneLiner:"Encapsulated gram-neg rod. <strong>Currant jelly sputum</strong> in alcoholics with pneumonia. UTI, abscess. Lactose-fermenter. MDR strains (KPC, ESBL).",
+path:"Lactose-fermenting gram-neg rod with thick polysaccharide capsule. Colonic flora but major nosocomial pathogen.",
+hy:["<strong>Currant jelly sputum</strong> (pneumonia — alcoholics, aspirators)","<strong>4 A's</strong>: <strong>A</strong>lcoholics, <strong>A</strong>bscess (liver), <strong>A</strong>spiration, di<strong>A</strong>betics","UTI in catheterized patients","MDR concern (KPC, ESBL carbapenemases)","Lactose-fermenter, mucoid colonies"]},
+
+{id:"enterobacter-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Enterobacter",
+oneLiner:"Hospital-acquired gram-neg rod. Multidrug resistant. UTI, pneumonia, bacteremia in ICU.",
+path:"Lactose-fermenting gram-neg rod. Inducible AmpC β-lactamase (SPICE: Serratia, Providencia, Indole-positive Proteus, Citrobacter, Enterobacter) → resistance to cephalosporins can emerge during therapy.",
+hy:["Hospital-acquired","SPICE organism (AmpC β-lactamase)","ICU pathogen"]},
+
+{id:"proteus-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Proteus mirabilis",
+oneLiner:"<strong>Urease+</strong> — alkaline urine → <strong>struvite (magnesium ammonium phosphate) staghorn stones</strong>. Swarming motility.",
+path:"Gram-neg rod, very motile, swarming on agar. <strong>Urease+</strong> hydrolyzes urea → NH₃ + alkaline urine → struvite stones. Non-lactose-fermenter.",
+hy:["<strong>Urease+</strong>","<strong>Struvite (staghorn) stones</strong>","<strong>Alkaline urine</strong>","Swarming motility on agar","Non-lactose-fermenter (unlike E. coli)"],
+mn:"<strong>Proteus</strong> = <strong>Pro</strong>duces <strong>U</strong>rease, <strong>Pro</strong>duces <strong>S</strong>tones."},
+
+{id:"enterococcus-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Enterococcus (E. faecalis, faecium)",
+oneLiner:"Gram-positive cocci in chains. Normal gut flora. UTI, endocarditis (especially after GU/GI procedures), hospital-acquired.  <strong>VRE</strong> is serious nosocomial pathogen.",
+path:"Gram-positive cocci in pairs/chains, catalase-negative (like strep but lancefield group D), <strong>bile-esculin+</strong>, grows in <strong>6.5% NaCl</strong> (distinguishes from strep bovis).",
+clin:"UTI, endocarditis (after GI/GU manipulation), biliary tract infection, line infection. Endocarditis of damaged valves.",
+tx:"Ampicillin + gentamicin. <strong>VRE</strong>: linezolid or daptomycin.",
+hy:["<strong>Bile-esculin+, 6.5% NaCl growth</strong>","Group D strep (Lancefield)","Endocarditis after GI/GU procedure","<strong>VRE</strong> = vancomycin-resistant — major nosocomial","Biliary tract infection"]},
+
+{id:"bacteroides-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Bacteroides fragilis",
+oneLiner:"Obligate anaerobe, gram-neg rod. <strong>Most common anaerobe</strong> in gut. Abdominal abscess post-perforation. Resistant to many β-lactams.",
+path:"Anaerobic gram-neg rod. Main anaerobic component of colonic flora. Capsule (polysaccharide) promotes abscess formation.",
+clin:"<ul><li>Intra-abdominal abscess after bowel perforation (appendicitis, diverticulitis, trauma)</li><li>Pelvic abscess</li><li>Often polymicrobial with E. coli</li></ul>",
+tx:"<strong>Metronidazole</strong>, <strong>carbapenems</strong>, <strong>piperacillin-tazobactam</strong>, clindamycin. Resistant to aminoglycosides (anaerobic — no O₂ for transport).",
+hy:["<strong>Most abundant anaerobe in gut</strong>","<strong>Abdominal abscess after perforation</strong>","<strong>Metronidazole</strong>","Resistant to aminoglycosides","Polymicrobial with E. coli"]},
+
+{id:"clostridium-flora",cat:"Normal Flora",ck:"flor",emoji:"🌿",name:"Clostridium (gut flora)",
+oneLiner:"Gram-positive spore-forming anaerobes. Small component of gut flora. Include pathogenic species (C. difficile, C. perfringens, C. botulinum, C. tetani).",
+path:"Gram+ anaerobic spore-formers. Normally minor flora but overgrow with antibiotic disruption (C. difficile). Pathogenic species produce exotoxins.",
+hy:["Gram+ spore-forming anaerobes","Minor flora, pathogenic when overgrown","C. difficile — pseudomembranous colitis","C. perfringens — food poisoning + gas gangrene","C. botulinum — flaccid paralysis","C. tetani — spastic paralysis"]},
+
+// ═══════════════ MOUTH FLORA ═══════════════
+{id:"viridans",cat:"Mouth Flora",ck:"mouth",emoji:"👄",name:"Viridans streptococci",
+oneLiner:"<strong>Subacute bacterial endocarditis on damaged valves</strong> after <strong>dental procedure</strong>. <strong>Dextran-mediated</strong> attachment. <strong>Alpha-hemolytic, optochin-resistant</strong>.",
+path:"Gram-positive cocci in chains. <strong>α-hemolytic, optochin-resistant, bile-insoluble</strong> (distinguishes from S. pneumoniae). Normal oral flora. Produces <strong>dextran</strong> from sucrose → sticks to damaged heart valves + dental surfaces. S. mutans = <strong>dental caries</strong>. S. sanguinis = <strong>endocarditis</strong>.",
+clin:"<ul><li><strong>Subacute endocarditis</strong> (insidious fever, weight loss, fatigue) on abnormal/prosthetic valves after dental work</li><li>Dental caries (S. mutans)</li><li>Brain abscess (S. intermedius group)</li></ul>",
+tx:"Penicillin or ceftriaxone for endocarditis.",
+hy:["<strong>α-hemolytic, optochin-RESISTANT, bile-insoluble</strong>","<strong>Subacute endocarditis after dental procedure</strong>","<strong>Dextran attachment</strong> — S. mutans for caries, S. sanguinis for endocarditis","Damaged/prosthetic valve risk","Contrast S. pneumoniae (optochin-sensitive)"]},
+
+{id:"spneumo",cat:"Mouth Flora",ck:"mouth",emoji:"👄",name:"Streptococcus pneumoniae",
+oneLiner:"Gram-positive <strong>lancet-shaped diplococci</strong>. <strong>Optochin-sensitive, bile-soluble</strong>. Encapsulated. <strong>MOPS</strong>: Meningitis, Otitis, Pneumonia, Sinusitis.",
+path:"Gram+ <strong>lancet-shaped diplococci</strong>. α-hemolytic. <strong>Optochin-sensitive</strong>, <strong>bile-soluble</strong>. <strong>Polysaccharide capsule</strong> = main virulence. Quellung reaction +.",
+clin:"<ul><li><strong>Meningitis</strong> (#1 in adults + kids &gt;1 mo)</li><li><strong>Otitis media</strong> in children (#1)</li><li><strong>Pneumonia</strong> (#1 CAP; 'rusty sputum', lobar)</li><li><strong>Sinusitis</strong></li><li>Bacteremia, especially <strong>asplenia</strong>, sickle cell, alcoholism</li></ul>",
+dx:"Gram stain: lancet-shaped diplococci. Culture. Urinary antigen.",
+tx:"Penicillin/amoxicillin. Ceftriaxone + vancomycin empiric (resistance).",
+hy:["<strong>Optochin-sensitive, bile-soluble, Quellung+</strong>","<strong>MOPS</strong>: Meningitis, Otitis, Pneumonia, Sinusitis","<strong>'Rusty sputum'</strong>","<strong>Asplenia / sickle cell</strong> = major risk (encapsulated)","PCV13 + PPSV23 vaccines"],
+mn:"<strong>S. pneumo MOPS</strong> up the mouth → respiratory tract."},
+
+{id:"fusobacterium",cat:"Mouth Flora",ck:"mouth",emoji:"👄",name:"Fusobacterium",
+oneLiner:"Gram-negative anaerobic spindle-shaped rod. <strong>Lemierre syndrome</strong> — septic thrombophlebitis of internal jugular vein after pharyngitis. Periodontal abscess.",
+path:"Gram-negative anaerobic <strong>fusiform (spindle-shaped)</strong> rods. Normal oral/pharyngeal flora.",
+clin:"<ul><li><strong>Lemierre syndrome</strong>: young adult with sore throat → fever + neck pain/swelling → <strong>septic thrombophlebitis of internal jugular vein</strong> → septic pulmonary emboli</li><li>Periodontal disease, dental abscess</li><li>Aspiration pneumonia / lung abscess</li></ul>",
+tx:"<strong>Metronidazole</strong> ± β-lactam/β-lactamase inhibitor. Anticoagulation controversial.",
+hy:["<strong>Lemierre syndrome</strong> — jugular vein septic thrombophlebitis","Post-pharyngitis in young adults","Gram-negative anaerobic spindle","<strong>Metronidazole</strong>"]},
+
+{id:"veillonella",cat:"Mouth Flora",ck:"mouth",emoji:"👄",name:"Veillonella",
+oneLiner:"Small gram-negative anaerobic cocci. Normal mouth flora. Rarely pathogenic — bacteremia, dental abscess in immunocompromised.",
+path:"Gram-negative anaerobic cocci in short chains. Normal mouth + gut flora. Ferments organic acids.",
+clin:"Usually commensal. Rarely: endocarditis, osteomyelitis, bacteremia (IVDU), dental abscess.",
+hy:["Gram-neg anaerobic cocci","Normally commensal","Rare bacteremia in immunocompromised","Part of dental plaque"]}
+];
+
+const state={currentId:null,learned:new Set(),search:"",collapsed:new Set()};
+function groupByCategory(){
+  const map={};
+  DISEASES.forEach(d=>{
+    if(!map[d.cat])map[d.cat]={key:d.ck,emoji:d.emoji,items:[]};
+    map[d.cat].items.push(d);
+  });
+  return map;
+}
+function getVisibleDiseases(){
+  const q=state.search.toLowerCase().trim();
+  if(!q)return DISEASES;
+  return DISEASES.filter(d=>{
+    const hay=(d.name+" "+d.cat+" "+d.oneLiner+" "+(d.path||"")+" "+(d.clin||"")+" "+(d.dx||"")+" "+(d.tx||"")+" "+(d.hy||[]).join(" ")+" "+(d.mn||"")+" "+(d.trap||"")).toLowerCase();
+    return hay.includes(q);
+  });
+}
+function renderSidebar(){
+  const visible=getVisibleDiseases();
+  const visibleIds=new Set(visible.map(d=>d.id));
+  const groups=groupByCategory();
+  const list=document.getElementById("sbList");
+  let html=`<div class="sb-home ${state.currentId===null?"active":""}" onclick="goHome()">🏠 Home</div>`;
+  Object.entries(groups).forEach(([cat,info])=>{
+    const visibleItems=info.items.filter(d=>visibleIds.has(d.id));
+    if(!visibleItems.length)return;
+    const collapsed=state.collapsed.has(cat)&&!state.search;
+    html+=`<div class="cat-group ${collapsed?"collapsed":""}" data-cat="${cat}"><div class="cat-header" onclick="toggleCat('${cat.replace(/'/g,"\\'")}')"><span class="cat-chevron">▼</span><span>${info.emoji} ${cat}</span><span class="cat-count">${visibleItems.length}</span></div><div class="cat-list">`;
+    visibleItems.forEach(d=>{
+      const active=state.currentId===d.id;
+      const learned=state.learned.has(d.id);
+      html+=`<div class="dz-item ${active?"active":""} ${learned?"learned":""}" data-id="${d.id}" onclick="selectDisease('${d.id}')"><span class="dz-check">${learned?"✓":"○"}</span><span class="dz-name">${d.name}</span></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  list.innerHTML=html||`<div class="empty" style="padding:30px 14px">No matches.</div>`;
+}
+function toggleCat(cat){
+  if(state.collapsed.has(cat))state.collapsed.delete(cat);
+  else state.collapsed.add(cat);
+  renderSidebar();
+}
+function renderHomepage(){
+  const content=document.getElementById("content");
+  const groups=groupByCategory();
+  let catCardsHtml="";
+  Object.entries(groups).forEach(([cat,info])=>{
+    catCardsHtml+=`<div class="home-cat"><div class="home-cat-title">${info.emoji} ${cat} <span class="home-cat-count">${info.items.length}</span></div><div class="home-dz-list">${info.items.map(d=>{const learned=state.learned.has(d.id);return `<div class="home-dz ${learned?"learned":""}" onclick="selectDisease('${d.id}')"><span class="home-check">${learned?"✓":"○"}</span><span>${d.name}</span></div>`;}).join("")}</div></div>`;
+  });
+  content.innerHTML=`<div class="content-inner"><div class="home-hero"><div class="home-brand">HoyaDocs · Block 4 GI</div><h1 class="home-title">Welcome to the GI Infections Atlas</h1><p class="home-sub">An interactive USMLE Step 1 reference covering all 55 GI infectious organisms — microbiology, clinical pearls, buzzwords, mnemonics, and exam traps.</p><button class="home-start" onclick="selectDisease('rotavirus')">Start with Rotavirus →</button></div><h2 class="home-section-title">Browse All Organisms</h2><p style="font-size:13.5px;color:#6b7b6c;margin-bottom:18px;font-style:italic;">Click any organism to open it. Use the sidebar to search or navigate by category. Use ← → arrow keys to move between organisms and Space to mark as learned.</p><div class="home-grid">${catCardsHtml}</div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function renderContent(){
+  if(state.currentId===null){renderHomepage();return;}
+  const content=document.getElementById("content");
+  const d=DISEASES.find(x=>x.id===state.currentId);
+  if(!d){content.innerHTML='<div class="empty">Not found.</div>';return;}
+  const learned=state.learned.has(d.id);
+  const visible=getVisibleDiseases();
+  const idx=visible.findIndex(x=>x.id===d.id);
+  const prev=idx>0?visible[idx-1]:null;
+  const next=idx<visible.length-1?visible[idx+1]:null;
+  content.innerHTML=`<div class="content-inner"><div class="dz-entry"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Microbiology &amp; Pathogenesis</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🩺 Clinical Features</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>🔍 Diagnosis</h3><p>${d.dx}</p></div>`:""}${d.tx?`<div class="sec"><h3>💊 Treatment</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ USMLE High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div><div class="footer-nav"><button class="nav-btn" onclick="navigate(-1)" ${prev?"":"disabled"}>◀ ${prev?shorten(prev.name,24):"Previous"}<span class="kbd">←</span></button><button class="nav-btn learn ${learned?"learned":""}" onclick="toggleLearned()">${learned?"✓ Learned":"Mark Learned"}<span class="kbd">Space</span></button><button class="nav-btn" onclick="navigate(1)" ${next?"":"disabled"}>${next?shorten(next.name,24):"Next"} ▶<span class="kbd">→</span></button></div></div>`;
+  document.getElementById("content").scrollTo(0,0);
+}
+function shorten(s,n){return s.length>n?s.slice(0,n-1)+"…":s;}
+function goHome(){state.currentId=null;renderSidebar();renderContent();closeSidebar();}
+function selectDisease(id){
+  state.currentId=id;
+  const d=DISEASES.find(x=>x.id===id);
+  if(d)state.collapsed.delete(d.cat);
+  renderSidebar();
+  renderContent();
+  closeSidebar();
+  setTimeout(()=>{const el=document.querySelector(`.dz-item[data-id="${id}"]`);if(el)el.scrollIntoView({block:"nearest",behavior:"smooth"});},50);
+}
+function navigate(dir){
+  const visible=getVisibleDiseases();
+  if(state.currentId===null){if(dir>0&&visible.length)selectDisease(visible[0].id);return;}
+  const idx=visible.findIndex(x=>x.id===state.currentId);
+  const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=visible.length)return;
+  selectDisease(visible[newIdx].id);
+}
+function toggleLearned(){
+  if(!state.currentId)return;
+  if(state.learned.has(state.currentId))state.learned.delete(state.currentId);
+  else state.learned.add(state.currentId);
+  renderSidebar();renderContent();updateProgress();
+}
+function updateProgress(){
+  document.getElementById("learnedText").textContent=`${state.learned.size} / ${DISEASES.length}`;
+  document.getElementById("progressFill").style.width=(DISEASES.length?state.learned.size/DISEASES.length*100:0)+"%";
+}
+function toggleSidebar(){
+  const open=document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sbBackdrop").classList.toggle("show",open);
+}
+function closeSidebar(){if(window.innerWidth<=720){document.getElementById("sidebar").classList.remove("open");document.getElementById("sbBackdrop").classList.remove("show");}}
+function exportExcel(){
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>th{background:#14532d;color:white;padding:8px;font-weight:bold;text-align:left;border:1px solid #0f3a1f}td{padding:6px 8px;border:1px solid #e2e8f0;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}.cat{background:#dcfce7;font-weight:bold}</style></head><body><table><tr><th>#</th><th>Category</th><th>Organism</th><th>One-Liner</th><th>Microbiology/Pathogenesis</th><th>Clinical</th><th>Diagnosis</th><th>Treatment</th><th>USMLE High-Yield</th><th>Mnemonic</th><th>Exam Trap</th><th>Learned</th></tr>`;
+  DISEASES.forEach((d,i)=>{
+    const strip=(s)=>(s||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+    html+=`<tr><td>${i+1}</td><td class="cat">${d.cat}</td><td><strong>${d.name}</strong></td><td>${strip(d.oneLiner)}</td><td>${strip(d.path)}</td><td>${strip(d.clin)}</td><td>${strip(d.dx)}</td><td>${strip(d.tx)}</td><td>${(d.hy||[]).map(strip).join(" • ")}</td><td>${strip(d.mn)}</td><td>${strip(d.trap)}</td><td>${state.learned.has(d.id)?"✓":""}</td></tr>`;
+  });
+  html+=`</table></body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:"application/vnd.ms-excel"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="GI_Infections_Study_Guide.xls";a.click();
+  URL.revokeObjectURL(url);
+}
+function printAll(){
+  const content=document.getElementById("content");
+  const original=content.innerHTML;
+  content.innerHTML=`<div class="content-inner">${DISEASES.map(d=>`<div class="dz-entry" style="page-break-after:always;margin-bottom:40px;"><div class="cat-label"><span class="cat-dot"></span>${d.emoji} ${d.cat}</div><h2 class="dz-title">${d.name}</h2><div class="dz-oneliner">${d.oneLiner}</div>${d.path?`<div class="sec"><h3>🔬 Microbiology &amp; Pathogenesis</h3><p>${d.path}</p></div>`:""}${d.clin?`<div class="sec"><h3>🩺 Clinical Features</h3>${d.clin.trim().startsWith("<ul>")?d.clin:"<p>"+d.clin+"</p>"}</div>`:""}${d.dx?`<div class="sec"><h3>🔍 Diagnosis</h3><p>${d.dx}</p></div>`:""}${d.tx?`<div class="sec"><h3>💊 Treatment</h3><p>${d.tx}</p></div>`:""}${d.hy?.length?`<div class="callout hy"><h4>⚡ USMLE High-Yield</h4><ul>${d.hy.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}${d.mn?`<div class="callout mn"><h4>🧠 Mnemonic</h4>${d.mn}</div>`:""}${d.trap?`<div class="callout trap"><h4>⚠️ Exam Trap</h4>${d.trap}</div>`:""}</div>`).join("")}</div>`;
+  setTimeout(()=>{window.print();content.innerHTML=original;renderContent();},300);
+}
+document.getElementById("search").addEventListener("input",(e)=>{state.search=e.target.value;renderSidebar();});
+document.getElementById("prevBtn").onclick=()=>navigate(-1);
+document.getElementById("nextBtn").onclick=()=>navigate(1);
+document.getElementById("printBtn").onclick=printAll;
+document.getElementById("excelBtn").onclick=exportExcel;
+document.addEventListener("keydown",(e)=>{
+  if(e.target.tagName==="INPUT")return;
+  if(state.currentId===null&&e.key!=="ArrowRight"&&e.key!=="ArrowDown")return;
+  if(e.key==="ArrowLeft"){e.preventDefault();navigate(-1);}
+  else if(e.key==="ArrowRight"){e.preventDefault();navigate(1);}
+  else if(e.key===" "){e.preventDefault();toggleLearned();}
+  else if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    const visible=getVisibleDiseases();
+    const idx=visible.findIndex(x=>x.id===state.currentId);
+    const dir=e.key==="ArrowDown"?1:-1;
+    const newIdx=idx===-1?0:idx+dir;
+    if(newIdx>=0&&newIdx<visible.length)selectDisease(visible[newIdx].id);
+  }
+  else if(e.key==="Escape"){goHome();}
+});
+Object.keys(groupByCategory()).forEach(c=>state.collapsed.add(c));
+renderSidebar();
+renderHomepage();
+updateProgress();
+</script>
+</body>
+</html>
