@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chronic Pancreatitis — USMLE Step 1 Tutor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-alt: #1c2330;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --teal: #3fb950;
+    --teal-dim: rgba(63,185,80,0.12);
+    --teal-border: rgba(63,185,80,0.3);
+    --amber: #e3b341;
+    --amber-dim: rgba(227,179,65,0.12);
+    --amber-border: rgba(227,179,65,0.3);
+    --red: #f85149;
+    --red-dim: rgba(248,81,73,0.12);
+    --red-border: rgba(248,81,73,0.3);
+    --blue: #58a6ff;
+    --blue-dim: rgba(88,166,255,0.12);
+    --blue-border: rgba(88,166,255,0.3);
+    --purple: #bc8cff;
+    --purple-dim: rgba(188,140,255,0.12);
+    --purple-border: rgba(188,140,255,0.3);
+    --coral: #ff7b72;
+    --coral-dim: rgba(255,123,114,0.12);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .site-header .kicker {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .site-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .header-rule { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Nav tabs ── */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 1rem 2rem 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--bg-card);
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 8px 18px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    position: relative;
+    bottom: -1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--bg-card-alt); }
+  .nav-tab.active {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--border);
+    border-bottom-color: var(--bg);
+  }
+  .nav-tab .q-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 32px; height: 24px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 700; padding: 0 8px;
+  }
+
+  /* ── Main layout ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ── Panel header ── */
+  .panel-header { margin-bottom: 1.75rem; }
+  .panel-header .q-label {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 0.4rem;
+  }
+  .panel-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .panel-header .subtitle {
+    font-size: 14px; color: var(--text-muted); margin-top: 0.5rem;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .card-subtitle {
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 0.4rem;
+  }
+
+  /* ── Grid layouts ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 720px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ── Highlight boxes ── */
+  .hl {
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 14px;
+    line-height: 1.65;
+    border-left: 3px solid;
+  }
+  .hl p { margin: 0; font-size: 14px; }
+  .hl-teal { background: var(--teal-dim); border-color: var(--teal); color: #b3ffbe; }
+  .hl-amber { background: var(--amber-dim); border-color: var(--amber); color: #fde68a; }
+  .hl-red { background: var(--red-dim); border-color: var(--red); color: #fca5a5; }
+  .hl-blue { background: var(--blue-dim); border-color: var(--blue); color: #93c5fd; }
+  .hl-purple { background: var(--purple-dim); border-color: var(--purple); color: #ddd6fe; }
+  .hl-coral { background: var(--coral-dim); border-color: var(--coral); color: #fdba74; }
+
+  /* ── Step list ── */
+  .steps { list-style: none; }
+  .steps li {
+    display: flex; gap: 12px; margin-bottom: 0.75rem;
+    font-size: 14px; line-height: 1.6;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-dot {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; margin-top: 1px;
+  }
+  .dot-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal-border); }
+  .dot-red { background: var(--red-dim); color: var(--red); border: 1px solid var(--red-border); }
+  .dot-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+  .dot-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+  .dot-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 9px; border-radius: 20px;
+    margin-bottom: 0.6rem; letter-spacing: 0.04em;
+  }
+  .badge-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal-border); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+  .badge-red { background: var(--red-dim); color: var(--red); border: 1px solid var(--red-border); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+  .badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  /* ── Key principle banner ── */
+  .key-principle {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .kp-icon {
+    font-size: 20px; flex-shrink: 0; margin-top: 2px;
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+  }
+  .kp-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .kp-text { font-size: 14px; line-height: 1.6; }
+
+  /* ── Arrow flow ── */
+  .flow {
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap; margin: 0.75rem 0;
+  }
+  .flow-box {
+    background: var(--bg-card-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 5px 12px;
+    font-size: 13px; font-weight: 500;
+  }
+  .flow-arrow { color: var(--text-dim); font-size: 16px; }
+
+  /* ── Compare table ── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cmp-table th {
+    text-align: left; padding: 8px 12px;
+    border-bottom: 1px solid var(--border-strong);
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .cmp-table td {
+    padding: 8px 12px; border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.5;
+  }
+  .cmp-table tr:last-child td { border-bottom: none; }
+
+  /* ── Bar charts ── */
+  .bar-group { margin: 0.5rem 0 1rem; }
+  .bar-label-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .bar-label { color: var(--text-muted); }
+  .bar-value { font-weight: 600; }
+  .bar-track { height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+
+  /* ── Enzyme cards ── */
+  .enzyme-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .enzyme-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .enzyme-card.amber::before { background: var(--amber); }
+  .enzyme-card.red::before { background: var(--red); }
+  .enzyme-card.blue::before { background: var(--blue); }
+  .enzyme-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem; line-height: 1;
+    position: absolute; right: 1rem; top: 0.5rem;
+    opacity: 0.07; font-style: italic;
+  }
+  .enzyme-name { font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; }
+
+  /* ── Comparison highlight ── */
+  .vs-row {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center;
+    margin: 0.75rem 0;
+  }
+  .vs-cell { background: var(--bg-card-alt); border-radius: var(--radius-sm); padding: 0.75rem; font-size: 13px; }
+  .vs-cell .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 4px; }
+  .vs-divider { text-align: center; color: var(--text-dim); font-size: 12px; font-weight: 600; }
+
+  /* ── Vitamin grid ── */
+  .vit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .vit-cell {
+    background: var(--bg-card-alt); border-radius: var(--radius-sm);
+    padding: 0.75rem; border: 1px solid var(--border);
+  }
+  .vit-letter { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; margin-bottom: 4px; }
+  .vit-effect { font-size: 12px; color: var(--text-muted); }
+
+  /* ── Self-test ── */
+  .quiz-item { margin-bottom: 8px; }
+  .quiz-q {
+    width: 100%; text-align: left;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 16px;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    transition: border-color 0.15s, background 0.15s;
+    gap: 12px;
+  }
+  .quiz-q:hover { border-color: var(--border-strong); background: var(--bg-card-alt); }
+  .quiz-q.open { border-color: var(--teal-border); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .toggle-icon {
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+    border: 1px solid var(--border-strong); display: flex; align-items: center;
+    justify-content: center; font-size: 14px; color: var(--text-muted); transition: all 0.15s;
+  }
+  .quiz-q.open .toggle-icon { background: var(--teal-dim); border-color: var(--teal-border); color: var(--teal); }
+  .quiz-a {
+    display: none; background: var(--teal-dim); border: 1px solid var(--teal-border);
+    border-top: none; border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    padding: 12px 16px; font-size: 13px; color: #b3ffbe; line-height: 1.6;
+  }
+  .quiz-a.open { display: block; }
+
+  p { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-bottom: 0.5rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  em { font-style: italic; color: var(--text); }
+
+  .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+  .muted { color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="kicker">USMLE Step 1</span>
+  <div class="header-rule"></div>
+  <h1>Chronic Pancreatitis — Complete Case Tutor</h1>
+</header>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="show('q1',this)">
+    <span class="q-num" style="background:rgba(63,185,80,0.15);color:#3fb950;">Q1</span>
+  </button>
+  <button class="nav-tab" onclick="show('q2',this)">
+    <span class="q-num" style="background:rgba(88,166,255,0.15);color:#58a6ff;">Q2</span>
+  </button>
+  <button class="nav-tab" onclick="show('q3',this)">
+    <span class="q-num" style="background:rgba(227,179,65,0.15);color:#e3b341;">Q3</span>
+  </button>
+  <button class="nav-tab" onclick="show('q4',this)">
+    <span class="q-num" style="background:rgba(188,140,255,0.15);color:#bc8cff;">Q4</span>
+  </button>
+  <button class="nav-tab" onclick="show('q5',this)">
+    <span class="q-num" style="background:rgba(248,81,73,0.15);color:#f85149;">Q5</span>
+  </button>
+  <button class="nav-tab" onclick="show('quiz',this)">
+    <span class="q-num" style="background:rgba(255,255,255,0.08);color:#8b949e;">✓</span>
+  </button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════ Q1 ═══════════════════════════════════════════ -->
+<section class="panel active" id="q1">
+  <div class="panel-header">
+    <div class="q-label" style="color:#3fb950;">Question 1</div>
+    <h2>Pancreatitis & Abnormal Stools</h2>
+    <p class="subtitle">What is pancreatitis, what caused it, and why are the stools bulky, oily, and malodorous?</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="color:#3fb950;">What is pancreatitis?</div>
+      <p>Pancreatitis is <strong>autodigestion</strong> of the pancreas — the gland's own proteolytic enzymes activate prematurely <em>inside</em> the acinar cells and begin destroying pancreatic tissue instead of waiting to be activated in the duodenum.</p>
+      <div class="hl hl-red">
+        <p><strong>Normally:</strong> Enzymes are secreted as inactive zymogens (trypsinogen, chymotrypsinogen, proelastase, prolipase) → travel to duodenum → enterokinase on brush border activates trypsinogen → trypsin activates all others.</p>
+      </div>
+      <div class="hl hl-amber">
+        <p><strong>In pancreatitis:</strong> Zymogens activate inside the gland → autodigestion → inflammation → necrosis → fibrosis → exocrine insufficiency.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#3fb950;">Why did alcohol cause this?</div>
+      <ul class="steps">
+        <li>
+          <span class="step-dot dot-teal">1</span>
+          <span><strong>Sphincter spasm:</strong> Alcohol causes spasm of the sphincter of Oddi → backed-up pancreatic secretions → intrapancreatic pressure rises.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-teal">2</span>
+          <span><strong>Direct acinar toxicity:</strong> Alcohol and its metabolite acetaldehyde directly injure acinar cells → promotes premature zymogen activation inside cells.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-teal">3</span>
+          <span><strong>Protein plugs:</strong> Alcohol increases protein concentration in pancreatic juice → plugs form in small ducts → obstruction → upstream pressure buildup.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-teal">4</span>
+          <span><strong>Repeated injury → fibrosis:</strong> Each acute episode destroys more functional tissue, replaced by fibrosis → progressive exocrine (and endocrine) failure.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-principle" style="border-color:var(--teal-border);">
+    <div class="kp-icon" style="background:var(--teal-dim); color:var(--teal);">⟳</div>
+    <div>
+      <div class="kp-label" style="color:var(--teal);">End Result</div>
+      <div class="kp-text">Years of alcohol-induced pancreatitis → widespread fibrosis → pancreas can no longer produce adequate lipase, proteases, or amylase → <strong>Exocrine Pancreatic Insufficiency (EPI)</strong>.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950;">Explaining the abnormal stools</div>
+    <p style="margin-bottom:1rem;">The stool findings — bulky, malodorous, oily, with fat droplets and undigested meat fibers — map directly onto the loss of specific pancreatic enzymes.</p>
+
+    <div class="grid-3">
+      <div class="card" style="background:var(--bg-card-alt); border-color:var(--amber-border); margin-bottom:0;">
+        <span class="badge badge-amber">Lipase absent</span>
+        <div class="enzyme-name" style="font-size:14px;">Steatorrhea</div>
+        <p>Dietary triglycerides are not hydrolyzed. Fat passes intact into colon → bacterial fermentation → <em>oily, bulky, foul-smelling stools</em>. Fat droplets visible on microscopy. Fat malabsorption is the <em>dominant</em> feature because there is no backup enzyme for lipase.</p>
+      </div>
+      <div class="card" style="background:var(--bg-card-alt); border-color:var(--red-border); margin-bottom:0;">
+        <span class="badge badge-red">Proteases absent</span>
+        <div class="enzyme-name" style="font-size:14px;">Azotorrhea</div>
+        <p>Without trypsin, chymotrypsin, elastase → dietary proteins not cleaved → pass undigested. <em>Undigested meat fibers</em> seen on microscopy. Caloric deficit contributes to progressive weight loss despite large food intake.</p>
+      </div>
+      <div class="card" style="background:var(--bg-card-alt); border-color:var(--blue-border); margin-bottom:0;">
+        <span class="badge badge-blue">Amylase reduced</span>
+        <div class="enzyme-name" style="font-size:14px;">Carbs (relatively spared)</div>
+        <p>Salivary α-amylase + brush-border disaccharidases (maltase, sucrase, lactase) provide significant backup. Carbohydrate malabsorption is milder — though undigested starch reaching the colon causes gas and bloating.</p>
+      </div>
+    </div>
+
+    <div class="hl hl-teal" style="margin-top:1rem;">
+      <p><strong>Key exam point:</strong> Fat malabsorption is the most clinically severe feature of EPI because fat digestion is almost entirely dependent on pancreatic lipase — there is no meaningful alternative pathway. This is why fat restriction is central to treatment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ Q2 ═══════════════════════════════════════════ -->
+<section class="panel" id="q2">
+  <div class="panel-header">
+    <div class="q-label" style="color:#58a6ff;">Question 2</div>
+    <h2>Secretin & Pancreatic Secretion</h2>
+    <p class="subtitle">What should secretin do — and what does this patient's response reveal?</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#58a6ff;">Normal secretin physiology</div>
+    <div class="flow">
+      <div class="flow-box">Acid enters duodenum</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--blue-border); color:var(--blue);">S cells release Secretin</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Pancreatic ductal cells</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--teal-border); color:var(--teal);">Large-volume HCO₃⁻-rich juice</div>
+    </div>
+    <p>Secretin is a peptide hormone released from S cells in the duodenal mucosa in response to luminal acidification (pH &lt; 4.5). It acts on pancreatic <strong>ductal (centroacinar) cells</strong> to produce a high-volume, bicarbonate-rich secretion. This serves to neutralize gastric acid and create the alkaline pH needed for pancreatic enzymes to work.</p>
+    <div class="hl hl-blue">
+      <p><strong>Critical distinction:</strong> Secretin drives ductal cells (water + HCO₃⁻). CCK drives acinar cells (digestive enzymes). These are two separate populations responding to two separate signals.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="color:#58a6ff;">Normal values vs. this patient</div>
+
+      <div class="bar-group">
+        <div class="bar-label-row">
+          <span class="bar-label">Volume in 60 min</span>
+          <span class="bar-value" style="color:var(--text-muted);">Normal: &gt;80 mL &nbsp;|&nbsp; Patient: <span style="color:var(--red);">10 mL</span></span>
+        </div>
+        <div style="margin-bottom:4px; font-size:11px; color:var(--text-dim);">Expected</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--teal);"></div></div>
+        <div style="margin-bottom:4px; font-size:11px; color:var(--text-dim);">Patient (~12% of normal)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:12%; background:var(--red);"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label-row">
+          <span class="bar-label">HCO₃⁻ concentration</span>
+          <span class="bar-value" style="color:var(--text-muted);">Normal: 80–120 mEq/L &nbsp;|&nbsp; Patient: <span style="color:var(--red);">2 mEq/L</span></span>
+        </div>
+        <div style="margin-bottom:4px; font-size:11px; color:var(--text-dim);">Expected</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--teal);"></div></div>
+        <div style="margin-bottom:4px; font-size:11px; color:var(--text-dim);">Patient (~2% of normal)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%; background:var(--red);"></div></div>
+      </div>
+
+      <div class="hl hl-red">
+        <p>Both volume and HCO₃⁻ are catastrophically reduced. The pancreas has essentially no functional ductal tissue remaining to respond to secretin. This is diagnostic of severe exocrine pancreatic insufficiency.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#58a6ff;">Consequences of absent HCO₃⁻</div>
+      <ul class="steps">
+        <li>
+          <span class="step-dot dot-red">1</span>
+          <span><strong>Acid not neutralized:</strong> Gastric acid enters duodenum unchecked. Duodenal pH remains very low throughout digestion.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-red">2</span>
+          <span><strong>Lipase denatures:</strong> Pancreatic lipase has an optimal pH of 7–8 and rapidly denatures below pH 4. Even supplemental lipase is destroyed in this environment.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-red">3</span>
+          <span><strong>Bile salt precipitation:</strong> Bile salts precipitate at low pH → impaired micelle formation → worsens fat malabsorption beyond enzyme deficiency alone.</span>
+        </li>
+        <li>
+          <span class="step-dot dot-red">4</span>
+          <span><strong>Mucosal injury:</strong> Sustained low duodenal pH → duodenal erosions, impaired brush-border enzyme activity.</span>
+        </li>
+      </ul>
+      <div class="hl hl-amber">
+        <p><strong>Clinical use of the secretin test:</strong> IV secretin + collection of duodenal fluid over 60 min is the gold standard for diagnosing exocrine pancreatic insufficiency. It directly measures functional pancreatic reserve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ Q3 ═══════════════════════════════════════════ -->
+<section class="panel" id="q3">
+  <div class="panel-header">
+    <div class="q-label" style="color:#e3b341;">Question 3</div>
+    <h2>Carb & Protein Digestion — and the Glucose Puzzle</h2>
+    <p class="subtitle">Normal digestion pathways, and why this patient has high blood glucose despite adequate absorption.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#e3b341;">Normal carbohydrate digestion & absorption</div>
+    <ul class="steps">
+      <li>
+        <span class="step-dot dot-amber">1</span>
+        <span><strong>Mouth / Stomach:</strong> Salivary α-amylase cleaves starch at α-1,4 bonds → maltose, maltotriose, α-limit dextrins. Continues in stomach until gastric acid denatures it (~pH 3).</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">2</span>
+        <span><strong>Duodenum / Jejunum:</strong> Pancreatic α-amylase (secreted by acinar cells in response to CCK) continues starch hydrolysis → oligosaccharides.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">3</span>
+        <span><strong>Brush border enzymes:</strong> Maltase (cleaves maltose → 2 glucose), Sucrase (sucrose → glucose + fructose), Lactase (lactose → glucose + galactose), Isomaltase (α-1,6 bonds in dextrins).</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">4</span>
+        <span><strong>Absorption:</strong> Glucose + galactose → <strong>SGLT-1</strong> (sodium-coupled cotransport, apical membrane). Fructose → <strong>GLUT-5</strong> (facilitated diffusion). All exit via <strong>GLUT-2</strong> (basolateral) into portal blood.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#e3b341;">Normal protein digestion & absorption</div>
+    <ul class="steps">
+      <li>
+        <span class="step-dot dot-amber">1</span>
+        <span><strong>Stomach:</strong> HCl denatures proteins + activates pepsinogen → pepsin. Pepsin cleaves peptide bonds (especially aromatic AAs) → large polypeptides.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">2</span>
+        <span><strong>Pancreatic endopeptidases:</strong> Trypsin, chymotrypsin, elastase → cleave internal peptide bonds → shorter oligopeptides. (Trypsin is activated by enterokinase; it then activates all others — master activator.)</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">3</span>
+        <span><strong>Pancreatic exopeptidases:</strong> Carboxypeptidase A & B → cleave from the C-terminus → releases individual amino acids from the ends.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">4</span>
+        <span><strong>Brush border:</strong> Aminopeptidases, dipeptidases → cleave remaining di/tripeptides into free amino acids.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-amber">5</span>
+        <span><strong>Absorption:</strong> Free AAs → Na⁺-coupled transporters (apical). Di/tripeptides → <strong>PepT1</strong> (H⁺-coupled cotransport). All exit via basolateral transporters into portal blood.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="color:#e3b341;">Does glucose absorption need the pancreas?</div>
+      <div class="hl hl-teal">
+        <p><strong>No.</strong> Monosaccharide absorption via SGLT-1/GLUT-2 is entirely independent of the pancreas. Salivary amylase + brush-border disaccharidases can compensate substantially for absent pancreatic amylase.</p>
+      </div>
+      <p>This is why carbohydrate malabsorption is far milder than fat/protein malabsorption in EPI. The patient's glucose rises to 200 mg% after the oral load — confirming that glucose <em>absorption</em> is intact.</p>
+      <div class="hl hl-amber">
+        <p><strong>The glucose rises fine — but doesn't come back down properly.</strong> That's the real problem. The question is what's wrong with glucose <em>disposal</em>.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#e3b341;">Why is his blood glucose elevated?</div>
+      <p>The pancreas has <strong>two functional compartments:</strong></p>
+
+      <table class="cmp-table" style="margin:0.75rem 0;">
+        <tr>
+          <th>Exocrine (90% of gland)</th>
+          <th>Endocrine (Islets of Langerhans)</th>
+        </tr>
+        <tr>
+          <td>Acinar cells → digestive enzymes<br>Ductal cells → HCO₃⁻ fluid</td>
+          <td>β cells → <strong>Insulin</strong><br>α cells → Glucagon<br>δ cells → Somatostatin</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">Destroyed by fibrosis</td>
+          <td style="color:var(--red);">Also destroyed by fibrosis</td>
+        </tr>
+      </table>
+
+      <div class="hl hl-red">
+        <p><strong>Pancreatogenic diabetes (Type 3c):</strong> Fibrosis destroys islet β cells → insulin deficiency → after glucose ingestion, glucose cannot be taken up efficiently by muscle/adipose → sustained hyperglycemia.</p>
+      </div>
+
+      <p style="margin-top:0.5rem;"><strong>His glucose curve:</strong> Fasting 130 mg% (already elevated) → peaks 200 at 1h → 150 at 2h. Impaired insulin secretion → delayed glucose disposal. Glucose absorption is normal; <em>insulin response</em> is absent.</p>
+    </div>
+  </div>
+
+  <div class="key-principle" style="border-color:var(--amber-border);">
+    <div class="kp-icon" style="background:var(--amber-dim); color:var(--amber);">!</div>
+    <div>
+      <div class="kp-label" style="color:var(--amber);">Key insight for exams</div>
+      <div class="kp-text">The glucose load test tells you about <em>insulin secretory capacity</em>, not absorption. In chronic pancreatitis, both exocrine AND endocrine function are progressively destroyed. Always think of the pancreas as having two compartments that can both fail.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ Q4 ═══════════════════════════════════════════ -->
+<section class="panel" id="q4">
+  <div class="panel-header">
+    <div class="q-label" style="color:#bc8cff;">Question 4</div>
+    <h2>The Hormone & Three Enzymes Used for Treatment</h2>
+    <p class="subtitle">Replacing what the destroyed pancreas can no longer produce — one hormone and three enzymes.</p>
+  </div>
+
+  <div class="key-principle" style="border-color:var(--purple-border);">
+    <div class="kp-icon" style="background:var(--purple-dim); color:var(--purple);">Rx</div>
+    <div>
+      <div class="kp-label" style="color:var(--purple);">Treatment logic</div>
+      <div class="kp-text">The treatment strategy is <strong>replacement</strong> of what the fibrosed pancreas can no longer make. The endocrine deficit (insulin) is treated with the hormone. The exocrine deficit is treated with pancreatic enzyme replacement therapy (PERT).</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--purple-border);">
+    <div class="badge badge-purple">The Hormone</div>
+    <div class="enzyme-name">Insulin</div>
+    <div class="grid-2" style="margin-top:0.75rem;">
+      <div>
+        <p><strong>Why needed:</strong> Chronic fibrosis destroys islet β cells → absolute insulin deficiency → pancreatogenic diabetes (Type 3c). This is distinct from Type 1 (autoimmune) and Type 2 (peripheral resistance), though the end result — insulin deficiency — is the same.</p>
+        <p style="margin-top:0.5rem;"><strong>Mechanism:</strong> Insulin binds receptor tyrosine kinase (insulin receptor) → autophosphorylation → signaling cascade → GLUT-4 translocation to cell membrane in muscle and adipose → glucose uptake. Also: promotes glycogen synthesis, inhibits gluconeogenesis, activates lipogenesis.</p>
+      </div>
+      <div>
+        <div class="hl hl-purple">
+          <p><strong>Type 3c diabetes</strong> (pancreatogenic): secondary to pancreatic disease. Often harder to manage than Type 2 because α cells (glucagon) are also destroyed — so there is no counterregulatory response to hypoglycemia. Patients are prone to severe hypoglycemia on insulin.</p>
+        </div>
+        <div class="hl hl-amber">
+          <p>His fasting glucose was already 130 mg% (diabetic range) and his post-load glucose peaked at 200 — confirming insulin deficiency, not just impaired absorption.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="enzyme-card amber">
+      <div class="enzyme-num">1</div>
+      <span class="badge badge-amber">Enzyme 1</span>
+      <div class="enzyme-name">Lipase</div>
+      <p>Hydrolyzes triglycerides at the sn-1 and sn-3 positions → 2-monoglyceride + 2 free fatty acids. Requires colipase (also in pancreatic juice) to anchor to fat droplet surface and displace bile salt coating. Optimal pH 7–8.</p>
+      <div class="hl hl-amber" style="margin-top:0.75rem;">
+        <p><strong>Without it:</strong> Steatorrhea. <strong>With replacement:</strong> Fat absorbed → weight gain, stool volume drops, oiliness resolves.</p>
+      </div>
+    </div>
+
+    <div class="enzyme-card red">
+      <div class="enzyme-num">2</div>
+      <span class="badge badge-red">Enzyme 2</span>
+      <div class="enzyme-name">Protease (Trypsin)</div>
+      <p>Trypsinogen → activated by <strong>enterokinase</strong> (enteropeptidase) on the duodenal brush border → trypsin. Trypsin is the <em>master activator</em>: it activates all other zymogens (chymotrypsinogen, proelastase, procarboxypeptidases) and autocatalyzes more trypsinogen.</p>
+      <div class="hl hl-red" style="margin-top:0.75rem;">
+        <p><strong>Without it:</strong> Azotorrhea, undigested meat fibers. <strong>With replacement:</strong> Protein digestion restored, weight gain resumes.</p>
+      </div>
+    </div>
+
+    <div class="enzyme-card blue">
+      <div class="enzyme-num">3</div>
+      <span class="badge badge-blue">Enzyme 3</span>
+      <div class="enzyme-name">Amylase</div>
+      <p>Cleaves α-1,4 glycosidic bonds in starch → maltose, maltotriose, α-limit dextrins. Though salivary amylase provides backup, pancreatic amylase is the dominant starch-digesting enzyme post-stomach. Carbohydrate malabsorption is milder than fat/protein.</p>
+      <div class="hl hl-blue" style="margin-top:0.75rem;">
+        <p><strong>Without it:</strong> Gas, bloating, osmotic diarrhea from undigested starch reaching colon. <strong>With replacement:</strong> Improved stool consistency and reduced frequency.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#bc8cff;">How PERT is delivered clinically</div>
+    <p>Pancreatic enzymes are given as <strong>enteric-coated microspheres</strong> (e.g., pancrelipase / Creon) taken <em>with every meal</em>. The enteric coating prevents destruction by gastric acid and releases enzymes in the duodenum. However, the acid environment in this patient (absent HCO₃⁻) still partially inactivates even enteric-coated lipase — which is a key reason why fat restriction remains essential alongside PERT.</p>
+    <div class="hl hl-teal">
+      <p><strong>Clinical result in this patient:</strong> He stopped losing weight and reduced the volume and frequency of his stools — confirming successful exocrine replacement and restoration of fat and protein absorption.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ Q5 ═══════════════════════════════════════════ -->
+<section class="panel" id="q5">
+  <div class="panel-header">
+    <div class="q-label" style="color:#f85149;">Question 5</div>
+    <h2>Why Restrict Dietary Fat?</h2>
+    <p class="subtitle">Even with enzyme replacement, fat absorption is never fully normalized. Here's why restriction is essential.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#f85149;">Five reasons fat restriction is necessary</div>
+    <ul class="steps">
+      <li>
+        <span class="step-dot dot-red">1</span>
+        <span><strong>Enzyme dose ceiling:</strong> No pill can replicate the full output of a healthy pancreas. A normal pancreas secretes lipase in massive excess; PERT pills provide a fraction of that. High fat intake simply overwhelms the supplemental dose — steatorrhea persists if fat load is too high.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-red">2</span>
+        <span><strong>Acid environment destroys lipase:</strong> This patient has virtually no HCO₃⁻ secretion (proven by the secretin test). The duodenum stays acidic. Pancreatic lipase denatures below pH 4. Even enteric-coated PERT releases enzymes into a suboptimal acid environment, reducing efficacy.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-red">3</span>
+        <span><strong>Bile salt depletion vicious cycle:</strong> Unabsorbed fatty acids in the colon bind calcium and bile salts (saponification). Bile salt loss → depleted bile salt pool → worse micelle formation → even more fat malabsorption. Restricting fat intake limits this cycle.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-red">4</span>
+        <span><strong>Symptom burden:</strong> Large amounts of undigested fat reaching the colon → osmotic diarrhea (fat draws water) + bacterial fermentation (produces gas, odor). Restriction directly reduces stool frequency, volume, and malodor — improving quality of life.</span>
+      </li>
+      <li>
+        <span class="step-dot dot-red">5</span>
+        <span><strong>Reduces pancreatic stimulation:</strong> Dietary fat is the most potent stimulus for CCK release from I cells of the duodenum. CCK stimulates the damaged acinar cells → can precipitate pain, inflammation, and further damage. Restricting fat reduces this pathological stimulus.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="color:#f85149;">MCT oil — the workaround</div>
+      <div class="vs-row">
+        <div class="vs-cell">
+          <div class="label" style="color:var(--red);">Long-chain fats (LCT)</div>
+          Require lipase + micelles. Cannot be absorbed without functioning fat digestion machinery.
+        </div>
+        <div class="vs-divider">vs</div>
+        <div class="vs-cell">
+          <div class="label" style="color:var(--teal);">MCT oil (C6–C12)</div>
+          Do NOT need lipase or micelles. Absorbed directly across enterocyte membrane → portal vein.
+        </div>
+      </div>
+      <div class="hl hl-teal">
+        <p><strong>Clinical use:</strong> MCT oil provides high-calorie supplementation without taxing the impaired fat digestion machinery. Essential for preventing malnutrition in EPI. Drawback: lacks essential fatty acids (linoleic, linolenic) which must still be supplied by small amounts of LCT.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#f85149;">Fat-soluble vitamin deficiency</div>
+      <p>Fat malabsorption → vitamins A, D, E, K are not absorbed (they require micelles for uptake into enterocytes).</p>
+
+      <div class="vit-grid" style="margin-top:0.75rem;">
+        <div class="vit-cell">
+          <div class="vit-letter" style="color:var(--amber);">A</div>
+          <div style="font-size:13px; font-weight:600; margin-bottom:2px;">Vitamin A</div>
+          <div class="vit-effect">Night blindness, xerophthalmia, corneal ulceration (keratomalacia)</div>
+        </div>
+        <div class="vit-cell">
+          <div class="vit-letter" style="color:var(--teal);">D</div>
+          <div style="font-size:13px; font-weight:600; margin-bottom:2px;">Vitamin D</div>
+          <div class="vit-effect">Osteomalacia (adults), rickets (children), hypocalcemia, muscle weakness</div>
+        </div>
+        <div class="vit-cell">
+          <div class="vit-letter" style="color:var(--blue);">E</div>
+          <div style="font-size:13px; font-weight:600; margin-bottom:2px;">Vitamin E</div>
+          <div class="vit-effect">Peripheral neuropathy, ataxia, hemolytic anemia (RBC membrane instability)</div>
+        </div>
+        <div class="vit-cell">
+          <div class="vit-letter" style="color:var(--red);">K</div>
+          <div style="font-size:13px; font-weight:600; margin-bottom:2px;">Vitamin K</div>
+          <div class="vit-effect">Coagulopathy — factors II, VII, IX, X not carboxylated → elevated PT/INR</div>
+        </div>
+      </div>
+
+      <div class="hl hl-amber" style="margin-top:0.75rem;">
+        <p>ADEK supplementation is a required part of EPI management, in addition to fat restriction and PERT.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-principle" style="border-color:var(--red-border);">
+    <div class="kp-icon" style="background:var(--red-dim); color:var(--red);">∑</div>
+    <div>
+      <div class="kp-label" style="color:var(--red);">Complete treatment summary for this patient</div>
+      <div class="kp-text">
+        <strong>1. Insulin</strong> — replaces destroyed β cell function (Type 3c diabetes) &nbsp;·&nbsp;
+        <strong>2. Lipase</strong> — restores fat digestion, stops steatorrhea &nbsp;·&nbsp;
+        <strong>3. Protease</strong> — restores protein digestion, stops azotorrhea &nbsp;·&nbsp;
+        <strong>4. Amylase</strong> — restores carbohydrate digestion, reduces bloating &nbsp;·&nbsp;
+        <strong>5. Low-fat diet</strong> — limits fat load beyond what PERT can handle, reduces CCK stimulus, breaks bile salt depletion cycle &nbsp;·&nbsp;
+        <strong>6. MCT oil + ADEK vitamins</strong> — prevents malnutrition and micronutrient deficiency
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ QUIZ ═══════════════════════════════════════════ -->
+<section class="panel" id="quiz">
+  <div class="panel-header">
+    <div class="q-label" style="color:#8b949e;">Self-Test</div>
+    <h2>Tap each question to reveal the answer</h2>
+    <p class="subtitle">Cover all five questions — these are the high-yield facts boards will test.</p>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">What is the mechanism of pancreatitis? What term describes the process?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">Pancreatitis = <strong>autodigestion</strong>. Digestive enzyme zymogens activate prematurely inside the pancreatic acinar cells (rather than in the duodenum after activation by enterokinase) → enzymes destroy the gland itself → inflammation, necrosis, and ultimately fibrosis.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Name 3 mechanisms by which alcohol causes pancreatitis.<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">1. <strong>Sphincter of Oddi spasm</strong> → backed-up pancreatic secretions. 2. <strong>Direct acinar cell toxicity</strong> (alcohol/acetaldehyde) → premature intracellular zymogen activation. 3. <strong>Protein plugs</strong> in pancreatic ducts → obstruction → intrapancreatic pressure buildup.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">What are steatorrhea and azotorrhea? Which enzyme deficiency causes each?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a"><strong>Steatorrhea</strong> = fat in stool (oily, bulky, foul-smelling, fat droplets on microscopy) → caused by absent <strong>lipase</strong>. <strong>Azotorrhea</strong> = nitrogen/protein in stool (undigested meat fibers on microscopy) → caused by absent <strong>proteases</strong> (trypsin, chymotrypsin, elastase).</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Which cell type produces the bicarbonate-rich response to secretin? What does CCK do instead?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a"><strong>Pancreatic ductal (centroacinar) cells</strong> respond to secretin → produce large-volume, HCO₃⁻-rich fluid (neutralizes acid). <strong>CCK</strong> (released by I cells in response to fat and protein) acts on <strong>acinar cells</strong> → secretion of enzyme-rich fluid (lipase, proteases, amylase). Two different cell populations, two different signals.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Why is carbohydrate malabsorption mild while fat malabsorption is severe in EPI?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">Fat digestion is almost entirely dependent on pancreatic lipase — there is no alternative pathway. Carbohydrate digestion has backup systems: <strong>salivary amylase</strong> (works until pH denatures it in stomach) and <strong>brush-border disaccharidases</strong> (maltase, sucrase, lactase) compensate substantially for absent pancreatic amylase. Protein has some pepsin backup but is still significantly impaired.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Does glucose absorption require pancreatic function? Explain the patient's elevated glucose.<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">No — glucose absorption via SGLT-1 (apical) and GLUT-2 (basolateral) is entirely independent of the pancreas. His glucose rises normally after oral load, confirming absorption is intact. The elevated glucose reflects <strong>insulin deficiency</strong> from destroyed islet β cells (Type 3c / pancreatogenic diabetes) — glucose gets absorbed fine but cannot be disposed of without insulin.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">What transporter absorbs glucose/galactose? Fructose? How do they exit the enterocyte?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">Glucose + galactose → <strong>SGLT-1</strong> (Na⁺-coupled cotransport, apical membrane). Fructose → <strong>GLUT-5</strong> (facilitated diffusion, apical). All three monosaccharides exit the enterocyte basolaterally via <strong>GLUT-2</strong> into portal blood.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Trypsin activates which other zymogens? What first activates trypsinogen?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a"><strong>Enterokinase (enteropeptidase)</strong> on the duodenal brush border first activates trypsinogen → trypsin. Trypsin then activates: chymotrypsinogen → chymotrypsin; proelastase → elastase; procarboxypeptidase A → carboxypeptidase A; procarboxypeptidase B → carboxypeptidase B. Trypsin also autocatalyzes more trypsinogen. Trypsin is the <em>master activator</em>.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Name 3 reasons why fat restriction is necessary even with PERT.<span class="toggle-icon">+</span></button>
+    <div class="quiz-a">1. <strong>PERT dose ceiling</strong> — supplemental lipase cannot match a healthy pancreas; high fat intake overwhelms it. 2. <strong>Acid environment</strong> — absent HCO₃⁻ keeps duodenum acidic → lipase denatures (optimal pH 7–8). 3. <strong>Bile salt depletion</strong> — unabsorbed fatty acids bind bile salts in the colon → depletes bile pool → worse micelle formation → vicious cycle. Also: reduces CCK stimulus on damaged pancreas, reduces osmotic diarrhea.</div>
+  </div>
+
+  <div class="quiz-item">
+    <button class="quiz-q" onclick="toggleQ(this)">Why is MCT oil used? What are the 4 fat-soluble vitamins and their deficiency effects?<span class="toggle-icon">+</span></button>
+    <div class="quiz-a"><strong>MCT oil (C6–C12):</strong> Medium-chain triglycerides do not require lipase or bile salt micelles — absorbed directly through the enterocyte membrane into the portal vein. Provides calories without requiring functional fat digestion.<br><br><strong>Fat-soluble vitamins:</strong> A → night blindness, xerophthalmia. D → osteomalacia, hypocalcemia. E → peripheral neuropathy, hemolytic anemia. K → coagulopathy (factors II, VII, IX, X), elevated PT/INR.</div>
+  </div>
+
+  <div style="text-align:center; margin-top:1.5rem;">
+    <button onclick="showAll()" style="padding:10px 24px; background:var(--teal-dim); color:var(--teal); border:1px solid var(--teal-border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">Reveal all answers</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleQ(btn) {
+  const ans = btn.nextElementSibling;
+  const icon = btn.querySelector('.toggle-icon');
+  const open = ans.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  icon.textContent = open ? '−' : '+';
+}
+function showAll() {
+  document.querySelectorAll('.quiz-a').forEach(a => a.classList.add('open'));
+  document.querySelectorAll('.quiz-q').forEach(b => b.classList.add('open'));
+  document.querySelectorAll('.toggle-icon').forEach(i => i.textContent = '−');
+}
+</script>
+</body>
+</html>
