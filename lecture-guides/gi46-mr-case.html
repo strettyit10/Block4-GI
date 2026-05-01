@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IL - Mr — HCC Case Tutor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117; --bg-card: #161b22; --bg-alt: #1c2330;
+    --border: rgba(255,255,255,0.08); --border-s: rgba(255,255,255,0.15);
+    --text: #e6edf3; --muted: #8b949e; --dim: #6e7681;
+    --teal: #3fb950; --teal-d: rgba(63,185,80,0.12); --teal-b: rgba(63,185,80,0.3);
+    --amber: #e3b341; --amber-d: rgba(227,179,65,0.12); --amber-b: rgba(227,179,65,0.3);
+    --red: #f85149; --red-d: rgba(248,81,73,0.12); --red-b: rgba(248,81,73,0.3);
+    --blue: #58a6ff; --blue-d: rgba(88,166,255,0.12); --blue-b: rgba(88,166,255,0.3);
+    --purple: #bc8cff; --purple-d: rgba(188,140,255,0.12); --purple-b: rgba(188,140,255,0.3);
+    --coral: #ff7b72; --coral-d: rgba(255,123,114,0.12); --coral-b: rgba(255,123,114,0.3);
+    --r: 10px; --rs: 6px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; min-height: 100vh; }
+  
+  /* Header */
+  .hdr { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 1.1rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 1rem; }
+  .hdr-kicker { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); font-weight: 600; white-space: nowrap; }
+  .hdr-rule { flex: 1; height: 1px; background: var(--border); }
+  .hdr h1 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-weight: 400; }
+
+  /* Patient banner */
+  .patient-banner { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 0.65rem 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .pat-name { font-size: 14px; font-weight: 600; }
+  .pat-detail { font-size: 12px; color: var(--muted); }
+  .pat-tag { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
+  .tag-amber { background: var(--amber-d); color: var(--amber); border: 1px solid var(--amber-b); }
+  .tag-red { background: var(--red-d); color: var(--red); border: 1px solid var(--red-b); }
+  .tag-blue { background: var(--blue-d); color: var(--blue); border: 1px solid var(--blue-b); }
+
+  /* Nav */
+  .nav { display: flex; gap: 4px; padding: 1rem 2rem 0; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; background: var(--bg-card); }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { padding: 8px 18px; border-radius: var(--rs) var(--rs) 0 0; border: 1px solid transparent; border-bottom: none; background: transparent; color: var(--muted); font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.15s; position: relative; bottom: -1px; display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .nav-btn:hover { color: var(--text); background: var(--bg-alt); }
+  .nav-btn.active { background: var(--bg); color: var(--text); border-color: var(--border); border-bottom-color: var(--bg); }
+  .q-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 22px; border-radius: var(--rs); font-size: 11px; font-weight: 700; padding: 0 7px; }
+
+  /* Main */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+  .panel { display: none; animation: fi 0.2s ease; }
+  .panel.active { display: block; }
+  @keyframes fi { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Panel header */
+  .ph { margin-bottom: 1.75rem; }
+  .ph-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.35rem; }
+  .ph h2 { font-family: 'DM Serif Display', serif; font-size: 1.55rem; font-weight: 400; line-height: 1.3; color: var(--text); }
+  .ph .sub { font-size: 14px; color: var(--muted); margin-top: 0.4rem; }
+
+  /* Cards */
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+  .ct { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.7rem; }
+
+  /* Grids */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+  @media(max-width:780px){ .g2,.g3,.g4 { grid-template-columns: 1fr; } }
+
+  /* Highlight boxes */
+  .hl { border-radius: var(--rs); padding: 0.8rem 1rem; margin: 0.7rem 0; font-size: 14px; line-height: 1.65; border-left: 3px solid; }
+  .hl p, .hl { color: inherit; }
+  .hl-t { background: var(--teal-d); border-color: var(--teal); color: #b3ffbe; }
+  .hl-a { background: var(--amber-d); border-color: var(--amber); color: #fde68a; }
+  .hl-r { background: var(--red-d); border-color: var(--red); color: #fca5a5; }
+  .hl-b { background: var(--blue-d); border-color: var(--blue); color: #93c5fd; }
+  .hl-p { background: var(--purple-d); border-color: var(--purple); color: #ddd6fe; }
+  .hl-c { background: var(--coral-d); border-color: var(--coral); color: #fdba74; }
+
+  /* Steps */
+  .steps { list-style: none; }
+  .steps li { display: flex; gap: 11px; margin-bottom: 0.7rem; font-size: 14px; line-height: 1.6; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); }
+  .steps li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .sn { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .sn-t { background: var(--teal-d); color: var(--teal); border: 1px solid var(--teal-b); }
+  .sn-r { background: var(--red-d); color: var(--red); border: 1px solid var(--red-b); }
+  .sn-b { background: var(--blue-d); color: var(--blue); border: 1px solid var(--blue-b); }
+  .sn-a { background: var(--amber-d); color: var(--amber); border: 1px solid var(--amber-b); }
+  .sn-p { background: var(--purple-d); color: var(--purple); border: 1px solid var(--purple-b); }
+
+  /* KP box */
+  .kp { display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-alt); border: 1px solid var(--border-s); border-radius: var(--r); padding: 1rem 1.2rem; margin-bottom: 1rem; }
+  .kp-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-top: 2px; }
+  .kp-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+  .kp-text { font-size: 14px; line-height: 1.6; }
+
+  /* Lab table */
+  .lab-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .lab-table th { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--border-s); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .lab-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .lab-table tr:last-child td { border-bottom: none; }
+  .lab-abn { color: var(--red); font-weight: 600; }
+  .lab-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
+
+  /* Flow */
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0.75rem 0; }
+  .fb { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--rs); padding: 5px 12px; font-size: 13px; font-weight: 500; }
+  .fa { color: var(--dim); font-size: 16px; }
+
+  /* Sign cards */
+  .sign-card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r); padding: 1rem; }
+  .sign-title { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .sign-body { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 1.2rem; }
+  .tl-dot { position: absolute; left: -21px; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid; background: var(--bg-card); }
+  .tl-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .tl-text { font-size: 14px; line-height: 1.6; }
+
+  /* Quiz */
+  .qi { margin-bottom: 8px; }
+  .qq { width: 100%; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--rs); padding: 11px 15px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: all 0.15s; }
+  .qq:hover { background: var(--bg-alt); border-color: var(--border-s); }
+  .qq.open { border-color: var(--teal-b); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .ti { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-s); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--muted); transition: all 0.15s; }
+  .qq.open .ti { background: var(--teal-d); border-color: var(--teal-b); color: var(--teal); }
+  .qa { display: none; background: var(--teal-d); border: 1px solid var(--teal-b); border-top: none; border-radius: 0 0 var(--rs) var(--rs); padding: 11px 15px; font-size: 13px; color: #b3ffbe; line-height: 1.65; }
+  .qa.open { display: block; }
+
+  /* Compare table */
+  .cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cmp th { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border-s); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .cmp td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; font-size: 13px; }
+  .cmp tr:last-child td { border-bottom: none; }
+
+  p { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 0.5rem; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: var(--text); font-weight: 600; }
+  p em { font-style: italic; color: var(--text); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <span class="hdr-kicker">USMLE Step 1</span>
+  <div class="hdr-rule"></div>
+  <h1>IL - Mr — HCC Case Tutor</h1>
+</header>
+
+<div class="patient-banner">
+  <span class="pat-name">Paul Quest</span>
+  <span class="pat-detail">54 yo Male</span>
+  <span class="pat-tag tag-amber">Progressive fatigue · Anorexia</span>
+  <span class="pat-tag tag-red">Weight loss</span>
+  <span class="pat-tag tag-blue">Elevated LFTs × 15 months</span>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('q1',this)">
+    <span class="q-badge" style="background:rgba(63,185,80,0.15);color:#3fb950;">Q1</span>
+  </button>
+  <button class="nav-btn" onclick="show('q2',this)">
+    <span class="q-badge" style="background:rgba(88,166,255,0.15);color:#58a6ff;">Q2</span>
+  </button>
+  <button class="nav-btn" onclick="show('q3',this)">
+    <span class="q-badge" style="background:rgba(227,179,65,0.15);color:#e3b341;">Q3</span>
+  </button>
+  <button class="nav-btn" onclick="show('q4',this)">
+    <span class="q-badge" style="background:rgba(188,140,255,0.15);color:#bc8cff;">Q4</span>
+  </button>
+  <button class="nav-btn" onclick="show('quiz',this)">
+    <span class="q-badge" style="background:rgba(255,255,255,0.08);color:#8b949e;">✓</span>
+  </button>
+</nav>
+
+<main>
+
+<!-- ═══════════════ Q1 ═══════════════ -->
+<section class="panel active" id="q1">
+  <div class="ph">
+    <div class="ph-label" style="color:#3fb950;">Questions 1.1 · 1.2 · 1.3</div>
+    <h2>History, Causes of Elevated LFTs & Physical Exam</h2>
+    <p class="sub">What to ask, what to consider, and what to look for on exam when a patient presents with unexplained weight loss and elevated liver enzymes.</p>
+  </div>
+
+  <!-- 1.1 -->
+  <div class="card">
+    <div class="ct" style="color:#3fb950;">1.1 — Additional PMH / Social History Questions</div>
+    <p>The presenting triad — fatigue, weight loss, elevated liver enzymes — could represent a wide range of hepatic pathology. Your history must efficiently screen the major risk categories for liver disease. Each question targets a specific mechanistic pathway:</p>
+    <div class="g2" style="margin-top:0.75rem;">
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-t">1</span><span><strong>Alcohol use</strong> — quantity, frequency, duration. Alcoholic hepatitis and alcoholic cirrhosis are dose-dependent. Even moderate chronic alcohol can cause steatohepatitis. The AST:ALT ratio &gt;2:1 is a classic clue for alcoholic liver disease.</span></li>
+          <li><span class="sn sn-t">2</span><span><strong>IV drug use</strong> — needle sharing is the primary transmission route for Hepatitis C (and B). Even past use decades ago is relevant — HCV can be asymptomatic for 20–30 years before causing cirrhosis or HCC.</span></li>
+          <li><span class="sn sn-t">3</span><span><strong>Hepatitis history</strong> — prior diagnosis, treatment, vaccination status. HBV and HCV are the two dominant infectious causes of chronic hepatitis and HCC worldwide.</span></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-t">4</span><span><strong>History of cancer</strong> — liver metastases from colorectal, breast, lung, pancreatic primaries are far more common than primary HCC. This changes the workup entirely.</span></li>
+          <li><span class="sn sn-t">5</span><span><strong>High-risk sexual activity</strong> — HBV is transmitted sexually. Multiple partners or unprotected sex raises HBV risk significantly. HIV co-infection also accelerates HCV progression to cirrhosis.</span></li>
+          <li><span class="sn sn-t">6</span><span><strong>Tattoos</strong> — poorly sterilized tattoo equipment is a well-documented transmission route for both HBV and HCV, especially from older tattoos or informal settings.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hl hl-t" style="margin-top:0.5rem;"><strong>Why these questions matter together:</strong> The overlap is intentional. HCV + alcohol is a particularly dangerous combination — alcohol accelerates HCV-related fibrosis ~2–3× faster, dramatically shortening the timeline to cirrhosis and HCC. Always ask both.</div>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="card">
+    <div class="ct" style="color:#3fb950;">1.2 — Causes of Elevated Liver Enzymes</div>
+    <p style="margin-bottom:1rem;">Liver enzymes reflect two different processes: <strong>hepatocellular injury</strong> (AST, ALT leak from damaged hepatocytes) vs. <strong>cholestatic injury</strong> (Alk Phos, GGT elevated when bile flow is impaired). Understanding which pattern dominates narrows the differential dramatically.</p>
+    <div class="g2">
+      <div>
+        <div class="card" style="background:var(--bg-alt); border-color:var(--blue-b); margin-bottom:0;">
+          <div class="ct" style="color:var(--blue);">Hepatocellular Pattern (↑↑ AST/ALT)</div>
+          <ul class="steps">
+            <li><span class="sn sn-b">A</span><span><strong>Acute viral hepatitis</strong> — HAV, HBV, HCV, EBV, CMV. AST/ALT can reach 1000–3000 U/L in acute injury.</span></li>
+            <li><span class="sn sn-b">B</span><span><strong>Drug/toxin-induced</strong> — acetaminophen, statins, isoniazid, NSAIDs, alcohol. Pattern varies by drug; DILI is always on the differential.</span></li>
+            <li><span class="sn sn-b">C</span><span><strong>Chronic hepatitis B or C</strong> — often mild transaminase elevation (2–5× ULN) for years/decades. This patient's pattern.</span></li>
+            <li><span class="sn sn-b">D</span><span><strong>Autoimmune hepatitis</strong> — affects women predominantly, associated with other autoimmune conditions, responds to steroids.</span></li>
+            <li><span class="sn sn-b">E</span><span><strong>Metabolic: NAFLD/NASH</strong> — increasingly common, associated with metabolic syndrome, obesity, T2DM.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="background:var(--bg-alt); border-color:var(--amber-b); margin-bottom:0;">
+          <div class="ct" style="color:var(--amber);">Cholestatic Pattern (↑↑ Alk Phos / GGT)</div>
+          <ul class="steps">
+            <li><span class="sn sn-a">A</span><span><strong>Primary Biliary Cholangitis (PBC)</strong> — autoimmune destruction of small intrahepatic bile ducts. Anti-mitochondrial antibody (AMA) positive. Predominantly women.</span></li>
+            <li><span class="sn sn-a">B</span><span><strong>Primary Sclerosing Cholangitis (PSC)</strong> — fibro-inflammatory destruction of bile ducts. Strongly associated with IBD (ulcerative colitis). Beaded appearance on MRCP.</span></li>
+            <li><span class="sn sn-a">C</span><span><strong>Malignancy</strong> — HCC, cholangiocarcinoma, metastases. Alk Phos is disproportionately elevated when bile ducts are compressed by tumor.</span></li>
+            <li><span class="sn sn-a">D</span><span><strong>Hemochromatosis</strong> — iron overload; elevated ferritin, transferrin saturation &gt;45%. Can cause cirrhosis and HCC even without viral hepatitis.</span></li>
+            <li><span class="sn sn-a">E</span><span><strong>Wilson's Disease</strong> — copper accumulation; younger patients, Kayser-Fleischer rings, low ceruloplasmin. Rare but important to not miss.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="hl hl-b" style="margin-top:0.5rem;"><strong>This patient's pattern:</strong> AST 125 (↑ ~3×), ALT 95 (↑ ~2×), Alk Phos 280 (↑ ~2×). Mixed pattern — hepatocellular + cholestatic. The disproportionate Alk Phos elevation alongside elevated transaminases in a patient with known HCV antibody and elevated AFP points strongly to <strong>HCC complicating chronic HCV infection</strong>.</div>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="card">
+    <div class="ct" style="color:#3fb950;">1.3 — Physical Exam Findings to Seek</div>
+    <p style="margin-bottom:1rem;">The physical exam in suspected liver disease is looking for two things simultaneously: evidence of <strong>chronic hepatocellular failure</strong> (the liver can no longer perform its metabolic functions) and evidence of <strong>portal hypertension</strong> (blood backing up from the obstructed portal circulation).</p>
+    <div class="g3">
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--amber);">Jaundice / Scleral icterus</div>
+        <div class="sign-body">Bilirubin &gt;2–3 mg/dL becomes visible. Reflects inability to conjugate or excrete bilirubin. Sclera are examined first — yellow color appears there before skin due to high albumin binding affinity of scleral tissue.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--amber);">Hepatomegaly / RUQ tenderness</div>
+        <div class="sign-body">Enlarged liver felt below right costal margin. Early cirrhosis → hepatomegaly from inflammation. Late cirrhosis → shrunken, nodular liver. HCC within a cirrhotic liver may produce a palpable mass or disproportionate enlargement.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--amber);">Ascites</div>
+        <div class="sign-body">Fluid in peritoneal cavity. Results from portal hypertension (↑ hydrostatic pressure) + hypoalbuminemia (↓ oncotic pressure) + secondary hyperaldosteronism (sodium/water retention). Fluid wave and shifting dullness on percussion.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--red);">Spider angiomas</div>
+        <div class="sign-body">Central arteriole with radiating vessels on upper trunk, face, arms. Caused by elevated estrogen (liver normally metabolizes estrogens — failure → estrogen accumulation → vasodilation). &gt;5 spider angiomas = significant liver disease.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--red);">Caput medusae</div>
+        <div class="sign-body">Dilated periumbilical veins radiating outward like Medusa's snakes. Represents portal-systemic shunting via reopened paraumbilical veins as portal pressure rises. A classic sign of portal hypertension.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-title" style="color:var(--red);">Palmar erythema / Edema</div>
+        <div class="sign-body">Palmar erythema (reddening of thenar/hypothenar eminences): estrogen accumulation → cutaneous vasodilation. Peripheral edema: hypoalbuminemia → ↓ oncotic pressure → fluid leaks into interstitium, especially dependent areas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Q2 ═══════════════ -->
+<section class="panel" id="q2">
+  <div class="ph">
+    <div class="ph-label" style="color:#58a6ff;">Questions 2.1 · 2.2 · 2.3 · 2.4</div>
+    <h2>Physical Findings, Labs, Liver Function & HCC</h2>
+    <p class="sub">Interpreting what was found, what the labs mean mechanistically, and how chronic HCV progresses to hepatocellular carcinoma.</p>
+  </div>
+
+  <!-- 2.1 Physical findings -->
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">2.1 — Explaining the Physical Findings</div>
+    <p style="margin-bottom:1rem;">Mr. Q has <strong>moderate hepatomegaly</strong>, <strong>RUQ tenderness</strong>, soft non-distended abdomen, no splenomegaly, no ascites, sclera not jaundiced. This profile represents <strong>early-to-moderate chronic liver disease</strong> — significant damage has occurred, but the compensatory mechanisms are still holding. Here's why each finding is present or absent:</p>
+    <div class="g2">
+      <div>
+        <div class="hl hl-b"><strong>Present — Moderate hepatomegaly:</strong> The liver is enlarged, likely from ongoing inflammatory infiltrate from chronic HCV, early regenerative nodules, and possibly the HCC mass itself occupying space within the parenchyma. In advanced cirrhosis the liver would be shrunken and nodular — the fact that it's enlarged suggests the disease is at an earlier architectural stage.</div>
+        <div class="hl hl-b"><strong>Present — RUQ tenderness:</strong> Stretching of Glisson's capsule (the fibrous liver capsule) by hepatomegaly or the HCC mass produces pain. The liver parenchyma itself has no pain receptors — it's always the capsule.</div>
+        <div class="hl hl-a"><strong>Absent — Jaundice:</strong> Bilirubin is only modestly elevated at 2.0 mg/dL (just above the normal 1.2 ceiling). Visible jaundice typically requires &gt;2.5–3 mg/dL. The liver still has enough functional hepatocytes to conjugate most bilirubin.</div>
+      </div>
+      <div>
+        <div class="hl hl-a"><strong>Absent — Ascites:</strong> Portal pressure hasn't risen enough yet to overwhelm oncotic forces. Albumin synthesis, though likely reduced, is still sufficient to maintain some oncotic pressure. Ascites is a late sign of portal hypertension.</div>
+        <div class="hl hl-a"><strong>Absent — Splenomegaly:</strong> Splenomegaly occurs when sustained portal hypertension causes splenic venous congestion and progressive enlargement. Its absence suggests portal pressure, while elevated (mild coagulopathy, low platelets), hasn't yet caused severe congestion.</div>
+        <div class="hl hl-t"><strong>Clinical stage:</strong> This pattern — hepatomegaly + mild coagulopathy + thrombocytopenia + elevated LFTs but without ascites/jaundice/encephalopathy — is consistent with <strong>compensated cirrhosis or advanced fibrosis</strong>. The liver is damaged but not yet decompensated.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.2 Labs -->
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">2.2 — Explaining the Lab Values</div>
+    <div class="g2">
+      <div>
+        <table class="lab-table">
+          <tr><th>Lab Value</th><th>Result</th><th>Normal</th><th>Interpretation</th></tr>
+          <tr>
+            <td><strong>Hematocrit</strong></td>
+            <td class="lab-abn">30%</td>
+            <td>41–50%</td>
+            <td>Low — anemia of chronic disease, splenic sequestration, or bleeding</td>
+          </tr>
+          <tr>
+            <td><strong>Platelets</strong></td>
+            <td class="lab-abn">100 K/uL</td>
+            <td>150–400</td>
+            <td>Thrombocytopenia — hypersplenism from portal hypertension; thrombopoietin (made in liver) may also be reduced</td>
+          </tr>
+          <tr>
+            <td><strong>INR</strong></td>
+            <td class="lab-abn">1.8</td>
+            <td>&lt;1.1</td>
+            <td>Elevated — liver makes factors II, VII, IX, X (Vit K dependent) and V, fibrinogen; reduced production → coagulopathy</td>
+          </tr>
+          <tr>
+            <td><strong>Creatinine</strong></td>
+            <td>1.1</td>
+            <td>0.55–1.30</td>
+            <td>Normal — kidney function preserved. Important baseline; hepatorenal syndrome is a late complication</td>
+          </tr>
+          <tr>
+            <td><strong>AST</strong></td>
+            <td class="lab-abn">125 U/L</td>
+            <td>6–42</td>
+            <td>~3× ULN — hepatocellular injury. AST is less liver-specific than ALT (also in heart, muscle)</td>
+          </tr>
+          <tr>
+            <td><strong>ALT</strong></td>
+            <td class="lab-abn">95 U/L</td>
+            <td>0–55</td>
+            <td>~2× ULN — more liver-specific marker of hepatocyte necrosis/inflammation</td>
+          </tr>
+          <tr>
+            <td><strong>Alk Phos</strong></td>
+            <td class="lab-abn">280 U/L</td>
+            <td>30–130</td>
+            <td>~2× ULN — cholestatic pattern. Elevated in bile duct obstruction, infiltrative disease (HCC), or bone disease</td>
+          </tr>
+          <tr>
+            <td><strong>Total bilirubin</strong></td>
+            <td class="lab-abn">2.0</td>
+            <td>0.2–1.2</td>
+            <td>Mildly elevated — reduced hepatic uptake, conjugation, or excretion; not yet at jaundice threshold</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <table class="lab-table">
+          <tr><th>Lab Value</th><th>Result</th><th>Interpretation</th></tr>
+          <tr>
+            <td><strong>AFP</strong></td>
+            <td class="lab-abn">413 ng/mL</td>
+            <td>0–40</td>
+            <td style="color:#fca5a5;"><strong>10× ULN — highly significant. AFP &gt;400 ng/mL with a liver mass on imaging is essentially diagnostic of HCC without biopsy. AFP is made by fetal hepatocytes; HCC cells revert to this primitive expression pattern.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>HBsAg</strong></td>
+            <td>Negative</td>
+            <td>Negative</td>
+            <td>No active HBV infection</td>
+          </tr>
+          <tr>
+            <td><strong>HBsAb</strong></td>
+            <td style="color:#3fb950;">Positive</td>
+            <td>Negative</td>
+            <td>Immunity to HBV — from prior vaccination or resolved past infection. HBsAb alone (without HBcAb) = vaccination.</td>
+          </tr>
+          <tr>
+            <td><strong>HBcAb</strong></td>
+            <td>Negative</td>
+            <td>Negative</td>
+            <td>No prior HBV infection (confirms this is vaccine immunity, not natural)</td>
+          </tr>
+          <tr>
+            <td><strong>HCV Ab</strong></td>
+            <td class="lab-abn">Positive</td>
+            <td>Negative</td>
+            <td><strong>Exposure to HCV confirmed.</strong> Must follow with HCV RNA PCR to confirm active viremia (Ab can persist after clearance)</td>
+          </tr>
+          <tr>
+            <td><strong>Urinalysis</strong></td>
+            <td>Normal</td>
+            <td>Normal</td>
+            <td>No proteinuria, hematuria, or casts — kidneys intact</td>
+          </tr>
+        </table>
+        <div class="hl hl-r" style="margin-top:0.75rem;"><strong>The diagnostic picture:</strong> HCV antibody + AFP 413 + liver mass on CT + hepatomegaly = HCC secondary to chronic HCV until proven otherwise. The biopsy confirmed hepatocellular carcinoma.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.3 Liver functions -->
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">2.3 — Normal Liver Functions Inhibited by Chronic HCV</div>
+    <p style="margin-bottom:1rem;">The liver performs hundreds of functions. Chronic HCV → progressive hepatocyte destruction → fibrosis → cirrhosis → these core functions are systematically lost. The lab abnormalities in this patient map directly onto each:</p>
+    <div class="g3">
+      <div class="sign-card" style="border-color:var(--amber-b);">
+        <div class="sign-title" style="color:var(--amber);">Bilirubin Excretion → Jaundice</div>
+        <div class="sign-body">Hepatocytes take up unconjugated bilirubin (from heme breakdown), conjugate it with glucuronic acid via UGT1A1, and excrete it into bile canaliculi. Chronic hepatocyte loss reduces all three steps → conjugated and unconjugated bilirubin accumulate in blood → jaundice, dark urine (conjugated bilirubin is water-soluble and excreted in urine), pale stools (less urobilinogen reaching gut).</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--red-b);">
+        <div class="sign-title" style="color:var(--red);">Ammonia Clearance → Encephalopathy</div>
+        <div class="sign-body">Intestinal bacteria generate ammonia from protein digestion and urea hydrolysis. The liver converts ammonia to urea via the urea cycle (hepatocyte-specific) for renal excretion. Failing hepatocytes → ammonia escapes into systemic circulation → crosses blood-brain barrier → astrocyte swelling, glutamine accumulation → hepatic encephalopathy (confusion, asterixis, coma in severe cases). Also worsened by portosystemic shunting.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--purple-b);">
+        <div class="sign-title" style="color:var(--purple);">Clotting Factor Synthesis → Coagulopathy</div>
+        <div class="sign-body">The liver synthesizes all coagulation factors except vWF. Vitamin K-dependent factors (II, VII, IX, X, Protein C, Protein S) require hepatic gamma-carboxylation. Loss of hepatocytes → reduced synthesis of all clotting factors → elevated PT/INR → bleeding risk. This patient's INR of 1.8 confirms significant synthetic dysfunction. Factor VII has the shortest half-life (~4–6h), so PT/INR is the most sensitive early marker of hepatic synthetic failure.</div>
+      </div>
+    </div>
+    <div class="g2" style="margin-top:0;">
+      <div class="sign-card" style="border-color:var(--teal-b);">
+        <div class="sign-title" style="color:var(--teal);">Albumin Synthesis → Edema / Ascites</div>
+        <div class="sign-body">Albumin is exclusively synthesized by hepatocytes. It maintains plasma oncotic pressure and transports hormones, drugs, fatty acids, and bilirubin. Loss of hepatocyte mass → hypoalbuminemia → reduced oncotic pressure → fluid leaks into interstitium → peripheral edema and ascites. Albumin has a half-life of ~20 days, so hypoalbuminemia indicates chronic rather than acute failure.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--blue-b);">
+        <div class="sign-title" style="color:var(--blue);">Estrogen Metabolism → Gynecomastia / Spider Angiomas</div>
+        <div class="sign-body">The liver deactivates estrogens via conjugation and excretion. Hepatocyte loss → estrogen accumulates → stimulates estrogen receptors in skin (spider angiomas, palmar erythema), breast tissue (gynecomastia in men), and causes testicular atrophy. Also contributes to loss of axillary/pubic hair. The elevated estrogen state also activates the renin-angiotensin-aldosterone system → secondary hyperaldosteronism → sodium and water retention → worsens ascites.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.4 HCC -->
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">2.4 — How HCC Manifests: The HCV → Cirrhosis → HCC Progression</div>
+    <p style="margin-bottom:1rem;">HCC rarely arises in a normal liver. It is almost always a <strong>complication of chronic liver disease</strong>. Understanding the mechanism of progression is essential for boards.</p>
+
+    <div class="timeline" style="margin-bottom:1rem;">
+      <div class="tl-item">
+        <div class="tl-dot" style="border-color:var(--blue); background:var(--blue-d);"></div>
+        <div class="tl-label" style="color:var(--blue);">0–24 weeks — Acute HCV Infection</div>
+        <div class="tl-text">HCV enters hepatocytes via CD81/SR-BI receptors. Only 30% of infected individuals clear the virus (via IFNα/IFNγ immune response). The remaining 70% develop <strong>chronic infection</strong> with viral persistence. Acute phase is usually asymptomatic or mildly symptomatic — most patients have no idea they've been infected.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="border-color:var(--amber); background:var(--amber-d);"></div>
+        <div class="tl-label" style="color:var(--amber);">24 weeks – 50 years — Chronic Hepatitis C</div>
+        <div class="tl-text">Persistently infected hepatocytes are recognized by CD8+ cytotoxic T cells → ongoing necroinflammatory injury. Activated <strong>Kupffer cells</strong> (liver macrophages) release TGF-β and other fibrogenic cytokines → activate <strong>hepatic stellate cells</strong> (quiescent → activated, myofibroblast-like) → stellate cells deposit <strong>collagen into the Space of Disse</strong> → progressive fibrosis. With each cycle of injury and repair, fibrous bands accumulate and displace normal parenchyma. Over 20–30 years this reaches cirrhosis in 15–25% of chronically infected patients. Alcohol use, male sex, older age at infection, HIV co-infection all accelerate this timeline.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="border-color:var(--amber); background:var(--amber-d);"></div>
+        <div class="tl-label" style="color:var(--amber);">Cirrhosis — The Critical Architectural Change</div>
+        <div class="tl-text">Fibrosis bands link portal triads to central veins, carving the liver into <strong>regenerative nodules</strong>. Contracting scar tissue compresses hepatic veins → <strong>postsinusoidal resistance to flow</strong> → portal hypertension. Loss of sinusoidal fenestrae (capillarization of sinusoids) → impaired exchange between blood and hepatocytes → further functional loss. The regenerating hepatocytes within nodules are under chronic proliferative stress — this is where oncogenic transformation happens.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="border-color:var(--red); background:var(--red-d);"></div>
+        <div class="tl-label" style="color:var(--red);">10–40 years post-infection — Hepatocellular Carcinoma</div>
+        <div class="tl-text">HCC develops in ~3% of cirrhotic patients per year. HCV doesn't integrate into the genome (unlike HBV), so carcinogenesis is <strong>indirect</strong> — via chronic inflammation, oxidative stress, and the proliferative pressure of cirrhotic regeneration. Key oncogenic events: TP53 mutations (loss of tumor suppressor), CTNNB1 (β-catenin pathway activation), Wnt signaling, telomere shortening. Tumors are <strong>hypervascular</strong> — fed by the hepatic artery rather than the portal vein — which is why <strong>arterial-phase enhancement on CT</strong> (washout pattern) is diagnostic of HCC. AFP is re-expressed because tumor cells revert to a fetal hepatocyte-like gene expression state.</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div>
+        <div class="hl hl-r"><strong>Clinical presentation of HCC:</strong> Often asymptomatic until advanced. When symptomatic: RUQ pain (capsule stretching), weight loss, anorexia (as in Mr. Q), constitutional symptoms (fatigue), paraneoplastic syndromes (hypoglycemia from IGF-2 production, erythrocytosis from ectopic EPO, hypercalcemia). A new hepatic mass in a cirrhotic patient = HCC until proven otherwise.</div>
+      </div>
+      <div>
+        <div class="hl hl-a"><strong>Surveillance in cirrhosis:</strong> All cirrhotic patients — regardless of etiology — should undergo <strong>ultrasound + AFP every 6 months</strong>. This is the surveillance protocol because it catches HCC at an earlier, potentially resectable or transplantable stage. The fact that Mr. Q was not under active surveillance is why his HCC was discovered incidentally on workup of symptoms rather than at an earlier stage.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Q3 — Portal HTN, Milan, MELD ═══════════════ -->
+<section class="panel" id="q3">
+  <div class="ph">
+    <div class="ph-label" style="color:#e3b341;">Part III — Complications, Transplant Criteria & Ethics</div>
+    <h2>Portal Hypertension, Milan Criteria, MELD Score & Ethical Allocation</h2>
+    <p class="sub">The downstream consequences of cirrhosis, how transplant candidacy is determined, and the ethics of a scarce resource.</p>
+  </div>
+
+  <!-- Portal HTN complications -->
+  <div class="card">
+    <div class="ct" style="color:var(--amber);">Complications of Chronic Hepatitis → Cirrhosis</div>
+    <p style="margin-bottom:1rem;">All complications of cirrhosis derive from two root mechanisms: <strong>portal hypertension</strong> (backed-up portal blood pressure) and <strong>hepatocellular failure</strong> (the liver can no longer perform its metabolic functions).</p>
+    <div class="g3">
+      <div class="sign-card" style="border-color:var(--amber-b);">
+        <div class="sign-title" style="color:var(--amber);">Portal Hypertension</div>
+        <div class="sign-body">Normal portal pressure ~5–10 mmHg. Cirrhosis → &gt;12 mmHg → varices form. Mechanism: regenerative nodules + contracting fibrous bands compress hepatic veins → postsinusoidal obstruction → blood backs up into the portal system → splanchnic vasodilation (via NO) → increased portal inflow worsens pressure further.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--red-b);">
+        <div class="sign-title" style="color:var(--red);">Esophageal Varices</div>
+        <div class="sign-body">Portal blood diverted via left gastric vein → esophageal venous plexus → azygos vein → superior vena cava. These thin-walled collaterals under high pressure can rupture → massive upper GI hemorrhage. Variceal bleeding has 15–20% mortality per episode. Prevented/managed with propranolol/nadolol (↓ portal pressure) or endoscopic band ligation.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--purple-b);">
+        <div class="sign-title" style="color:var(--purple);">Hepatic Encephalopathy</div>
+        <div class="sign-body">Ammonia (and other gut-derived toxins) bypass the failing liver via portosystemic shunts → reach the brain. Astrocytes swell as they convert ammonia to glutamine. Spectrum: mild confusion/asterixis → stupor → coma. Precipitants: GI bleeding (protein load), infection, constipation, hypokalemia, sedatives. Treatment: lactulose (acidifies colon, traps NH4+), rifaximin (reduces gut bacterial ammonia production).</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--teal-b);">
+        <div class="sign-title" style="color:var(--teal);">Ascites</div>
+        <div class="sign-body">Portal hypertension → splanchnic vasodilation → reduced effective circulating volume → RAAS activation → Na/water retention → hepatic lymph production exceeds lymphatic drainage → peritoneal fluid accumulation. Managed with sodium restriction, spironolactone (aldosterone antagonist), furosemide. Spontaneous bacterial peritonitis (SBP) is a life-threatening complication.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--blue-b);">
+        <div class="sign-title" style="color:var(--blue);">Splenomegaly / Hypersplenism</div>
+        <div class="sign-body">Portal hypertension → splenic venous congestion → splenomegaly → splenic sequestration of blood cells → pancytopenia (thrombocytopenia most prominent, as in Mr. Q with platelets of 100). Splenomegaly also reduces thrombopoietin sensitivity. Thrombocytopenia + coagulopathy = high bleeding risk.</div>
+      </div>
+      <div class="sign-card" style="border-color:var(--coral-b);">
+        <div class="sign-title" style="color:var(--coral);">Hepatorenal Syndrome</div>
+        <div class="sign-body">Profound splanchnic vasodilation in advanced cirrhosis → renal vasoconstriction (compensatory) → acute kidney injury without intrinsic renal disease. Kidneys are structurally normal — they recover if transplanted into a healthy recipient. Creatinine rises; urine sodium &lt;10 mEq/L (avid sodium retention). Carries very poor prognosis without transplant.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Milan + MELD -->
+  <div class="g2">
+    <div class="card">
+      <div class="ct" style="color:var(--amber);">Milan Criteria — Transplant Eligibility for HCC</div>
+      <p style="margin-bottom:0.75rem;">The Milan Criteria define when liver transplant offers acceptable long-term outcomes for HCC patients. Transplant removes both the tumor AND the pre-malignant cirrhotic liver, addressing both problems simultaneously.</p>
+      <div class="hl hl-t">
+        <strong>Milan Criteria (patient must meet ALL):</strong><br>
+        1. Single lesion &lt;5 cm, OR up to 3 lesions each &lt;3 cm<br>
+        2. No extrahepatic involvement (no metastases)<br>
+        3. No macrovascular invasion (no portal/hepatic vein tumor thrombus)<br><br>
+        Patients within Milan: <strong>~70% 5-year survival</strong>, &lt;15% recurrence. Outside Milan: outcomes decline sharply.
+      </div>
+      <p>Mr. Q had a lesion detected on triphasic CT — the triphasic protocol (non-contrast, arterial, portal venous phases) is specifically designed to demonstrate HCC's characteristic <strong>arterial enhancement + portal venous washout</strong> pattern, distinguishing it from benign hepatic lesions. AFP 413 + this CT pattern = diagnosis without biopsy under AASLD guidelines.</p>
+      <div class="hl hl-a"><strong>HCC exception points:</strong> Patients with HCC within Milan automatically receive MELD exception points (+22 points currently) — because HCC can progress and metastasize while waiting, making time-on-list particularly dangerous for this subgroup.</div>
+    </div>
+
+    <div class="card">
+      <div class="ct" style="color:var(--amber);">MELD Score — Prioritizing the Sickest</div>
+      <p style="margin-bottom:0.75rem;">The <strong>Model for End-Stage Liver Disease (MELD)</strong> replaced time-on-list as the primary allocation metric in 2002. It uses objective lab values to predict 90-day mortality without transplant.</p>
+      <div class="hl hl-b">
+        <strong>MELD = 3.78 × ln(bilirubin) + 11.2 × ln(INR) + 9.57 × ln(creatinine) + 6.43</strong><br><br>
+        Components reflect hepatic function (bilirubin, INR) + renal function (creatinine) — the two systems most predictive of short-term mortality in liver disease.
+      </div>
+      <table class="cmp" style="margin-top:0.75rem;">
+        <tr><th>MELD Score</th><th>90-day Mortality Without Transplant</th></tr>
+        <tr><td>&lt;10</td><td style="color:var(--teal);">~1% — transplant may not improve survival</td></tr>
+        <tr><td>10–19</td><td style="color:var(--amber);">~6% — benefit threshold; MELD &gt;15 = candidate</td></tr>
+        <tr><td>20–29</td><td style="color:var(--amber);">~25% — clear benefit from transplant</td></tr>
+        <tr><td>30–39</td><td style="color:var(--red);">~62% — urgent need</td></tr>
+        <tr><td>≥40</td><td style="color:var(--red);">~79–89% — extremely high risk</td></tr>
+      </table>
+      <p style="margin-top:0.75rem;">Mr. Q: Bilirubin 2.0, INR 1.8, Creatinine 1.1 → MELD ~14 base score. <strong>+22 HCC exception points = effective MELD ~36</strong>, appropriately reflecting the urgency created by the risk of tumor progression beyond Milan.</p>
+    </div>
+  </div>
+
+  <!-- Ethics -->
+  <div class="card">
+    <div class="ct" style="color:var(--amber);">Ethical Issues in Liver Transplant Allocation</div>
+    <p style="margin-bottom:1rem;">Liver transplantation is a paradigm case of medical resource allocation ethics. There are ~8,000 liver transplants performed in the US annually but ~100,000 patients on the waiting list. Every allocation decision is a tradeoff.</p>
+    <div class="g2">
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-a">1</span><span><strong>Sickest-first vs. best-outcomes:</strong> MELD prioritizes the sickest patients (greatest need, most to gain from transplant). But the sickest patients — highest MELD — also have the most comorbidities and highest surgical risk. A utilitarian argument would allocate livers to patients most likely to survive long-term; a justice argument prioritizes those who will die without it. MELD leans toward justice.</span></li>
+          <li><span class="sn sn-a">2</span><span><strong>Alcoholic liver disease:</strong> Most programs require 6 months of documented abstinence before listing ("6-month rule"). The rationale: sobriety predicts post-transplant compliance; relapse damages the graft. Critics argue this is discriminatory against a disease (alcohol use disorder) rather than a moral failing, and that 6 months of abstinence doesn't reliably predict long-term sobriety. Some centers now consider transplant for acute alcoholic hepatitis without the 6-month rule.</span></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-a">3</span><span><strong>Geographic inequities:</strong> MELD scores at transplant vary dramatically by UNOS region — historically ranging from MELD ~18 in some regions to &gt;30 in others for the same organ. The 2017 "acuity circles" policy replaced fixed regional boundaries with a distance-based allocation model to reduce geographic disparity. Wealthy patients can list at multiple centers in favorable regions ("list shopping") — a practice inaccessible to lower-income patients.</span></li>
+          <li><span class="sn sn-a">4</span><span><strong>Living donor ethics:</strong> A living donor undergoes a major operation (right lobe hepatectomy) with ~0.5% mortality risk for no personal medical benefit. Informed consent must be truly voluntary — financial incentives are prohibited, family pressure is a real concern. The donor's interests must be balanced against the recipient's need. Long-term donor outcomes are generally good but complications occur in ~30% of donors to some degree.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Q4 — Liver anatomy & pathology deep dive ═══════════════ -->
+<section class="panel" id="q4">
+  <div class="ph">
+    <div class="ph-label" style="color:#bc8cff;">Supplemental — Liver Anatomy & Cellular Pathology</div>
+    <h2>Hepatic Anatomy, Sinusoidal Biology & The Fibrosis Mechanism</h2>
+    <p class="sub">The structural context behind why chronic HCV causes the lab and clinical findings it does — from sinusoid to cirrhotic nodule.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct" style="color:var(--purple);">Liver Blood Supply — The Dual Inflow</div>
+      <p>The liver is unique in receiving blood from two sources simultaneously:</p>
+      <div class="hl hl-b"><strong>Portal vein (~75% of hepatic blood flow, ~50% of O₂):</strong> Carries nutrient-rich but relatively deoxygenated blood from the entire GI tract (stomach, small bowel, colon), spleen, pancreas, and gallbladder. This is why the liver is the first organ to encounter absorbed nutrients, drugs, and gut-derived toxins — including ammonia, bacterial products, and absorbed alcohol.</div>
+      <div class="hl hl-a"><strong>Hepatic artery (~25% of flow, ~50% of O₂):</strong> Oxygenated blood from the celiac axis. Supplies the bile ducts primarily — bile ducts are dependent on arterial supply and are vulnerable when hepatic artery flow is compromised (e.g., after liver transplant, hepatic artery thrombosis → biliary ischemia → bile leaks and strictures).</div>
+      <p style="margin-top:0.5rem;">Both streams mix in the hepatic sinusoids — fenestrated capillaries lined by sinusoidal endothelial cells, where hepatocytes on either side are in direct contact with the plasma via the Space of Disse.</p>
+    </div>
+    <div class="card">
+      <div class="ct" style="color:var(--purple);">Sinusoidal Architecture — Key Cell Types</div>
+      <ul class="steps">
+        <li><span class="sn sn-p">1</span><span><strong>Hepatocytes (60% of liver cells):</strong> The functional workhorse — metabolism, synthesis, detoxification, bile production. Arranged in plates 1–2 cells thick, maximizing surface exposure to sinusoidal blood.</span></li>
+        <li><span class="sn sn-p">2</span><span><strong>Kupffer cells (hepatic macrophages):</strong> Reside within sinusoidal lumen, attached to endothelium. First-line immune surveillance for gut-derived pathogens. In chronic HCV: Kupffer cells are chronically activated → release TNF-α, IL-6, TGF-β → drive fibrogenic stellate cell activation and maintain the inflammatory state.</span></li>
+        <li><span class="sn sn-p">3</span><span><strong>Hepatic stellate cells (HSC, cells of Ito):</strong> Quiescent state — store Vitamin A (retinoids) in lipid droplets, reside in the Space of Disse. Activated by TGF-β (from Kupffer cells) and PDGF → transdifferentiate into myofibroblasts → proliferate, lose retinoid stores, and produce <strong>type I and III collagen</strong>. This is the primary cellular mechanism of hepatic fibrosis. Activated HSCs are the direct cause of cirrhosis.</span></li>
+        <li><span class="sn sn-p">4</span><span><strong>Sinusoidal endothelial cells:</strong> Fenestrated (have pores, no basement membrane) — allows free exchange between plasma and hepatocytes. In cirrhosis: fenestrae are lost ("capillarization") → impaired hepatocyte-plasma exchange → worsens metabolic dysfunction even beyond hepatocyte loss.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--purple);">Portal Anatomy & Porto-Systemic Collaterals — Why Varices Form Where They Do</div>
+    <p style="margin-bottom:0.75rem;">The portal venous system collects blood from the entire abdominal GI tract. The portal vein forms at the confluence of: <strong>Splenic vein + Superior Mesenteric Vein + Inferior Mesenteric Vein</strong>. When portal pressure rises, blood seeks alternative routes to the systemic venous system — the porto-systemic collaterals. Each collateral location produces a specific clinical sign:</p>
+    <div class="g2">
+      <div>
+        <table class="cmp">
+          <tr><th>Collateral Site</th><th>Portal Vessel</th><th>Systemic Vessel</th><th>Clinical Sign</th></tr>
+          <tr><td>Gastroesophageal junction</td><td>Left gastric (coronary) vein</td><td>Esophageal tributaries of azygos</td><td style="color:var(--red);"><strong>Esophageal varices</strong> — most dangerous; rupture = massive hematemesis</td></tr>
+          <tr><td>Umbilicus</td><td>Paraumbilical veins (from left portal vein)</td><td>Superficial abdominal wall veins (epigastric)</td><td style="color:var(--amber);"><strong>Caput medusae</strong> — dilated veins radiating from umbilicus</td></tr>
+          <tr><td>Rectum</td><td>Superior rectal vein (from IMV)</td><td>Middle and inferior rectal veins (internal iliac)</td><td style="color:var(--blue);"><strong>Anorectal varices / hemorrhoids</strong> — bleeding per rectum</td></tr>
+          <tr><td>Retroperitoneum</td><td>Colonic veins (ascending/descending)</td><td>Renal, lumbar, phrenic veins</td><td style="color:var(--muted);">Colonic varices — less common but important</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="hl hl-p"><strong>Why esophageal varices are the most dangerous:</strong> The esophageal submucosal venous plexus is superficially located and thinly covered. Under high portal pressure, these vessels expand dramatically and can be easily torn by swallowing, vomiting, or NSAIDs. A single bleeding episode can exsanguinate a patient quickly. Variceal bleeding precipitates hepatic encephalopathy (blood in the gut = protein load = ammonia) and often triggers spontaneous bacterial peritonitis — a "triple threat."</div>
+        <div class="hl hl-a"><strong>Liver segments (Couinaud anatomy):</strong> The liver has 8 functional segments, each with its own portal vein branch, hepatic artery branch, bile duct, and hepatic vein drainage. This segmental independence is what makes partial hepatectomy and living-donor lobectomy possible — segment(s) can be resected without compromising the remaining segments' vascular or biliary supply. Mr. Q's tumor location within segments determines resectability and whether right vs. left lobe donation is feasible.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<section class="panel" id="quiz">
+  <div class="ph">
+    <div class="ph-label" style="color:#8b949e;">Self-Test</div>
+    <h2>10 Board-Style Questions</h2>
+    <p class="sub">Cover the answers and work through each question. All high-yield facts from this case.</p>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">What is the significance of a positive HCV antibody with a negative HBcAb and positive HBsAb in this patient? <span class="ti">+</span></button>
+    <div class="qa">HCV antibody positive = prior or current exposure to Hepatitis C; requires HCV RNA PCR to confirm active viremia (antibody can persist after spontaneous clearance). HBsAb positive + HBcAb negative = vaccine-induced HBV immunity (natural infection would produce both surface antibody AND core antibody). This patient has active HCV infection complicating a vaccinated individual — common clinical scenario since HCV has no vaccine.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">AFP is 413 ng/mL. What is AFP, why is it elevated in HCC, and at what level is it diagnostic? <span class="ti">+</span></button>
+    <div class="qa">AFP (alpha-fetoprotein) is normally produced by fetal hepatocytes and the yolk sac; it drops to near-zero after birth. In HCC, tumor cells de-differentiate and revert to fetal gene expression patterns, re-expressing AFP. Normal &lt;40 ng/mL. AFP &gt;400 ng/mL with a typical vascular lesion on imaging (arterial enhancement + washout) is diagnostic of HCC under AASLD guidelines without requiring biopsy. AFP is also elevated in other germ cell tumors (testicular/ovarian) and hepatic regeneration, so context matters.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">Explain the AST:ALT ratio in this patient. What does the ratio suggest about etiology? <span class="ti">+</span></button>
+    <div class="qa">AST 125 / ALT 95 = ratio ~1.3:1. In alcoholic liver disease, AST:ALT is classically &gt;2:1 (alcohol preferentially depletes pyridoxal phosphate, which ALT requires more than AST). This patient's ratio of ~1:1 is more typical of viral hepatitis (HCV) or non-alcoholic causes, where both enzymes are elevated roughly equally. A ratio &gt;2:1 should make you think alcohol first. However this is a guideline, not a rule — in advanced cirrhosis from any cause, ALT may fall as functioning hepatocyte mass is lost.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">Why is INR elevated in this patient? Which clotting factors are affected? <span class="ti">+</span></button>
+    <div class="qa">The liver synthesizes all clotting factors except von Willebrand factor (vWF, made by endothelium). The PT/INR measures the extrinsic pathway: Factors VII → X → II (prothrombin) → fibrinogen. Factor VII has the shortest half-life (~4–6 hours), making it the most sensitive early indicator of hepatic synthetic failure. As hepatocytes are destroyed by chronic HCV → cirrhosis, synthesis of all these factors decreases → prolonged PT → elevated INR. INR 1.8 confirms significant (though not yet severe) synthetic dysfunction.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">What cell type is primarily responsible for hepatic fibrosis in chronic HCV? What activates it? <span class="ti">+</span></button>
+    <div class="qa">Hepatic stellate cells (HSCs, also called Ito cells or perisinusoidal cells). In their quiescent state they store Vitamin A in lipid droplets in the Space of Disse. Activated by TGF-β (from Kupffer cells and damaged hepatocytes) and PDGF → transdifferentiate into myofibroblast-like cells → lose retinoid stores → proliferate and deposit type I and III collagen into the Space of Disse and portal tracts → progressive fibrosis → cirrhosis. Activated HSCs are the cellular mediator of cirrhosis in virtually all chronic liver diseases, not just HCV.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">Why does this patient have thrombocytopenia? Name two mechanisms. <span class="ti">+</span></button>
+    <div class="qa">1. Hypersplenism: Portal hypertension → splenic venous congestion → splenomegaly → the enlarged spleen sequesters and destroys platelets at an increased rate (and other blood cells too — can cause pancytopenia). 2. Reduced thrombopoietin (TPO): TPO is produced primarily by hepatocytes and drives megakaryocyte differentiation and platelet production. Loss of hepatocyte mass in cirrhosis → reduced TPO → decreased platelet production. Both mechanisms operate simultaneously in most cirrhotic patients.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">What is the Milan Criteria? Why does meeting Milan criteria matter for transplant? <span class="ti">+</span></button>
+    <div class="qa">Milan Criteria for HCC transplant: (1) single lesion &lt;5 cm OR up to 3 lesions each &lt;3 cm; (2) no extrahepatic metastases; (3) no macrovascular invasion. Patients within Milan achieve ~70% 5-year survival after transplant with &lt;15% tumor recurrence — outcomes comparable to transplant for non-malignant indications. Outside Milan, recurrence rates rise sharply, making transplant less justified given organ scarcity. Transplant is ideal for HCC because it removes both the tumor AND the underlying pre-malignant cirrhotic liver that would continue to produce new tumors.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">What are the three components of the MELD score and what does each reflect? <span class="ti">+</span></button>
+    <div class="qa">1. Serum creatinine — reflects renal function, the strongest predictor of short-term mortality in cirrhosis; kidney dysfunction marks advanced decompensation. 2. Total bilirubin — reflects hepatic excretory function; rising bilirubin indicates worsening cholestasis and synthetic failure. 3. INR — reflects hepatic synthetic function (clotting factor production). A MELD &gt;15 indicates that transplant confers survival benefit. HCC patients receive automatic MELD exception points (+22) because tumor progression risk is not captured by these three lab values alone.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">Why does HCC arise almost exclusively in cirrhotic livers? What makes the cirrhotic milieu carcinogenic? <span class="ti">+</span></button>
+    <div class="qa">Multiple converging mechanisms: 1. Chronic inflammation — sustained cytokine release (TNF-α, IL-6) activates pro-proliferative signaling (NF-κB, STAT3) in regenerating hepatocytes. 2. Oxidative stress — reactive oxygen species from activated Kupffer cells cause DNA damage and oncogenic mutations. 3. Regenerative pressure — hepatocytes must continuously divide to replace dying cells; each division is an opportunity for replication errors and oncogenic mutations to accumulate. 4. Telomere shortening — repeated rounds of regeneration exhaust telomere length → chromosomal instability. 5. TP53 and Wnt/β-catenin pathway mutations accumulate over decades of this environment. Note: HBV (unlike HCV) can cause HCC even without cirrhosis via direct genomic integration.</div>
+  </div>
+
+  <div class="qi">
+    <button class="qq" onclick="tq(this)">What is the mechanism of hepatic encephalopathy? How does lactulose treat it? <span class="ti">+</span></button>
+    <div class="qa">Mechanism: Intestinal bacteria produce ammonia (from protein digestion and urease-mediated urea hydrolysis). The liver normally converts ammonia to urea via the urea cycle. In cirrhosis: (1) reduced hepatocyte mass = less urea cycle capacity; (2) portosystemic shunts = ammonia bypasses the liver entirely. Ammonia enters systemic circulation → crosses BBB → taken up by astrocytes → converted to glutamine (via glutamine synthetase) → astrocyte swelling → cerebral edema → encephalopathy. Lactulose: a non-absorbable disaccharide metabolized by colonic bacteria to lactic + acetic acids → acidifies colon → converts NH3 (diffusible) to NH4+ (charged, non-diffusible, trapped in colon) → excreted in stool. Also acts as osmotic laxative, reducing colonic transit time and bacterial protein fermentation.</div>
+  </div>
+
+  <div style="text-align:center; margin-top:1.5rem;">
+    <button onclick="allQ()" style="padding:10px 24px; background:var(--teal-d); color:var(--teal); border:1px solid var(--teal-b); border-radius:var(--rs); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">Reveal all answers</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function tq(btn) {
+  const a = btn.nextElementSibling;
+  const i = btn.querySelector('.ti');
+  const open = a.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  i.textContent = open ? '−' : '+';
+}
+function allQ() {
+  document.querySelectorAll('.qa').forEach(a => a.classList.add('open'));
+  document.querySelectorAll('.qq').forEach(b => b.classList.add('open'));
+  document.querySelectorAll('.ti').forEach(i => i.textContent = '−');
+}
+</script>
+</body>
+</html>
