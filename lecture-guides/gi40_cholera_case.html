@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cholera Case — USMLE Step 1 Tutor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117; --bg-card: #161b22; --bg-alt: #1c2330;
+    --border: rgba(255,255,255,0.08); --border-s: rgba(255,255,255,0.15);
+    --text: #e6edf3; --muted: #8b949e; --dim: #6e7681;
+    --teal: #3fb950; --teal-d: rgba(63,185,80,0.12); --teal-b: rgba(63,185,80,0.3);
+    --amber: #e3b341; --amber-d: rgba(227,179,65,0.12); --amber-b: rgba(227,179,65,0.3);
+    --red: #f85149; --red-d: rgba(248,81,73,0.12); --red-b: rgba(248,81,73,0.3);
+    --blue: #58a6ff; --blue-d: rgba(88,166,255,0.12); --blue-b: rgba(88,166,255,0.3);
+    --purple: #bc8cff; --purple-d: rgba(188,140,255,0.12); --purple-b: rgba(188,140,255,0.3);
+    --cyan: #39d4d0; --cyan-d: rgba(57,212,208,0.12); --cyan-b: rgba(57,212,208,0.3);
+    --r: 10px; --rs: 6px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; min-height: 100vh; }
+  .hdr { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 1.1rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 1rem; }
+  .hdr-kicker { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); font-weight: 600; white-space: nowrap; }
+  .hdr-rule { flex: 1; height: 1px; background: var(--border); }
+  .hdr h1 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-weight: 400; }
+  .banner { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 0.6rem 2rem; display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .bn { font-size: 14px; font-weight: 600; }
+  .bd { font-size: 12px; color: var(--muted); }
+  .bt { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
+  .bt-r { background: var(--red-d); color: var(--red); border: 1px solid var(--red-b); }
+  .bt-a { background: var(--amber-d); color: var(--amber); border: 1px solid var(--amber-b); }
+  .bt-b { background: var(--blue-d); color: var(--blue); border: 1px solid var(--blue-b); }
+  .nav { display: flex; gap: 4px; padding: 1rem 2rem 0; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; background: var(--bg-card); }
+  .nav::-webkit-scrollbar { display: none; }
+  .nb { padding: 8px 18px; border-radius: var(--rs) var(--rs) 0 0; border: 1px solid transparent; border-bottom: none; background: transparent; color: var(--muted); font-size: 13px; font-family: 'DM Sans',sans-serif; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.15s; position: relative; bottom: -1px; display: flex; align-items: center; justify-content: center; }
+  .nb:hover { color: var(--text); background: var(--bg-alt); }
+  .nb.active { background: var(--bg); color: var(--text); border-color: var(--border); border-bottom-color: var(--bg); }
+  .qb { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 22px; border-radius: var(--rs); font-size: 11px; font-weight: 700; padding: 0 7px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+  .panel { display: none; animation: fi 0.2s ease; }
+  .panel.active { display: block; }
+  @keyframes fi { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .ph { margin-bottom: 1.75rem; }
+  .ph-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.35rem; }
+  .ph h2 { font-family: 'DM Serif Display',serif; font-size: 1.55rem; font-weight: 400; line-height: 1.3; }
+  .ph .sub { font-size: 14px; color: var(--muted); margin-top: 0.4rem; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+  .ct { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.7rem; }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media(max-width:760px){ .g2,.g3 { grid-template-columns:1fr; } }
+  .hl { border-radius: var(--rs); padding: 0.8rem 1rem; margin: 0.7rem 0; font-size: 14px; line-height: 1.65; border-left: 3px solid; }
+  .hl-t { background: var(--teal-d); border-color: var(--teal); color: #b3ffbe; }
+  .hl-a { background: var(--amber-d); border-color: var(--amber); color: #fde68a; }
+  .hl-r { background: var(--red-d); border-color: var(--red); color: #fca5a5; }
+  .hl-b { background: var(--blue-d); border-color: var(--blue); color: #93c5fd; }
+  .hl-p { background: var(--purple-d); border-color: var(--purple); color: #ddd6fe; }
+  .hl-c { background: var(--cyan-d); border-color: var(--cyan); color: #a5f3fc; }
+  .steps { list-style: none; }
+  .steps li { display: flex; gap: 11px; margin-bottom: 0.7rem; font-size: 14px; line-height: 1.6; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); }
+  .steps li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .sn { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .sn-t { background: var(--teal-d); color: var(--teal); border: 1px solid var(--teal-b); }
+  .sn-r { background: var(--red-d); color: var(--red); border: 1px solid var(--red-b); }
+  .sn-b { background: var(--blue-d); color: var(--blue); border: 1px solid var(--blue-b); }
+  .sn-a { background: var(--amber-d); color: var(--amber); border: 1px solid var(--amber-b); }
+  .sn-p { background: var(--purple-d); color: var(--purple); border: 1px solid var(--purple-b); }
+  .sn-c { background: var(--cyan-d); color: var(--cyan); border: 1px solid var(--cyan-b); }
+  .kp { display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-alt); border: 1px solid var(--border-s); border-radius: var(--r); padding: 1rem 1.2rem; margin-bottom: 1rem; }
+  .kp-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+  .kp-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+  .kp-text { font-size: 14px; line-height: 1.6; }
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0.75rem 0; }
+  .fb { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--rs); padding: 5px 12px; font-size: 13px; font-weight: 500; }
+  .fa { color: var(--dim); font-size: 16px; }
+  .val-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .val-table th { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--border-s); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .val-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .val-table tr:last-child td { border-bottom: none; }
+  .abn { color: var(--red); font-weight: 600; }
+  .normal { color: var(--teal); }
+  .compartment-viz { display: flex; gap: 2px; height: 60px; border-radius: var(--rs); overflow: hidden; margin: 0.75rem 0; }
+  .comp-ecf { background: linear-gradient(135deg, rgba(248,81,73,0.4), rgba(248,81,73,0.2)); border: 1px solid var(--red-b); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--red); flex-direction: column; gap: 2px; }
+  .comp-icf { background: linear-gradient(135deg, rgba(88,166,255,0.3), rgba(88,166,255,0.15)); border: 1px solid var(--blue-b); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--blue); flex-direction: column; gap: 2px; }
+  .qi { margin-bottom: 8px; }
+  .qq { width: 100%; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--rs); padding: 11px 15px; color: var(--text); font-family: 'DM Sans',sans-serif; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: all 0.15s; }
+  .qq:hover { background: var(--bg-alt); border-color: var(--border-s); }
+  .qq.open { border-color: var(--teal-b); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .ti { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-s); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--muted); transition: all 0.15s; }
+  .qq.open .ti { background: var(--teal-d); border-color: var(--teal-b); color: var(--teal); }
+  .qa { display: none; background: var(--teal-d); border: 1px solid var(--teal-b); border-top: none; border-radius: 0 0 var(--rs) var(--rs); padding: 11px 15px; font-size: 13px; color: #b3ffbe; line-height: 1.65; }
+  .qa.open { display: block; }
+  .cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cmp th { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border-s); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .cmp td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .cmp tr:last-child td { border-bottom: none; }
+  p { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 0.5rem; }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: var(--text); font-weight: 600; }
+  p em { font-style: italic; color: var(--text); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; margin-bottom: 6px; }
+  .badge-r { background: var(--red-d); color: var(--red); border: 1px solid var(--red-b); }
+  .badge-t { background: var(--teal-d); color: var(--teal); border: 1px solid var(--teal-b); }
+  .badge-b { background: var(--blue-d); color: var(--blue); border: 1px solid var(--blue-b); }
+  .badge-a { background: var(--amber-d); color: var(--amber); border: 1px solid var(--amber-b); }
+  .badge-c { background: var(--cyan-d); color: var(--cyan); border: 1px solid var(--cyan-b); }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <span class="hdr-kicker">USMLE Step 1</span>
+  <div class="hdr-rule"></div>
+  <h1>Cholera Case Tutor</h1>
+</header>
+
+<div class="banner">
+  <span class="bn">Post-Hurricane</span>
+  <span class="bd">Male patient, Port-au-Prince region</span>
+  <span class="bt bt-r">BP 60/30 · HR 150 · Stuporous</span>
+  <span class="bt bt-a">HCT 0.60 · Protein 12 g/dL</span>
+  <span class="bt bt-b">Stool 600 mL/hr · Vibrio cholerae</span>
+</div>
+
+<nav class="nav">
+  <button class="nb active" onclick="show('q1',this)"><span class="qb" style="background:rgba(63,185,80,0.15);color:#3fb950;">Q1</span></button>
+  <button class="nb" onclick="show('q2',this)"><span class="qb" style="background:rgba(248,81,73,0.15);color:#f85149;">Q2</span></button>
+  <button class="nb" onclick="show('q3',this)"><span class="qb" style="background:rgba(88,166,255,0.15);color:#58a6ff;">Q3</span></button>
+  <button class="nb" onclick="show('q4',this)"><span class="qb" style="background:rgba(57,212,208,0.15);color:#39d4d0;">Q4</span></button>
+  <button class="nb" onclick="show('q5',this)"><span class="qb" style="background:rgba(227,179,65,0.15);color:#e3b341;">Q5</span></button>
+  <button class="nb" onclick="show('quiz',this)"><span class="qb" style="background:rgba(255,255,255,0.08);color:#8b949e;">✓</span></button>
+</nav>
+
+<main>
+
+<!-- Q1 -->
+<section class="panel active" id="q1">
+  <div class="ph">
+    <div class="ph-label" style="color:#3fb950;">Question 1</div>
+    <h2>Lab Values & Fluid Compartment Analysis</h2>
+    <p class="sub">What the serum protein, HCT, and Na+ values mean, and how cholera shifts the ECF/ICF balance.</p>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:#3fb950;">The abnormal lab values — interpreting each one</div>
+    <table class="val-table">
+      <tr><th>Value</th><th>Result</th><th>Normal</th><th>Mechanism & Significance</th></tr>
+      <tr>
+        <td><strong>Hematocrit (HCT)</strong></td>
+        <td class="abn">0.60 (60%)</td>
+        <td>0.40 (40%)</td>
+        <td>Dramatically elevated — not because red cell mass increased, but because <strong>plasma volume has been lost</strong>. RBCs are the same in absolute number but now represent a larger fraction of a shrunken total blood volume. This is <em>hemoconcentration</em> — the lab equivalent of the plasma being wrung out of the vascular space.</td>
+      </tr>
+      <tr>
+        <td><strong>Total serum protein</strong></td>
+        <td class="abn">12 g/dL</td>
+        <td>6–8 g/dL</td>
+        <td>Nearly double the upper limit of normal. Again, <strong>not because more protein was made</strong> — the liver hasn't changed. Plasma water has been lost into the stool, so the same amount of protein is dissolved in a much smaller volume. This is pure hemoconcentration. The protein per se is normal; the plasma volume is not.</td>
+      </tr>
+      <tr>
+        <td><strong>Serum Na+</strong></td>
+        <td class="normal">141 mEq/L</td>
+        <td>136–145 mEq/L</td>
+        <td><strong>Normal — and this is the critical clue.</strong> Despite massive fluid losses, sodium concentration is normal. This tells us the diarrhea fluid is <em>isotonic</em> — it contains sodium in roughly the same concentration as plasma (~140 mEq/L). The patient is losing isotonic fluid, so what remains in the vascular space has the same sodium concentration. Volume is depleted, but tonicity is preserved.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct" style="color:#3fb950;">ECF vs ICF compartments — normal distribution</div>
+      <p>Total body water (TBW) is ~60% of body weight. It is distributed as:</p>
+      <div class="hl hl-b">
+        <strong>ICF (Intracellular Fluid) = 2/3 of TBW (~40% body weight)</strong><br>
+        The water inside all cells. Maintained by Na+/K+-ATPase pumping Na+ out and K+ in. High K+, low Na+ intracellularly.
+      </div>
+      <div class="hl hl-t">
+        <strong>ECF (Extracellular Fluid) = 1/3 of TBW (~20% body weight)</strong><br>
+        Plasma (~25% of ECF) + Interstitial fluid (~75% of ECF). Predominant cation is Na+. This is the compartment directly affected by cholera losses.
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct" style="color:#3fb950;">ECF vs ICF in this patient</div>
+      <p>Because cholera stool is <strong>isotonic</strong> (same Na+ as ECF), the fluid lost comes exclusively from the ECF — not from the ICF.</p>
+      <div class="compartment-viz">
+        <div class="comp-ecf" style="width:65%;">
+          <span style="font-size:13px;">ECF</span>
+          <span style="font-size:10px; color:var(--muted);">SEVERELY depleted</span>
+          <span style="font-size:10px;">↓↓↓ volume</span>
+        </div>
+        <div class="comp-icf" style="width:35%;">
+          <span style="font-size:13px;">ICF</span>
+          <span style="font-size:10px; color:var(--muted);">Relatively preserved</span>
+          <span style="font-size:10px;">~ normal</span>
+        </div>
+      </div>
+      <div class="hl hl-a">
+        <strong>Why ICF is spared:</strong> If serum Na+ stays normal (141 mEq/L), plasma osmolality is unchanged. Water only moves between compartments when osmolality changes (osmosis). Since ECF osmolality hasn't changed, there is no osmotic gradient to drive water out of cells. The ICF volume is therefore <em>relatively preserved</em>. The ECF is severely contracted; the ICF is comparatively intact.
+      </div>
+      <div class="hl hl-r">
+        <strong>If water alone had been lost</strong> (hypertonic dehydration), Na+ would rise, ECF would become hypertonic, water would shift out of cells → ICF would also contract. That's not happening here.
+      </div>
+    </div>
+  </div>
+
+  <div class="kp" style="border-color:var(--teal-b);">
+    <div class="kp-icon" style="background:var(--teal-d); color:var(--teal);">KEY</div>
+    <div>
+      <div class="kp-label" style="color:var(--teal);">Summary of compartment logic</div>
+      <div class="kp-text">Isotonic fluid loss → ECF contracts, ICF preserved. Hypotonic fluid loss (free water) → ECF becomes hypertonic → water leaves ICF → both compartments contract. Hypertonic fluid loss → ECF becomes hypotonic → water enters ICF → ICF expands, ECF further depleted. In cholera: <strong>pure isotonic ECF depletion</strong>. The elevated HCT and protein are the lab fingerprint of hemoconcentration from ECF loss.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Q2 -->
+<section class="panel" id="q2">
+  <div class="ph">
+    <div class="ph-label" style="color:#f85149;">Question 2</div>
+    <h2>Why is BP So Low Despite Very High Heart Rate?</h2>
+    <p class="sub">Cardiovascular physiology of hypovolemic shock and the limits of compensatory tachycardia.</p>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--red);">The cardiovascular equation</div>
+    <div class="hl hl-r"><strong>Mean Arterial Pressure (MAP) = Cardiac Output (CO) × Systemic Vascular Resistance (SVR)</strong><br>
+    And: <strong>Cardiac Output = Heart Rate × Stroke Volume</strong><br>
+    Therefore: MAP = HR × SV × SVR</div>
+    <p>With a BP of 60/30 mmHg, MAP ≈ 40 mmHg (life-threatening hypotension; normal ~93 mmHg). HR is 150 bpm — a massive compensatory tachycardia driven by the sympathetic nervous system. So why isn't the high HR rescuing the BP?</p>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct" style="color:var(--red);">What tachycardia can and cannot fix</div>
+      <ul class="steps">
+        <li><span class="sn sn-r">1</span><span><strong>Massive plasma volume loss:</strong> At 600 mL/hr of stool for several hours, this patient has lost liters of isotonic ECF. The vascular space is severely underfilled — analogous to a deflated tire. Venous return (preload) to the right heart is drastically reduced.</span></li>
+        <li><span class="sn sn-r">2</span><span><strong>Stroke volume collapses:</strong> Stroke volume depends on preload (Frank-Starling mechanism). With markedly reduced venous return → reduced end-diastolic volume → the left ventricle ejects much less per beat. Even a structurally normal heart cannot compensate for an empty tank.</span></li>
+        <li><span class="sn sn-r">3</span><span><strong>Tachycardia partially compensates but fails:</strong> HR of 150 tries to maintain CO = HR × SV. But if SV has fallen by 60–70%, tripling HR only partially rescues CO. The math doesn't work — you cannot multiply zero by a large number and get a big answer.</span></li>
+        <li><span class="sn sn-r">4</span><span><strong>Tachycardia worsens diastolic filling:</strong> At very high heart rates, diastolic filling time shortens. Less time for ventricular filling → further reduction in end-diastolic volume → further reduction in SV. Tachycardia above ~150 bpm can paradoxically reduce CO.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ct" style="color:var(--red);">Sympathetic compensation — all guns firing</div>
+      <p>Baroreceptors in the aortic arch and carotid sinus detect the pressure drop → activate the sympathetic nervous system maximally:</p>
+      <ul class="steps">
+        <li><span class="sn sn-a">1</span><span><strong>Tachycardia (HR 150):</strong> SA node driven by norepinephrine via beta-1 receptors → fastest possible rate to sustain CO.</span></li>
+        <li><span class="sn sn-a">2</span><span><strong>Vasoconstriction:</strong> Alpha-1 receptor stimulation → arteriolar constriction → elevated SVR → BP partially maintained. This is why cold, clammy skin is present — cutaneous blood flow is sacrificed to maintain perfusion of brain and heart.</span></li>
+        <li><span class="sn sn-a">3</span><span><strong>Venoconstriction:</strong> Reduces the capacitance of venous reservoir → mobilizes blood toward the heart → slightly increases preload.</span></li>
+        <li><span class="sn sn-a">4</span><span><strong>RAAS activation:</strong> Low renal perfusion → renin → angiotensin II → aldosterone → Na+/water retention (too slow to help acutely, but ongoing).</span></li>
+      </ul>
+      <div class="hl hl-r"><strong>Despite all of this:</strong> The fluid deficit is simply too large for compensatory mechanisms to overcome. The only definitive fix is volume replacement — which is exactly what IV NaCl achieves on day 1.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--red);">Hypovolemic shock — the four stages</div>
+    <table class="cmp">
+      <tr><th>Class</th><th>Blood/fluid loss</th><th>HR</th><th>BP</th><th>Signs</th></tr>
+      <tr><td>I</td><td>&lt;15%</td><td>Normal/↑</td><td>Normal</td><td>Minimal symptoms</td></tr>
+      <tr><td>II</td><td>15–30%</td><td>100–120</td><td>Normal (SVR compensates)</td><td>Anxious, tachycardic, cool extremities</td></tr>
+      <tr><td>III</td><td>30–40%</td><td>120–140</td><td>↓ systolic</td><td>Confused, oliguria, marked pallor</td></tr>
+      <tr><td style="color:var(--red); font-weight:600;">IV</td><td>&gt;40%</td><td>&gt;140</td><td style="color:var(--red);">↓↓ systolic &lt;70</td><td style="color:var(--red);">Stuporous, anuric, lethal without intervention</td></tr>
+    </table>
+    <div class="hl hl-r" style="margin-top:0.75rem;"><strong>This patient is Class IV:</strong> BP 60/30, HR 150, stuporous. He has lost well over 40% of his ECF volume. Without immediate IV fluid resuscitation, end-organ damage (brain, kidneys, heart) becomes irreversible within minutes to hours. Cold skin confirms maximal sympathetic vasoconstriction.</div>
+  </div>
+</section>
+
+<!-- Q3 -->
+<section class="panel" id="q3">
+  <div class="ph">
+    <div class="ph-label" style="color:#58a6ff;">Question 3</div>
+    <h2>Na+ Fall with Water · Normal Na+/Water Absorption · Cholera's Mechanism</h2>
+    <p class="sub">Why drinking plain water dropped his sodium, how the gut normally handles sodium and water, and what cholera toxin does to all of it.</p>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">Why serum Na+ fell to 130 mEq/L after drinking water</div>
+    <p>On day 2, IV fluids were stopped and the patient drank plain water to replace stool losses. After 2 hours, serum Na+ fell from 141 to 130 mEq/L. The explanation is straightforward once you understand what was being replaced and what wasn't:</p>
+    <div class="g2">
+      <div>
+        <div class="hl hl-r">
+          <strong>The problem: replacing the wrong fluid</strong><br>
+          Cholera stool has HIGH sodium content (similar to plasma — ~130 mEq/L Na+, Cl-, HCO3-). The patient is losing isotonic, sodium-rich fluid at 600 mL/hr.<br><br>
+          When he drinks <em>plain water</em> (zero sodium), he is replacing an isotonic sodium loss with a <strong>hypotonic</strong> (sodium-free) input.
+        </div>
+      </div>
+      <div>
+        <div class="hl hl-b">
+          <strong>The result: dilutional hyponatremia</strong><br>
+          The water he drinks is absorbed (glucose-independent water absorption is intact), enters the ECF, and dilutes the sodium that's already there.<br><br>
+          Serum Na+ = total Na+ ÷ total water. If water increases while Na+ stays the same (or continues to leave in stool), Na+ concentration falls → hyponatremia.<br><br>
+          Na+ 130 mEq/L = mild hyponatremia, but clinically significant and worsening quickly.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">Normal Na+ and water absorption by intestinal mucosa</div>
+    <p style="margin-bottom:1rem;">The small intestine absorbs Na+ via several parallel mechanisms, each with distinct spatial and physiological characteristics:</p>
+    <ul class="steps">
+      <li><span class="sn sn-b">1</span><span><strong>Na+/glucose cotransport (SGLT1) — proximal small intestine:</strong> Na+ and glucose are cotransported apically via SGLT1 (2 Na+ per glucose). This is coupled transport — both must be present for either to be absorbed efficiently. This is the mechanism that makes oral rehydration therapy work, and the one that cholera toxin does NOT block.</span></li>
+      <li><span class="sn sn-b">2</span><span><strong>Na+/amino acid cotransporters — small intestine:</strong> Similar principle — Na+ is cotransported with neutral, basic, and acidic amino acids via different carrier proteins. Also glucose-independent but substrate-dependent.</span></li>
+      <li><span class="sn sn-b">3</span><span><strong>Na+/H+ exchanger (NHE3) — jejunum and ileum:</strong> Electroneutral exchange — one Na+ in, one H+ out. This is the primary mechanism of sodium absorption from the intestinal lumen. Driven by the low intracellular Na+ maintained by basolateral Na+/K+-ATPase. Cholera toxin may partially impair this via elevated cAMP.</span></li>
+      <li><span class="sn sn-b">4</span><span><strong>Na+/K+-ATPase (basolateral) — all enterocytes:</strong> Not a transporter of luminal Na+ per se, but the engine driving all the above. Pumps 3 Na+ out / 2 K+ in per ATP → keeps intracellular Na+ low → maintains the electrochemical gradient that drives all apical Na+ entry.</span></li>
+      <li><span class="sn sn-b">5</span><span><strong>Water follows osmotically:</strong> Na+ absorption creates an osmotic gradient — water follows passively via aquaporins (AQP1, 7, 8) and paracellular tight junctions into the enterocyte and then into the capillaries. No active water transport — it's purely osmotic drag behind sodium.</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--blue);">How cholera toxin disrupts normal absorption</div>
+    <div class="flow">
+      <div class="fb" style="border-color:var(--red-b); color:var(--red);">V. cholerae ingested</div>
+      <div class="fa">→</div>
+      <div class="fb">Colonizes small intestine</div>
+      <div class="fa">→</div>
+      <div class="fb" style="border-color:var(--red-b); color:var(--red);">Secretes Cholera Toxin (CT)</div>
+      <div class="fa">→</div>
+      <div class="fb" style="border-color:var(--amber-b); color:var(--amber);">B subunit binds GM1 ganglioside</div>
+      <div class="fa">→</div>
+      <div class="fb" style="border-color:var(--red-b); color:var(--red);">A subunit enters enterocyte</div>
+    </div>
+    <div class="g2" style="margin-top:0.5rem;">
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-r">1</span><span><strong>ADP-ribosylation of Gs-alpha:</strong> The A1 subunit of cholera toxin ADP-ribosylates the Gs-alpha protein of adenylyl cyclase, locking it in the permanently active "on" state.</span></li>
+          <li><span class="sn sn-r">2</span><span><strong>Massive cAMP accumulation:</strong> Permanently active adenylyl cyclase → continuous conversion of ATP to cAMP → intracellular cAMP rises to extremely high levels. Normal cAMP signaling is transient; cholera toxin makes it permanent.</span></li>
+          <li><span class="sn sn-r">3</span><span><strong>CFTR activation:</strong> High cAMP activates Protein Kinase A → phosphorylates and opens <strong>CFTR (cystic fibrosis transmembrane conductance regulator)</strong> Cl- channels on the apical membrane → massive Cl- secretion into the lumen.</span></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-r">4</span><span><strong>Na+ follows Cl- paracellularly:</strong> The Cl- flood creates a negative lumen charge → Na+ moves paracellularly from blood to lumen to maintain electroneutrality → Na+ secretion.</span></li>
+          <li><span class="sn sn-r">5</span><span><strong>Water follows osmotically:</strong> Massive Na+ and Cl- in lumen → osmotic gradient → water pours into lumen → profuse watery diarrhea. The "rice water" appearance = clear fluid with mucus flecks, no blood (no mucosal damage — the epithelium is structurally intact).</span></li>
+          <li><span class="sn sn-c">6</span><span><strong>SGLT1 is unaffected:</strong> Crucially, cholera toxin does NOT block Na+/glucose cotransport. SGLT1 remains functional. This is the entire physiological rationale for glucose-containing ORS.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hl hl-c"><strong>The key insight:</strong> Cholera produces a pure <em>secretory</em> diarrhea — the epithelium actively pumps isotonic fluid into the lumen. The villi are structurally intact; the secretory machinery has simply been hijacked by cAMP. SGLT1 remains functional, which is what makes ORT possible.</div>
+  </div>
+</section>
+
+<!-- Q4 -->
+<section class="panel" id="q4">
+  <div class="ph">
+    <div class="ph-label" style="color:#39d4d0;">Question 4</div>
+    <h2>How Glucose Stopped the Diarrhea — ORT Physiology</h2>
+    <p class="sub">Why adding 60 mM glucose to the electrolyte solution was the turning point in this patient's treatment.</p>
+  </div>
+
+  <div class="kp" style="border-color:var(--cyan-b);">
+    <div class="kp-icon" style="background:var(--cyan-d); color:var(--cyan);">ORT</div>
+    <div>
+      <div class="kp-label" style="color:var(--cyan);">One of the most important physiological discoveries of the 20th century</div>
+      <div class="kp-text">The principle behind oral rehydration therapy — that glucose can rescue sodium and water absorption even during active cholera secretion — was described as "potentially the most important medical advance of the 20th century" by The Lancet. It has saved tens of millions of lives in the developing world since its widespread adoption in the 1970s.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--cyan);">Why the electrolyte solution alone didn't work (Day 3)</div>
+    <p>On day 3, an oral solution matching the stool electrolyte composition (high Na+, Cl-, HCO3-) was given in amounts matching losses. The diarrhea continued. Why didn't this work?</p>
+    <div class="hl hl-r">
+      <strong>Without glucose, there is no sodium cotransport driver.</strong><br>
+      The cholera toxin has maximally upregulated CFTR-mediated Cl- and Na+ <em>secretion</em>. Passive Na+ absorption via NHE3 is overwhelmed by active secretion. Giving Na+-rich fluid orally just replaces what's being lost — it doesn't actually stop the net secretion or restore net absorption. You're pouring water into a leaking bucket at the same rate it's leaking out.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--cyan);">Why glucose changes everything — the SGLT1 mechanism</div>
+    <div class="g2">
+      <div>
+        <ul class="steps">
+          <li><span class="sn sn-c">1</span><span><strong>SGLT1 is cholera-resistant:</strong> Cholera toxin acts on the basolateral Gs-protein/adenylyl cyclase/cAMP/CFTR axis to drive Cl- secretion. SGLT1 is an apical cotransporter driven by the Na+ gradient — a completely separate mechanism that cAMP does not directly inhibit. It remains fully functional even at maximal secretory states.</span></li>
+          <li><span class="sn sn-c">2</span><span><strong>Glucose + Na+ cotransport creates a powerful absorptive force:</strong> SGLT1 co-imports 2 Na+ with every 1 glucose molecule against the luminal Na+ gradient. This is driven by the electrochemical gradient maintained by basolateral Na+/K+-ATPase. Adding glucose to the lumen activates this transporter maximally.</span></li>
+          <li><span class="sn sn-c">3</span><span><strong>Net sodium absorption overcomes net secretion:</strong> The SGLT1-mediated Na+ influx is large enough to exceed the CFTR-mediated Na+ secretion. The intestinal mucosa shifts from net secretion to net absorption. With Na+ being absorbed, water follows osmotically → stool volume drops → diarrhea ceases.</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="hl hl-c">
+          <strong>The race between CFTR and SGLT1:</strong><br>
+          CFTR (cholera-activated): pumping Cl- and Na+ OUT into lumen at maximum rate.<br><br>
+          SGLT1 (glucose-activated): pumping Na+ + glucose IN from lumen.<br><br>
+          When 60 mM glucose is added: SGLT1 wins the race. Net Na+ movement reverses direction → water follows Na+ back into the body → net fluid reabsorption → diarrhea stops.
+        </div>
+        <div class="hl hl-t">
+          <strong>Why 60 mM glucose specifically?</strong> The WHO ORS formulation uses ~75 mM glucose (reduced osmolarity). 60 mM provides sufficient glucose to maximally activate SGLT1 without making the solution hypertonic (which would worsen osmotic diarrhea). Too much glucose → hyperosmolar ORS → draws water into lumen → counterproductive.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--cyan);">Why this matters beyond cholera — clinical applications</div>
+    <table class="cmp">
+      <tr><th>Application</th><th>Mechanism used</th><th>Clinical relevance</th></tr>
+      <tr><td style="color:var(--cyan);"><strong>ORS for all secretory diarrhea</strong></td><td>SGLT1 Na+/glucose cotransport</td><td>WHO ORS: 75 mM glucose + Na+ + K+ + Cl- + citrate. Works for any secretory diarrhea (cholera, rotavirus, E. coli), not just cholera.</td></tr>
+      <tr><td style="color:var(--cyan);"><strong>Sports drinks</strong></td><td>SGLT1 + enhanced gut absorption</td><td>Glucose + Na+ in sports beverages accelerates water absorption beyond plain water alone — the same SGLT1 principle.</td></tr>
+      <tr><td style="color:var(--cyan);"><strong>Post-operative bowel recovery</strong></td><td>Enteral nutrition timing</td><td>Early enteral feeding with glucose-containing solutions promotes intestinal SGLT1 expression and restores gut function faster than nil-by-mouth.</td></tr>
+      <tr><td style="color:var(--blue);"><strong>Cystic fibrosis</strong></td><td>CFTR dysfunction</td><td>CF patients have non-functional CFTR → reduced Cl- secretion → thick mucus in lungs and GI tract. Cholera exploits the same CFTR channel in the opposite direction (pathologically hyperactivated).</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- Q5 -->
+<section class="panel" id="q5">
+  <div class="ph">
+    <div class="ph-label" style="color:#e3b341;">Question 5</div>
+    <h2>Type of Diarrhea — Classification & Mechanism</h2>
+    <p class="sub">Where cholera fits in the diarrhea classification framework and how it differs from other types.</p>
+  </div>
+
+  <div class="kp" style="border-color:var(--amber-b);">
+    <div class="kp-icon" style="background:var(--amber-d); color:var(--amber);">Dx</div>
+    <div>
+      <div class="kp-label" style="color:var(--amber);">Answer</div>
+      <div class="kp-text">This patient has <strong>secretory diarrhea</strong> — specifically the most extreme clinical example of secretory diarrhea. The intestinal epithelium is actively secreting isotonic fluid into the lumen at rates that completely overwhelm absorptive capacity, driven by cAMP-mediated CFTR activation from cholera toxin.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct" style="color:var(--amber);">The four main diarrhea types — complete comparison</div>
+    <table class="cmp">
+      <tr><th>Type</th><th>Mechanism</th><th>Stool characteristics</th><th>Response to fasting</th><th>Classic examples</th></tr>
+      <tr>
+        <td style="color:var(--amber);"><strong>Secretory</strong></td>
+        <td>Active ion secretion by intact epithelium → osmotic water loss. cAMP/cGMP/Ca2+ driven. Epithelium structurally intact.</td>
+        <td>Large volume, watery, isotonic, no blood, no pus. "Rice water" in cholera. Osmotic gap &lt;50 mOsm/kg.</td>
+        <td><strong>Continues with fasting</strong> — secretion is active and independent of luminal contents. Hallmark sign of secretory diarrhea.</td>
+        <td>Cholera, ETEC, VIPoma, carcinoid, microscopic colitis, bile acid malabsorption</td>
+      </tr>
+      <tr>
+        <td style="color:var(--blue);"><strong>Osmotic</strong></td>
+        <td>Poorly absorbed solutes in lumen → osmotic gradient → water drawn into lumen passively. Epithelium intact but overwhelmed.</td>
+        <td>Watery, large volume. Osmotic gap &gt;125 mOsm/kg. Stool pH may be low (fermentation).</td>
+        <td><strong>Stops with fasting</strong> — remove the osmotic solute, diarrhea resolves. Key distinguishing feature.</td>
+        <td>Lactose intolerance, sorbitol/mannitol ingestion, lactulose, Mg-containing antacids, malabsorption syndromes</td>
+      </tr>
+      <tr>
+        <td style="color:var(--red);"><strong>Inflammatory / Exudative</strong></td>
+        <td>Mucosal damage → epithelial disruption → plasma proteins, blood, and pus leak into lumen. Cytokine-driven secretion also present.</td>
+        <td>Small volume, bloody, mucoid, pus. Fecal leukocytes on microscopy. Fever, tenesmus common.</td>
+        <td>Typically persists with fasting (mucosal damage ongoing).</td>
+        <td>IBD (Crohn's, UC), invasive bacteria (Salmonella, Shigella, Campylobacter, C. diff), ischemic colitis</td>
+      </tr>
+      <tr>
+        <td style="color:var(--purple);"><strong>Malabsorptive / Fatty</strong></td>
+        <td>Failure to absorb fat, protein, or carbs → undigested nutrients reach colon → osmotic + fermentative diarrhea.</td>
+        <td>Steatorrhea: bulky, oily, malodorous, floats, difficult to flush. Often pale (absent bile pigment).</td>
+        <td>Persists but may improve with dietary modification (low fat diet, enzyme replacement).</td>
+        <td>EPI (chronic pancreatitis), celiac disease, short bowel syndrome, tropical sprue</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct" style="color:var(--amber);">Why cholera is the quintessential secretory diarrhea</div>
+      <ul class="steps">
+        <li><span class="sn sn-a">1</span><span><strong>No mucosal damage:</strong> Unlike invasive pathogens (Shigella, C. diff), V. cholerae does not invade the epithelium. The villi are architecturally normal. It wins by biochemical subversion, not physical destruction.</span></li>
+        <li><span class="sn sn-a">2</span><span><strong>Rice-water stool:</strong> The isotonic fluid pouring out of the crypt epithelium has no blood or pus — because there's no mucosal ulceration. The white flecks (giving "rice water" appearance) are mucus and shed epithelial cells from normal turnover.</span></li>
+        <li><span class="sn sn-a">3</span><span><strong>Isotonic stool composition:</strong> High Na+, Cl-, HCO3- — mirrors the ECF composition. This is why Na+ stays normal in serum despite massive losses, and why the ECF contracts without affecting ICF tonicity.</span></li>
+        <li><span class="sn sn-a">4</span><span><strong>Osmotic gap is absent:</strong> Stool osmolality is accounted for entirely by the electrolytes (Na+, K+, Cl-, HCO3-). No un-absorbable solutes. This confirms secretory etiology.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ct" style="color:var(--amber);">Calculating the stool osmotic gap</div>
+      <p>The osmotic gap distinguishes secretory from osmotic diarrhea:</p>
+      <div class="hl hl-a">
+        <strong>Stool osmotic gap = Measured stool osmolality − 2 × (stool Na+ + stool K+)</strong><br><br>
+        Normal stool osmolality ≈ 290 mOsm/kg<br>
+        Cholera stool: high Na+, Cl-, HCO3- → 2 × (Na+ + K+) accounts for nearly all osmolality<br>
+        → Osmotic gap &lt;50 mOsm/kg → <strong>Secretory</strong>
+      </div>
+      <div class="hl hl-b">
+        <strong>In osmotic diarrhea:</strong><br>
+        Stool contains un-absorbable solutes (lactose, sorbitol) not measured by electrolytes alone → 2×(Na++K+) underestimates total osmolality → Gap &gt;125 mOsm/kg → <strong>Osmotic</strong>
+      </div>
+      <div class="hl hl-t">
+        <strong>Fasting test is the bedside version:</strong> Stop eating → secretory diarrhea continues (secretion is autonomous) → osmotic diarrhea stops (no solute to drive it). This is the most clinically practical test.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="panel" id="quiz">
+  <div class="ph">
+    <div class="ph-label" style="color:#8b949e;">Self-Test</div>
+    <h2>10 Board-Style Questions</h2>
+    <p class="sub">Cover the answers and work through each question.</p>
+  </div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Why is HCT 0.60 and total protein 12 g/dL if no blood cells or protein were lost? <span class="ti">+</span></button>
+  <div class="qa">Both are elevated by hemoconcentration — not increased production. Cholera causes massive loss of plasma water (isotonic fluid) into the stool. The same absolute numbers of RBCs and protein molecules are dissolved in a much smaller plasma volume. HCT = RBCs / total blood volume; when plasma volume drops, HCT rises even with no change in red cell mass. Same logic for protein: concentration = amount / volume. Volume drops → concentration rises.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Serum Na+ is normal at 141 mEq/L despite massive fluid loss. What does this tell you about the diarrhea fluid? <span class="ti">+</span></button>
+  <div class="qa">It tells you the stool is isotonic — its sodium concentration is approximately equal to that of plasma (~140 mEq/L). When you lose isotonic fluid, the remaining plasma has the same sodium concentration as before. Sodium concentration only changes if you lose water in a different proportion to sodium (hypertonic loss → Na+ rises; hypotonic loss → Na+ falls). Normal Na+ = isotonic loss = ECF contracts, ICF preserved.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Why is the ICF relatively preserved while the ECF is severely depleted in this patient? <span class="ti">+</span></button>
+  <div class="qa">Water moves between compartments only when osmolality changes (osmosis). Cholera causes isotonic fluid loss → ECF osmolality stays normal → no osmotic gradient → water does NOT shift out of cells. ICF volume is therefore relatively preserved. If free water were lost (hypertonic dehydration), ECF would become hypertonic, water would osmose out of cells, and both compartments would contract. In cholera: ECF contracts in isolation.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Explain why BP is 60/30 despite HR 150. What is the fundamental cardiovascular formula? <span class="ti">+</span></button>
+  <div class="qa">MAP = CO × SVR; CO = HR × SV. Massive isotonic fluid loss → severely depleted venous return → reduced preload → reduced end-diastolic volume → markedly reduced stroke volume (Frank-Starling). Tachycardia tries to compensate (CO = HR × SV), but if SV collapses by 60-70%, even tripling HR cannot rescue CO. Additionally, high HR &gt;150 reduces diastolic filling time → further worsens SV. The result: BP remains catastrophically low despite maximum sympathetic compensation.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">What is the exact mechanism by which cholera toxin causes diarrhea? Name all steps. <span class="ti">+</span></button>
+  <div class="qa">1. V. cholerae colonizes small intestine and secretes cholera toxin. 2. B subunit binds GM1 ganglioside on enterocyte surface. 3. A subunit enters cell and ADP-ribosylates Gs-alpha → permanently activates adenylyl cyclase. 4. Continuous ATP → cAMP conversion → massive intracellular cAMP accumulation. 5. cAMP activates Protein Kinase A → phosphorylates and opens apical CFTR Cl- channels → massive Cl- secretion into lumen. 6. Na+ follows paracellularly (electroneutrality) → water follows osmotically → profuse watery diarrhea. SGLT1 is unaffected throughout.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Why did serum Na+ fall to 130 mEq/L when the patient drank plain water? <span class="ti">+</span></button>
+  <div class="qa">Dilutional hyponatremia. Cholera stool contains high Na+ (~130 mEq/L) — the patient is losing isotonic, sodium-rich fluid. Plain water contains zero sodium. Replacing an isotonic Na+ loss with hypotonic (zero Na+) water input → water is absorbed, enters ECF, dilutes residual sodium → Na+ concentration falls. The replacement fluid must match the composition of what's lost — which is why glucose-electrolyte ORS (not plain water) is the correct treatment.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Name the five mechanisms of intestinal Na+ absorption. Which does cholera toxin spare? <span class="ti">+</span></button>
+  <div class="qa">1. SGLT1 (Na+/glucose cotransport) — SPARED by cholera toxin. 2. Na+/amino acid cotransporters — also spared. 3. NHE3 (Na+/H+ exchanger) — partially impaired by elevated cAMP. 4. Na+/K+-ATPase (basolateral, not a luminal transporter but the driving force). 5. Paracellular Na+ movement following osmotic gradients. Cholera toxin specifically drives CFTR-mediated Cl- secretion → Na+ secretion paracellularly. SGLT1 is completely cholera-resistant, which is the entire physiological basis of ORT.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Why does adding glucose to the ORS solution stop the diarrhea? Be mechanistically specific. <span class="ti">+</span></button>
+  <div class="qa">Glucose activates SGLT1 (Na+/glucose cotransporter) on the apical membrane of enterocytes — a transporter that cholera toxin does NOT inhibit. SGLT1 cotransports 2 Na+ + 1 glucose from lumen into enterocyte. This Na+ influx via SGLT1 is large enough to exceed the CFTR-mediated Na+ secretion driven by cAMP. Net Na+ movement reverses direction (from secretory to absorptive). Water follows Na+ osmotically back into the body → net fluid reabsorption → stool volume decreases → diarrhea stops. Glucose wins the competition with CFTR.</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">What is the stool osmotic gap and how does it distinguish secretory from osmotic diarrhea? <span class="ti">+</span></button>
+  <div class="qa">Stool osmotic gap = measured stool osmolality − 2 × (stool Na+ + stool K+). In secretory diarrhea: stool electrolytes account for virtually all osmolality → gap &lt;50 mOsm/kg. In osmotic diarrhea: poorly absorbed solutes (lactose, sorbitol, Mg++) contribute to osmolality but are not captured by the electrolyte formula → gap &gt;125 mOsm/kg. The bedside equivalent: secretory diarrhea continues with fasting (active secretion is autonomous); osmotic diarrhea stops with fasting (remove the solute, remove the gradient).</div></div>
+
+  <div class="qi"><button class="qq" onclick="tq(this)">Name the 4 types of diarrhea, their mechanism, stool characteristics, and a classic example of each. <span class="ti">+</span></button>
+  <div class="qa">1. Secretory: active ion secretion via cAMP/CFTR, intact epithelium, large-volume watery isotonic stool, persists with fasting. Example: cholera, VIPoma. 2. Osmotic: poorly absorbed solutes draw water osmotically, large-volume watery stool with high osmotic gap, STOPS with fasting. Example: lactose intolerance, sorbitol. 3. Inflammatory/exudative: mucosal damage, bloody/mucoid/purulent stool, fecal WBCs, fever. Example: IBD, C. diff, Shigella. 4. Malabsorptive: fat/protein/carb malabsorption, steatorrhea (oily, bulky, malodorous, floats), persists but improves with diet modification. Example: EPI, celiac disease.</div></div>
+
+  <div style="text-align:center; margin-top:1.5rem;">
+    <button onclick="allQ()" style="padding:10px 24px; background:var(--teal-d); color:var(--teal); border:1px solid var(--teal-b); border-radius:var(--rs); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">Reveal all answers</button>
+  </div>
+</section>
+
+</main>
+<script>
+function show(id,btn){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+function tq(btn){const a=btn.nextElementSibling,i=btn.querySelector('.ti'),open=a.classList.toggle('open');btn.classList.toggle('open',open);i.textContent=open?'−':'+';}
+function allQ(){document.querySelectorAll('.qa').forEach(a=>a.classList.add('open'));document.querySelectorAll('.qq').forEach(b=>b.classList.add('open'));document.querySelectorAll('.ti').forEach(i=>i.textContent='−');}
+</script>
+</body>
+</html>
